@@ -1,0 +1,9 @@
+eth0 못잡을 때
+
+0) ip 설정후
+
+1) rm -f /etc/udev/rules.d/70-persistent-net.rules
+
+2) shutdown -r now
+
+3) 

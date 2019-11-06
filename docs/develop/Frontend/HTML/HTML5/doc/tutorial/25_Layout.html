@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>HTML Layout | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="HTML Layout" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Welcome to my blog." />
+<meta property="og:description" content="Welcome to my blog." />
+<link rel="canonical" href="http://localhost:4000/blog/docs/develop/Frontend/HTML/HTML5/doc/tutorial/25_Layout.html" />
+<meta property="og:url" content="http://localhost:4000/blog/docs/develop/Frontend/HTML/HTML5/doc/tutorial/25_Layout.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-06T09:31:12+09:00" />
+<script type="application/ld+json">
+{"description":"Welcome to my blog.","headline":"HTML Layout","dateModified":"2019-11-06T09:31:12+09:00","datePublished":"2019-11-06T09:31:12+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/docs/develop/Frontend/HTML/HTML5/doc/tutorial/25_Layout.html"},"url":"http://localhost:4000/blog/docs/develop/Frontend/HTML/HTML5/doc/tutorial/25_Layout.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>HTML Layout</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#html-layout-elements">HTML Layout Elements</a></li>
+<li class="toc-entry toc-h2"><a href="#html-layout-techniques">HTML Layout Techniques</a></li>
+<li class="toc-entry toc-h2"><a href="#which-one-th">Which One th</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#html-tables">HTML Tables</a></li>
+<li class="toc-entry toc-h3"><a href="#css-frameworks">CSS Frameworks</a></li>
+<li class="toc-entry toc-h3"><a href="#css-floats">CSS Floats</a></li>
+<li class="toc-entry toc-h3"><a href="#css-flexbox">CSS Flexbox</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#reference">Reference</a></li>
+</ul><hr>
+
+<h2 id="html-layout-elements">
+<a class="anchor" href="#html-layout-elements" aria-hidden="true"><span class="octicon octicon-link"></span></a>HTML Layout Elements</h2>
+
+<p>웹 사이트는 종종 잡지 나 신문과 같이 여러 열에 내용을 표시합니다.</p>
+
+<p>HTML5 새로운 의미론적인 웹 페이지의 다른 부분을 정의하는 element 들을 제공한다.</p>
+
+<ul>
+<li>
+<code>&lt;header&gt;</code> - 문서 또는 섹션의 머리글을 정의합니다.</li>
+<li>
+<code>&lt;nav&gt;</code> - 탐색 링크용 컨테이너를 정의합니다.</li>
+<li>
+<code>&lt;section&gt;</code> - 문서안의 섹션을 정의합니다.</li>
+<li>
+<code>&lt;article&gt;</code> - 독립적 인 자체 포함 된 article을 정의합니다.</li>
+<li>
+<code>&lt;aside&gt;</code> - 내용과는 별도의 콘텐츠를 정의합니다. (sidebar 처럼)</li>
+<li>
+<code>&lt;footer&gt;</code> - 문서 또는 섹션의 바닥글을 정의합니다.</li>
+<li>
+<code>&lt;details&gt;</code> - 추가적인 세부정보를 정의합니다.</li>
+<li>
+<code>&lt;summary&gt;</code> - <code>&lt;details&gt;</code> 요소의 제목을 정의합니다.</li>
+</ul>
+
+<hr>
+
+<h2 id="html-layout-techniques">
+<a class="anchor" href="#html-layout-techniques" aria-hidden="true"><span class="octicon octicon-link"></span></a>HTML Layout Techniques</h2>
+
+<p>여러 열 레이아웃을 만드는 방법에는 네 가지가 있습니다. 각 방법마다 장단점이 있습니다.</p>
+
+<ul>
+<li>HTML tables</li>
+<li>CSS float property</li>
+<li>CSS framework</li>
+<li>CSS flexbox</li>
+</ul>
+
+<hr>
+
+<h2 id="which-one-th">
+<a class="anchor" href="#which-one-th" aria-hidden="true"><span class="octicon octicon-link"></span></a>Which One th</h2>
+
+<h3 id="html-tables">
+<a class="anchor" href="#html-tables" aria-hidden="true"><span class="octicon octicon-link"></span></a>HTML Tables</h3>
+
+<p><code>&lt;table&gt;</code> 요소는 레이아웃 도구로 설계되지 않았습니다!
+<code>&lt;table&gt;</code> 요소의 목적은 표 형식의 데이터를 표시하는 것입니다.
+따라서 페이지 레이아웃에 테이블을 사용하지 마십시오!
+그들은 당신의 코드에 혼란을 가져올 것입니다.
+몇 달 후에 사이트를 재 설계하는 것이 얼마나 힘든지 상상해보십시오.</p>
+
+<h3 id="css-frameworks">
+<a class="anchor" href="#css-frameworks" aria-hidden="true"><span class="octicon octicon-link"></span></a>CSS Frameworks</h3>
+
+<p>빠른 layout 생성을 원한다면 <a href="https://www.w3schools.com/w3css/default.asp">W3.CSS</a> or <a href="https://www.w3schools.com/bootstrap/default.asp">Bootstrap</a> 같은 framework 를 사용할 수 있다.</p>
+
+<h3 id="css-floats">
+<a class="anchor" href="#css-floats" aria-hidden="true"><span class="octicon octicon-link"></span></a>CSS Floats</h3>
+
+<p>CSS float 속성을 사용하여 전체 웹 레이아웃을 수행하는 것이 일반적입니다.
+float 는 배우기 쉽습니다.
+float 및 투명한 속성이 작동하는 방식을 기억하면됩니다.</p>
+
+<p>단점: 플로팅 요소는 문서 흐름에 묶여있어 유연성에 해를 미칠 수 있습니다.</p>
+
+<p><a href="https://www.w3schools.com/css/css_float.asp">CSS Float and Clear</a> 장에서 float에 대해 자세히 알아보십시오.</p>
+
+<h3 id="css-flexbox">
+<a class="anchor" href="#css-flexbox" aria-hidden="true"><span class="octicon octicon-link"></span></a>CSS Flexbox</h3>
+
+<p>Flexbox는 CSS3의 새로운 레이아웃 모드입니다.</p>
+
+<p>flexbox를 사용하면 페이지 레이아웃이 다른 화면 크기와 다른 디스플레이 장치를 수용해야하는 경우 요소가 예상대로 작동합니다.</p>
+
+<p>단점 : IE10 이하에서는 작동하지 않습니다.</p>
+
+<p>Flexbox에 대한 자세한 내용은 <a href="https://www.w3schools.com/css/css3_flexbox.asp">CSS Flexbox</a> 장을 참조하십시오.</p>
+
+<h2 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+<p><a href="https://www.w3schools.com/html/html_layout.asp">https://www.w3schools.com/html/html_layout.asp</a></p>
+
+  </div>
+
+<div>
+  <hr>
+
+<h2 id="html-layout-elements">HTML Layout Elements</h2>
+
+<p>웹 사이트는 종종 잡지 나 신문과 같이 여러 열에 내용을 표시합니다.</p>
+
+<p>HTML5 새로운 의미론적인 웹 페이지의 다른 부분을 정의하는 element 들을 제공한다.</p>
+
+<ul>
+<li>
+<code>&lt;header&gt;</code> - 문서 또는 섹션의 머리글을 정의합니다.</li>
+<li>
+<code>&lt;nav&gt;</code> - 탐색 링크용 컨테이너를 정의합니다.</li>
+<li>
+<code>&lt;section&gt;</code> - 문서안의 섹션을 정의합니다.</li>
+<li>
+<code>&lt;article&gt;</code> - 독립적 인 자체 포함 된 article을 정의합니다.</li>
+<li>
+<code>&lt;aside&gt;</code> - 내용과는 별도의 콘텐츠를 정의합니다. (sidebar 처럼)</li>
+<li>
+<code>&lt;footer&gt;</code> - 문서 또는 섹션의 바닥글을 정의합니다.</li>
+<li>
+<code>&lt;details&gt;</code> - 추가적인 세부정보를 정의합니다.</li>
+<li>
+<code>&lt;summary&gt;</code> - <code>&lt;details&gt;</code> 요소의 제목을 정의합니다.</li>
+</ul>
+
+<hr>
+
+<h2 id="html-layout-techniques">HTML Layout Techniques</h2>
+
+<p>여러 열 레이아웃을 만드는 방법에는 네 가지가 있습니다. 각 방법마다 장단점이 있습니다.</p>
+
+<ul>
+<li>HTML tables</li>
+<li>CSS float property</li>
+<li>CSS framework</li>
+<li>CSS flexbox</li>
+</ul>
+
+<hr>
+
+<h2 id="which-one-th">Which One th</h2>
+
+<h3 id="html-tables">HTML Tables</h3>
+
+<p><code>&lt;table&gt;</code> 요소는 레이아웃 도구로 설계되지 않았습니다!
+<code>&lt;table&gt;</code> 요소의 목적은 표 형식의 데이터를 표시하는 것입니다.
+따라서 페이지 레이아웃에 테이블을 사용하지 마십시오!
+그들은 당신의 코드에 혼란을 가져올 것입니다.
+몇 달 후에 사이트를 재 설계하는 것이 얼마나 힘든지 상상해보십시오.</p>
+
+<h3 id="css-frameworks">CSS Frameworks</h3>
+
+<p>빠른 layout 생성을 원한다면 <a href="https://www.w3schools.com/w3css/default.asp" rel="nofollow" target="_blank">W3.CSS</a> or <a href="https://www.w3schools.com/bootstrap/default.asp" rel="nofollow" target="_blank">Bootstrap</a> 같은 framework 를 사용할 수 있다.</p>
+
+<h3 id="css-floats">CSS Floats</h3>
+
+<p>CSS float 속성을 사용하여 전체 웹 레이아웃을 수행하는 것이 일반적입니다.
+float 는 배우기 쉽습니다.
+float 및 투명한 속성이 작동하는 방식을 기억하면됩니다.</p>
+
+<p>단점: 플로팅 요소는 문서 흐름에 묶여있어 유연성에 해를 미칠 수 있습니다.</p>
+
+<p><a href="https://www.w3schools.com/css/css_float.asp" rel="nofollow" target="_blank">CSS Float and Clear</a> 장에서 float에 대해 자세히 알아보십시오.</p>
+
+<h3 id="css-flexbox">CSS Flexbox</h3>
+
+<p>Flexbox는 CSS3의 새로운 레이아웃 모드입니다.</p>
+
+<p>flexbox를 사용하면 페이지 레이아웃이 다른 화면 크기와 다른 디스플레이 장치를 수용해야하는 경우 요소가 예상대로 작동합니다.</p>
+
+<p>단점 : IE10 이하에서는 작동하지 않습니다.</p>
+
+<p>Flexbox에 대한 자세한 내용은 <a href="https://www.w3schools.com/css/css3_flexbox.asp" rel="nofollow" target="_blank">CSS Flexbox</a> 장을 참조하십시오.</p>
+
+<h2 id="reference">Reference</h2>
+
+<p><a href="https://www.w3schools.com/html/html_layout.asp" rel="nofollow" target="_blank">https://www.w3schools.com/html/html_layout.asp</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

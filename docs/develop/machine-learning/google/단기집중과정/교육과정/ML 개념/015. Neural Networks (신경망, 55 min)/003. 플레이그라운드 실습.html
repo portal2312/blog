@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>플레이그라운드 실습 | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="플레이그라운드 실습" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="신경망 초기화" />
+<meta property="og:description" content="신경망 초기화" />
+<link rel="canonical" href="http://localhost:4000/blog/docs/develop/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML%20%EA%B0%9C%EB%85%90/015.%20Neural%20Networks%20(%EC%8B%A0%EA%B2%BD%EB%A7%9D,%2055%20min)/003.%20%ED%94%8C%EB%A0%88%EC%9D%B4%EA%B7%B8%EB%9D%BC%EC%9A%B4%EB%93%9C%20%EC%8B%A4%EC%8A%B5.html" />
+<meta property="og:url" content="http://localhost:4000/blog/docs/develop/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML%20%EA%B0%9C%EB%85%90/015.%20Neural%20Networks%20(%EC%8B%A0%EA%B2%BD%EB%A7%9D,%2055%20min)/003.%20%ED%94%8C%EB%A0%88%EC%9D%B4%EA%B7%B8%EB%9D%BC%EC%9A%B4%EB%93%9C%20%EC%8B%A4%EC%8A%B5.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-06T09:31:12+09:00" />
+<script type="application/ld+json">
+{"description":"신경망 초기화","headline":"플레이그라운드 실습","dateModified":"2019-11-06T09:31:12+09:00","datePublished":"2019-11-06T09:31:12+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/docs/develop/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML%20%EA%B0%9C%EB%85%90/015.%20Neural%20Networks%20(%EC%8B%A0%EA%B2%BD%EB%A7%9D,%2055%20min)/003.%20%ED%94%8C%EB%A0%88%EC%9D%B4%EA%B7%B8%EB%9D%BC%EC%9A%B4%EB%93%9C%20%EC%8B%A4%EC%8A%B5.html"},"url":"http://localhost:4000/blog/docs/develop/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML%20%EA%B0%9C%EB%85%90/015.%20Neural%20Networks%20(%EC%8B%A0%EA%B2%BD%EB%A7%9D,%2055%20min)/003.%20%ED%94%8C%EB%A0%88%EC%9D%B4%EA%B7%B8%EB%9D%BC%EC%9A%B4%EB%93%9C%20%EC%8B%A4%EC%8A%B5.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>플레이그라운드 실습</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#part-d86551f2651fbe78">신경망 초기화</a></li>
+<li class="toc-entry toc-h2"><a href="#ml-spiral-solution">ML Spiral Solution (나선 신경망 해결)</a></li>
+<li class="toc-entry toc-h2"><a href="#reference">Reference</a></li>
+</ul><h2 id="part-d86551f2651fbe78">
+<a class="anchor" href="#part-d86551f2651fbe78" aria-hidden="true"><span class="octicon octicon-link"></span></a>신경망 초기화</h2>
+
+<p>초기화에 따른 데이터가 달라 지더라도 레이어와 추가 노드를 추가하여 더 반복적인 결과를 얻었습니다. 매 시도마다 결과 모델은 거의 같은 형태였습니다. 또한 테스트 손실 수렴 결과는 매 시도마다 변화가 적었습니다.</p>
+
+<h2 id="ml-spiral-solution">
+<a class="anchor" href="#ml-spiral-solution" aria-hidden="true"><span class="octicon octicon-link"></span></a>ML Spiral Solution (나선 신경망 해결)</h2>
+
+<p>특성과 매개 변수가 적절하다면 아주 어렵거나 복잡한 모델 없이도 문제를 해결할 수 있다.</p>
+
+<p>주의사항:</p>
+
+<ol>
+<li>너무 많은 Hidden Layers, neurons</li>
+<li>Features: $X_1$, $X_2$</li>
+<li>Hidden Layers: 6</li>
+<li>neurons: 8 (* 6)</li>
+<li>Learning rage: 0.1</li>
+<li>그래프의 노드가 너무 많아짐 -&gt; 모든 가중치를 조정하는데 연산이 복잡 -&gt; 모델 속도 느림</li>
+<li>Iterations(반복 횟수) 가 아주 느려짐.</li>
+<li>그래프 레이어와 노드가 많으면 모델 해석이 어려워짐.</li>
+<li><p>neuron 별 그래프가 갈 수록 일부 특성이 나선 데이터 결과물에 어떤 영향을 미치는지 알 수 없음.</p></li>
+<li><p>정규화를 사용하지 않은 경우</p></li>
+<li><p>Learning rage: 0.01 (손실 곡선이 위아래로 급격하게 달라지지 않도록, 보조 곡선이 부드러워지고 테스트 데이터에 과적합 되지 않기를 바라면서)</p></li>
+<li><p>Features: $X_1$, $X_2$, $X_1^2$, $X_2^2$, $X_1X_2$, $sin(X_1)$, $sin(X_2)$</p></li>
+<li><p>Hidden Layers: 4</p></li>
+<li><p>neurons: 8, 6, 4, 2</p></li>
+<li><p>반복수는 빨라졌으나 테스트 손실 많음, 학습 손실 적음</p></li>
+<li><p>정규화는 복잡한 모델과 과적합에 패널티를 주고 부드러운 손실 곡선과 학습 데이터에 과적합 되지 않는 더 적합한 모델을 얻을 수 있다.</p></li>
+<li><p>정규화를 사용하지 않은 경우</p></li>
+<li><p>Learning rage: 0.01</p></li>
+<li><p>Regularization: L1</p></li>
+<li><p>Regularization rate: 0.01</p></li>
+<li><p>Features: $X_1$, $X_2$, $X_1^2$, $X_2^2$, $X_1X_2$, $sin(X_1)$, $sin(X_2)$</p></li>
+<li><p>Hidden Layers: 4</p></li>
+<li><p>neurons: 8, 6, 4, 2</p></li>
+<li><p>정규화 수준이 너무 높이 않게 하고 모델의 복잡도를 학습하지 않도록</p></li>
+<li><p>손실 곡선이 부드러워지고 모델 출력은 덜 뾰족하게 됨</p></li>
+<li><p>batch size: 너무 작으면 모델 학습시간 오래걸림, 너무 크면 수렴에 문제가 생길 수 있음.</p></li>
+<li><p>Learning rate: 너무 높으면 변동 많아지고 수렴에 문제 생길 수 있음.</p></li>
+<li><p>Noise</p></li>
+<li><p>Learning rage: 0.01</p></li>
+<li><p>Regularization: L2</p></li>
+<li><p>Regularization rate: 0.003</p></li>
+<li><p>Features: $X_1$, $X_2$</p></li>
+<li><p>Hidden Layers: 4</p></li>
+<li><p>neurons: 8, 6, 4, 2</p></li>
+<li><p>Noise: 25</p></li>
+<li><p>Noise 수준이 높을 때는 약간의 특성 추출 만으로도 레이어 추가나 매개변수 조정보다 크게 결과를 개선할 수 있다. 노이즈가 줄면 테스트 손실이 개선된다. 선영 특성만 사용하는 경우에도 데이터의 노이즈 수준이 낮으면 더 나은 테스트 손실을 얻기 위해 특성 추출 작업을 해야한다.</p></li>
+<li><p>Add complicate Features</p></li>
+<li><p>복잡한 특성 추가시 가장 눈에 띄는 부분은 모델의 첫번째 Layers 에서 특성이 훨씬 더 복잡하다.</p></li>
+<li><p>neurons 이 학습하는 것은 여러 기울기에 선이 나타내는 것보다 훨씬 더 복잡하다.</p></li>
+<li><p>더 복잡한 특성을 추가시 훨씬 빠른 속도로 이 곡선을 학습하게 된다.</p></li>
+<li><p>곡선이 너무 복잡하여 망에 너무 많은 노드를 삽입하는 첫 번째 함정으로 돌아간다.</p></li>
+<li><p>레이어와 각 레이어에 있는 neurons 수를 줄이고 학습율을 낮추면 노이즈가 심한 데이터라도 손실 곡선이 훨씬 부드러워지고 데이터에 적합성도 크게 향상되는 것을 확인할 수 있다. </p></li>
+<li><p>추가한 특성으로 모델의 복잡도를 줄이고 모델에 포함된 레이어 수를 줄이고 나니 데이터 과적합을 훨씬 효과적으로 방지할 수 있게 됨.</p></li>
+</ol>
+
+<h2 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+<p><a href="https://developers.google.com/machine-learning/crash-course/introduction-to-neural-networks/playground-exercises">https://developers.google.com/machine-learning/crash-course/introduction-to-neural-networks/playground-exercises</a></p>
+
+  </div>
+
+<div>
+  <h2 id="part-d86551f2651fbe78">신경망 초기화</h2>
+
+<p>초기화에 따른 데이터가 달라 지더라도 레이어와 추가 노드를 추가하여 더 반복적인 결과를 얻었습니다. 매 시도마다 결과 모델은 거의 같은 형태였습니다. 또한 테스트 손실 수렴 결과는 매 시도마다 변화가 적었습니다.</p>
+
+<h2 id="ml-spiral-solution">ML Spiral Solution (나선 신경망 해결)</h2>
+
+<p>특성과 매개 변수가 적절하다면 아주 어렵거나 복잡한 모델 없이도 문제를 해결할 수 있다.</p>
+
+<p>주의사항:</p>
+
+<ol>
+<li>너무 많은 Hidden Layers, neurons</li>
+<li>Features: $X_1$, $X_2$</li>
+<li>Hidden Layers: 6</li>
+<li>neurons: 8 (* 6)</li>
+<li>Learning rage: 0.1</li>
+<li>그래프의 노드가 너무 많아짐 -&gt; 모든 가중치를 조정하는데 연산이 복잡 -&gt; 모델 속도 느림</li>
+<li>Iterations(반복 횟수) 가 아주 느려짐.</li>
+<li>그래프 레이어와 노드가 많으면 모델 해석이 어려워짐.</li>
+<li><p>neuron 별 그래프가 갈 수록 일부 특성이 나선 데이터 결과물에 어떤 영향을 미치는지 알 수 없음.</p></li>
+<li><p>정규화를 사용하지 않은 경우</p></li>
+<li><p>Learning rage: 0.01 (손실 곡선이 위아래로 급격하게 달라지지 않도록, 보조 곡선이 부드러워지고 테스트 데이터에 과적합 되지 않기를 바라면서)</p></li>
+<li><p>Features: $X_1$, $X_2$, $X_1^2$, $X_2^2$, $X_1X_2$, $sin(X_1)$, $sin(X_2)$</p></li>
+<li><p>Hidden Layers: 4</p></li>
+<li><p>neurons: 8, 6, 4, 2</p></li>
+<li><p>반복수는 빨라졌으나 테스트 손실 많음, 학습 손실 적음</p></li>
+<li><p>정규화는 복잡한 모델과 과적합에 패널티를 주고 부드러운 손실 곡선과 학습 데이터에 과적합 되지 않는 더 적합한 모델을 얻을 수 있다.</p></li>
+<li><p>정규화를 사용하지 않은 경우</p></li>
+<li><p>Learning rage: 0.01</p></li>
+<li><p>Regularization: L1</p></li>
+<li><p>Regularization rate: 0.01</p></li>
+<li><p>Features: $X_1$, $X_2$, $X_1^2$, $X_2^2$, $X_1X_2$, $sin(X_1)$, $sin(X_2)$</p></li>
+<li><p>Hidden Layers: 4</p></li>
+<li><p>neurons: 8, 6, 4, 2</p></li>
+<li><p>정규화 수준이 너무 높이 않게 하고 모델의 복잡도를 학습하지 않도록</p></li>
+<li><p>손실 곡선이 부드러워지고 모델 출력은 덜 뾰족하게 됨</p></li>
+<li><p>batch size: 너무 작으면 모델 학습시간 오래걸림, 너무 크면 수렴에 문제가 생길 수 있음.</p></li>
+<li><p>Learning rate: 너무 높으면 변동 많아지고 수렴에 문제 생길 수 있음.</p></li>
+<li><p>Noise</p></li>
+<li><p>Learning rage: 0.01</p></li>
+<li><p>Regularization: L2</p></li>
+<li><p>Regularization rate: 0.003</p></li>
+<li><p>Features: $X_1$, $X_2$</p></li>
+<li><p>Hidden Layers: 4</p></li>
+<li><p>neurons: 8, 6, 4, 2</p></li>
+<li><p>Noise: 25</p></li>
+<li><p>Noise 수준이 높을 때는 약간의 특성 추출 만으로도 레이어 추가나 매개변수 조정보다 크게 결과를 개선할 수 있다. 노이즈가 줄면 테스트 손실이 개선된다. 선영 특성만 사용하는 경우에도 데이터의 노이즈 수준이 낮으면 더 나은 테스트 손실을 얻기 위해 특성 추출 작업을 해야한다.</p></li>
+<li><p>Add complicate Features</p></li>
+<li><p>복잡한 특성 추가시 가장 눈에 띄는 부분은 모델의 첫번째 Layers 에서 특성이 훨씬 더 복잡하다.</p></li>
+<li><p>neurons 이 학습하는 것은 여러 기울기에 선이 나타내는 것보다 훨씬 더 복잡하다.</p></li>
+<li><p>더 복잡한 특성을 추가시 훨씬 빠른 속도로 이 곡선을 학습하게 된다.</p></li>
+<li><p>곡선이 너무 복잡하여 망에 너무 많은 노드를 삽입하는 첫 번째 함정으로 돌아간다.</p></li>
+<li><p>레이어와 각 레이어에 있는 neurons 수를 줄이고 학습율을 낮추면 노이즈가 심한 데이터라도 손실 곡선이 훨씬 부드러워지고 데이터에 적합성도 크게 향상되는 것을 확인할 수 있다. </p></li>
+<li><p>추가한 특성으로 모델의 복잡도를 줄이고 모델에 포함된 레이어 수를 줄이고 나니 데이터 과적합을 훨씬 효과적으로 방지할 수 있게 됨.</p></li>
+</ol>
+
+<h2 id="reference">Reference</h2>
+
+<p><a href="https://developers.google.com/machine-learning/crash-course/introduction-to-neural-networks/playground-exercises" rel="nofollow" target="_blank">https://developers.google.com/machine-learning/crash-course/introduction-to-neural-networks/playground-exercises</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Chapter.1 Start | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Chapter.1 Start" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="버전관리 수정, 복구, 이력관리, 비교." />
+<meta property="og:description" content="버전관리 수정, 복구, 이력관리, 비교." />
+<link rel="canonical" href="http://localhost:4000/blog/docs/develop/VCS/Git/study/Pro_Git_ko_582/chapter_1_start.html" />
+<meta property="og:url" content="http://localhost:4000/blog/docs/develop/VCS/Git/study/Pro_Git_ko_582/chapter_1_start.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-06T09:31:12+09:00" />
+<script type="application/ld+json">
+{"description":"버전관리 수정, 복구, 이력관리, 비교.","headline":"Chapter.1 Start","dateModified":"2019-11-06T09:31:12+09:00","datePublished":"2019-11-06T09:31:12+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/docs/develop/VCS/Git/study/Pro_Git_ko_582/chapter_1_start.html"},"url":"http://localhost:4000/blog/docs/develop/VCS/Git/study/Pro_Git_ko_582/chapter_1_start.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Chapter.1 Start</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#part-30a6623f03b171f1">버전관리</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#local-version-control-system-vcs">(Local) Version Control System (VCS - 로컬 버전 관리)</a></li>
+<li class="toc-entry toc-h3"><a href="#central-version-control-system-cvcs">Central Version Control System (CVCS - 중앙 집중식 버전 관리)</a></li>
+<li class="toc-entry toc-h3"><a href="#distributed-version-control-system-dvcs">Distributed Version Control System (DVCS - 분산 버전 관리)</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#git">짧게 보는 Git의 역사 (장점)</a></li>
+<li class="toc-entry toc-h2"><a href="#git">Git 기초</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#part-75d45b832146853a">차이가 아니라 스냅샷</a></li>
+<li class="toc-entry toc-h3"><a href="#part-1f874d8a034b1298">거의 모든 명령을 로컬에서 실행</a></li>
+<li class="toc-entry toc-h3"><a href="#git">Git의 무결성</a></li>
+<li class="toc-entry toc-h3"><a href="#git">Git은 데이터를 추가할 뿐</a></li>
+<li class="toc-entry toc-h3"><a href="#3">3가지 상태 (중요)</a></li>
+<li class="toc-entry toc-h3"><a href="#cli">CLI</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#git-install">Git install</a></li>
+<li class="toc-entry toc-h2"><a href="#git">Git 최초 설정</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#part-679c6d29b56ece7b">사용자 정보</a></li>
+<li class="toc-entry toc-h3"><a href="#part-37876445c53d76e">편집기</a></li>
+<li class="toc-entry toc-h3"><a href="#part-3d027c3f22923d56">설정 확인</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#part-37873afbbe5fc8c">도움말</a></li>
+<li class="toc-entry toc-h2"><a href="#part-65439985ebd">요약</a></li>
+</ul><h2 id="part-30a6623f03b171f1">
+<a class="anchor" href="#part-30a6623f03b171f1" aria-hidden="true"><span class="octicon octicon-link"></span></a>버전관리</h2>
+
+<p>수정, 복구, 이력관리, 비교.</p>
+
+<h3 id="local-version-control-system-vcs">
+<a class="anchor" href="#local-version-control-system-vcs" aria-hidden="true"><span class="octicon octicon-link"></span></a>(Local) Version Control System (VCS - 로컬 버전 관리)</h3>
+
+<p>Database를 통한 단순 저장.</p>
+
+<h3 id="central-version-control-system-cvcs">
+<a class="anchor" href="#central-version-control-system-cvcs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Central Version Control System (CVCS - 중앙 집중식 버전 관리)</h3>
+
+<ul>
+<li><p>Client들이 Central Server로 저장시킴.</p></li>
+<li><p>단점: 중앙 서버에서 문제 발생시.</p></li>
+</ul>
+
+<h3 id="distributed-version-control-system-dvcs">
+<a class="anchor" href="#distributed-version-control-system-dvcs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Distributed Version Control System (DVCS - 분산 버전 관리)</h3>
+
+<p>Client, Server 모두 저장 및 공유.</p>
+
+<h2 id="git">
+<a class="anchor" href="#git" aria-hidden="true"><span class="octicon octicon-link"></span></a>짧게 보는 Git의 역사 (장점)</h2>
+
+<ul>
+<li>빠른 속도</li>
+<li>단순한 구조</li>
+<li>비선령적인 개발</li>
+<li>완벽한 분산</li>
+<li>Linux Kernel 같은 대형 Projects 에도 유용할 것 (Data Size면에서)</li>
+<li>Branch (Git 기능중 강점)</li>
+</ul>
+
+<h2 id="git">
+<a class="anchor" href="#git" aria-hidden="true"><span class="octicon octicon-link"></span></a>Git 기초</h2>
+
+<h3 id="part-75d45b832146853a">
+<a class="anchor" href="#part-75d45b832146853a" aria-hidden="true"><span class="octicon octicon-link"></span></a>차이가 아니라 스냅샷</h3>
+
+<p>[Git] 모든 상황을 저장 (Snapshot) &lt;&gt; [VCS] File별 변화에 따른 시간순으로 관리.</p>
+
+<h3 id="part-1f874d8a034b1298">
+<a class="anchor" href="#part-1f874d8a034b1298" aria-hidden="true"><span class="octicon octicon-link"></span></a>거의 모든 명령을 로컬에서 실행</h3>
+
+<h3 id="git">
+<a class="anchor" href="#git" aria-hidden="true"><span class="octicon octicon-link"></span></a>Git의 무결성</h3>
+
+<ul>
+<li><p>데이터 저장전 항상 Checksum 을 구하고 해당 Checksum 으로 데이터 관리.</p></li>
+<li><p>Checksum 은 Git의 Atomic 데이터, 없으면 관리 안됨.</p></li>
+<li><p>Git은 SHA-1 hash를 이용하여 Checksum 을 생성. (File 내용, Dir 구조를 이용)</p></li>
+<li><p>Git은 File 명을 저장하지 않고 hash 를 저장.</p></li>
+</ul>
+
+<h3 id="git">
+<a class="anchor" href="#git" aria-hidden="true"><span class="octicon octicon-link"></span></a>Git은 데이터를 추가할 뿐</h3>
+
+<h3 id="3">
+<a class="anchor" href="#3" aria-hidden="true"><span class="octicon octicon-link"></span></a>3가지 상태 (중요)</h3>
+
+<ul>
+<li><p>Working Directory</p></li>
+<li><p>Staging Area</p></li>
+<li><p>.git dir (Repository)</p></li>
+</ul>
+<div class="highlight"><pre><code class="language-" data-lang="">[Working Dir]    [Staging Area]        [.git Dir] (Repository)
+
+file1   -&gt; fixed -&gt; * Modified                       -&gt; * Committed
+                 -&gt; git add &lt;file1&gt;
+                 -&gt; * Staged           -&gt; git commit
+
+        &lt;-------------- Check out -----------------
+</code></pre></div>
+<h3 id="cli">
+<a class="anchor" href="#cli" aria-hidden="true"><span class="octicon octicon-link"></span></a>CLI</h3>
+
+<p>CLI 는 GUI 를 다룰수 있음.</p>
+
+<p>GUI 는 CLI 를 할 수 없음. (명령어 제약 등등)</p>
+
+<h2 id="git-install">
+<a class="anchor" href="#git-install" aria-hidden="true"><span class="octicon octicon-link"></span></a>Git install</h2>
+
+<p>생략</p>
+
+<h2 id="git">
+<a class="anchor" href="#git" aria-hidden="true"><span class="octicon octicon-link"></span></a>Git 최초 설정</h2>
+
+<ul>
+<li><p>설정한 내용은 Upgrade 해도 유지, 언제든 변경 가능.</p></li>
+<li><p>적용순서는 작은 단위가 먼저.</p></li>
+<li><p>Linux</p></li>
+</ul>
+
+<table>
+<thead>
+<tr>
+<th style="text-align: left">File</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left">/etc/gitconfig</td>
+<td style="text-align: left">ALL (User, Dir)</td>
+</tr>
+<tr>
+<td style="text-align: left">~/.gitconfig</td>
+<td style="text-align: left">User</td>
+</tr>
+<tr>
+<td style="text-align: left">~/.config/git/config</td>
+<td style="text-align: left">User</td>
+</tr>
+<tr>
+<td style="text-align: left">.git/config</td>
+<td style="text-align: left">Dir</td>
+</tr>
+</tbody>
+</table>
+
+<ul>
+<li>
+<p>Windows</p>
+
+<ul>
+<li>$HOME Dir에서 찾음.</li>
+</ul>
+</li>
+</ul>
+
+<h3 id="part-679c6d29b56ece7b">
+<a class="anchor" href="#part-679c6d29b56ece7b" aria-hidden="true"><span class="octicon octicon-link"></span></a>사용자 정보</h3>
+
+<ul>
+<li><p>설치 후 가장 먼저 해야 됨.</p></li>
+<li><p>이후 commit 후에 정보를 변경할 수 없음.</p></li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">git config <span class="nt">--global</span> user.name <span class="s1">'mkkim'</span>
+git config <span class="nt">--global</span> user.email <span class="s1">'portal2312@gmail.com'</span>
+</code></pre></div>
+<ul>
+<li>프로젝트별 다른 Name, Email 을 사용하려면 --global 옵션해제.</li>
+</ul>
+
+<h3 id="part-37876445c53d76e">
+<a class="anchor" href="#part-37876445c53d76e" aria-hidden="true"><span class="octicon octicon-link"></span></a>편집기</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">git config <span class="nt">--global</span> core.editor vim
+</code></pre></div>
+<h3 id="part-3d027c3f22923d56">
+<a class="anchor" href="#part-3d027c3f22923d56" aria-hidden="true"><span class="octicon octicon-link"></span></a>설정 확인</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">git config <span class="nt">--list</span>
+...
+
+user.name<span class="o">=</span>mkkim
+user.email<span class="o">=</span>portal2312@gmail.com
+
+
+git config user.name
+...
+
+user.name<span class="o">=</span>mkkim
+</code></pre></div>
+<h2 id="part-37873afbbe5fc8c">
+<a class="anchor" href="#part-37873afbbe5fc8c" aria-hidden="true"><span class="octicon octicon-link"></span></a>도움말</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">git <span class="nb">help
+
+</span>git &lt;Tab-key&gt;
+</code></pre></div>
+<h2 id="part-65439985ebd">
+<a class="anchor" href="#part-65439985ebd" aria-hidden="true"><span class="octicon octicon-link"></span></a>요약</h2>
+
+  </div>
+
+<div>
+  <h2 id="part-30a6623f03b171f1">버전관리</h2>
+
+<p>수정, 복구, 이력관리, 비교.</p>
+
+<h3 id="local-version-control-system-vcs">(Local) Version Control System (VCS - 로컬 버전 관리)</h3>
+
+<p>Database를 통한 단순 저장.</p>
+
+<h3 id="central-version-control-system-cvcs">Central Version Control System (CVCS - 중앙 집중식 버전 관리)</h3>
+
+<ul>
+<li><p>Client들이 Central Server로 저장시킴.</p></li>
+<li><p>단점: 중앙 서버에서 문제 발생시.</p></li>
+</ul>
+
+<h3 id="distributed-version-control-system-dvcs">Distributed Version Control System (DVCS - 분산 버전 관리)</h3>
+
+<p>Client, Server 모두 저장 및 공유.</p>
+
+<h2 id="git">짧게 보는 Git의 역사 (장점)</h2>
+
+<ul>
+<li>빠른 속도</li>
+<li>단순한 구조</li>
+<li>비선령적인 개발</li>
+<li>완벽한 분산</li>
+<li>Linux Kernel 같은 대형 Projects 에도 유용할 것 (Data Size면에서)</li>
+<li>Branch (Git 기능중 강점)</li>
+</ul>
+
+<h2 id="git">Git 기초</h2>
+
+<h3 id="part-75d45b832146853a">차이가 아니라 스냅샷</h3>
+
+<p>[Git] 모든 상황을 저장 (Snapshot) &lt;&gt; [VCS] File별 변화에 따른 시간순으로 관리.</p>
+
+<h3 id="part-1f874d8a034b1298">거의 모든 명령을 로컬에서 실행</h3>
+
+<h3 id="git">Git의 무결성</h3>
+
+<ul>
+<li><p>데이터 저장전 항상 Checksum 을 구하고 해당 Checksum 으로 데이터 관리.</p></li>
+<li><p>Checksum 은 Git의 Atomic 데이터, 없으면 관리 안됨.</p></li>
+<li><p>Git은 SHA-1 hash를 이용하여 Checksum 을 생성. (File 내용, Dir 구조를 이용)</p></li>
+<li><p>Git은 File 명을 저장하지 않고 hash 를 저장.</p></li>
+</ul>
+
+<h3 id="git">Git은 데이터를 추가할 뿐</h3>
+
+<h3 id="3">3가지 상태 (중요)</h3>
+
+<ul>
+<li><p>Working Directory</p></li>
+<li><p>Staging Area</p></li>
+<li><p>.git dir (Repository)</p></li>
+</ul>
+<div class="highlight"><pre><code class="language-" data-lang="">[Working Dir]    [Staging Area]        [.git Dir] (Repository)
+
+file1   -&gt; fixed -&gt; * Modified                       -&gt; * Committed
+                 -&gt; git add &lt;file1&gt;
+                 -&gt; * Staged           -&gt; git commit
+
+        &lt;-------------- Check out -----------------
+</code></pre></div>
+<h3 id="cli">CLI</h3>
+
+<p>CLI 는 GUI 를 다룰수 있음.</p>
+
+<p>GUI 는 CLI 를 할 수 없음. (명령어 제약 등등)</p>
+
+<h2 id="git-install">Git install</h2>
+
+<p>생략</p>
+
+<h2 id="git">Git 최초 설정</h2>
+
+<ul>
+<li><p>설정한 내용은 Upgrade 해도 유지, 언제든 변경 가능.</p></li>
+<li><p>적용순서는 작은 단위가 먼저.</p></li>
+<li><p>Linux</p></li>
+</ul>
+
+<table>
+<thead>
+<tr>
+<th style="text-align: left">File</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left">/etc/gitconfig</td>
+<td style="text-align: left">ALL (User, Dir)</td>
+</tr>
+<tr>
+<td style="text-align: left">~/.gitconfig</td>
+<td style="text-align: left">User</td>
+</tr>
+<tr>
+<td style="text-align: left">~/.config/git/config</td>
+<td style="text-align: left">User</td>
+</tr>
+<tr>
+<td style="text-align: left">.git/config</td>
+<td style="text-align: left">Dir</td>
+</tr>
+</tbody>
+</table>
+
+<ul>
+<li>
+<p>Windows</p>
+
+<ul>
+<li>$HOME Dir에서 찾음.</li>
+</ul>
+</li>
+</ul>
+
+<h3 id="part-679c6d29b56ece7b">사용자 정보</h3>
+
+<ul>
+<li><p>설치 후 가장 먼저 해야 됨.</p></li>
+<li><p>이후 commit 후에 정보를 변경할 수 없음.</p></li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">git config <span class="nt">--global</span> user.name <span class="s1">'mkkim'</span>
+git config <span class="nt">--global</span> user.email <span class="s1">'portal2312@gmail.com'</span>
+</code></pre></div>
+<ul>
+<li>프로젝트별 다른 Name, Email 을 사용하려면 --global 옵션해제.</li>
+</ul>
+
+<h3 id="part-37876445c53d76e">편집기</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">git config <span class="nt">--global</span> core.editor vim
+</code></pre></div>
+<h3 id="part-3d027c3f22923d56">설정 확인</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">git config <span class="nt">--list</span>
+...
+
+user.name<span class="o">=</span>mkkim
+user.email<span class="o">=</span>portal2312@gmail.com
+
+
+git config user.name
+...
+
+user.name<span class="o">=</span>mkkim
+</code></pre></div>
+<h2 id="part-37873afbbe5fc8c">도움말</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">git <span class="nb">help
+
+</span>git &lt;Tab-key&gt;
+</code></pre></div>
+<h2 id="part-65439985ebd">요약</h2>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

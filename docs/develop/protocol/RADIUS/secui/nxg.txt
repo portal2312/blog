@@ -1,0 +1,18 @@
+안녕하세요. 넷크루즈 김경환 입니다.
+
+신한카드 NXG RADIUS 연동 문의 답변 드립니다. 업무에 참고하세요.
+결론부터 말씀드리면 RADIUS 인증 시 별다른 attribute 값은 없고, 인증 성공 메시지만 보내주면 RADIUS 인증이 됩니다.
+
+
+하지만 아래처럼 Secui RADIUS 인증 요청 시 User-Name과 User-Password 의 정보만 보내주고 있습니다.
+그래서 RADIUS 인증 시 userInfo 가 없다고 판단하여 인증 실패가 되었습니다.
+※ Secui 는 인증 방식을 PAP 또는 CHAP 방식을 사용합니다.
+
+Secui 에서 RADIUS 인증 요청 시 ID, PW 의 정보가 맞을 경우 아래의 코드를 입력하여 Secui 쪽으로 보내주면 됩니다.
+
+resp = req.createReply(ACCESS_ACCEPT, Reply_Message="ACCESS_ACCEPT")
+
+- Cisco RADIUS 인증 요청 정보
+
+아래는 RADIUS 인증 시 <AuthResponse is sent> 를 보내는 부분입니다.
+/opt/hts/netcruz/nom/radius/AuthProtocol.py

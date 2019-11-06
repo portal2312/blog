@@ -1,0 +1,33 @@
+< 스트리밍서버 > - Red5
+
+1. 경로 : 
+>cd /opt/hts/red5-1.0.0
+
+2. 재구동 : 
+> ./red5.sh
+
+3. nOM의 모든 Logs
+경로:
+> cd /opt/hts/logs/nom/[날짜]/[서버IP]/[세션ID]/
+예)
+/opt/hts/logs/nom/2012-11-19/211.241.161.201/20121119105640-netcruz-211.241.161.201-3389-rdp-none
+
+폴더 안에
+
+- snap shot : "세션ID.jsg"
+- flv           : "세션ID.flv"
+
+파일 확인하기
+
+
+
+
+
+//----------------------------------------------------
+
+No	설명	template	js	
+1	전체 탭	glogs.html	glogs.js	
+2	멀티동영상	stream.html	swfobject.js	경로 ( /opt/hts/netcruz/webapps/nom/static/js/player )
+3	이력 스냅샷	snap.html	snap.js	monitorlib.js
+				
+1	전체 탭			

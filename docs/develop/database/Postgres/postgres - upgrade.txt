@@ -1,0 +1,188 @@
+0.
+
+
+
+
+1. postgresql 9.3.1 upgrade
+(0) ready
+> su - postgres
+
+(1) pg_dump (database backup).
+> pg_dump -U postgres nom > nom.sql
+> /etc/init.d/postgresql stop
+
+(2) database file rename (database backup).
+> su -
+#> mv -v /home/postgres/data /home/postgres/data9.1
+
+(3) postgresql before version rename (postgresql version backup).
+#> mv -v /usr/local/pgsql /usr/local/pgsql9.1
+
+(4) postgres permision change.
+#> chown -R postgres:postgres /usr/local/pgsql9.1 /home/postgres/data9.1
+
+
+2. postgresql 9.3.1 install
+(0) ready
+> su - postgres
+> scp -rp postgres@211.241.161.53:/home/postgres/src ./
+
+
+(1) compile (53번 서버에서 가져온 파일은 이미 컴파일이 완료된 상태 -> 바로 (2)번으로 넘어가시오.)
+> cd ./postgresql-9.3.1
+> ./configure --prefix=/usr/local/pgsql --enable-thread-safety --with-python --with-libxml --with-ossp-uuid --with-libxslt --with-openssl
+
+
+(2) install before
+> gmake
+
+
+(3) install
+> gmake install
+
+예외: permision Error
+> su -
+#> mkdir /usr/local/pgsql
+#> chown -R postgres:postgres /usr/local/pgsql (postgres permision 변경)
+#> su - postgres
+>
+
+(4) complite (메시지 확인)
+PostgreSQL installation complete.
+
+
+(5) upgrade
+> cd ./contrib/pg_upgrade
+> make                    (= 이미 컴파일 된 파일이라면 이번 make 무시)
+> make install
+
+> cd ../pg_upgrade_support
+> make                    (= 이미 컴파일 된 파일이라면 이번 make 무시)
+> make install
+
+
+3. initdb
+> su - postgres
+> cd
+> /usr/local/pgsql/bin/initdb --locale=ko_KR.UTF-8 -D /home/postgres/data
+> /usr/local/pgsql/bin/pg_ctl -D /home/postgres/data -l logfile start
+> /usr/local/pgsql/bin/psql
+
+메시지:
+psql (9.3.1)     <- 버전정보 확인
+Type "help" for help.
+
+postgres=#
+
+
+
+4. pgpool install
+(0) 준비
+> su -
+#>
+
+
+(1) install
+#> cd /home/postgres/src/pgpool-II-3.3.1
+#> ./configure --prefix=/usr/local/pgpool
+#> make
+#> make install
+
+
+(2) pgpool-regclass
+#> cd ./sql/pgpool-regclass
+#> make
+#> make install
+#> psql -U postgres -f pgpool-regclass.sql template1
+#> psql -U postgres -f pgpool-regclass.sql postgres
+
+
+(3) lock script
+#> cd ..
+#> psql -U postgres -f insert_lock.sql template1
+
+
+(4) pgpool-recovery
+#> cd pgpool-recovery
+#> make
+#> make install
+#> psql -U postgres -f pgpool-recovery.sql template1
+#> psql -U postgres -f pgpool-recovery.sql postgres
+
+
+(5) permision change
+#> chown -R postgres:postgres /usr/local/pgpool
+#> chown -R postgres:postgres /usr/local/pgsql
+#> ldconfig
+
+
+
+5. Database update
+(1) 먼저 로딩된 DBMS 서버 다운.
+> su - postgres
+> /usr/local/pgsql9.1/bin/pg_ctl -D  /home/postgres/data9.1  stop
+> /usr/local/pgsql/bin/pg_ctl -D  /home/postgres/data  stop
+> /usr/local/pgsql/bin/pg_upgrade -d /home/postgres/data9.1 -D /home/postgres/data -b /usr/local/pgsql9.1/bin -B /usr/local/pgsql/bin
+
+
+(2) check collate (정렬 기준 확인).
+#> /etc/init.d/postgres start
+#> su - postgres
+
+> /usr/local/pgsql/bin/psql      (postgresql 접속)
+
+postgres=# \l    (역슬래쉬 소문자 L, Database 목록보기)
+
+메시지:
+                                  List of databases
+   Name    |  Owner   | Encoding |   Collate   |    Ctype    |   Access privileges
+-----------+----------+----------+-------------+-------------+-----------------------
+ postgres  | postgres | UTF8     | ko_KR.UTF-8 | ko_KR.UTF-8 |
+ template0 | postgres | UTF8     | ko_KR.UTF-8 | ko_KR.UTF-8 | =c/postgres          +
+           |          |          |             |             | postgres=CTc/postgres
+ template1 | postgres | UTF8     | ko_KR.UTF-8 | ko_KR.UTF-8 | =c/postgres          +
+           |          |          |             |             | postgres=CTc/postgres
+
+Collate 컬럼값 확인, "ko_KR.UTF-8" 성공.
+
+
+(3) create database nom.
+postgres=# create DATABASE nom;
+
+메시지:
+CREATE DATABASE
+
+
+(4) 확인.
+postgres=# \l
+                                  List of databases
+   Name    |  Owner   | Encoding |   Collate   |    Ctype    |   Access privileges
+-----------+----------+----------+-------------+-------------+-----------------------
+ nom       | postgres | UTF8     | ko_KR.UTF-8 | ko_KR.UTF-8 |
+ postgres  | postgres | UTF8     | ko_KR.UTF-8 | ko_KR.UTF-8 |
+ template0 | postgres | UTF8     | ko_KR.UTF-8 | ko_KR.UTF-8 | =c/postgres          +
+           |          |          |             |             | postgres=CTc/postgres
+ template1 | postgres | UTF8     | ko_KR.UTF-8 | ko_KR.UTF-8 | =c/postgres          +
+           |          |          |             |             | postgres=CTc/postgres
+(4 rows)
+
+postgres=# \q  (postgres 나옴)
+
+
+(5) new nom database data update. (이중화, slave 서버라면 생략한다)
+> /usr/local/pgsql/bin/psql -U postgres nom < nom.sql
+
+
+6. 설정 확인(copy)
+
+
+<만약 password가 걸려있다면, pg_hba.conf 에서 md5 -> trust 로 변경후 작업할 것>
+
+
+
+* pgbounce shutdown
+> su - postgres
+> psql -p 6432 -U pgbouncer pgbouncer
+=# shutdown;
+
+pgbouncer -R -d /usr/local/share/doc/pgbouncer/pgbouncer.ini

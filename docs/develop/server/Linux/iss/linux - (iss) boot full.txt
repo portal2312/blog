@@ -1,0 +1,42 @@
+﻿# **boot full**
+
+df -h  # check current boot size
+
+uname -a  # check using (new version) kernel
+
+...3.10.0-327.36.3.el7.x86_64...
+
+rpm -qa | grep kernel | sort  # show installed kernel list
+
+yum remove kernel-x.x.x-x.x.x86_64  # remove (old version) kernel
+
+df -h  # check current boot size
+
+yum upgrade
+
+
+- 버전별 커널 설치 개수 제한.
+
+vi /etc/yum.conf
+
+installonly_limit=2
+
+:wq
+
+
+/boot full
+
+# CentOS
+
+
+## package-cleanup
+
+su -
+vi /etc/vim.conf
+installonly_limit=2
+yum install yum-utils
+package-cleanup --oldkernels --count=2
+
+
+# *Reference.URL*
+http://a.zany.kr:9003/board/bView.asp?bCode=11&aCode=8172

@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>HTML Colors | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="HTML Colors" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="RGB, HEX 값으로 표현." />
+<meta property="og:description" content="RGB, HEX 값으로 표현." />
+<link rel="canonical" href="http://localhost:4000/blog/docs/develop/Frontend/HTML/HTML5/doc/tutorial/13_colors.html" />
+<meta property="og:url" content="http://localhost:4000/blog/docs/develop/Frontend/HTML/HTML5/doc/tutorial/13_colors.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-06T09:31:12+09:00" />
+<script type="application/ld+json">
+{"description":"RGB, HEX 값으로 표현.","headline":"HTML Colors","dateModified":"2019-11-06T09:31:12+09:00","datePublished":"2019-11-06T09:31:12+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/docs/develop/Frontend/HTML/HTML5/doc/tutorial/13_colors.html"},"url":"http://localhost:4000/blog/docs/develop/Frontend/HTML/HTML5/doc/tutorial/13_colors.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>HTML Colors</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#color-names">Color Names</a></li>
+<li class="toc-entry toc-h2"><a href="#background-color">Background Color</a></li>
+<li class="toc-entry toc-h2"><a href="#text-color">Text Color</a></li>
+<li class="toc-entry toc-h2"><a href="#border-color">Border Color</a></li>
+<li class="toc-entry toc-h2"><a href="#color-values">Color Values</a></li>
+<li class="toc-entry toc-h2"><a href="#rgb-value">RGB Value</a></li>
+<li class="toc-entry toc-h2"><a href="#hex-value">HEX Value</a></li>
+<li class="toc-entry toc-h2"><a href="#summary">Summary</a></li>
+<li class="toc-entry toc-h2"><a href="#hsl-value">HSL Value</a></li>
+<li class="toc-entry toc-h2"><a href="#rgba-value">RGBA Value</a></li>
+<li class="toc-entry toc-h2"><a href="#hsla-value">HSLA Value</a></li>
+<li class="toc-entry toc-h2"><a href="#reference">Reference</a></li>
+</ul><p>RGB, HEX 값으로 표현.</p>
+
+<hr>
+
+<h2 id="color-names">
+<a class="anchor" href="#color-names" aria-hidden="true"><span class="octicon octicon-link"></span></a>Color Names</h2>
+
+<p>HTML에서는 색상 이름을 사용하여 색상을 지정할 수 있습니다.</p>
+
+<p>red, green, blue, cyan, magenta, ... etc</p>
+
+<p>140 가지의 color name 을 지원.</p>
+
+<h2 id="background-color">
+<a class="anchor" href="#background-color" aria-hidden="true"><span class="octicon octicon-link"></span></a>Background Color</h2>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:DodgerBlue;"</span><span class="nt">&gt;</span>Hello World<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;p</span> <span class="na">style=</span><span class="s">"background-color:Tomato;"</span><span class="nt">&gt;</span>Lorem ipsum...<span class="nt">&lt;/p&gt;</span>
+</code></pre></div>
+<h2 id="text-color">
+<a class="anchor" href="#text-color" aria-hidden="true"><span class="octicon octicon-link"></span></a>Text Color</h2>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"color:Tomato;"</span><span class="nt">&gt;</span>Hello World<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;p</span> <span class="na">style=</span><span class="s">"color:DodgerBlue;"</span><span class="nt">&gt;</span>Lorem ipsum...<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;p</span> <span class="na">style=</span><span class="s">"color:MediumSeaGreen;"</span><span class="nt">&gt;</span>Ut wisi enim...<span class="nt">&lt;/p&gt;</span>
+</code></pre></div>
+<h2 id="border-color">
+<a class="anchor" href="#border-color" aria-hidden="true"><span class="octicon octicon-link"></span></a>Border Color</h2>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"border:2px solid Tomato;"</span><span class="nt">&gt;</span>Hello World<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"border:2px solid DodgerBlue;"</span><span class="nt">&gt;</span>Hello World<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"border:2px solid Violet;"</span><span class="nt">&gt;</span>Hello World<span class="nt">&lt;/h1&gt;</span>
+</code></pre></div>
+<h2 id="color-values">
+<a class="anchor" href="#color-values" aria-hidden="true"><span class="octicon octicon-link"></span></a>Color Values</h2>
+
+<p>HTML에서는 RGB 값, HEX 값, HSL 값, RGBA 값 및 HSLA 값을 사용하여 색상을 지정할 수도 있습니다.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:rgb(255, 99, 71);"</span><span class="nt">&gt;</span>...<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:#ff6347;"</span><span class="nt">&gt;</span>...<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:hsl(9, 100%, 64%);"</span><span class="nt">&gt;</span>...<span class="nt">&lt;/h1&gt;</span>
+
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:rgba(255, 99, 71, 0.5);"</span><span class="nt">&gt;</span>...<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:hsla(9, 100%, 64%, 0.5);"</span><span class="nt">&gt;</span>...<span class="nt">&lt;/h1&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="rgb-value">
+<a class="anchor" href="#rgb-value" aria-hidden="true"><span class="octicon octicon-link"></span></a>RGB Value</h2>
+
+<p>HTML에서는 다음 공식을 사용하여 RGB 값으로 색상을 지정할 수도 있습니다.</p>
+
+<p><strong>rgb(red, green, blue)</strong></p>
+
+<p>rgb (빨강, 녹색, 파랑) 각 매개 변수 (빨강, 녹색 및 파랑)는 0과 255 사이의 색상 강도를 정의합니다.</p>
+
+<p>예를 들어, 빨간색은 가장 높은 값 (255)으로 설정되고 다른 값은 0으로 설정되므로 rgb (255,0,0)는 빨간색으로 표시됩니다.</p>
+
+<hr>
+
+<h2 id="hex-value">
+<a class="anchor" href="#hex-value" aria-hidden="true"><span class="octicon octicon-link"></span></a>HEX Value</h2>
+
+<p>HTML에서는 #RRGGBB 형식의 16 진수 값을 사용하여 색상을 지정할 수도 있습니다.</p>
+
+<p><strong>#rrggbb</strong></p>
+
+<p>RR (빨강), GG (녹색) 및 BB (파랑)는 00에서 FF 사이의 16 진수 값입니다 (십진수 0-255와 동일).</p>
+
+<p>예를 들어 빨간색은 가장 높은 값 (FF)으로 설정되고 다른 값은 가장 낮은 값 (00)으로 설정
+되므로 # FF0000은 빨간색으로 표시됩니다.</p>
+
+<hr>
+
+<h2 id="summary">
+<a class="anchor" href="#summary" aria-hidden="true"><span class="octicon octicon-link"></span></a>Summary</h2>
+
+<table>
+<thead>
+<tr>
+<th style="text-align: left">name</th>
+<th style="text-align: left">RGB</th>
+<th style="text-align: left">HEX</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left">-</td>
+<td style="text-align: left">rgb(R, G, B)</td>
+<td style="text-align: left">#RRGGBB</td>
+</tr>
+<tr>
+<td style="text-align: left">red</td>
+<td style="text-align: left">rgb(255, 0, 0)</td>
+<td style="text-align: left">#FF0000</td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td style="text-align: left"></td>
+<td style="text-align: left">#FFFF00</td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td style="text-align: left"></td>
+<td style="text-align: left">#00FF00</td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td style="text-align: left"></td>
+<td style="text-align: left">#00FFFF</td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td style="text-align: left"></td>
+<td style="text-align: left">#0000FF</td>
+</tr>
+<tr>
+<td style="text-align: left">black</td>
+<td style="text-align: left">rgb(0, 0, 0)</td>
+<td style="text-align: left">#000000</td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td style="text-align: left">rgb(90, 90, 90)</td>
+<td style="text-align: left">#404040</td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td style="text-align: left">rgb(128, 128, 128)</td>
+<td style="text-align: left">#808080</td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td style="text-align: left">rgb(200, 200, 200)</td>
+<td style="text-align: left">#CCCCCC</td>
+</tr>
+<tr>
+<td style="text-align: left">white</td>
+<td style="text-align: left">rgb(255, 255, 255)</td>
+<td style="text-align: left">#FFFFFF</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="hsl-value">
+<a class="anchor" href="#hsl-value" aria-hidden="true"><span class="octicon octicon-link"></span></a>HSL Value</h2>
+
+<p>HTML에서는 색상, 채도 및 명도 (HSL)를 사용하여 다음과 같은 형식으로 색상을 지정할 수 있습니다.</p>
+
+<p><strong>hsl(hue, saturation, lightness)</strong></p>
+
+<p>Hue: 색조는 0~360 색상환에 대한 정도입니다. (0: red, 120: green, 240: blue)</p>
+
+<p>Saturation: 채도는 백분율 값이고, 0% 는 회색 음영을, 100 %는 풀 컬러입니다.</p>
+
+<p>Lightness: 밝기는 백분율 값이고, 0% 는 검은색, 50% 는 밝거나 어두움, 100% 는 흰색.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:hsl(0, 100%, 50%);"</span><span class="nt">&gt;</span>hsl(0, 100%, 50%)<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:hsl(240, 100%, 50%);"</span><span class="nt">&gt;</span>hsl(240, 100%, 50%)<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:hsl(147, 50%, 47%);"</span><span class="nt">&gt;</span>hsl(147, 50%, 47%)<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:hsl(300, 76%, 72%);"</span><span class="nt">&gt;</span>hsl(300, 76%, 72%)<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:hsl(39, 100%, 50%);"</span><span class="nt">&gt;</span>hsl(39, 100%, 50%)<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:hsl(248, 53%, 58%);"</span><span class="nt">&gt;</span>hsl(248, 53%, 58%)<span class="nt">&lt;/h1&gt;</span>
+</code></pre></div>
+<h2 id="rgba-value">
+<a class="anchor" href="#rgba-value" aria-hidden="true"><span class="octicon octicon-link"></span></a>RGBA Value</h2>
+
+<p>RGBA 색상 값은 색상의 불투명도를 지정하는 알파 채널이있는 RGB 색상 값의 확장입니다.</p>
+
+<p>RGBA 색상 값은 다음과 같이 지정됩니다.</p>
+
+<p><strong>rgba(red, green, blue, alpha)</strong></p>
+
+<p>알파 매개 변수는 0.0 (완전 투명)과 1.0 (투명하지 않음) 사이의 숫자입니다.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:rgba(255, 99, 71, 0);"</span><span class="nt">&gt;</span>rgba(255, 99, 71, 0)<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:rgba(255, 99, 71, 0.2);"</span><span class="nt">&gt;</span>rgba(255, 99, 71, 0.2)<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:rgba(255, 99, 71, 0.4);"</span><span class="nt">&gt;</span>rgba(255, 99, 71, 0.4)<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:rgba(255, 99, 71, 0.6);"</span><span class="nt">&gt;</span>rgba(255, 99, 71, 0.6)<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:rgba(255, 99, 71, 0.8);"</span><span class="nt">&gt;</span>rgba(255, 99, 71, 0.8)<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:rgba(255, 99, 71, 1);"</span><span class="nt">&gt;</span>rgba(255, 99, 71, 1)<span class="nt">&lt;/h1&gt;</span>
+</code></pre></div>
+<h2 id="hsla-value">
+<a class="anchor" href="#hsla-value" aria-hidden="true"><span class="octicon octicon-link"></span></a>HSLA Value</h2>
+
+<p>HSLA 색상 값은 색상의 불투명도를 지정하는 알파 채널이있는 HSL 색상 값의 확장입니다.</p>
+
+<p>HSLA 색상 값은 다음과 같이 지정됩니다.</p>
+
+<p><strong>hsla(hue, saturation, lightness, alpha)</strong></p>
+
+<p>알파 매개 변수는 0.0 (완전 투명)과 1.0 (투명하지 않음) 사이의 숫자입니다.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:hsla(9, 100%, 64%, 0);"</span><span class="nt">&gt;</span>hsla(9, 100%, 64%, 0)<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:hsla(9, 100%, 64%, 0.2);"</span><span class="nt">&gt;</span>hsla(9, 100%, 64%, 0.2)<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:hsla(9, 100%, 64%, 0.4);"</span><span class="nt">&gt;</span>hsla(9, 100%, 64%, 0.4)<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:hsla(9, 100%, 64%, 0.6);"</span><span class="nt">&gt;</span>hsla(9, 100%, 64%, 0.6)<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:hsla(9, 100%, 64%, 0.8);"</span><span class="nt">&gt;</span>hsla(9, 100%, 64%, 0.8)<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:hsla(9, 100%, 64%, 1);"</span><span class="nt">&gt;</span>hsla(9, 100%, 64%, 1)<span class="nt">&lt;/h1&gt;</span>
+</code></pre></div>
+<h2 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+<p><a href="https://www.w3schools.com/html/html_colors.asp">https://www.w3schools.com/html/html_colors.asp</a></p>
+
+  </div>
+
+<div>
+  <p>RGB, HEX 값으로 표현.</p>
+
+<hr>
+
+<h2 id="color-names">Color Names</h2>
+
+<p>HTML에서는 색상 이름을 사용하여 색상을 지정할 수 있습니다.</p>
+
+<p>red, green, blue, cyan, magenta, ... etc</p>
+
+<p>140 가지의 color name 을 지원.</p>
+
+<h2 id="background-color">Background Color</h2>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:DodgerBlue;"</span><span class="nt">&gt;</span>Hello World<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;p</span> <span class="na">style=</span><span class="s">"background-color:Tomato;"</span><span class="nt">&gt;</span>Lorem ipsum...<span class="nt">&lt;/p&gt;</span>
+</code></pre></div>
+<h2 id="text-color">Text Color</h2>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"color:Tomato;"</span><span class="nt">&gt;</span>Hello World<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;p</span> <span class="na">style=</span><span class="s">"color:DodgerBlue;"</span><span class="nt">&gt;</span>Lorem ipsum...<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;p</span> <span class="na">style=</span><span class="s">"color:MediumSeaGreen;"</span><span class="nt">&gt;</span>Ut wisi enim...<span class="nt">&lt;/p&gt;</span>
+</code></pre></div>
+<h2 id="border-color">Border Color</h2>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"border:2px solid Tomato;"</span><span class="nt">&gt;</span>Hello World<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"border:2px solid DodgerBlue;"</span><span class="nt">&gt;</span>Hello World<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"border:2px solid Violet;"</span><span class="nt">&gt;</span>Hello World<span class="nt">&lt;/h1&gt;</span>
+</code></pre></div>
+<h2 id="color-values">Color Values</h2>
+
+<p>HTML에서는 RGB 값, HEX 값, HSL 값, RGBA 값 및 HSLA 값을 사용하여 색상을 지정할 수도 있습니다.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:rgb(255, 99, 71);"</span><span class="nt">&gt;</span>...<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:#ff6347;"</span><span class="nt">&gt;</span>...<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:hsl(9, 100%, 64%);"</span><span class="nt">&gt;</span>...<span class="nt">&lt;/h1&gt;</span>
+
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:rgba(255, 99, 71, 0.5);"</span><span class="nt">&gt;</span>...<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:hsla(9, 100%, 64%, 0.5);"</span><span class="nt">&gt;</span>...<span class="nt">&lt;/h1&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="rgb-value">RGB Value</h2>
+
+<p>HTML에서는 다음 공식을 사용하여 RGB 값으로 색상을 지정할 수도 있습니다.</p>
+
+<p><strong>rgb(red, green, blue)</strong></p>
+
+<p>rgb (빨강, 녹색, 파랑) 각 매개 변수 (빨강, 녹색 및 파랑)는 0과 255 사이의 색상 강도를 정의합니다.</p>
+
+<p>예를 들어, 빨간색은 가장 높은 값 (255)으로 설정되고 다른 값은 0으로 설정되므로 rgb (255,0,0)는 빨간색으로 표시됩니다.</p>
+
+<hr>
+
+<h2 id="hex-value">HEX Value</h2>
+
+<p>HTML에서는 #RRGGBB 형식의 16 진수 값을 사용하여 색상을 지정할 수도 있습니다.</p>
+
+<p><strong>#rrggbb</strong></p>
+
+<p>RR (빨강), GG (녹색) 및 BB (파랑)는 00에서 FF 사이의 16 진수 값입니다 (십진수 0-255와 동일).</p>
+
+<p>예를 들어 빨간색은 가장 높은 값 (FF)으로 설정되고 다른 값은 가장 낮은 값 (00)으로 설정
+되므로 # FF0000은 빨간색으로 표시됩니다.</p>
+
+<hr>
+
+<h2 id="summary">Summary</h2>
+
+<table>
+<thead>
+<tr>
+<th style="text-align: left">name</th>
+<th style="text-align: left">RGB</th>
+<th style="text-align: left">HEX</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left">-</td>
+<td style="text-align: left">rgb(R, G, B)</td>
+<td style="text-align: left">#RRGGBB</td>
+</tr>
+<tr>
+<td style="text-align: left">red</td>
+<td style="text-align: left">rgb(255, 0, 0)</td>
+<td style="text-align: left">#FF0000</td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td style="text-align: left"></td>
+<td style="text-align: left">#FFFF00</td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td style="text-align: left"></td>
+<td style="text-align: left">#00FF00</td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td style="text-align: left"></td>
+<td style="text-align: left">#00FFFF</td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td style="text-align: left"></td>
+<td style="text-align: left">#0000FF</td>
+</tr>
+<tr>
+<td style="text-align: left">black</td>
+<td style="text-align: left">rgb(0, 0, 0)</td>
+<td style="text-align: left">#000000</td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td style="text-align: left">rgb(90, 90, 90)</td>
+<td style="text-align: left">#404040</td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td style="text-align: left">rgb(128, 128, 128)</td>
+<td style="text-align: left">#808080</td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td style="text-align: left">rgb(200, 200, 200)</td>
+<td style="text-align: left">#CCCCCC</td>
+</tr>
+<tr>
+<td style="text-align: left">white</td>
+<td style="text-align: left">rgb(255, 255, 255)</td>
+<td style="text-align: left">#FFFFFF</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="hsl-value">HSL Value</h2>
+
+<p>HTML에서는 색상, 채도 및 명도 (HSL)를 사용하여 다음과 같은 형식으로 색상을 지정할 수 있습니다.</p>
+
+<p><strong>hsl(hue, saturation, lightness)</strong></p>
+
+<p>Hue: 색조는 0~360 색상환에 대한 정도입니다. (0: red, 120: green, 240: blue)</p>
+
+<p>Saturation: 채도는 백분율 값이고, 0% 는 회색 음영을, 100 %는 풀 컬러입니다.</p>
+
+<p>Lightness: 밝기는 백분율 값이고, 0% 는 검은색, 50% 는 밝거나 어두움, 100% 는 흰색.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:hsl(0, 100%, 50%);"</span><span class="nt">&gt;</span>hsl(0, 100%, 50%)<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:hsl(240, 100%, 50%);"</span><span class="nt">&gt;</span>hsl(240, 100%, 50%)<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:hsl(147, 50%, 47%);"</span><span class="nt">&gt;</span>hsl(147, 50%, 47%)<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:hsl(300, 76%, 72%);"</span><span class="nt">&gt;</span>hsl(300, 76%, 72%)<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:hsl(39, 100%, 50%);"</span><span class="nt">&gt;</span>hsl(39, 100%, 50%)<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:hsl(248, 53%, 58%);"</span><span class="nt">&gt;</span>hsl(248, 53%, 58%)<span class="nt">&lt;/h1&gt;</span>
+</code></pre></div>
+<h2 id="rgba-value">RGBA Value</h2>
+
+<p>RGBA 색상 값은 색상의 불투명도를 지정하는 알파 채널이있는 RGB 색상 값의 확장입니다.</p>
+
+<p>RGBA 색상 값은 다음과 같이 지정됩니다.</p>
+
+<p><strong>rgba(red, green, blue, alpha)</strong></p>
+
+<p>알파 매개 변수는 0.0 (완전 투명)과 1.0 (투명하지 않음) 사이의 숫자입니다.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:rgba(255, 99, 71, 0);"</span><span class="nt">&gt;</span>rgba(255, 99, 71, 0)<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:rgba(255, 99, 71, 0.2);"</span><span class="nt">&gt;</span>rgba(255, 99, 71, 0.2)<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:rgba(255, 99, 71, 0.4);"</span><span class="nt">&gt;</span>rgba(255, 99, 71, 0.4)<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:rgba(255, 99, 71, 0.6);"</span><span class="nt">&gt;</span>rgba(255, 99, 71, 0.6)<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:rgba(255, 99, 71, 0.8);"</span><span class="nt">&gt;</span>rgba(255, 99, 71, 0.8)<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:rgba(255, 99, 71, 1);"</span><span class="nt">&gt;</span>rgba(255, 99, 71, 1)<span class="nt">&lt;/h1&gt;</span>
+</code></pre></div>
+<h2 id="hsla-value">HSLA Value</h2>
+
+<p>HSLA 색상 값은 색상의 불투명도를 지정하는 알파 채널이있는 HSL 색상 값의 확장입니다.</p>
+
+<p>HSLA 색상 값은 다음과 같이 지정됩니다.</p>
+
+<p><strong>hsla(hue, saturation, lightness, alpha)</strong></p>
+
+<p>알파 매개 변수는 0.0 (완전 투명)과 1.0 (투명하지 않음) 사이의 숫자입니다.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:hsla(9, 100%, 64%, 0);"</span><span class="nt">&gt;</span>hsla(9, 100%, 64%, 0)<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:hsla(9, 100%, 64%, 0.2);"</span><span class="nt">&gt;</span>hsla(9, 100%, 64%, 0.2)<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:hsla(9, 100%, 64%, 0.4);"</span><span class="nt">&gt;</span>hsla(9, 100%, 64%, 0.4)<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:hsla(9, 100%, 64%, 0.6);"</span><span class="nt">&gt;</span>hsla(9, 100%, 64%, 0.6)<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:hsla(9, 100%, 64%, 0.8);"</span><span class="nt">&gt;</span>hsla(9, 100%, 64%, 0.8)<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"background-color:hsla(9, 100%, 64%, 1);"</span><span class="nt">&gt;</span>hsla(9, 100%, 64%, 1)<span class="nt">&lt;/h1&gt;</span>
+</code></pre></div>
+<h2 id="reference">Reference</h2>
+
+<p><a href="https://www.w3schools.com/html/html_colors.asp" rel="nofollow" target="_blank">https://www.w3schools.com/html/html_colors.asp</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

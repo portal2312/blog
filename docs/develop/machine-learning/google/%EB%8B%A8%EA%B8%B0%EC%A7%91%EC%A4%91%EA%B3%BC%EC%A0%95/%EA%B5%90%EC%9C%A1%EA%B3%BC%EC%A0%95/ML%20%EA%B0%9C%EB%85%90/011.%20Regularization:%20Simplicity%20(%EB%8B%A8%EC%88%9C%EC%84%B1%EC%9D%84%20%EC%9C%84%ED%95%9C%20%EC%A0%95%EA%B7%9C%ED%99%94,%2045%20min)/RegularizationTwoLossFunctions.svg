@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   width="253.99948mm"
+   height="142.87469mm"
+   viewBox="0 0 253.99948 142.8747"
+   version="1.1"
+   id="svg8">
+  <desc>학습 세트에 대한 손실 함수는 점차 감소합니다. 이와 반대로 검증 세트에 대한 손실 함수는 감소했다가 다시 상승하기 시작합니다.</desc>
+  <defs
+     id="defs2">
+    <clipPath
+       id="clipPath47"
+       clipPathUnits="userSpaceOnUse">
+      <path
+         id="path45"
+         d="M 0,0 H 365760 V 205740 H 0 Z" />
+    </clipPath>
+  </defs>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <path
+     d="M 0,0 H 253.99949 V 142.87471 H 0 Z"
+     style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.00069444"
+     id="path53" />
+  <g
+     transform="matrix(6.9444304e-4,0,0,6.9444304e-4,0,0)"
+     id="g59">
+    <path
+       d="m 25755,2437.4365 c 5065.049,2441.124 20662.055,9091.1485 30390.297,14646.7435 9728.243,5555.595 20582.353,12373.74 27979.163,18686.828 7396.81,6313.09 10452.08,11363.282 16401.71,19191.707 5949.64,7828.425 13828.85,21212.975 19296.08,27778.845 5467.24,6565.885 7718.63,7912.75 13507.36,11616.424 5788.72,3703.676 13426.31,7322.846 21224.99,10605.606 7798.67,3282.77 15838.6,6649.85 25567.02,9090.98 9728.41,2441.13 21306.19,4208.9 32803.43,5555.77 11497.25,1346.87 20904.17,2188.68 36180.01,2525.44 15275.84,336.77 46229.24,-420.72 55475.1,-504.87"
+       style="fill:#000000;fill-opacity:0;fill-rule:evenodd;stroke:none"
+       id="path61" />
+  </g>
+  <path
+     id="path63"
+     style="fill:none;stroke:#1155cc;stroke-width:1.05833125;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:14.3355875;stroke-dasharray:none;stroke-opacity:1"
+     d="m 17.885383,1.692661 c 3.517388,1.695221 14.34862,6.313285 21.10433,10.171329 6.755712,3.858044 14.293273,8.592858 19.429936,12.976938 5.136662,4.384081 7.258374,7.891152 11.390054,13.327547 4.131685,5.436398 9.603348,14.731198 13.400027,19.290828 3.796688,4.55963 5.360149,5.49495 9.380093,8.06694 4.019937,2.57199 9.323807,5.0853 14.739547,7.36499 5.41573,2.2797 10.999,4.61794 17.75483,6.31317 6.75583,1.69523 14.79594,2.92284 22.78012,3.85817 7.98418,0.93532 14.51675,1.51991 25.12495,1.75377 10.60821,0.23387 32.10358,-0.29217 38.5243,-0.3506" />
+  <g
+     transform="matrix(6.9444304e-4,0,0,6.9444304e-4,0,0)"
+     id="g69">
+    <path
+       d="m 25755,246.4366 c 7779.31,3567.0737 35047.05,15322.3094 46675.84,21402.4424 11628.79,6080.133 15638.45,9646.871 23096.92,15078.351 7458.46,5431.485 13874.55,12322.176 21653.85,17510.54 7779.3,5188.367 16280.47,9566.168 25021.99,13619.644 8741.51,4053.476 16921.17,7620.716 27427.09,10701.216 10505.91,3080.51 26385.53,6403.79 35608.39,7781.8 9222.87,1378 12751.52,1053.68 19728.78,486.234 6977.28,-567.444 14435.91,-2188.574 22134.87,-3890.898 7698.97,-1702.326 16600.49,-4134.18 24058.97,-6323.076 7458.46,-2188.91 16200.6,-5188.87 20691.8,-6810.33 4491.2,-1621.46 5212.72,-2432.02 6255.25,-2918.42"
+       style="fill:#000000;fill-opacity:0;fill-rule:evenodd;stroke:none"
+       id="path71" />
+  </g>
+  <path
+     id="path73"
+     style="fill:none;stroke:#cc0000;stroke-width:1.05833125;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:14.3355875;stroke-dasharray:none;stroke-opacity:1"
+     d="M 17.885383,0.17113604 C 23.287672,2.648266 42.223564,10.811607 50.299095,15.033913 c 8.075532,4.222306 10.860013,6.699203 16.039496,10.471056 5.179475,3.771857 9.635084,8.55705 15.037365,12.160073 5.402281,3.603021 11.305859,6.643161 17.376347,9.458071 6.070477,2.8149 11.750787,5.29215 19.046547,7.43138 7.29576,2.13924 18.32325,4.44707 24.728,5.40402 6.40476,0.95694 8.8552,0.73172 13.70051,0.33766 4.84533,-0.39406 10.02492,-1.51984 15.37141,-2.70201 5.3465,-1.18217 11.5281,-2.87095 16.70758,-4.39101 5.17948,-1.52008 11.2504,-3.60338 14.36928,-4.72939 3.11888,-1.12601 3.61994,-1.6889 4.34392,-2.02668" />
+  <g
+     transform="matrix(6.9444304e-4,0,0,6.9444304e-4,0,0)"
+     id="g79">
+    <path
+       d="m 64305,75594 h 49608 V 87834 H 64305 Z"
+       style="fill:#000000;fill-opacity:0;fill-rule:evenodd;stroke:none"
+       id="path81" />
+  </g>
+  <g
+     transform="matrix(6.9444304e-4,0,0,6.9444304e-4,0,0)"
+     id="g99">
+    <path
+       d="m 171677,63402 h 61860 v 13512 h -61860 z"
+       style="fill:#000000;fill-opacity:0;fill-rule:evenodd;stroke:none"
+       id="path101" />
+  </g>
+  <g
+     transform="matrix(6.9444304e-4,0,0,6.9444304e-4,0,0)"
+     id="g119">
+    <path
+       d="M 23127.95,126593 H 314307.94"
+       style="fill:#000000;fill-opacity:0;fill-rule:evenodd;stroke:none"
+       id="path121" />
+  </g>
+  <path
+     id="path123"
+     style="fill:none;stroke:#595959;stroke-width:0.79374838;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:14.3355875;stroke-dasharray:none;stroke-opacity:1"
+     d="M 16.061047,87.911623 H 213.50647" />
+  <path
+     id="path125"
+     style="fill:#595959;fill-opacity:1;fill-rule:evenodd;stroke:#595959;stroke-width:0.79374838;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:11.47371292;stroke-dasharray:none;stroke-opacity:1"
+     d="m 213.50647,89.222683 3.6021,-1.31106 -3.6021,-1.31106 z" />
+  <g
+     transform="matrix(6.9444304e-4,0,0,6.9444304e-4,0,0)"
+     id="g131">
+    <path
+       d="m 143256,128486 h 39600 v 13512 h -39600 z"
+       style="fill:#000000;fill-opacity:0;fill-rule:evenodd;stroke:none"
+       id="path133" />
+  </g>
+  <g
+     transform="matrix(6.9444304e-4,0,0,6.9444304e-4,0,0)"
+     id="g151">
+    <path
+       d="M 23439.205,126684 V 0"
+       style="fill:#000000;fill-opacity:0;fill-rule:evenodd;stroke:none"
+       id="path153" />
+  </g>
+  <path
+     id="path155"
+     style="fill:none;stroke:#000000;stroke-width:0.79374838;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:14.3355875;stroke-dasharray:none;stroke-opacity:1"
+     d="M 16.277196,87.974823 V 4.76249" />
+  <path
+     id="path157"
+     style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.79374838;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:11.47371292;stroke-dasharray:none;stroke-opacity:1"
+     d="M 17.588255,4.76249 16.277196,1.160383 14.966136,4.76249 Z" />
+  <g
+     transform="matrix(6.9444304e-4,0,0,6.9444304e-4,0,0)"
+     id="g163">
+    <path
+       d="M 0,55328 H 22620 V 68840 H 0 Z"
+       style="fill:#000000;fill-opacity:0;fill-rule:evenodd;stroke:none"
+       id="path165" />
+  </g>
+  <text
+     id="text3938"
+     y="42.687973"
+     x="1.2906522"
+     style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+     xml:space="preserve"><tspan
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611107px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+       y="42.687973"
+       x="1.2906522"
+       id="tspan3936">손실</tspan></text>
+  <text
+     id="text3942"
+     y="54.787819"
+     x="46.786079"
+     style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+     xml:space="preserve"><tspan
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611107px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#0000ff;stroke-width:0.26458332"
+       y="54.787819"
+       x="46.786079"
+       id="tspan3940">테스트 세트</tspan></text>
+  <text
+     id="text3946"
+     y="46.237259"
+     x="128.25838"
+     style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+     xml:space="preserve"><tspan
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611107px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ff0000;stroke-width:0.26458332"
+       y="46.237259"
+       x="128.25838"
+       id="tspan3944">학습 세트</tspan></text>
+  <text
+     id="text3950"
+     y="95.281982"
+     x="109.70528"
+     style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+     xml:space="preserve"><tspan
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611107px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+       y="95.281982"
+       x="109.70528"
+       id="tspan3948">학습 반복</tspan></text>
+</svg>

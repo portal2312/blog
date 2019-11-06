@@ -1,0 +1,9 @@
+tcpdump
+
+tcpdump -i eht0 -w tcpdump.log
+
+[option]
+-c È½¼ö : Ä¸ÃÄ È½¼ö ¸¸ ÀúÀå
+
+
+tcpdump -i eht0 -w tcpdump.log udp port 22 and host 1.1.1.1

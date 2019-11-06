@@ -1,0 +1,5 @@
+http://meyerweb.com/eric/tools/dencoder/
+
+html 에서 url 로 통신시 특수기호 처리하기
+
+http://kjcc2.tistory.com/2045

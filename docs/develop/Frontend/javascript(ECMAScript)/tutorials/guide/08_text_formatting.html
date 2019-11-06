@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Text formatting(텍스트 서식) | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Text formatting(텍스트 서식)" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="문자열" />
+<meta property="og:description" content="문자열" />
+<link rel="canonical" href="http://localhost:4000/blog/docs/develop/Frontend/javascript(ECMAScript)/tutorials/guide/08_text_formatting.html" />
+<meta property="og:url" content="http://localhost:4000/blog/docs/develop/Frontend/javascript(ECMAScript)/tutorials/guide/08_text_formatting.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-06T09:31:12+09:00" />
+<script type="application/ld+json">
+{"description":"문자열","headline":"Text formatting(텍스트 서식)","dateModified":"2019-11-06T09:31:12+09:00","datePublished":"2019-11-06T09:31:12+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/docs/develop/Frontend/javascript(ECMAScript)/tutorials/guide/08_text_formatting.html"},"url":"http://localhost:4000/blog/docs/develop/Frontend/javascript(ECMAScript)/tutorials/guide/08_text_formatting.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Text formatting(텍스트 서식)</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#part-37874df226e8325">문자열</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#part-f89ce964c802f021">문자열 리터럴</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#16">16진수 이스케이프 시퀀스</a></li>
+<li class="toc-entry toc-h4"><a href="#part-5c7b59f7d25670fd">유니코드 이스케이프 시퀀스</a></li>
+<li class="toc-entry toc-h4"><a href="#part-68ad77fe4fd78372">유니코드 코드 포인트 이스케이프</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#part-63efbbeefe0a0a2d">문자열 개체</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#part-f89ce97b52f29ad3">문자열 메서드</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#part-c03e0af53bcc817b">다중 선 템플릿 문자열</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#part-7286e5c704b24810">다중 선</a></li>
+<li class="toc-entry toc-h4"><a href="#part-378764aadf6e22b">포함식</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#internationalization">Internationalization(국제화)</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#part-87892eeb55e1f097">날짜와 시간서식</a></li>
+<li class="toc-entry toc-h3"><a href="#part-3ff6cf5901d9463e">숫자 서식</a></li>
+<li class="toc-entry toc-h3"><a href="#part-6543a26690d">조합</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#part-94f0c68c9d5456da">정규 표현식</a></li>
+<li class="toc-entry toc-h2"><a href="#reference">Reference</a></li>
+</ul><h2 id="part-37874df226e8325">
+<a class="anchor" href="#part-37874df226e8325" aria-hidden="true"><span class="octicon octicon-link"></span></a>문자열</h2>
+
+<h3 id="part-f89ce964c802f021">
+<a class="anchor" href="#part-f89ce964c802f021" aria-hidden="true"><span class="octicon octicon-link"></span></a>문자열 리터럴</h3>
+
+<h4 id="16">
+<a class="anchor" href="#16" aria-hidden="true"><span class="octicon octicon-link"></span></a>16진수 이스케이프 시퀀스</h4>
+
+<h4 id="part-5c7b59f7d25670fd">
+<a class="anchor" href="#part-5c7b59f7d25670fd" aria-hidden="true"><span class="octicon octicon-link"></span></a>유니코드 이스케이프 시퀀스</h4>
+
+<h4 id="part-68ad77fe4fd78372">
+<a class="anchor" href="#part-68ad77fe4fd78372" aria-hidden="true"><span class="octicon octicon-link"></span></a>유니코드 코드 포인트 이스케이프</h4>
+
+<p>ECMAScript 6의 새로운 기능. 유니코드 코드 포인트 이스케이프를 가지고,  최대 0x10FFFF로 유니코드 코드 포인트를 사용할 수 있도록 모든 문자는 16진수를 사용하여 이스케이프할 수있습니다. 간단한 유니코드 이스케이프를 가지고, 동일함을 달성하기 위해 별도로 대용의 반쪽을 쓰도록하는 것이 필요합니다.</p>
+
+<p>String.fromCodePoint()나 String.prototype.codePointAt()를 참고하세요.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="dl">'</span><span class="se">\</span><span class="s1">u{2F804}</span><span class="dl">'</span>
+
+<span class="c1">// the same with simple Unicode escapes</span>
+<span class="dl">'</span><span class="se">\</span><span class="s1">uD87E</span><span class="se">\</span><span class="s1">uDC04</span><span class="dl">'</span>
+</code></pre></div>
+<h3 id="part-63efbbeefe0a0a2d">
+<a class="anchor" href="#part-63efbbeefe0a0a2d" aria-hidden="true"><span class="octicon octicon-link"></span></a>문자열 개체</h3>
+
+<p>문자열 개체는 문자열 기본 데이터 형식의 래퍼입니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">s</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">String</span><span class="p">(</span><span class="dl">"</span><span class="s2">foo</span><span class="dl">"</span><span class="p">);</span> <span class="c1">// Creates a String object</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span> <span class="c1">// Displays: { '0': 'f', '1': 'o', '2': 'o'}</span>
+<span class="k">typeof</span> <span class="nx">s</span><span class="p">;</span> <span class="c1">// Returns 'object'</span>
+</code></pre></div>
+<p>특별히 문자열 개체를 사용할 필요가 없지 않는 한, 문자열 개체는 직관에 반하는 행동을 할 수 있기 때문에 여러분은 문자열 리터럴을 사용해야합니다. 예를들어:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">s1</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">2 + 2</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// Creates a string literal value</span>
+<span class="kd">var</span> <span class="nx">s2</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">String</span><span class="p">(</span><span class="dl">"</span><span class="s2">2 + 2</span><span class="dl">"</span><span class="p">);</span> <span class="c1">// Creates a String object</span>
+<span class="nb">eval</span><span class="p">(</span><span class="nx">s1</span><span class="p">);</span> <span class="c1">// Returns the number 4</span>
+<span class="nb">eval</span><span class="p">(</span><span class="nx">s2</span><span class="p">);</span> <span class="c1">// Returns the string "2 + 2"</span>
+<span class="nb">eval</span><span class="p">(</span><span class="nx">s2</span><span class="p">.</span><span class="nx">valueOf</span><span class="p">());</span> <span class="c1">// Returns the number 4</span>
+</code></pre></div>
+<h4 id="part-f89ce97b52f29ad3">
+<a class="anchor" href="#part-f89ce97b52f29ad3" aria-hidden="true"><span class="octicon octicon-link"></span></a>문자열 메서드</h4>
+
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>charAt, charCodeAt, codePointAt</td>
+<td>문자열에서 지정된 위치에 있는 문자나 문자 코드를 반환합니다.</td>
+</tr>
+<tr>
+<td>indexOf, lastIndexOf</td>
+<td>문자열에서 지정된 부분 문자열의 위치나 지정된 부분 문자열의 마지막 위치를 각각 반환합니다.</td>
+</tr>
+<tr>
+<td>startsWith, endsWith, includes</td>
+<td>문자열 시작하고, 끝나고, 지정된 문자열을 포함하는지의 여부를 반환합니다.</td>
+</tr>
+<tr>
+<td>concat</td>
+<td>두 문자열의 텍스트를 결합하고 새로운 문자열을 반환합니다.</td>
+</tr>
+<tr>
+<td>fromCharCode, fromCodePoint</td>
+<td>유니코드 값의 지정된 시퀀스로부터 문자열을 구축합니다. 문자열 인스턴스가 아닌 문자열 클래스의 메서드입니다.</td>
+</tr>
+<tr>
+<td>split</td>
+<td>부분 문자열로 문자열을 분리하여 문자열 배열로 문자열 개체를 분할합니다.</td>
+</tr>
+<tr>
+<td>slice</td>
+<td>문자열의 한 부분을 추출하고 새 문자열을 반환합니다.</td>
+</tr>
+<tr>
+<td>substring, substr</td>
+<td>어느 시작 및 종료 인덱스 또는 시작 인덱스 및 길이를 지정하여, 문자열의 지정된 일부를 반환합니다.</td>
+</tr>
+<tr>
+<td>match, replace, search</td>
+<td>정규 표현식으로 작업합니다.</td>
+</tr>
+<tr>
+<td>toLowerCase, toUpperCase</td>
+<td>.모든 소문자 또는 대문자에서 각각 문자열을 반환합니다.</td>
+</tr>
+<tr>
+<td>normalize</td>
+<td>호출 문자열 값의 유니 코드 표준화 양식을 반환합니다.</td>
+</tr>
+<tr>
+<td>repeat</td>
+<td>주어진 회를 반복하는 개체 요소로 이루어진 문자열을 반환합니다.</td>
+</tr>
+<tr>
+<td>trim</td>
+<td>문자열의 시작과 끝에서 공백을 자릅니다.</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="part-c03e0af53bcc817b">
+<a class="anchor" href="#part-c03e0af53bcc817b" aria-hidden="true"><span class="octicon octicon-link"></span></a>다중 선 템플릿 문자열</h3>
+
+<p>템플릿 문자열은 포함 식을 용납하는 문자열 리터럴입니다. 여러분은 그것들과 함께 다중 선 문자열 및 문자열 보간 기능을 사용할 수 있습니다.</p>
+
+<p>템플릿 문자열은 작은따옴표나 큰따옴표 대신에 back-tick (` `) (grave accent)문자로 묶습니다. 템플릿 문자열은 자리 표시자를 포함 할 수 있습니다. 이들은 달러 기호와 중괄호로 표시됩니다.  (${expression})</p>
+
+<h4 id="part-7286e5c704b24810">
+<a class="anchor" href="#part-7286e5c704b24810" aria-hidden="true"><span class="octicon octicon-link"></span></a>다중 선</h4>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">string text line 1</span><span class="se">\n\</span><span class="s2">
+string text line 2</span><span class="dl">"</span><span class="p">);</span>
+<span class="c1">// "string text line 1</span>
+<span class="c1">// string text line 2"</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`string text line 1
+string text line 2`</span><span class="p">);</span>
+<span class="c1">// "string text line 1</span>
+<span class="c1">// string text line 2"</span>
+</code></pre></div>
+<h4 id="part-378764aadf6e22b">
+<a class="anchor" href="#part-378764aadf6e22b" aria-hidden="true"><span class="octicon octicon-link"></span></a>포함식</h4>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Fifteen is </span><span class="dl">"</span> <span class="o">+</span> <span class="p">(</span><span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">)</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> and</span><span class="se">\n</span><span class="s2">not </span><span class="dl">"</span> <span class="o">+</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">)</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">.</span><span class="dl">"</span><span class="p">);</span>
+<span class="c1">// "Fifteen is 15 and</span>
+<span class="c1">// not 20."</span>
+</code></pre></div>
+<p>이제, 템플릿 문자열을 가지고, 여러분은 읽기와 같이 대체를 만드는 syntactic sugar의 사용을 할 수 있습니다:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`Fifteen is </span><span class="p">${</span><span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">}</span><span class="s2"> and\nnot </span><span class="p">${</span><span class="mi">2</span> <span class="o">*</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">}</span><span class="s2">.`</span><span class="p">);</span>
+<span class="c1">// "Fifteen is 15 and</span>
+<span class="c1">// not 20."</span>
+</code></pre></div>
+<p>자세한 내용은 JavaScript 참조에서 <a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Template_literals">템플릿 문자열</a>에 대해 읽어보세요.</p>
+
+<hr>
+
+<h2 id="internationalization">
+<a class="anchor" href="#internationalization" aria-hidden="true"><span class="octicon octicon-link"></span></a>Internationalization(국제화)</h2>
+
+<p>Intl 개체는  ECMA스크립트 국제 API에 언어와 문자열과 숫자서식과 날짜와 시간서식을 제공하는 명칭공간입니다.  Collator, NumberFormat, 와 DateTimeFormat 개체들을 위한 생성자들은  Intl 개체의 특성들입니다.</p>
+
+<h3 id="part-87892eeb55e1f097">
+<a class="anchor" href="#part-87892eeb55e1f097" aria-hidden="true"><span class="octicon octicon-link"></span></a>날짜와 시간서식</h3>
+
+<p>DateTimeFormat 개체는 날짜와 시간을 서식하기에 유용합니다. 다음 코드는 미국에서 쓰이는 영어로 날짜를 서식합니다. (결과는 다른 시간대와 다릅니다)</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">msPerDay</span> <span class="o">=</span> <span class="mi">24</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">;</span>
+
+<span class="c1">// July 17, 2014 00:00:00 UTC.</span>
+<span class="kd">var</span> <span class="nx">july172014</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nx">msPerDay</span> <span class="o">*</span> <span class="p">(</span><span class="mi">44</span> <span class="o">*</span> <span class="mi">365</span> <span class="o">+</span> <span class="mi">11</span> <span class="o">+</span> <span class="mi">197</span><span class="p">));</span>
+
+<span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span> <span class="na">year</span><span class="p">:</span> <span class="dl">"</span><span class="s2">2-digit</span><span class="dl">"</span><span class="p">,</span> <span class="na">month</span><span class="p">:</span> <span class="dl">"</span><span class="s2">2-digit</span><span class="dl">"</span><span class="p">,</span> <span class="na">day</span><span class="p">:</span> <span class="dl">"</span><span class="s2">2-digit</span><span class="dl">"</span><span class="p">,</span>
+                <span class="na">hour</span><span class="p">:</span> <span class="dl">"</span><span class="s2">2-digit</span><span class="dl">"</span><span class="p">,</span> <span class="na">minute</span><span class="p">:</span> <span class="dl">"</span><span class="s2">2-digit</span><span class="dl">"</span><span class="p">,</span> <span class="na">timeZoneName</span><span class="p">:</span> <span class="dl">"</span><span class="s2">short</span><span class="dl">"</span> <span class="p">};</span>
+<span class="kd">var</span> <span class="nx">americanDateTime</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Intl</span><span class="p">.</span><span class="nx">DateTimeFormat</span><span class="p">(</span><span class="dl">"</span><span class="s2">en-US</span><span class="dl">"</span><span class="p">,</span> <span class="nx">options</span><span class="p">).</span><span class="nx">format</span><span class="p">;</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">americanDateTime</span><span class="p">(</span><span class="nx">july172014</span><span class="p">));</span> <span class="c1">// 07/16/14, 5:00 PM PDT</span>
+</code></pre></div>
+<h3 id="part-3ff6cf5901d9463e">
+<a class="anchor" href="#part-3ff6cf5901d9463e" aria-hidden="true"><span class="octicon octicon-link"></span></a>숫자 서식</h3>
+
+<p>NumberFormat개체는 통화를 위해 숫자를 서식하는것에 대해 유용하다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">gasPrice</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Intl</span><span class="p">.</span><span class="nx">NumberFormat</span><span class="p">(</span><span class="dl">"</span><span class="s2">en-US</span><span class="dl">"</span><span class="p">,</span>
+                        <span class="p">{</span> <span class="na">style</span><span class="p">:</span> <span class="dl">"</span><span class="s2">currency</span><span class="dl">"</span><span class="p">,</span> <span class="na">currency</span><span class="p">:</span> <span class="dl">"</span><span class="s2">USD</span><span class="dl">"</span><span class="p">,</span>
+                          <span class="na">minimumFractionDigits</span><span class="p">:</span> <span class="mi">3</span> <span class="p">});</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">gasPrice</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="mf">5.259</span><span class="p">));</span> <span class="c1">// $5.259</span>
+
+<span class="kd">var</span> <span class="nx">hanDecimalRMBInChina</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Intl</span><span class="p">.</span><span class="nx">NumberFormat</span><span class="p">(</span><span class="dl">"</span><span class="s2">zh-CN-u-nu-hanidec</span><span class="dl">"</span><span class="p">,</span>
+                        <span class="p">{</span> <span class="na">style</span><span class="p">:</span> <span class="dl">"</span><span class="s2">currency</span><span class="dl">"</span><span class="p">,</span> <span class="na">currency</span><span class="p">:</span> <span class="dl">"</span><span class="s2">CNY</span><span class="dl">"</span> <span class="p">});</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">hanDecimalRMBInChina</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="mf">1314.25</span><span class="p">));</span> <span class="c1">// ￥ 一,三一四.二五</span>
+</code></pre></div>
+<h3 id="part-6543a26690d">
+<a class="anchor" href="#part-6543a26690d" aria-hidden="true"><span class="octicon octicon-link"></span></a>조합</h3>
+
+<p>Collator개체는 문자열을 비교하고 구분하는 것에 대해 유용합니다.</p>
+
+<p>그 <a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Intl">Intl</a>API에 대한 자세한 내용은 자바스크립트 국제화 API소개를 참조하세요.</p>
+
+<hr>
+
+<h2 id="part-94f0c68c9d5456da">
+<a class="anchor" href="#part-94f0c68c9d5456da" aria-hidden="true"><span class="octicon octicon-link"></span></a>정규 표현식</h2>
+
+<p>Regular expressions은  패턴 문자열에서 문자 조합을 일치시키는 데 사용합니다.</p>
+
+<p>이 표현들은 복잡하고 강력하고 다음 장에서 설명 할것입니다. 여기서 규칙적인표현에 대해 더 살펴보아라:</p>
+
+<ul>
+<li>자바스크립트 가이드에서 <a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/%EC%A0%95%EA%B7%9C%EC%8B%9D">정규 표현식</a>.</li>
+<li>
+<a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a> 참조문서.</li>
+</ul>
+
+<hr>
+
+<h2 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+<p><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/Text_formatting">https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/Text_formatting</a></p>
+
+  </div>
+
+<div>
+  <h2 id="part-37874df226e8325">문자열</h2>
+
+<h3 id="part-f89ce964c802f021">문자열 리터럴</h3>
+
+<h4 id="16">16진수 이스케이프 시퀀스</h4>
+
+<h4 id="part-5c7b59f7d25670fd">유니코드 이스케이프 시퀀스</h4>
+
+<h4 id="part-68ad77fe4fd78372">유니코드 코드 포인트 이스케이프</h4>
+
+<p>ECMAScript 6의 새로운 기능. 유니코드 코드 포인트 이스케이프를 가지고,  최대 0x10FFFF로 유니코드 코드 포인트를 사용할 수 있도록 모든 문자는 16진수를 사용하여 이스케이프할 수있습니다. 간단한 유니코드 이스케이프를 가지고, 동일함을 달성하기 위해 별도로 대용의 반쪽을 쓰도록하는 것이 필요합니다.</p>
+
+<p>String.fromCodePoint()나 String.prototype.codePointAt()를 참고하세요.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="dl">'</span><span class="se">\</span><span class="s1">u{2F804}</span><span class="dl">'</span>
+
+<span class="c1">// the same with simple Unicode escapes</span>
+<span class="dl">'</span><span class="se">\</span><span class="s1">uD87E</span><span class="se">\</span><span class="s1">uDC04</span><span class="dl">'</span>
+</code></pre></div>
+<h3 id="part-63efbbeefe0a0a2d">문자열 개체</h3>
+
+<p>문자열 개체는 문자열 기본 데이터 형식의 래퍼입니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">s</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">String</span><span class="p">(</span><span class="dl">"</span><span class="s2">foo</span><span class="dl">"</span><span class="p">);</span> <span class="c1">// Creates a String object</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span> <span class="c1">// Displays: { '0': 'f', '1': 'o', '2': 'o'}</span>
+<span class="k">typeof</span> <span class="nx">s</span><span class="p">;</span> <span class="c1">// Returns 'object'</span>
+</code></pre></div>
+<p>특별히 문자열 개체를 사용할 필요가 없지 않는 한, 문자열 개체는 직관에 반하는 행동을 할 수 있기 때문에 여러분은 문자열 리터럴을 사용해야합니다. 예를들어:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">s1</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">2 + 2</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// Creates a string literal value</span>
+<span class="kd">var</span> <span class="nx">s2</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">String</span><span class="p">(</span><span class="dl">"</span><span class="s2">2 + 2</span><span class="dl">"</span><span class="p">);</span> <span class="c1">// Creates a String object</span>
+<span class="nb">eval</span><span class="p">(</span><span class="nx">s1</span><span class="p">);</span> <span class="c1">// Returns the number 4</span>
+<span class="nb">eval</span><span class="p">(</span><span class="nx">s2</span><span class="p">);</span> <span class="c1">// Returns the string "2 + 2"</span>
+<span class="nb">eval</span><span class="p">(</span><span class="nx">s2</span><span class="p">.</span><span class="nx">valueOf</span><span class="p">());</span> <span class="c1">// Returns the number 4</span>
+</code></pre></div>
+<h4 id="part-f89ce97b52f29ad3">문자열 메서드</h4>
+
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>charAt, charCodeAt, codePointAt</td>
+<td>문자열에서 지정된 위치에 있는 문자나 문자 코드를 반환합니다.</td>
+</tr>
+<tr>
+<td>indexOf, lastIndexOf</td>
+<td>문자열에서 지정된 부분 문자열의 위치나 지정된 부분 문자열의 마지막 위치를 각각 반환합니다.</td>
+</tr>
+<tr>
+<td>startsWith, endsWith, includes</td>
+<td>문자열 시작하고, 끝나고, 지정된 문자열을 포함하는지의 여부를 반환합니다.</td>
+</tr>
+<tr>
+<td>concat</td>
+<td>두 문자열의 텍스트를 결합하고 새로운 문자열을 반환합니다.</td>
+</tr>
+<tr>
+<td>fromCharCode, fromCodePoint</td>
+<td>유니코드 값의 지정된 시퀀스로부터 문자열을 구축합니다. 문자열 인스턴스가 아닌 문자열 클래스의 메서드입니다.</td>
+</tr>
+<tr>
+<td>split</td>
+<td>부분 문자열로 문자열을 분리하여 문자열 배열로 문자열 개체를 분할합니다.</td>
+</tr>
+<tr>
+<td>slice</td>
+<td>문자열의 한 부분을 추출하고 새 문자열을 반환합니다.</td>
+</tr>
+<tr>
+<td>substring, substr</td>
+<td>어느 시작 및 종료 인덱스 또는 시작 인덱스 및 길이를 지정하여, 문자열의 지정된 일부를 반환합니다.</td>
+</tr>
+<tr>
+<td>match, replace, search</td>
+<td>정규 표현식으로 작업합니다.</td>
+</tr>
+<tr>
+<td>toLowerCase, toUpperCase</td>
+<td>.모든 소문자 또는 대문자에서 각각 문자열을 반환합니다.</td>
+</tr>
+<tr>
+<td>normalize</td>
+<td>호출 문자열 값의 유니 코드 표준화 양식을 반환합니다.</td>
+</tr>
+<tr>
+<td>repeat</td>
+<td>주어진 회를 반복하는 개체 요소로 이루어진 문자열을 반환합니다.</td>
+</tr>
+<tr>
+<td>trim</td>
+<td>문자열의 시작과 끝에서 공백을 자릅니다.</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="part-c03e0af53bcc817b">다중 선 템플릿 문자열</h3>
+
+<p>템플릿 문자열은 포함 식을 용납하는 문자열 리터럴입니다. 여러분은 그것들과 함께 다중 선 문자열 및 문자열 보간 기능을 사용할 수 있습니다.</p>
+
+<p>템플릿 문자열은 작은따옴표나 큰따옴표 대신에 back-tick (` `) (grave accent)문자로 묶습니다. 템플릿 문자열은 자리 표시자를 포함 할 수 있습니다. 이들은 달러 기호와 중괄호로 표시됩니다.  (${expression})</p>
+
+<h4 id="part-7286e5c704b24810">다중 선</h4>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">string text line 1</span><span class="se">\n\</span><span class="s2">
+string text line 2</span><span class="dl">"</span><span class="p">);</span>
+<span class="c1">// "string text line 1</span>
+<span class="c1">// string text line 2"</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`string text line 1
+string text line 2`</span><span class="p">);</span>
+<span class="c1">// "string text line 1</span>
+<span class="c1">// string text line 2"</span>
+</code></pre></div>
+<h4 id="part-378764aadf6e22b">포함식</h4>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Fifteen is </span><span class="dl">"</span> <span class="o">+</span> <span class="p">(</span><span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">)</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> and</span><span class="se">\n</span><span class="s2">not </span><span class="dl">"</span> <span class="o">+</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">)</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">.</span><span class="dl">"</span><span class="p">);</span>
+<span class="c1">// "Fifteen is 15 and</span>
+<span class="c1">// not 20."</span>
+</code></pre></div>
+<p>이제, 템플릿 문자열을 가지고, 여러분은 읽기와 같이 대체를 만드는 syntactic sugar의 사용을 할 수 있습니다:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`Fifteen is </span><span class="p">${</span><span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">}</span><span class="s2"> and\nnot </span><span class="p">${</span><span class="mi">2</span> <span class="o">*</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">}</span><span class="s2">.`</span><span class="p">);</span>
+<span class="c1">// "Fifteen is 15 and</span>
+<span class="c1">// not 20."</span>
+</code></pre></div>
+<p>자세한 내용은 JavaScript 참조에서 <a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Template_literals" rel="nofollow" target="_blank">템플릿 문자열</a>에 대해 읽어보세요.</p>
+
+<hr>
+
+<h2 id="internationalization">Internationalization(국제화)</h2>
+
+<p>Intl 개체는  ECMA스크립트 국제 API에 언어와 문자열과 숫자서식과 날짜와 시간서식을 제공하는 명칭공간입니다.  Collator, NumberFormat, 와 DateTimeFormat 개체들을 위한 생성자들은  Intl 개체의 특성들입니다.</p>
+
+<h3 id="part-87892eeb55e1f097">날짜와 시간서식</h3>
+
+<p>DateTimeFormat 개체는 날짜와 시간을 서식하기에 유용합니다. 다음 코드는 미국에서 쓰이는 영어로 날짜를 서식합니다. (결과는 다른 시간대와 다릅니다)</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">msPerDay</span> <span class="o">=</span> <span class="mi">24</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">;</span>
+
+<span class="c1">// July 17, 2014 00:00:00 UTC.</span>
+<span class="kd">var</span> <span class="nx">july172014</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nx">msPerDay</span> <span class="o">*</span> <span class="p">(</span><span class="mi">44</span> <span class="o">*</span> <span class="mi">365</span> <span class="o">+</span> <span class="mi">11</span> <span class="o">+</span> <span class="mi">197</span><span class="p">));</span>
+
+<span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span> <span class="na">year</span><span class="p">:</span> <span class="dl">"</span><span class="s2">2-digit</span><span class="dl">"</span><span class="p">,</span> <span class="na">month</span><span class="p">:</span> <span class="dl">"</span><span class="s2">2-digit</span><span class="dl">"</span><span class="p">,</span> <span class="na">day</span><span class="p">:</span> <span class="dl">"</span><span class="s2">2-digit</span><span class="dl">"</span><span class="p">,</span>
+                <span class="na">hour</span><span class="p">:</span> <span class="dl">"</span><span class="s2">2-digit</span><span class="dl">"</span><span class="p">,</span> <span class="na">minute</span><span class="p">:</span> <span class="dl">"</span><span class="s2">2-digit</span><span class="dl">"</span><span class="p">,</span> <span class="na">timeZoneName</span><span class="p">:</span> <span class="dl">"</span><span class="s2">short</span><span class="dl">"</span> <span class="p">};</span>
+<span class="kd">var</span> <span class="nx">americanDateTime</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Intl</span><span class="p">.</span><span class="nx">DateTimeFormat</span><span class="p">(</span><span class="dl">"</span><span class="s2">en-US</span><span class="dl">"</span><span class="p">,</span> <span class="nx">options</span><span class="p">).</span><span class="nx">format</span><span class="p">;</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">americanDateTime</span><span class="p">(</span><span class="nx">july172014</span><span class="p">));</span> <span class="c1">// 07/16/14, 5:00 PM PDT</span>
+</code></pre></div>
+<h3 id="part-3ff6cf5901d9463e">숫자 서식</h3>
+
+<p>NumberFormat개체는 통화를 위해 숫자를 서식하는것에 대해 유용하다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">gasPrice</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Intl</span><span class="p">.</span><span class="nx">NumberFormat</span><span class="p">(</span><span class="dl">"</span><span class="s2">en-US</span><span class="dl">"</span><span class="p">,</span>
+                        <span class="p">{</span> <span class="na">style</span><span class="p">:</span> <span class="dl">"</span><span class="s2">currency</span><span class="dl">"</span><span class="p">,</span> <span class="na">currency</span><span class="p">:</span> <span class="dl">"</span><span class="s2">USD</span><span class="dl">"</span><span class="p">,</span>
+                          <span class="na">minimumFractionDigits</span><span class="p">:</span> <span class="mi">3</span> <span class="p">});</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">gasPrice</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="mf">5.259</span><span class="p">));</span> <span class="c1">// $5.259</span>
+
+<span class="kd">var</span> <span class="nx">hanDecimalRMBInChina</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Intl</span><span class="p">.</span><span class="nx">NumberFormat</span><span class="p">(</span><span class="dl">"</span><span class="s2">zh-CN-u-nu-hanidec</span><span class="dl">"</span><span class="p">,</span>
+                        <span class="p">{</span> <span class="na">style</span><span class="p">:</span> <span class="dl">"</span><span class="s2">currency</span><span class="dl">"</span><span class="p">,</span> <span class="na">currency</span><span class="p">:</span> <span class="dl">"</span><span class="s2">CNY</span><span class="dl">"</span> <span class="p">});</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">hanDecimalRMBInChina</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="mf">1314.25</span><span class="p">));</span> <span class="c1">// ￥ 一,三一四.二五</span>
+</code></pre></div>
+<h3 id="part-6543a26690d">조합</h3>
+
+<p>Collator개체는 문자열을 비교하고 구분하는 것에 대해 유용합니다.</p>
+
+<p>그 <a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Intl" rel="nofollow" target="_blank">Intl</a>API에 대한 자세한 내용은 자바스크립트 국제화 API소개를 참조하세요.</p>
+
+<hr>
+
+<h2 id="part-94f0c68c9d5456da">정규 표현식</h2>
+
+<p>Regular expressions은  패턴 문자열에서 문자 조합을 일치시키는 데 사용합니다.</p>
+
+<p>이 표현들은 복잡하고 강력하고 다음 장에서 설명 할것입니다. 여기서 규칙적인표현에 대해 더 살펴보아라:</p>
+
+<ul>
+<li>자바스크립트 가이드에서 <a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/%EC%A0%95%EA%B7%9C%EC%8B%9D" rel="nofollow" target="_blank">정규 표현식</a>.</li>
+<li>
+<a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/RegExp" rel="nofollow" target="_blank">RegExp</a> 참조문서.</li>
+</ul>
+
+<hr>
+
+<h2 id="reference">Reference</h2>
+
+<p><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/Text_formatting" rel="nofollow" target="_blank">https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/Text_formatting</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

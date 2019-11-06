@@ -1,0 +1,6 @@
+﻿tab 속성중 split 를 써서 간격을 만들면
+chrome debug tools 에서
+
+data:image/gif;base64.!@##$== 
+
+메시지가 network 에서 통신해서 받아 오는 것 처럼 보인다.

@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Part 3 - Services | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Part 3 - Services" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Prerequisites" />
+<meta property="og:description" content="Prerequisites" />
+<link rel="canonical" href="http://localhost:4000/blog/docs/develop/CaaS/docker/1_Guides/2_Get_started/1_Get_started_with_Docker/Part_3_Services.html" />
+<meta property="og:url" content="http://localhost:4000/blog/docs/develop/CaaS/docker/1_Guides/2_Get_started/1_Get_started_with_Docker/Part_3_Services.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-06T09:31:12+09:00" />
+<script type="application/ld+json">
+{"description":"Prerequisites","headline":"Part 3 - Services","dateModified":"2019-11-06T09:31:12+09:00","datePublished":"2019-11-06T09:31:12+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/docs/develop/CaaS/docker/1_Guides/2_Get_started/1_Get_started_with_Docker/Part_3_Services.html"},"url":"http://localhost:4000/blog/docs/develop/CaaS/docker/1_Guides/2_Get_started/1_Get_started_with_Docker/Part_3_Services.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Part 3 - Services</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#prerequisites">Prerequisites</a></li>
+<li class="toc-entry toc-h2"><a href="#introduction">Introduction</a></li>
+<li class="toc-entry toc-h2"><a href="#about-services">About Services</a></li>
+<li class="toc-entry toc-h2"><a href="#your-first-docker-compose-yml-file">Your first docker - compose.yml file</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#docker-compose-yml">docker-compose.yml</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#run-your-new-load-balanced-app">Run your new load-balanced app</a></li>
+<li class="toc-entry toc-h2"><a href="#scale-the-app">Scale the app</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#take-down-the-app-and-the-swarm">Take down the app and the swarm</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#recap-and-cheat-sheet">Recap and cheat sheet</a></li>
+<li class="toc-entry toc-h2"><a href="#reference">Reference</a></li>
+</ul><h2 id="prerequisites">
+<a class="anchor" href="#prerequisites" aria-hidden="true"><span class="octicon octicon-link"></span></a>Prerequisites</h2>
+
+<ul>
+<li>생략</li>
+<li>레지스트리에 푸시하여 작성한 friendlyhello 이미지를 게시했는지 확인하십시오.</li>
+<li>여기서 공유 이미지를 사용하겠습니다. 이미지가 배포 된 컨테이너로 작동하는지 확인하십시오. 이 명령을 실행하여 정보에서 <code>username</code>, <code>repo</code> 및 <code>tag :</code> <code>docker run -p 80:80 username/repo:tag</code> 를 실행한 다음 <code>http://localhost/</code> 를 방문하십시오.</li>
+</ul>
+
+<hr>
+
+<h2 id="introduction">
+<a class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h2>
+
+<p>Part3 에서는 응용 프로그램을 확장하고 load-balancing 조정을 활성화합니다.</p>
+
+<p>이렇게 하려면 분산 응용 프로그램의 계층 구조에서 하나의 수준 높은 <strong>:service</strong> 로 이동해야 합니다.</p>
+
+<ul>
+<li>stack</li>
+<li>
+<strong>Services</strong> (you ar here)</li>
+<li>Container (covered in Part 2)</li>
+</ul>
+
+<hr>
+
+<h2 id="about-services">
+<a class="anchor" href="#about-services" aria-hidden="true"><span class="octicon octicon-link"></span></a>About Services</h2>
+
+<p>분산 응용 프로그램에서 app의 다른 부분을 "Service" 라고 합니다.
+예를 들어 비디오 공유 사이트를 상상하면 응용 프로그램 데이터를 데이터베이스에 저장하는 서비스, 사용자의 것을 upload, front-end 를 위한 서비스등이 포함됩니다.</p>
+
+<p>Service 는 실제로 "container in production" 입니다.
+Service 는 하나의 image 만 실행하지만 imgage 를 실행하는 방법을 체계화합니다.
+즉 어떤 port 를 사용해야 하는지, 얼마나 많은 container 복제본을 실행해야 Service 에 필요한 용량이 있는지, 곧. 서비스를 확장하면 해당 소프트웨어를 실행하는 container instance 수가 변경되어 process 의 Service 에 더 많은 컴퓨팅 자원이 할당됩니다.</p>
+
+<p>다행히 Docker 플랫폼으로 서비스를 정의, 실행 및 확장하는 것은 매우 쉽습니다 - <code>docker-compose.yml</code> 파일만 작성하십시오.</p>
+
+<hr>
+
+<h2 id="your-first-docker-compose-yml-file">
+<a class="anchor" href="#your-first-docker-compose-yml-file" aria-hidden="true"><span class="octicon octicon-link"></span></a>Your first <code>docker - compose.yml</code> file</h2>
+
+<p><code>docker-compose.yml</code> 파일은 Docker container 가 production 환경에서 어떻게 작동해야하는지 정의하는 YAML 파일입니다.</p>
+
+<h3 id="docker-compose-yml">
+<a class="anchor" href="#docker-compose-yml" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>docker-compose.yml</code>
+</h3>
+
+<p>이 파일을 <code>docker-compose.yml</code> 파일로 저장하십시오.
+Part 2 에서 만든 이미지를 레지스트리로 push 한 다음 <code>username/repo:tag</code> 를 이미지 세부 정보로 바꾸면 이 <code>.yml</code> 을 업데이트 해야 합니다.</p>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="na">version</span><span class="pi">:</span> <span class="s2">"</span><span class="s">3"</span>
+<span class="na">services</span><span class="pi">:</span>
+  <span class="na">web</span><span class="pi">:</span>
+    <span class="c1"># replace username/repo:tag with your name and image details</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">username/repo:tag</span>
+    <span class="na">deploy</span><span class="pi">:</span>
+      <span class="na">replicas</span><span class="pi">:</span> <span class="m">5</span>
+      <span class="na">resources</span><span class="pi">:</span>
+        <span class="na">limits</span><span class="pi">:</span>
+          <span class="na">cpus</span><span class="pi">:</span> <span class="s2">"</span><span class="s">0.1"</span>
+          <span class="na">memory</span><span class="pi">:</span> <span class="s">50M</span>
+      <span class="na">restart_policy</span><span class="pi">:</span>
+        <span class="na">condition</span><span class="pi">:</span> <span class="s">on-failure</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">80:80"</span>
+    <span class="na">networks</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">webnet</span>
+<span class="na">networks</span><span class="pi">:</span>
+  <span class="na">webnet</span><span class="pi">:</span>
+</code></pre></div>
+<p>이 docker-compose.yml 파일은 Docker에게 다음을 수행하도록 지시합니다:</p>
+
+<ul>
+<li>2 단계에서 업로드 한 이미지를 레지스트리에서 가져옵니다.</li>
+<li>해당 이미지의 5개의 인스턴스를 웹이라는 서비스로 실행하고 각 이미지를 최대 10% 의 CPU(모든 코어에서 사용)와 50MB의 RAM으로 제한합니다.</li>
+<li>컨테이너가 실패하면 즉시 다시 시작하십시오.</li>
+<li>호스트의 포트 80을 웹의 포트 80에 매핑하십시오.</li>
+<li>webnet 이라는 부하 분산 네트워크를 통해 포트 80을 공유하도록 웹의 컨테이너에 지시하십시오.</li>
+<li>내부적으로 컨테이너 자체는 임시 port에서 웹의 port 80에 게시합니다.</li>
+<li>기본 설정 (load-balancing overlay network)으로 <code>webnet</code> 네트워크를 정의하십시오.</li>
+</ul>
+
+<blockquote>
+<p>Wondering about Compose the file versions, names, and commands?</p>
+
+<p>작성 파일을 <code>version: "3"</code> 으로 설정합니다. 이것은 본질적으로 <a href="https://docs.docker.com/engine/swarm/">swarm mode</a> 와 호환됩니다.
+Google 은 <a href="%5BCompose%20%ED%8C%8C%EC%9D%BC%20%ED%98%95%EC%8B%9D%20%EB%B2%84%EC%A0%84%203.x%20%EC%9D%B4%EC%83%81%5D%EC%97%90%EC%84%9C%EB%A7%8C%20%EC%82%AC%EC%9A%A9%20%EA%B0%80%EB%8A%A5">deploy key</a> 및 하위 옵션을 사용하여 각 서비스 (예: <code>web</code>)의 성능을 load-balance 하고 최적화합니다.
+<code>docker stack deploy</code> 명령 (Compose 파일 버전 3.x 이상에서만 지원됨)을 사용하여 파일을 실행할 수 있습니다.
+<code>docker-compose up</code> 를 사용하여 swarm 구성이 아닌 버전 3 파일을 실행할 수도 있지만 swarm 예제를 작성 중이므로 stack 배포에 중점을 둡니다.
+작성 파일의 이름을 논리적으로 의미있는 것으로 이름 지정할 수 있습니다. <code>docker-compose.yml</code> 은 단순히 표준 이름입니다.
+이 파일을 <code>docker-stack.yml</code> 이나 우리 프로젝트에 좀 더 쉽게 부르는 것처럼 쉽게 호출 할 수 있습니다.</p>
+</blockquote>
+
+<hr>
+
+<h2 id="run-your-new-load-balanced-app">
+<a class="anchor" href="#run-your-new-load-balanced-app" aria-hidden="true"><span class="octicon octicon-link"></span></a>Run your new load-balanced app</h2>
+
+<p><code>docker stack deploy</code> 명령을 사용하기 전에 먼저 다음을 실행합니다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker swarm init
+</code></pre></div>
+<blockquote>
+<p>Note: 우리는 <a href="https://docs.docker.com/get-started/part4/">Part 4</a> 에서 그 명령의 의미를 알 수 있습니다.
+<code>docker swarm init</code> 을 실행하지 않으면 "이 node는 swarm manager 가 아닙니다."라는 오류가 표시됩니다.</p>
+</blockquote>
+
+<p>이제 실행 해 봅시다. 앱에 이름을 지정해야합니다. 여기에 getstartedlab이 설정됩니다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker stack deploy <span class="nt">-c</span> docker-compose.yml getstartedlab
+</code></pre></div>
+<p>단일 서비스 스택은 배포된 이미지의 컨테이너 인스턴스 5개를 하나의 호스트에서 실행합니다. 확인하자.</p>
+
+<p>애플리케이션에서 하나의 서비스에 대한 서비스 ID를 얻습니다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker service <span class="nb">ls</span>
+</code></pre></div>
+<p>app 이름 앞에 <code>web</code> 서비스 출력이 표시됩니다.
+이 예제에서와 같이 이름을 지정하면 이름은 <code>getstartedlab_web</code> 가 됩니다.
+Service ID는 복제본 수, image 이름 및 노출된 port 와 함께 나열됩니다.
+Docker 는 container 를 생성하는 작업을 실행합니다.</p>
+
+<p>작업에는 상태 및 자체 ID가 있습니다. 작업을 나열해 보겠습니다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker service ps &lt;service&gt;
+<span class="c"># ID                  NAME                  IMAGE                          NODE                DESIRED STATE       CURRENT STATE            ERROR               PORTS</span>
+<span class="c"># qci5ojd44mve        getstartedlab_web.1   portal2312/get-started:part2   mkkimpc             Running             Running 10 minutes ago</span>
+<span class="c"># vjplmno1h1hb        getstartedlab_web.2   portal2312/get-started:part2   mkkimpc             Running             Running 10 minutes ago</span>
+<span class="c"># 6y419kstyoq0        getstartedlab_web.3   portal2312/get-started:part2   mkkimpc             Running             Running 10 minutes ago</span>
+<span class="c"># i384t7ljqg8f        getstartedlab_web.4   portal2312/get-started:part2   mkkimpc             Running             Running 10 minutes ago</span>
+<span class="c"># w7687rejn0et        getstartedlab_web.5   portal2312/get-started:part2   mkkimpc             Running             Running 10 minutes ago</span>
+</code></pre></div>
+<blockquote>
+<p>Note: Darmer는 SwarmKit이라는 프로젝트를 사용하여 지원됩니다.
+SwarmKit 작업은 컨테이너일 필요는 없지만 Docker Swarm 작업은 해당 항목을 생성하기 위해 정의됩니다.</p>
+</blockquote>
+
+<p>이 작업 중 하나를 조사하고 결과를 컨테이너 ID로 제한해보자:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker inspect <span class="nt">--format</span><span class="o">=</span><span class="s1">'{{.Status.ContainerStatus.ContainerID}}'</span> &lt;task&gt;
+</code></pre></div>
+<p>그 반대의 경우 컨테이너 ID를 검사하고 작업 ID를 추출 할 수 있습니다.</p>
+
+<p>먼저 <code>docker container ls</code> 를 실행하여 container ID 를 얻은 다음 다음을 수행하십시오:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># docker inspect --format="{{index .Config.Labels \"com.docker.swarm.task.id\"}}" &lt;container&gt;</span>
+<span class="nv">$ </span>docker inspect <span class="nt">--format</span><span class="o">=</span><span class="s2">"{{index .Config.Labels </span><span class="se">\"</span><span class="s2">com.docker.swarm.task.id</span><span class="se">\"</span><span class="s2">}}"</span> 891ac4572043
+
+<span class="c"># w7687rejn0etejxrmqr7l0mne</span>
+</code></pre></div>
+<p>이제 5 개의 컨테이너를 모두 나열하십시오:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker container <span class="nb">ls</span> <span class="nt">-q</span>
+<span class="c"># 891ac4572043</span>
+<span class="c"># 2dfe9b3d6543</span>
+<span class="c"># 763733ea81ed</span>
+<span class="c"># 9cc27430ecbe</span>
+<span class="c"># c91a8abb8e5e</span>
+</code></pre></div>
+<p><code>curl -4 http://localhost</code> 를 연속 여러번 실행하거나 브라우저에서 해당 URL로 이동하여 새로 고침을 몇 번 누릅니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>curl <span class="nt">-4</span> http://localhost
+<span class="c"># &lt;h3&gt;Hello World!&lt;/h3&gt;&lt;b&gt;Hostname:&lt;/b&gt; 2dfe9b3d6543&lt;br/&gt;&lt;b&gt;Visits:&lt;/b&gt; &lt;i&gt;cannot connect to Redis, counter disabled&lt;/i&gt;docker@mkkimpc:~/mycontainer$</span>
+</code></pre></div>
+<p>어느 쪽이든 container ID가 변경되어 load-balancing 을 보여줍니다.
+각 요청마다 5 개의 복제본 중 하나가 round-robin 방식으로 응답하도록 선택됩니다.
+container ID는 이전 명령 (<code>docker container ls -q</code>)의 출력과 일치합니다.</p>
+
+<p>(Windows 10 PowerShell은 이미 사용 가능해야하지만 그렇지 않은 경우 Git BASH와 같은 Linux 터미널 에뮬레이터를 사용할 수 있습니다. 여기에서 작업 흐름에 중요하지 않습니다.)</p>
+
+<blockquote>
+<p>Note: 이 단계에서 컨테이너가 HTTP 요청에 응답하는 데 최대 30 초가 걸릴 수 있습니다.
+이는 Docker 또는 Swarm 성능을 나타내는 것이 아니라, 자습서의 뒷부분에서 다룰 Unis Redis 의존성입니다.
+당분간 방문자 카운터는 같은 이유로 작동하지 않습니다.
+아직 데이터를 유지하는 서비스를 추가하지 않았습니다.</p>
+</blockquote>
+
+<hr>
+
+<h2 id="scale-the-app">
+<a class="anchor" href="#scale-the-app" aria-hidden="true"><span class="octicon octicon-link"></span></a>Scale the app</h2>
+
+<p><code>docker-compose.yml</code> 의 복제 값을 변경하고 변경 사항을 저장 한 다음 <code>docker stack deploy</code> 명령을 다시 실행하여 응용 프로그램을 확장 할 수 있습니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>vi docker-compose.yml
+<span class="c"># 생략</span>
+
+<span class="nv">$ </span>docker stack deploy <span class="nt">-c</span> docker-compose.yml getstartedlab
+<span class="c"># Updating service getstartedlab_web (id: nmdnam0l0b2xijs6evgcqj1ck)</span>
+</code></pre></div>
+<p>Docker는 적절한 업데이트를 수행하므로 스택을 먼저 떼어 내거나 컨테이너를 제거 할 필요가 없습니다.
+이제 <code>docker container ls -q</code> 를 다시 실행하여 배포된 인스턴스가 재구성된 것을 확인합니다.
+복제본을 확장하면 더 많은 태스크가 생겨서 더 많은 컨테이너가 시작됩니다.</p>
+
+<h3 id="take-down-the-app-and-the-swarm">
+<a class="anchor" href="#take-down-the-app-and-the-swarm" aria-hidden="true"><span class="octicon octicon-link"></span></a>Take down the app and the swarm</h3>
+
+<ul>
+<li>
+<code>docker stack rm</code> 을 사용하여 app 을 다운시킵니다.</li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">  <span class="nv">$ </span>docker stack <span class="nb">rm </span>getstartedlab
+  <span class="c"># Removing service getstartedlab_web</span>
+  <span class="c"># Removing network getstartedlab_webnet</span>
+</code></pre></div>
+<p>이것은 app을 제거하지만, 우리의 한 node 득시기는 아직 가동 중입니다 (멍청이 node 처럼).</p>
+
+<ul>
+<li>swarm down 하기.</li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">  <span class="nv">$ </span>docker swarm leave <span class="nt">--force</span>
+  <span class="c"># Node left the swarm.</span>
+</code></pre></div>
+<p>이것은 swarm를 제거합니다. 이 작업의 목적은 동일한 명령 shell 에서 시작하는 가상 "Docker 컴퓨터"에서 swarm를 만드는 다음 단계를 준비​​할 때 깨끗한 슬레이트를 만드는 것입니다.
+  이렇게하면 어떤 Dockerized 호스트를 사용하고 있거나 어떤 swarm 을 사용하고 있는지 혼란스러울 필요가 없습니다.</p>
+
+<blockquote>
+<p>Note: 이와 같이 작성 파일은 Docker를 사용하여 응용 프로그램을 정의하는데 사용되며 Docker Cloud를 사용하여 클라우드 공급자에게 업로드하거나 Docker Enterprise Edition에서 선택한 하드웨어 또는 클라우드 공급자에 업로드할 수 있습니다.</p>
+</blockquote>
+
+<hr>
+
+<h2 id="recap-and-cheat-sheet">
+<a class="anchor" href="#recap-and-cheat-sheet" aria-hidden="true"><span class="octicon octicon-link"></span></a>Recap and cheat sheet</h2>
+
+<p>다시 말하면, <code>docker run</code> 을 입력하는 동안 충분히 간단합니다.
+production 에서 container 의 실제 구현은 이를 service 로 실행합니다.</p>
+
+<p>service 는 Compose 파일에서 container 의 동작을 성문화하며, 이 파일을 사용하여 app을 확장, 제한 및 재배포 할 수 있습니다.</p>
+
+<p>service 를 시작한 명령과 동일한 명령인 <code>docker stack deploy</code> 를 사용하여 서비스가 변경 될 때 해당 서비스의 변경 사항을 적용 할 수 있습니다.</p>
+
+<p>이 단계에서 알 수있는 명령은 다음과 같습니다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">docker stack <span class="nb">ls</span>                                            <span class="c"># List stacks or apps</span>
+docker stack deploy <span class="nt">-c</span> &lt;composefile&gt; &lt;appname&gt;  <span class="c"># Run the specified Compose file</span>
+docker service <span class="nb">ls</span>                 <span class="c"># List running services associated with an app</span>
+docker service ps &lt;service&gt;                  <span class="c"># List tasks associated with an app</span>
+docker inspect &lt;task or container&gt;                   <span class="c"># Inspect task or container</span>
+docker container <span class="nb">ls</span> <span class="nt">-q</span>                                      <span class="c"># List container IDs</span>
+docker stack <span class="nb">rm</span> &lt;appname&gt;                             <span class="c"># Tear down an application</span>
+docker swarm leave <span class="nt">--force</span>      <span class="c"># Take down a single node swarm from the manager</span>
+</code></pre></div>
+<hr>
+
+<h2 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+  </div>
+
+<div>
+  <h2 id="prerequisites">Prerequisites</h2>
+
+<ul>
+<li>생략</li>
+<li>레지스트리에 푸시하여 작성한 friendlyhello 이미지를 게시했는지 확인하십시오.</li>
+<li>여기서 공유 이미지를 사용하겠습니다. 이미지가 배포 된 컨테이너로 작동하는지 확인하십시오. 이 명령을 실행하여 정보에서 <code>username</code>, <code>repo</code> 및 <code>tag :</code> <code>docker run -p 80:80 username/repo:tag</code> 를 실행한 다음 <code>http://localhost/</code> 를 방문하십시오.</li>
+</ul>
+
+<hr>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>Part3 에서는 응용 프로그램을 확장하고 load-balancing 조정을 활성화합니다.</p>
+
+<p>이렇게 하려면 분산 응용 프로그램의 계층 구조에서 하나의 수준 높은 <strong>:service</strong> 로 이동해야 합니다.</p>
+
+<ul>
+<li>stack</li>
+<li>
+<strong>Services</strong> (you ar here)</li>
+<li>Container (covered in Part 2)</li>
+</ul>
+
+<hr>
+
+<h2 id="about-services">About Services</h2>
+
+<p>분산 응용 프로그램에서 app의 다른 부분을 "Service" 라고 합니다.
+예를 들어 비디오 공유 사이트를 상상하면 응용 프로그램 데이터를 데이터베이스에 저장하는 서비스, 사용자의 것을 upload, front-end 를 위한 서비스등이 포함됩니다.</p>
+
+<p>Service 는 실제로 "container in production" 입니다.
+Service 는 하나의 image 만 실행하지만 imgage 를 실행하는 방법을 체계화합니다.
+즉 어떤 port 를 사용해야 하는지, 얼마나 많은 container 복제본을 실행해야 Service 에 필요한 용량이 있는지, 곧. 서비스를 확장하면 해당 소프트웨어를 실행하는 container instance 수가 변경되어 process 의 Service 에 더 많은 컴퓨팅 자원이 할당됩니다.</p>
+
+<p>다행히 Docker 플랫폼으로 서비스를 정의, 실행 및 확장하는 것은 매우 쉽습니다 - <code>docker-compose.yml</code> 파일만 작성하십시오.</p>
+
+<hr>
+
+<h2 id="your-first-docker-compose-yml-file">Your first <code>docker - compose.yml</code> file</h2>
+
+<p><code>docker-compose.yml</code> 파일은 Docker container 가 production 환경에서 어떻게 작동해야하는지 정의하는 YAML 파일입니다.</p>
+
+<h3 id="docker-compose-yml"><code>docker-compose.yml</code></h3>
+
+<p>이 파일을 <code>docker-compose.yml</code> 파일로 저장하십시오.
+Part 2 에서 만든 이미지를 레지스트리로 push 한 다음 <code>username/repo:tag</code> 를 이미지 세부 정보로 바꾸면 이 <code>.yml</code> 을 업데이트 해야 합니다.</p>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="na">version</span><span class="pi">:</span> <span class="s2">"</span><span class="s">3"</span>
+<span class="na">services</span><span class="pi">:</span>
+  <span class="na">web</span><span class="pi">:</span>
+    <span class="c1"># replace username/repo:tag with your name and image details</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">username/repo:tag</span>
+    <span class="na">deploy</span><span class="pi">:</span>
+      <span class="na">replicas</span><span class="pi">:</span> <span class="m">5</span>
+      <span class="na">resources</span><span class="pi">:</span>
+        <span class="na">limits</span><span class="pi">:</span>
+          <span class="na">cpus</span><span class="pi">:</span> <span class="s2">"</span><span class="s">0.1"</span>
+          <span class="na">memory</span><span class="pi">:</span> <span class="s">50M</span>
+      <span class="na">restart_policy</span><span class="pi">:</span>
+        <span class="na">condition</span><span class="pi">:</span> <span class="s">on-failure</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">80:80"</span>
+    <span class="na">networks</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">webnet</span>
+<span class="na">networks</span><span class="pi">:</span>
+  <span class="na">webnet</span><span class="pi">:</span>
+</code></pre></div>
+<p>이 docker-compose.yml 파일은 Docker에게 다음을 수행하도록 지시합니다:</p>
+
+<ul>
+<li>2 단계에서 업로드 한 이미지를 레지스트리에서 가져옵니다.</li>
+<li>해당 이미지의 5개의 인스턴스를 웹이라는 서비스로 실행하고 각 이미지를 최대 10% 의 CPU(모든 코어에서 사용)와 50MB의 RAM으로 제한합니다.</li>
+<li>컨테이너가 실패하면 즉시 다시 시작하십시오.</li>
+<li>호스트의 포트 80을 웹의 포트 80에 매핑하십시오.</li>
+<li>webnet 이라는 부하 분산 네트워크를 통해 포트 80을 공유하도록 웹의 컨테이너에 지시하십시오.</li>
+<li>내부적으로 컨테이너 자체는 임시 port에서 웹의 port 80에 게시합니다.</li>
+<li>기본 설정 (load-balancing overlay network)으로 <code>webnet</code> 네트워크를 정의하십시오.</li>
+</ul>
+
+<blockquote>
+<p>Wondering about Compose the file versions, names, and commands?</p>
+
+<p>작성 파일을 <code>version: "3"</code> 으로 설정합니다. 이것은 본질적으로 <a href="https://docs.docker.com/engine/swarm/" rel="nofollow" target="_blank">swarm mode</a> 와 호환됩니다.
+Google 은 <a href="%5BCompose%20%ED%8C%8C%EC%9D%BC%20%ED%98%95%EC%8B%9D%20%EB%B2%84%EC%A0%84%203.x%20%EC%9D%B4%EC%83%81%5D%EC%97%90%EC%84%9C%EB%A7%8C%20%EC%82%AC%EC%9A%A9%20%EA%B0%80%EB%8A%A5">deploy key</a> 및 하위 옵션을 사용하여 각 서비스 (예: <code>web</code>)의 성능을 load-balance 하고 최적화합니다.
+<code>docker stack deploy</code> 명령 (Compose 파일 버전 3.x 이상에서만 지원됨)을 사용하여 파일을 실행할 수 있습니다.
+<code>docker-compose up</code> 를 사용하여 swarm 구성이 아닌 버전 3 파일을 실행할 수도 있지만 swarm 예제를 작성 중이므로 stack 배포에 중점을 둡니다.
+작성 파일의 이름을 논리적으로 의미있는 것으로 이름 지정할 수 있습니다. <code>docker-compose.yml</code> 은 단순히 표준 이름입니다.
+이 파일을 <code>docker-stack.yml</code> 이나 우리 프로젝트에 좀 더 쉽게 부르는 것처럼 쉽게 호출 할 수 있습니다.</p>
+</blockquote>
+
+<hr>
+
+<h2 id="run-your-new-load-balanced-app">Run your new load-balanced app</h2>
+
+<p><code>docker stack deploy</code> 명령을 사용하기 전에 먼저 다음을 실행합니다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker swarm init
+</code></pre></div>
+<blockquote>
+<p>Note: 우리는 <a href="https://docs.docker.com/get-started/part4/" rel="nofollow" target="_blank">Part 4</a> 에서 그 명령의 의미를 알 수 있습니다.
+<code>docker swarm init</code> 을 실행하지 않으면 "이 node는 swarm manager 가 아닙니다."라는 오류가 표시됩니다.</p>
+</blockquote>
+
+<p>이제 실행 해 봅시다. 앱에 이름을 지정해야합니다. 여기에 getstartedlab이 설정됩니다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker stack deploy <span class="nt">-c</span> docker-compose.yml getstartedlab
+</code></pre></div>
+<p>단일 서비스 스택은 배포된 이미지의 컨테이너 인스턴스 5개를 하나의 호스트에서 실행합니다. 확인하자.</p>
+
+<p>애플리케이션에서 하나의 서비스에 대한 서비스 ID를 얻습니다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker service <span class="nb">ls</span>
+</code></pre></div>
+<p>app 이름 앞에 <code>web</code> 서비스 출력이 표시됩니다.
+이 예제에서와 같이 이름을 지정하면 이름은 <code>getstartedlab_web</code> 가 됩니다.
+Service ID는 복제본 수, image 이름 및 노출된 port 와 함께 나열됩니다.
+Docker 는 container 를 생성하는 작업을 실행합니다.</p>
+
+<p>작업에는 상태 및 자체 ID가 있습니다. 작업을 나열해 보겠습니다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker service ps &lt;service&gt;
+<span class="c"># ID                  NAME                  IMAGE                          NODE                DESIRED STATE       CURRENT STATE            ERROR               PORTS</span>
+<span class="c"># qci5ojd44mve        getstartedlab_web.1   portal2312/get-started:part2   mkkimpc             Running             Running 10 minutes ago</span>
+<span class="c"># vjplmno1h1hb        getstartedlab_web.2   portal2312/get-started:part2   mkkimpc             Running             Running 10 minutes ago</span>
+<span class="c"># 6y419kstyoq0        getstartedlab_web.3   portal2312/get-started:part2   mkkimpc             Running             Running 10 minutes ago</span>
+<span class="c"># i384t7ljqg8f        getstartedlab_web.4   portal2312/get-started:part2   mkkimpc             Running             Running 10 minutes ago</span>
+<span class="c"># w7687rejn0et        getstartedlab_web.5   portal2312/get-started:part2   mkkimpc             Running             Running 10 minutes ago</span>
+</code></pre></div>
+<blockquote>
+<p>Note: Darmer는 SwarmKit이라는 프로젝트를 사용하여 지원됩니다.
+SwarmKit 작업은 컨테이너일 필요는 없지만 Docker Swarm 작업은 해당 항목을 생성하기 위해 정의됩니다.</p>
+</blockquote>
+
+<p>이 작업 중 하나를 조사하고 결과를 컨테이너 ID로 제한해보자:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker inspect <span class="nt">--format</span><span class="o">=</span><span class="s1">'{{.Status.ContainerStatus.ContainerID}}'</span> &lt;task&gt;
+</code></pre></div>
+<p>그 반대의 경우 컨테이너 ID를 검사하고 작업 ID를 추출 할 수 있습니다.</p>
+
+<p>먼저 <code>docker container ls</code> 를 실행하여 container ID 를 얻은 다음 다음을 수행하십시오:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># docker inspect --format="{{index .Config.Labels \"com.docker.swarm.task.id\"}}" &lt;container&gt;</span>
+<span class="nv">$ </span>docker inspect <span class="nt">--format</span><span class="o">=</span><span class="s2">"{{index .Config.Labels </span><span class="se">\"</span><span class="s2">com.docker.swarm.task.id</span><span class="se">\"</span><span class="s2">}}"</span> 891ac4572043
+
+<span class="c"># w7687rejn0etejxrmqr7l0mne</span>
+</code></pre></div>
+<p>이제 5 개의 컨테이너를 모두 나열하십시오:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker container <span class="nb">ls</span> <span class="nt">-q</span>
+<span class="c"># 891ac4572043</span>
+<span class="c"># 2dfe9b3d6543</span>
+<span class="c"># 763733ea81ed</span>
+<span class="c"># 9cc27430ecbe</span>
+<span class="c"># c91a8abb8e5e</span>
+</code></pre></div>
+<p><code>curl -4 http://localhost</code> 를 연속 여러번 실행하거나 브라우저에서 해당 URL로 이동하여 새로 고침을 몇 번 누릅니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>curl <span class="nt">-4</span> http://localhost
+<span class="c"># &lt;h3&gt;Hello World!&lt;/h3&gt;&lt;b&gt;Hostname:&lt;/b&gt; 2dfe9b3d6543&lt;br/&gt;&lt;b&gt;Visits:&lt;/b&gt; &lt;i&gt;cannot connect to Redis, counter disabled&lt;/i&gt;docker@mkkimpc:~/mycontainer$</span>
+</code></pre></div>
+<p>어느 쪽이든 container ID가 변경되어 load-balancing 을 보여줍니다.
+각 요청마다 5 개의 복제본 중 하나가 round-robin 방식으로 응답하도록 선택됩니다.
+container ID는 이전 명령 (<code>docker container ls -q</code>)의 출력과 일치합니다.</p>
+
+<p>(Windows 10 PowerShell은 이미 사용 가능해야하지만 그렇지 않은 경우 Git BASH와 같은 Linux 터미널 에뮬레이터를 사용할 수 있습니다. 여기에서 작업 흐름에 중요하지 않습니다.)</p>
+
+<blockquote>
+<p>Note: 이 단계에서 컨테이너가 HTTP 요청에 응답하는 데 최대 30 초가 걸릴 수 있습니다.
+이는 Docker 또는 Swarm 성능을 나타내는 것이 아니라, 자습서의 뒷부분에서 다룰 Unis Redis 의존성입니다.
+당분간 방문자 카운터는 같은 이유로 작동하지 않습니다.
+아직 데이터를 유지하는 서비스를 추가하지 않았습니다.</p>
+</blockquote>
+
+<hr>
+
+<h2 id="scale-the-app">Scale the app</h2>
+
+<p><code>docker-compose.yml</code> 의 복제 값을 변경하고 변경 사항을 저장 한 다음 <code>docker stack deploy</code> 명령을 다시 실행하여 응용 프로그램을 확장 할 수 있습니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>vi docker-compose.yml
+<span class="c"># 생략</span>
+
+<span class="nv">$ </span>docker stack deploy <span class="nt">-c</span> docker-compose.yml getstartedlab
+<span class="c"># Updating service getstartedlab_web (id: nmdnam0l0b2xijs6evgcqj1ck)</span>
+</code></pre></div>
+<p>Docker는 적절한 업데이트를 수행하므로 스택을 먼저 떼어 내거나 컨테이너를 제거 할 필요가 없습니다.
+이제 <code>docker container ls -q</code> 를 다시 실행하여 배포된 인스턴스가 재구성된 것을 확인합니다.
+복제본을 확장하면 더 많은 태스크가 생겨서 더 많은 컨테이너가 시작됩니다.</p>
+
+<h3 id="take-down-the-app-and-the-swarm">Take down the app and the swarm</h3>
+
+<ul>
+<li>
+<code>docker stack rm</code> 을 사용하여 app 을 다운시킵니다.</li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">  <span class="nv">$ </span>docker stack <span class="nb">rm </span>getstartedlab
+  <span class="c"># Removing service getstartedlab_web</span>
+  <span class="c"># Removing network getstartedlab_webnet</span>
+</code></pre></div>
+<p>이것은 app을 제거하지만, 우리의 한 node 득시기는 아직 가동 중입니다 (멍청이 node 처럼).</p>
+
+<ul>
+<li>swarm down 하기.</li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">  <span class="nv">$ </span>docker swarm leave <span class="nt">--force</span>
+  <span class="c"># Node left the swarm.</span>
+</code></pre></div>
+<p>이것은 swarm를 제거합니다. 이 작업의 목적은 동일한 명령 shell 에서 시작하는 가상 "Docker 컴퓨터"에서 swarm를 만드는 다음 단계를 준비​​할 때 깨끗한 슬레이트를 만드는 것입니다.
+  이렇게하면 어떤 Dockerized 호스트를 사용하고 있거나 어떤 swarm 을 사용하고 있는지 혼란스러울 필요가 없습니다.</p>
+
+<blockquote>
+<p>Note: 이와 같이 작성 파일은 Docker를 사용하여 응용 프로그램을 정의하는데 사용되며 Docker Cloud를 사용하여 클라우드 공급자에게 업로드하거나 Docker Enterprise Edition에서 선택한 하드웨어 또는 클라우드 공급자에 업로드할 수 있습니다.</p>
+</blockquote>
+
+<hr>
+
+<h2 id="recap-and-cheat-sheet">Recap and cheat sheet</h2>
+
+<p>다시 말하면, <code>docker run</code> 을 입력하는 동안 충분히 간단합니다.
+production 에서 container 의 실제 구현은 이를 service 로 실행합니다.</p>
+
+<p>service 는 Compose 파일에서 container 의 동작을 성문화하며, 이 파일을 사용하여 app을 확장, 제한 및 재배포 할 수 있습니다.</p>
+
+<p>service 를 시작한 명령과 동일한 명령인 <code>docker stack deploy</code> 를 사용하여 서비스가 변경 될 때 해당 서비스의 변경 사항을 적용 할 수 있습니다.</p>
+
+<p>이 단계에서 알 수있는 명령은 다음과 같습니다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">docker stack <span class="nb">ls</span>                                            <span class="c"># List stacks or apps</span>
+docker stack deploy <span class="nt">-c</span> &lt;composefile&gt; &lt;appname&gt;  <span class="c"># Run the specified Compose file</span>
+docker service <span class="nb">ls</span>                 <span class="c"># List running services associated with an app</span>
+docker service ps &lt;service&gt;                  <span class="c"># List tasks associated with an app</span>
+docker inspect &lt;task or container&gt;                   <span class="c"># Inspect task or container</span>
+docker container <span class="nb">ls</span> <span class="nt">-q</span>                                      <span class="c"># List container IDs</span>
+docker stack <span class="nb">rm</span> &lt;appname&gt;                             <span class="c"># Tear down an application</span>
+docker swarm leave <span class="nt">--force</span>      <span class="c"># Take down a single node swarm from the manager</span>
+</code></pre></div>
+<hr>
+
+<h2 id="reference">Reference</h2>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

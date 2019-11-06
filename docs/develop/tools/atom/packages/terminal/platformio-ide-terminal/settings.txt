@@ -1,0 +1,28 @@
+﻿# Core
+
+## Auto Run Command
+
+& 'C:\Program Files (x86)\OpenSSH for Windows\bin\ssh.exe'
+
+
+## Scroll Back
+
+2000
+
+
+## Shell Override
+C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+
+or
+
+C:\Windows\System32\cmd.exe
+
+
+# Ansi Colors Z Bright
+
+## Bright Blue
+
+RGB(85, 85, 255)
+
+
+# termianl 열때 open folder 에서 한글일 경우 안되므로 폴더명은 영문으로 할것.

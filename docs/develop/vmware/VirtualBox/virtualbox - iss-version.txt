@@ -1,0 +1,35 @@
+# VirtualBox 5.0.x -> 5.1.x 호환성 이슈
+--------
+
+# 내용
+--------
+- 사용중인 가상환경이 5.1 이전에 만들어 졌다면 update 이후
+아래와 같은 # ERR-MSG 발생.
+
+- downgrade 로 해결.
+
+- downgrade 시 "관리자권한"으로 실행하기.
+
+- 삭제후 재설치시 제어판 > 프로그램 관리 에서 삭제하기.
+
+- downgrade 시 PID 기동중이란 retry 메시지 나오면
+작업관리자에서 프로세스 목록들 확인후 종료하시고 "retry" 하기.
+
+
+# ERR-MSG
+--------
+가상 머신 [nOM] 배포버전의 세션을 열 수 없습니다.
+
+The virtual machine '[nOM] 배포버전' has terminated unexpectedly during startup with exit code 1 (0x1).  More details may be available in 'E:\[nOM] 배포버전\Logs\VBoxHardening.log'.
+
+결과 코드: E_FAIL (0x80004005)
+구성 요소: MachineWrap
+인터페이스: IMachine {b2547866-a0a1-4391-8b86-6952d82efaa0}
+
+
+# version info
+--------
+- iss new version: VirtualBox-5.1.8-111374-Win.exe (Warnning!!)
+
+- old version: VirtualBox-5.0.28-111378-Win.exe
+(https://www.virtualbox.org/wiki/Download_Old_Builds_5_0)

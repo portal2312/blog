@@ -1,0 +1,66 @@
+ps -ef | grep '프로세스명' | awk '{print $2}' | xargs kill -9
+
+
+
+find ./ -name "*.py" -print -exec grep -n "test" {} \;
+find ./ -name "*.py" -exec grep "doPing" *.py {} \;
+
+
+
+10.1.1.1
+configure terminal
+username abcd password $passwd_random8
+end
+
+
+doPing['111.1.2.149', 3]
+doPing['111.1.2.150', 3]
+notifyToServer 'batch.getGroupTopology'
+notifyToServer 'batch.getScripts'
+
+handleScriptInfo {내용}
+
+checkScriptTime
+doPing['nms.netcruz.co.kr', 3]
+doPing['111.1.2.64', 3]
+
+
+
+BatchServer.py
+
+> startService > getIPAddress > doPingCheck > doPing > 
+
+
+
+
+
+
+
+
+
+handleScriptInfo{
+'weeks': '*',
+'name': 'cisco_passwd_test',
+'minutes': '37',
+'script': '[{"expect":"","send":"configure terminal"},{"expect":"","send":"username abcd password $passwd_random8"},{"expect":"","send":"end"}]',
+'adminID': 'kingsoo2',
+'months': '*',
+'days': '*',
+'hours': '*',
+'hosts': [
+    {'account':
+        {'passwd': 'wP91vzV0A7YrUA6ZGhb24w==\n', 'userid': 'netcruz', 'id': 1050},
+        'enable': 'wP91vzV0A7YrUA6ZGhb24w==\n',
+        'console': None,
+        'name': 'Cisco_6506',
+        'ip': '10.1.1.1',
+        'port': 23,
+        'radius': 0,
+        'protocol': 'telnet',
+        'id': 9
+    }
+],
+'adminPwd': 'wP91vzV0A7YrUA6ZGhb24w==\n',
+'redo': 1,
+'id': 13
+}

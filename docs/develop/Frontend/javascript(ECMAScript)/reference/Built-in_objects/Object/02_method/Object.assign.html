@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Object.assign() | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Object.assign()" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Object.assign() 메소드는 열거할 수 있는 하나 이상의 소스 오브젝트로 부터 타켓 오브젝트로 프로퍼티들을 복사하는데 사용됩니다. 그리고, 타겟 오브젝트가 반환될 것입니다." />
+<meta property="og:description" content="Object.assign() 메소드는 열거할 수 있는 하나 이상의 소스 오브젝트로 부터 타켓 오브젝트로 프로퍼티들을 복사하는데 사용됩니다. 그리고, 타겟 오브젝트가 반환될 것입니다." />
+<link rel="canonical" href="http://localhost:4000/blog/docs/develop/Frontend/javascript(ECMAScript)/reference/Built-in_objects/Object/02_method/Object.assign.html" />
+<meta property="og:url" content="http://localhost:4000/blog/docs/develop/Frontend/javascript(ECMAScript)/reference/Built-in_objects/Object/02_method/Object.assign.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-06T09:31:12+09:00" />
+<script type="application/ld+json">
+{"description":"Object.assign() 메소드는 열거할 수 있는 하나 이상의 소스 오브젝트로 부터 타켓 오브젝트로 프로퍼티들을 복사하는데 사용됩니다. 그리고, 타겟 오브젝트가 반환될 것입니다.","headline":"Object.assign()","dateModified":"2019-11-06T09:31:12+09:00","datePublished":"2019-11-06T09:31:12+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/docs/develop/Frontend/javascript(ECMAScript)/reference/Built-in_objects/Object/02_method/Object.assign.html"},"url":"http://localhost:4000/blog/docs/develop/Frontend/javascript(ECMAScript)/reference/Built-in_objects/Object/02_method/Object.assign.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Object.assign()</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#part-654389cac26">문법</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#part-65439e266e0">인자</a></li>
+<li class="toc-entry toc-h3"><a href="#return">return 값</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#examples">Examples</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#part-7ee7033b2a7fdc15">객체 복제하기</a></li>
+<li class="toc-entry toc-h3"><a href="#part-3d93afa337040433">깊은 복제에 대한 주의사항</a></li>
+<li class="toc-entry toc-h3"><a href="#part-7ee11480cf60d494">객체 병합하기</a></li>
+<li class="toc-entry toc-h3"><a href="#part-650a8cb91fdefd45">심볼 타입 프로퍼티 복사하기</a></li>
+<li class="toc-entry toc-h3"><a href="#part-22aea3d12e2c8c1a">프로토타입 체인 위에 있는 프로퍼티와 열거할 수 없는 프로퍼티들은 복사되지 않습니다</a></li>
+<li class="toc-entry toc-h3"><a href="#part-858b1af922e51fe7">원시 타입들은 객체로 변환될 것입니다</a></li>
+<li class="toc-entry toc-h3"><a href="#part-922e409018964321">예외는 진행중인 복사 작업을 중지시킬 것입니다</a></li>
+<li class="toc-entry toc-h3"><a href="#part-af22ceb9abb1f28">복사 접근자들</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#polyfill">Polyfill</a></li>
+<li class="toc-entry toc-h2"><a href="#reference">Reference</a></li>
+</ul><p>Object.assign() 메소드는 열거할 수 있는 하나 이상의 소스 오브젝트로 부터 타켓 오브젝트로 프로퍼티들을 복사하는데 사용됩니다. 그리고, 타겟 오브젝트가 반환될 것입니다.</p>
+
+<h2 id="part-654389cac26">
+<a class="anchor" href="#part-654389cac26" aria-hidden="true"><span class="octicon octicon-link"></span></a>문법</h2>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="p">...</span><span class="nx">sources</span><span class="p">)</span>  <span class="c1">// retrun target</span>
+</code></pre></div>
+<h3 id="part-65439e266e0">
+<a class="anchor" href="#part-65439e266e0" aria-hidden="true"><span class="octicon octicon-link"></span></a>인자</h3>
+
+<p><code>target</code>: 타켓 오브젝트</p>
+
+<p><code>sources</code>: 하나 이상의 소스 오브젝트</p>
+
+<h3 id="return">
+<a class="anchor" href="#return" aria-hidden="true"><span class="octicon octicon-link"></span></a>return 값</h3>
+
+<p><code>target</code></p>
+
+<hr>
+
+<h2 id="examples">
+<a class="anchor" href="#examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples</h2>
+
+<h3 id="part-7ee7033b2a7fdc15">
+<a class="anchor" href="#part-7ee7033b2a7fdc15" aria-hidden="true"><span class="octicon octicon-link"></span></a>객체 복제하기</h3>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span> <span class="na">a</span><span class="p">:</span> <span class="mi">1</span> <span class="p">};</span>
+<span class="kd">var</span> <span class="nx">copy</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">({},</span> <span class="nx">obj</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">copy</span><span class="p">);</span> <span class="c1">// { a: 1 }</span>
+</code></pre></div>
+<h3 id="part-3d93afa337040433">
+<a class="anchor" href="#part-3d93afa337040433" aria-hidden="true"><span class="octicon octicon-link"></span></a>깊은 복제에 대한 주의사항</h3>
+
+<p>깊은 복제에 대해서는 대안적인 방법을 사용할 필요가 있습니다. 왜냐하면, Object,assign()는 타겟 오브젝트에 할당을 할 때, 프로퍼티의 참조를 복사하기 때문입니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">test</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">{</span> <span class="na">b</span><span class="p">:</span> <span class="p">{</span><span class="na">c</span><span class="p">:</span><span class="mi">4</span><span class="p">}</span> <span class="p">,</span> <span class="na">d</span><span class="p">:</span> <span class="p">{</span> <span class="na">e</span><span class="p">:</span> <span class="p">{</span><span class="na">f</span><span class="p">:</span><span class="mi">1</span><span class="p">}}</span> <span class="p">}</span>
+  <span class="kd">let</span> <span class="nx">g</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">({},</span><span class="nx">a</span><span class="p">)</span>
+  <span class="kd">let</span> <span class="nx">h</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">a</span><span class="p">));</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">g</span><span class="p">.</span><span class="nx">d</span><span class="p">)</span> <span class="c1">// { e: { f: 1 } }</span>
+  <span class="nx">g</span><span class="p">.</span><span class="nx">d</span><span class="p">.</span><span class="nx">e</span> <span class="o">=</span> <span class="mi">32</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">g.d.e set to 32.</span><span class="dl">'</span><span class="p">)</span> <span class="c1">// g.d.e set to 32.</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">g</span><span class="p">)</span> <span class="c1">// { b: { c: 4 }, d: { e: 32 } }</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="c1">// { b: { c: 4 }, d: { e: 32 } }</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">h</span><span class="p">)</span> <span class="c1">// { b: { c: 4 }, d: { e: { f: 1 } } }</span>
+  <span class="nx">h</span><span class="p">.</span><span class="nx">d</span><span class="p">.</span><span class="nx">e</span> <span class="o">=</span> <span class="mi">54</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">h.d.e set to 54.</span><span class="dl">'</span><span class="p">)</span> <span class="c1">// h.d.e set to 54.</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">g</span><span class="p">)</span> <span class="c1">// { b: { c: 4 }, d: { e: 32 } }</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="c1">// { b: { c: 4 }, d: { e: 32 } }</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">h</span><span class="p">)</span> <span class="c1">// { b: { c: 4 }, d: { e: 54 } }</span>
+<span class="p">}</span>
+<span class="nx">test</span><span class="p">();</span>
+</code></pre></div>
+<h3 id="part-7ee11480cf60d494">
+<a class="anchor" href="#part-7ee11480cf60d494" aria-hidden="true"><span class="octicon octicon-link"></span></a>객체 병합하기</h3>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">o1</span> <span class="o">=</span> <span class="p">{</span> <span class="na">a</span><span class="p">:</span> <span class="mi">1</span> <span class="p">};</span>
+<span class="kd">var</span> <span class="nx">o2</span> <span class="o">=</span> <span class="p">{</span> <span class="na">b</span><span class="p">:</span> <span class="mi">2</span> <span class="p">};</span>
+<span class="kd">var</span> <span class="nx">o3</span> <span class="o">=</span> <span class="p">{</span> <span class="na">c</span><span class="p">:</span> <span class="mi">3</span> <span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">(</span><span class="nx">o1</span><span class="p">,</span> <span class="nx">o2</span><span class="p">,</span> <span class="nx">o3</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span> <span class="c1">// { a: 1, b: 2, c: 3 }</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">o1</span><span class="p">);</span>  <span class="c1">// { a: 1, b: 2, c: 3 }, 타겟 오브젝트, 그 자체도 변화합니다.</span>
+</code></pre></div>
+<p>다른 오브젝트가 가지고 있는 똑같은 프로퍼티들은 인수의 순서에 따라 덮어 씌여질 것입니다.</p>
+
+<h3 id="part-650a8cb91fdefd45">
+<a class="anchor" href="#part-650a8cb91fdefd45" aria-hidden="true"><span class="octicon octicon-link"></span></a>심볼 타입 프로퍼티 복사하기</h3>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">o1</span> <span class="o">=</span> <span class="p">{</span> <span class="na">a</span><span class="p">:</span> <span class="mi">1</span> <span class="p">};</span>
+<span class="kd">var</span> <span class="nx">o2</span> <span class="o">=</span> <span class="p">{</span> <span class="p">[</span><span class="nb">Symbol</span><span class="p">(</span><span class="dl">'</span><span class="s1">foo</span><span class="dl">'</span><span class="p">)]:</span> <span class="mi">2</span> <span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">({},</span> <span class="nx">o1</span><span class="p">,</span> <span class="nx">o2</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span> <span class="c1">// { a : 1, [Symbol("foo")]: 2 } (cf. bug 1207182 on Firefox)</span>
+<span class="nb">Object</span><span class="p">.</span><span class="nx">getOwnPropertySymbols</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span> <span class="c1">// [Symbol(foo)]</span>
+</code></pre></div>
+<h3 id="part-22aea3d12e2c8c1a">
+<a class="anchor" href="#part-22aea3d12e2c8c1a" aria-hidden="true"><span class="octicon octicon-link"></span></a>프로토타입 체인 위에 있는 프로퍼티와 열거할 수 없는 프로퍼티들은 복사되지 않습니다</h3>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span> <span class="na">foo</span><span class="p">:</span> <span class="mi">1</span> <span class="p">},</span> <span class="p">{</span> <span class="c1">// foo는 변수 obj의 프로토타입 체인 위에 있습니다.</span>
+  <span class="na">bar</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">value</span><span class="p">:</span> <span class="mi">2</span>  <span class="c1">// 변수 bar는 non-enumerable 프로퍼티입니다. 따라서 복사되지 않을 것입니다.</span>
+  <span class="p">},</span>
+  <span class="na">baz</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">value</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="na">enumerable</span><span class="p">:</span> <span class="kc">true</span>  <span class="c1">// 변수 baz는 그 자체도 enumerable 프로퍼티입니다. 따라서 복사될 것입니다.</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">copy</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">({},</span> <span class="nx">obj</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">copy</span><span class="p">);</span> <span class="c1">// { baz: 3 }</span>
+</code></pre></div>
+<h3 id="part-858b1af922e51fe7">
+<a class="anchor" href="#part-858b1af922e51fe7" aria-hidden="true"><span class="octicon octicon-link"></span></a>원시 타입들은 객체로 변환될 것입니다</h3>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">v1</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">abc</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">v2</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">v3</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">v4</span> <span class="o">=</span> <span class="nb">Symbol</span><span class="p">(</span><span class="dl">'</span><span class="s1">foo</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">({},</span> <span class="nx">v1</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">v2</span><span class="p">,</span> <span class="kc">undefined</span><span class="p">,</span> <span class="nx">v3</span><span class="p">,</span> <span class="nx">v4</span><span class="p">);</span>
+<span class="c1">// null과 undefined는 무시될 것입니다.</span>
+<span class="c1">// String warpper만이 enumerable 프로퍼티를 가지고 있음을 주의하세요.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span> <span class="c1">// { "0": "a", "1": "b", "2": "c" }</span>
+</code></pre></div>
+<h3 id="part-922e409018964321">
+<a class="anchor" href="#part-922e409018964321" aria-hidden="true"><span class="octicon octicon-link"></span></a>예외는 진행중인 복사 작업을 중지시킬 것입니다</h3>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">target</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">({},</span> <span class="dl">'</span><span class="s1">foo</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+  <span class="na">value</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="na">writable</span><span class="p">:</span> <span class="kc">false</span>
+<span class="p">});</span> <span class="c1">// target.foo is a read-only property</span>
+
+<span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="p">{</span> <span class="na">bar</span><span class="p">:</span> <span class="mi">2</span> <span class="p">},</span> <span class="p">{</span> <span class="na">foo2</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="na">foo</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="na">foo3</span><span class="p">:</span> <span class="mi">3</span> <span class="p">},</span> <span class="p">{</span> <span class="na">baz</span><span class="p">:</span> <span class="mi">4</span> <span class="p">});</span>
+<span class="c1">// TypeError: "foo" is read-only</span>
+<span class="c1">// The Exception is thrown when assigning target.foo</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">target</span><span class="p">.</span><span class="nx">bar</span><span class="p">);</span>  <span class="c1">// 2, 첫 번째 소스 오브젝트는 성공적으로 복사되었습니다.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">target</span><span class="p">.</span><span class="nx">foo2</span><span class="p">);</span> <span class="c1">// 3, 두 번째 소스 프로젝트의 첫 번째 프로퍼티도 성공적으로 복사되었습니다.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">target</span><span class="p">.</span><span class="nx">foo</span><span class="p">);</span>  <span class="c1">// 1, 예외는 여기서 던져집니다.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">target</span><span class="p">.</span><span class="nx">foo3</span><span class="p">);</span> <span class="c1">// undefined, Object.assign() 메소드는 끝났습니다. 변수 foo3는 복사되지 않습니다.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">target</span><span class="p">.</span><span class="nx">baz</span><span class="p">);</span>  <span class="c1">// undefined, 세 번째 소스 오브젝트, 역시 복사되지 않습니다.</span>
+</code></pre></div>
+<h3 id="part-af22ceb9abb1f28">
+<a class="anchor" href="#part-af22ceb9abb1f28" aria-hidden="true"><span class="octicon octicon-link"></span></a>복사 접근자들</h3>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">foo</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="kd">get</span> <span class="nx">bar</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">copy</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">({},</span> <span class="nx">obj</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">copy</span><span class="p">);</span>
+<span class="c1">// { foo: 1, bar: 2 }, copy.bar의 값은 obj.bar'의 게터가 리턴해주는 값입니다.</span>
+
+<span class="c1">// 이것은 모든 descriptors를 복사하는 할당 함수입니다.</span>
+<span class="kd">function</span> <span class="nx">completeAssign</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="p">...</span><span class="nx">sources</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">sources</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">source</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">descriptors</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">source</span><span class="p">).</span><span class="nx">reduce</span><span class="p">((</span><span class="nx">descriptors</span><span class="p">,</span> <span class="nx">key</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="nx">descriptors</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">getOwnPropertyDescriptor</span><span class="p">(</span><span class="nx">source</span><span class="p">,</span> <span class="nx">key</span><span class="p">);</span>
+      <span class="k">return</span> <span class="nx">descriptors</span><span class="p">;</span>
+    <span class="p">},</span> <span class="p">{});</span>
+    <span class="c1">// 기본적으로, Object.assign는 열거할 수 있는 Symbol도 복사합니다.</span>
+    <span class="nb">Object</span><span class="p">.</span><span class="nx">getOwnPropertySymbols</span><span class="p">(</span><span class="nx">source</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">sym</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="kd">let</span> <span class="nx">descriptor</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">getOwnPropertyDescriptor</span><span class="p">(</span><span class="nx">source</span><span class="p">,</span> <span class="nx">sym</span><span class="p">);</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">descriptor</span><span class="p">.</span><span class="nx">enumerable</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">descriptors</span><span class="p">[</span><span class="nx">sym</span><span class="p">]</span> <span class="o">=</span> <span class="nx">descriptor</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">});</span>
+    <span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperties</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">descriptors</span><span class="p">);</span>
+  <span class="p">});</span>
+  <span class="k">return</span> <span class="nx">target</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">copy</span> <span class="o">=</span> <span class="nx">completeAssign</span><span class="p">({},</span> <span class="nx">obj</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">copy</span><span class="p">);</span>
+<span class="c1">// { foo:1, get bar() { return 2 } }</span>
+</code></pre></div>
+<hr>
+
+<h2 id="polyfill">
+<a class="anchor" href="#polyfill" aria-hidden="true"><span class="octicon octicon-link"></span></a>Polyfill</h2>
+
+<p>polyfill ES5에서는 Symbol를 지원하지 않습니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span> <span class="o">!=</span> <span class="dl">'</span><span class="s1">function</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+  <span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">target</span><span class="p">)</span> <span class="p">{</span>
+      <span class="dl">'</span><span class="s1">use strict</span><span class="dl">'</span><span class="p">;</span>
+      <span class="c1">// 우리는 반드시 특정한 케이스에 대해서 확인해야 합니다.</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">target</span> <span class="o">===</span> <span class="kc">undefined</span> <span class="o">||</span> <span class="nx">target</span> <span class="o">===</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nx">TypeError</span><span class="p">(</span><span class="dl">'</span><span class="s1">Cannot convert undefined or null to object</span><span class="dl">'</span><span class="p">);</span>
+      <span class="p">}</span>
+
+      <span class="kd">var</span> <span class="nx">output</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">(</span><span class="nx">target</span><span class="p">);</span>
+      <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">index</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">index</span> <span class="o">&lt;</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">index</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">source</span> <span class="o">=</span> <span class="nx">arguments</span><span class="p">[</span><span class="nx">index</span><span class="p">];</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">source</span> <span class="o">!==</span> <span class="kc">undefined</span> <span class="o">&amp;&amp;</span> <span class="nx">source</span> <span class="o">!==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">nextKey</span> <span class="k">in</span> <span class="nx">source</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">source</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">nextKey</span><span class="p">))</span> <span class="p">{</span>
+              <span class="nx">output</span><span class="p">[</span><span class="nx">nextKey</span><span class="p">]</span> <span class="o">=</span> <span class="nx">source</span><span class="p">[</span><span class="nx">nextKey</span><span class="p">];</span>
+            <span class="p">}</span>
+          <span class="p">}</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+      <span class="k">return</span> <span class="nx">output</span><span class="p">;</span>
+    <span class="p">};</span>
+  <span class="p">})();</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr>
+
+<h2 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+<p><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Object/assign">https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Object/assign</a></p>
+
+  </div>
+
+<div>
+  <p>Object.assign() 메소드는 열거할 수 있는 하나 이상의 소스 오브젝트로 부터 타켓 오브젝트로 프로퍼티들을 복사하는데 사용됩니다. 그리고, 타겟 오브젝트가 반환될 것입니다.</p>
+
+<h2 id="part-654389cac26">문법</h2>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="p">...</span><span class="nx">sources</span><span class="p">)</span>  <span class="c1">// retrun target</span>
+</code></pre></div>
+<h3 id="part-65439e266e0">인자</h3>
+
+<p><code>target</code>: 타켓 오브젝트</p>
+
+<p><code>sources</code>: 하나 이상의 소스 오브젝트</p>
+
+<h3 id="return">return 값</h3>
+
+<p><code>target</code></p>
+
+<hr>
+
+<h2 id="examples">Examples</h2>
+
+<h3 id="part-7ee7033b2a7fdc15">객체 복제하기</h3>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span> <span class="na">a</span><span class="p">:</span> <span class="mi">1</span> <span class="p">};</span>
+<span class="kd">var</span> <span class="nx">copy</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">({},</span> <span class="nx">obj</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">copy</span><span class="p">);</span> <span class="c1">// { a: 1 }</span>
+</code></pre></div>
+<h3 id="part-3d93afa337040433">깊은 복제에 대한 주의사항</h3>
+
+<p>깊은 복제에 대해서는 대안적인 방법을 사용할 필요가 있습니다. 왜냐하면, Object,assign()는 타겟 오브젝트에 할당을 할 때, 프로퍼티의 참조를 복사하기 때문입니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">test</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">{</span> <span class="na">b</span><span class="p">:</span> <span class="p">{</span><span class="na">c</span><span class="p">:</span><span class="mi">4</span><span class="p">}</span> <span class="p">,</span> <span class="na">d</span><span class="p">:</span> <span class="p">{</span> <span class="na">e</span><span class="p">:</span> <span class="p">{</span><span class="na">f</span><span class="p">:</span><span class="mi">1</span><span class="p">}}</span> <span class="p">}</span>
+  <span class="kd">let</span> <span class="nx">g</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">({},</span><span class="nx">a</span><span class="p">)</span>
+  <span class="kd">let</span> <span class="nx">h</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">a</span><span class="p">));</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">g</span><span class="p">.</span><span class="nx">d</span><span class="p">)</span> <span class="c1">// { e: { f: 1 } }</span>
+  <span class="nx">g</span><span class="p">.</span><span class="nx">d</span><span class="p">.</span><span class="nx">e</span> <span class="o">=</span> <span class="mi">32</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">g.d.e set to 32.</span><span class="dl">'</span><span class="p">)</span> <span class="c1">// g.d.e set to 32.</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">g</span><span class="p">)</span> <span class="c1">// { b: { c: 4 }, d: { e: 32 } }</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="c1">// { b: { c: 4 }, d: { e: 32 } }</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">h</span><span class="p">)</span> <span class="c1">// { b: { c: 4 }, d: { e: { f: 1 } } }</span>
+  <span class="nx">h</span><span class="p">.</span><span class="nx">d</span><span class="p">.</span><span class="nx">e</span> <span class="o">=</span> <span class="mi">54</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">h.d.e set to 54.</span><span class="dl">'</span><span class="p">)</span> <span class="c1">// h.d.e set to 54.</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">g</span><span class="p">)</span> <span class="c1">// { b: { c: 4 }, d: { e: 32 } }</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="c1">// { b: { c: 4 }, d: { e: 32 } }</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">h</span><span class="p">)</span> <span class="c1">// { b: { c: 4 }, d: { e: 54 } }</span>
+<span class="p">}</span>
+<span class="nx">test</span><span class="p">();</span>
+</code></pre></div>
+<h3 id="part-7ee11480cf60d494">객체 병합하기</h3>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">o1</span> <span class="o">=</span> <span class="p">{</span> <span class="na">a</span><span class="p">:</span> <span class="mi">1</span> <span class="p">};</span>
+<span class="kd">var</span> <span class="nx">o2</span> <span class="o">=</span> <span class="p">{</span> <span class="na">b</span><span class="p">:</span> <span class="mi">2</span> <span class="p">};</span>
+<span class="kd">var</span> <span class="nx">o3</span> <span class="o">=</span> <span class="p">{</span> <span class="na">c</span><span class="p">:</span> <span class="mi">3</span> <span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">(</span><span class="nx">o1</span><span class="p">,</span> <span class="nx">o2</span><span class="p">,</span> <span class="nx">o3</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span> <span class="c1">// { a: 1, b: 2, c: 3 }</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">o1</span><span class="p">);</span>  <span class="c1">// { a: 1, b: 2, c: 3 }, 타겟 오브젝트, 그 자체도 변화합니다.</span>
+</code></pre></div>
+<p>다른 오브젝트가 가지고 있는 똑같은 프로퍼티들은 인수의 순서에 따라 덮어 씌여질 것입니다.</p>
+
+<h3 id="part-650a8cb91fdefd45">심볼 타입 프로퍼티 복사하기</h3>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">o1</span> <span class="o">=</span> <span class="p">{</span> <span class="na">a</span><span class="p">:</span> <span class="mi">1</span> <span class="p">};</span>
+<span class="kd">var</span> <span class="nx">o2</span> <span class="o">=</span> <span class="p">{</span> <span class="p">[</span><span class="nb">Symbol</span><span class="p">(</span><span class="dl">'</span><span class="s1">foo</span><span class="dl">'</span><span class="p">)]:</span> <span class="mi">2</span> <span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">({},</span> <span class="nx">o1</span><span class="p">,</span> <span class="nx">o2</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span> <span class="c1">// { a : 1, [Symbol("foo")]: 2 } (cf. bug 1207182 on Firefox)</span>
+<span class="nb">Object</span><span class="p">.</span><span class="nx">getOwnPropertySymbols</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span> <span class="c1">// [Symbol(foo)]</span>
+</code></pre></div>
+<h3 id="part-22aea3d12e2c8c1a">프로토타입 체인 위에 있는 프로퍼티와 열거할 수 없는 프로퍼티들은 복사되지 않습니다</h3>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span> <span class="na">foo</span><span class="p">:</span> <span class="mi">1</span> <span class="p">},</span> <span class="p">{</span> <span class="c1">// foo는 변수 obj의 프로토타입 체인 위에 있습니다.</span>
+  <span class="na">bar</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">value</span><span class="p">:</span> <span class="mi">2</span>  <span class="c1">// 변수 bar는 non-enumerable 프로퍼티입니다. 따라서 복사되지 않을 것입니다.</span>
+  <span class="p">},</span>
+  <span class="na">baz</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">value</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="na">enumerable</span><span class="p">:</span> <span class="kc">true</span>  <span class="c1">// 변수 baz는 그 자체도 enumerable 프로퍼티입니다. 따라서 복사될 것입니다.</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">copy</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">({},</span> <span class="nx">obj</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">copy</span><span class="p">);</span> <span class="c1">// { baz: 3 }</span>
+</code></pre></div>
+<h3 id="part-858b1af922e51fe7">원시 타입들은 객체로 변환될 것입니다</h3>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">v1</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">abc</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">v2</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">v3</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">v4</span> <span class="o">=</span> <span class="nb">Symbol</span><span class="p">(</span><span class="dl">'</span><span class="s1">foo</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">({},</span> <span class="nx">v1</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">v2</span><span class="p">,</span> <span class="kc">undefined</span><span class="p">,</span> <span class="nx">v3</span><span class="p">,</span> <span class="nx">v4</span><span class="p">);</span>
+<span class="c1">// null과 undefined는 무시될 것입니다.</span>
+<span class="c1">// String warpper만이 enumerable 프로퍼티를 가지고 있음을 주의하세요.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span> <span class="c1">// { "0": "a", "1": "b", "2": "c" }</span>
+</code></pre></div>
+<h3 id="part-922e409018964321">예외는 진행중인 복사 작업을 중지시킬 것입니다</h3>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">target</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">({},</span> <span class="dl">'</span><span class="s1">foo</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+  <span class="na">value</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="na">writable</span><span class="p">:</span> <span class="kc">false</span>
+<span class="p">});</span> <span class="c1">// target.foo is a read-only property</span>
+
+<span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="p">{</span> <span class="na">bar</span><span class="p">:</span> <span class="mi">2</span> <span class="p">},</span> <span class="p">{</span> <span class="na">foo2</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="na">foo</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="na">foo3</span><span class="p">:</span> <span class="mi">3</span> <span class="p">},</span> <span class="p">{</span> <span class="na">baz</span><span class="p">:</span> <span class="mi">4</span> <span class="p">});</span>
+<span class="c1">// TypeError: "foo" is read-only</span>
+<span class="c1">// The Exception is thrown when assigning target.foo</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">target</span><span class="p">.</span><span class="nx">bar</span><span class="p">);</span>  <span class="c1">// 2, 첫 번째 소스 오브젝트는 성공적으로 복사되었습니다.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">target</span><span class="p">.</span><span class="nx">foo2</span><span class="p">);</span> <span class="c1">// 3, 두 번째 소스 프로젝트의 첫 번째 프로퍼티도 성공적으로 복사되었습니다.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">target</span><span class="p">.</span><span class="nx">foo</span><span class="p">);</span>  <span class="c1">// 1, 예외는 여기서 던져집니다.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">target</span><span class="p">.</span><span class="nx">foo3</span><span class="p">);</span> <span class="c1">// undefined, Object.assign() 메소드는 끝났습니다. 변수 foo3는 복사되지 않습니다.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">target</span><span class="p">.</span><span class="nx">baz</span><span class="p">);</span>  <span class="c1">// undefined, 세 번째 소스 오브젝트, 역시 복사되지 않습니다.</span>
+</code></pre></div>
+<h3 id="part-af22ceb9abb1f28">복사 접근자들</h3>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">foo</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="kd">get</span> <span class="nx">bar</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">copy</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">({},</span> <span class="nx">obj</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">copy</span><span class="p">);</span>
+<span class="c1">// { foo: 1, bar: 2 }, copy.bar의 값은 obj.bar'의 게터가 리턴해주는 값입니다.</span>
+
+<span class="c1">// 이것은 모든 descriptors를 복사하는 할당 함수입니다.</span>
+<span class="kd">function</span> <span class="nx">completeAssign</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="p">...</span><span class="nx">sources</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">sources</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">source</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">descriptors</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">source</span><span class="p">).</span><span class="nx">reduce</span><span class="p">((</span><span class="nx">descriptors</span><span class="p">,</span> <span class="nx">key</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="nx">descriptors</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">getOwnPropertyDescriptor</span><span class="p">(</span><span class="nx">source</span><span class="p">,</span> <span class="nx">key</span><span class="p">);</span>
+      <span class="k">return</span> <span class="nx">descriptors</span><span class="p">;</span>
+    <span class="p">},</span> <span class="p">{});</span>
+    <span class="c1">// 기본적으로, Object.assign는 열거할 수 있는 Symbol도 복사합니다.</span>
+    <span class="nb">Object</span><span class="p">.</span><span class="nx">getOwnPropertySymbols</span><span class="p">(</span><span class="nx">source</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">sym</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="kd">let</span> <span class="nx">descriptor</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">getOwnPropertyDescriptor</span><span class="p">(</span><span class="nx">source</span><span class="p">,</span> <span class="nx">sym</span><span class="p">);</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">descriptor</span><span class="p">.</span><span class="nx">enumerable</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">descriptors</span><span class="p">[</span><span class="nx">sym</span><span class="p">]</span> <span class="o">=</span> <span class="nx">descriptor</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">});</span>
+    <span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperties</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">descriptors</span><span class="p">);</span>
+  <span class="p">});</span>
+  <span class="k">return</span> <span class="nx">target</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">copy</span> <span class="o">=</span> <span class="nx">completeAssign</span><span class="p">({},</span> <span class="nx">obj</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">copy</span><span class="p">);</span>
+<span class="c1">// { foo:1, get bar() { return 2 } }</span>
+</code></pre></div>
+<hr>
+
+<h2 id="polyfill">Polyfill</h2>
+
+<p>polyfill ES5에서는 Symbol를 지원하지 않습니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span> <span class="o">!=</span> <span class="dl">'</span><span class="s1">function</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+  <span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">target</span><span class="p">)</span> <span class="p">{</span>
+      <span class="dl">'</span><span class="s1">use strict</span><span class="dl">'</span><span class="p">;</span>
+      <span class="c1">// 우리는 반드시 특정한 케이스에 대해서 확인해야 합니다.</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">target</span> <span class="o">===</span> <span class="kc">undefined</span> <span class="o">||</span> <span class="nx">target</span> <span class="o">===</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nx">TypeError</span><span class="p">(</span><span class="dl">'</span><span class="s1">Cannot convert undefined or null to object</span><span class="dl">'</span><span class="p">);</span>
+      <span class="p">}</span>
+
+      <span class="kd">var</span> <span class="nx">output</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">(</span><span class="nx">target</span><span class="p">);</span>
+      <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">index</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">index</span> <span class="o">&lt;</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">index</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">source</span> <span class="o">=</span> <span class="nx">arguments</span><span class="p">[</span><span class="nx">index</span><span class="p">];</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">source</span> <span class="o">!==</span> <span class="kc">undefined</span> <span class="o">&amp;&amp;</span> <span class="nx">source</span> <span class="o">!==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">nextKey</span> <span class="k">in</span> <span class="nx">source</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">source</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">nextKey</span><span class="p">))</span> <span class="p">{</span>
+              <span class="nx">output</span><span class="p">[</span><span class="nx">nextKey</span><span class="p">]</span> <span class="o">=</span> <span class="nx">source</span><span class="p">[</span><span class="nx">nextKey</span><span class="p">];</span>
+            <span class="p">}</span>
+          <span class="p">}</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+      <span class="k">return</span> <span class="nx">output</span><span class="p">;</span>
+    <span class="p">};</span>
+  <span class="p">})();</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr>
+
+<h2 id="reference">Reference</h2>
+
+<p><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Object/assign" rel="nofollow" target="_blank">https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Object/assign</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

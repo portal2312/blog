@@ -1,0 +1,13 @@
+# CREATE & UPDATE
+
+enable
+
+passwd: ****
+
+show conft
+
+username mkkim1 secret $passwd_sptzmfnwm!1
+
+end
+
+exit

@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Part 4 - Swarms | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Part 4 - Swarms" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Prerequisites" />
+<meta property="og:description" content="Prerequisites" />
+<link rel="canonical" href="http://localhost:4000/blog/docs/develop/CaaS/docker/1_Guides/2_Get_started/1_Get_started_with_Docker/Part_4_Swarms.html" />
+<meta property="og:url" content="http://localhost:4000/blog/docs/develop/CaaS/docker/1_Guides/2_Get_started/1_Get_started_with_Docker/Part_4_Swarms.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-06T09:31:12+09:00" />
+<script type="application/ld+json">
+{"description":"Prerequisites","headline":"Part 4 - Swarms","dateModified":"2019-11-06T09:31:12+09:00","datePublished":"2019-11-06T09:31:12+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/docs/develop/CaaS/docker/1_Guides/2_Get_started/1_Get_started_with_Docker/Part_4_Swarms.html"},"url":"http://localhost:4000/blog/docs/develop/CaaS/docker/1_Guides/2_Get_started/1_Get_started_with_Docker/Part_4_Swarms.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Part 4 - Swarms</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#prerequisites">Prerequisites</a></li>
+<li class="toc-entry toc-h2"><a href="#introduction">Introduction</a></li>
+<li class="toc-entry toc-h2"><a href="#understanding-swarm-clusters">Understanding Swarm clusters</a></li>
+<li class="toc-entry toc-h2"><a href="#set-up-your-swarm">Set up your swarm</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#create-a-cluster">Create a cluster</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#vms-on-your-local-machine-mac-linux-windows-7-and-8">VMS ON YOUR LOCAL MACHINE (MAC, LINUX, WINDOWS 7 AND 8)</a></li>
+<li class="toc-entry toc-h4"><a href="#vms-on-your-local-machine-windows-10">VMS ON YOUR LOCAL MACHINE (WINDOWS 10)</a></li>
+<li class="toc-entry toc-h4"><a href="#list-the-vms-and-get-their-ip-addresses">LIST THE VMS AND GET THEIR IP ADDRESSES</a></li>
+<li class="toc-entry toc-h4"><a href="#initialze-the-swarm-and-add-nodes">INITIALZE THE SWARM AND ADD NODES</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#deploy-your-app-on-the-swarm-cluster">Deploy your app on the swarm cluster</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#configure-a-docker-machine-shell-to-the-swarm-manager">Configure a docker-machine shell to the swarm manager</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#docker-machine-shell-environment-on-mac-or-linux">DOCKER MACHINE SHELL ENVIRONMENT ON MAC OR LINUX</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#deploy-the-app-on-the-swarm-manager">Deploy the app on the swarm manager</a></li>
+<li class="toc-entry toc-h3"><a href="#accessing-your-cluster">Accessing your cluster</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#iterating-and-scaling-your-app">Iterating and scaling your app</a></li>
+<li class="toc-entry toc-h2"><a href="#cleanup-and-reboot">Cleanup and reboot</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#stacks-and-swarms">Stacks and swarms</a></li>
+<li class="toc-entry toc-h3"><a href="#unsetting-docker-machine-shell-variable-settings">Unsetting docker-machine shell variable settings</a></li>
+<li class="toc-entry toc-h3"><a href="#restarting-docker-machines">Restarting Docker machines</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#reference">Reference</a></li>
+</ul><h2 id="prerequisites">
+<a class="anchor" href="#prerequisites" aria-hidden="true"><span class="octicon octicon-link"></span></a>Prerequisites</h2>
+
+<p>생략</p>
+
+<hr>
+
+<h2 id="introduction">
+<a class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h2>
+
+<p>Part 3 에서는 Part 2에서 작성한 응용 프로그램을 가져 와서 service 로 전환하여 production 환경에서 실행해야하는 방법을 정의하고 프로세스에서 5 배로 확장했습니다.
+여기 Part 4 에서는 이 응용 프로그램을 여러 컴퓨터에서 실행하는 클러스터에 배포합니다.
+여러 컨테이너, 다중 기계 응용 프로그램은 여러 대의 컴퓨터를 <strong>swarm</strong> 라고 불리는 "Dockerized" 클러스터로 결합하여 가능합니다.</p>
+
+<hr>
+
+<h2 id="understanding-swarm-clusters">
+<a class="anchor" href="#understanding-swarm-clusters" aria-hidden="true"><span class="octicon octicon-link"></span></a>Understanding Swarm clusters</h2>
+
+<p>swarm 는 Docker를 실행하고 클러스터에 합류한 컴퓨터 그룹입니다.
+그런 일이 발생하면, 이전에는 사용하던 Docker 명령을 계속 실행하지만, 이제는 <strong>swarm manager</strong> 가 클러스터에서 실행합니다.
+swarm 에 있는 machine 은 물리적 또는 가상일 수 있습니다.
+swarm 에 joining 시 <strong>node</strong> 라고 부릅니다.</p>
+
+<p>Swarm managers 는 활용도가 가장 낮은 machine 을 container 로 채우는 "emptiest node"와 같은 container 를 실행하기 위한 몇 가지 전략을 사용할 수 있습니다.
+또는 "Global". 각 기계가 지정된 container 의 instance 를 정확히 하나씩 가져옵니다.
+swarm managers 가 이미 사용하고 있는 것과 마찬가지로 작성 전략에서 이 전략을 사용하도록 지시합니다.</p>
+
+<p>Swarm managers 는 명령을 실행할 수 있는 swarm 내의 유일한 기계이거나 다른 기계가 swarm에 <strong>Workers</strong> 로 참여할 수 있는 권한을 부여합니다.
+Workers 는 수용 능력을 제공하기 위해 존재하며, 다른 기계에 무엇을 할 수 있고 할 수 없는지를 말할 권한이 없습니다.</p>
+
+<p>지금까지 로컬 시스템에서 단일 호스트 모드로 Docker를 사용해 왔다.
+그러나 Docker는 <strong>swarm mode</strong> 로 전환 될 수 있으며, 이것이 Swarm의 사용을 가능하게 합니다.
+swarm mode 를 즉시 활성화하면 현재 시스템이 swarm managers 가 됩니다.
+그때부터 Docker는 현재 컴퓨터에서만 관리하는 것이 아니라 관리중인 명령에서 실행하는 명령을 실행합니다.</p>
+
+<hr>
+
+<h2 id="set-up-your-swarm">
+<a class="anchor" href="#set-up-your-swarm" aria-hidden="true"><span class="octicon octicon-link"></span></a>Set up your swarm</h2>
+
+<p>swarm 는 여러 nodes 로 구성되며 물리적 또는 가상 시스템이 될 수 있습니다.
+기본 개념은 간단합니다:
+swarm mode 를 활성화하고 현재 시스템을 swarm manager 로 만들려면 <code>docker swarm mode</code>실행한 다음, 다른 machines 에서 workers 로 swarm 에 합류하게 <code>docker swarm join</code> 하십시오.
+아래에서 탭을 선택하여 다양한 상황에서 이것이 어떻게 진행되는지 확인하십시오.
+우리는 VM을 사용하여 2대의 machines cluster 를 신속하게 만들고 그것을 swarm 로 바꿀 것입니다.</p>
+
+<h3 id="create-a-cluster">
+<a class="anchor" href="#create-a-cluster" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create a cluster</h3>
+
+<p><strong>Local VMs (Mac, Linux, Windows 7 and 8) [TAB]</strong></p>
+
+<p><strong>Local VMs (Windows 10/Hyper-V) [TAB]</strong></p>
+
+<h4 id="vms-on-your-local-machine-mac-linux-windows-7-and-8">
+<a class="anchor" href="#vms-on-your-local-machine-mac-linux-windows-7-and-8" aria-hidden="true"><span class="octicon octicon-link"></span></a>VMS ON YOUR LOCAL MACHINE (MAC, LINUX, WINDOWS 7 AND 8)</h4>
+
+<p>먼저, 가상 머신 (VM)을 생성 할 수있는 하이퍼 바이저가 필요하므로 머신의 OS 용 <a href="https://">Oracle VirtualBox</a>를 설치하십시오.</p>
+
+<blockquote>
+<p>Note: Windows 10과 같이 Hyper-V가 설치된 Windows 시스템을 사용하는 경우 VirtualBox를 설치할 필요가 없으므로 대신 Hyper-V를 사용해야합니다. 위의 Hyper-V 탭을 클릭하여 Hyper-V 시스템에 대한 지침을 봅니다.
+<a href="https://docs.docker.com/toolbox/overview/">Docker Toolbox</a> 를 사용하는 경우 VirtualBox를 이미 포함시켜야하므로 잘 할 수 있습니다.</p>
+</blockquote>
+
+<p>이제 VirtualBox 드라이버를 사용하여 <strong>docker-machine</strong> 을 사용하여 몇 가지 VM을 만듭니다:</p>
+
+<blockquote>
+<p>Note: <strong>docker-machine</strong> 사용 전 준비</p>
+
+<p>설치: <a href="https://docs.docker.com/machine/install-machine/">Install Docker Machine</a>
+자세한 명령어: 설치 후 <code>docker-machine -h</code> 또는 사이트 참조
+자동완성: <a href="https://docs.docker.com/machine/completion/">docker-machine autocompletion</a></p>
+</blockquote>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker-machine create <span class="nt">--driver</span> virtualbox myvm1
+<span class="c"># Creating CA: /home/docker/.docker/machine/certs/ca.pem</span>
+<span class="c"># Creating client certificate: /home/docker/.docker/machine/certs/cert.pem</span>
+<span class="c"># Running pre-create checks...</span>
+<span class="c"># (myvm1) Image cache directory does not exist, creating it at /home/docker/.docker/machine/cache...</span>
+<span class="c"># (myvm1) No default Boot2Docker ISO found locally, downloading the latest release...</span>
+<span class="c"># (myvm1) Latest release for github.com/boot2docker/boot2docker is v17.10.0-ce</span>
+<span class="c"># (myvm1) Downloading /home/docker/.docker/machine/cache/boot2docker.iso from https://github.com/boot2docker/boot2docker/releases/download/v17.10.0-ce/boot2docker.iso...</span>
+<span class="c"># (myvm1) 0%....10%....20%....30%....40%....50%....60%....70%....80%....90%....100%</span>
+<span class="c"># Creating machine...</span>
+<span class="c"># (myvm1) Copying /home/docker/.docker/machine/cache/boot2docker.iso to /home/docker/.docker/machine/machines/myvm1/boot2docker.iso...</span>
+<span class="c"># (myvm1) Creating VirtualBox VM...</span>
+<span class="c"># (myvm1) Creating SSH key...</span>
+<span class="c"># (myvm1) Starting the VM...</span>
+<span class="c"># (myvm1) Check network to re-create if needed...</span>
+<span class="c"># (myvm1) Found a new host-only adapter: "vboxnet0"</span>
+<span class="c"># (myvm1) Waiting for an IP...</span>
+<span class="c"># Waiting for machine to be running, this may take a few minutes...</span>
+<span class="c"># Detecting operating system of created instance...</span>
+<span class="c"># Waiting for SSH to be available...</span>
+<span class="c"># Detecting the provisioner...</span>
+<span class="c"># Provisioning with boot2docker...</span>
+<span class="c"># Copying certs to the local machine directory...</span>
+<span class="c"># Copying certs to the remote machine...</span>
+<span class="c"># Setting Docker configuration on the remote daemon...</span>
+<span class="c"># Checking connection to Docker...</span>
+<span class="c"># Docker is up and running!</span>
+<span class="c"># To see how to connect your Docker Client to the Docker Engine running on this virtual machine, run: docker-machine env myvm1</span>
+
+<span class="nv">$ </span>docker-machine create <span class="nt">--driver</span> virtualbox myvm2
+</code></pre></div>
+<hr>
+
+<h4 id="vms-on-your-local-machine-windows-10">
+<a class="anchor" href="#vms-on-your-local-machine-windows-10" aria-hidden="true"><span class="octicon octicon-link"></span></a>VMS ON YOUR LOCAL MACHINE (WINDOWS 10)</h4>
+
+<p>생략</p>
+
+<hr>
+
+<h4 id="list-the-vms-and-get-their-ip-addresses">
+<a class="anchor" href="#list-the-vms-and-get-their-ip-addresses" aria-hidden="true"><span class="octicon octicon-link"></span></a>LIST THE VMS AND GET THEIR IP ADDRESSES</h4>
+
+<p>이제 <code>myvm1</code> 과 <code>myvm2</code> 라는 두 개의 VM이 생성되었습니다.</p>
+
+<p>이 명령을 사용하여 시스템을 나열하고 IP 주소를 가져옵니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker-machine <span class="nb">ls</span>
+</code></pre></div>
+<p>다음은이 명령의 출력 예 입니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker-machine <span class="nb">ls</span>
+<span class="c"># NAME    ACTIVE   DRIVER       STATE     URL                         SWARM   DOCKER        ERRORS</span>
+<span class="c"># myvm1   -        virtualbox   Running   tcp://192.168.99.100:2376           v17.10.0-ce</span>
+<span class="c"># myvm2   -        virtualbox   Running   tcp://192.168.99.101:2376           v17.10.0-ce</span>
+</code></pre></div>
+<blockquote>
+<p>Note:
+STATE: Stopped 인 경우에는 다음과 같다</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># docker-marchine start &lt;vm-name&gt;</span>
+<span class="nv">$ </span>docker-marchine start myvm1
+</code></pre></div>
+<h4 id="initialze-the-swarm-and-add-nodes">
+<a class="anchor" href="#initialze-the-swarm-and-add-nodes" aria-hidden="true"><span class="octicon octicon-link"></span></a>INITIALZE THE SWARM AND ADD NODES</h4>
+
+<p>첫 번째 장비는 관리자로 작동하여 관리 명령을 실행하고 worker를 인증하여 swarm 에 가입시키며,
+두 번째 시스템은 worker 가 됩니다.</p>
+
+<p><code>docker-machine ssh</code> 를 사용하여 VM에 명령을 보낼 수 있습니다.
+<code>myvm1</code> 에게 <code>docker swarm init</code> 가 있는 swarm manager가 되도록 지시하면 다음과 같은 출력이 표시됩니다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker-machine ssh myvm1 <span class="s2">"docker swarm init --advertise-addr &lt;myvm1 ip&gt;"</span>
+<span class="c"># Swarm initialized: current node &lt;node ID&gt; is now a manager.</span>
+<span class="c">#</span>
+<span class="c"># To add a worker to this swarm, run the following command:</span>
+<span class="c">#</span>
+<span class="c">#   docker swarm join \</span>
+<span class="c">#   --token &lt;token&gt; \</span>
+<span class="c">#   &lt;myvm ip&gt;:&lt;port&gt;</span>
+<span class="c">#</span>
+<span class="c"># To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.</span>
+</code></pre></div>
+<p>예:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker-machine ssh myvm1 <span class="s2">"docker swarm init --advertise-addr 192.168.99.100:2377"</span>
+
+<span class="c"># Swarm initialized: current node (dbu83tptex4v60c1wdk5spmi2) is now a manager.</span>
+<span class="c">#</span>
+<span class="c"># To add a worker to this swarm, run the following command:</span>
+<span class="c">#</span>
+<span class="c">#     docker swarm join --token SWMTKN-1-0etkogicru2lvzkgn99mnmampy6jcafcfsnw0np721iyew1427-eqkttfzl9hzbitjxb5voplfda 192.168.99.100:2377</span>
+<span class="c">#</span>
+<span class="c"># To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.</span>
+
+</code></pre></div>
+<blockquote>
+<p><strong>Ports 2377 and 2376</strong></p>
+
+<p><code>docker swarm init</code> and <code>docker swarm join</code> 는 port <strong>2377</strong> (swarm mangement port)를 항상 실행하거나, 전혀 포트를 사용하지 않고 기본값을 사용합니다.</p>
+
+<p><code>docker-machine ls</code> 에 의해 반환된 컴퓨터 IP 주소는 Docker 데몬 port인 포트 <strong>2376</strong> 을 포함합니다.</p>
+
+<p>이 포트를 사용하지 마십시오. 오류가 발생할 수 있습니다.</p>
+</blockquote>
+
+<p>보시다시피 <code>docker swarm init</code> 에 대한 응답에는 추가하려는 node 에서 실행할 수 있도록 미리 구성된 <code>docker swarm join</code> 명령어가 포함되어 있습니다.
+이 명령어을 복사하여 <code>docker-machine ssh</code> 를 통해 <code>myvm2</code> 로 보내면 <code>myvm2</code> 가 새 swarm 을 worker 로 참여시킵니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker-machine ssh myvm2 <span class="s2">"docker swarm join </span><span class="se">\</span><span class="s2">
+--token &lt;token&gt; </span><span class="se">\</span><span class="s2">
+&lt;ip&gt;:2377"</span>
+
+This node joined a swarm as a worker.
+</code></pre></div>
+<p>예:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker-machine ssh myvm2 <span class="s2">"docker swarm join --token SWMTKN-1-0etkogicru2lvzkgn99mnmampy6jcafcfsnw0np721iyew1427-eqkttfzl9hzbitjxb5voplfda 192.168.99.100:2377"</span>
+<span class="c"># This node joined a swarm as a worker.</span>
+</code></pre></div>
+<p>축하합니다, 당신은 첫 번째 swarm 을 만들었습니다!</p>
+
+<p>이 swarm 에서 node 를 보려면 manager 에서 <code>docker node ls</code> 를 실행하십시오:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker-machine ssh myvm1 <span class="s2">"docker node ls"</span>
+<span class="c"># ID                            HOSTNAME            STATUS              AVAILABILITY        MANAGER STATUS</span>
+<span class="c"># dbu83tptex4v60c1wdk5spmi2 *   myvm1               Ready               Active              Leader</span>
+<span class="c"># t8herakzh18tlj2tfmbjvxtay     myvm2               Ready               Active</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Leaving a swarm</strong></p>
+
+<p>다시 시작하려면 각 노드에서 <code>docker swarm leave</code> 를 실행할 수 있습니다.</p>
+</blockquote>
+
+<h2 id="deploy-your-app-on-the-swarm-cluster">
+<a class="anchor" href="#deploy-your-app-on-the-swarm-cluster" aria-hidden="true"><span class="octicon octicon-link"></span></a>Deploy your app on the swarm cluster</h2>
+
+<p>swarm cluseter 에 나의 app 배포하기.</p>
+
+<p>어려운 부분은 끝났습니다.
+이제 Part 3 에서 사용한 프로세스를 새 swarm 에 배치하기 만하면 됩니다.
+<code>myvm1</code> 과 같은 swarm manager 만 Docker 명령을 실행한다; 는 점을 기억하십시오.
+workers 는 단지 능력을 위한 것입니다.</p>
+
+<h3 id="configure-a-docker-machine-shell-to-the-swarm-manager">
+<a class="anchor" href="#configure-a-docker-machine-shell-to-the-swarm-manager" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configure a <code>docker-machine</code> shell to the swarm manager</h3>
+
+<p>지금까지 <code>docker-machine ssh</code> 에서 Docker 명령을 랩핑하여 VM과 대화했습니다.
+또 다른 옵션은 <code>docker-machine env &lt;machine&gt;</code> 을 실행하여 현재 shell 을 구성하여 VM의 Docker 데몬과 통신하는 명령을 실행하는 것입니다.
+이 방법은 로컬 <code>docker-compose.yml</code> 파일을 사용하여 어디서나 복사하지 않고 "원격"으로 app 을 배포 할 수 있기 때문에 보다 다음 단계에서 효과적입니다.</p>
+
+<p><code>docker-machine env myvm1</code> 를 입력하고, 출력의 마지막 줄에 제공된 명령을 복사하여 붙여넣고 실행하여 shell 이 swarm manager 인 <code>myvm1</code> 과 통신하도록 구성하십시오.</p>
+
+<p>Shell 을 구성하는 명령은 Mac, Linux 또는 Windows 중 어떤 것이 있는지에 따라 다르므로 아래 각 탭에 예제가 나와 있습니다.</p>
+
+<h4 id="docker-machine-shell-environment-on-mac-or-linux">
+<a class="anchor" href="#docker-machine-shell-environment-on-mac-or-linux" aria-hidden="true"><span class="octicon octicon-link"></span></a>DOCKER MACHINE SHELL ENVIRONMENT ON MAC OR LINUX</h4>
+
+<p><code>docker-machine env myvm1</code> 을 실행하여 <code>myvm1</code> 과 통신하도록 shell 을 구성하는 명령을 얻으십시오.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker-machine <span class="nb">env </span>myvm1
+
+<span class="nb">export </span><span class="nv">DOCKER_TLS_VERIFY</span><span class="o">=</span><span class="s2">"1"</span>
+<span class="nb">export </span><span class="nv">DOCKER_HOST</span><span class="o">=</span><span class="s2">"tcp://192.168.99.100:2376"</span>
+<span class="nb">export </span><span class="nv">DOCKER_CERT_PATH</span><span class="o">=</span><span class="s2">"/home/docker/.docker/machine/machines/myvm1"</span>
+<span class="nb">export </span><span class="nv">DOCKER_MACHINE_NAME</span><span class="o">=</span><span class="s2">"myvm1"</span>
+<span class="c"># Run this command to configure your shell:</span>
+<span class="c"># eval $(docker-machine env myvm1)</span>
+</code></pre></div>
+<p>주어진 명령을 실행하여 shell 이 <code>myvm1</code> 과 통신하도록 구성하십시오.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">eval</span> <span class="si">$(</span>docker-machine <span class="nb">env </span>myvm1<span class="si">)</span>
+</code></pre></div>
+<p><code>docker-machine ls</code> 를 실행하여 옆에 asterisk(<code>*</code>) 가 표시된대로 <code>myvm1</code> 이 현재 활성 시스템인지 확인하십시오.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker-machine <span class="nb">ls</span>
+
+<span class="c"># NAME    ACTIVE   DRIVER       STATE     URL                         SWARM   DOCKER        ERRORS</span>
+<span class="c"># myvm1   *        virtualbox   Running   tcp://192.168.99.100:2376           v17.11.0-ce</span>
+<span class="c"># myvm2   -        virtualbox   Running   tcp://192.168.99.101:2376           v17.11.0-ce</span>
+</code></pre></div>
+<hr>
+
+<h3 id="deploy-the-app-on-the-swarm-manager">
+<a class="anchor" href="#deploy-the-app-on-the-swarm-manager" aria-hidden="true"><span class="octicon octicon-link"></span></a>Deploy the app on the swarm manager</h3>
+
+<p>이제 <code>myvm1</code> 을 사용했으므로 swarm manager로서의 권한을 사용하여 part 3에서 사용한 것과 동일한 <code>docker stack deploy</code> 명령을 <code>myvm1</code> 에 사용하고 <code>docker-compose.yml</code> 의 로컬 복사본을 사용하여 응용 프로그램을 배포 할 수 있습니다.</p>
+
+<p><code>docker-machine</code> shell 구성을 사용하여 <code>myvm1</code> 에 연결되어 있고 로컬 호스트의 파일에 계속 액세스 할 수 있습니다.
+part 3에서 만든 <code>docker-compose.yml</code> 파일을 포함하여 이전과 같은 디렉토리에 있는지 확인하십시오.</p>
+
+<p>이전과 마찬가지로 <code>myvm1</code>에 app을 배포하려면 다음 명령을 실행하십시오.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker stack deploy <span class="nt">-c</span> docker-compose.yml getstartedlab
+</code></pre></div>
+<p>이제 part 3에서 사용한 동일한 docker commands 을 사용할 수 있습니다.
+이 시간에만 <code>myvm1</code>과 <code>myvm2</code> 사이에 서비스(및 연관된 컨테이너)가 분산되어 있음을 알 수 있습니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker stack ps getstartedlab
+
+<span class="c"># ID                  NAME                  IMAGE                          NODE                DESIRED STATE       CURRENT STATE            ERROR               PORTS</span>
+<span class="c"># xydzx0jr810x        getstartedlab_web.1   portal2312/get-started:part2   myvm2               Running             Running 53 seconds ago</span>
+<span class="c"># 6btx6nklstwy        getstartedlab_web.2   portal2312/get-started:part2   myvm1               Running             Running 53 seconds ago</span>
+<span class="c"># yo0j6jz0bvkw        getstartedlab_web.3   portal2312/get-started:part2   myvm2               Running             Running 53 seconds ago</span>
+<span class="c"># kfjet1qmf83p        getstartedlab_web.4   portal2312/get-started:part2   myvm2               Running             Running 53 seconds ago</span>
+<span class="c"># smtbb029szy0        getstartedlab_web.5   portal2312/get-started:part2   myvm1               Running             Running 53 seconds ago</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Connecting to VMs with <code>docker-machine env</code> and <code>docker-machine ssh</code></strong></p>
+
+<ul>
+<li><p><code>myvm2</code> 처럼 다른 machine 과 대화할 shell 을 설정하려면, 동일하거나 다른 shell 에서 <code>docker-machine env</code> 를 다시 실행 한 다음 주어진 명령을 실행하여 <code>myvm2</code> 를 가리키십시오.
+이것은 항상 현재 shell 에만 적용됩니다.
+구성되지 않은 shell 로 변경하거나 new shell 을 열면 명령을 다시 실행해야합니다.
+<code>docker-machine ls</code> 를 사용하여 기계를 나열하고, 그들이 어떤 상태인지 파악하고, IP ​​주소를 얻고, 연결되어있는 경우 어떤 것이 있는지 찾아보십시오.
+자세한 내용은 <a href="https://docs.docker.com/machine/get-started/#create-a-machine">Docker Machine getting started topics</a> 참조하십시오.</p></li>
+<li><p>또는 Docker 명령을 <code>docker-machine ssh &lt;machine&gt; "&lt;command&gt;"</code> 형식으로 래핑할 수도 있습니다.
+이 명령은 VM에 직접 기록하지만 로컬 호스트의 파일에 즉시 액세스 할 수는 없습니다.</p></li>
+<li><p>Mac 및 Linux에서는 <code>docker-machine scp &lt;file&gt; &lt;machine&gt;:~</code> 을 사용하여 여러 컴퓨터에서 파일을 복사 할 수 있지만 Windows 사용자는이 작업을 위해서는 Git Bash와 같은 Linux 터미널 에뮬레이터가 필요합니다.</p></li>
+</ul>
+
+<p>이 튜토리얼은 <code>docker-machine CLI</code> 를 통해 모든 플랫폼에서 사용할 수 있으므로 <code>docker-machine ssh</code> 와 <code>docker-machine env</code> 를 모두 데모합니다.</p>
+</blockquote>
+
+<h3 id="accessing-your-cluster">
+<a class="anchor" href="#accessing-your-cluster" aria-hidden="true"><span class="octicon octicon-link"></span></a>Accessing your cluster</h3>
+
+<p><code>myvm1</code> 또는 <code>myvm2</code>의 IP 주소에서 앱에 액세스 할 수 있습니다.</p>
+
+<p>사용자가 만든 네트워크는 네트워크간에 공유되며 load-balancing 을 수행합니다.
+<code>docker-machine ls</code> 를 실행하여 VM의 IP 주소를 얻고 브라우저에서 해당 주소로 방문하여 새로 고침 (또는 <code>curl</code>)하십시오.</p>
+
+<p>5 개의 가능한 컨테이너 ID가 모두 무작위로 순환하여 load-balancing을 보여줍니다.</p>
+
+<p>두 IP 주소가 작동하는 이유는 한 무리의 node 가 수신 <strong>routing mesh</strong> 에 참여한다는 것입니다.
+이렇게하면 실제로 container 를 실행중인 node 가 무엇이든 관계없이 swarm의 특정 포트에 배포 된 서비스가 항상 해당 port 를 소유하도록 할 수 있습니다.
+다음 다이어그램은 3 node 뭉치에서 포트 <code>8080</code> 에 게시된 <code>my-web</code> 이라는 서비스용 <strong>routing mesh</strong> 가 어떻게 보이는지 입니다.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">   192.168.99.100:8080       192.168.99.101:8080        192.168.99.102:8080
+            |                         |                          |
+<span class="gd">------------|-------------------------|--------------------------|--------------
+</span><span class="err">|+----------|-------------++----------|-------------++-----------|------------+|</span>
+||          |             ||          |             ||           |            ||
+<span class="err">||</span> [swarm load balancer]  || [swarm load balancer]  || [swarm load balancer]  ||
+<span class="err">||</span>          |             ||          |             ||           |            ||
+<span class="err">||</span>          +-------------||----------+-------------||------------            ||
+<span class="err">||</span>          |             ||          |             ||                        ||
+<span class="err">||</span> [10.0.0.1:80 my-web.1] || [10.0.0.2:80 my-web.2] ||                        ||
+<span class="err">||</span>                        ||                        ||                        ||
+<span class="err">||</span> node1 (192.168.99.100) || node2 (192.168.99.101) || node3 (192.168.99.102) ||
+<span class="err">|+------------------------++------------------------++------------------------+|</span>
+--------------------------------------------------------------------------------
+                              [ingress network]
+</code></pre></div>
+<blockquote>
+<p><strong>Having connectivity trouble?</strong></p>
+
+<p>swarm mode 활성화하기 전에 swarm 에 진입 네트워크를 사용하려면 swarm 노드간 다음 Port 를 열어야 합니다.
+- container 네트워크 검색을 위한 Port 7946 TCP/UDP
+- container 수신용 네트워크를 위한 Port 4789 UDP</p>
+</blockquote>
+
+<h2 id="iterating-and-scaling-your-app">
+<a class="anchor" href="#iterating-and-scaling-your-app" aria-hidden="true"><span class="octicon octicon-link"></span></a>Iterating and scaling your app</h2>
+
+<p>여기에서 파트 2와 3에서 배운 모든 것을 할 수 있습니다.</p>
+
+<p><code>docker-compose.yml</code> 파일을 변경하여 응용 프로그램의 크기를 조정하십시오.</p>
+
+<p>코드를 편집하여 응용 프로그램 동작을 변경 한 다음 새 이미지를 다시 작성하고 푸시합니다.
+(이렇게하려면 이전에 앱을 제작하고 이미지를 게시하는 데 사용한 것과 동일한 단계를 따르십시오).</p>
+
+<p>두 경우 모두 간단하게 <code>docker stack deploy</code> 를 다시 실행하여 이러한 변경 사항을 배포하십시오.</p>
+
+<p>물리적 또는 가상의 어떤 machine 이든 swarm 에 join 할 수 있습니다, <code>myvm2</code> 에서 사용된 <code>docker swarm join</code> 명령어와 같이 사용하면, 용량이 클러스터에 추가됩니다.
+나중에 <code>docker stack deploy</code>를 실행하면 app 이 새로운 리소스를 활용하게 됩니다.</p>
+
+<p>예:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>vi docker-compose.yml
+<span class="c"># 80:80 --&gt; 4000:80</span>
+<span class="nv">$ </span>docker stack deploy <span class="nt">-c</span> docker-compose.yml getstartedlab
+<span class="nv">$ </span>docker stack ps getstartedlab
+
+<span class="c"># ID                  NAME                      IMAGE                          NODE                DESIRED STATE       CURRENT STATE            ERROR               PORTS</span>
+<span class="c"># zstx3qjpht82        getstartedlab_web.1       portal2312/get-started:part2   myvm1               Running             Running 5 minutes ago</span>
+<span class="c"># xydzx0jr810x         \_ getstartedlab_web.1   portal2312/get-started:part2   myvm2               Shutdown            Shutdown 5 minutes ago</span>
+<span class="c"># zpli298le2i9        getstartedlab_web.2       portal2312/get-started:part2   myvm1               Running             Running 5 minutes ago</span>
+<span class="c"># 6btx6nklstwy         \_ getstartedlab_web.2   portal2312/get-started:part2   myvm1               Shutdown            Shutdown 5 minutes ago</span>
+<span class="c"># bbyqsbn167us        getstartedlab_web.3       portal2312/get-started:part2   myvm2               Running             Running 5 minutes ago</span>
+<span class="c"># yo0j6jz0bvkw         \_ getstartedlab_web.3   portal2312/get-started:part2   myvm2               Shutdown            Shutdown 5 minutes ago</span>
+<span class="c"># r3jym2zd79dd        getstartedlab_web.4       portal2312/get-started:part2   myvm2               Running             Running 4 minutes ago</span>
+<span class="c"># kfjet1qmf83p         \_ getstartedlab_web.4   portal2312/get-started:part2   myvm2               Shutdown            Shutdown 4 minutes ago</span>
+<span class="c"># qqaofvkr762o        getstartedlab_web.5       portal2312/get-started:part2   myvm1               Running             Running 5 minutes ago</span>
+<span class="c"># smtbb029szy0         \_ getstartedlab_web.5   portal2312/get-started:part2   myvm1               Shutdown            Shutdown 5 minutes ago</span>
+</code></pre></div>
+<h2 id="cleanup-and-reboot">
+<a class="anchor" href="#cleanup-and-reboot" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cleanup and reboot</h2>
+
+<h3 id="stacks-and-swarms">
+<a class="anchor" href="#stacks-and-swarms" aria-hidden="true"><span class="octicon octicon-link"></span></a>Stacks and swarms</h3>
+
+<p><code>docker stack rm</code> 을 사용하여 stack 을 삭제할 수 있습니다. 예:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker stack <span class="nb">rm </span>getstartedlab
+</code></pre></div>
+<blockquote>
+<p><strong>Keep the swarm or remove it?</strong></p>
+
+<p>나중에 관리자에서 <code>docker-machine ssh myvm2 "docker swarm leave"</code> 와 <code>docker-machine ssh myvm1 "docker swarm leave --force"</code> 이용해서 원한다면 swarm 를 제거 할 수 있습니다.
+그러나 이 swarm 은 part 5 필요하니 보관하십시오.</p>
+</blockquote>
+
+<h3 id="unsetting-docker-machine-shell-variable-settings">
+<a class="anchor" href="#unsetting-docker-machine-shell-variable-settings" aria-hidden="true"><span class="octicon octicon-link"></span></a>Unsetting docker-machine shell variable settings</h3>
+
+<p>다음 명령을 사용하여 현재 쉘에서 docker-machine 환경 변수를 설정 해제 할 수 있습니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">eval</span> <span class="si">$(</span>docker-machine <span class="nb">env</span> <span class="nt">-u</span><span class="si">)</span>
+</code></pre></div>
+<p>이렇게 하면 docker 컴퓨터에서 만든 가상 컴퓨터와 셸의 연결이 끊어지며 동일한 셸에서 작업을 계속할 수 있습니다.
+예를 들어 Mac 용 Docker 또는 Windows 용 Docker와 같은 기본 docker 명령을 사용합니다.
+자세한 내용은 <a href="https://docs.docker.com/machine/get-started/#unset-environment-variables-in-the-current-shell">Machine topic on unsetting environment variables</a> 참조.</p>
+
+<h3 id="restarting-docker-machines">
+<a class="anchor" href="#restarting-docker-machines" aria-hidden="true"><span class="octicon octicon-link"></span></a>Restarting Docker machines</h3>
+
+<p>만일 local host 를 종료할 때, Docker machines 중지됩니다.
+<code>docker-machine ls</code> 를 실행하여 machines 의 상태를 확인할 수 있습니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker-machine <span class="nb">ls</span>
+</code></pre></div>
+<p>재시작하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker-machine start &lt;machine-name&gt;
+</code></pre></div>
+<p>part 4 에서는 swarm 이 무엇인지, swarm node 가 관리자 또는 작업자가 될 수 있는지, swarm 을 만들어서 어떻게 응용 프로그램을 배포 하는지를 배웠습니다.
+Docker 핵심 명령이 part 3에서 변경되지 않은 것을 보았을 때, 그들은 swarm master 는 목표 향해 달려 가야했습니다.
+Docker의 네트워킹 기능이 실제로 다른 시스템에서 실행 중이더라도 container 간에 load-balancing request 을 보냈습니다.
+마지막으로 cluster 에서 app을 반복하고 크기를 조정하는 방법을 배웠습니다.</p>
+
+<p>다음은 swarm 및 VM과 상호 작용하기 위해 실행할 수있는 몇 가지 명령입니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">docker-machine create <span class="nt">--driver</span> virtualbox myvm1 <span class="c"># Create a VM (Mac, Win7, Linux)</span>
+docker-machine create <span class="nt">-d</span> hyperv <span class="nt">--hyperv-virtual-switch</span> <span class="s2">"myswitch"</span> myvm1 <span class="c"># Win10</span>
+docker-machine <span class="nb">env </span>myvm1                <span class="c"># View basic information about your node</span>
+docker-machine ssh myvm1 <span class="s2">"docker node ls"</span>         <span class="c"># List the nodes in your swarm</span>
+docker-machine ssh myvm1 <span class="s2">"docker node inspect &lt;node ID&gt;"</span>        <span class="c"># Inspect a node</span>
+docker-machine ssh myvm1 <span class="s2">"docker swarm join-token -q worker"</span>   <span class="c"># View join token</span>
+docker-machine ssh myvm1   <span class="c"># Open an SSH session with the VM; type "exit" to end</span>
+docker node <span class="nb">ls</span>                <span class="c"># View nodes in swarm (while logged on to manager)</span>
+docker-machine ssh myvm2 <span class="s2">"docker swarm leave"</span>  <span class="c"># Make the worker leave the swarm</span>
+docker-machine ssh myvm1 <span class="s2">"docker swarm leave -f"</span> <span class="c"># Make master leave, kill swarm</span>
+docker-machine <span class="nb">ls</span> <span class="c"># list VMs, asterisk shows which VM this shell is talking to</span>
+docker-machine start myvm1            <span class="c"># Start a VM that is currently not running</span>
+docker-machine <span class="nb">env </span>myvm1      <span class="c"># show environment variables and command for myvm1</span>
+<span class="nb">eval</span> <span class="si">$(</span>docker-machine <span class="nb">env </span>myvm1<span class="si">)</span>         <span class="c"># Mac command to connect shell to myvm1</span>
+&amp; <span class="s2">"C:</span><span class="se">\P</span><span class="s2">rogram Files</span><span class="se">\D</span><span class="s2">ocker</span><span class="se">\D</span><span class="s2">ocker</span><span class="se">\R</span><span class="s2">esources</span><span class="se">\b</span><span class="s2">in</span><span class="se">\d</span><span class="s2">ocker-machine.exe"</span> <span class="nb">env </span>myvm1 | Invoke-Expression   <span class="c"># Windows command to connect shell to myvm1</span>
+docker stack deploy <span class="nt">-c</span> &lt;file&gt; &lt;app&gt;  <span class="c"># Deploy an app; command shell must be set to talk to manager (myvm1), uses local Compose file</span>
+docker-machine scp docker-compose.yml myvm1:~ <span class="c"># Copy file to node's home dir (only required if you use ssh to connect to manager and deploy the app)</span>
+docker-machine ssh myvm1 <span class="s2">"docker stack deploy -c &lt;file&gt; &lt;app&gt;"</span>   <span class="c"># Deploy an app using ssh (you must have first copied the Compose file to myvm1)</span>
+<span class="nb">eval</span> <span class="si">$(</span>docker-machine <span class="nb">env</span> <span class="nt">-u</span><span class="si">)</span>     <span class="c"># Disconnect shell from VMs, use native docker</span>
+docker-machine stop <span class="si">$(</span>docker-machine <span class="nb">ls</span> <span class="nt">-q</span><span class="si">)</span>               <span class="c"># Stop all running VMs</span>
+docker-machine <span class="nb">rm</span> <span class="si">$(</span>docker-machine <span class="nb">ls</span> <span class="nt">-q</span><span class="si">)</span> <span class="c"># Delete all VMs and their disk images</span>
+</code></pre></div>
+<hr>
+
+<h2 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+  </div>
+
+<div>
+  <h2 id="prerequisites">Prerequisites</h2>
+
+<p>생략</p>
+
+<hr>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>Part 3 에서는 Part 2에서 작성한 응용 프로그램을 가져 와서 service 로 전환하여 production 환경에서 실행해야하는 방법을 정의하고 프로세스에서 5 배로 확장했습니다.
+여기 Part 4 에서는 이 응용 프로그램을 여러 컴퓨터에서 실행하는 클러스터에 배포합니다.
+여러 컨테이너, 다중 기계 응용 프로그램은 여러 대의 컴퓨터를 <strong>swarm</strong> 라고 불리는 "Dockerized" 클러스터로 결합하여 가능합니다.</p>
+
+<hr>
+
+<h2 id="understanding-swarm-clusters">Understanding Swarm clusters</h2>
+
+<p>swarm 는 Docker를 실행하고 클러스터에 합류한 컴퓨터 그룹입니다.
+그런 일이 발생하면, 이전에는 사용하던 Docker 명령을 계속 실행하지만, 이제는 <strong>swarm manager</strong> 가 클러스터에서 실행합니다.
+swarm 에 있는 machine 은 물리적 또는 가상일 수 있습니다.
+swarm 에 joining 시 <strong>node</strong> 라고 부릅니다.</p>
+
+<p>Swarm managers 는 활용도가 가장 낮은 machine 을 container 로 채우는 "emptiest node"와 같은 container 를 실행하기 위한 몇 가지 전략을 사용할 수 있습니다.
+또는 "Global". 각 기계가 지정된 container 의 instance 를 정확히 하나씩 가져옵니다.
+swarm managers 가 이미 사용하고 있는 것과 마찬가지로 작성 전략에서 이 전략을 사용하도록 지시합니다.</p>
+
+<p>Swarm managers 는 명령을 실행할 수 있는 swarm 내의 유일한 기계이거나 다른 기계가 swarm에 <strong>Workers</strong> 로 참여할 수 있는 권한을 부여합니다.
+Workers 는 수용 능력을 제공하기 위해 존재하며, 다른 기계에 무엇을 할 수 있고 할 수 없는지를 말할 권한이 없습니다.</p>
+
+<p>지금까지 로컬 시스템에서 단일 호스트 모드로 Docker를 사용해 왔다.
+그러나 Docker는 <strong>swarm mode</strong> 로 전환 될 수 있으며, 이것이 Swarm의 사용을 가능하게 합니다.
+swarm mode 를 즉시 활성화하면 현재 시스템이 swarm managers 가 됩니다.
+그때부터 Docker는 현재 컴퓨터에서만 관리하는 것이 아니라 관리중인 명령에서 실행하는 명령을 실행합니다.</p>
+
+<hr>
+
+<h2 id="set-up-your-swarm">Set up your swarm</h2>
+
+<p>swarm 는 여러 nodes 로 구성되며 물리적 또는 가상 시스템이 될 수 있습니다.
+기본 개념은 간단합니다:
+swarm mode 를 활성화하고 현재 시스템을 swarm manager 로 만들려면 <code>docker swarm mode</code>실행한 다음, 다른 machines 에서 workers 로 swarm 에 합류하게 <code>docker swarm join</code> 하십시오.
+아래에서 탭을 선택하여 다양한 상황에서 이것이 어떻게 진행되는지 확인하십시오.
+우리는 VM을 사용하여 2대의 machines cluster 를 신속하게 만들고 그것을 swarm 로 바꿀 것입니다.</p>
+
+<h3 id="create-a-cluster">Create a cluster</h3>
+
+<p><strong>Local VMs (Mac, Linux, Windows 7 and 8) [TAB]</strong></p>
+
+<p><strong>Local VMs (Windows 10/Hyper-V) [TAB]</strong></p>
+
+<h4 id="vms-on-your-local-machine-mac-linux-windows-7-and-8">VMS ON YOUR LOCAL MACHINE (MAC, LINUX, WINDOWS 7 AND 8)</h4>
+
+<p>먼저, 가상 머신 (VM)을 생성 할 수있는 하이퍼 바이저가 필요하므로 머신의 OS 용 <a href="https://" rel="nofollow" target="_blank">Oracle VirtualBox</a>를 설치하십시오.</p>
+
+<blockquote>
+<p>Note: Windows 10과 같이 Hyper-V가 설치된 Windows 시스템을 사용하는 경우 VirtualBox를 설치할 필요가 없으므로 대신 Hyper-V를 사용해야합니다. 위의 Hyper-V 탭을 클릭하여 Hyper-V 시스템에 대한 지침을 봅니다.
+<a href="https://docs.docker.com/toolbox/overview/" rel="nofollow" target="_blank">Docker Toolbox</a> 를 사용하는 경우 VirtualBox를 이미 포함시켜야하므로 잘 할 수 있습니다.</p>
+</blockquote>
+
+<p>이제 VirtualBox 드라이버를 사용하여 <strong>docker-machine</strong> 을 사용하여 몇 가지 VM을 만듭니다:</p>
+
+<blockquote>
+<p>Note: <strong>docker-machine</strong> 사용 전 준비</p>
+
+<p>설치: <a href="https://docs.docker.com/machine/install-machine/" rel="nofollow" target="_blank">Install Docker Machine</a>
+자세한 명령어: 설치 후 <code>docker-machine -h</code> 또는 사이트 참조
+자동완성: <a href="https://docs.docker.com/machine/completion/" rel="nofollow" target="_blank">docker-machine autocompletion</a></p>
+</blockquote>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker-machine create <span class="nt">--driver</span> virtualbox myvm1
+<span class="c"># Creating CA: /home/docker/.docker/machine/certs/ca.pem</span>
+<span class="c"># Creating client certificate: /home/docker/.docker/machine/certs/cert.pem</span>
+<span class="c"># Running pre-create checks...</span>
+<span class="c"># (myvm1) Image cache directory does not exist, creating it at /home/docker/.docker/machine/cache...</span>
+<span class="c"># (myvm1) No default Boot2Docker ISO found locally, downloading the latest release...</span>
+<span class="c"># (myvm1) Latest release for github.com/boot2docker/boot2docker is v17.10.0-ce</span>
+<span class="c"># (myvm1) Downloading /home/docker/.docker/machine/cache/boot2docker.iso from https://github.com/boot2docker/boot2docker/releases/download/v17.10.0-ce/boot2docker.iso...</span>
+<span class="c"># (myvm1) 0%....10%....20%....30%....40%....50%....60%....70%....80%....90%....100%</span>
+<span class="c"># Creating machine...</span>
+<span class="c"># (myvm1) Copying /home/docker/.docker/machine/cache/boot2docker.iso to /home/docker/.docker/machine/machines/myvm1/boot2docker.iso...</span>
+<span class="c"># (myvm1) Creating VirtualBox VM...</span>
+<span class="c"># (myvm1) Creating SSH key...</span>
+<span class="c"># (myvm1) Starting the VM...</span>
+<span class="c"># (myvm1) Check network to re-create if needed...</span>
+<span class="c"># (myvm1) Found a new host-only adapter: "vboxnet0"</span>
+<span class="c"># (myvm1) Waiting for an IP...</span>
+<span class="c"># Waiting for machine to be running, this may take a few minutes...</span>
+<span class="c"># Detecting operating system of created instance...</span>
+<span class="c"># Waiting for SSH to be available...</span>
+<span class="c"># Detecting the provisioner...</span>
+<span class="c"># Provisioning with boot2docker...</span>
+<span class="c"># Copying certs to the local machine directory...</span>
+<span class="c"># Copying certs to the remote machine...</span>
+<span class="c"># Setting Docker configuration on the remote daemon...</span>
+<span class="c"># Checking connection to Docker...</span>
+<span class="c"># Docker is up and running!</span>
+<span class="c"># To see how to connect your Docker Client to the Docker Engine running on this virtual machine, run: docker-machine env myvm1</span>
+
+<span class="nv">$ </span>docker-machine create <span class="nt">--driver</span> virtualbox myvm2
+</code></pre></div>
+<hr>
+
+<h4 id="vms-on-your-local-machine-windows-10">VMS ON YOUR LOCAL MACHINE (WINDOWS 10)</h4>
+
+<p>생략</p>
+
+<hr>
+
+<h4 id="list-the-vms-and-get-their-ip-addresses">LIST THE VMS AND GET THEIR IP ADDRESSES</h4>
+
+<p>이제 <code>myvm1</code> 과 <code>myvm2</code> 라는 두 개의 VM이 생성되었습니다.</p>
+
+<p>이 명령을 사용하여 시스템을 나열하고 IP 주소를 가져옵니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker-machine <span class="nb">ls</span>
+</code></pre></div>
+<p>다음은이 명령의 출력 예 입니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker-machine <span class="nb">ls</span>
+<span class="c"># NAME    ACTIVE   DRIVER       STATE     URL                         SWARM   DOCKER        ERRORS</span>
+<span class="c"># myvm1   -        virtualbox   Running   tcp://192.168.99.100:2376           v17.10.0-ce</span>
+<span class="c"># myvm2   -        virtualbox   Running   tcp://192.168.99.101:2376           v17.10.0-ce</span>
+</code></pre></div>
+<blockquote>
+<p>Note:
+STATE: Stopped 인 경우에는 다음과 같다</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># docker-marchine start &lt;vm-name&gt;</span>
+<span class="nv">$ </span>docker-marchine start myvm1
+</code></pre></div>
+<h4 id="initialze-the-swarm-and-add-nodes">INITIALZE THE SWARM AND ADD NODES</h4>
+
+<p>첫 번째 장비는 관리자로 작동하여 관리 명령을 실행하고 worker를 인증하여 swarm 에 가입시키며,
+두 번째 시스템은 worker 가 됩니다.</p>
+
+<p><code>docker-machine ssh</code> 를 사용하여 VM에 명령을 보낼 수 있습니다.
+<code>myvm1</code> 에게 <code>docker swarm init</code> 가 있는 swarm manager가 되도록 지시하면 다음과 같은 출력이 표시됩니다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker-machine ssh myvm1 <span class="s2">"docker swarm init --advertise-addr &lt;myvm1 ip&gt;"</span>
+<span class="c"># Swarm initialized: current node &lt;node ID&gt; is now a manager.</span>
+<span class="c">#</span>
+<span class="c"># To add a worker to this swarm, run the following command:</span>
+<span class="c">#</span>
+<span class="c">#   docker swarm join \</span>
+<span class="c">#   --token &lt;token&gt; \</span>
+<span class="c">#   &lt;myvm ip&gt;:&lt;port&gt;</span>
+<span class="c">#</span>
+<span class="c"># To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.</span>
+</code></pre></div>
+<p>예:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker-machine ssh myvm1 <span class="s2">"docker swarm init --advertise-addr 192.168.99.100:2377"</span>
+
+<span class="c"># Swarm initialized: current node (dbu83tptex4v60c1wdk5spmi2) is now a manager.</span>
+<span class="c">#</span>
+<span class="c"># To add a worker to this swarm, run the following command:</span>
+<span class="c">#</span>
+<span class="c">#     docker swarm join --token SWMTKN-1-0etkogicru2lvzkgn99mnmampy6jcafcfsnw0np721iyew1427-eqkttfzl9hzbitjxb5voplfda 192.168.99.100:2377</span>
+<span class="c">#</span>
+<span class="c"># To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.</span>
+
+</code></pre></div>
+<blockquote>
+<p><strong>Ports 2377 and 2376</strong></p>
+
+<p><code>docker swarm init</code> and <code>docker swarm join</code> 는 port <strong>2377</strong> (swarm mangement port)를 항상 실행하거나, 전혀 포트를 사용하지 않고 기본값을 사용합니다.</p>
+
+<p><code>docker-machine ls</code> 에 의해 반환된 컴퓨터 IP 주소는 Docker 데몬 port인 포트 <strong>2376</strong> 을 포함합니다.</p>
+
+<p>이 포트를 사용하지 마십시오. 오류가 발생할 수 있습니다.</p>
+</blockquote>
+
+<p>보시다시피 <code>docker swarm init</code> 에 대한 응답에는 추가하려는 node 에서 실행할 수 있도록 미리 구성된 <code>docker swarm join</code> 명령어가 포함되어 있습니다.
+이 명령어을 복사하여 <code>docker-machine ssh</code> 를 통해 <code>myvm2</code> 로 보내면 <code>myvm2</code> 가 새 swarm 을 worker 로 참여시킵니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker-machine ssh myvm2 <span class="s2">"docker swarm join </span><span class="se">\</span><span class="s2">
+--token &lt;token&gt; </span><span class="se">\</span><span class="s2">
+&lt;ip&gt;:2377"</span>
+
+This node joined a swarm as a worker.
+</code></pre></div>
+<p>예:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker-machine ssh myvm2 <span class="s2">"docker swarm join --token SWMTKN-1-0etkogicru2lvzkgn99mnmampy6jcafcfsnw0np721iyew1427-eqkttfzl9hzbitjxb5voplfda 192.168.99.100:2377"</span>
+<span class="c"># This node joined a swarm as a worker.</span>
+</code></pre></div>
+<p>축하합니다, 당신은 첫 번째 swarm 을 만들었습니다!</p>
+
+<p>이 swarm 에서 node 를 보려면 manager 에서 <code>docker node ls</code> 를 실행하십시오:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker-machine ssh myvm1 <span class="s2">"docker node ls"</span>
+<span class="c"># ID                            HOSTNAME            STATUS              AVAILABILITY        MANAGER STATUS</span>
+<span class="c"># dbu83tptex4v60c1wdk5spmi2 *   myvm1               Ready               Active              Leader</span>
+<span class="c"># t8herakzh18tlj2tfmbjvxtay     myvm2               Ready               Active</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Leaving a swarm</strong></p>
+
+<p>다시 시작하려면 각 노드에서 <code>docker swarm leave</code> 를 실행할 수 있습니다.</p>
+</blockquote>
+
+<h2 id="deploy-your-app-on-the-swarm-cluster">Deploy your app on the swarm cluster</h2>
+
+<p>swarm cluseter 에 나의 app 배포하기.</p>
+
+<p>어려운 부분은 끝났습니다.
+이제 Part 3 에서 사용한 프로세스를 새 swarm 에 배치하기 만하면 됩니다.
+<code>myvm1</code> 과 같은 swarm manager 만 Docker 명령을 실행한다; 는 점을 기억하십시오.
+workers 는 단지 능력을 위한 것입니다.</p>
+
+<h3 id="configure-a-docker-machine-shell-to-the-swarm-manager">Configure a <code>docker-machine</code> shell to the swarm manager</h3>
+
+<p>지금까지 <code>docker-machine ssh</code> 에서 Docker 명령을 랩핑하여 VM과 대화했습니다.
+또 다른 옵션은 <code>docker-machine env &lt;machine&gt;</code> 을 실행하여 현재 shell 을 구성하여 VM의 Docker 데몬과 통신하는 명령을 실행하는 것입니다.
+이 방법은 로컬 <code>docker-compose.yml</code> 파일을 사용하여 어디서나 복사하지 않고 "원격"으로 app 을 배포 할 수 있기 때문에 보다 다음 단계에서 효과적입니다.</p>
+
+<p><code>docker-machine env myvm1</code> 를 입력하고, 출력의 마지막 줄에 제공된 명령을 복사하여 붙여넣고 실행하여 shell 이 swarm manager 인 <code>myvm1</code> 과 통신하도록 구성하십시오.</p>
+
+<p>Shell 을 구성하는 명령은 Mac, Linux 또는 Windows 중 어떤 것이 있는지에 따라 다르므로 아래 각 탭에 예제가 나와 있습니다.</p>
+
+<h4 id="docker-machine-shell-environment-on-mac-or-linux">DOCKER MACHINE SHELL ENVIRONMENT ON MAC OR LINUX</h4>
+
+<p><code>docker-machine env myvm1</code> 을 실행하여 <code>myvm1</code> 과 통신하도록 shell 을 구성하는 명령을 얻으십시오.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker-machine <span class="nb">env </span>myvm1
+
+<span class="nb">export </span><span class="nv">DOCKER_TLS_VERIFY</span><span class="o">=</span><span class="s2">"1"</span>
+<span class="nb">export </span><span class="nv">DOCKER_HOST</span><span class="o">=</span><span class="s2">"tcp://192.168.99.100:2376"</span>
+<span class="nb">export </span><span class="nv">DOCKER_CERT_PATH</span><span class="o">=</span><span class="s2">"/home/docker/.docker/machine/machines/myvm1"</span>
+<span class="nb">export </span><span class="nv">DOCKER_MACHINE_NAME</span><span class="o">=</span><span class="s2">"myvm1"</span>
+<span class="c"># Run this command to configure your shell:</span>
+<span class="c"># eval $(docker-machine env myvm1)</span>
+</code></pre></div>
+<p>주어진 명령을 실행하여 shell 이 <code>myvm1</code> 과 통신하도록 구성하십시오.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">eval</span> <span class="si">$(</span>docker-machine <span class="nb">env </span>myvm1<span class="si">)</span>
+</code></pre></div>
+<p><code>docker-machine ls</code> 를 실행하여 옆에 asterisk(<code>*</code>) 가 표시된대로 <code>myvm1</code> 이 현재 활성 시스템인지 확인하십시오.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker-machine <span class="nb">ls</span>
+
+<span class="c"># NAME    ACTIVE   DRIVER       STATE     URL                         SWARM   DOCKER        ERRORS</span>
+<span class="c"># myvm1   *        virtualbox   Running   tcp://192.168.99.100:2376           v17.11.0-ce</span>
+<span class="c"># myvm2   -        virtualbox   Running   tcp://192.168.99.101:2376           v17.11.0-ce</span>
+</code></pre></div>
+<hr>
+
+<h3 id="deploy-the-app-on-the-swarm-manager">Deploy the app on the swarm manager</h3>
+
+<p>이제 <code>myvm1</code> 을 사용했으므로 swarm manager로서의 권한을 사용하여 part 3에서 사용한 것과 동일한 <code>docker stack deploy</code> 명령을 <code>myvm1</code> 에 사용하고 <code>docker-compose.yml</code> 의 로컬 복사본을 사용하여 응용 프로그램을 배포 할 수 있습니다.</p>
+
+<p><code>docker-machine</code> shell 구성을 사용하여 <code>myvm1</code> 에 연결되어 있고 로컬 호스트의 파일에 계속 액세스 할 수 있습니다.
+part 3에서 만든 <code>docker-compose.yml</code> 파일을 포함하여 이전과 같은 디렉토리에 있는지 확인하십시오.</p>
+
+<p>이전과 마찬가지로 <code>myvm1</code>에 app을 배포하려면 다음 명령을 실행하십시오.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker stack deploy <span class="nt">-c</span> docker-compose.yml getstartedlab
+</code></pre></div>
+<p>이제 part 3에서 사용한 동일한 docker commands 을 사용할 수 있습니다.
+이 시간에만 <code>myvm1</code>과 <code>myvm2</code> 사이에 서비스(및 연관된 컨테이너)가 분산되어 있음을 알 수 있습니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker stack ps getstartedlab
+
+<span class="c"># ID                  NAME                  IMAGE                          NODE                DESIRED STATE       CURRENT STATE            ERROR               PORTS</span>
+<span class="c"># xydzx0jr810x        getstartedlab_web.1   portal2312/get-started:part2   myvm2               Running             Running 53 seconds ago</span>
+<span class="c"># 6btx6nklstwy        getstartedlab_web.2   portal2312/get-started:part2   myvm1               Running             Running 53 seconds ago</span>
+<span class="c"># yo0j6jz0bvkw        getstartedlab_web.3   portal2312/get-started:part2   myvm2               Running             Running 53 seconds ago</span>
+<span class="c"># kfjet1qmf83p        getstartedlab_web.4   portal2312/get-started:part2   myvm2               Running             Running 53 seconds ago</span>
+<span class="c"># smtbb029szy0        getstartedlab_web.5   portal2312/get-started:part2   myvm1               Running             Running 53 seconds ago</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Connecting to VMs with <code>docker-machine env</code> and <code>docker-machine ssh</code></strong></p>
+
+<ul>
+<li><p><code>myvm2</code> 처럼 다른 machine 과 대화할 shell 을 설정하려면, 동일하거나 다른 shell 에서 <code>docker-machine env</code> 를 다시 실행 한 다음 주어진 명령을 실행하여 <code>myvm2</code> 를 가리키십시오.
+이것은 항상 현재 shell 에만 적용됩니다.
+구성되지 않은 shell 로 변경하거나 new shell 을 열면 명령을 다시 실행해야합니다.
+<code>docker-machine ls</code> 를 사용하여 기계를 나열하고, 그들이 어떤 상태인지 파악하고, IP ​​주소를 얻고, 연결되어있는 경우 어떤 것이 있는지 찾아보십시오.
+자세한 내용은 <a href="https://docs.docker.com/machine/get-started/#create-a-machine" rel="nofollow" target="_blank">Docker Machine getting started topics</a> 참조하십시오.</p></li>
+<li><p>또는 Docker 명령을 <code>docker-machine ssh &lt;machine&gt; "&lt;command&gt;"</code> 형식으로 래핑할 수도 있습니다.
+이 명령은 VM에 직접 기록하지만 로컬 호스트의 파일에 즉시 액세스 할 수는 없습니다.</p></li>
+<li><p>Mac 및 Linux에서는 <code>docker-machine scp &lt;file&gt; &lt;machine&gt;:~</code> 을 사용하여 여러 컴퓨터에서 파일을 복사 할 수 있지만 Windows 사용자는이 작업을 위해서는 Git Bash와 같은 Linux 터미널 에뮬레이터가 필요합니다.</p></li>
+</ul>
+
+<p>이 튜토리얼은 <code>docker-machine CLI</code> 를 통해 모든 플랫폼에서 사용할 수 있으므로 <code>docker-machine ssh</code> 와 <code>docker-machine env</code> 를 모두 데모합니다.</p>
+</blockquote>
+
+<h3 id="accessing-your-cluster">Accessing your cluster</h3>
+
+<p><code>myvm1</code> 또는 <code>myvm2</code>의 IP 주소에서 앱에 액세스 할 수 있습니다.</p>
+
+<p>사용자가 만든 네트워크는 네트워크간에 공유되며 load-balancing 을 수행합니다.
+<code>docker-machine ls</code> 를 실행하여 VM의 IP 주소를 얻고 브라우저에서 해당 주소로 방문하여 새로 고침 (또는 <code>curl</code>)하십시오.</p>
+
+<p>5 개의 가능한 컨테이너 ID가 모두 무작위로 순환하여 load-balancing을 보여줍니다.</p>
+
+<p>두 IP 주소가 작동하는 이유는 한 무리의 node 가 수신 <strong>routing mesh</strong> 에 참여한다는 것입니다.
+이렇게하면 실제로 container 를 실행중인 node 가 무엇이든 관계없이 swarm의 특정 포트에 배포 된 서비스가 항상 해당 port 를 소유하도록 할 수 있습니다.
+다음 다이어그램은 3 node 뭉치에서 포트 <code>8080</code> 에 게시된 <code>my-web</code> 이라는 서비스용 <strong>routing mesh</strong> 가 어떻게 보이는지 입니다.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">   192.168.99.100:8080       192.168.99.101:8080        192.168.99.102:8080
+            |                         |                          |
+<span class="gd">------------|-------------------------|--------------------------|--------------
+</span><span class="err">|+----------|-------------++----------|-------------++-----------|------------+|</span>
+||          |             ||          |             ||           |            ||
+<span class="err">||</span> [swarm load balancer]  || [swarm load balancer]  || [swarm load balancer]  ||
+<span class="err">||</span>          |             ||          |             ||           |            ||
+<span class="err">||</span>          +-------------||----------+-------------||------------            ||
+<span class="err">||</span>          |             ||          |             ||                        ||
+<span class="err">||</span> [10.0.0.1:80 my-web.1] || [10.0.0.2:80 my-web.2] ||                        ||
+<span class="err">||</span>                        ||                        ||                        ||
+<span class="err">||</span> node1 (192.168.99.100) || node2 (192.168.99.101) || node3 (192.168.99.102) ||
+<span class="err">|+------------------------++------------------------++------------------------+|</span>
+--------------------------------------------------------------------------------
+                              [ingress network]
+</code></pre></div>
+<blockquote>
+<p><strong>Having connectivity trouble?</strong></p>
+
+<p>swarm mode 활성화하기 전에 swarm 에 진입 네트워크를 사용하려면 swarm 노드간 다음 Port 를 열어야 합니다.
+- container 네트워크 검색을 위한 Port 7946 TCP/UDP
+- container 수신용 네트워크를 위한 Port 4789 UDP</p>
+</blockquote>
+
+<h2 id="iterating-and-scaling-your-app">Iterating and scaling your app</h2>
+
+<p>여기에서 파트 2와 3에서 배운 모든 것을 할 수 있습니다.</p>
+
+<p><code>docker-compose.yml</code> 파일을 변경하여 응용 프로그램의 크기를 조정하십시오.</p>
+
+<p>코드를 편집하여 응용 프로그램 동작을 변경 한 다음 새 이미지를 다시 작성하고 푸시합니다.
+(이렇게하려면 이전에 앱을 제작하고 이미지를 게시하는 데 사용한 것과 동일한 단계를 따르십시오).</p>
+
+<p>두 경우 모두 간단하게 <code>docker stack deploy</code> 를 다시 실행하여 이러한 변경 사항을 배포하십시오.</p>
+
+<p>물리적 또는 가상의 어떤 machine 이든 swarm 에 join 할 수 있습니다, <code>myvm2</code> 에서 사용된 <code>docker swarm join</code> 명령어와 같이 사용하면, 용량이 클러스터에 추가됩니다.
+나중에 <code>docker stack deploy</code>를 실행하면 app 이 새로운 리소스를 활용하게 됩니다.</p>
+
+<p>예:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>vi docker-compose.yml
+<span class="c"># 80:80 --&gt; 4000:80</span>
+<span class="nv">$ </span>docker stack deploy <span class="nt">-c</span> docker-compose.yml getstartedlab
+<span class="nv">$ </span>docker stack ps getstartedlab
+
+<span class="c"># ID                  NAME                      IMAGE                          NODE                DESIRED STATE       CURRENT STATE            ERROR               PORTS</span>
+<span class="c"># zstx3qjpht82        getstartedlab_web.1       portal2312/get-started:part2   myvm1               Running             Running 5 minutes ago</span>
+<span class="c"># xydzx0jr810x         \_ getstartedlab_web.1   portal2312/get-started:part2   myvm2               Shutdown            Shutdown 5 minutes ago</span>
+<span class="c"># zpli298le2i9        getstartedlab_web.2       portal2312/get-started:part2   myvm1               Running             Running 5 minutes ago</span>
+<span class="c"># 6btx6nklstwy         \_ getstartedlab_web.2   portal2312/get-started:part2   myvm1               Shutdown            Shutdown 5 minutes ago</span>
+<span class="c"># bbyqsbn167us        getstartedlab_web.3       portal2312/get-started:part2   myvm2               Running             Running 5 minutes ago</span>
+<span class="c"># yo0j6jz0bvkw         \_ getstartedlab_web.3   portal2312/get-started:part2   myvm2               Shutdown            Shutdown 5 minutes ago</span>
+<span class="c"># r3jym2zd79dd        getstartedlab_web.4       portal2312/get-started:part2   myvm2               Running             Running 4 minutes ago</span>
+<span class="c"># kfjet1qmf83p         \_ getstartedlab_web.4   portal2312/get-started:part2   myvm2               Shutdown            Shutdown 4 minutes ago</span>
+<span class="c"># qqaofvkr762o        getstartedlab_web.5       portal2312/get-started:part2   myvm1               Running             Running 5 minutes ago</span>
+<span class="c"># smtbb029szy0         \_ getstartedlab_web.5   portal2312/get-started:part2   myvm1               Shutdown            Shutdown 5 minutes ago</span>
+</code></pre></div>
+<h2 id="cleanup-and-reboot">Cleanup and reboot</h2>
+
+<h3 id="stacks-and-swarms">Stacks and swarms</h3>
+
+<p><code>docker stack rm</code> 을 사용하여 stack 을 삭제할 수 있습니다. 예:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker stack <span class="nb">rm </span>getstartedlab
+</code></pre></div>
+<blockquote>
+<p><strong>Keep the swarm or remove it?</strong></p>
+
+<p>나중에 관리자에서 <code>docker-machine ssh myvm2 "docker swarm leave"</code> 와 <code>docker-machine ssh myvm1 "docker swarm leave --force"</code> 이용해서 원한다면 swarm 를 제거 할 수 있습니다.
+그러나 이 swarm 은 part 5 필요하니 보관하십시오.</p>
+</blockquote>
+
+<h3 id="unsetting-docker-machine-shell-variable-settings">Unsetting docker-machine shell variable settings</h3>
+
+<p>다음 명령을 사용하여 현재 쉘에서 docker-machine 환경 변수를 설정 해제 할 수 있습니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">eval</span> <span class="si">$(</span>docker-machine <span class="nb">env</span> <span class="nt">-u</span><span class="si">)</span>
+</code></pre></div>
+<p>이렇게 하면 docker 컴퓨터에서 만든 가상 컴퓨터와 셸의 연결이 끊어지며 동일한 셸에서 작업을 계속할 수 있습니다.
+예를 들어 Mac 용 Docker 또는 Windows 용 Docker와 같은 기본 docker 명령을 사용합니다.
+자세한 내용은 <a href="https://docs.docker.com/machine/get-started/#unset-environment-variables-in-the-current-shell" rel="nofollow" target="_blank">Machine topic on unsetting environment variables</a> 참조.</p>
+
+<h3 id="restarting-docker-machines">Restarting Docker machines</h3>
+
+<p>만일 local host 를 종료할 때, Docker machines 중지됩니다.
+<code>docker-machine ls</code> 를 실행하여 machines 의 상태를 확인할 수 있습니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker-machine <span class="nb">ls</span>
+</code></pre></div>
+<p>재시작하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker-machine start &lt;machine-name&gt;
+</code></pre></div>
+<p>part 4 에서는 swarm 이 무엇인지, swarm node 가 관리자 또는 작업자가 될 수 있는지, swarm 을 만들어서 어떻게 응용 프로그램을 배포 하는지를 배웠습니다.
+Docker 핵심 명령이 part 3에서 변경되지 않은 것을 보았을 때, 그들은 swarm master 는 목표 향해 달려 가야했습니다.
+Docker의 네트워킹 기능이 실제로 다른 시스템에서 실행 중이더라도 container 간에 load-balancing request 을 보냈습니다.
+마지막으로 cluster 에서 app을 반복하고 크기를 조정하는 방법을 배웠습니다.</p>
+
+<p>다음은 swarm 및 VM과 상호 작용하기 위해 실행할 수있는 몇 가지 명령입니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">docker-machine create <span class="nt">--driver</span> virtualbox myvm1 <span class="c"># Create a VM (Mac, Win7, Linux)</span>
+docker-machine create <span class="nt">-d</span> hyperv <span class="nt">--hyperv-virtual-switch</span> <span class="s2">"myswitch"</span> myvm1 <span class="c"># Win10</span>
+docker-machine <span class="nb">env </span>myvm1                <span class="c"># View basic information about your node</span>
+docker-machine ssh myvm1 <span class="s2">"docker node ls"</span>         <span class="c"># List the nodes in your swarm</span>
+docker-machine ssh myvm1 <span class="s2">"docker node inspect &lt;node ID&gt;"</span>        <span class="c"># Inspect a node</span>
+docker-machine ssh myvm1 <span class="s2">"docker swarm join-token -q worker"</span>   <span class="c"># View join token</span>
+docker-machine ssh myvm1   <span class="c"># Open an SSH session with the VM; type "exit" to end</span>
+docker node <span class="nb">ls</span>                <span class="c"># View nodes in swarm (while logged on to manager)</span>
+docker-machine ssh myvm2 <span class="s2">"docker swarm leave"</span>  <span class="c"># Make the worker leave the swarm</span>
+docker-machine ssh myvm1 <span class="s2">"docker swarm leave -f"</span> <span class="c"># Make master leave, kill swarm</span>
+docker-machine <span class="nb">ls</span> <span class="c"># list VMs, asterisk shows which VM this shell is talking to</span>
+docker-machine start myvm1            <span class="c"># Start a VM that is currently not running</span>
+docker-machine <span class="nb">env </span>myvm1      <span class="c"># show environment variables and command for myvm1</span>
+<span class="nb">eval</span> <span class="si">$(</span>docker-machine <span class="nb">env </span>myvm1<span class="si">)</span>         <span class="c"># Mac command to connect shell to myvm1</span>
+&amp; <span class="s2">"C:</span><span class="se">\P</span><span class="s2">rogram Files</span><span class="se">\D</span><span class="s2">ocker</span><span class="se">\D</span><span class="s2">ocker</span><span class="se">\R</span><span class="s2">esources</span><span class="se">\b</span><span class="s2">in</span><span class="se">\d</span><span class="s2">ocker-machine.exe"</span> <span class="nb">env </span>myvm1 | Invoke-Expression   <span class="c"># Windows command to connect shell to myvm1</span>
+docker stack deploy <span class="nt">-c</span> &lt;file&gt; &lt;app&gt;  <span class="c"># Deploy an app; command shell must be set to talk to manager (myvm1), uses local Compose file</span>
+docker-machine scp docker-compose.yml myvm1:~ <span class="c"># Copy file to node's home dir (only required if you use ssh to connect to manager and deploy the app)</span>
+docker-machine ssh myvm1 <span class="s2">"docker stack deploy -c &lt;file&gt; &lt;app&gt;"</span>   <span class="c"># Deploy an app using ssh (you must have first copied the Compose file to myvm1)</span>
+<span class="nb">eval</span> <span class="si">$(</span>docker-machine <span class="nb">env</span> <span class="nt">-u</span><span class="si">)</span>     <span class="c"># Disconnect shell from VMs, use native docker</span>
+docker-machine stop <span class="si">$(</span>docker-machine <span class="nb">ls</span> <span class="nt">-q</span><span class="si">)</span>               <span class="c"># Stop all running VMs</span>
+docker-machine <span class="nb">rm</span> <span class="si">$(</span>docker-machine <span class="nb">ls</span> <span class="nt">-q</span><span class="si">)</span> <span class="c"># Delete all VMs and their disk images</span>
+</code></pre></div>
+<hr>
+
+<h2 id="reference">Reference</h2>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

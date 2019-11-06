@@ -1,0 +1,6 @@
+﻿- 제어판 삭제
+- C:\Users\<user name>\.atom
+- C:\Users\<user name>\AppData\Local\atom
+- C:\Users\<user name>\AppData\Roaming\Atom
+
+C:\Users\mkkim\AppData

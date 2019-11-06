@@ -1,0 +1,38 @@
+﻿# alter column ERROR:  column "컬럼명" contains null values
+
+
+nom=# alter table "USER" alter column lock_time set default 0;
+ALTER TABLE
+
+nom=# alter table "USER" alter column lock_time set not null;
+ERROR:  column "lock_time" contains null values
+
+nom=# select userid, lock_time from "USER" where state = 1;
+userid    | lock_time
+-------------+------------
+masteradmin |
+UserBefore  |
+UserAfter   |
+mkkim1      |
+restUser    | 1467366949
+mkkim2      |
+(6 rows)
+
+
+nom=# update "USER" set lock_time = 0 where lock_time is null;
+UPDATE 61
+nom=# select userid, lock_time from "USER" where state = 1;
+userid    | lock_time
+-------------+------------
+mkkim2      |          0
+restUser    | 1467366949
+masteradmin |          0
+UserBefore  |          0
+UserAfter   |          0
+mkkim1      |          0
+(6 rows)
+
+nom=# alter table "USER" alter column lock_time set not null;
+ALTER TABLE
+nom=#
+

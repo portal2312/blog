@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Docker development best practices | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Docker development best practices" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Docker 개발을 최고로 실행하기" />
+<meta property="og:description" content="Docker 개발을 최고로 실행하기" />
+<link rel="canonical" href="http://localhost:4000/blog/docs/develop/CaaS/docker/1_Guides/3_Develop_with_Docker/1_Develop_your_apps_on_Docker/2_Docker_development_best_practices.html" />
+<meta property="og:url" content="http://localhost:4000/blog/docs/develop/CaaS/docker/1_Guides/3_Develop_with_Docker/1_Develop_your_apps_on_Docker/2_Docker_development_best_practices.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-06T09:31:12+09:00" />
+<script type="application/ld+json">
+{"description":"Docker 개발을 최고로 실행하기","headline":"Docker development best practices","dateModified":"2019-11-06T09:31:12+09:00","datePublished":"2019-11-06T09:31:12+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/docs/develop/CaaS/docker/1_Guides/3_Develop_with_Docker/1_Develop_your_apps_on_Docker/2_Docker_development_best_practices.html"},"url":"http://localhost:4000/blog/docs/develop/CaaS/docker/1_Guides/3_Develop_with_Docker/1_Develop_your_apps_on_Docker/2_Docker_development_best_practices.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Docker development best practices</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#how-to-keep-your-images-small">How to keep your images small</a></li>
+<li class="toc-entry toc-h2"><a href="#where-and-how-to-presist-application-data">Where and how to presist application data</a></li>
+<li class="toc-entry toc-h2"><a href="#use-swarm-services-when-possible">Use swarm services when possible</a></li>
+<li class="toc-entry toc-h2"><a href="#use-ci-cd-for-testing-and-deployment">Use CI/CD for testing and deployment</a></li>
+<li class="toc-entry toc-h2"><a href="#differences-in-development-and-production-environments">Differences in development and production environments</a></li>
+<li class="toc-entry toc-h2"><a href="#reference">Reference</a></li>
+</ul><p>Docker 개발을 최고로 실행하기</p>
+
+<p>다음 개발 패턴은 Docker로 애플리케이션을 개발하는 사람들에게 도움이되는 것으로 입증되었습니다.
+추가해야 할 것을 발견했다면 저희에게 알려주십시오.</p>
+
+<h2 id="how-to-keep-your-images-small">
+<a class="anchor" href="#how-to-keep-your-images-small" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to keep your images small</h2>
+
+<p>images 를 작게 유지하는 방법</p>
+
+<p>작은 이미지는 컨테이너 나 서비스를 시작할 때 네트워크로 연결하는 것이 빠르며 메모리로 로드하는 것이 빠릅니다.
+이미지 크기를 작게 유지하는 몇 가지 경험 법칙이 있습니다.</p>
+
+<ul>
+<li><p>적절한 기본 이미지로 시작하십시오. 예를 들어, JDK가 필요한 경우 일반적인 <code>ubuntu</code> 이미지로 시작하고 Dockerfile의 일부로 <code>openjdk</code> 를 설치하는 대신 이미지를 공식 <code>openjdk</code> 이미지로 간주하는 것이 좋습니다.</p></li>
+<li>
+<p><a href="https://docs.docker.com/engine/userguide/eng-image/multistage-build/">다단식 빌드를 사용하십시오</a>. 예를 들어, <code>maven</code> 이미지를 사용하여 자바 애플리케이션을 빌드 한 다음 Tomcat 이미지로 재설정하고 Java 아티팩트를 정확한 위치에 복사하여 앱을 전개 할 수 있다.
+모두 동일한 Dockerfile에 있다. 즉, 최종 이미지에는 빌드에서 가져온 라이브러리 및 종속성이 모두 포함되지 않지만 이를 실행하는 데 필요한 아티팩트 및 환경만 포함됩니다.</p>
+
+<ul>
+<li>다단계 빌드가 포함되지 않은 Docker 버전을 사용해야 하는 경우 Dockerfile에서 별도의 RUN 명령 수를 최소화하여 이미지의 레이어 수를 줄이십시오.
+여러 명령을 단일 RUN 행에 통합하고 쉘의 메커니즘을 사용하여 이를 결합 할 수 있습니다.
+다음 두 단편을 고려하십시오.
+첫 번째는 이미지에 두 개의 레이어를 만들고 두 번째는 하나의 레이어를 만듭니다.</li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">RUN apt-get <span class="nt">-y</span> update
+RUN apt-get <span class="nb">install</span> <span class="nt">-y</span> python
+</code></pre></div>
+<div class="highlight"><pre><code class="language-" data-lang="">RUN apt-get -y update &amp;&amp; apt-get install -y python
+</code></pre></div>
+</li>
+<li><p>공통점이 많은 이미지가 여러 개인 경우 공유 구성 요소를 사용하여 자신의 기본 이미지를 만들고 그에 고유 이미지를 적용하는 것이 좋습니다.
+Docker는 공통 레이어를 한 번만 로드하면 캐시됩니다.
+즉, 파생 이미지가 Docker 호스트의 메모리를 보다 효율적으로 사용하고 더 빨리 로드 할 수 있습니다.</p></li>
+<li><p>프로덕션 이미지를 간결하게 유지하면서 디버깅을 허용하려면 프로덕션 이미지를 디버그 이미지의 기본 이미지로 사용하는 것이 좋습니다.
+프로덕션 이미지 위에 추가 테스트 또는 디버깅 도구를 추가 할 수 있습니다.</p></li>
+<li><p>이미지를 빌드 할 때 항상 버전 정보, 의도된 목적지 (예: <code>prod</code> 또는 <code>test</code>), 안정성 또는 다른 환경에서 응용 프로그램을 배포 할 때 유용한 기타 정보를 코드화하는 유용한 태그를 태그에 추가하십시오.
+자동으로 생성된 최신(<code>latest</code>) 태그에 의존하지 마십시오.</p></li>
+</ul>
+
+<h2 id="where-and-how-to-presist-application-data">
+<a class="anchor" href="#where-and-how-to-presist-application-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Where and how to presist application data</h2>
+
+<p>응용 프로그램 데이터를 저장하는 위치 및 방법</p>
+
+<ul>
+<li>
+<a href="https://docs.docker.com/engine/userguide/storagedriver/">storage drivers</a> 를 사용하여 container 의 쓰기 가능한 계층에 응용 프로그램 데이터를 저장을 <strong>피하십시오.</strong>
+이렇게 하면 volumes 이나 bind-mounts 를 사용하는 것보다 I/O 관점에서 볼 때 container 크기가 커지고 효율성이 떨어집니다.</li>
+<li>대신 <a href="https://docs.docker.com/engine/admin/volumes/volumes/">volumes</a> 을 사용하여 데이터를 저장하십시오.</li>
+<li>
+<a href="https://docs.docker.com/engine/admin/volumes/bind-mounts/">bind-mounts</a> 를 사용하는 것이 적절한 경우는 개발 중에 소스 디렉토리 또는 방금 컨테이너에 빌드 한 바이너리를 마운트하려는 경우일 수 있습니다. 제품으로써의 경우, volumes 을 대신 사용하여 개발 중에 bind-mounts 를 마운트 한 것과 같은 위치에 마운트하십시오.</li>
+<li>제품으로써는 <a href="https://docs.docker.com/engine/swarm/secrets/">secrets</a>을 사용하여 서비스에서 사용되는 중요한 응용 프로그램 데이터를 저장하고 구성 파일과 같이 중요하지 않은 데이터에 대해서는 config를 사용합니다.
+현재 독립형 container 를 사용하는 경우 single-replica services(단일 복제 서비스) 를 사용하도록 마이그레이션하는 것이 좋습니다.
+그러면 이러한 services 기능을 활용할 수 있습니다.</li>
+</ul>
+
+<h2 id="use-swarm-services-when-possible">
+<a class="anchor" href="#use-swarm-services-when-possible" aria-hidden="true"><span class="octicon octicon-link"></span></a>Use swarm services when possible</h2>
+
+<p>swarm 서비스가 가능한 경우 사용하기</p>
+
+<ul>
+<li>가능한 경우 swarm 서비스를 사용하여 확장 할 수 있도록 응용 프로그램을 설계하십시오.</li>
+<li>응용 프로그램의 단일 인스턴스만 실행해야 하는 경우에도 swarm 서비스는 독립형 컨테이너에 비해 몇 가지 이점을 제공합니다.
+서비스의 구성은 선언적이며 Docker는 항상 원하는 상태와 실제 상태를 동기화 상태로 유지하려고 노력하고 있습니다.</li>
+<li>network 및 volumes 을 swarm 서비스와 연결 및 연결 해제 할 수 있으며 Docker는 개별 서비스 컨테이너를 무중단 방식으로 재배포합니다.
+독립형 컨테이너는 구성 변경 사항을 수용하기 위해 수동으로 중지, 제거 및 재 작성해야합니다.</li>
+<li>
+<a href="https://docs.docker.com/engine/swarm/secrets/">secrets</a> 및 <a href="https://docs.docker.com/engine/swarm/configs/">configs</a> 저장 기능과 같은 몇 가지 기능은 독립형 컨테이너가 아닌 서비스에서만 사용할 수 있습니다.
+이 기능을 사용하면 images 를 가능한 많이 포괄적으로 유지하고 중요한 데이터를 Docker images 또는 containers 자체에 저장하지 않아도됩니다.</li>
+<li>
+<code>docker pull</code> 을 사용하는 대신 <code>docker stack deploy</code> 를 사용하여 images 를 가져옵니다.
+이렇게 하면 배포시 nodes 가 down 되지 않습니다.
+또한 새로운 노드가 swarm 에 추가되면 images 가 자동으로 꺼내집니다.</li>
+</ul>
+
+<p>swarm service 의 node 간에 데이터를 공유하는 데는 한계가 있습니다.
+Docker for AWS 또는 Docker for Azure를 사용하는 경우 Cloudstor 플러그인을 사용하여 Swarm 서비스 노드간에 데이터를 공유 할 수 있습니다.
+동시 업데이트를 지원하는 별도의 데이터베이스에 응용 프로그램 데이터를 작성할 수도 있습니다.</p>
+
+<h2 id="use-ci-cd-for-testing-and-deployment">
+<a class="anchor" href="#use-ci-cd-for-testing-and-deployment" aria-hidden="true"><span class="octicon octicon-link"></span></a>Use CI/CD for testing and deployment</h2>
+
+<p>테스트 및 배포시 CI/CD 사용</p>
+
+<ul>
+<li>source control 의 변경 사항을 확인하거나 pull 요청을 만들 때 [Docker Cloud] 또는 다른 CI/CD 파이프 라인을 사용하여 Docker 이미지를 자동으로 작성하고 태그를 지정하고 테스트하십시오.
+Docker Cloud 는 테스트를 거친 애플리케이션을 곧바로 프로덕션 환경으로 배포할 수 있습니다.</li>
+<li>[Docker EE]를 사용하면 개발, 테스트 및 보안 팀에서 프로덕션 환경에 배포하기 전에 이미지에 서명해야 하므로이 작업을 더욱 신속하게 수행 할 수 있습니다.
+이 방법을 사용하면 이미지를 프로덕션에 배포하기 전에 개발, 품질 및 보안 팀과 같은 테스트를 거쳤음을 확신 할 수 있습니다.</li>
+</ul>
+
+<h2 id="differences-in-development-and-production-environments">
+<a class="anchor" href="#differences-in-development-and-production-environments" aria-hidden="true"><span class="octicon octicon-link"></span></a>Differences in development and production environments</h2>
+
+<p>개발 및 프로덕션 환경의 차이점</p>
+
+<table>
+<thead>
+<tr>
+<th>개발</th>
+<th>생산</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>바인드 마운트를 사용하여 컨테이너에 소스 코드에 대한 액세스 권한을 부여하십시오.</td>
+<td>볼륨을 사용하여 컨테이너 데이터를 저장합니다.</td>
+</tr>
+<tr>
+<td>Mac 용 Docker 또는 Windows 용 Docker를 사용하십시오.</td>
+<td>가능한 경우 Docker 프로세스를 호스트 프로세스와보다 효과적으로 분리하기 위해 userns 매핑을 사용하여 Docker EE를 사용하십시오.</td>
+</tr>
+<tr>
+<td>시간 이동에 대해 걱정하지 마십시오.</td>
+<td>항상 Docker 호스트와 각 컨테이너 프로세스에서 NTP 클라이언트를 실행하고 모두 동일한 NTP 서버에 동기화하십시오. 스웜 서비스를 사용하는 경우 각 Docker 노드가 해당 시계를 컨테이너와 동일한 시간 소스와 동기화하도록해야합니다.</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+<p><a href="https://docs.docker.com/develop/dev-best-practices/#how-to-keep-your-images-small">https://docs.docker.com/develop/dev-best-practices/#how-to-keep-your-images-small</a></p>
+
+  </div>
+
+<div>
+  <p>Docker 개발을 최고로 실행하기</p>
+
+<p>다음 개발 패턴은 Docker로 애플리케이션을 개발하는 사람들에게 도움이되는 것으로 입증되었습니다.
+추가해야 할 것을 발견했다면 저희에게 알려주십시오.</p>
+
+<h2 id="how-to-keep-your-images-small">How to keep your images small</h2>
+
+<p>images 를 작게 유지하는 방법</p>
+
+<p>작은 이미지는 컨테이너 나 서비스를 시작할 때 네트워크로 연결하는 것이 빠르며 메모리로 로드하는 것이 빠릅니다.
+이미지 크기를 작게 유지하는 몇 가지 경험 법칙이 있습니다.</p>
+
+<ul>
+<li><p>적절한 기본 이미지로 시작하십시오. 예를 들어, JDK가 필요한 경우 일반적인 <code>ubuntu</code> 이미지로 시작하고 Dockerfile의 일부로 <code>openjdk</code> 를 설치하는 대신 이미지를 공식 <code>openjdk</code> 이미지로 간주하는 것이 좋습니다.</p></li>
+<li>
+<p><a href="https://docs.docker.com/engine/userguide/eng-image/multistage-build/" rel="nofollow" target="_blank">다단식 빌드를 사용하십시오</a>. 예를 들어, <code>maven</code> 이미지를 사용하여 자바 애플리케이션을 빌드 한 다음 Tomcat 이미지로 재설정하고 Java 아티팩트를 정확한 위치에 복사하여 앱을 전개 할 수 있다.
+모두 동일한 Dockerfile에 있다. 즉, 최종 이미지에는 빌드에서 가져온 라이브러리 및 종속성이 모두 포함되지 않지만 이를 실행하는 데 필요한 아티팩트 및 환경만 포함됩니다.</p>
+
+<ul>
+<li>다단계 빌드가 포함되지 않은 Docker 버전을 사용해야 하는 경우 Dockerfile에서 별도의 RUN 명령 수를 최소화하여 이미지의 레이어 수를 줄이십시오.
+여러 명령을 단일 RUN 행에 통합하고 쉘의 메커니즘을 사용하여 이를 결합 할 수 있습니다.
+다음 두 단편을 고려하십시오.
+첫 번째는 이미지에 두 개의 레이어를 만들고 두 번째는 하나의 레이어를 만듭니다.</li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">RUN apt-get <span class="nt">-y</span> update
+RUN apt-get <span class="nb">install</span> <span class="nt">-y</span> python
+</code></pre></div>
+<div class="highlight"><pre><code class="language-" data-lang="">RUN apt-get -y update &amp;&amp; apt-get install -y python
+</code></pre></div>
+</li>
+<li><p>공통점이 많은 이미지가 여러 개인 경우 공유 구성 요소를 사용하여 자신의 기본 이미지를 만들고 그에 고유 이미지를 적용하는 것이 좋습니다.
+Docker는 공통 레이어를 한 번만 로드하면 캐시됩니다.
+즉, 파생 이미지가 Docker 호스트의 메모리를 보다 효율적으로 사용하고 더 빨리 로드 할 수 있습니다.</p></li>
+<li><p>프로덕션 이미지를 간결하게 유지하면서 디버깅을 허용하려면 프로덕션 이미지를 디버그 이미지의 기본 이미지로 사용하는 것이 좋습니다.
+프로덕션 이미지 위에 추가 테스트 또는 디버깅 도구를 추가 할 수 있습니다.</p></li>
+<li><p>이미지를 빌드 할 때 항상 버전 정보, 의도된 목적지 (예: <code>prod</code> 또는 <code>test</code>), 안정성 또는 다른 환경에서 응용 프로그램을 배포 할 때 유용한 기타 정보를 코드화하는 유용한 태그를 태그에 추가하십시오.
+자동으로 생성된 최신(<code>latest</code>) 태그에 의존하지 마십시오.</p></li>
+</ul>
+
+<h2 id="where-and-how-to-presist-application-data">Where and how to presist application data</h2>
+
+<p>응용 프로그램 데이터를 저장하는 위치 및 방법</p>
+
+<ul>
+<li>
+<a href="https://docs.docker.com/engine/userguide/storagedriver/" rel="nofollow" target="_blank">storage drivers</a> 를 사용하여 container 의 쓰기 가능한 계층에 응용 프로그램 데이터를 저장을 <strong>피하십시오.</strong>
+이렇게 하면 volumes 이나 bind-mounts 를 사용하는 것보다 I/O 관점에서 볼 때 container 크기가 커지고 효율성이 떨어집니다.</li>
+<li>대신 <a href="https://docs.docker.com/engine/admin/volumes/volumes/" rel="nofollow" target="_blank">volumes</a> 을 사용하여 데이터를 저장하십시오.</li>
+<li>
+<a href="https://docs.docker.com/engine/admin/volumes/bind-mounts/" rel="nofollow" target="_blank">bind-mounts</a> 를 사용하는 것이 적절한 경우는 개발 중에 소스 디렉토리 또는 방금 컨테이너에 빌드 한 바이너리를 마운트하려는 경우일 수 있습니다. 제품으로써의 경우, volumes 을 대신 사용하여 개발 중에 bind-mounts 를 마운트 한 것과 같은 위치에 마운트하십시오.</li>
+<li>제품으로써는 <a href="https://docs.docker.com/engine/swarm/secrets/" rel="nofollow" target="_blank">secrets</a>을 사용하여 서비스에서 사용되는 중요한 응용 프로그램 데이터를 저장하고 구성 파일과 같이 중요하지 않은 데이터에 대해서는 config를 사용합니다.
+현재 독립형 container 를 사용하는 경우 single-replica services(단일 복제 서비스) 를 사용하도록 마이그레이션하는 것이 좋습니다.
+그러면 이러한 services 기능을 활용할 수 있습니다.</li>
+</ul>
+
+<h2 id="use-swarm-services-when-possible">Use swarm services when possible</h2>
+
+<p>swarm 서비스가 가능한 경우 사용하기</p>
+
+<ul>
+<li>가능한 경우 swarm 서비스를 사용하여 확장 할 수 있도록 응용 프로그램을 설계하십시오.</li>
+<li>응용 프로그램의 단일 인스턴스만 실행해야 하는 경우에도 swarm 서비스는 독립형 컨테이너에 비해 몇 가지 이점을 제공합니다.
+서비스의 구성은 선언적이며 Docker는 항상 원하는 상태와 실제 상태를 동기화 상태로 유지하려고 노력하고 있습니다.</li>
+<li>network 및 volumes 을 swarm 서비스와 연결 및 연결 해제 할 수 있으며 Docker는 개별 서비스 컨테이너를 무중단 방식으로 재배포합니다.
+독립형 컨테이너는 구성 변경 사항을 수용하기 위해 수동으로 중지, 제거 및 재 작성해야합니다.</li>
+<li>
+<a href="https://docs.docker.com/engine/swarm/secrets/" rel="nofollow" target="_blank">secrets</a> 및 <a href="https://docs.docker.com/engine/swarm/configs/" rel="nofollow" target="_blank">configs</a> 저장 기능과 같은 몇 가지 기능은 독립형 컨테이너가 아닌 서비스에서만 사용할 수 있습니다.
+이 기능을 사용하면 images 를 가능한 많이 포괄적으로 유지하고 중요한 데이터를 Docker images 또는 containers 자체에 저장하지 않아도됩니다.</li>
+<li>
+<code>docker pull</code> 을 사용하는 대신 <code>docker stack deploy</code> 를 사용하여 images 를 가져옵니다.
+이렇게 하면 배포시 nodes 가 down 되지 않습니다.
+또한 새로운 노드가 swarm 에 추가되면 images 가 자동으로 꺼내집니다.</li>
+</ul>
+
+<p>swarm service 의 node 간에 데이터를 공유하는 데는 한계가 있습니다.
+Docker for AWS 또는 Docker for Azure를 사용하는 경우 Cloudstor 플러그인을 사용하여 Swarm 서비스 노드간에 데이터를 공유 할 수 있습니다.
+동시 업데이트를 지원하는 별도의 데이터베이스에 응용 프로그램 데이터를 작성할 수도 있습니다.</p>
+
+<h2 id="use-ci-cd-for-testing-and-deployment">Use CI/CD for testing and deployment</h2>
+
+<p>테스트 및 배포시 CI/CD 사용</p>
+
+<ul>
+<li>source control 의 변경 사항을 확인하거나 pull 요청을 만들 때 [Docker Cloud] 또는 다른 CI/CD 파이프 라인을 사용하여 Docker 이미지를 자동으로 작성하고 태그를 지정하고 테스트하십시오.
+Docker Cloud 는 테스트를 거친 애플리케이션을 곧바로 프로덕션 환경으로 배포할 수 있습니다.</li>
+<li>[Docker EE]를 사용하면 개발, 테스트 및 보안 팀에서 프로덕션 환경에 배포하기 전에 이미지에 서명해야 하므로이 작업을 더욱 신속하게 수행 할 수 있습니다.
+이 방법을 사용하면 이미지를 프로덕션에 배포하기 전에 개발, 품질 및 보안 팀과 같은 테스트를 거쳤음을 확신 할 수 있습니다.</li>
+</ul>
+
+<h2 id="differences-in-development-and-production-environments">Differences in development and production environments</h2>
+
+<p>개발 및 프로덕션 환경의 차이점</p>
+
+<table>
+<thead>
+<tr>
+<th>개발</th>
+<th>생산</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>바인드 마운트를 사용하여 컨테이너에 소스 코드에 대한 액세스 권한을 부여하십시오.</td>
+<td>볼륨을 사용하여 컨테이너 데이터를 저장합니다.</td>
+</tr>
+<tr>
+<td>Mac 용 Docker 또는 Windows 용 Docker를 사용하십시오.</td>
+<td>가능한 경우 Docker 프로세스를 호스트 프로세스와보다 효과적으로 분리하기 위해 userns 매핑을 사용하여 Docker EE를 사용하십시오.</td>
+</tr>
+<tr>
+<td>시간 이동에 대해 걱정하지 마십시오.</td>
+<td>항상 Docker 호스트와 각 컨테이너 프로세스에서 NTP 클라이언트를 실행하고 모두 동일한 NTP 서버에 동기화하십시오. 스웜 서비스를 사용하는 경우 각 Docker 노드가 해당 시계를 컨테이너와 동일한 시간 소스와 동기화하도록해야합니다.</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="reference">Reference</h2>
+
+<p><a href="https://docs.docker.com/develop/dev-best-practices/#how-to-keep-your-images-small" rel="nofollow" target="_blank">https://docs.docker.com/develop/dev-best-practices/#how-to-keep-your-images-small</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

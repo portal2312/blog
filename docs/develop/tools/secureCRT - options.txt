@@ -1,0 +1,17 @@
+HP_UX 에서 발생된 이슈
+
+- 명령어 실행시 read 하는 데이터가 많아서 buffer 크기 조절 실패 또는 read 속도가 빨라서 그런가?
+
+- secureCRT 에서 error msg 출력되고 명령어는 실행은 됨, 이후 다시 명령어 실행시 msg 없이 잘 됨
+
+
+1. Line send delay
+
+https://s2-forums.vandyke.com/showthread.php?t=7080
+
+[top menu] > Option > Session Options > Terminal > Emulation > Advanced > Send delay options > Line send delay
+
+
+2. scroll 로 buffer 조절
+
+https://forums.vandyke.com/archive/index.php/t-11032.html

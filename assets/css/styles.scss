@@ -1,0 +1,78 @@
+@charset "UTF-8";
+
+/**
+ * basic theme.
+ * The minima is jekyll theme.
+ */
+$device: 700px;
+
+@import "../../_sass/minima";
+
+// The FontAwesome use for icons.
+@import
+  "../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome",
+  "../../node_modules/@fortawesome/fontawesome-free/scss/brands", // add solid icons
+  "../../node_modules/@fortawesome/fontawesome-free/scss/solid", // add regular icons
+  "../../node_modules/@fortawesome/fontawesome-free/scss/regular"
+;
+
+// Start Globals variables.
+$red-color: rgba(230, 25, 75, 1);
+$green-color: rgba(60, 180, 75, 1);
+$yellow-color: rgba(255, 225, 25, 1);
+$blue-color: rgba(0, 130, 200, 1);
+$orange-color: rgba(245, 130, 48, 1);
+$purple-color: rgba(145, 30, 180, 1);
+$cyan-color: rgba(70, 240, 240, 1);
+$magenta-color: rgba(240, 50, 230, 1);
+$lime-color: rgba(210, 245, 60, 1);
+$pink-color: rgba(250, 190, 190, 1);
+$teal-color: rgba(0, 128, 128, 1);
+$lavender-color: rgba(230, 190, 255, 1);
+$brown-color: rgba(170, 110, 40, 1);
+$beige-color: rgba(255, 250, 200, 1);
+$maroon-color: rgba(128, 0, 0, 1);
+$mint-color: rgba(170, 255, 195, 1);
+$olive-color: rgba(128, 128, 0, 1);
+$apricot-color: rgba(255, 215, 180, 1);
+$navy-color: rgba(0, 0, 128, 1);
+$grey-color: $grey-color;  // minima
+$white-color: rgba(255, 255, 255, 1);
+$black-color: rgba(0, 0, 0, 1);
+
+.bg-green {
+  background-color: $green-color;
+}
+.bg-blue {
+  background-color: $blue-color;
+}
+.bg-orange {
+  background-color: $orange-color;
+}
+.bg-red {
+  background-color: $red-color;
+}
+.bg-black {
+  background-color: $white-color;
+  color: $black-color;
+}
+.bg-link {
+  background-color: $brand-color;
+}
+
+$box-shadow: 0 0 0 1px rgba(0,0,0,0.04), 0 4px 8px 0 rgba(0,0,0,0.20);
+$hover-box-shadow: 0 0 0 1px rgba(0,0,0,0.04), 0 8px 16px 0 rgba(0,0,0,0.20);
+
+// Start components.
+@import "../../_sass/components";
+
+// Start Layouts.
+@import "../../_sass/layouts";
+
+// Start each page SASS.
+@import
+  "../../_sass/about"
+;
+
+// Start overrides.
+@import "../../_sass/overrides";

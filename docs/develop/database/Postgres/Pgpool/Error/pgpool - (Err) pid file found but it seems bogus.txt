@@ -1,0 +1,24 @@
+# **pgpool - (Err) pid file found but it seems bogus **
+
+
+
+- logs
+    /etc/init.d/pgpool restart
+
+    Starting pg-Pool II: ok!
+    pid file found but it seems bogus. Trying to start pgpool anyway...
+
+
+- reason
+
+    ls -al
+
+    ...
+    root root /var/run/pgpool/pgpool.pid
+    ...
+
+- solve
+
+    rm -rf /var/run/pgpool/pgpool.pid
+
+    /etc/init.d/pgpool restart

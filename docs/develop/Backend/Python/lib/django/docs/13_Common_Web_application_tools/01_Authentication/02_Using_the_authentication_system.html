@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Using the Django authentication system | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Using the Django authentication system" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="이 문서는 기본 설정에서 장고의 인증 시스템 사용법을 설명합니다." />
+<meta property="og:description" content="이 문서는 기본 설정에서 장고의 인증 시스템 사용법을 설명합니다." />
+<link rel="canonical" href="http://localhost:4000/blog/docs/develop/Backend/Python/lib/django/docs/13_Common_Web_application_tools/01_Authentication/02_Using_the_authentication_system.html" />
+<meta property="og:url" content="http://localhost:4000/blog/docs/develop/Backend/Python/lib/django/docs/13_Common_Web_application_tools/01_Authentication/02_Using_the_authentication_system.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-06T09:31:12+09:00" />
+<script type="application/ld+json">
+{"description":"이 문서는 기본 설정에서 장고의 인증 시스템 사용법을 설명합니다.","headline":"Using the Django authentication system","dateModified":"2019-11-06T09:31:12+09:00","datePublished":"2019-11-06T09:31:12+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/docs/develop/Backend/Python/lib/django/docs/13_Common_Web_application_tools/01_Authentication/02_Using_the_authentication_system.html"},"url":"http://localhost:4000/blog/docs/develop/Backend/Python/lib/django/docs/13_Common_Web_application_tools/01_Authentication/02_Using_the_authentication_system.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Using the Django authentication system</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#user-objects">User objects</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#creating-users">Creating users</a></li>
+<li class="toc-entry toc-h3"><a href="#creating-superusers">Creating superusers</a></li>
+<li class="toc-entry toc-h3"><a href="#changing-passwords">Changing passwords</a></li>
+<li class="toc-entry toc-h3"><a href="#authenticating-users">Authenticating users</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#permissions-and-authorization">Permissions and Authorization</a></li>
+<li class="toc-entry toc-h2"><a href="#authentication-in-web-requests">Authentication in Web requests</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#how-to-log-a-user-in">How to log a user in</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#selecting-the-authentication-backend">Selecting the authentication backend</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#authentication-views">Authentication Views</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#using-the-views">Using the views</a></li>
+<li class="toc-entry toc-h4"><a href="#all-authentication-views">All authentication views</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#helper-functions">Helper functions</a></li>
+<li class="toc-entry toc-h3"><a href="#built-in-forms">Built-in forms</a></li>
+<li class="toc-entry toc-h3"><a href="#authentication-data-in-templates">Authentication data in templates</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#users">Users</a></li>
+<li class="toc-entry toc-h4"><a href="#permissions">Permissions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#managing-users-in-the-admin">Managing users in the admin</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#creating-users">Creating users</a></li>
+<li class="toc-entry toc-h3"><a href="#changing-passwords">Changing passwords</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#references">References</a></li>
+</ul><p>이 문서는 기본 설정에서 장고의 인증 시스템 사용법을 설명합니다.</p>
+
+<p>이 구성은 가장 일반적인 프로젝트 요구를 처리하고 합리적으로 광범위한 작업을 처리하며 암호와 사용 권한을 신중하게 구현하도록 진화했습니다.</p>
+
+<p>Django는 인증 요구 사항이 기본값과 다른 프로젝트의 경우 광범위한 인증 <a href="https://docs.djangoproject.com/en/2.1/topics/auth/customizing/">확장 및 사용자 정의</a>를 지원합니다.</p>
+
+<p>Django authentication은 authentication(인증)과 authorization(권한 부여)를 함께 제공하며 일반적으로 authentication system 이라고 합니다.</p>
+
+<p>이러한 기능은 다소 결합되어 있기 때문입니다.</p>
+
+<h2 id="user-objects">
+<a class="anchor" href="#user-objects" aria-hidden="true"><span class="octicon octicon-link"></span></a>User objects</h2>
+
+<p><strong>User</strong> 객체는 인증 시스템의 핵심입니다.
+그들은 일반적으로 사이트와 상호 작용하는 사람들을 대표하며 액세스 제한, 사용자 프로필 등록, 제작자와 콘텐츠 연결 등을 가능하게 하는 데 사용됩니다.
+Django의 인증 프레임 워크에 <strong>'superusers'</strong> 또는 admin <strong>'staff'</strong> 사용자는 특별한 속성이 설정된 사용자 객체일 뿐이며 사용자 객체의 클래스는 다릅니다.</p>
+
+<p>기본 사용자의 기본 속성은 다음과 같습니다:</p>
+
+<ul>
+<li>username</li>
+<li>password</li>
+<li>email</li>
+<li>first_name</li>
+<li>last_name</li>
+</ul>
+
+<p>전체 참조 정보는 <a href="https://docs.djangoproject.com/en/2.1/ref/contrib/auth/#django.contrib.auth.models.User">full API documentation</a>를 참조하십시오. 이후의 설명서는 더 많은 작업 지향적 인 내용을 담고 있습니다.</p>
+
+<h3 id="creating-users">
+<a class="anchor" href="#creating-users" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating users</h3>
+
+<p>사용자를 생성하는 가장 직접적인 방법은 포함 된 <code>create_user()</code> 도우미 함수를 사용하는 것입니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span>
+<span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="s">'mk'</span><span class="p">,</span> <span class="s">'mkkim@zensystems.co.kr'</span><span class="p">,</span> <span class="s">'****'</span><span class="p">)</span>
+<span class="n">user</span><span class="o">.</span><span class="n">last_name</span> <span class="o">=</span> <span class="s">'kim'</span>
+<span class="n">user</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</code></pre></div>
+<p>Django 관리자가 설치되어 있다면 <a href="https://docs.djangoproject.com/en/2.1/topics/auth/default/#auth-admin">대화식으로 사용자를 생성</a>할 수 있습니다.</p>
+
+<hr>
+
+<h3 id="creating-superusers">
+<a class="anchor" href="#creating-superusers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating superusers</h3>
+
+<p><a href="https://docs.djangoproject.com/en/2.1/ref/django-admin/#django-admin-createsuperuse">createsuperuser</a> 명령을 사용하여 수퍼 유저를 만듭니다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>python manage.py createsuperuser <span class="nt">--username</span><span class="o">=</span>masteradmin <span class="nt">--email</span><span class="o">=</span>mkkim@zensystems.co.kr
+
+Password:
+Password <span class="o">(</span>again<span class="o">)</span>:
+Superuser created successfully.
+</code></pre></div>
+<p>암호를 묻는 메시지가 나타납니다.
+입력 한 후 사용자가 즉시 생성됩니다. <code>--username</code> 또는 <code>--email</code> 옵션을 사용하지 않으면 해당 값을 묻는 메시지가 나타납니다.</p>
+
+<p>동일한 username 으로 인한 출동 내용:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+  <span class="n">File</span> <span class="s">"/home/zen/.pyenv/versions/portscan/lib/python3.7/site-packages/django/db/backends/utils.py"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">85</span><span class="p">,</span> <span class="ow">in</span> <span class="n">_execute</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+  <span class="n">File</span> <span class="s">"/home/zen/.pyenv/versions/portscan/lib/python3.7/site-packages/django/db/backends/sqlite3/base.py"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">296</span><span class="p">,</span> <span class="ow">in</span> <span class="n">execute</span>
+    <span class="k">return</span> <span class="n">Database</span><span class="o">.</span><span class="n">Cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+<span class="n">sqlite3</span><span class="o">.</span><span class="n">IntegrityError</span><span class="p">:</span> <span class="n">UNIQUE</span> <span class="n">constraint</span> <span class="n">failed</span><span class="p">:</span> <span class="n">auth_user</span><span class="o">.</span><span class="n">username</span>
+</code></pre></div><div class="highlight"><pre><code class="language-py" data-lang="py"><span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span>
+
+<span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+
+<span class="p">{</span>
+    <span class="s">'id'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s">'password'</span><span class="p">:</span> <span class="s">'pbkdf2_sha256$120000$d8rc8DXOK3SZ$zajQtVEFjbs9X8Etv7gtk/Q9yE3ukBifHjsCzo+PmO8='</span><span class="p">,</span>
+    <span class="s">'last_login'</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+    <span class="s">'is_superuser'</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="s">'username'</span><span class="p">:</span> <span class="s">'mkkim'</span><span class="p">,</span>
+    <span class="s">'first_name'</span><span class="p">:</span> <span class="s">'mk'</span><span class="p">,</span>
+    <span class="s">'last_name'</span><span class="p">:</span> <span class="s">'kim'</span><span class="p">,</span>
+    <span class="s">'email'</span><span class="p">:</span> <span class="s">'mkkim@zensystems.co.kr'</span><span class="p">,</span>
+    <span class="s">'is_staff'</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="s">'is_active'</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="s">'date_joined'</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2018</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">238654</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=&lt;</span><span class="n">UTC</span><span class="o">&gt;</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="p">{</span>
+    <span class="s">'id'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s">'password'</span><span class="p">:</span> <span class="s">'pbkdf2_sha256$120000$9gOIbmnJTHwi$qWGpxhL4hNIULyjY26K2QKZgkTW8VP47najlRnI4rYg='</span><span class="p">,</span>
+    <span class="s">'last_login'</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+    <span class="s">'is_superuser'</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="s">'username'</span><span class="p">:</span> <span class="s">'masteradmin'</span><span class="p">,</span>
+    <span class="s">'first_name'</span><span class="p">:</span> <span class="s">''</span><span class="p">,</span>
+    <span class="s">'last_name'</span><span class="p">:</span> <span class="s">''</span><span class="p">,</span>
+    <span class="s">'email'</span><span class="p">:</span> <span class="s">'mkkim@zensystems.co.kr'</span><span class="p">,</span>
+    <span class="s">'is_staff'</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="s">'is_active'</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="s">'date_joined'</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2018</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">435579</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=&lt;</span><span class="n">UTC</span><span class="o">&gt;</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr>
+
+<h3 id="changing-passwords">
+<a class="anchor" href="#changing-passwords" aria-hidden="true"><span class="octicon octicon-link"></span></a>Changing passwords</h3>
+
+<p>Django는 사용자 모델에 원시 (일반 텍스트) 비밀번호를 저장하지 않지만 해시만 저장합니다 (자세한 내용은 <a href="https://docs.djangoproject.com/en/2.1/topics/auth/passwords/">documentation of how passwords are managed</a> 참조).</p>
+
+<p>이 때문에 사용자의 암호 특성을 직접 조작하지 마십시오. 사용자를 만들 때 도우미 함수가 사용됩니다.</p>
+
+<p>사용자의 암호를 변경하려면 몇 가지 옵션이 있습니다:</p>
+
+<p><code>manage.py changepassword *username*</code> 은 명령 줄에서 사용자의 비밀번호를 변경하는 방법을 제공합니다.
+그것은 당신이 두 번 입력해야 주어진 사용자의 암호를 변경하라는 메시지가 나타납니다.
+둘 모두 일치하면 새 암호가 즉시 변경됩니다.
+사용자에게 제공하지 않으면이 명령은 사용자 이름이 현재 시스템 사용자와 일치하는 암호를 변경하려고 시도합니다.
+<code>set_password()</code>를 사용하여 프로그래밍 방식으로 암호를 변경할 수도 있습니다:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span>
+<span class="n">u</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">'john'</span><span class="p">)</span>
+<span class="n">u</span><span class="o">.</span><span class="n">set_password</span><span class="p">(</span><span class="s">'new password'</span><span class="p">)</span>
+<span class="n">u</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</code></pre></div>
+<p>Django 관리자가 설치되어 있다면 인증 시스템의 관리 페이지에서 사용자의 암호를 변경할 수 있습니다.</p>
+
+<p>Django는 사용자가 자신의 암호를 변경할 수 있게 하는데 사용할 수 있는 views 와 forms도 제공합니다.</p>
+
+<p>사용자의 암호를 변경하면 모든 세션이 로그 아웃됩니다.</p>
+
+<p>자세한 내용은 <a href="https://docs.djangoproject.com/en/2.1/topics/auth/default/#session-invalidation-on-password-change">암호 변경시 세션 무효화</a>를 참조하십시오.</p>
+
+<hr>
+
+<h3 id="authenticating-users">
+<a class="anchor" href="#authenticating-users" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authenticating users</h3>
+
+<p><strong>authenticate(request=None, **credentials)</strong></p>
+
+<p><strong>authenticate()</strong>를 사용하여 자격 증명 집합을 확인합니다.
+기본 케이스의 키워드 인수, 사용자 이름 및 암호로 자격 증명을 가져 와서 각 인증 백엔드에 대해 확인하고 백엔드에 대한 자격 증명이 유효한 경우 User 객체를 반환합니다.
+자격 증명이 백엔드에 유효하지 않거나 백엔드가 PermissionDenied를 발생 시키면 None을 반환합니다. 예:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="kn">from</span> <span class="nn">django.contrib.auth</span> <span class="kn">import</span> <span class="n">authenticate</span>
+<span class="n">user</span> <span class="o">=</span> <span class="n">authenticate</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">'john'</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s">'secret'</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">user</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="c1"># A backend authenticated the credentials
+</span><span class="k">else</span><span class="p">:</span>
+    <span class="c1"># No backend authenticated the credentials
+</span></code></pre></div>
+<p><strong>request</strong> 은 인증 백엔드의 <strong>authenticate()</strong> 메소드에 전달되는 선택적 <strong>HttpRequest</strong>입니다.</p>
+
+<blockquote>
+<p>Note</p>
+
+<p>이는 자격 증명 집합을 인증하는 낮은 수준의 방법입니다.
+예를 들어 <a href="https://docs.djangoproject.com/en/2.1/ref/middleware/#django.contrib.auth.middleware.RemoteUserMiddleware">RemoteUserMiddleware</a>에서 사용합니다.
+자신의 인증 시스템을 작성하지 않는 한, 아마 이것을 사용하지 않을 것입니다.
+오히려 사용자 로그인 방법을 찾고 있다면 <a href="https://docs.djangoproject.com/en/2.1/topics/auth/default/#django.contrib.auth.views.LoginView">LoginView</a>를 사용하십시오.</p>
+</blockquote>
+
+<hr>
+
+<h2 id="permissions-and-authorization">
+<a class="anchor" href="#permissions-and-authorization" aria-hidden="true"><span class="octicon octicon-link"></span></a>Permissions and Authorization</h2>
+
+<hr>
+
+<p>Default permissions
+Groups
+Programmatically creating permissions
+Permission caching</p>
+
+<hr>
+
+<h2 id="authentication-in-web-requests">
+<a class="anchor" href="#authentication-in-web-requests" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authentication in Web requests</h2>
+
+<p>Django는 세션과 미들웨어를 사용하여 인증 시스템을 <strong>request objects</strong>에 연결합니다.</p>
+
+<p>이들은 현재 사용자를 나타내는 모든 요청에 ​​대해 <strong>request.user</strong> 속성을 제공합니다.
+현재 사용자가 로그인하지 않은 경우이 속성은 AnonymousUser의 인스턴스로 설정되고, 그렇지 않으면 User의 인스턴스가됩니다. <strong>is_authenticated</strong>를 사용하면 다음과 같이 구분할 수 있습니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">:</span>
+    <span class="c1"># Do something for authenticated users.
+</span>    <span class="o">...</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># Do something for anonymous users.
+</span>    <span class="o">...</span>
+</code></pre></div>
+<h3 id="how-to-log-a-user-in">
+<a class="anchor" href="#how-to-log-a-user-in" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to log a user in</h3>
+
+<p>현재 세션에 연결하려는 인증 된 사용자가있는 경우 <strong>login()</strong> 함수를 사용하여이 작업을 수행합니다.</p>
+
+<p><strong>login(request, user, backend=None)</strong></p>
+
+<p>보기에서 사용자를 로그인하려면 <strong>login()</strong>을 사용하십시오.
+그것은 <strong>HttpRequest</strong> 객체와 <strong>User</strong> 객체를 취합니다.
+<strong>login()</strong>은 Django의 세션 프레임 워크를 사용하여 세션에 사용자의 ID를 저장합니다.</p>
+
+<p>익명 세션 중에 설정된 모든 데이터는 사용자가 로그인 한 후에 세션에 유지됩니다.
+이 예는 <strong>authenticate()</strong>와 <strong>login()</strong>을 모두 사용하는 방법을 보여줍니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="kn">from</span> <span class="nn">django.contrib.auth</span> <span class="kn">import</span> <span class="n">authenticate</span><span class="p">,</span> <span class="n">login</span>
+
+<span class="k">def</span> <span class="nf">my_view</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">username</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">[</span><span class="s">'username'</span><span class="p">]</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">[</span><span class="s">'password'</span><span class="p">]</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">authenticate</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">user</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">login</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
+        <span class="c1"># Redirect to a success page.
+</span>        <span class="o">...</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Return an 'invalid login' error message.
+</span>        <span class="o">...</span>
+</code></pre></div>
+<h4 id="selecting-the-authentication-backend">
+<a class="anchor" href="#selecting-the-authentication-backend" aria-hidden="true"><span class="octicon octicon-link"></span></a>Selecting the authentication backend</h4>
+
+<p>사용자가 로그인하면 사용자의 ID와 인증에 사용 된 backend가 사용자의 세션에 저장됩니다.
+이를 통해 동일한 인증 백엔드가 이후 요청시 사용자 세부 정보를 가져올 수 있습니다.
+세션에 저장할 인증 backend는 다음과 같이 선택됩니다.</p>
+
+<ul>
+<li>제공되는 경우 선택적 <strong>backend</strong> 인수의 값을 사용하십시오.</li>
+<li>
+<strong>user.backend</strong> 속성의 값을 사용하십시오 (있는 경우). 이렇게하면 <strong>authenticate()</strong> 및 <strong>login()</strong> 을 쌍으로 지정할 수 있습니다. <strong>authenticate()</strong> 는 반환하는 사용자 객체에 <strong>user.backend</strong> 특성을 설정합니다.</li>
+<li>하나만 있는 경우 <strong>AUTHENTICATION_BACKENDS</strong>에서 backend를 사용하십시오.</li>
+<li>그렇지 않으면 예외를 발생시킵니다.</li>
+</ul>
+
+<p>경우 1과 2에서 백엔드 인수 또는 <strong>user.backend</strong> 속성의 값은 실제 백엔드 클래스가 아닌 점으로 구분 된 가져 오기 경로 문자열 (<strong>AUTHENTICATION_BACKENDS</strong> 에 있는 것과 유사)이어야합니다.</p>
+
+<hr>
+
+<p>How to log a user out
+Limiting access to logged-in users
+The raw way
+The login_required decorator
+The LoginRequired mixin
+Limiting access to logged-in users that pass a test
+The permission_required decorator
+The PermissionRequiredMixin mixin
+Redirecting unauthorized requests in class-based views
+Session invalidation on password change</p>
+
+<hr>
+
+<h3 id="authentication-views">
+<a class="anchor" href="#authentication-views" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authentication Views</h3>
+
+<p>Django 는 로그인, 로그아웃 및 비밀번호 관리를 처리하는 데 사용할 수 있는 몇 가지보기를 제공합니다.
+이것들은 주식 승인 양식을 사용하지만 당신은 자신의 양식으로도 전달할 수 있습니다.</p>
+
+<p>Django 는 인증보기에 대한 기본 템플릿을 제공하지 않습니다.
+사용할보기에 대해 사용자 고유의 템플리트를 작성해야합니다.
+템플릿 컨텍스트는 각보기에 설명되어 있습니다. 모든 인증보기를 참조하십시오.</p>
+
+<h4 id="using-the-views">
+<a class="anchor" href="#using-the-views" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using the views</h4>
+
+<p>프로젝트에 이러한 뷰를 구현하는 데는 여러 가지 방법이 있습니다.
+가장 쉬운 방법은 제공된 URLconf를 자신의 URLconf에있는 <strong>django.contrib.auth.urls</strong>에 포함시키는 것입니다. 예를 들면 다음과 같습니다:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"></code></pre></div>
+<h4 id="all-authentication-views">
+<a class="anchor" href="#all-authentication-views" aria-hidden="true"><span class="octicon octicon-link"></span></a>All authentication views</h4>
+
+<hr>
+
+<h3 id="helper-functions">
+<a class="anchor" href="#helper-functions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Helper functions</h3>
+
+<h3 id="built-in-forms">
+<a class="anchor" href="#built-in-forms" aria-hidden="true"><span class="octicon octicon-link"></span></a>Built-in forms</h3>
+
+<h3 id="authentication-data-in-templates">
+<a class="anchor" href="#authentication-data-in-templates" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authentication data in templates</h3>
+
+<h4 id="users">
+<a class="anchor" href="#users" aria-hidden="true"><span class="octicon octicon-link"></span></a>Users</h4>
+
+<h4 id="permissions">
+<a class="anchor" href="#permissions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Permissions</h4>
+
+<hr>
+
+<h2 id="managing-users-in-the-admin">
+<a class="anchor" href="#managing-users-in-the-admin" aria-hidden="true"><span class="octicon octicon-link"></span></a>Managing users in the admin</h2>
+
+<h3 id="creating-users">
+<a class="anchor" href="#creating-users" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating users</h3>
+
+<h3 id="changing-passwords">
+<a class="anchor" href="#changing-passwords" aria-hidden="true"><span class="octicon octicon-link"></span></a>Changing passwords</h3>
+
+<hr>
+
+<h2 id="references">
+<a class="anchor" href="#references" aria-hidden="true"><span class="octicon octicon-link"></span></a>References</h2>
+
+  </div>
+
+<div>
+  <p>이 문서는 기본 설정에서 장고의 인증 시스템 사용법을 설명합니다.</p>
+
+<p>이 구성은 가장 일반적인 프로젝트 요구를 처리하고 합리적으로 광범위한 작업을 처리하며 암호와 사용 권한을 신중하게 구현하도록 진화했습니다.</p>
+
+<p>Django는 인증 요구 사항이 기본값과 다른 프로젝트의 경우 광범위한 인증 <a href="https://docs.djangoproject.com/en/2.1/topics/auth/customizing/" rel="nofollow" target="_blank">확장 및 사용자 정의</a>를 지원합니다.</p>
+
+<p>Django authentication은 authentication(인증)과 authorization(권한 부여)를 함께 제공하며 일반적으로 authentication system 이라고 합니다.</p>
+
+<p>이러한 기능은 다소 결합되어 있기 때문입니다.</p>
+
+<h2 id="user-objects">User objects</h2>
+
+<p><strong>User</strong> 객체는 인증 시스템의 핵심입니다.
+그들은 일반적으로 사이트와 상호 작용하는 사람들을 대표하며 액세스 제한, 사용자 프로필 등록, 제작자와 콘텐츠 연결 등을 가능하게 하는 데 사용됩니다.
+Django의 인증 프레임 워크에 <strong>'superusers'</strong> 또는 admin <strong>'staff'</strong> 사용자는 특별한 속성이 설정된 사용자 객체일 뿐이며 사용자 객체의 클래스는 다릅니다.</p>
+
+<p>기본 사용자의 기본 속성은 다음과 같습니다:</p>
+
+<ul>
+<li>username</li>
+<li>password</li>
+<li>email</li>
+<li>first_name</li>
+<li>last_name</li>
+</ul>
+
+<p>전체 참조 정보는 <a href="https://docs.djangoproject.com/en/2.1/ref/contrib/auth/#django.contrib.auth.models.User" rel="nofollow" target="_blank">full API documentation</a>를 참조하십시오. 이후의 설명서는 더 많은 작업 지향적 인 내용을 담고 있습니다.</p>
+
+<h3 id="creating-users">Creating users</h3>
+
+<p>사용자를 생성하는 가장 직접적인 방법은 포함 된 <code>create_user()</code> 도우미 함수를 사용하는 것입니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span>
+<span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="s">'mk'</span><span class="p">,</span> <span class="s">'mkkim@zensystems.co.kr'</span><span class="p">,</span> <span class="s">'****'</span><span class="p">)</span>
+<span class="n">user</span><span class="o">.</span><span class="n">last_name</span> <span class="o">=</span> <span class="s">'kim'</span>
+<span class="n">user</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</code></pre></div>
+<p>Django 관리자가 설치되어 있다면 <a href="https://docs.djangoproject.com/en/2.1/topics/auth/default/#auth-admin" rel="nofollow" target="_blank">대화식으로 사용자를 생성</a>할 수 있습니다.</p>
+
+<hr>
+
+<h3 id="creating-superusers">Creating superusers</h3>
+
+<p><a href="https://docs.djangoproject.com/en/2.1/ref/django-admin/#django-admin-createsuperuse" rel="nofollow" target="_blank">createsuperuser</a> 명령을 사용하여 수퍼 유저를 만듭니다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>python manage.py createsuperuser <span class="nt">--username</span><span class="o">=</span>masteradmin <span class="nt">--email</span><span class="o">=</span>mkkim@zensystems.co.kr
+
+Password:
+Password <span class="o">(</span>again<span class="o">)</span>:
+Superuser created successfully.
+</code></pre></div>
+<p>암호를 묻는 메시지가 나타납니다.
+입력 한 후 사용자가 즉시 생성됩니다. <code>--username</code> 또는 <code>--email</code> 옵션을 사용하지 않으면 해당 값을 묻는 메시지가 나타납니다.</p>
+
+<p>동일한 username 으로 인한 출동 내용:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+  <span class="n">File</span> <span class="s">"/home/zen/.pyenv/versions/portscan/lib/python3.7/site-packages/django/db/backends/utils.py"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">85</span><span class="p">,</span> <span class="ow">in</span> <span class="n">_execute</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+  <span class="n">File</span> <span class="s">"/home/zen/.pyenv/versions/portscan/lib/python3.7/site-packages/django/db/backends/sqlite3/base.py"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">296</span><span class="p">,</span> <span class="ow">in</span> <span class="n">execute</span>
+    <span class="k">return</span> <span class="n">Database</span><span class="o">.</span><span class="n">Cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+<span class="n">sqlite3</span><span class="o">.</span><span class="n">IntegrityError</span><span class="p">:</span> <span class="n">UNIQUE</span> <span class="n">constraint</span> <span class="n">failed</span><span class="p">:</span> <span class="n">auth_user</span><span class="o">.</span><span class="n">username</span>
+</code></pre></div><div class="highlight"><pre><code class="language-py" data-lang="py"><span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span>
+
+<span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+
+<span class="p">{</span>
+    <span class="s">'id'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s">'password'</span><span class="p">:</span> <span class="s">'pbkdf2_sha256$120000$d8rc8DXOK3SZ$zajQtVEFjbs9X8Etv7gtk/Q9yE3ukBifHjsCzo+PmO8='</span><span class="p">,</span>
+    <span class="s">'last_login'</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+    <span class="s">'is_superuser'</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="s">'username'</span><span class="p">:</span> <span class="s">'mkkim'</span><span class="p">,</span>
+    <span class="s">'first_name'</span><span class="p">:</span> <span class="s">'mk'</span><span class="p">,</span>
+    <span class="s">'last_name'</span><span class="p">:</span> <span class="s">'kim'</span><span class="p">,</span>
+    <span class="s">'email'</span><span class="p">:</span> <span class="s">'mkkim@zensystems.co.kr'</span><span class="p">,</span>
+    <span class="s">'is_staff'</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="s">'is_active'</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="s">'date_joined'</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2018</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">238654</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=&lt;</span><span class="n">UTC</span><span class="o">&gt;</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="p">{</span>
+    <span class="s">'id'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s">'password'</span><span class="p">:</span> <span class="s">'pbkdf2_sha256$120000$9gOIbmnJTHwi$qWGpxhL4hNIULyjY26K2QKZgkTW8VP47najlRnI4rYg='</span><span class="p">,</span>
+    <span class="s">'last_login'</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+    <span class="s">'is_superuser'</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="s">'username'</span><span class="p">:</span> <span class="s">'masteradmin'</span><span class="p">,</span>
+    <span class="s">'first_name'</span><span class="p">:</span> <span class="s">''</span><span class="p">,</span>
+    <span class="s">'last_name'</span><span class="p">:</span> <span class="s">''</span><span class="p">,</span>
+    <span class="s">'email'</span><span class="p">:</span> <span class="s">'mkkim@zensystems.co.kr'</span><span class="p">,</span>
+    <span class="s">'is_staff'</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="s">'is_active'</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="s">'date_joined'</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2018</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">435579</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=&lt;</span><span class="n">UTC</span><span class="o">&gt;</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr>
+
+<h3 id="changing-passwords">Changing passwords</h3>
+
+<p>Django는 사용자 모델에 원시 (일반 텍스트) 비밀번호를 저장하지 않지만 해시만 저장합니다 (자세한 내용은 <a href="https://docs.djangoproject.com/en/2.1/topics/auth/passwords/" rel="nofollow" target="_blank">documentation of how passwords are managed</a> 참조).</p>
+
+<p>이 때문에 사용자의 암호 특성을 직접 조작하지 마십시오. 사용자를 만들 때 도우미 함수가 사용됩니다.</p>
+
+<p>사용자의 암호를 변경하려면 몇 가지 옵션이 있습니다:</p>
+
+<p><code>manage.py changepassword *username*</code> 은 명령 줄에서 사용자의 비밀번호를 변경하는 방법을 제공합니다.
+그것은 당신이 두 번 입력해야 주어진 사용자의 암호를 변경하라는 메시지가 나타납니다.
+둘 모두 일치하면 새 암호가 즉시 변경됩니다.
+사용자에게 제공하지 않으면이 명령은 사용자 이름이 현재 시스템 사용자와 일치하는 암호를 변경하려고 시도합니다.
+<code>set_password()</code>를 사용하여 프로그래밍 방식으로 암호를 변경할 수도 있습니다:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span>
+<span class="n">u</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">'john'</span><span class="p">)</span>
+<span class="n">u</span><span class="o">.</span><span class="n">set_password</span><span class="p">(</span><span class="s">'new password'</span><span class="p">)</span>
+<span class="n">u</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</code></pre></div>
+<p>Django 관리자가 설치되어 있다면 인증 시스템의 관리 페이지에서 사용자의 암호를 변경할 수 있습니다.</p>
+
+<p>Django는 사용자가 자신의 암호를 변경할 수 있게 하는데 사용할 수 있는 views 와 forms도 제공합니다.</p>
+
+<p>사용자의 암호를 변경하면 모든 세션이 로그 아웃됩니다.</p>
+
+<p>자세한 내용은 <a href="https://docs.djangoproject.com/en/2.1/topics/auth/default/#session-invalidation-on-password-change" rel="nofollow" target="_blank">암호 변경시 세션 무효화</a>를 참조하십시오.</p>
+
+<hr>
+
+<h3 id="authenticating-users">Authenticating users</h3>
+
+<p><strong>authenticate(request=None, **credentials)</strong></p>
+
+<p><strong>authenticate()</strong>를 사용하여 자격 증명 집합을 확인합니다.
+기본 케이스의 키워드 인수, 사용자 이름 및 암호로 자격 증명을 가져 와서 각 인증 백엔드에 대해 확인하고 백엔드에 대한 자격 증명이 유효한 경우 User 객체를 반환합니다.
+자격 증명이 백엔드에 유효하지 않거나 백엔드가 PermissionDenied를 발생 시키면 None을 반환합니다. 예:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="kn">from</span> <span class="nn">django.contrib.auth</span> <span class="kn">import</span> <span class="n">authenticate</span>
+<span class="n">user</span> <span class="o">=</span> <span class="n">authenticate</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">'john'</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s">'secret'</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">user</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="c1"># A backend authenticated the credentials
+</span><span class="k">else</span><span class="p">:</span>
+    <span class="c1"># No backend authenticated the credentials
+</span></code></pre></div>
+<p><strong>request</strong> 은 인증 백엔드의 <strong>authenticate()</strong> 메소드에 전달되는 선택적 <strong>HttpRequest</strong>입니다.</p>
+
+<blockquote>
+<p>Note</p>
+
+<p>이는 자격 증명 집합을 인증하는 낮은 수준의 방법입니다.
+예를 들어 <a href="https://docs.djangoproject.com/en/2.1/ref/middleware/#django.contrib.auth.middleware.RemoteUserMiddleware" rel="nofollow" target="_blank">RemoteUserMiddleware</a>에서 사용합니다.
+자신의 인증 시스템을 작성하지 않는 한, 아마 이것을 사용하지 않을 것입니다.
+오히려 사용자 로그인 방법을 찾고 있다면 <a href="https://docs.djangoproject.com/en/2.1/topics/auth/default/#django.contrib.auth.views.LoginView" rel="nofollow" target="_blank">LoginView</a>를 사용하십시오.</p>
+</blockquote>
+
+<hr>
+
+<h2 id="permissions-and-authorization">Permissions and Authorization</h2>
+
+<hr>
+
+<p>Default permissions
+Groups
+Programmatically creating permissions
+Permission caching</p>
+
+<hr>
+
+<h2 id="authentication-in-web-requests">Authentication in Web requests</h2>
+
+<p>Django는 세션과 미들웨어를 사용하여 인증 시스템을 <strong>request objects</strong>에 연결합니다.</p>
+
+<p>이들은 현재 사용자를 나타내는 모든 요청에 ​​대해 <strong>request.user</strong> 속성을 제공합니다.
+현재 사용자가 로그인하지 않은 경우이 속성은 AnonymousUser의 인스턴스로 설정되고, 그렇지 않으면 User의 인스턴스가됩니다. <strong>is_authenticated</strong>를 사용하면 다음과 같이 구분할 수 있습니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">:</span>
+    <span class="c1"># Do something for authenticated users.
+</span>    <span class="o">...</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># Do something for anonymous users.
+</span>    <span class="o">...</span>
+</code></pre></div>
+<h3 id="how-to-log-a-user-in">How to log a user in</h3>
+
+<p>현재 세션에 연결하려는 인증 된 사용자가있는 경우 <strong>login()</strong> 함수를 사용하여이 작업을 수행합니다.</p>
+
+<p><strong>login(request, user, backend=None)</strong></p>
+
+<p>보기에서 사용자를 로그인하려면 <strong>login()</strong>을 사용하십시오.
+그것은 <strong>HttpRequest</strong> 객체와 <strong>User</strong> 객체를 취합니다.
+<strong>login()</strong>은 Django의 세션 프레임 워크를 사용하여 세션에 사용자의 ID를 저장합니다.</p>
+
+<p>익명 세션 중에 설정된 모든 데이터는 사용자가 로그인 한 후에 세션에 유지됩니다.
+이 예는 <strong>authenticate()</strong>와 <strong>login()</strong>을 모두 사용하는 방법을 보여줍니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="kn">from</span> <span class="nn">django.contrib.auth</span> <span class="kn">import</span> <span class="n">authenticate</span><span class="p">,</span> <span class="n">login</span>
+
+<span class="k">def</span> <span class="nf">my_view</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">username</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">[</span><span class="s">'username'</span><span class="p">]</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">[</span><span class="s">'password'</span><span class="p">]</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">authenticate</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">user</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">login</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
+        <span class="c1"># Redirect to a success page.
+</span>        <span class="o">...</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Return an 'invalid login' error message.
+</span>        <span class="o">...</span>
+</code></pre></div>
+<h4 id="selecting-the-authentication-backend">Selecting the authentication backend</h4>
+
+<p>사용자가 로그인하면 사용자의 ID와 인증에 사용 된 backend가 사용자의 세션에 저장됩니다.
+이를 통해 동일한 인증 백엔드가 이후 요청시 사용자 세부 정보를 가져올 수 있습니다.
+세션에 저장할 인증 backend는 다음과 같이 선택됩니다.</p>
+
+<ul>
+<li>제공되는 경우 선택적 <strong>backend</strong> 인수의 값을 사용하십시오.</li>
+<li>
+<strong>user.backend</strong> 속성의 값을 사용하십시오 (있는 경우). 이렇게하면 <strong>authenticate()</strong> 및 <strong>login()</strong> 을 쌍으로 지정할 수 있습니다. <strong>authenticate()</strong> 는 반환하는 사용자 객체에 <strong>user.backend</strong> 특성을 설정합니다.</li>
+<li>하나만 있는 경우 <strong>AUTHENTICATION_BACKENDS</strong>에서 backend를 사용하십시오.</li>
+<li>그렇지 않으면 예외를 발생시킵니다.</li>
+</ul>
+
+<p>경우 1과 2에서 백엔드 인수 또는 <strong>user.backend</strong> 속성의 값은 실제 백엔드 클래스가 아닌 점으로 구분 된 가져 오기 경로 문자열 (<strong>AUTHENTICATION_BACKENDS</strong> 에 있는 것과 유사)이어야합니다.</p>
+
+<hr>
+
+<p>How to log a user out
+Limiting access to logged-in users
+The raw way
+The login_required decorator
+The LoginRequired mixin
+Limiting access to logged-in users that pass a test
+The permission_required decorator
+The PermissionRequiredMixin mixin
+Redirecting unauthorized requests in class-based views
+Session invalidation on password change</p>
+
+<hr>
+
+<h3 id="authentication-views">Authentication Views</h3>
+
+<p>Django 는 로그인, 로그아웃 및 비밀번호 관리를 처리하는 데 사용할 수 있는 몇 가지보기를 제공합니다.
+이것들은 주식 승인 양식을 사용하지만 당신은 자신의 양식으로도 전달할 수 있습니다.</p>
+
+<p>Django 는 인증보기에 대한 기본 템플릿을 제공하지 않습니다.
+사용할보기에 대해 사용자 고유의 템플리트를 작성해야합니다.
+템플릿 컨텍스트는 각보기에 설명되어 있습니다. 모든 인증보기를 참조하십시오.</p>
+
+<h4 id="using-the-views">Using the views</h4>
+
+<p>프로젝트에 이러한 뷰를 구현하는 데는 여러 가지 방법이 있습니다.
+가장 쉬운 방법은 제공된 URLconf를 자신의 URLconf에있는 <strong>django.contrib.auth.urls</strong>에 포함시키는 것입니다. 예를 들면 다음과 같습니다:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"></code></pre></div>
+<h4 id="all-authentication-views">All authentication views</h4>
+
+<hr>
+
+<h3 id="helper-functions">Helper functions</h3>
+
+<h3 id="built-in-forms">Built-in forms</h3>
+
+<h3 id="authentication-data-in-templates">Authentication data in templates</h3>
+
+<h4 id="users">Users</h4>
+
+<h4 id="permissions">Permissions</h4>
+
+<hr>
+
+<h2 id="managing-users-in-the-admin">Managing users in the admin</h2>
+
+<h3 id="creating-users">Creating users</h3>
+
+<h3 id="changing-passwords">Changing passwords</h3>
+
+<hr>
+
+<h2 id="references">References</h2>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

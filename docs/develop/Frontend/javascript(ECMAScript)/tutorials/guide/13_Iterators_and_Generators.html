@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Iterators_and_Generators(반복기 및 생성기) | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Iterators_and_Generators(반복기 및 생성기)" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="컬렉션 내 각 항목 처리는 매우 흔한 연산입니다. JavaScript는 간단한 for 루프에서 map() 및 filter()에 이르기까지, 컬렉션을 반복하는 많은 방법을 제공합니다. 반복기(iterator) 및 생성기(generator)는 반복 개념을 핵심 언어 내로 바로 가져와 for...of 루프의 동작(behavior)을 사용자 정의하는 메커니즘을 제공합니다." />
+<meta property="og:description" content="컬렉션 내 각 항목 처리는 매우 흔한 연산입니다. JavaScript는 간단한 for 루프에서 map() 및 filter()에 이르기까지, 컬렉션을 반복하는 많은 방법을 제공합니다. 반복기(iterator) 및 생성기(generator)는 반복 개념을 핵심 언어 내로 바로 가져와 for...of 루프의 동작(behavior)을 사용자 정의하는 메커니즘을 제공합니다." />
+<link rel="canonical" href="http://localhost:4000/blog/docs/develop/Frontend/javascript(ECMAScript)/tutorials/guide/13_Iterators_and_Generators.html" />
+<meta property="og:url" content="http://localhost:4000/blog/docs/develop/Frontend/javascript(ECMAScript)/tutorials/guide/13_Iterators_and_Generators.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-06T09:31:12+09:00" />
+<script type="application/ld+json">
+{"description":"컬렉션 내 각 항목 처리는 매우 흔한 연산입니다. JavaScript는 간단한 for 루프에서 map() 및 filter()에 이르기까지, 컬렉션을 반복하는 많은 방법을 제공합니다. 반복기(iterator) 및 생성기(generator)는 반복 개념을 핵심 언어 내로 바로 가져와 for...of 루프의 동작(behavior)을 사용자 정의하는 메커니즘을 제공합니다.","headline":"Iterators_and_Generators(반복기 및 생성기)","dateModified":"2019-11-06T09:31:12+09:00","datePublished":"2019-11-06T09:31:12+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/docs/develop/Frontend/javascript(ECMAScript)/tutorials/guide/13_Iterators_and_Generators.html"},"url":"http://localhost:4000/blog/docs/develop/Frontend/javascript(ECMAScript)/tutorials/guide/13_Iterators_and_Generators.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Iterators_and_Generators(반복기 및 생성기)</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#iterators">iterators(반복기)</a></li>
+<li class="toc-entry toc-h2"><a href="#iterable">iterable</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#iterable">사용자 정의 iterable</a></li>
+<li class="toc-entry toc-h3"><a href="#iterable">내장 iterable</a></li>
+<li class="toc-entry toc-h3"><a href="#iterable">iterable 을 기대하는 구문</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#generator">generator(생성기)</a></li>
+<li class="toc-entry toc-h2"><a href="#advanced-generators">Advanced generators(고급 생성기)</a></li>
+<li class="toc-entry toc-h2"><a href="#reference">Reference</a></li>
+</ul><p>컬렉션 내 각 항목 처리는 매우 흔한 연산입니다.
+JavaScript는 간단한 for 루프에서 <code>map()</code> 및 <code>filter()</code>에 이르기까지, 컬렉션을 반복하는 많은 방법을 제공합니다.
+반복기(iterator) 및 생성기(generator)는 반복 개념을 핵심 언어 내로 바로 가져와 <code>for...of</code> 루프의 동작(behavior)을 사용자 정의하는 메커니즘을 제공합니다.</p>
+
+<ul>
+<li>  반복 프로토콜</li>
+<li>  for...of</li>
+<li>  function* 및 Generator</li>
+<li>  yield 및 yield*</li>
+</ul>
+
+<h2 id="iterators">
+<a class="anchor" href="#iterators" aria-hidden="true"><span class="octicon octicon-link"></span></a>iterators(반복기)</h2>
+
+<p><strong>객체는 한 번에 하나씩 컬렉션 항목을 액세스하는 법을 아는 경우 반복기(iterator)입니다.
+그 열(sequence) 내부 현재 위치를 기억하면서.</strong></p>
+
+<p>JavaScript에서 반복기는 열 내 다음 항목을 반환하는 <code>next()</code> 메서드를 제공하는 객체입니다.</p>
+
+<p>이 메서드는 다음 두 속성이 있는 객체를 반환합니다: <code>done</code> 및 <code>value</code>.</p>
+
+<p>일단 생성되면, 반복기 객체는 명시해서 next()를 반복 호출하여 사용될 수 있습니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">makeIterator</span><span class="p">(</span><span class="nx">array</span><span class="p">){</span>
+    <span class="kd">var</span> <span class="nx">nextIndex</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+       <span class="na">next</span><span class="p">:</span> <span class="kd">function</span><span class="p">(){</span>
+           <span class="k">return</span> <span class="nx">nextIndex</span> <span class="o">&lt;</span> <span class="nx">array</span><span class="p">.</span><span class="nx">length</span> <span class="p">?</span>
+               <span class="p">{</span><span class="na">value</span><span class="p">:</span> <span class="nx">array</span><span class="p">[</span><span class="nx">nextIndex</span><span class="o">++</span><span class="p">],</span> <span class="na">done</span><span class="p">:</span> <span class="kc">false</span><span class="p">}</span> <span class="p">:</span>
+               <span class="p">{</span><span class="na">done</span><span class="p">:</span> <span class="kc">true</span><span class="p">};</span>
+       <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>일단 초기화되면, next() 메서드는 차례로 객체에서 키-값 쌍에 액세스하기 위해 호출될 수 있습니다:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">it</span> <span class="o">=</span> <span class="nx">makeIterator</span><span class="p">([</span><span class="dl">'</span><span class="s1">yo</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">ya</span><span class="dl">'</span><span class="p">]);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">it</span><span class="p">.</span><span class="nx">next</span><span class="p">().</span><span class="nx">value</span><span class="p">);</span> <span class="c1">// 'yo'</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">it</span><span class="p">.</span><span class="nx">next</span><span class="p">().</span><span class="nx">value</span><span class="p">);</span> <span class="c1">// 'ya'</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">it</span><span class="p">.</span><span class="nx">next</span><span class="p">().</span><span class="nx">done</span><span class="p">);</span>  <span class="c1">// true</span>
+</code></pre></div>
+<hr>
+
+<h2 id="iterable">
+<a class="anchor" href="#iterable" aria-hidden="true"><span class="octicon octicon-link"></span></a>iterable</h2>
+
+<p><strong>객체는 값이 <code>for..of</code> 구조 내에서 반복되는 것 같은 그 반복 동작을 정의하는 경우 반복가능(iterable)입니다.</strong></p>
+
+<p><code>Array</code> 또는 <code>Map</code>과 같은 일부 내장 형은 기본 반복 동작이 있지만 다른 형(가령 Object)은 없습니다.</p>
+
+<p><strong>반복가능</strong> 하기 위해서, 객체는 <strong>@@iterator</strong> 메서드를 구현해야 합니다, 객체(나 그 prototype 체인에 등장하는 객체 중 하나)가 <code>Symbol.iterator</code> 키를 갖는 속성이 있어야 함을 뜻하는:</p>
+
+<h3 id="iterable">
+<a class="anchor" href="#iterable" aria-hidden="true"><span class="octicon octicon-link"></span></a>사용자 정의 iterable</h3>
+
+<p>자신의 반복가능 객체를 만들 수 있습니다:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">myIterable</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="nx">myIterable</span><span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]</span> <span class="o">=</span> <span class="kd">function</span><span class="o">*</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">yield</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">yield</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="k">yield</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="p">[...</span><span class="nx">myIterable</span><span class="p">]</span> <span class="c1">// [1, 2, 3]</span>
+</code></pre></div>
+<h3 id="iterable">
+<a class="anchor" href="#iterable" aria-hidden="true"><span class="octicon octicon-link"></span></a>내장 iterable</h3>
+
+<p><code>String</code>, <code>Array</code>, <code>TypedArray</code>, <code>Map</code> 및 <code>Set</code>은 모두 내장 반복가능 객체입니다, 그들의 프로토타입 객체가 모두 Symbol.iterator 메서드가 있기에.</p>
+
+<h3 id="iterable">
+<a class="anchor" href="#iterable" aria-hidden="true"><span class="octicon octicon-link"></span></a>iterable 을 기대하는 구문</h3>
+
+<p>일부 문(statement) 및 식(expression)은 iterable을 기대합니다, 가령 for-of 루프, 전개 연산자, yield* 및 해체 할당.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">value</span> <span class="k">of</span> <span class="p">[</span><span class="dl">"</span><span class="s2">a</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">b</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">c</span><span class="dl">"</span><span class="p">]){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="c1">// "a"</span>
+<span class="c1">// "b"</span>
+<span class="c1">// "c"</span>
+
+<span class="p">[...</span><span class="dl">"</span><span class="s2">abc</span><span class="dl">"</span><span class="p">]</span> <span class="c1">// ["a", "b", "c"]</span>
+
+<span class="kd">function</span><span class="o">*</span> <span class="nx">gen</span><span class="p">(){</span>
+  <span class="k">yield</span><span class="o">*</span> <span class="p">[</span><span class="dl">"</span><span class="s2">a</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">b</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">c</span><span class="dl">"</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="nx">gen</span><span class="p">().</span><span class="nx">next</span><span class="p">()</span> <span class="c1">// { value:"a", done:false }</span>
+
+<span class="p">[</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">c</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Set</span><span class="p">([</span><span class="dl">"</span><span class="s2">a</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">b</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">c</span><span class="dl">"</span><span class="p">])</span>
+<span class="nx">a</span> <span class="c1">// "a"</span>
+</code></pre></div>
+<hr>
+
+<h2 id="generator">
+<a class="anchor" href="#generator" aria-hidden="true"><span class="octicon octicon-link"></span></a>generator(생성기)</h2>
+
+<p><strong>사용자 정의 반복기는 유용한 도구이지만, 반복기 생성은 명시적으로 그들의 내부 상태를 유지할 필요 때문에 주의깊은 프로그래밍이 필요합니다.</strong></p>
+
+<p>생성기는 강력한 대안을 제공합니다: <strong>자신의 상태를 유지할 수 있는 단일 함수를 작성하여 반복 알고리즘을 정의할 수 있게 합니다.</strong></p>
+
+<p>생성기는 반복기 팩토리로서 작동하는 특별한 유형의 함수입니다.
+함수가 하나 이상의 <a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/yield">yield</a> 식을 포함하고 <a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Statements/function">function*</a> 구문을 사용하면 생성기가 됩니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span><span class="o">*</span> <span class="nx">idMaker</span><span class="p">(){</span>
+  <span class="kd">var</span> <span class="nx">index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">while</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+    <span class="k">yield</span> <span class="nx">index</span><span class="o">++</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">gen</span> <span class="o">=</span> <span class="nx">idMaker</span><span class="p">();</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">gen</span><span class="p">.</span><span class="nx">next</span><span class="p">().</span><span class="nx">value</span><span class="p">);</span> <span class="c1">// 0</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">gen</span><span class="p">.</span><span class="nx">next</span><span class="p">().</span><span class="nx">value</span><span class="p">);</span> <span class="c1">// 1</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">gen</span><span class="p">.</span><span class="nx">next</span><span class="p">().</span><span class="nx">value</span><span class="p">);</span> <span class="c1">// 2</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+<hr>
+
+<h2 id="advanced-generators">
+<a class="anchor" href="#advanced-generators" aria-hidden="true"><span class="octicon octicon-link"></span></a>Advanced generators(고급 생성기)</h2>
+
+<p>생성기는 요청에 따라 그 산출된(yielded, yield 식으로 산출된) 값을 계산하고, 계산하기 비싼(힘든) 수열 또는 위에 설명한 대로 무한 수열이라도 효율적으로 나타내게 합니다.</p>
+
+<p><code>next()</code> 메서드는 또한 생성기의 내부 상태를 수정하는 데 쓰일 수 있는 값을 받습니다.</p>
+
+<blockquote>
+<p>Note: <strong>next()</strong> method</p>
+
+<p>done과 value 프로퍼티를 가진 객체를 반환한다.</p>
+
+<p>또한 next() 메소드를 호출할 때 매개변수를 제공하여 그 값을 generator에 전달할 수 있다.</p>
+</blockquote>
+
+<p>next()에 전달되는 값은 생성기가 중단된 마지막 yield 식의 결과로 처리됩니다.</p>
+
+<p>여기 sequence(수열)을 재시작하기 위해 next(x)를 사용하는 피보나치 생성기가 있습니다:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span><span class="o">*</span> <span class="nx">fibonacci</span><span class="p">(){</span>
+  <span class="kd">var</span> <span class="nx">fn1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">fn2</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">while</span> <span class="p">(</span><span class="kc">true</span><span class="p">){</span>
+    <span class="kd">var</span> <span class="nx">current</span> <span class="o">=</span> <span class="nx">fn1</span><span class="p">;</span>
+    <span class="nx">fn1</span> <span class="o">=</span> <span class="nx">fn2</span><span class="p">;</span>
+    <span class="nx">fn2</span> <span class="o">=</span> <span class="nx">current</span> <span class="o">+</span> <span class="nx">fn1</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">reset</span> <span class="o">=</span> <span class="k">yield</span> <span class="nx">current</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">reset</span><span class="p">){</span>
+        <span class="nx">fn1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="nx">fn2</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">sequence</span> <span class="o">=</span> <span class="nx">fibonacci</span><span class="p">();</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">sequence</span><span class="p">.</span><span class="nx">next</span><span class="p">().</span><span class="nx">value</span><span class="p">);</span>     <span class="c1">// 0</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">sequence</span><span class="p">.</span><span class="nx">next</span><span class="p">().</span><span class="nx">value</span><span class="p">);</span>     <span class="c1">// 1</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">sequence</span><span class="p">.</span><span class="nx">next</span><span class="p">().</span><span class="nx">value</span><span class="p">);</span>     <span class="c1">// 1</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">sequence</span><span class="p">.</span><span class="nx">next</span><span class="p">().</span><span class="nx">value</span><span class="p">);</span>     <span class="c1">// 2</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">sequence</span><span class="p">.</span><span class="nx">next</span><span class="p">().</span><span class="nx">value</span><span class="p">);</span>     <span class="c1">// 3</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">sequence</span><span class="p">.</span><span class="nx">next</span><span class="p">().</span><span class="nx">value</span><span class="p">);</span>     <span class="c1">// 5</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">sequence</span><span class="p">.</span><span class="nx">next</span><span class="p">().</span><span class="nx">value</span><span class="p">);</span>     <span class="c1">// 8</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">sequence</span><span class="p">.</span><span class="nx">next</span><span class="p">(</span><span class="kc">true</span><span class="p">).</span><span class="nx">value</span><span class="p">);</span> <span class="c1">// 0</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">sequence</span><span class="p">.</span><span class="nx">next</span><span class="p">().</span><span class="nx">value</span><span class="p">);</span>     <span class="c1">// 1</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">sequence</span><span class="p">.</span><span class="nx">next</span><span class="p">().</span><span class="nx">value</span><span class="p">);</span>     <span class="c1">// 1</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">sequence</span><span class="p">.</span><span class="nx">next</span><span class="p">().</span><span class="nx">value</span><span class="p">);</span>     <span class="c1">// 2</span>
+</code></pre></div>
+<blockquote>
+<p>Note: 주의:
+흥미롭게도, next(undefined) 호출은 next() 호출과 같습니다. 그러나, next() 호출할 때 undefined 이외의 값으로 신생 생성기를 시작하면 TypeError 예외가 발생합니다.</p>
+</blockquote>
+
+<p><code>throw()</code> 메서드를 호출하며 발생해야 할 예외 값을 전달하여 예외를 발생하도록 생성기를 강제할 수 있습니다.
+이 예외는 생성기의 현재 중단된 문맥에서 발생됩니다, 마치 현재 중단된 <code>yield</code>가 throw value 문 대신인 것처럼.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">sequence</span> <span class="o">=</span> <span class="nx">fibonacci</span><span class="p">();</span>
+
+<span class="nx">sequence</span><span class="p">.</span><span class="nx">next</span><span class="p">()</span>  <span class="c1">// {value: 0, done: false}</span>
+<span class="nx">sequence</span><span class="p">.</span><span class="nx">next</span><span class="p">()</span>  <span class="c1">// {value: 1, done: false}</span>
+<span class="nx">sequence</span><span class="p">.</span><span class="k">throw</span><span class="p">();</span>
+<span class="c1">// VM113:8 Uncaught undefined</span>
+<span class="nx">sequence</span><span class="p">.</span><span class="nx">next</span><span class="p">()</span>  <span class="c1">// {value: undefined, done: true}</span>
+</code></pre></div>
+<p>발생한 예외 처리 도중 yield를 만나지 않는 경우, 그 뒤 예외는 <code>throw()</code> 호출을 통해 위로 전하며 <code>next()</code> 의 후속 호출 결과 done 속성은 true가 됩니다.</p>
+
+<p>생성기는 주어진 값을 반환하고 생성기 자체를 끝내는 <code>return(value)</code> 메서드가 있습니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">sequence</span> <span class="o">=</span> <span class="nx">fibonacci</span><span class="p">();</span>
+
+<span class="nx">sequence</span><span class="p">.</span><span class="nx">next</span><span class="p">()</span>  <span class="c1">// {value: 0, done: false}</span>
+<span class="nx">sequence</span><span class="p">.</span><span class="nx">next</span><span class="p">()</span>  <span class="c1">// {value: 1, done: false}</span>
+<span class="nx">sequence</span><span class="p">.</span><span class="k">return</span><span class="p">(</span><span class="dl">'</span><span class="s1">return</span><span class="dl">'</span><span class="p">);</span>  <span class="c1">// {value: "return", done: true}</span>
+<span class="nx">sequence</span><span class="p">.</span><span class="nx">next</span><span class="p">()</span>  <span class="c1">// {value: undefined, done: true}</span>
+
+</code></pre></div>
+<hr>
+
+<h2 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+<p><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/Iterators_and_Generators">Iterators_and_Generators(반복기 및 생성기)</a></p>
+
+  </div>
+
+<div>
+  <p>컬렉션 내 각 항목 처리는 매우 흔한 연산입니다.
+JavaScript는 간단한 for 루프에서 <code>map()</code> 및 <code>filter()</code>에 이르기까지, 컬렉션을 반복하는 많은 방법을 제공합니다.
+반복기(iterator) 및 생성기(generator)는 반복 개념을 핵심 언어 내로 바로 가져와 <code>for...of</code> 루프의 동작(behavior)을 사용자 정의하는 메커니즘을 제공합니다.</p>
+
+<ul>
+<li>  반복 프로토콜</li>
+<li>  for...of</li>
+<li>  function* 및 Generator</li>
+<li>  yield 및 yield*</li>
+</ul>
+
+<h2 id="iterators">iterators(반복기)</h2>
+
+<p><strong>객체는 한 번에 하나씩 컬렉션 항목을 액세스하는 법을 아는 경우 반복기(iterator)입니다.
+그 열(sequence) 내부 현재 위치를 기억하면서.</strong></p>
+
+<p>JavaScript에서 반복기는 열 내 다음 항목을 반환하는 <code>next()</code> 메서드를 제공하는 객체입니다.</p>
+
+<p>이 메서드는 다음 두 속성이 있는 객체를 반환합니다: <code>done</code> 및 <code>value</code>.</p>
+
+<p>일단 생성되면, 반복기 객체는 명시해서 next()를 반복 호출하여 사용될 수 있습니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">makeIterator</span><span class="p">(</span><span class="nx">array</span><span class="p">){</span>
+    <span class="kd">var</span> <span class="nx">nextIndex</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+       <span class="na">next</span><span class="p">:</span> <span class="kd">function</span><span class="p">(){</span>
+           <span class="k">return</span> <span class="nx">nextIndex</span> <span class="o">&lt;</span> <span class="nx">array</span><span class="p">.</span><span class="nx">length</span> <span class="p">?</span>
+               <span class="p">{</span><span class="na">value</span><span class="p">:</span> <span class="nx">array</span><span class="p">[</span><span class="nx">nextIndex</span><span class="o">++</span><span class="p">],</span> <span class="na">done</span><span class="p">:</span> <span class="kc">false</span><span class="p">}</span> <span class="p">:</span>
+               <span class="p">{</span><span class="na">done</span><span class="p">:</span> <span class="kc">true</span><span class="p">};</span>
+       <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>일단 초기화되면, next() 메서드는 차례로 객체에서 키-값 쌍에 액세스하기 위해 호출될 수 있습니다:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">it</span> <span class="o">=</span> <span class="nx">makeIterator</span><span class="p">([</span><span class="dl">'</span><span class="s1">yo</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">ya</span><span class="dl">'</span><span class="p">]);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">it</span><span class="p">.</span><span class="nx">next</span><span class="p">().</span><span class="nx">value</span><span class="p">);</span> <span class="c1">// 'yo'</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">it</span><span class="p">.</span><span class="nx">next</span><span class="p">().</span><span class="nx">value</span><span class="p">);</span> <span class="c1">// 'ya'</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">it</span><span class="p">.</span><span class="nx">next</span><span class="p">().</span><span class="nx">done</span><span class="p">);</span>  <span class="c1">// true</span>
+</code></pre></div>
+<hr>
+
+<h2 id="iterable">iterable</h2>
+
+<p><strong>객체는 값이 <code>for..of</code> 구조 내에서 반복되는 것 같은 그 반복 동작을 정의하는 경우 반복가능(iterable)입니다.</strong></p>
+
+<p><code>Array</code> 또는 <code>Map</code>과 같은 일부 내장 형은 기본 반복 동작이 있지만 다른 형(가령 Object)은 없습니다.</p>
+
+<p><strong>반복가능</strong> 하기 위해서, 객체는 <strong>@@iterator</strong> 메서드를 구현해야 합니다, 객체(나 그 prototype 체인에 등장하는 객체 중 하나)가 <code>Symbol.iterator</code> 키를 갖는 속성이 있어야 함을 뜻하는:</p>
+
+<h3 id="iterable">사용자 정의 iterable</h3>
+
+<p>자신의 반복가능 객체를 만들 수 있습니다:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">myIterable</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="nx">myIterable</span><span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]</span> <span class="o">=</span> <span class="kd">function</span><span class="o">*</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">yield</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">yield</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="k">yield</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="p">[...</span><span class="nx">myIterable</span><span class="p">]</span> <span class="c1">// [1, 2, 3]</span>
+</code></pre></div>
+<h3 id="iterable">내장 iterable</h3>
+
+<p><code>String</code>, <code>Array</code>, <code>TypedArray</code>, <code>Map</code> 및 <code>Set</code>은 모두 내장 반복가능 객체입니다, 그들의 프로토타입 객체가 모두 Symbol.iterator 메서드가 있기에.</p>
+
+<h3 id="iterable">iterable 을 기대하는 구문</h3>
+
+<p>일부 문(statement) 및 식(expression)은 iterable을 기대합니다, 가령 for-of 루프, 전개 연산자, yield* 및 해체 할당.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">value</span> <span class="k">of</span> <span class="p">[</span><span class="dl">"</span><span class="s2">a</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">b</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">c</span><span class="dl">"</span><span class="p">]){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="c1">// "a"</span>
+<span class="c1">// "b"</span>
+<span class="c1">// "c"</span>
+
+<span class="p">[...</span><span class="dl">"</span><span class="s2">abc</span><span class="dl">"</span><span class="p">]</span> <span class="c1">// ["a", "b", "c"]</span>
+
+<span class="kd">function</span><span class="o">*</span> <span class="nx">gen</span><span class="p">(){</span>
+  <span class="k">yield</span><span class="o">*</span> <span class="p">[</span><span class="dl">"</span><span class="s2">a</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">b</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">c</span><span class="dl">"</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="nx">gen</span><span class="p">().</span><span class="nx">next</span><span class="p">()</span> <span class="c1">// { value:"a", done:false }</span>
+
+<span class="p">[</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">c</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Set</span><span class="p">([</span><span class="dl">"</span><span class="s2">a</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">b</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">c</span><span class="dl">"</span><span class="p">])</span>
+<span class="nx">a</span> <span class="c1">// "a"</span>
+</code></pre></div>
+<hr>
+
+<h2 id="generator">generator(생성기)</h2>
+
+<p><strong>사용자 정의 반복기는 유용한 도구이지만, 반복기 생성은 명시적으로 그들의 내부 상태를 유지할 필요 때문에 주의깊은 프로그래밍이 필요합니다.</strong></p>
+
+<p>생성기는 강력한 대안을 제공합니다: <strong>자신의 상태를 유지할 수 있는 단일 함수를 작성하여 반복 알고리즘을 정의할 수 있게 합니다.</strong></p>
+
+<p>생성기는 반복기 팩토리로서 작동하는 특별한 유형의 함수입니다.
+함수가 하나 이상의 <a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/yield" rel="nofollow" target="_blank">yield</a> 식을 포함하고 <a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Statements/function" rel="nofollow" target="_blank">function*</a> 구문을 사용하면 생성기가 됩니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span><span class="o">*</span> <span class="nx">idMaker</span><span class="p">(){</span>
+  <span class="kd">var</span> <span class="nx">index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">while</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+    <span class="k">yield</span> <span class="nx">index</span><span class="o">++</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">gen</span> <span class="o">=</span> <span class="nx">idMaker</span><span class="p">();</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">gen</span><span class="p">.</span><span class="nx">next</span><span class="p">().</span><span class="nx">value</span><span class="p">);</span> <span class="c1">// 0</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">gen</span><span class="p">.</span><span class="nx">next</span><span class="p">().</span><span class="nx">value</span><span class="p">);</span> <span class="c1">// 1</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">gen</span><span class="p">.</span><span class="nx">next</span><span class="p">().</span><span class="nx">value</span><span class="p">);</span> <span class="c1">// 2</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+<hr>
+
+<h2 id="advanced-generators">Advanced generators(고급 생성기)</h2>
+
+<p>생성기는 요청에 따라 그 산출된(yielded, yield 식으로 산출된) 값을 계산하고, 계산하기 비싼(힘든) 수열 또는 위에 설명한 대로 무한 수열이라도 효율적으로 나타내게 합니다.</p>
+
+<p><code>next()</code> 메서드는 또한 생성기의 내부 상태를 수정하는 데 쓰일 수 있는 값을 받습니다.</p>
+
+<blockquote>
+<p>Note: <strong>next()</strong> method</p>
+
+<p>done과 value 프로퍼티를 가진 객체를 반환한다.</p>
+
+<p>또한 next() 메소드를 호출할 때 매개변수를 제공하여 그 값을 generator에 전달할 수 있다.</p>
+</blockquote>
+
+<p>next()에 전달되는 값은 생성기가 중단된 마지막 yield 식의 결과로 처리됩니다.</p>
+
+<p>여기 sequence(수열)을 재시작하기 위해 next(x)를 사용하는 피보나치 생성기가 있습니다:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span><span class="o">*</span> <span class="nx">fibonacci</span><span class="p">(){</span>
+  <span class="kd">var</span> <span class="nx">fn1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">fn2</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">while</span> <span class="p">(</span><span class="kc">true</span><span class="p">){</span>
+    <span class="kd">var</span> <span class="nx">current</span> <span class="o">=</span> <span class="nx">fn1</span><span class="p">;</span>
+    <span class="nx">fn1</span> <span class="o">=</span> <span class="nx">fn2</span><span class="p">;</span>
+    <span class="nx">fn2</span> <span class="o">=</span> <span class="nx">current</span> <span class="o">+</span> <span class="nx">fn1</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">reset</span> <span class="o">=</span> <span class="k">yield</span> <span class="nx">current</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">reset</span><span class="p">){</span>
+        <span class="nx">fn1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="nx">fn2</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">sequence</span> <span class="o">=</span> <span class="nx">fibonacci</span><span class="p">();</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">sequence</span><span class="p">.</span><span class="nx">next</span><span class="p">().</span><span class="nx">value</span><span class="p">);</span>     <span class="c1">// 0</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">sequence</span><span class="p">.</span><span class="nx">next</span><span class="p">().</span><span class="nx">value</span><span class="p">);</span>     <span class="c1">// 1</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">sequence</span><span class="p">.</span><span class="nx">next</span><span class="p">().</span><span class="nx">value</span><span class="p">);</span>     <span class="c1">// 1</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">sequence</span><span class="p">.</span><span class="nx">next</span><span class="p">().</span><span class="nx">value</span><span class="p">);</span>     <span class="c1">// 2</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">sequence</span><span class="p">.</span><span class="nx">next</span><span class="p">().</span><span class="nx">value</span><span class="p">);</span>     <span class="c1">// 3</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">sequence</span><span class="p">.</span><span class="nx">next</span><span class="p">().</span><span class="nx">value</span><span class="p">);</span>     <span class="c1">// 5</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">sequence</span><span class="p">.</span><span class="nx">next</span><span class="p">().</span><span class="nx">value</span><span class="p">);</span>     <span class="c1">// 8</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">sequence</span><span class="p">.</span><span class="nx">next</span><span class="p">(</span><span class="kc">true</span><span class="p">).</span><span class="nx">value</span><span class="p">);</span> <span class="c1">// 0</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">sequence</span><span class="p">.</span><span class="nx">next</span><span class="p">().</span><span class="nx">value</span><span class="p">);</span>     <span class="c1">// 1</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">sequence</span><span class="p">.</span><span class="nx">next</span><span class="p">().</span><span class="nx">value</span><span class="p">);</span>     <span class="c1">// 1</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">sequence</span><span class="p">.</span><span class="nx">next</span><span class="p">().</span><span class="nx">value</span><span class="p">);</span>     <span class="c1">// 2</span>
+</code></pre></div>
+<blockquote>
+<p>Note: 주의:
+흥미롭게도, next(undefined) 호출은 next() 호출과 같습니다. 그러나, next() 호출할 때 undefined 이외의 값으로 신생 생성기를 시작하면 TypeError 예외가 발생합니다.</p>
+</blockquote>
+
+<p><code>throw()</code> 메서드를 호출하며 발생해야 할 예외 값을 전달하여 예외를 발생하도록 생성기를 강제할 수 있습니다.
+이 예외는 생성기의 현재 중단된 문맥에서 발생됩니다, 마치 현재 중단된 <code>yield</code>가 throw value 문 대신인 것처럼.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">sequence</span> <span class="o">=</span> <span class="nx">fibonacci</span><span class="p">();</span>
+
+<span class="nx">sequence</span><span class="p">.</span><span class="nx">next</span><span class="p">()</span>  <span class="c1">// {value: 0, done: false}</span>
+<span class="nx">sequence</span><span class="p">.</span><span class="nx">next</span><span class="p">()</span>  <span class="c1">// {value: 1, done: false}</span>
+<span class="nx">sequence</span><span class="p">.</span><span class="k">throw</span><span class="p">();</span>
+<span class="c1">// VM113:8 Uncaught undefined</span>
+<span class="nx">sequence</span><span class="p">.</span><span class="nx">next</span><span class="p">()</span>  <span class="c1">// {value: undefined, done: true}</span>
+</code></pre></div>
+<p>발생한 예외 처리 도중 yield를 만나지 않는 경우, 그 뒤 예외는 <code>throw()</code> 호출을 통해 위로 전하며 <code>next()</code> 의 후속 호출 결과 done 속성은 true가 됩니다.</p>
+
+<p>생성기는 주어진 값을 반환하고 생성기 자체를 끝내는 <code>return(value)</code> 메서드가 있습니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">sequence</span> <span class="o">=</span> <span class="nx">fibonacci</span><span class="p">();</span>
+
+<span class="nx">sequence</span><span class="p">.</span><span class="nx">next</span><span class="p">()</span>  <span class="c1">// {value: 0, done: false}</span>
+<span class="nx">sequence</span><span class="p">.</span><span class="nx">next</span><span class="p">()</span>  <span class="c1">// {value: 1, done: false}</span>
+<span class="nx">sequence</span><span class="p">.</span><span class="k">return</span><span class="p">(</span><span class="dl">'</span><span class="s1">return</span><span class="dl">'</span><span class="p">);</span>  <span class="c1">// {value: "return", done: true}</span>
+<span class="nx">sequence</span><span class="p">.</span><span class="nx">next</span><span class="p">()</span>  <span class="c1">// {value: undefined, done: true}</span>
+
+</code></pre></div>
+<hr>
+
+<h2 id="reference">Reference</h2>
+
+<p><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/Iterators_and_Generators" rel="nofollow" target="_blank">Iterators_and_Generators(반복기 및 생성기)</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

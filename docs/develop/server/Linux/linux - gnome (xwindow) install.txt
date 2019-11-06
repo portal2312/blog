@@ -1,0 +1,25 @@
+﻿# yum groupinstall "GNOME Desktop" "Graphical Administration Tools"
+
+#> systemctl isolate graphical.target
+
+ln -sf /lib/systemd/system/runlevel5.target /etc/systemd/system/default.target
+
+
+
+
+
+
+
+
+Troubleshooting — Server Stuck at Boot Phase
+Depending on how your server has been set up, when the machine starts up it may remain in the boot phase showing a message like this:
+
+Initial setup of CentOS Linux 7 (core)
+1) [!] License information (Licence not accepted)
+Please make your choice from above ['q' to quit | 'c' to continue | 'r' to refresh]:
+To get past this, press 1 (license read), then 2 (accept licence), and then C (to continue). You may have to press C two or more times. The image below shows this:
+
+Boot phase message in CentOS 7 after installing GNOME Desktop
+
+If you don't see this error and the boot process is smooth, all the better – you can move on to the next step.
+

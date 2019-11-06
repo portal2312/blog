@@ -1,0 +1,12 @@
+netstat -lntp | grep "port"  [�ɼ�]
+
+pid Ȯ��
+
+ps -ef | grep "pid"
+
+
+find port process:
+
+```bash
+$ netstat -tulpn | grep :8000
+```

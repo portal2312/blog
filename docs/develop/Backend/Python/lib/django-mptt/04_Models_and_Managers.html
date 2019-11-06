@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Models and Managers | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Models and Managers" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Contents" />
+<meta property="og:description" content="Contents" />
+<link rel="canonical" href="http://localhost:4000/blog/docs/develop/Backend/Python/lib/django-mptt/04_Models_and_Managers.html" />
+<meta property="og:url" content="http://localhost:4000/blog/docs/develop/Backend/Python/lib/django-mptt/04_Models_and_Managers.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-06T09:31:12+09:00" />
+<script type="application/ld+json">
+{"description":"Contents","headline":"Models and Managers","dateModified":"2019-11-06T09:31:12+09:00","datePublished":"2019-11-06T09:31:12+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/docs/develop/Backend/Python/lib/django-mptt/04_Models_and_Managers.html"},"url":"http://localhost:4000/blog/docs/develop/Backend/Python/lib/django-mptt/04_Models_and_Managers.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Models and Managers</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#setting-up-a-django-model-for-mptt">Setting up a Django model for MPTT</a></li>
+<li class="toc-entry toc-h2"><a href="#model-options">Model Options</a></li>
+<li class="toc-entry toc-h2"><a href="#registration-of-existing-models">Registration of existing models</a></li>
+<li class="toc-entry toc-h2"><a href="#mpttmodel-instance-methods">MPTTModel instance methods</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#get_ancestors-ascending-false-include_self-false">get_ancestors(ascending=False, include_self=False)</a></li>
+<li class="toc-entry toc-h3"><a href="#get_children">get_children()</a></li>
+<li class="toc-entry toc-h3"><a href="#get_descendants-include_self-false">get_descendants(include_self=False)</a></li>
+<li class="toc-entry toc-h3"><a href="#get_descendant_count">get_descendant_count()</a></li>
+<li class="toc-entry toc-h3"><a href="#get_family">get_family()</a></li>
+<li class="toc-entry toc-h3"><a href="#get_next_sibling">get_next_sibling()</a></li>
+<li class="toc-entry toc-h3"><a href="#get_previous_sibling">get_previous_sibling()</a></li>
+<li class="toc-entry toc-h3"><a href="#get_root">get_root()</a></li>
+<li class="toc-entry toc-h3"><a href="#get_siblings-include_self-false">get_siblings(include_self=False)</a></li>
+<li class="toc-entry toc-h3"><a href="#insert_at-target-position-first-child-save-false">insert_at(target, position=&#39;first-child&#39;, save=False)</a></li>
+<li class="toc-entry toc-h3"><a href="#is_child_node">is_child_node()</a></li>
+<li class="toc-entry toc-h3"><a href="#is_leaf_node">is_leaf_node()</a></li>
+<li class="toc-entry toc-h3"><a href="#is_root_node">is_root_node()</a></li>
+<li class="toc-entry toc-h3"><a href="#move_to-target-position-first-child">move_to(target, position=&#39;first-child&#39;)</a></li>
+<li class="toc-entry toc-h3"><a href="#treeforeignkey-treeonetoonefield-treemanytomanyfield">TreeForeignKey, TreeOneToOneField, TreeManyToManyField</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#the-treemanager-custom-manager">The TreeManager custom manager</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#methods">Methods</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#disable_mptt_updates-and-delay_mptt_updates">disable_mptt_updates() and delay_mptt_updates()</a></li>
+<li class="toc-entry toc-h4"><a href="#rebuild">rebuild()</a></li>
+<li class="toc-entry toc-h4"><a href="#add_related_count-queryset-rel_cls-rel_field-count_attr-cumulative-false">add_related_count(queryset, rel_cls, rel_field, count_attr, cumulative=False)</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#example-usage-in-the-admin">Example usage in the admin</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#root_node-tree_id">root_node(tree_id)</a></li>
+<li class="toc-entry toc-h4"><a href="#insert_node-node-target-position-last-child-save-false">insert_node(node, target, position=&#39;last-child&#39;, save=False)</a></li>
+<li class="toc-entry toc-h4"><a href="#move_node-node-target-position-last-child">move_node(node, target, position=&#39;last-child&#39;)</a></li>
+<li class="toc-entry toc-h4"><a href="#root_nodes">root_nodes()</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#example-usage">Example usage</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#references">References</a></li>
+</ul><p>Contents</p>
+
+<ul>
+<li>  <a href="#models-and-managers">Models and Managers</a>
+
+<ul>
+<li>  <a href="#setting-up-a-django-model-for-mptt">Setting up a Django model for MPTT</a>
+</li>
+<li>  <a href="#model-options">Model Options</a>
+</li>
+<li>  <a href="#registration-of-existing-models">Registration of existing models</a>
+</li>
+<li>  <a href="#mpttmodel-instance-methods">MPTTModel instance methods</a>
+
+<ul>
+<li>  <a href="#getancestorsascendingfalse-includeselffalse"><code>get_ancestors(ascending=False, include_self=False)</code></a>
+</li>
+<li>  <a href="#getchildren"><code>get_children()</code></a>
+</li>
+<li><a href="#getdescendantsincludeselffalse"><code>get_descendants(include_self=False)</code></a></li>
+<li>  <a href="#getdescendantcount"><code>get_descendant_count()</code></a>
+</li>
+<li>  <a href="#getfamily"><code>get_family()</code></a>
+</li>
+<li>  <a href="#getnextsibling"><code>get_next_sibling()</code></a>
+</li>
+<li>  <a href="#getprevioussibling"><code>get_previous_sibling()</code></a>
+</li>
+<li>  <a href="#getroot"><code>get_root()</code></a>
+</li>
+<li>  <a href="#getsiblingsincludeselffalse"><code>get_siblings(include_self=False)</code></a>
+</li>
+<li>  <a href="#insertattarget-positionfirst-child-savefalse"><code>insert_at(target, position='first-child', save=False)</code></a>
+</li>
+<li>  <a href="#ischildnode"><code>is_child_node()</code></a>
+</li>
+<li>  <a href="#isleafnode"><code>is_leaf_node()</code></a>
+</li>
+<li>  <a href="#isrootnode"><code>is_root_node()</code></a>
+</li>
+<li>  <a href="#movetotarget-positionfirst-child"><code>move_to(target, position='first-child')</code></a>
+</li>
+<li>  <a href="#treeforeignkey-treeonetoonefield-treemanytomanyfield"><code>TreeForeignKey</code>, <code>TreeOneToOneField</code>, <code>TreeManyToManyField</code></a>
+</li>
+</ul>
+</li>
+<li>  <a href="#the-treemanager-custom-manager">The <code>TreeManager</code> custom manager</a>
+
+<ul>
+<li>  <a href="#methods">Methods</a>
+</li>
+<li>  <a href="#example-usage-in-the-admin">Example usage in the admin</a>
+</li>
+<li>  <a href="#example-usage">Example usage</a>
+</li>
+</ul>
+</li>
+<li>  <a href="#references">References</a>
+</li>
+</ul>
+</li>
+</ul>
+
+<h2 id="setting-up-a-django-model-for-mptt">
+<a class="anchor" href="#setting-up-a-django-model-for-mptt" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setting up a Django model for MPTT</h2>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">mptt.models</span> <span class="kn">import</span> <span class="n">MPTTModel</span><span class="p">,</span> <span class="n">TreeForeignKey</span>
+
+<span class="k">class</span> <span class="nc">Genre</span><span class="p">(</span><span class="n">MPTTModel</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">TreeForeignKey</span><span class="p">(</span><span class="s">'self'</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s">'children'</span><span class="p">)</span>
+</code></pre></div>
+<p><code>self'</code>에 대한 <code>ForeignKey</code>인 상위 필드를 정의해야합니다.</p>
+
+<p>권장 사항: <code>TreeForeignKey</code>를 사용하십시오.</p>
+
+<p>원하는 경우 다른 것으로 부를 수 있습니다. 아래 <a href="https://django-mptt.readthedocs.io/en/latest/models.html#model-options">Model Options</a>을 참조하십시오.</p>
+
+<p><code>MPTTModel</code>을 상속 받기 때문에 모델에는 <code>level</code>, <code>lft</code>, <code>rght</code> 및 <code>tree_id</code>와 같은 여러 필드가 있습니다.</p>
+
+<p>대부분의 경우이 필드를 직접 사용할 필요는 없지만 해당 필드가 있음을 아는 것이 도움이 됩니다.</p>
+
+<p>다중 상속을 사용하는 경우 MPTTModel은 일반적으로 상속 된 첫 번째 class 여야합니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="k">class</span> <span class="nc">Genre</span><span class="p">(</span><span class="n">MPTTModel</span><span class="p">,</span><span class="n">Foo</span><span class="p">,</span><span class="n">Bar</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div>
+<p>MPTTModel은 models.Model에서 상속되므로 "다이아몬드 스타일" 다중 상속을 사용할 때 매우 중요합니다:
+동일한 기본 클래스에서 상속하는 두 모델 (예: models.Model)을 상속합니다.</p>
+
+<p>이 경우 MPTTModel 이 첫 번째 모델이 아닌 경우 AttributeError와 같은 모델 유효성 검사에서 오류가 발생할 수 있습니다. 이와 같은 <code>AttributeError: 'NoneType' object has no attribute 'name'</code>.</p>
+
+<h2 id="model-options">
+<a class="anchor" href="#model-options" aria-hidden="true"><span class="octicon octicon-link"></span></a>Model Options</h2>
+
+<p>경우에 따라 위 필드의 이름을 변경하려는 경우가 있습니다.</p>
+
+<p>예를 들어 level이라는 필드가 이미 있고 충돌을 피하려는 경우가 있습니다:</p>
+
+<p>이름을 변경하려면 클래스 내에 MPTTMeta 클래스를 만듭니다:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="k">class</span> <span class="nc">Genre</span><span class="p">(</span><span class="n">MPTTModel</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">TreeForeignKey</span><span class="p">(</span>
+        <span class="s">'self'</span><span class="p">,</span>
+        <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">,</span>
+        <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="n">related_name</span><span class="o">=</span><span class="s">'children'</span>
+        <span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">MPTTMeta</span><span class="p">:</span>
+        <span class="n">level_attr</span> <span class="o">=</span> <span class="s">'mptt_level'</span>
+        <span class="n">order_insertion_by</span><span class="o">=</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span>
+</code></pre></div>
+<p>MPTTMeta 클래스에 사용할 수있는 옵션은 다음과 같습니다:</p>
+
+<ul>
+<li>  <code>parent_attr</code>
+
+<ul>
+<li>  각 인스턴스가 다른 인스턴스의 자식이 될 수 있도록 모델을 다시 자체와 연관시키는 필드의 이름입니다.</li>
+<li>  default: <code>'parent'</code>
+</li>
+</ul>
+</li>
+<li>  <code>left_attr</code>
+
+<ul>
+<li>  왼쪽 Tree 노드 가장자리 표시기가 들어있는 필드의 이름으로, <code>PositiveIntegerField</code> 여야합니다.</li>
+<li>  default: <code>'lft'</code>
+</li>
+</ul>
+</li>
+<li>  <code>right_attr</code>
+
+<ul>
+<li>  왼쪽 Tree 노드 가장자리 표시기가 들어있는 필드의 이름으로, <code>PositiveIntegerField</code> 여야합니다.</li>
+<li>  default: <code>'rght'</code>
+</li>
+</ul>
+</li>
+<li>  <code>tree_id_attr</code>
+
+<ul>
+<li>  각 노드의 트리 ID를 포함하는 필드의 이름으로, <code>PositiveIntegerField</code> 여야합니다.</li>
+<li>  default: <code>'tree_id'</code>
+</li>
+</ul>
+</li>
+<li>  <code>level_attr</code>
+
+<ul>
+<li>  항목이 트리에있는 (zero-based) 레벨을 포함하는 필드의 이름으로, <code>PositiveIntegerField</code> 여야합니다.</li>
+<li>  default: <code>'level'</code>
+</li>
+<li>  예를 들어 root 노드의 레벨은 0 이고 직계 하위 노드의 레벨은 1입니다.</li>
+</ul>
+</li>
+<li>  <code>order_insertion_by</code>
+
+<ul>
+<li>  새로운 Tree 노드가 삽입 될 때의 순서를 정의하거나 기존의 노드가 가장 중요한 순서 필드 이름이 가장 먼저 표시되는 필드 이름 목록. 기본값은 [] 입니다.</li>
+<li>  순서 지정을 정의하는 것으로 식별 된 모든 필드는 데이터베이스에서 절대 NULL이 될 수 없다고 가정합니다.</li>
+<li>  노드를 저장할 때 노드를 배치해야 하는 위치를 결정하려면 추가 DB 쿼리가 필요합니다.
+이 옵션은 범주의 Tree와 같이 대부분 정적인 구조를 유지하는 경우 편리합니다.
+이 Tree는 항상 알파벳 순서로 있어야 합니다.</li>
+</ul>
+</li>
+</ul>
+
+<h2 id="registration-of-existing-models">
+<a class="anchor" href="#registration-of-existing-models" aria-hidden="true"><span class="octicon octicon-link"></span></a>Registration of existing models</h2>
+
+<p><code>django-mptt</code>에서 모델 등록을하는 가장 좋은 방법은 <code>MPTTModel</code>을 서브 클래싱하는 것입니다.</p>
+
+<p>그러나 때로는 그렇게 작동하지 않습니다. 예로, Django의 그룹 모델을 계층 구조로 수정하려고한다고 가정하십시오.</p>
+
+<p>그룹 소스를 수정하지 않고 <code>MPTTModel</code>을 서브 클래스화할 수 없습니다. 대신 다음을 수행 할 수 있습니다:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="kn">import</span> <span class="nn">mptt</span>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">mptt.fields</span> <span class="kn">import</span> <span class="n">TreeForeignKey</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">Group</span>
+
+<span class="c1"># add a parent foreign key
+</span><span class="n">TreeForeignKey</span><span class="p">(</span><span class="n">Group</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">contribute_to_class</span><span class="p">(</span><span class="n">Group</span><span class="p">,</span> <span class="s">'parent'</span><span class="p">)</span>
+
+<span class="n">mptt</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Group</span><span class="p">,</span> <span class="n">order_insertion_by</span><span class="o">=</span><span class="p">[</span><span class="s">'name'</span><span class="p">])</span>
+</code></pre></div>
+<h2 id="mpttmodel-instance-methods">
+<a class="anchor" href="#mpttmodel-instance-methods" aria-hidden="true"><span class="octicon octicon-link"></span></a>MPTTModel instance methods</h2>
+
+<p>MPTTModel의 서브 클래스는 다음과 같은 인스턴스 메소드를 가집니다.</p>
+
+<h3 id="get_ancestors-ascending-false-include_self-false">
+<a class="anchor" href="#get_ancestors-ascending-false-include_self-false" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>get_ancestors(ascending=False, include_self=False)</code>
+</h3>
+
+<p>Model instance 의 조상을 포함하는 <code>QuerySet</code>을 작성합니다.</p>
+
+<p>기본값은 내림차순입니다 (root 조상이 먼저, 직접 부모가 마지막 임).</p>
+
+<p>오름차순 인수에 대해 <code>True</code>를 전달하면 순서가 바뀝니다 (즉, 상위 상위, 상위 상위).</p>
+
+<p><code>include_self</code>가 <code>True</code>이면 <code>QuerySet</code>에는 모델 인스턴스 자체도 포함됩니다.</p>
+
+<p>인스턴스가 이미 저장되지 않은 경우 <code>ValueError</code>를 발생시킵니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="kn">from</span> <span class="nn">app_mptt.models</span> <span class="kn">import</span> <span class="n">Genre</span>
+
+<span class="n">genres</span> <span class="o">=</span> <span class="n">Genre</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="nb">all</span><span class="p">()</span>
+<span class="n">genres</span><span class="o">.</span><span class="n">get_ancestors</span><span class="p">()</span>
+
+<span class="o">&lt;</span><span class="n">TreeQuerySet</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="n">Rock</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span>
+</code></pre></div>
+<h3 id="get_children">
+<a class="anchor" href="#get_children" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>get_children()</code>
+</h3>
+
+<p>Tree 의 순서로 모델 인스턴스의 직접적인 children를 포함한 <code>QuerySet</code>를 작성합니다.</p>
+
+<p>ORM 에서 인스턴스의 자식에 대해 제공하는 역방향 관계에 대해이 메서드를 사용하면 인스턴스가 리프 노드 (자식이 없음) 인 경우 데이터베이스 쿼리를 피할 수 있다는 장점이 있습니다.</p>
+
+<p>인스턴스가 이미 저장되지 않은 경우 <code>ValueError</code>를 발생시킵니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="kn">from</span> <span class="nn">app_mptt.models</span> <span class="kn">import</span> <span class="n">Genre</span>
+
+<span class="n">genres</span> <span class="o">=</span> <span class="n">Genre</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="nb">all</span><span class="p">()</span>
+<span class="n">genres</span><span class="o">.</span><span class="n">get_children</span><span class="p">()</span>
+
+<span class="o">&lt;</span><span class="n">TreeQuerySet</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="n">Hard</span> <span class="n">Rock</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="n">Pop</span> <span class="n">Rock</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span>
+</code></pre></div>
+<h3 id="get_descendants-include_self-false">
+<a class="anchor" href="#get_descendants-include_self-false" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>get_descendants(include_self=False)</code>
+</h3>
+
+<p>Tree 구조로 모델 인스턴스의 children을 포함하는 <code>QuerySet</code>을 생성합니다.</p>
+
+<p><code>include_self</code>가 <code>True</code>이면 <code>QuerySet</code>에는 모델 인스턴스 자체도 포함됩니다.</p>
+
+<p>인스턴스가 이미 저장되지 않은 경우 <code>ValueError</code>를 발생시킵니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">genres</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_descendants</span><span class="p">()</span>
+
+<span class="o">&lt;</span><span class="n">TreeQuerySet</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="n">Hard</span> <span class="n">Rock</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="n">Pop</span> <span class="n">Rock</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span>
+</code></pre></div>
+<h3 id="get_descendant_count">
+<a class="anchor" href="#get_descendant_count" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>get_descendant_count()</code>
+</h3>
+
+<p>왼쪽 및 오른쪽 트리 노드 엣지 표시기를 기반으로 모델 인스턴스에있는 자손 수를 반환합니다.</p>
+
+<p>따라서 데이터베이스 액세스가 발생하지 않습니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">genres</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_descendant_count</span><span class="p">()</span>
+
+<span class="mi">2</span>
+</code></pre></div>
+<h3 id="get_family">
+<a class="anchor" href="#get_family" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>get_family()</code>
+</h3>
+
+<p>조상, 모델 자체, 및 자손을 트리 순서로 포함한 <code>QuerySet</code>를 리턴합니다.</p>
+
+<p>인스턴스가 이미 저장되지 않은 경우 <code>ValueError</code>를 발생시킵니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">genres</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_family</span><span class="p">()</span>
+<span class="o">&lt;</span><span class="n">TreeQuerySet</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="n">Blues</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span>
+
+<span class="n">genres</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_family</span><span class="p">()</span>
+<span class="o">&lt;</span><span class="n">TreeQuerySet</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="n">Rock</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="n">Hard</span> <span class="n">Rock</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="n">Pop</span> <span class="n">Rock</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span>
+
+<span class="n">genres</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">get_family</span><span class="p">()</span>
+<span class="o">&lt;</span><span class="n">TreeQuerySet</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="n">Rock</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="n">Hard</span> <span class="n">Rock</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span>
+
+<span class="n">genres</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">get_family</span><span class="p">()</span>
+<span class="o">&lt;</span><span class="n">TreeQuerySet</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="n">Rock</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="n">Pop</span> <span class="n">Rock</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span>
+</code></pre></div>
+<h3 id="get_next_sibling">
+<a class="anchor" href="#get_next_sibling" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>get_next_sibling()</code>
+</h3>
+
+<p>Tree에서 모델 인스턴스의 다음 형제를 반환하거나 다음 형제가 없으면 <code>None</code>을 반환합니다.</p>
+
+<p>인스턴스가 이미 저장되지 않은 경우 <code>ValueError</code>를 발생시킵니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">genres</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="n">Blues</span><span class="o">&gt;</span>
+
+<span class="n">genres</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_next_sibling</span><span class="p">()</span>
+<span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="n">Rock</span><span class="o">&gt;</span>
+
+<span class="n">genres</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_next_sibling</span><span class="p">()</span>
+
+<span class="n">genres</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">get_next_sibling</span><span class="p">()</span>
+<span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="n">Pop</span> <span class="n">Rock</span><span class="o">&gt;</span>
+
+<span class="n">genres</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">get_next_sibling</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="get_previous_sibling">
+<a class="anchor" href="#get_previous_sibling" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>get_previous_sibling()</code>
+</h3>
+
+<p>Tree에서 모델 인스턴스의 이전 형제를 반환하거나 이전 형제가없는 경우 <code>None</code>을 반환합니다.</p>
+
+<p>인스턴스가 이미 저장되지 않은 경우 <code>ValueError</code>를 발생시킵니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">genres</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="n">Blues</span><span class="o">&gt;</span>
+
+<span class="n">genres</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_previous_sibling</span><span class="p">()</span>
+
+<span class="n">genres</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_previous_sibling</span><span class="p">()</span>
+<span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="n">Blues</span><span class="o">&gt;</span>
+
+<span class="n">genres</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">get_previous_sibling</span><span class="p">()</span>
+
+<span class="n">genres</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">get_previous_sibling</span><span class="p">()</span>
+<span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="n">Hard</span> <span class="n">Rock</span><span class="o">&gt;</span>
+</code></pre></div>
+<h3 id="get_root">
+<a class="anchor" href="#get_root" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>get_root()</code>
+</h3>
+
+<p>모델 인스턴스 Tree의 root 노드를 반환합니다.</p>
+
+<p>인스턴스가 이미 저장되지 않은 경우 <code>ValueError</code>를 발생시킵니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">genres</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">get_root</span><span class="p">()</span>
+<span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="n">Rock</span><span class="o">&gt;</span>
+</code></pre></div>
+<h3 id="get_siblings-include_self-false">
+<a class="anchor" href="#get_siblings-include_self-false" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>get_siblings(include_self=False)</code>
+</h3>
+
+<p>모델 인스턴스의 형제를 포함하는 QuerySet을 작성합니다.</p>
+
+<p>root 노드는 다른 root 노드의 형제 노드로 간주됩니다.</p>
+
+<p><code>include_self</code>가 <code>True</code>이면 QuerySet에는 모델 인스턴스 자체도 포함됩니다.</p>
+
+<p>인스턴스가 이미 저장되지 않은 경우 <code>ValueError</code>를 발생시킵니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">genres</span> <span class="o">=</span> <span class="n">Genre</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="nb">all</span><span class="p">()</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s">'id'</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">genres</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">g</span><span class="o">.</span><span class="n">get_siblings</span><span class="p">())</span>
+
+<span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="n">Rock</span> <span class="o">&lt;</span><span class="n">TreeQuerySet</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="n">Blues</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="n">Blues</span> <span class="o">&lt;</span><span class="n">TreeQuerySet</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="n">Rock</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span>
+<span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="n">Hard</span> <span class="n">Rock</span> <span class="o">&lt;</span><span class="n">TreeQuerySet</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="n">Pop</span> <span class="n">Rock</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span>
+<span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="n">Pop</span> <span class="n">Rock</span> <span class="o">&lt;</span><span class="n">TreeQuerySet</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="n">Hard</span> <span class="n">Rock</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span>
+</code></pre></div>
+<h3 id="insert_at-target-position-first-child-save-false">
+<a class="anchor" href="#insert_at-target-position-first-child-save-false" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>insert_at(target, position='first-child', save=False)</code>
+</h3>
+
+<p>모델 인스턴스(아직 Database에 삽입되어 있지 않아야 함, 새로운 node 추가시)를
+<code>target</code> 및 <code>position</code> (적절한 경우)에 따라 Tree에 배치합니다.</p>
+
+<p><code>save</code> 가 True 인 경우, 모델 인스턴스 save() method 또한 호출될 것이다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">node</span> <span class="o">=</span> <span class="n">Genre</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'test'</span><span class="p">)</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">Genre</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'Blues'</span><span class="p">)</span>
+
+<span class="n">Genre</span><span class="o">.</span><span class="n">insert_at</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="s">'first-child'</span><span class="p">,</span> <span class="n">save</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="ow">or</span>
+<span class="n">node</span><span class="o">.</span><span class="n">insert_at</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="s">'last-child'</span><span class="p">,</span> <span class="n">save</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">-   Blues
+    -   test
+-   Rock
+    -   Hard Rock
+    -   Pop Rock
+</code></pre></div>
+<h3 id="is_child_node">
+<a class="anchor" href="#is_child_node" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>is_child_node()</code>
+</h3>
+
+<p>모델 인스턴스가 자식 노드면 True를 반환하고 그렇지 않으면 False를 반환합니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">genres</span> <span class="o">=</span> <span class="n">Genre</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="nb">all</span><span class="p">()</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s">'id'</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">genres</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">g</span><span class="o">.</span><span class="n">is_child_node</span><span class="p">(),</span> <span class="n">g</span><span class="o">.</span><span class="n">is_leaf_node</span><span class="p">(),</span> <span class="n">g</span><span class="o">.</span><span class="n">is_root_node</span><span class="p">())</span>
+
+<span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="n">Rock</span> <span class="bp">False</span> <span class="bp">False</span> <span class="bp">True</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="n">Blues</span> <span class="bp">False</span> <span class="bp">True</span> <span class="bp">True</span>
+<span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="n">Hard</span> <span class="n">Rock</span> <span class="bp">True</span> <span class="bp">True</span> <span class="bp">False</span>
+<span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="n">Pop</span> <span class="n">Rock</span> <span class="bp">True</span> <span class="bp">True</span> <span class="bp">False</span>
+</code></pre></div>
+<h3 id="is_leaf_node">
+<a class="anchor" href="#is_leaf_node" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>is_leaf_node()</code>
+</h3>
+
+<p>모델 인스턴스가 리프 노드(자식이 없음)면 True를 반환하고 그렇지 않으면 False를 반환합니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">genres</span> <span class="o">=</span> <span class="n">Genre</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="nb">all</span><span class="p">()</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s">'id'</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">genres</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">g</span><span class="o">.</span><span class="n">is_child_node</span><span class="p">(),</span> <span class="n">g</span><span class="o">.</span><span class="n">is_leaf_node</span><span class="p">(),</span> <span class="n">g</span><span class="o">.</span><span class="n">is_root_node</span><span class="p">())</span>
+
+<span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="n">Rock</span> <span class="bp">False</span> <span class="bp">False</span> <span class="bp">True</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="n">Blues</span> <span class="bp">False</span> <span class="bp">True</span> <span class="bp">True</span>
+<span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="n">Hard</span> <span class="n">Rock</span> <span class="bp">True</span> <span class="bp">True</span> <span class="bp">False</span>
+<span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="n">Pop</span> <span class="n">Rock</span> <span class="bp">True</span> <span class="bp">True</span> <span class="bp">False</span>
+</code></pre></div>
+<h3 id="is_root_node">
+<a class="anchor" href="#is_root_node" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>is_root_node()</code>
+</h3>
+
+<p>모델 인스턴스가 root 노드면 True를 반환하고 그렇지 않으면 False를 반환합니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">genres</span> <span class="o">=</span> <span class="n">Genre</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="nb">all</span><span class="p">()</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s">'id'</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">genres</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">g</span><span class="o">.</span><span class="n">is_child_node</span><span class="p">(),</span> <span class="n">g</span><span class="o">.</span><span class="n">is_leaf_node</span><span class="p">(),</span> <span class="n">g</span><span class="o">.</span><span class="n">is_root_node</span><span class="p">())</span>
+
+<span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="n">Rock</span> <span class="bp">False</span> <span class="bp">False</span> <span class="bp">True</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="n">Blues</span> <span class="bp">False</span> <span class="bp">True</span> <span class="bp">True</span>
+<span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="n">Hard</span> <span class="n">Rock</span> <span class="bp">True</span> <span class="bp">True</span> <span class="bp">False</span>
+<span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="n">Pop</span> <span class="n">Rock</span> <span class="bp">True</span> <span class="bp">True</span> <span class="bp">False</span>
+</code></pre></div>
+<h3 id="move_to-target-position-first-child">
+<a class="anchor" href="#move_to-target-position-first-child" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>move_to(target, position='first-child')</code>
+</h3>
+
+<p>모델 인스턴스를 <code>target</code> 및 <code>position</code>에 따라 Tree의 다른 위치로 이동합니다 (해당되는 경우).</p>
+
+<p>예외없이 이동 된 경우 <code>node_moved</code> 신호가 전송됩니다.</p>
+
+<blockquote>
+<p>! Note</p>
+
+<p>이 메서드를 호출하면 호출 한 인스턴스의 인스턴스와 전달된 대상 인스턴스의 Tree 필드가 데이터베이스의 현재 상태를 반영한다고 가정합니다.
+이 메소드를 호출하거나 데이터베이스와 동기화되지 않은 Tree 필드를 사용하기 전에 Tree 필드를 수동으로 수정하면 Tree 구조가 부정확한 상태가 될 수 있습니다.</p>
+</blockquote>
+
+<p><code>target</code>이 다른 모델 인스턴스 인 경우, 이는 수행해야하는 동작 유형을 결정하는 데 사용되며 모델이 이동 될 때 위치 인수와 함께 모델 <code>position</code> 지정을 위한 기초로 사용됩니다.</p>
+
+<p><code>None</code> 의 <code>target</code>은 모델 인스턴스가 루트 노드로 변환되어야 함을 나타냅니다. 이 경우 <code>position</code> 인수는 무시됩니다.</p>
+
+<p><code>position</code> 인수에 대한 유효한 값과 이동에 대한 영향은 다음과 같습니다:</p>
+
+<ul>
+<li>
+<p><code>'first-child'</code></p>
+
+<p>이동되는 인스턴스는 <code>target</code>이 새 상위로 설정되고 Tree 구조에서 첫 번째 하위로 배치되어야 합니다.</p>
+</li>
+<li>
+<p><code>'last-child'</code></p>
+
+<p>이동되는 인스턴스는 <code>target</code>을 새 상위로 설정하고 Tree 구조에서 마지막 하위로 배치해야 합니다.</p>
+</li>
+<li>
+<p><code>'left'</code></p>
+
+<p>이동되는 인스턴스는 <code>target</code> 부모를 새로운 부모로 설정해야하며 Tree 구조의 target 바로 앞에 위치해야 합니다.</p>
+</li>
+<li>
+<p><code>'right'</code></p>
+
+<p>이동되는 인스턴스는 <code>target</code> 부모를 새로운 부모로 설정해야하며 Tree 구조의 target 바로 뒤에 위치해야 합니다.</p>
+</li>
+</ul>
+
+<p><code>position</code> 인수에 잘못된 값이 주어진 경우 <code>ValueError</code>가 발생합니다.</p>
+
+<p>이 메소드를 사용하여 시도할 수 있는 일부 작업은 유효하지 않습니다.
+예를 들어, 인스턴스를 자체 하위 또는 자손 중 하나의 하위로 만들려는 경우입니다.
+이러한 경우 mptt.exceptions.InvalidMove 예외가 발생합니다.</p>
+
+<p>이 호출의 결과로 인스턴스 자체도 수정되어 데이터베이스에 업데이트된 Tree 필드의 상태를 반영하므로이 메서드를 호출 한 후에 저장하거나 트리 필드를 사용하는 것이 안전합니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">node</span> <span class="o">=</span> <span class="n">Genre</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'test'</span><span class="p">)</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">Genre</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'Rock'</span><span class="p">)</span>
+
+<span class="n">Genre</span><span class="o">.</span><span class="n">move_to</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="s">'left'</span><span class="p">)</span>
+<span class="n">Genre</span><span class="o">.</span><span class="n">move_to</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="s">'right'</span><span class="p">)</span>
+<span class="n">Genre</span><span class="o">.</span><span class="n">move_to</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="s">'first-child'</span><span class="p">)</span>
+<span class="n">Genre</span><span class="o">.</span><span class="n">move_to</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="s">'last-child'</span><span class="p">)</span>
+
+<span class="ow">or</span>
+
+<span class="n">node</span><span class="o">.</span><span class="n">move_to</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="s">'left'</span><span class="p">)</span>
+<span class="n">node</span><span class="o">.</span><span class="n">move_to</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="s">'right'</span><span class="p">)</span>
+<span class="n">node</span><span class="o">.</span><span class="n">move_to</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="s">'first-child'</span><span class="p">)</span>
+<span class="n">node</span><span class="o">.</span><span class="n">move_to</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="s">'last-child'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">-   Blues
+-   test  # left
+-   Rock
+    -   test  # first-child
+    -   Pop Rock
+    -   Hard Rock
+    -   test  # last-child
+-   test  # right
+</code></pre></div>
+<h3 id="treeforeignkey-treeonetoonefield-treemanytomanyfield">
+<a class="anchor" href="#treeforeignkey-treeonetoonefield-treemanytomanyfield" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>TreeForeignKey</code>, <code>TreeOneToOneField</code>, <code>TreeManyToManyField</code>
+</h3>
+
+<p><code>mptt.fields.TreeForeignKey</code>는 MPTT 모델에 외래키가 있는 곳이면 어디에서나 사용하는 것이 좋습니다. 여기에는 모델에서 방금 작성한 <code>parent</code> 링크가 포함됩니다.</p>
+
+<p><code>TreeForeignKey</code>는 일반 <code>ForeignKey</code>와 같지만 Tree 양식의 기본 양식 필드 표시 선택 항목이됩니다.</p>
+
+<p>필요한 경우 <code>TreeOneToOneField</code> 및 <code>TreeManyToManyField</code>도 있습니다.
+이것들은 당신의 Tree 모델과 어떤면에서 관련이있는 다른 모델들에서 유용할 수 있습니다.</p>
+
+<blockquote>
+<p>! Note</p>
+
+<p>당신은 당신의 '부모'필드로 many-to-many를 사용할 수 없다.
+이것은 mptt 알고리즘이 임의의 그래프가 아닌 트리 만 처리하기 때문입니다.
+노드가 여러 개의 부모를 가질 수있는 트리는 실제로 트리가 아닙니다.</p>
+</blockquote>
+
+<h2 id="the-treemanager-custom-manager">
+<a class="anchor" href="#the-treemanager-custom-manager" aria-hidden="true"><span class="octicon octicon-link"></span></a>The <code>TreeManager</code> custom manager</h2>
+
+<p>MPTTModel의 기본 관리자는 <code>TreeManager</code>입니다.</p>
+
+<p>이 관리자로 생성된 모든 <code>QuerySet</code>은 트리 구조에 따라 정렬되며 root 노드는 tree id 순서로 나타나고 하위 노드는 깊이 우선 순서로 정렬됩니다.</p>
+
+<h3 id="methods">
+<a class="anchor" href="#methods" aria-hidden="true"><span class="octicon octicon-link"></span></a>Methods</h3>
+
+<p>다음과 같은 관리자 방법을 사용할 수 있습니다.</p>
+
+<h4 id="disable_mptt_updates-and-delay_mptt_updates">
+<a class="anchor" href="#disable_mptt_updates-and-delay_mptt_updates" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>disable_mptt_updates()</code> and <code>delay_mptt_updates()</code>
+</h4>
+
+<p>이 두 메서드는 컨텍스트 관리자를 반환하며 큰 Tree를 효율적으로 대량 업데이트하는데 사용됩니다.
+자세한 내용은 자동 생성 된 문서를 참조하십시오:</p>
+
+<ul>
+<li>  <a href="https://django-mptt.readthedocs.io/en/latest/mptt.managers.html#mptt.managers.TreeManager.delay_mptt_updates">delay_mptt_updates</a>
+</li>
+<li>  <a href="https://django-mptt.readthedocs.io/en/latest/mptt.managers.html#mptt.managers.TreeManager.disable_mptt_updates">disable_mptt_updates</a>
+</li>
+</ul>
+
+<h4 id="rebuild">
+<a class="anchor" href="#rebuild" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>rebuild()</code>
+</h4>
+
+<p>전체 테이블에 대한 mptt 필드를 다시 작성합니다. 이것은 유용 할 수 있습니다:</p>
+
+<ul>
+<li>  너의 Tree가 어떻게든 손상되면.</li>
+<li>  대규모 대량 작업 후에 <code>disable_mptt_updates</code>를 사용한 경우</li>
+</ul>
+
+<p>안전성과 성능 향상을 위해 <code>transaction.atomic()</code> 블록 내에서 Tree를 다시 빌드하는 것이 좋습니다.</p>
+
+<h4 id="add_related_count-queryset-rel_cls-rel_field-count_attr-cumulative-false">
+<a class="anchor" href="#add_related_count-queryset-rel_cls-rel_field-count_attr-cumulative-false" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>add_related_count(queryset, rel_cls, rel_field, count_attr, cumulative=False)</code>
+</h4>
+
+<p>이 매니저의 모델과 관련이 있는 모델에 대해, 추가 메소드를 사용하여 주어진 <code>QuerySet</code>에 관련된 항목 수를 추가합니다.</p>
+
+<p><code>rel_cls</code></p>
+
+<p>이 매니저의 모델과 관계가있는 Django 모델 클래스.</p>
+
+<p><code>rel_field</code></p>
+
+<p>관계를 보유하고있는 <code>rel_cls</code> 필드의 이름.</p>
+
+<p><code>count_attr</code></p>
+
+<p>이 <code>QuerySet</code>의 각 항목에 추가되어야 하는 속성의 이름으로, <code>rel_field</code>를 통해 얼마나 많은 <code>rel_cls</code>의 인스턴스가 관련되어 있는지 계산합니다.</p>
+
+<p><code>cumulative</code></p>
+
+<p><code>True</code>면 각 항목과 모든 자손에 대해 계산됩니다. 그렇지 않으면 각 항목 자체에 대해 계산됩니다.</p>
+
+<h3 id="example-usage-in-the-admin">
+<a class="anchor" href="#example-usage-in-the-admin" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example usage in the admin</h3>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="kn">from</span> <span class="nn">mptt.admin</span> <span class="kn">import</span> <span class="n">DraggableMPTTAdmin</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Category</span><span class="p">,</span> <span class="n">Product</span>
+
+
+<span class="k">class</span> <span class="nc">CategoryAdmin</span><span class="p">(</span><span class="n">DraggableMPTTAdmin</span><span class="p">):</span>
+    <span class="n">mptt_indent_field</span> <span class="o">=</span> <span class="s">"name"</span>
+    <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span><span class="s">'tree_actions'</span><span class="p">,</span> <span class="s">'indented_title'</span><span class="p">,</span>
+                    <span class="s">'related_products_count'</span><span class="p">,</span> <span class="s">'related_products_cumulative_count'</span><span class="p">)</span>
+    <span class="n">list_display_links</span> <span class="o">=</span> <span class="p">(</span><span class="s">'indented_title'</span><span class="p">,)</span>
+
+    <span class="k">def</span> <span class="nf">get_queryset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="n">qs</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_queryset</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+
+        <span class="c1"># Add cumulative product count
+</span>        <span class="n">qs</span> <span class="o">=</span> <span class="n">Category</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">add_related_count</span><span class="p">(</span>
+                <span class="n">qs</span><span class="p">,</span>
+                <span class="n">Product</span><span class="p">,</span>
+                <span class="s">'category'</span><span class="p">,</span>
+                <span class="s">'products_cumulative_count'</span><span class="p">,</span>
+                <span class="n">cumulative</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+        <span class="c1"># Add non cumulative product count
+</span>        <span class="n">qs</span> <span class="o">=</span> <span class="n">Category</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">add_related_count</span><span class="p">(</span><span class="n">qs</span><span class="p">,</span>
+                 <span class="n">Product</span><span class="p">,</span>
+                 <span class="s">'categories'</span><span class="p">,</span>
+                 <span class="s">'products_count'</span><span class="p">,</span>
+                 <span class="n">cumulative</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">qs</span>
+
+    <span class="k">def</span> <span class="nf">related_products_count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">instance</span><span class="o">.</span><span class="n">products_count</span>
+    <span class="n">related_product_count</span><span class="o">.</span><span class="n">short_description</span> <span class="o">=</span> <span class="s">'Related products (for this specific category)'</span>
+
+    <span class="k">def</span> <span class="nf">related_products_cumulative_count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">instance</span><span class="o">.</span><span class="n">products_cumulative_count</span>
+    <span class="n">related_products_cumulative_count</span><span class="o">.</span><span class="n">short_description</span> <span class="o">=</span> <span class="s">'Related products (in tree)'</span>
+</code></pre></div>
+<h4 id="root_node-tree_id">
+<a class="anchor" href="#root_node-tree_id" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>root_node(tree_id)</code>
+</h4>
+
+<p>지정된 ID를 가지는 Tree의 root 노드를 돌려줍니다.</p>
+
+<h4 id="insert_node-node-target-position-last-child-save-false">
+<a class="anchor" href="#insert_node-node-target-position-last-child-save-false" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>insert_node(node, target, position='last-child', save=False)</code>
+</h4>
+
+<p><code>node</code> (아직 데이타베이스에 삽입되어 있지 않다)의 Tree 상태를 설정해, node가 삽입되었을 때에 <code>position</code>에 의해 지정되는 지정된 <code>target</code> node에 상대적으로 배치됩니다.
+그것을 위해 만들어졌다.</p>
+
+<p><code>None</code>의 <code>target</code>은 <code>node</code>가 마지막 root node 여야함을 나타냅니다.</p>
+
+<p><code>save</code>가 <code>True</code>이면 <code>node</code>의 <code>save()</code> 메소드가 리턴되기 전에 호출됩니다.</p>
+
+<h4 id="move_node-node-target-position-last-child">
+<a class="anchor" href="#move_node-node-target-position-last-child" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>move_node(node, target, position='last-child')</code>
+</h4>
+
+<p>적절한 경우 대상을 기준으로 위치를 기준으로 노드를 이동합니다.</p>
+
+<p>None 대상은 노드가 현재 위치에서 제거되고 루트 노드로 바뀌어야 함을 나타냅니다.</p>
+
+<p>이 경우 노드가 루트 노드이면 아무런 작업도 수행되지 않습니다.</p>
+
+<p>주어진 노드는 새 트리 상태를 데이터베이스에 반영하도록 수정됩니다.</p>
+
+<p>자세한 내용은 위의 <a href="https://django-mptt.readthedocs.io/en/latest/models.html#move-to-documentation">move_to documentation</a> 를 참조하십시오.</p>
+
+<h4 id="root_nodes">
+<a class="anchor" href="#root_nodes" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>root_nodes()</code>
+</h4>
+
+<p>루트 노드를 포함한 <code>QuerySet</code>를 작성합니다.</p>
+
+<h3 id="example-usage">
+<a class="anchor" href="#example-usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example usage</h3>
+
+<p>다음 예제에서는 Category 및 Question 모델을 사용합니다.</p>
+
+<p>질문에 범주에 대한 <code>TreeForeignKey</code> 인 범주 필드가 있습니다.</p>
+
+<p>각 root 및 모든 children과 관련된 질문 수를 포함하는 <code>question_count</code> 속성이 있는 root 카테고리의 목록 검색:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">roots</span> <span class="o">=</span> <span class="n">Category</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">add_related_count</span><span class="p">(</span>
+    <span class="n">Category</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">root_nodes</span><span class="p">(),</span>
+    <span class="n">Question</span><span class="p">,</span>
+    <span class="s">'category'</span><span class="p">,</span>
+    <span class="s">'question_counts'</span><span class="p">,</span>
+    <span class="n">cumulative</span><span class="o">=</span><span class="bp">True</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>각 질문과 관련된 질문 수를 포함하는 <code>question_count</code> 속성이 있는 하위 카테고리의 목록 검색:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">node</span> <span class="o">=</span> <span class="n">Category</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'Some Category'</span><span class="p">)</span>
+
+<span class="n">children</span> <span class="o">=</span> <span class="n">Category</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">add_related_count</span><span class="p">(</span>
+    <span class="n">node</span><span class="o">.</span><span class="n">get_children</span><span class="p">(),</span>
+    <span class="n">Question</span><span class="p">,</span>
+    <span class="s">'category'</span><span class="p">,</span>
+    <span class="s">'question_counts'</span>
+<span class="p">)</span>
+</code></pre></div>
+<h2 id="references">
+<a class="anchor" href="#references" aria-hidden="true"><span class="octicon octicon-link"></span></a>References</h2>
+
+<p><a href="https://django-mptt.readthedocs.io/en/latest/models.html">Models and Managers</a></p>
+
+  </div>
+
+<div>
+  <p>Contents</p>
+
+<ul>
+<li>  <a href="#models-and-managers">Models and Managers</a>
+
+<ul>
+<li>  <a href="#setting-up-a-django-model-for-mptt">Setting up a Django model for MPTT</a>
+</li>
+<li>  <a href="#model-options">Model Options</a>
+</li>
+<li>  <a href="#registration-of-existing-models">Registration of existing models</a>
+</li>
+<li>  <a href="#mpttmodel-instance-methods">MPTTModel instance methods</a>
+
+<ul>
+<li>  <a href="#getancestorsascendingfalse-includeselffalse"><code>get_ancestors(ascending=False, include_self=False)</code></a>
+</li>
+<li>  <a href="#getchildren"><code>get_children()</code></a>
+</li>
+<li><a href="#getdescendantsincludeselffalse"><code>get_descendants(include_self=False)</code></a></li>
+<li>  <a href="#getdescendantcount"><code>get_descendant_count()</code></a>
+</li>
+<li>  <a href="#getfamily"><code>get_family()</code></a>
+</li>
+<li>  <a href="#getnextsibling"><code>get_next_sibling()</code></a>
+</li>
+<li>  <a href="#getprevioussibling"><code>get_previous_sibling()</code></a>
+</li>
+<li>  <a href="#getroot"><code>get_root()</code></a>
+</li>
+<li>  <a href="#getsiblingsincludeselffalse"><code>get_siblings(include_self=False)</code></a>
+</li>
+<li>  <a href="#insertattarget-positionfirst-child-savefalse"><code>insert_at(target, position='first-child', save=False)</code></a>
+</li>
+<li>  <a href="#ischildnode"><code>is_child_node()</code></a>
+</li>
+<li>  <a href="#isleafnode"><code>is_leaf_node()</code></a>
+</li>
+<li>  <a href="#isrootnode"><code>is_root_node()</code></a>
+</li>
+<li>  <a href="#movetotarget-positionfirst-child"><code>move_to(target, position='first-child')</code></a>
+</li>
+<li>  <a href="#treeforeignkey-treeonetoonefield-treemanytomanyfield"><code>TreeForeignKey</code>, <code>TreeOneToOneField</code>, <code>TreeManyToManyField</code></a>
+</li>
+</ul>
+</li>
+<li>  <a href="#the-treemanager-custom-manager">The <code>TreeManager</code> custom manager</a>
+
+<ul>
+<li>  <a href="#methods">Methods</a>
+</li>
+<li>  <a href="#example-usage-in-the-admin">Example usage in the admin</a>
+</li>
+<li>  <a href="#example-usage">Example usage</a>
+</li>
+</ul>
+</li>
+<li>  <a href="#references">References</a>
+</li>
+</ul>
+</li>
+</ul>
+
+<h2 id="setting-up-a-django-model-for-mptt">Setting up a Django model for MPTT</h2>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">mptt.models</span> <span class="kn">import</span> <span class="n">MPTTModel</span><span class="p">,</span> <span class="n">TreeForeignKey</span>
+
+<span class="k">class</span> <span class="nc">Genre</span><span class="p">(</span><span class="n">MPTTModel</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">TreeForeignKey</span><span class="p">(</span><span class="s">'self'</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s">'children'</span><span class="p">)</span>
+</code></pre></div>
+<p><code>self'</code>에 대한 <code>ForeignKey</code>인 상위 필드를 정의해야합니다.</p>
+
+<p>권장 사항: <code>TreeForeignKey</code>를 사용하십시오.</p>
+
+<p>원하는 경우 다른 것으로 부를 수 있습니다. 아래 <a href="https://django-mptt.readthedocs.io/en/latest/models.html#model-options" rel="nofollow" target="_blank">Model Options</a>을 참조하십시오.</p>
+
+<p><code>MPTTModel</code>을 상속 받기 때문에 모델에는 <code>level</code>, <code>lft</code>, <code>rght</code> 및 <code>tree_id</code>와 같은 여러 필드가 있습니다.</p>
+
+<p>대부분의 경우이 필드를 직접 사용할 필요는 없지만 해당 필드가 있음을 아는 것이 도움이 됩니다.</p>
+
+<p>다중 상속을 사용하는 경우 MPTTModel은 일반적으로 상속 된 첫 번째 class 여야합니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="k">class</span> <span class="nc">Genre</span><span class="p">(</span><span class="n">MPTTModel</span><span class="p">,</span><span class="n">Foo</span><span class="p">,</span><span class="n">Bar</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div>
+<p>MPTTModel은 models.Model에서 상속되므로 "다이아몬드 스타일" 다중 상속을 사용할 때 매우 중요합니다:
+동일한 기본 클래스에서 상속하는 두 모델 (예: models.Model)을 상속합니다.</p>
+
+<p>이 경우 MPTTModel 이 첫 번째 모델이 아닌 경우 AttributeError와 같은 모델 유효성 검사에서 오류가 발생할 수 있습니다. 이와 같은 <code>AttributeError: 'NoneType' object has no attribute 'name'</code>.</p>
+
+<h2 id="model-options">Model Options</h2>
+
+<p>경우에 따라 위 필드의 이름을 변경하려는 경우가 있습니다.</p>
+
+<p>예를 들어 level이라는 필드가 이미 있고 충돌을 피하려는 경우가 있습니다:</p>
+
+<p>이름을 변경하려면 클래스 내에 MPTTMeta 클래스를 만듭니다:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="k">class</span> <span class="nc">Genre</span><span class="p">(</span><span class="n">MPTTModel</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">TreeForeignKey</span><span class="p">(</span>
+        <span class="s">'self'</span><span class="p">,</span>
+        <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">,</span>
+        <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="n">related_name</span><span class="o">=</span><span class="s">'children'</span>
+        <span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">MPTTMeta</span><span class="p">:</span>
+        <span class="n">level_attr</span> <span class="o">=</span> <span class="s">'mptt_level'</span>
+        <span class="n">order_insertion_by</span><span class="o">=</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span>
+</code></pre></div>
+<p>MPTTMeta 클래스에 사용할 수있는 옵션은 다음과 같습니다:</p>
+
+<ul>
+<li>  <code>parent_attr</code>
+
+<ul>
+<li>  각 인스턴스가 다른 인스턴스의 자식이 될 수 있도록 모델을 다시 자체와 연관시키는 필드의 이름입니다.</li>
+<li>  default: <code>'parent'</code>
+</li>
+</ul>
+</li>
+<li>  <code>left_attr</code>
+
+<ul>
+<li>  왼쪽 Tree 노드 가장자리 표시기가 들어있는 필드의 이름으로, <code>PositiveIntegerField</code> 여야합니다.</li>
+<li>  default: <code>'lft'</code>
+</li>
+</ul>
+</li>
+<li>  <code>right_attr</code>
+
+<ul>
+<li>  왼쪽 Tree 노드 가장자리 표시기가 들어있는 필드의 이름으로, <code>PositiveIntegerField</code> 여야합니다.</li>
+<li>  default: <code>'rght'</code>
+</li>
+</ul>
+</li>
+<li>  <code>tree_id_attr</code>
+
+<ul>
+<li>  각 노드의 트리 ID를 포함하는 필드의 이름으로, <code>PositiveIntegerField</code> 여야합니다.</li>
+<li>  default: <code>'tree_id'</code>
+</li>
+</ul>
+</li>
+<li>  <code>level_attr</code>
+
+<ul>
+<li>  항목이 트리에있는 (zero-based) 레벨을 포함하는 필드의 이름으로, <code>PositiveIntegerField</code> 여야합니다.</li>
+<li>  default: <code>'level'</code>
+</li>
+<li>  예를 들어 root 노드의 레벨은 0 이고 직계 하위 노드의 레벨은 1입니다.</li>
+</ul>
+</li>
+<li>  <code>order_insertion_by</code>
+
+<ul>
+<li>  새로운 Tree 노드가 삽입 될 때의 순서를 정의하거나 기존의 노드가 가장 중요한 순서 필드 이름이 가장 먼저 표시되는 필드 이름 목록. 기본값은 [] 입니다.</li>
+<li>  순서 지정을 정의하는 것으로 식별 된 모든 필드는 데이터베이스에서 절대 NULL이 될 수 없다고 가정합니다.</li>
+<li>  노드를 저장할 때 노드를 배치해야 하는 위치를 결정하려면 추가 DB 쿼리가 필요합니다.
+이 옵션은 범주의 Tree와 같이 대부분 정적인 구조를 유지하는 경우 편리합니다.
+이 Tree는 항상 알파벳 순서로 있어야 합니다.</li>
+</ul>
+</li>
+</ul>
+
+<h2 id="registration-of-existing-models">Registration of existing models</h2>
+
+<p><code>django-mptt</code>에서 모델 등록을하는 가장 좋은 방법은 <code>MPTTModel</code>을 서브 클래싱하는 것입니다.</p>
+
+<p>그러나 때로는 그렇게 작동하지 않습니다. 예로, Django의 그룹 모델을 계층 구조로 수정하려고한다고 가정하십시오.</p>
+
+<p>그룹 소스를 수정하지 않고 <code>MPTTModel</code>을 서브 클래스화할 수 없습니다. 대신 다음을 수행 할 수 있습니다:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="kn">import</span> <span class="nn">mptt</span>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">mptt.fields</span> <span class="kn">import</span> <span class="n">TreeForeignKey</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">Group</span>
+
+<span class="c1"># add a parent foreign key
+</span><span class="n">TreeForeignKey</span><span class="p">(</span><span class="n">Group</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">contribute_to_class</span><span class="p">(</span><span class="n">Group</span><span class="p">,</span> <span class="s">'parent'</span><span class="p">)</span>
+
+<span class="n">mptt</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Group</span><span class="p">,</span> <span class="n">order_insertion_by</span><span class="o">=</span><span class="p">[</span><span class="s">'name'</span><span class="p">])</span>
+</code></pre></div>
+<h2 id="mpttmodel-instance-methods">MPTTModel instance methods</h2>
+
+<p>MPTTModel의 서브 클래스는 다음과 같은 인스턴스 메소드를 가집니다.</p>
+
+<h3 id="get_ancestors-ascending-false-include_self-false"><code>get_ancestors(ascending=False, include_self=False)</code></h3>
+
+<p>Model instance 의 조상을 포함하는 <code>QuerySet</code>을 작성합니다.</p>
+
+<p>기본값은 내림차순입니다 (root 조상이 먼저, 직접 부모가 마지막 임).</p>
+
+<p>오름차순 인수에 대해 <code>True</code>를 전달하면 순서가 바뀝니다 (즉, 상위 상위, 상위 상위).</p>
+
+<p><code>include_self</code>가 <code>True</code>이면 <code>QuerySet</code>에는 모델 인스턴스 자체도 포함됩니다.</p>
+
+<p>인스턴스가 이미 저장되지 않은 경우 <code>ValueError</code>를 발생시킵니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="kn">from</span> <span class="nn">app_mptt.models</span> <span class="kn">import</span> <span class="n">Genre</span>
+
+<span class="n">genres</span> <span class="o">=</span> <span class="n">Genre</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="nb">all</span><span class="p">()</span>
+<span class="n">genres</span><span class="o">.</span><span class="n">get_ancestors</span><span class="p">()</span>
+
+<span class="o">&lt;</span><span class="n">TreeQuerySet</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="n">Rock</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span>
+</code></pre></div>
+<h3 id="get_children"><code>get_children()</code></h3>
+
+<p>Tree 의 순서로 모델 인스턴스의 직접적인 children를 포함한 <code>QuerySet</code>를 작성합니다.</p>
+
+<p>ORM 에서 인스턴스의 자식에 대해 제공하는 역방향 관계에 대해이 메서드를 사용하면 인스턴스가 리프 노드 (자식이 없음) 인 경우 데이터베이스 쿼리를 피할 수 있다는 장점이 있습니다.</p>
+
+<p>인스턴스가 이미 저장되지 않은 경우 <code>ValueError</code>를 발생시킵니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="kn">from</span> <span class="nn">app_mptt.models</span> <span class="kn">import</span> <span class="n">Genre</span>
+
+<span class="n">genres</span> <span class="o">=</span> <span class="n">Genre</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="nb">all</span><span class="p">()</span>
+<span class="n">genres</span><span class="o">.</span><span class="n">get_children</span><span class="p">()</span>
+
+<span class="o">&lt;</span><span class="n">TreeQuerySet</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="n">Hard</span> <span class="n">Rock</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="n">Pop</span> <span class="n">Rock</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span>
+</code></pre></div>
+<h3 id="get_descendants-include_self-false"><code>get_descendants(include_self=False)</code></h3>
+
+<p>Tree 구조로 모델 인스턴스의 children을 포함하는 <code>QuerySet</code>을 생성합니다.</p>
+
+<p><code>include_self</code>가 <code>True</code>이면 <code>QuerySet</code>에는 모델 인스턴스 자체도 포함됩니다.</p>
+
+<p>인스턴스가 이미 저장되지 않은 경우 <code>ValueError</code>를 발생시킵니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">genres</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_descendants</span><span class="p">()</span>
+
+<span class="o">&lt;</span><span class="n">TreeQuerySet</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="n">Hard</span> <span class="n">Rock</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="n">Pop</span> <span class="n">Rock</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span>
+</code></pre></div>
+<h3 id="get_descendant_count"><code>get_descendant_count()</code></h3>
+
+<p>왼쪽 및 오른쪽 트리 노드 엣지 표시기를 기반으로 모델 인스턴스에있는 자손 수를 반환합니다.</p>
+
+<p>따라서 데이터베이스 액세스가 발생하지 않습니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">genres</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_descendant_count</span><span class="p">()</span>
+
+<span class="mi">2</span>
+</code></pre></div>
+<h3 id="get_family"><code>get_family()</code></h3>
+
+<p>조상, 모델 자체, 및 자손을 트리 순서로 포함한 <code>QuerySet</code>를 리턴합니다.</p>
+
+<p>인스턴스가 이미 저장되지 않은 경우 <code>ValueError</code>를 발생시킵니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">genres</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_family</span><span class="p">()</span>
+<span class="o">&lt;</span><span class="n">TreeQuerySet</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="n">Blues</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span>
+
+<span class="n">genres</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_family</span><span class="p">()</span>
+<span class="o">&lt;</span><span class="n">TreeQuerySet</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="n">Rock</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="n">Hard</span> <span class="n">Rock</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="n">Pop</span> <span class="n">Rock</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span>
+
+<span class="n">genres</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">get_family</span><span class="p">()</span>
+<span class="o">&lt;</span><span class="n">TreeQuerySet</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="n">Rock</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="n">Hard</span> <span class="n">Rock</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span>
+
+<span class="n">genres</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">get_family</span><span class="p">()</span>
+<span class="o">&lt;</span><span class="n">TreeQuerySet</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="n">Rock</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="n">Pop</span> <span class="n">Rock</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span>
+</code></pre></div>
+<h3 id="get_next_sibling"><code>get_next_sibling()</code></h3>
+
+<p>Tree에서 모델 인스턴스의 다음 형제를 반환하거나 다음 형제가 없으면 <code>None</code>을 반환합니다.</p>
+
+<p>인스턴스가 이미 저장되지 않은 경우 <code>ValueError</code>를 발생시킵니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">genres</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="n">Blues</span><span class="o">&gt;</span>
+
+<span class="n">genres</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_next_sibling</span><span class="p">()</span>
+<span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="n">Rock</span><span class="o">&gt;</span>
+
+<span class="n">genres</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_next_sibling</span><span class="p">()</span>
+
+<span class="n">genres</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">get_next_sibling</span><span class="p">()</span>
+<span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="n">Pop</span> <span class="n">Rock</span><span class="o">&gt;</span>
+
+<span class="n">genres</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">get_next_sibling</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="get_previous_sibling"><code>get_previous_sibling()</code></h3>
+
+<p>Tree에서 모델 인스턴스의 이전 형제를 반환하거나 이전 형제가없는 경우 <code>None</code>을 반환합니다.</p>
+
+<p>인스턴스가 이미 저장되지 않은 경우 <code>ValueError</code>를 발생시킵니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">genres</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="n">Blues</span><span class="o">&gt;</span>
+
+<span class="n">genres</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_previous_sibling</span><span class="p">()</span>
+
+<span class="n">genres</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_previous_sibling</span><span class="p">()</span>
+<span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="n">Blues</span><span class="o">&gt;</span>
+
+<span class="n">genres</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">get_previous_sibling</span><span class="p">()</span>
+
+<span class="n">genres</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">get_previous_sibling</span><span class="p">()</span>
+<span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="n">Hard</span> <span class="n">Rock</span><span class="o">&gt;</span>
+</code></pre></div>
+<h3 id="get_root"><code>get_root()</code></h3>
+
+<p>모델 인스턴스 Tree의 root 노드를 반환합니다.</p>
+
+<p>인스턴스가 이미 저장되지 않은 경우 <code>ValueError</code>를 발생시킵니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">genres</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">get_root</span><span class="p">()</span>
+<span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="n">Rock</span><span class="o">&gt;</span>
+</code></pre></div>
+<h3 id="get_siblings-include_self-false"><code>get_siblings(include_self=False)</code></h3>
+
+<p>모델 인스턴스의 형제를 포함하는 QuerySet을 작성합니다.</p>
+
+<p>root 노드는 다른 root 노드의 형제 노드로 간주됩니다.</p>
+
+<p><code>include_self</code>가 <code>True</code>이면 QuerySet에는 모델 인스턴스 자체도 포함됩니다.</p>
+
+<p>인스턴스가 이미 저장되지 않은 경우 <code>ValueError</code>를 발생시킵니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">genres</span> <span class="o">=</span> <span class="n">Genre</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="nb">all</span><span class="p">()</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s">'id'</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">genres</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">g</span><span class="o">.</span><span class="n">get_siblings</span><span class="p">())</span>
+
+<span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="n">Rock</span> <span class="o">&lt;</span><span class="n">TreeQuerySet</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="n">Blues</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="n">Blues</span> <span class="o">&lt;</span><span class="n">TreeQuerySet</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="n">Rock</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span>
+<span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="n">Hard</span> <span class="n">Rock</span> <span class="o">&lt;</span><span class="n">TreeQuerySet</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="n">Pop</span> <span class="n">Rock</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span>
+<span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="n">Pop</span> <span class="n">Rock</span> <span class="o">&lt;</span><span class="n">TreeQuerySet</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Genre</span><span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="n">Hard</span> <span class="n">Rock</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span>
+</code></pre></div>
+<h3 id="insert_at-target-position-first-child-save-false"><code>insert_at(target, position='first-child', save=False)</code></h3>
+
+<p>모델 인스턴스(아직 Database에 삽입되어 있지 않아야 함, 새로운 node 추가시)를
+<code>target</code> 및 <code>position</code> (적절한 경우)에 따라 Tree에 배치합니다.</p>
+
+<p><code>save</code> 가 True 인 경우, 모델 인스턴스 save() method 또한 호출될 것이다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">node</span> <span class="o">=</span> <span class="n">Genre</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'test'</span><span class="p">)</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">Genre</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'Blues'</span><span class="p">)</span>
+
+<span class="n">Genre</span><span class="o">.</span><span class="n">insert_at</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="s">'first-child'</span><span class="p">,</span> <span class="n">save</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="ow">or</span>
+<span class="n">node</span><span class="o">.</span><span class="n">insert_at</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="s">'last-child'</span><span class="p">,</span> <span class="n">save</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">-   Blues
+    -   test
+-   Rock
+    -   Hard Rock
+    -   Pop Rock
+</code></pre></div>
+<h3 id="is_child_node"><code>is_child_node()</code></h3>
+
+<p>모델 인스턴스가 자식 노드면 True를 반환하고 그렇지 않으면 False를 반환합니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">genres</span> <span class="o">=</span> <span class="n">Genre</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="nb">all</span><span class="p">()</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s">'id'</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">genres</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">g</span><span class="o">.</span><span class="n">is_child_node</span><span class="p">(),</span> <span class="n">g</span><span class="o">.</span><span class="n">is_leaf_node</span><span class="p">(),</span> <span class="n">g</span><span class="o">.</span><span class="n">is_root_node</span><span class="p">())</span>
+
+<span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="n">Rock</span> <span class="bp">False</span> <span class="bp">False</span> <span class="bp">True</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="n">Blues</span> <span class="bp">False</span> <span class="bp">True</span> <span class="bp">True</span>
+<span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="n">Hard</span> <span class="n">Rock</span> <span class="bp">True</span> <span class="bp">True</span> <span class="bp">False</span>
+<span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="n">Pop</span> <span class="n">Rock</span> <span class="bp">True</span> <span class="bp">True</span> <span class="bp">False</span>
+</code></pre></div>
+<h3 id="is_leaf_node"><code>is_leaf_node()</code></h3>
+
+<p>모델 인스턴스가 리프 노드(자식이 없음)면 True를 반환하고 그렇지 않으면 False를 반환합니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">genres</span> <span class="o">=</span> <span class="n">Genre</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="nb">all</span><span class="p">()</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s">'id'</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">genres</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">g</span><span class="o">.</span><span class="n">is_child_node</span><span class="p">(),</span> <span class="n">g</span><span class="o">.</span><span class="n">is_leaf_node</span><span class="p">(),</span> <span class="n">g</span><span class="o">.</span><span class="n">is_root_node</span><span class="p">())</span>
+
+<span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="n">Rock</span> <span class="bp">False</span> <span class="bp">False</span> <span class="bp">True</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="n">Blues</span> <span class="bp">False</span> <span class="bp">True</span> <span class="bp">True</span>
+<span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="n">Hard</span> <span class="n">Rock</span> <span class="bp">True</span> <span class="bp">True</span> <span class="bp">False</span>
+<span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="n">Pop</span> <span class="n">Rock</span> <span class="bp">True</span> <span class="bp">True</span> <span class="bp">False</span>
+</code></pre></div>
+<h3 id="is_root_node"><code>is_root_node()</code></h3>
+
+<p>모델 인스턴스가 root 노드면 True를 반환하고 그렇지 않으면 False를 반환합니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">genres</span> <span class="o">=</span> <span class="n">Genre</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="nb">all</span><span class="p">()</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s">'id'</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">genres</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">g</span><span class="o">.</span><span class="n">is_child_node</span><span class="p">(),</span> <span class="n">g</span><span class="o">.</span><span class="n">is_leaf_node</span><span class="p">(),</span> <span class="n">g</span><span class="o">.</span><span class="n">is_root_node</span><span class="p">())</span>
+
+<span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="n">Rock</span> <span class="bp">False</span> <span class="bp">False</span> <span class="bp">True</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="n">Blues</span> <span class="bp">False</span> <span class="bp">True</span> <span class="bp">True</span>
+<span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="n">Hard</span> <span class="n">Rock</span> <span class="bp">True</span> <span class="bp">True</span> <span class="bp">False</span>
+<span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="n">Pop</span> <span class="n">Rock</span> <span class="bp">True</span> <span class="bp">True</span> <span class="bp">False</span>
+</code></pre></div>
+<h3 id="move_to-target-position-first-child"><code>move_to(target, position='first-child')</code></h3>
+
+<p>모델 인스턴스를 <code>target</code> 및 <code>position</code>에 따라 Tree의 다른 위치로 이동합니다 (해당되는 경우).</p>
+
+<p>예외없이 이동 된 경우 <code>node_moved</code> 신호가 전송됩니다.</p>
+
+<blockquote>
+<p>! Note</p>
+
+<p>이 메서드를 호출하면 호출 한 인스턴스의 인스턴스와 전달된 대상 인스턴스의 Tree 필드가 데이터베이스의 현재 상태를 반영한다고 가정합니다.
+이 메소드를 호출하거나 데이터베이스와 동기화되지 않은 Tree 필드를 사용하기 전에 Tree 필드를 수동으로 수정하면 Tree 구조가 부정확한 상태가 될 수 있습니다.</p>
+</blockquote>
+
+<p><code>target</code>이 다른 모델 인스턴스 인 경우, 이는 수행해야하는 동작 유형을 결정하는 데 사용되며 모델이 이동 될 때 위치 인수와 함께 모델 <code>position</code> 지정을 위한 기초로 사용됩니다.</p>
+
+<p><code>None</code> 의 <code>target</code>은 모델 인스턴스가 루트 노드로 변환되어야 함을 나타냅니다. 이 경우 <code>position</code> 인수는 무시됩니다.</p>
+
+<p><code>position</code> 인수에 대한 유효한 값과 이동에 대한 영향은 다음과 같습니다:</p>
+
+<ul>
+<li>
+<p><code>'first-child'</code></p>
+
+<p>이동되는 인스턴스는 <code>target</code>이 새 상위로 설정되고 Tree 구조에서 첫 번째 하위로 배치되어야 합니다.</p>
+</li>
+<li>
+<p><code>'last-child'</code></p>
+
+<p>이동되는 인스턴스는 <code>target</code>을 새 상위로 설정하고 Tree 구조에서 마지막 하위로 배치해야 합니다.</p>
+</li>
+<li>
+<p><code>'left'</code></p>
+
+<p>이동되는 인스턴스는 <code>target</code> 부모를 새로운 부모로 설정해야하며 Tree 구조의 target 바로 앞에 위치해야 합니다.</p>
+</li>
+<li>
+<p><code>'right'</code></p>
+
+<p>이동되는 인스턴스는 <code>target</code> 부모를 새로운 부모로 설정해야하며 Tree 구조의 target 바로 뒤에 위치해야 합니다.</p>
+</li>
+</ul>
+
+<p><code>position</code> 인수에 잘못된 값이 주어진 경우 <code>ValueError</code>가 발생합니다.</p>
+
+<p>이 메소드를 사용하여 시도할 수 있는 일부 작업은 유효하지 않습니다.
+예를 들어, 인스턴스를 자체 하위 또는 자손 중 하나의 하위로 만들려는 경우입니다.
+이러한 경우 mptt.exceptions.InvalidMove 예외가 발생합니다.</p>
+
+<p>이 호출의 결과로 인스턴스 자체도 수정되어 데이터베이스에 업데이트된 Tree 필드의 상태를 반영하므로이 메서드를 호출 한 후에 저장하거나 트리 필드를 사용하는 것이 안전합니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">node</span> <span class="o">=</span> <span class="n">Genre</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'test'</span><span class="p">)</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">Genre</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'Rock'</span><span class="p">)</span>
+
+<span class="n">Genre</span><span class="o">.</span><span class="n">move_to</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="s">'left'</span><span class="p">)</span>
+<span class="n">Genre</span><span class="o">.</span><span class="n">move_to</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="s">'right'</span><span class="p">)</span>
+<span class="n">Genre</span><span class="o">.</span><span class="n">move_to</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="s">'first-child'</span><span class="p">)</span>
+<span class="n">Genre</span><span class="o">.</span><span class="n">move_to</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="s">'last-child'</span><span class="p">)</span>
+
+<span class="ow">or</span>
+
+<span class="n">node</span><span class="o">.</span><span class="n">move_to</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="s">'left'</span><span class="p">)</span>
+<span class="n">node</span><span class="o">.</span><span class="n">move_to</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="s">'right'</span><span class="p">)</span>
+<span class="n">node</span><span class="o">.</span><span class="n">move_to</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="s">'first-child'</span><span class="p">)</span>
+<span class="n">node</span><span class="o">.</span><span class="n">move_to</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="s">'last-child'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">-   Blues
+-   test  # left
+-   Rock
+    -   test  # first-child
+    -   Pop Rock
+    -   Hard Rock
+    -   test  # last-child
+-   test  # right
+</code></pre></div>
+<h3 id="treeforeignkey-treeonetoonefield-treemanytomanyfield">
+<code>TreeForeignKey</code>, <code>TreeOneToOneField</code>, <code>TreeManyToManyField</code>
+</h3>
+
+<p><code>mptt.fields.TreeForeignKey</code>는 MPTT 모델에 외래키가 있는 곳이면 어디에서나 사용하는 것이 좋습니다. 여기에는 모델에서 방금 작성한 <code>parent</code> 링크가 포함됩니다.</p>
+
+<p><code>TreeForeignKey</code>는 일반 <code>ForeignKey</code>와 같지만 Tree 양식의 기본 양식 필드 표시 선택 항목이됩니다.</p>
+
+<p>필요한 경우 <code>TreeOneToOneField</code> 및 <code>TreeManyToManyField</code>도 있습니다.
+이것들은 당신의 Tree 모델과 어떤면에서 관련이있는 다른 모델들에서 유용할 수 있습니다.</p>
+
+<blockquote>
+<p>! Note</p>
+
+<p>당신은 당신의 '부모'필드로 many-to-many를 사용할 수 없다.
+이것은 mptt 알고리즘이 임의의 그래프가 아닌 트리 만 처리하기 때문입니다.
+노드가 여러 개의 부모를 가질 수있는 트리는 실제로 트리가 아닙니다.</p>
+</blockquote>
+
+<h2 id="the-treemanager-custom-manager">The <code>TreeManager</code> custom manager</h2>
+
+<p>MPTTModel의 기본 관리자는 <code>TreeManager</code>입니다.</p>
+
+<p>이 관리자로 생성된 모든 <code>QuerySet</code>은 트리 구조에 따라 정렬되며 root 노드는 tree id 순서로 나타나고 하위 노드는 깊이 우선 순서로 정렬됩니다.</p>
+
+<h3 id="methods">Methods</h3>
+
+<p>다음과 같은 관리자 방법을 사용할 수 있습니다.</p>
+
+<h4 id="disable_mptt_updates-and-delay_mptt_updates">
+<code>disable_mptt_updates()</code> and <code>delay_mptt_updates()</code>
+</h4>
+
+<p>이 두 메서드는 컨텍스트 관리자를 반환하며 큰 Tree를 효율적으로 대량 업데이트하는데 사용됩니다.
+자세한 내용은 자동 생성 된 문서를 참조하십시오:</p>
+
+<ul>
+<li>  <a href="https://django-mptt.readthedocs.io/en/latest/mptt.managers.html#mptt.managers.TreeManager.delay_mptt_updates" rel="nofollow" target="_blank">delay_mptt_updates</a>
+</li>
+<li>  <a href="https://django-mptt.readthedocs.io/en/latest/mptt.managers.html#mptt.managers.TreeManager.disable_mptt_updates" rel="nofollow" target="_blank">disable_mptt_updates</a>
+</li>
+</ul>
+
+<h4 id="rebuild"><code>rebuild()</code></h4>
+
+<p>전체 테이블에 대한 mptt 필드를 다시 작성합니다. 이것은 유용 할 수 있습니다:</p>
+
+<ul>
+<li>  너의 Tree가 어떻게든 손상되면.</li>
+<li>  대규모 대량 작업 후에 <code>disable_mptt_updates</code>를 사용한 경우</li>
+</ul>
+
+<p>안전성과 성능 향상을 위해 <code>transaction.atomic()</code> 블록 내에서 Tree를 다시 빌드하는 것이 좋습니다.</p>
+
+<h4 id="add_related_count-queryset-rel_cls-rel_field-count_attr-cumulative-false"><code>add_related_count(queryset, rel_cls, rel_field, count_attr, cumulative=False)</code></h4>
+
+<p>이 매니저의 모델과 관련이 있는 모델에 대해, 추가 메소드를 사용하여 주어진 <code>QuerySet</code>에 관련된 항목 수를 추가합니다.</p>
+
+<p><code>rel_cls</code></p>
+
+<p>이 매니저의 모델과 관계가있는 Django 모델 클래스.</p>
+
+<p><code>rel_field</code></p>
+
+<p>관계를 보유하고있는 <code>rel_cls</code> 필드의 이름.</p>
+
+<p><code>count_attr</code></p>
+
+<p>이 <code>QuerySet</code>의 각 항목에 추가되어야 하는 속성의 이름으로, <code>rel_field</code>를 통해 얼마나 많은 <code>rel_cls</code>의 인스턴스가 관련되어 있는지 계산합니다.</p>
+
+<p><code>cumulative</code></p>
+
+<p><code>True</code>면 각 항목과 모든 자손에 대해 계산됩니다. 그렇지 않으면 각 항목 자체에 대해 계산됩니다.</p>
+
+<h3 id="example-usage-in-the-admin">Example usage in the admin</h3>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="kn">from</span> <span class="nn">mptt.admin</span> <span class="kn">import</span> <span class="n">DraggableMPTTAdmin</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Category</span><span class="p">,</span> <span class="n">Product</span>
+
+
+<span class="k">class</span> <span class="nc">CategoryAdmin</span><span class="p">(</span><span class="n">DraggableMPTTAdmin</span><span class="p">):</span>
+    <span class="n">mptt_indent_field</span> <span class="o">=</span> <span class="s">"name"</span>
+    <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span><span class="s">'tree_actions'</span><span class="p">,</span> <span class="s">'indented_title'</span><span class="p">,</span>
+                    <span class="s">'related_products_count'</span><span class="p">,</span> <span class="s">'related_products_cumulative_count'</span><span class="p">)</span>
+    <span class="n">list_display_links</span> <span class="o">=</span> <span class="p">(</span><span class="s">'indented_title'</span><span class="p">,)</span>
+
+    <span class="k">def</span> <span class="nf">get_queryset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="n">qs</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_queryset</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+
+        <span class="c1"># Add cumulative product count
+</span>        <span class="n">qs</span> <span class="o">=</span> <span class="n">Category</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">add_related_count</span><span class="p">(</span>
+                <span class="n">qs</span><span class="p">,</span>
+                <span class="n">Product</span><span class="p">,</span>
+                <span class="s">'category'</span><span class="p">,</span>
+                <span class="s">'products_cumulative_count'</span><span class="p">,</span>
+                <span class="n">cumulative</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+        <span class="c1"># Add non cumulative product count
+</span>        <span class="n">qs</span> <span class="o">=</span> <span class="n">Category</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">add_related_count</span><span class="p">(</span><span class="n">qs</span><span class="p">,</span>
+                 <span class="n">Product</span><span class="p">,</span>
+                 <span class="s">'categories'</span><span class="p">,</span>
+                 <span class="s">'products_count'</span><span class="p">,</span>
+                 <span class="n">cumulative</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">qs</span>
+
+    <span class="k">def</span> <span class="nf">related_products_count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">instance</span><span class="o">.</span><span class="n">products_count</span>
+    <span class="n">related_product_count</span><span class="o">.</span><span class="n">short_description</span> <span class="o">=</span> <span class="s">'Related products (for this specific category)'</span>
+
+    <span class="k">def</span> <span class="nf">related_products_cumulative_count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">instance</span><span class="o">.</span><span class="n">products_cumulative_count</span>
+    <span class="n">related_products_cumulative_count</span><span class="o">.</span><span class="n">short_description</span> <span class="o">=</span> <span class="s">'Related products (in tree)'</span>
+</code></pre></div>
+<h4 id="root_node-tree_id"><code>root_node(tree_id)</code></h4>
+
+<p>지정된 ID를 가지는 Tree의 root 노드를 돌려줍니다.</p>
+
+<h4 id="insert_node-node-target-position-last-child-save-false"><code>insert_node(node, target, position='last-child', save=False)</code></h4>
+
+<p><code>node</code> (아직 데이타베이스에 삽입되어 있지 않다)의 Tree 상태를 설정해, node가 삽입되었을 때에 <code>position</code>에 의해 지정되는 지정된 <code>target</code> node에 상대적으로 배치됩니다.
+그것을 위해 만들어졌다.</p>
+
+<p><code>None</code>의 <code>target</code>은 <code>node</code>가 마지막 root node 여야함을 나타냅니다.</p>
+
+<p><code>save</code>가 <code>True</code>이면 <code>node</code>의 <code>save()</code> 메소드가 리턴되기 전에 호출됩니다.</p>
+
+<h4 id="move_node-node-target-position-last-child"><code>move_node(node, target, position='last-child')</code></h4>
+
+<p>적절한 경우 대상을 기준으로 위치를 기준으로 노드를 이동합니다.</p>
+
+<p>None 대상은 노드가 현재 위치에서 제거되고 루트 노드로 바뀌어야 함을 나타냅니다.</p>
+
+<p>이 경우 노드가 루트 노드이면 아무런 작업도 수행되지 않습니다.</p>
+
+<p>주어진 노드는 새 트리 상태를 데이터베이스에 반영하도록 수정됩니다.</p>
+
+<p>자세한 내용은 위의 <a href="https://django-mptt.readthedocs.io/en/latest/models.html#move-to-documentation" rel="nofollow" target="_blank">move_to documentation</a> 를 참조하십시오.</p>
+
+<h4 id="root_nodes"><code>root_nodes()</code></h4>
+
+<p>루트 노드를 포함한 <code>QuerySet</code>를 작성합니다.</p>
+
+<h3 id="example-usage">Example usage</h3>
+
+<p>다음 예제에서는 Category 및 Question 모델을 사용합니다.</p>
+
+<p>질문에 범주에 대한 <code>TreeForeignKey</code> 인 범주 필드가 있습니다.</p>
+
+<p>각 root 및 모든 children과 관련된 질문 수를 포함하는 <code>question_count</code> 속성이 있는 root 카테고리의 목록 검색:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">roots</span> <span class="o">=</span> <span class="n">Category</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">add_related_count</span><span class="p">(</span>
+    <span class="n">Category</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">root_nodes</span><span class="p">(),</span>
+    <span class="n">Question</span><span class="p">,</span>
+    <span class="s">'category'</span><span class="p">,</span>
+    <span class="s">'question_counts'</span><span class="p">,</span>
+    <span class="n">cumulative</span><span class="o">=</span><span class="bp">True</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>각 질문과 관련된 질문 수를 포함하는 <code>question_count</code> 속성이 있는 하위 카테고리의 목록 검색:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">node</span> <span class="o">=</span> <span class="n">Category</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'Some Category'</span><span class="p">)</span>
+
+<span class="n">children</span> <span class="o">=</span> <span class="n">Category</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">add_related_count</span><span class="p">(</span>
+    <span class="n">node</span><span class="o">.</span><span class="n">get_children</span><span class="p">(),</span>
+    <span class="n">Question</span><span class="p">,</span>
+    <span class="s">'category'</span><span class="p">,</span>
+    <span class="s">'question_counts'</span>
+<span class="p">)</span>
+</code></pre></div>
+<h2 id="references">References</h2>
+
+<p><a href="https://django-mptt.readthedocs.io/en/latest/models.html" rel="nofollow" target="_blank">Models and Managers</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

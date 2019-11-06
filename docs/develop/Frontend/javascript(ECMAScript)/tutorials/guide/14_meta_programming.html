@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>meta programming | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="meta programming" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="ECMAScript 2015에서 JavaScript에는 Proxy개체와 Reflect개체가 지원되었습니다. 이들은 기본적인 언어 조작 (예를 들어, 속성 검색, 대입 열거 함수 호출 등)에 인터럽트 동작을 사용자 정의 할 수 있습니다. 이 두 개체 덕분에 JavaScript로 메타 레벨 프로그래밍 할 수 있습니다." />
+<meta property="og:description" content="ECMAScript 2015에서 JavaScript에는 Proxy개체와 Reflect개체가 지원되었습니다. 이들은 기본적인 언어 조작 (예를 들어, 속성 검색, 대입 열거 함수 호출 등)에 인터럽트 동작을 사용자 정의 할 수 있습니다. 이 두 개체 덕분에 JavaScript로 메타 레벨 프로그래밍 할 수 있습니다." />
+<link rel="canonical" href="http://localhost:4000/blog/docs/develop/Frontend/javascript(ECMAScript)/tutorials/guide/14_meta_programming.html" />
+<meta property="og:url" content="http://localhost:4000/blog/docs/develop/Frontend/javascript(ECMAScript)/tutorials/guide/14_meta_programming.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-06T09:31:12+09:00" />
+<script type="application/ld+json">
+{"description":"ECMAScript 2015에서 JavaScript에는 Proxy개체와 Reflect개체가 지원되었습니다. 이들은 기본적인 언어 조작 (예를 들어, 속성 검색, 대입 열거 함수 호출 등)에 인터럽트 동작을 사용자 정의 할 수 있습니다. 이 두 개체 덕분에 JavaScript로 메타 레벨 프로그래밍 할 수 있습니다.","headline":"meta programming","dateModified":"2019-11-06T09:31:12+09:00","datePublished":"2019-11-06T09:31:12+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/docs/develop/Frontend/javascript(ECMAScript)/tutorials/guide/14_meta_programming.html"},"url":"http://localhost:4000/blog/docs/develop/Frontend/javascript(ECMAScript)/tutorials/guide/14_meta_programming.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>meta programming</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#proxies">Proxies(프록시)</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#part-65439a3e2ca">용어</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#handlers-traps">Handlers &amp; Traps</a></li>
+<li class="toc-entry toc-h2"><a href="#revocable-proxy">Revocable Proxy(취소 가능한 프록시)</a></li>
+<li class="toc-entry toc-h2"><a href="#reflection">Reflection</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#a-better-apply-function">A better apply function</a></li>
+<li class="toc-entry toc-h3"><a href="#checking-if-property-definition-has-been-successful">Checking if property definition has been successful(속성 정의가 성공적인지 확인하기)</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#reference">Reference</a></li>
+</ul><p>ECMAScript 2015에서 JavaScript에는 <a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Proxy">Proxy</a>개체와 <a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Reflect">Reflect</a>개체가 지원되었습니다.
+이들은 기본적인 언어 조작 (예를 들어, 속성 검색, 대입 열거 함수 호출 등)에 인터럽트 동작을 사용자 정의 할 수 있습니다.
+이 두 개체 덕분에 JavaScript로 메타 레벨 프로그래밍 할 수 있습니다.</p>
+
+<hr>
+
+<h2 id="proxies">
+<a class="anchor" href="#proxies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Proxies(프록시)</h2>
+
+<p>ECMAScript 6에서 도입 된 Proxy개체는 특정 작업에 끼어 동작을 사용자 정의 할 수 있습니다. 예를 들어, 개체의 속성을 가져 봅시다:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">handler</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">get</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">name</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">name</span> <span class="k">in</span> <span class="nx">target</span> <span class="p">?</span> <span class="nx">target</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="p">:</span> <span class="mi">42</span><span class="p">;</span>
+<span class="p">}};</span>
+<span class="kd">var</span> <span class="nx">p</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Proxy</span><span class="p">({},</span> <span class="nx">handler</span><span class="p">);</span>
+<span class="nx">p</span><span class="p">.</span><span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">a</span><span class="p">,</span> <span class="nx">p</span><span class="p">.</span><span class="nx">b</span><span class="p">);</span> <span class="c1">// 1, 42</span>
+</code></pre></div>
+<p>이 Proxy개체는 target(여기에서는 빈 객체)와 get트랩이 구현 된 handler객체를 정의하고 있습니다.
+여기에서 프록시가 된 개체는 정의되지 않은 속성을 취득하려고했을 때 undefined 반환하지 않으며 대신에 숫자 42을 반환합니다.</p>
+
+<p>더 많은 예제는 <a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Proxy">Proxy</a> 참조하십시오.</p>
+
+<h3 id="part-65439a3e2ca">
+<a class="anchor" href="#part-65439a3e2ca" aria-hidden="true"><span class="octicon octicon-link"></span></a>용어</h3>
+
+<p><strong>handler</strong>:</p>
+
+<p><code>trap</code>을 넣기 위한 자리 표시 용 객체.</p>
+
+<p><strong>trap</strong>:</p>
+
+<p>속성에 대한 액세스를 제공하는 메소드. 운영 체제에서 트랩의 개념과 유사한 것입니다.</p>
+
+<p><strong>target</strong>:</p>
+
+<p>proxy를 가상화하는 객체.
+이것은 proxy 스토리지 백엔드로 자주 사용됩니다.
+확장·설정 가능하지 않은 특성을 가진 개체에 대한 불변 조건(변경되지 않는 의미, 즉 개체의 의미 정보) 이 대상에 대해 확인됩니다.</p>
+
+<p><strong>invariant(불변 조건)</strong>:</p>
+
+<p>사용자 지정 동작을 구현할 때 변경되지 않는 의미를 불변 조건이라고 합니다.
+핸들러의 불변 조건을 위반하는 경우 TypeError가 발생합니다.</p>
+
+<hr>
+
+<h2 id="handlers-traps">
+<a class="anchor" href="#handlers-traps" aria-hidden="true"><span class="octicon octicon-link"></span></a>Handlers &amp; Traps</h2>
+
+<p>다음 표는 <code>Proxy</code>개체에 사용할 수있는 트랩을 요약 한 것입니다.</p>
+
+<p>자세한 내용과 예제는 참조 핸들러에 대한 페이지 를 참조하십시오.</p>
+
+<p><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/%EB%A9%94%ED%83%80_%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D#Handlers_and_traps">https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/%EB%A9%94%ED%83%80_%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D#Handlers_and_traps</a></p>
+
+<hr>
+
+<h2 id="revocable-proxy">
+<a class="anchor" href="#revocable-proxy" aria-hidden="true"><span class="octicon octicon-link"></span></a>Revocable Proxy(취소 가능한 프록시)</h2>
+
+<p><code>proxy.revocable()</code> 메서드는 취소 가능한 <code>Proxy</code> 객체를 만드는 데 사용됩니다.
+즉, proxy는 <code>revoke</code> 함수를 통해 취소될 수 있으며 proxy를 해제합니다.
+그런 다음 프록시에 대한 조작으로 <code>typeerror</code>가 발생합니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">revocable</span> <span class="o">=</span> <span class="nb">Proxy</span><span class="p">.</span><span class="nx">revocable</span><span class="p">({},</span> <span class="p">{</span>
+  <span class="na">get</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="dl">'</span><span class="s1">[[</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">name</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">]]</span><span class="dl">'</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+<span class="kd">var</span> <span class="nx">proxy</span> <span class="o">=</span> <span class="nx">revocable</span><span class="p">.</span><span class="nx">proxy</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">proxy</span><span class="p">.</span><span class="nx">foo</span><span class="p">);</span> <span class="c1">// "[[foo]]"</span>
+
+<span class="nx">revocable</span><span class="p">.</span><span class="nx">revoke</span><span class="p">();</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">proxy</span><span class="p">.</span><span class="nx">foo</span><span class="p">);</span>  <span class="c1">// TypeError is thrown</span>
+<span class="nx">proxy</span><span class="p">.</span><span class="nx">foo</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>           <span class="c1">// TypeError again</span>
+<span class="k">delete</span> <span class="nx">proxy</span><span class="p">.</span><span class="nx">foo</span><span class="p">;</span>        <span class="c1">// still TypeError</span>
+<span class="k">typeof</span> <span class="nx">proxy</span><span class="p">;</span>            <span class="c1">// "object", typeof doesn't trigger any trap</span>
+</code></pre></div>
+<hr>
+
+<h2 id="reflection">
+<a class="anchor" href="#reflection" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reflection</h2>
+
+<p><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Reflect">Reflect</a>는 차단 가능한 JavaScript 작업을 위한 메서드를 제공하는 기본 제공 개체입니다.
+메소드는 proxy 핸들러의 메소드와 동일합니다.
+Reflect는 함수 객체가 아닙니다.</p>
+
+<p><code>Reflect</code>는 기본 작업을 처리기에서 대상으로 전달하는 데 도움이 됩니다.</p>
+
+<p>예를 들어 <code>Reflect.has()</code>를 사용하면 <code>in 연산자</code>를 함수로 사용할 수 있습니다:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">Reflect.has(Object, 'assign'); // true
+</code></pre></div>
+<h3 id="a-better-apply-function">
+<a class="anchor" href="#a-better-apply-function" aria-hidden="true"><span class="octicon octicon-link"></span></a>A better <code>apply</code> function</h3>
+
+<p>ES5에서는 일반적으로 <code>Function.prototype.apply()</code> 메서드를 사용하여 지정된 값과 인수(배열 또는 유사한 객체)로 제공된 함수를 호출합니다.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">Function.prototype.apply.call(Math.floor, undefined, [1.75]);
+</code></pre></div>
+<p><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Reflect/apply">Reflect.apply</a>를 사용하면 이해가 덜 쉽고 이해하기 쉬워집니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nb">Reflect</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">,</span> <span class="kc">undefined</span><span class="p">,</span> <span class="p">[</span><span class="mf">1.75</span><span class="p">]);</span>
+<span class="c1">// 1;</span>
+
+<span class="nb">Reflect</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nb">String</span><span class="p">.</span><span class="nx">fromCharCode</span><span class="p">,</span> <span class="kc">undefined</span><span class="p">,</span> <span class="p">[</span><span class="mi">104</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="mi">111</span><span class="p">]);</span>
+<span class="c1">// "hello"</span>
+
+<span class="nb">Reflect</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nb">RegExp</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">exec</span><span class="p">,</span> <span class="sr">/ab/</span><span class="p">,</span> <span class="p">[</span><span class="dl">'</span><span class="s1">confabulation</span><span class="dl">'</span><span class="p">]).</span><span class="nx">index</span><span class="p">;</span>
+<span class="c1">// 4</span>
+
+<span class="nb">Reflect</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="dl">''</span><span class="p">.</span><span class="nx">charAt</span><span class="p">,</span> <span class="dl">'</span><span class="s1">ponies</span><span class="dl">'</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">]);</span>
+<span class="c1">// "i"</span>
+</code></pre></div>
+<h3 id="checking-if-property-definition-has-been-successful">
+<a class="anchor" href="#checking-if-property-definition-has-been-successful" aria-hidden="true"><span class="octicon octicon-link"></span></a>Checking if property definition has been successful(속성 정의가 성공적인지 확인하기)</h3>
+
+<p>성공하면 Object를 반환하는 <code>Object.defineProperty</code>를 사용하고 그렇지 않으면 <code>TypeError</code>를 <code>throw</code>합니다.
+<code>try...catch</code> 블록을 사용하여 속성을 정의하는 동안 발생한 오류를 <code>catch</code>합니다.
+<code>Reflect.defineProperty</code>는 Boolean success 상태를 반환하기 때문에 여기서 <code>if...else</code> 블록을 사용할 수 있습니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="k">if</span> <span class="p">(</span><span class="nb">Reflect</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">property</span><span class="p">,</span> <span class="nx">attributes</span><span class="p">))</span> <span class="p">{</span>
+  <span class="c1">// success</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+  <span class="c1">// failure</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr>
+
+<h2 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+<p><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/%EB%A9%94%ED%83%80_%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D">meta programming</a></p>
+
+  </div>
+
+<div>
+  <p>ECMAScript 2015에서 JavaScript에는 <a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Proxy" rel="nofollow" target="_blank">Proxy</a>개체와 <a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Reflect" rel="nofollow" target="_blank">Reflect</a>개체가 지원되었습니다.
+이들은 기본적인 언어 조작 (예를 들어, 속성 검색, 대입 열거 함수 호출 등)에 인터럽트 동작을 사용자 정의 할 수 있습니다.
+이 두 개체 덕분에 JavaScript로 메타 레벨 프로그래밍 할 수 있습니다.</p>
+
+<hr>
+
+<h2 id="proxies">Proxies(프록시)</h2>
+
+<p>ECMAScript 6에서 도입 된 Proxy개체는 특정 작업에 끼어 동작을 사용자 정의 할 수 있습니다. 예를 들어, 개체의 속성을 가져 봅시다:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">handler</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">get</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">name</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">name</span> <span class="k">in</span> <span class="nx">target</span> <span class="p">?</span> <span class="nx">target</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="p">:</span> <span class="mi">42</span><span class="p">;</span>
+<span class="p">}};</span>
+<span class="kd">var</span> <span class="nx">p</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Proxy</span><span class="p">({},</span> <span class="nx">handler</span><span class="p">);</span>
+<span class="nx">p</span><span class="p">.</span><span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">a</span><span class="p">,</span> <span class="nx">p</span><span class="p">.</span><span class="nx">b</span><span class="p">);</span> <span class="c1">// 1, 42</span>
+</code></pre></div>
+<p>이 Proxy개체는 target(여기에서는 빈 객체)와 get트랩이 구현 된 handler객체를 정의하고 있습니다.
+여기에서 프록시가 된 개체는 정의되지 않은 속성을 취득하려고했을 때 undefined 반환하지 않으며 대신에 숫자 42을 반환합니다.</p>
+
+<p>더 많은 예제는 <a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Proxy" rel="nofollow" target="_blank">Proxy</a> 참조하십시오.</p>
+
+<h3 id="part-65439a3e2ca">용어</h3>
+
+<p><strong>handler</strong>:</p>
+
+<p><code>trap</code>을 넣기 위한 자리 표시 용 객체.</p>
+
+<p><strong>trap</strong>:</p>
+
+<p>속성에 대한 액세스를 제공하는 메소드. 운영 체제에서 트랩의 개념과 유사한 것입니다.</p>
+
+<p><strong>target</strong>:</p>
+
+<p>proxy를 가상화하는 객체.
+이것은 proxy 스토리지 백엔드로 자주 사용됩니다.
+확장·설정 가능하지 않은 특성을 가진 개체에 대한 불변 조건(변경되지 않는 의미, 즉 개체의 의미 정보) 이 대상에 대해 확인됩니다.</p>
+
+<p><strong>invariant(불변 조건)</strong>:</p>
+
+<p>사용자 지정 동작을 구현할 때 변경되지 않는 의미를 불변 조건이라고 합니다.
+핸들러의 불변 조건을 위반하는 경우 TypeError가 발생합니다.</p>
+
+<hr>
+
+<h2 id="handlers-traps">Handlers &amp; Traps</h2>
+
+<p>다음 표는 <code>Proxy</code>개체에 사용할 수있는 트랩을 요약 한 것입니다.</p>
+
+<p>자세한 내용과 예제는 참조 핸들러에 대한 페이지 를 참조하십시오.</p>
+
+<p><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/%EB%A9%94%ED%83%80_%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D#Handlers_and_traps" rel="nofollow" target="_blank">https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/%EB%A9%94%ED%83%80_%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D#Handlers_and_traps</a></p>
+
+<hr>
+
+<h2 id="revocable-proxy">Revocable Proxy(취소 가능한 프록시)</h2>
+
+<p><code>proxy.revocable()</code> 메서드는 취소 가능한 <code>Proxy</code> 객체를 만드는 데 사용됩니다.
+즉, proxy는 <code>revoke</code> 함수를 통해 취소될 수 있으며 proxy를 해제합니다.
+그런 다음 프록시에 대한 조작으로 <code>typeerror</code>가 발생합니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">revocable</span> <span class="o">=</span> <span class="nb">Proxy</span><span class="p">.</span><span class="nx">revocable</span><span class="p">({},</span> <span class="p">{</span>
+  <span class="na">get</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="dl">'</span><span class="s1">[[</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">name</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">]]</span><span class="dl">'</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+<span class="kd">var</span> <span class="nx">proxy</span> <span class="o">=</span> <span class="nx">revocable</span><span class="p">.</span><span class="nx">proxy</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">proxy</span><span class="p">.</span><span class="nx">foo</span><span class="p">);</span> <span class="c1">// "[[foo]]"</span>
+
+<span class="nx">revocable</span><span class="p">.</span><span class="nx">revoke</span><span class="p">();</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">proxy</span><span class="p">.</span><span class="nx">foo</span><span class="p">);</span>  <span class="c1">// TypeError is thrown</span>
+<span class="nx">proxy</span><span class="p">.</span><span class="nx">foo</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>           <span class="c1">// TypeError again</span>
+<span class="k">delete</span> <span class="nx">proxy</span><span class="p">.</span><span class="nx">foo</span><span class="p">;</span>        <span class="c1">// still TypeError</span>
+<span class="k">typeof</span> <span class="nx">proxy</span><span class="p">;</span>            <span class="c1">// "object", typeof doesn't trigger any trap</span>
+</code></pre></div>
+<hr>
+
+<h2 id="reflection">Reflection</h2>
+
+<p><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Reflect" rel="nofollow" target="_blank">Reflect</a>는 차단 가능한 JavaScript 작업을 위한 메서드를 제공하는 기본 제공 개체입니다.
+메소드는 proxy 핸들러의 메소드와 동일합니다.
+Reflect는 함수 객체가 아닙니다.</p>
+
+<p><code>Reflect</code>는 기본 작업을 처리기에서 대상으로 전달하는 데 도움이 됩니다.</p>
+
+<p>예를 들어 <code>Reflect.has()</code>를 사용하면 <code>in 연산자</code>를 함수로 사용할 수 있습니다:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">Reflect.has(Object, 'assign'); // true
+</code></pre></div>
+<h3 id="a-better-apply-function">A better <code>apply</code> function</h3>
+
+<p>ES5에서는 일반적으로 <code>Function.prototype.apply()</code> 메서드를 사용하여 지정된 값과 인수(배열 또는 유사한 객체)로 제공된 함수를 호출합니다.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">Function.prototype.apply.call(Math.floor, undefined, [1.75]);
+</code></pre></div>
+<p><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Reflect/apply" rel="nofollow" target="_blank">Reflect.apply</a>를 사용하면 이해가 덜 쉽고 이해하기 쉬워집니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nb">Reflect</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">,</span> <span class="kc">undefined</span><span class="p">,</span> <span class="p">[</span><span class="mf">1.75</span><span class="p">]);</span>
+<span class="c1">// 1;</span>
+
+<span class="nb">Reflect</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nb">String</span><span class="p">.</span><span class="nx">fromCharCode</span><span class="p">,</span> <span class="kc">undefined</span><span class="p">,</span> <span class="p">[</span><span class="mi">104</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="mi">111</span><span class="p">]);</span>
+<span class="c1">// "hello"</span>
+
+<span class="nb">Reflect</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nb">RegExp</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">exec</span><span class="p">,</span> <span class="sr">/ab/</span><span class="p">,</span> <span class="p">[</span><span class="dl">'</span><span class="s1">confabulation</span><span class="dl">'</span><span class="p">]).</span><span class="nx">index</span><span class="p">;</span>
+<span class="c1">// 4</span>
+
+<span class="nb">Reflect</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="dl">''</span><span class="p">.</span><span class="nx">charAt</span><span class="p">,</span> <span class="dl">'</span><span class="s1">ponies</span><span class="dl">'</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">]);</span>
+<span class="c1">// "i"</span>
+</code></pre></div>
+<h3 id="checking-if-property-definition-has-been-successful">Checking if property definition has been successful(속성 정의가 성공적인지 확인하기)</h3>
+
+<p>성공하면 Object를 반환하는 <code>Object.defineProperty</code>를 사용하고 그렇지 않으면 <code>TypeError</code>를 <code>throw</code>합니다.
+<code>try...catch</code> 블록을 사용하여 속성을 정의하는 동안 발생한 오류를 <code>catch</code>합니다.
+<code>Reflect.defineProperty</code>는 Boolean success 상태를 반환하기 때문에 여기서 <code>if...else</code> 블록을 사용할 수 있습니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="k">if</span> <span class="p">(</span><span class="nb">Reflect</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">property</span><span class="p">,</span> <span class="nx">attributes</span><span class="p">))</span> <span class="p">{</span>
+  <span class="c1">// success</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+  <span class="c1">// failure</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr>
+
+<h2 id="reference">Reference</h2>
+
+<p><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/%EB%A9%94%ED%83%80_%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D" rel="nofollow" target="_blank">meta programming</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

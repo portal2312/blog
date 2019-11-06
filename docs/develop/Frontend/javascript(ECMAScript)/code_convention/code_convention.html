@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Code Convention | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Code Convention" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Requirements" />
+<meta property="og:description" content="Requirements" />
+<link rel="canonical" href="http://localhost:4000/blog/docs/develop/Frontend/javascript(ECMAScript)/code_convention/code_convention.html" />
+<meta property="og:url" content="http://localhost:4000/blog/docs/develop/Frontend/javascript(ECMAScript)/code_convention/code_convention.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-06T09:31:12+09:00" />
+<script type="application/ld+json">
+{"description":"Requirements","headline":"Code Convention","dateModified":"2019-11-06T09:31:12+09:00","datePublished":"2019-11-06T09:31:12+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/docs/develop/Frontend/javascript(ECMAScript)/code_convention/code_convention.html"},"url":"http://localhost:4000/blog/docs/develop/Frontend/javascript(ECMAScript)/code_convention/code_convention.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Code Convention</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#requirements">Requirements</a></li>
+<li class="toc-entry toc-h2"><a href="#installation">Installation</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#eslint">ESLint</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#prettier-plugin-config">Prettier plugin &amp; config</a></li>
+<li class="toc-entry toc-h4"><a href="#init">init</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#prettier">Prettier</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#init">init</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#sencha-eslint-plugin-extjs">Sencha ESLint plugin ExtJS</a></li>
+<li class="toc-entry toc-h3"><a href="#init">Init</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#eslint">ESLint</a></li>
+<li class="toc-entry toc-h4"><a href="#prettier">Prettier</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#pycharm">PyCharm</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#eslint">ESLint</a></li>
+<li class="toc-entry toc-h3"><a href="#prettier">Prettier</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#exception">Exception</a></li>
+<li class="toc-entry toc-h2"><a href="#reference">Reference</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#eslint">ESLint</a></li>
+<li class="toc-entry toc-h3"><a href="#npm">npm</a></li>
+</ul>
+</li>
+</ul><h2 id="requirements">
+<a class="anchor" href="#requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requirements</h2>
+
+<p><code>npm</code> install:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">sudo </span>apt-get <span class="nb">install </span>npm
+<span class="nb">sudo </span>npm <span class="nt">--version</span>
+<span class="nb">sudo </span>npm <span class="nb">install</span> <span class="nt">-g</span> npx
+</code></pre></div>
+<hr>
+
+<h2 id="installation">
+<a class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<h3 id="eslint">
+<a class="anchor" href="#eslint" aria-hidden="true"><span class="octicon octicon-link"></span></a>ESLint</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">sudo </span>npm <span class="nb">install</span> <span class="nt">-g</span> eslint
+<span class="c"># ...</span>
+</code></pre></div>
+<p>version 확인하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">sudo </span>npm <span class="nb">ls</span> <span class="nt">-g</span> | <span class="nb">grep </span>eslint
+
+├─┬ eslint@5.3.0
+│ ├─┬ eslint-scope@4.0.3
+│ ├── eslint-utils@1.3.1
+│ ├── eslint-visitor-keys@1.0.0
+├─┬ eslint-config-airbnb@17.1.0
+│ ├─┬ eslint-config-airbnb-base@13.1.0
+│ │ └── eslint-restricted-globals@0.1.1
+├─┬ eslint-config-prettier@4.2.0
+├─┬ eslint-plugin-import@2.17.2
+│ ├── eslint-import-resolver-node@0.3.2
+│ ├─┬ eslint-module-utils@2.4.0
+├─┬ eslint-plugin-jsx-a11y@6.2.1
+├─┬ eslint-plugin-react@7.12.4
+</code></pre></div>
+<p><code>npx</code> 명령어를 이용하여 <code>eslint-config-airbnb</code> install:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">sudo </span>npx install-peerdeps <span class="nt">-g</span> eslint-config-airbnb
+
+<span class="c"># ...</span>
+SUCCESS eslint-config-airbnb    
+  and its peerDeps were installed successfully.
+</code></pre></div>
+<h4 id="prettier-plugin-config">
+<a class="anchor" href="#prettier-plugin-config" aria-hidden="true"><span class="octicon octicon-link"></span></a>Prettier plugin &amp; config</h4>
+
+<p><code>eslint-plugin-prettier</code> install:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">sudo </span>npm <span class="nb">install</span> <span class="nt">-g</span> eslint-plugin-prettier
+
+/usr/local/lib
+├── UNMET PEER DEPENDENCY eslint@&gt;<span class="o">=</span> 5.0.0
+├─┬ eslint-plugin-prettier@3.0.1 
+│ └─┬ prettier-linter-helpers@1.0.0 
+│   └── fast-diff@1.2.0 
+└── UNMET PEER DEPENDENCY prettier@&gt;<span class="o">=</span> 1.13.0
+
+npm WARN eslint-plugin-prettier@3.0.1 requires a peer of eslint@&gt;<span class="o">=</span> 5.0.0 but none was installed.
+npm WARN eslint-plugin-prettier@3.0.1 requires a peer of prettier@&gt;<span class="o">=</span> 1.13.0 but none was installed.
+</code></pre></div>
+<p><code>eslint-config-prettier</code> install:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">sudo </span>npm <span class="nb">install</span> <span class="nt">-g</span> eslint-config-prettier
+
+/usr/local/bin/eslint-config-prettier-check -&gt; /usr/local/lib/node_modules/eslint-config-prettier/bin/cli.js
+/usr/local/lib
+├── UNMET PEER DEPENDENCY eslint@&gt;<span class="o">=</span>3.14.1
+└── eslint-config-prettier@4.2.0 
+
+npm WARN eslint-config-prettier@4.2.0 requires a peer of eslint@&gt;<span class="o">=</span>3.14.1 but none was installed.
+</code></pre></div>
+<h4 id="init">
+<a class="anchor" href="#init" aria-hidden="true"><span class="octicon octicon-link"></span></a>init</h4>
+
+<p>내용 생략.</p>
+
+<hr>
+
+<h3 id="prettier">
+<a class="anchor" href="#prettier" aria-hidden="true"><span class="octicon octicon-link"></span></a>Prettier</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">sudo </span>npm <span class="nb">install</span> <span class="nt">-g</span> prettier
+
+/usr/local/bin/prettier -&gt; /usr/local/lib/node_modules/prettier/bin-prettier.js
+/usr/local/lib
+└── prettier@1.17.0
+</code></pre></div>
+<p><code>/usr/local/lib/node_modules/prettier/bin-prettier.js</code> 는 추후 <code>PyCharm</code>/<code>settings</code>/<code>tools</code>/<code>File Watchers</code>/<code>Prettier</code> 에 Program 값에서 사용된다.</p>
+
+<h4 id="init">
+<a class="anchor" href="#init" aria-hidden="true"><span class="octicon octicon-link"></span></a>init</h4>
+
+<p>내용 생략.</p>
+
+<hr>
+
+<h3 id="sencha-eslint-plugin-extjs">
+<a class="anchor" href="#sencha-eslint-plugin-extjs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sencha ESLint plugin ExtJS</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">sudo </span>npm <span class="nb">install</span> <span class="nt">-g</span> ./@sencha_eslint-plugin-extjs.0.0.3.tgz
+
+/usr/local/lib
+└─┬ @sencha/eslint-plugin-extjs@0.0.3 
+  └── requireindex@1.1.0
+</code></pre></div>
+<hr>
+
+<h3 id="init">
+<a class="anchor" href="#init" aria-hidden="true"><span class="octicon octicon-link"></span></a>Init</h3>
+
+<h4 id="eslint">
+<a class="anchor" href="#eslint" aria-hidden="true"><span class="octicon octicon-link"></span></a>ESLint</h4>
+
+<p><code>npm install --global</code> 로 설치했기 때문에 별도 <code>eslint init</code> 하지 않는다.</p>
+
+<p>앞으로 관리할 프로젝트 경로로 이동후 <code>.eslintrc</code> 작성하기:</p>
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"env"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"browser"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"extends"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"airbnb"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"plugin:@sencha/extjs/recommended"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"plugin:prettier/recommended"</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"globals"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"zenlog"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"echarts"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"$"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"_"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"__"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"moment"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"ReconnectingWebSocket"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"domtoimage"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"plugins"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"@sencha/extjs"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"prettier"</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"rules"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"object-shorthand"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"error"</span><span class="p">,</span><span class="w"> </span><span class="s2">"properties"</span><span class="p">],</span><span class="w">
+    </span><span class="nl">"func-names"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"error"</span><span class="p">,</span><span class="w"> </span><span class="s2">"as-needed"</span><span class="p">],</span><span class="w">
+    </span><span class="nl">"no-param-reassign"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"error"</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"props"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">}],</span><span class="w">
+    </span><span class="nl">"@sencha/extjs/no-private-method-override"</span><span class="p">:</span><span class="w"> </span><span class="s2">"off"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<h4 id="prettier">
+<a class="anchor" href="#prettier" aria-hidden="true"><span class="octicon octicon-link"></span></a>Prettier</h4>
+
+<p>앞으로 관리할 프로젝트 경로로 이동후 <code>.prettierrc</code> 작성하기:</p>
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"printWidth"</span><span class="p">:</span><span class="w"> </span><span class="mi">80</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"singleQuote"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<hr>
+
+<h2 id="pycharm">
+<a class="anchor" href="#pycharm" aria-hidden="true"><span class="octicon octicon-link"></span></a>PyCharm</h2>
+
+<p><code>settings</code>/<code>plugins</code> <code>prettier</code> install.</p>
+
+<h3 id="eslint">
+<a class="anchor" href="#eslint" aria-hidden="true"><span class="octicon octicon-link"></span></a>ESLint</h3>
+
+<p><code>settgins</code>/<code>Languages &amp; Frameworks</code>/<code>Javascript</code>/<code>Code Quality Tools</code>/<code>ESlint</code></p>
+
+<ul>
+<li>[x] Enable</li>
+<li>Node interpreter: /usr/bin/node</li>
+<li>ESLint package: /usr/local/lib/node_modules/eslint</li>
+<li>Configuration file
+
+<ul>
+<li>[x] Automatic search</li>
+</ul>
+</li>
+</ul>
+
+<hr>
+
+<h3 id="prettier">
+<a class="anchor" href="#prettier" aria-hidden="true"><span class="octicon octicon-link"></span></a>Prettier</h3>
+
+<p><code>settgins</code>/<code>Languages &amp; Frameworks</code>/<code>Javascript</code>/<code>Prettier</code>
+- Node interpreter: /usr/local/node
+- Prettier package: /usr/local/lib/node_modules/prettier </p>
+
+<p><code>settings</code>/<code>tools</code>/<code>File Watchers</code>/<code>Prettier</code>
+- <code>+</code> click.
+- Program: /usr/local/lib/node_modules/prettier/bin-prettier.js<br>
+  (해당 경로는 npm install -g prettier 시 )</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">cd</span> <span class="k">${</span><span class="nv">project</span><span class="p"> path</span><span class="k">}</span>
+eslint <span class="nt">--init</span>
+
+? How would you like to configure ESLint? <span class="o">(</span>Use arrow keys<span class="o">)</span>
+  Use a popular style guide 
+❯ Answer questions about your style 
+  Inspect your JavaScript file<span class="o">(</span>s<span class="o">)</span> 
+
+</code></pre></div>
+<hr>
+
+<h2 id="exception">
+<a class="anchor" href="#exception" aria-hidden="true"><span class="octicon octicon-link"></span></a>Exception</h2>
+
+<hr>
+
+<h2 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+<p><a href="https://velog.io/@velopert/eslint-and-prettier-in-react">https://velog.io/@velopert/eslint-and-prettier-in-react</a></p>
+
+<h3 id="eslint">
+<a class="anchor" href="#eslint" aria-hidden="true"><span class="octicon octicon-link"></span></a>ESLint</h3>
+
+<p><a href="https://www.jetbrains.com/help/pycharm/eslint.html">https://www.jetbrains.com/help/pycharm/eslint.html</a></p>
+
+<h3 id="npm">
+<a class="anchor" href="#npm" aria-hidden="true"><span class="octicon octicon-link"></span></a>npm</h3>
+
+<ul>
+<li><a href="https://dololak.tistory.com/98">기본 내용</a></li>
+<li><a href="https://ithub.tistory.com/165">npm install [plugin] --save or --save-dev</a></li>
+<li>npx
+
+<ul>
+<li><a href="https://www.npmjs.com/package/npx">official</a></li>
+<li><a href="https://geonlee.tistory.com/32">blog</a></li>
+</ul>
+</li>
+<li>npm <a href="https://www.npmjs.com/package/install-peerdeps">install-peerdeps</a>
+</li>
+<li><a href="https://www.npmtrends.com/">npm package trends</a></li>
+<li><a href="https://docs.sencha.com/extjs/6.7.0/guides/upgrade_adviser/getting_started.html#upgrade_adviser-_-getting_started_-_step_2__install_the_ext_js_eslint_plugin">sencha/estjs/current/guides/upgrade_adviser/getting_started</a></li>
+</ul>
+
+  </div>
+
+<div>
+  <h2 id="requirements">Requirements</h2>
+
+<p><code>npm</code> install:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">sudo </span>apt-get <span class="nb">install </span>npm
+<span class="nb">sudo </span>npm <span class="nt">--version</span>
+<span class="nb">sudo </span>npm <span class="nb">install</span> <span class="nt">-g</span> npx
+</code></pre></div>
+<hr>
+
+<h2 id="installation">Installation</h2>
+
+<h3 id="eslint">ESLint</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">sudo </span>npm <span class="nb">install</span> <span class="nt">-g</span> eslint
+<span class="c"># ...</span>
+</code></pre></div>
+<p>version 확인하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">sudo </span>npm <span class="nb">ls</span> <span class="nt">-g</span> | <span class="nb">grep </span>eslint
+
+├─┬ eslint@5.3.0
+│ ├─┬ eslint-scope@4.0.3
+│ ├── eslint-utils@1.3.1
+│ ├── eslint-visitor-keys@1.0.0
+├─┬ eslint-config-airbnb@17.1.0
+│ ├─┬ eslint-config-airbnb-base@13.1.0
+│ │ └── eslint-restricted-globals@0.1.1
+├─┬ eslint-config-prettier@4.2.0
+├─┬ eslint-plugin-import@2.17.2
+│ ├── eslint-import-resolver-node@0.3.2
+│ ├─┬ eslint-module-utils@2.4.0
+├─┬ eslint-plugin-jsx-a11y@6.2.1
+├─┬ eslint-plugin-react@7.12.4
+</code></pre></div>
+<p><code>npx</code> 명령어를 이용하여 <code>eslint-config-airbnb</code> install:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">sudo </span>npx install-peerdeps <span class="nt">-g</span> eslint-config-airbnb
+
+<span class="c"># ...</span>
+SUCCESS eslint-config-airbnb    
+  and its peerDeps were installed successfully.
+</code></pre></div>
+<h4 id="prettier-plugin-config">Prettier plugin &amp; config</h4>
+
+<p><code>eslint-plugin-prettier</code> install:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">sudo </span>npm <span class="nb">install</span> <span class="nt">-g</span> eslint-plugin-prettier
+
+/usr/local/lib
+├── UNMET PEER DEPENDENCY eslint@&gt;<span class="o">=</span> 5.0.0
+├─┬ eslint-plugin-prettier@3.0.1 
+│ └─┬ prettier-linter-helpers@1.0.0 
+│   └── fast-diff@1.2.0 
+└── UNMET PEER DEPENDENCY prettier@&gt;<span class="o">=</span> 1.13.0
+
+npm WARN eslint-plugin-prettier@3.0.1 requires a peer of eslint@&gt;<span class="o">=</span> 5.0.0 but none was installed.
+npm WARN eslint-plugin-prettier@3.0.1 requires a peer of prettier@&gt;<span class="o">=</span> 1.13.0 but none was installed.
+</code></pre></div>
+<p><code>eslint-config-prettier</code> install:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">sudo </span>npm <span class="nb">install</span> <span class="nt">-g</span> eslint-config-prettier
+
+/usr/local/bin/eslint-config-prettier-check -&gt; /usr/local/lib/node_modules/eslint-config-prettier/bin/cli.js
+/usr/local/lib
+├── UNMET PEER DEPENDENCY eslint@&gt;<span class="o">=</span>3.14.1
+└── eslint-config-prettier@4.2.0 
+
+npm WARN eslint-config-prettier@4.2.0 requires a peer of eslint@&gt;<span class="o">=</span>3.14.1 but none was installed.
+</code></pre></div>
+<h4 id="init">init</h4>
+
+<p>내용 생략.</p>
+
+<hr>
+
+<h3 id="prettier">Prettier</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">sudo </span>npm <span class="nb">install</span> <span class="nt">-g</span> prettier
+
+/usr/local/bin/prettier -&gt; /usr/local/lib/node_modules/prettier/bin-prettier.js
+/usr/local/lib
+└── prettier@1.17.0
+</code></pre></div>
+<p><code>/usr/local/lib/node_modules/prettier/bin-prettier.js</code> 는 추후 <code>PyCharm</code>/<code>settings</code>/<code>tools</code>/<code>File Watchers</code>/<code>Prettier</code> 에 Program 값에서 사용된다.</p>
+
+<h4 id="init">init</h4>
+
+<p>내용 생략.</p>
+
+<hr>
+
+<h3 id="sencha-eslint-plugin-extjs">Sencha ESLint plugin ExtJS</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">sudo </span>npm <span class="nb">install</span> <span class="nt">-g</span> ./@sencha_eslint-plugin-extjs.0.0.3.tgz
+
+/usr/local/lib
+└─┬ @sencha/eslint-plugin-extjs@0.0.3 
+  └── requireindex@1.1.0
+</code></pre></div>
+<hr>
+
+<h3 id="init">Init</h3>
+
+<h4 id="eslint">ESLint</h4>
+
+<p><code>npm install --global</code> 로 설치했기 때문에 별도 <code>eslint init</code> 하지 않는다.</p>
+
+<p>앞으로 관리할 프로젝트 경로로 이동후 <code>.eslintrc</code> 작성하기:</p>
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"env"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"browser"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"extends"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"airbnb"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"plugin:@sencha/extjs/recommended"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"plugin:prettier/recommended"</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"globals"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"zenlog"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"echarts"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"$"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"_"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"__"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"moment"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"ReconnectingWebSocket"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"domtoimage"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"plugins"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"@sencha/extjs"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"prettier"</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"rules"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"object-shorthand"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"error"</span><span class="p">,</span><span class="w"> </span><span class="s2">"properties"</span><span class="p">],</span><span class="w">
+    </span><span class="nl">"func-names"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"error"</span><span class="p">,</span><span class="w"> </span><span class="s2">"as-needed"</span><span class="p">],</span><span class="w">
+    </span><span class="nl">"no-param-reassign"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"error"</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"props"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">}],</span><span class="w">
+    </span><span class="nl">"@sencha/extjs/no-private-method-override"</span><span class="p">:</span><span class="w"> </span><span class="s2">"off"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<h4 id="prettier">Prettier</h4>
+
+<p>앞으로 관리할 프로젝트 경로로 이동후 <code>.prettierrc</code> 작성하기:</p>
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"printWidth"</span><span class="p">:</span><span class="w"> </span><span class="mi">80</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"singleQuote"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<hr>
+
+<h2 id="pycharm">PyCharm</h2>
+
+<p><code>settings</code>/<code>plugins</code> <code>prettier</code> install.</p>
+
+<h3 id="eslint">ESLint</h3>
+
+<p><code>settgins</code>/<code>Languages &amp; Frameworks</code>/<code>Javascript</code>/<code>Code Quality Tools</code>/<code>ESlint</code></p>
+
+<ul>
+<li>[x] Enable</li>
+<li>Node interpreter: /usr/bin/node</li>
+<li>ESLint package: /usr/local/lib/node_modules/eslint</li>
+<li>Configuration file
+
+<ul>
+<li>[x] Automatic search</li>
+</ul>
+</li>
+</ul>
+
+<hr>
+
+<h3 id="prettier">Prettier</h3>
+
+<p><code>settgins</code>/<code>Languages &amp; Frameworks</code>/<code>Javascript</code>/<code>Prettier</code>
+- Node interpreter: /usr/local/node
+- Prettier package: /usr/local/lib/node_modules/prettier </p>
+
+<p><code>settings</code>/<code>tools</code>/<code>File Watchers</code>/<code>Prettier</code>
+- <code>+</code> click.
+- Program: /usr/local/lib/node_modules/prettier/bin-prettier.js<br>
+  (해당 경로는 npm install -g prettier 시 )</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">cd</span> <span class="k">${</span><span class="nv">project</span><span class="p"> path</span><span class="k">}</span>
+eslint <span class="nt">--init</span>
+
+? How would you like to configure ESLint? <span class="o">(</span>Use arrow keys<span class="o">)</span>
+  Use a popular style guide 
+❯ Answer questions about your style 
+  Inspect your JavaScript file<span class="o">(</span>s<span class="o">)</span> 
+
+</code></pre></div>
+<hr>
+
+<h2 id="exception">Exception</h2>
+
+<hr>
+
+<h2 id="reference">Reference</h2>
+
+<p><a href="https://velog.io/@velopert/eslint-and-prettier-in-react" rel="nofollow" target="_blank">https://velog.io/@velopert/eslint-and-prettier-in-react</a></p>
+
+<h3 id="eslint">ESLint</h3>
+
+<p><a href="https://www.jetbrains.com/help/pycharm/eslint.html" rel="nofollow" target="_blank">https://www.jetbrains.com/help/pycharm/eslint.html</a></p>
+
+<h3 id="npm">npm</h3>
+
+<ul>
+<li><a href="https://dololak.tistory.com/98" rel="nofollow" target="_blank">기본 내용</a></li>
+<li><a href="https://ithub.tistory.com/165" rel="nofollow" target="_blank">npm install [plugin] --save or --save-dev</a></li>
+<li>npx
+
+<ul>
+<li><a href="https://www.npmjs.com/package/npx" rel="nofollow" target="_blank">official</a></li>
+<li><a href="https://geonlee.tistory.com/32" rel="nofollow" target="_blank">blog</a></li>
+</ul>
+</li>
+<li>npm <a href="https://www.npmjs.com/package/install-peerdeps" rel="nofollow" target="_blank">install-peerdeps</a>
+</li>
+<li><a href="https://www.npmtrends.com/" rel="nofollow" target="_blank">npm package trends</a></li>
+<li><a href="https://docs.sencha.com/extjs/6.7.0/guides/upgrade_adviser/getting_started.html#upgrade_adviser-_-getting_started_-_step_2__install_the_ext_js_eslint_plugin" rel="nofollow" target="_blank">sencha/estjs/current/guides/upgrade_adviser/getting_started</a></li>
+</ul>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

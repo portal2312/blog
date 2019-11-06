@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>webpack - Concepts | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="webpack - Concepts" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="핵심적으로 webpack 은 최신 JavaScript 응용 프로그램을위한 정적 모듈 번들러 입니다. 웹팩은 애플리케이션을 처리 할 때 프로젝트에 필요한 모든 모듈을 매핑하고 하나 이상의 번들을 생성 하는 종속성 그래프 를 내부적으로 빌드합니다." />
+<meta property="og:description" content="핵심적으로 webpack 은 최신 JavaScript 응용 프로그램을위한 정적 모듈 번들러 입니다. 웹팩은 애플리케이션을 처리 할 때 프로젝트에 필요한 모든 모듈을 매핑하고 하나 이상의 번들을 생성 하는 종속성 그래프 를 내부적으로 빌드합니다." />
+<link rel="canonical" href="http://localhost:4000/blog/docs/develop/Frontend/webpack/concepts/concepts.html" />
+<meta property="og:url" content="http://localhost:4000/blog/docs/develop/Frontend/webpack/concepts/concepts.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-06T09:31:12+09:00" />
+<script type="application/ld+json">
+{"description":"핵심적으로 webpack 은 최신 JavaScript 응용 프로그램을위한 정적 모듈 번들러 입니다. 웹팩은 애플리케이션을 처리 할 때 프로젝트에 필요한 모든 모듈을 매핑하고 하나 이상의 번들을 생성 하는 종속성 그래프 를 내부적으로 빌드합니다.","headline":"webpack - Concepts","dateModified":"2019-11-06T09:31:12+09:00","datePublished":"2019-11-06T09:31:12+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/docs/develop/Frontend/webpack/concepts/concepts.html"},"url":"http://localhost:4000/blog/docs/develop/Frontend/webpack/concepts/concepts.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>webpack - Concepts</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#entry">Entry</a></li>
+<li class="toc-entry toc-h2"><a href="#output">Output</a></li>
+<li class="toc-entry toc-h2"><a href="#loader">Loader</a></li>
+<li class="toc-entry toc-h2"><a href="#plugins">Plugins</a></li>
+<li class="toc-entry toc-h2"><a href="#mode">Mode</a></li>
+<li class="toc-entry toc-h2"><a href="#browser-compatibility">Browser Compatibility</a></li>
+<li class="toc-entry toc-h2"><a href="#references">References</a></li>
+</ul><p>핵심적으로 webpack 은 최신 JavaScript 응용 프로그램을위한 정적 모듈 번들러 입니다.
+웹팩은 애플리케이션을 처리 할 때 프로젝트에 필요한 모든 모듈을 매핑하고 하나 이상의 번들을 생성 하는 종속성 그래프 를 내부적으로 빌드합니다.</p>
+
+<blockquote>
+<p>JavaScript 모듈 및 웹팩 모듈에 대한 자세한 내용은 여기를 참조하십시오.</p>
+</blockquote>
+
+<p>버전 4.0.0부터 웹팩에는 프로젝트를 번들하기 위해 구성 파일 이 필요하지 않습니다.
+그럼에도 불구하고, 그것은 당신의 요구에 더 잘 맞도록 <a href="https://webpack.js.org/configuration">믿을 수 없을 정도로 구성 가능</a> 합니다.</p>
+
+<p>시작하려면 핵심 개념 만 이해하면 됩니다:</p>
+
+<ul>
+<li>Entry (기입)</li>
+<li>Output (산출)</li>
+<li>Loaders (불러오기)</li>
+<li>Plugins (플러그인)</li>
+<li>Mode (방법)</li>
+<li>Browser Compatibility (브라우저 호환성)</li>
+</ul>
+
+<p>이 문서는 이러한 개념에 대한 고급 개요를 제공하기 위해 작성되었습니다.<br>
+자세한 개념별 사용 사례에 대한 링크를 제공합니다.</p>
+
+<p>모듈 번들러의 기본 개념과 이들이 어떻게 작동하는지 이해하려면 다음 리소스를 참조하십시오:</p>
+
+<ul>
+<li>수동으로 응용 프로그램 번들링</li>
+<li>간단한 모듈 번들러 라이브 코딩</li>
+<li>간단한 모듈 번들러에 대한 자세한 설명</li>
+</ul>
+
+<h2 id="entry">
+<a class="anchor" href="#entry" aria-hidden="true"><span class="octicon octicon-link"></span></a>Entry</h2>
+
+<p><strong>entry</strong> 은 내부 종속성 그래프 작성을 시작하기 위해 사용해야하는 모듈 웹팩을 나타냅니다.
+webpack은 진입 점이 의존하는 다른 모듈과 라이브러리를 (직접적으로) 파악합니다.</p>
+
+<p>기본적으로 값은 <code>./src/index.js</code> 이지만 entry webpack 구성에서 특성을 설정하여 다른 (또는 여러 진입 점)을 지정할 수 있습니다. 예를 들면 다음과 같습니다:</p>
+
+<p><strong>webpack.config.js</strong></p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">entry</span><span class="p">:</span> <span class="dl">'</span><span class="s1">./path/to/my/entry/file.js</span><span class="dl">'</span>
+<span class="p">};</span>
+</code></pre></div>
+<blockquote>
+<p>entry points 섹션에서 자세히 알아보십시오 .</p>
+</blockquote>
+
+<h2 id="output">
+<a class="anchor" href="#output" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h2>
+
+<p><strong>output</strong> 속성은 웹팩에 번들을 생성 할 위치와 파일 이름을 지정하는 방법을 알려줍니다. 기본 출력 파일의 경우 기본값은 ./dist/main.js이고 다른 생성 된 파일의 경우 ./dist 폴더입니다.</p>
+
+<p>구성에서 <code>output</code> 필드를 지정하여 프로세스의 이 부분을 구성 할 수 있습니다:</p>
+
+<p><strong>webpack.config.js</strong></p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">path</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">entry</span><span class="p">:</span> <span class="dl">'</span><span class="s1">./path/to/my/entry/file.js</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">output</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">path</span><span class="p">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="dl">'</span><span class="s1">dist</span><span class="dl">'</span><span class="p">),</span>
+    <span class="na">filename</span><span class="p">:</span> <span class="dl">'</span><span class="s1">my-first-webpack.bundle.js</span><span class="dl">'</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>위의 예제에서 <code>output.filename</code> 와 <code>output.path</code> 속성을 사용하여 웹팩에 번들 이름과 배포 위치를 알려줍니다.
+맨 위에 경로 모듈을 가져 오는 것에 대해 궁금한 경우 파일 경로를 조작하는 데 사용되는 핵심 Node.js 모듈입니다.</p>
+
+<blockquote>
+<p>이 <code>output</code> 속성에는 더 많은 구성 가능한 기능이 있습니다.
+그 뒤에있는 개념에 대해 배우려면 출력 섹션에서 더 많은 내용을 읽을 수 있습니다 .</p>
+</blockquote>
+
+<h2 id="loader">
+<a class="anchor" href="#loader" aria-hidden="true"><span class="octicon octicon-link"></span></a>Loader</h2>
+
+<p>기본적으로 webpack 은 JavaScript 및 JSON 파일만 이해합니다.
+Loader 는 webpack 이 다른 유형의 파일을 처리하고 이를 응용 프로그램이 소비하고 종속성 그래프에 추가 할 수있는 유효한 모듈로 변환 할 수 있도록 합니다.</p>
+
+<blockquote>
+<p>모든 유형의 모듈을 가져 오는 기능 (예: .css 파일은 웹팩 전용 기능이며 다른 번들러 또는 작업 실행기에서 지원하지 않을 수 있습니다.
+개발자는 보다 정확한 의존성 그래프를 작성할 수 있으므로 언어의 확장이 보장된다고 생각합니다.</p>
+</blockquote>
+
+<p>상위 레벨에서 로더 는 웹팩 구성에 두 가지 특성이 있습니다:</p>
+
+<ol>
+<li>이 <code>test</code> 특성은 변환 할 파일을 식별합니다.</li>
+<li>이 <code>use</code> 특성은 변환을 수행하는 데 사용해야하는 로더를 나타냅니다.</li>
+</ol>
+
+<p><strong>webpack.config.js</strong></p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">path</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">output</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">filename</span><span class="p">:</span> <span class="dl">'</span><span class="s1">my-first-webpack.bundle.js</span><span class="dl">'</span>
+  <span class="p">},</span>
+  <span class="na">module</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">rules</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span> <span class="na">test</span><span class="p">:</span> <span class="sr">/</span><span class="se">\.</span><span class="sr">txt$/</span><span class="p">,</span> <span class="na">use</span><span class="p">:</span> <span class="dl">'</span><span class="s1">raw-loader</span><span class="dl">'</span> <span class="p">}</span>
+    <span class="p">]</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>구성은 위에서 정의한 <code>rules</code> 두 필수 특성 단일 모듈 속성: <code>test</code> 및 <code>use</code>.
+이것은 webpack의 컴파일러에게 다음을 알려줍니다:</p>
+
+<blockquote>
+<p>"Hywebpack 컴파일러는 require()/ import문 안에서 '.txt'파일로 해석되는 경로를 발견 할 때 번들에 추가하기 전에를 사용 하여 raw-loader변환하십시오."</p>
+
+<p>웹팩 구성에서 규칙을 정의 할 때는 규칙을 정의 module.rules하고 그렇지 않은 규칙을 정의해야합니다 rules. 귀하의 이익을 위해, 웹팩은 이것이 잘못 수행되면 경고합니다.</p>
+
+<p>정규식을 사용하여 파일을 일치시킬 때는 인용 할 수 없습니다. 즉 /.txt$/동일하지 않습니다 '/.txt$/'나 "/.txt$/". 전자는 webpack에게 .txt로 끝나는 모든 파일을 일치 시키도록 지시하고 후자는 webpack에게 절대 경로 '.txt'를 갖는 단일 파일을 일치 시키도록 지시합니다. 이것은 당신의 의도가 아닐 것입니다.</p>
+</blockquote>
+
+<p><a href="">loaders section</a>에 loader를 포함시킬 때 추가 사용자 정의를 확인할 수 있습니다.</p>
+
+<h2 id="plugins">
+<a class="anchor" href="#plugins" aria-hidden="true"><span class="octicon octicon-link"></span></a>Plugins</h2>
+
+<p>loaders 는 특정 유형의 모듈을 변환하는 데 사용되지만 plugins 은 번들 최적화, 자산 관리 및 환경 변수 주입과 같은 광범위한 작업을 수행하는 데 사용될 수 있습니다.</p>
+
+<blockquote>
+<p><a href="">plugin interface</a> 과 어떻게 이것을 사용하여 웹팩의 기능을 확장하는 방법 확인하십시오.</p>
+</blockquote>
+
+<p>plugins 을 사용하려면 <code>require()</code>에 <code>plugins</code>배열에 추가해야합니다.
+대부분의 플러그인은 옵션을 통해 사용자 정의할 수 있습니다.
+다른 목적으로 구성에서 플러그인을 여러 번 사용할 수 있으므로 new 연산자를 사용하여 플러그인을 호출하여 인스턴스를 작성해야 합니다.</p>
+
+<p><strong>webpack.config.js</strong></p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">const</span> <span class="nx">HtmlWebpackPlugin</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">html-webpack-plugin</span><span class="dl">'</span><span class="p">);</span> <span class="c1">//installed via npm</span>
+<span class="kd">const</span> <span class="nx">webpack</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">webpack</span><span class="dl">'</span><span class="p">);</span> <span class="c1">//to access built-in plugins</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">module</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">rules</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span> <span class="na">test</span><span class="p">:</span> <span class="sr">/</span><span class="se">\.</span><span class="sr">txt$/</span><span class="p">,</span> <span class="na">use</span><span class="p">:</span> <span class="dl">'</span><span class="s1">raw-loader</span><span class="dl">'</span> <span class="p">}</span>
+    <span class="p">]</span>
+  <span class="p">},</span>
+  <span class="na">plugins</span><span class="p">:</span> <span class="p">[</span>
+    <span class="k">new</span> <span class="nx">HtmlWebpackPlugin</span><span class="p">({</span><span class="na">template</span><span class="p">:</span> <span class="dl">'</span><span class="s1">./src/index.html</span><span class="dl">'</span><span class="p">})</span>
+  <span class="p">]</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>위의 예제에서 <code>html-webpack-plugin</code> 생성된 모든 번들을 자동으로 삽입하여 애플리케이션의 HTML 파일을 생성합니다.</p>
+
+<blockquote>
+<p>webpack이 기본적으로 제공하는 많은 플러그인이 있습니다! <a href="">플러그인 목록</a>을 확인하십시오.</p>
+</blockquote>
+
+<p>웹팩 설정에서 플러그인을 사용하는 것은 간단합니다.
+그러나 추가로 조사 할 가치가있는 많은 사용 사례가 있습니다.
+이에 대한 자세한 내용은 여기를 참조하십시오.</p>
+
+<h2 id="mode">
+<a class="anchor" href="#mode" aria-hidden="true"><span class="octicon octicon-link"></span></a>Mode</h2>
+
+<p>설정에 따라 mode 하나에 매개 변수를 development, production 또는 none각 환경에 대응 웹팩에 내장 된 최적화를 활성화 할 수 있습니다. 기본값은 production입니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">mode</span><span class="p">:</span> <span class="dl">'</span><span class="s1">production</span><span class="dl">'</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>여기 에서 모드 구성 및 각 값에서 수행되는 최적화 에 대해 자세히 알아보십시오.</p>
+
+<h2 id="browser-compatibility">
+<a class="anchor" href="#browser-compatibility" aria-hidden="true"><span class="octicon octicon-link"></span></a>Browser Compatibility</h2>
+
+<p>webpack 은 ES5와 호환 되는 모든 브라우저를 지원합니다 (IE8 이하는 지원되지 않음).
+webpack 은 필요 Promise에 대한 <code>import()</code> 및 <code>require.ensure()</code>.
+구형 브라우저를 지원하려면 이러한 표현식을 사용하기 전에 polyfill 을 로드 해야합니다 .</p>
+
+<h2 id="references">
+<a class="anchor" href="#references" aria-hidden="true"><span class="octicon octicon-link"></span></a>References</h2>
+
+<p><a href="https://webpack.js.org/concepts/">https://webpack.js.org/concepts/</a></p>
+
+  </div>
+
+<div>
+  <p>핵심적으로 webpack 은 최신 JavaScript 응용 프로그램을위한 정적 모듈 번들러 입니다.
+웹팩은 애플리케이션을 처리 할 때 프로젝트에 필요한 모든 모듈을 매핑하고 하나 이상의 번들을 생성 하는 종속성 그래프 를 내부적으로 빌드합니다.</p>
+
+<blockquote>
+<p>JavaScript 모듈 및 웹팩 모듈에 대한 자세한 내용은 여기를 참조하십시오.</p>
+</blockquote>
+
+<p>버전 4.0.0부터 웹팩에는 프로젝트를 번들하기 위해 구성 파일 이 필요하지 않습니다.
+그럼에도 불구하고, 그것은 당신의 요구에 더 잘 맞도록 <a href="https://webpack.js.org/configuration" rel="nofollow" target="_blank">믿을 수 없을 정도로 구성 가능</a> 합니다.</p>
+
+<p>시작하려면 핵심 개념 만 이해하면 됩니다:</p>
+
+<ul>
+<li>Entry (기입)</li>
+<li>Output (산출)</li>
+<li>Loaders (불러오기)</li>
+<li>Plugins (플러그인)</li>
+<li>Mode (방법)</li>
+<li>Browser Compatibility (브라우저 호환성)</li>
+</ul>
+
+<p>이 문서는 이러한 개념에 대한 고급 개요를 제공하기 위해 작성되었습니다.<br>
+자세한 개념별 사용 사례에 대한 링크를 제공합니다.</p>
+
+<p>모듈 번들러의 기본 개념과 이들이 어떻게 작동하는지 이해하려면 다음 리소스를 참조하십시오:</p>
+
+<ul>
+<li>수동으로 응용 프로그램 번들링</li>
+<li>간단한 모듈 번들러 라이브 코딩</li>
+<li>간단한 모듈 번들러에 대한 자세한 설명</li>
+</ul>
+
+<h2 id="entry">Entry</h2>
+
+<p><strong>entry</strong> 은 내부 종속성 그래프 작성을 시작하기 위해 사용해야하는 모듈 웹팩을 나타냅니다.
+webpack은 진입 점이 의존하는 다른 모듈과 라이브러리를 (직접적으로) 파악합니다.</p>
+
+<p>기본적으로 값은 <code>./src/index.js</code> 이지만 entry webpack 구성에서 특성을 설정하여 다른 (또는 여러 진입 점)을 지정할 수 있습니다. 예를 들면 다음과 같습니다:</p>
+
+<p><strong>webpack.config.js</strong></p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">entry</span><span class="p">:</span> <span class="dl">'</span><span class="s1">./path/to/my/entry/file.js</span><span class="dl">'</span>
+<span class="p">};</span>
+</code></pre></div>
+<blockquote>
+<p>entry points 섹션에서 자세히 알아보십시오 .</p>
+</blockquote>
+
+<h2 id="output">Output</h2>
+
+<p><strong>output</strong> 속성은 웹팩에 번들을 생성 할 위치와 파일 이름을 지정하는 방법을 알려줍니다. 기본 출력 파일의 경우 기본값은 ./dist/main.js이고 다른 생성 된 파일의 경우 ./dist 폴더입니다.</p>
+
+<p>구성에서 <code>output</code> 필드를 지정하여 프로세스의 이 부분을 구성 할 수 있습니다:</p>
+
+<p><strong>webpack.config.js</strong></p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">path</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">entry</span><span class="p">:</span> <span class="dl">'</span><span class="s1">./path/to/my/entry/file.js</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">output</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">path</span><span class="p">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="dl">'</span><span class="s1">dist</span><span class="dl">'</span><span class="p">),</span>
+    <span class="na">filename</span><span class="p">:</span> <span class="dl">'</span><span class="s1">my-first-webpack.bundle.js</span><span class="dl">'</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>위의 예제에서 <code>output.filename</code> 와 <code>output.path</code> 속성을 사용하여 웹팩에 번들 이름과 배포 위치를 알려줍니다.
+맨 위에 경로 모듈을 가져 오는 것에 대해 궁금한 경우 파일 경로를 조작하는 데 사용되는 핵심 Node.js 모듈입니다.</p>
+
+<blockquote>
+<p>이 <code>output</code> 속성에는 더 많은 구성 가능한 기능이 있습니다.
+그 뒤에있는 개념에 대해 배우려면 출력 섹션에서 더 많은 내용을 읽을 수 있습니다 .</p>
+</blockquote>
+
+<h2 id="loader">Loader</h2>
+
+<p>기본적으로 webpack 은 JavaScript 및 JSON 파일만 이해합니다.
+Loader 는 webpack 이 다른 유형의 파일을 처리하고 이를 응용 프로그램이 소비하고 종속성 그래프에 추가 할 수있는 유효한 모듈로 변환 할 수 있도록 합니다.</p>
+
+<blockquote>
+<p>모든 유형의 모듈을 가져 오는 기능 (예: .css 파일은 웹팩 전용 기능이며 다른 번들러 또는 작업 실행기에서 지원하지 않을 수 있습니다.
+개발자는 보다 정확한 의존성 그래프를 작성할 수 있으므로 언어의 확장이 보장된다고 생각합니다.</p>
+</blockquote>
+
+<p>상위 레벨에서 로더 는 웹팩 구성에 두 가지 특성이 있습니다:</p>
+
+<ol>
+<li>이 <code>test</code> 특성은 변환 할 파일을 식별합니다.</li>
+<li>이 <code>use</code> 특성은 변환을 수행하는 데 사용해야하는 로더를 나타냅니다.</li>
+</ol>
+
+<p><strong>webpack.config.js</strong></p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">path</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">output</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">filename</span><span class="p">:</span> <span class="dl">'</span><span class="s1">my-first-webpack.bundle.js</span><span class="dl">'</span>
+  <span class="p">},</span>
+  <span class="na">module</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">rules</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span> <span class="na">test</span><span class="p">:</span> <span class="sr">/</span><span class="se">\.</span><span class="sr">txt$/</span><span class="p">,</span> <span class="na">use</span><span class="p">:</span> <span class="dl">'</span><span class="s1">raw-loader</span><span class="dl">'</span> <span class="p">}</span>
+    <span class="p">]</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>구성은 위에서 정의한 <code>rules</code> 두 필수 특성 단일 모듈 속성: <code>test</code> 및 <code>use</code>.
+이것은 webpack의 컴파일러에게 다음을 알려줍니다:</p>
+
+<blockquote>
+<p>"Hywebpack 컴파일러는 require()/ import문 안에서 '.txt'파일로 해석되는 경로를 발견 할 때 번들에 추가하기 전에를 사용 하여 raw-loader변환하십시오."</p>
+
+<p>웹팩 구성에서 규칙을 정의 할 때는 규칙을 정의 module.rules하고 그렇지 않은 규칙을 정의해야합니다 rules. 귀하의 이익을 위해, 웹팩은 이것이 잘못 수행되면 경고합니다.</p>
+
+<p>정규식을 사용하여 파일을 일치시킬 때는 인용 할 수 없습니다. 즉 /.txt$/동일하지 않습니다 '/.txt$/'나 "/.txt$/". 전자는 webpack에게 .txt로 끝나는 모든 파일을 일치 시키도록 지시하고 후자는 webpack에게 절대 경로 '.txt'를 갖는 단일 파일을 일치 시키도록 지시합니다. 이것은 당신의 의도가 아닐 것입니다.</p>
+</blockquote>
+
+<p><a href="">loaders section</a>에 loader를 포함시킬 때 추가 사용자 정의를 확인할 수 있습니다.</p>
+
+<h2 id="plugins">Plugins</h2>
+
+<p>loaders 는 특정 유형의 모듈을 변환하는 데 사용되지만 plugins 은 번들 최적화, 자산 관리 및 환경 변수 주입과 같은 광범위한 작업을 수행하는 데 사용될 수 있습니다.</p>
+
+<blockquote>
+<p><a href="">plugin interface</a> 과 어떻게 이것을 사용하여 웹팩의 기능을 확장하는 방법 확인하십시오.</p>
+</blockquote>
+
+<p>plugins 을 사용하려면 <code>require()</code>에 <code>plugins</code>배열에 추가해야합니다.
+대부분의 플러그인은 옵션을 통해 사용자 정의할 수 있습니다.
+다른 목적으로 구성에서 플러그인을 여러 번 사용할 수 있으므로 new 연산자를 사용하여 플러그인을 호출하여 인스턴스를 작성해야 합니다.</p>
+
+<p><strong>webpack.config.js</strong></p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">const</span> <span class="nx">HtmlWebpackPlugin</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">html-webpack-plugin</span><span class="dl">'</span><span class="p">);</span> <span class="c1">//installed via npm</span>
+<span class="kd">const</span> <span class="nx">webpack</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">webpack</span><span class="dl">'</span><span class="p">);</span> <span class="c1">//to access built-in plugins</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">module</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">rules</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span> <span class="na">test</span><span class="p">:</span> <span class="sr">/</span><span class="se">\.</span><span class="sr">txt$/</span><span class="p">,</span> <span class="na">use</span><span class="p">:</span> <span class="dl">'</span><span class="s1">raw-loader</span><span class="dl">'</span> <span class="p">}</span>
+    <span class="p">]</span>
+  <span class="p">},</span>
+  <span class="na">plugins</span><span class="p">:</span> <span class="p">[</span>
+    <span class="k">new</span> <span class="nx">HtmlWebpackPlugin</span><span class="p">({</span><span class="na">template</span><span class="p">:</span> <span class="dl">'</span><span class="s1">./src/index.html</span><span class="dl">'</span><span class="p">})</span>
+  <span class="p">]</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>위의 예제에서 <code>html-webpack-plugin</code> 생성된 모든 번들을 자동으로 삽입하여 애플리케이션의 HTML 파일을 생성합니다.</p>
+
+<blockquote>
+<p>webpack이 기본적으로 제공하는 많은 플러그인이 있습니다! <a href="">플러그인 목록</a>을 확인하십시오.</p>
+</blockquote>
+
+<p>웹팩 설정에서 플러그인을 사용하는 것은 간단합니다.
+그러나 추가로 조사 할 가치가있는 많은 사용 사례가 있습니다.
+이에 대한 자세한 내용은 여기를 참조하십시오.</p>
+
+<h2 id="mode">Mode</h2>
+
+<p>설정에 따라 mode 하나에 매개 변수를 development, production 또는 none각 환경에 대응 웹팩에 내장 된 최적화를 활성화 할 수 있습니다. 기본값은 production입니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">mode</span><span class="p">:</span> <span class="dl">'</span><span class="s1">production</span><span class="dl">'</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>여기 에서 모드 구성 및 각 값에서 수행되는 최적화 에 대해 자세히 알아보십시오.</p>
+
+<h2 id="browser-compatibility">Browser Compatibility</h2>
+
+<p>webpack 은 ES5와 호환 되는 모든 브라우저를 지원합니다 (IE8 이하는 지원되지 않음).
+webpack 은 필요 Promise에 대한 <code>import()</code> 및 <code>require.ensure()</code>.
+구형 브라우저를 지원하려면 이러한 표현식을 사용하기 전에 polyfill 을 로드 해야합니다 .</p>
+
+<h2 id="references">References</h2>
+
+<p><a href="https://webpack.js.org/concepts/" rel="nofollow" target="_blank">https://webpack.js.org/concepts/</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

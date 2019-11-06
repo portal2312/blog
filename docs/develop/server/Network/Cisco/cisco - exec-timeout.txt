@@ -1,0 +1,76 @@
+# exec-timeout
+
+: To configure the inactive session timeout on the console port or the virtual terminal, use the exec-timeout command. To revert to the default, use the no form of this command.
+
+- exec-timeout minutes
+
+- no exec-timeout
+
+
+# Syntax Description
+
+--------------------------------------------------------------------------------------------------------
+minutes | Number of minutes. The range is from 0 to 525600. A setting of 0 minutes disables the timeout.
+--------------------------------------------------------------------------------------------------------
+
+# Command Default
+
+: Timeout is disabled.
+
+# Command Modes
+
+: Terminal line configuration mode
+
+# Command History
+
+-------------------------------------------
+Release      | Modification
+-------------+-----------------------------
+4.0(0)N1(1a) | This command was introduced.
+-------------------------------------------
+
+# Usage Guidelines
+
+: You can configure the console port only from a session on the console port.
+
+# Examples
+
+: This example shows how to configure the inactive session timeout for the console port:
+
+switch# configure terminal
+switch(config)# line console
+switch(config-console)# exec-timeout 30
+ 
+: This example shows how to revert to the default inactive session timeout for the console port:
+
+switch# configure terminal
+switch(config)# line console
+switch(config-console)# no exec-timeout
+ 
+: This example shows how to configure the inactive session timeout for the virtual terminal:
+
+switch# configure terminal
+switch(config)# line vty
+switch(config-line)# exec-timeout 30
+ 
+: This example shows how to revert to the default inactive session timeout for the virtual terminal:
+
+switch# configure terminal
+switch(config)# line vty
+switch(config-line)# no exec-timeout
+ 
+# Related Commands
+
+---------------------------------------------------------------------
+Command             | Description
+--------------------+------------------------------------------------
+line console        | Enters the console terminal configuration mode.
+--------------------+------------------------------------------------
+line vty            | Enters the virtual terminal configuration mode.
+--------------------+------------------------------------------------
+show running-config | Displays the running configuration.
+---------------------------------------------------------------------
+
+
+[ÂüÁ¶]
+http://www.cisco.com/web/techdoc/dc/reference/cli/nxos/commands/fund/exec-timeout.html

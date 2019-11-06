@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>일반화 - 과적합의 위험 | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="일반화 - 과적합의 위험" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="일반화는 모델이 이를 만들기 위해 사용된 것과 같은 분포에서 추출된 이전에 보지 못했던 새로운 데이터에 제대로 적합할 수 있는지를 나타냅니다. (새로운 데이터가 이전 데이터 모델에 적합할 수 있는지)" />
+<meta property="og:description" content="일반화는 모델이 이를 만들기 위해 사용된 것과 같은 분포에서 추출된 이전에 보지 못했던 새로운 데이터에 제대로 적합할 수 있는지를 나타냅니다. (새로운 데이터가 이전 데이터 모델에 적합할 수 있는지)" />
+<link rel="canonical" href="http://localhost:4000/blog/docs/develop/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML%20%EA%B0%9C%EB%85%90/006.%20Generalization%20(%EC%9D%BC%EB%B0%98%ED%99%94,%2015%20min)/%EA%B3%BC%EC%A0%81%ED%95%A9%EC%9D%98%20%EC%9C%84%ED%97%98.html" />
+<meta property="og:url" content="http://localhost:4000/blog/docs/develop/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML%20%EA%B0%9C%EB%85%90/006.%20Generalization%20(%EC%9D%BC%EB%B0%98%ED%99%94,%2015%20min)/%EA%B3%BC%EC%A0%81%ED%95%A9%EC%9D%98%20%EC%9C%84%ED%97%98.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-06T09:31:12+09:00" />
+<script type="application/ld+json">
+{"description":"일반화는 모델이 이를 만들기 위해 사용된 것과 같은 분포에서 추출된 이전에 보지 못했던 새로운 데이터에 제대로 적합할 수 있는지를 나타냅니다. (새로운 데이터가 이전 데이터 모델에 적합할 수 있는지)","headline":"일반화 - 과적합의 위험","dateModified":"2019-11-06T09:31:12+09:00","datePublished":"2019-11-06T09:31:12+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/docs/develop/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML%20%EA%B0%9C%EB%85%90/006.%20Generalization%20(%EC%9D%BC%EB%B0%98%ED%99%94,%2015%20min)/%EA%B3%BC%EC%A0%81%ED%95%A9%EC%9D%98%20%EC%9C%84%ED%97%98.html"},"url":"http://localhost:4000/blog/docs/develop/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML%20%EA%B0%9C%EB%85%90/006.%20Generalization%20(%EC%9D%BC%EB%B0%98%ED%99%94,%2015%20min)/%EA%B3%BC%EC%A0%81%ED%95%A9%EC%9D%98%20%EC%9C%84%ED%97%98.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>일반화 - 과적합의 위험</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#ml">ML 세부사항</a></li>
+<li class="toc-entry toc-h2"><a href="#reference">Reference</a></li>
+</ul><p><strong>일반화</strong>는 모델이 이를 만들기 위해 사용된 것과 같은 분포에서 추출된 이전에 보지 못했던 새로운 데이터에 제대로 적합할 수 있는지를 나타냅니다. (새로운 데이터가 이전 데이터 모델에 적합할 수 있는지)</p>
+
+<p><strong>과적합 모델</strong>은 학습하는 동안 손실이 적지만 새 데이터를 잘 예측하지 못합니다.<br>
+현재 샘플에 적합한 모델에서 새 데이터를 잘 예측할 것이라고 신뢰할 수 있나요?<br>
+<a href="https://developers.google.com/machine-learning/crash-course/regularization-for-simplicity/l2-regularization?hl=ko">나중에</a> 알게 되겠지만 필요 이상으로 복잡한 모델을 만들면 과적합이 발생합니다.<br>
+머신러닝의 근본적인 과제는 데이터 적합도를 유지하는 동시에 최대한 단순화하는 것입니다.</p>
+
+<p>머신러닝의 목표는 숨겨진 실제 확률 분포에서 추출되는 새 데이터를 잘 예측하는 것입니다.<br>
+모델에서는 모든 데이터를 볼 수 없으며 학습 데이터 세트에서만 샘플을 추출할 수 있습니다.<br>
+현재 예에 적합한 모델에서 처음 보는 예도 효과적으로 예측할 것이라고 신뢰할 수 있나요?</p>
+
+<p>Occam의 면도날 법칙을 머신러닝 용어로 표현하면 다음과 같습니다.</p>
+
+<blockquote>
+<p>ML 모델이 덜 복잡할수록 샘플의 특성 때문이 아니어도 좋은 경험적 결과를 얻을 가능성이 높습니다.</p>
+</blockquote>
+
+<p>이제 Occam의 면도날 법칙은 통계적 학습 이론 및 컴퓨터 학습 이론 분야에서 공식화되었습니다.
+이들 분야에서는 다음과 같은 요인을 기반으로 새 데이터에 맞게 모델이 일반화되는 정도를 통계적으로 설명하는 일반화 한계를 개발했습니다.</p>
+
+<ul>
+<li>모델의 복잡성</li>
+<li>학습 데이터에 대한 모델의 성능</li>
+</ul>
+
+<p>이론적 분석은 이상적인 가정하에 형식적인 결과를 보장하지만 실제로 적용하기 어려울 수 있습니다.
+머신러닝 단기집중과정에서는 대신 <strong>경험적 평가</strong>에 초점을 맞춰 새 데이터에 맞게 모델이 일반화되는 정도를 판단합니다.</p>
+
+<p>머신러닝의 목표는 이전에 보지 못한 새 데이터를 잘 예측하는 것입니다.<br>
+하지만 데이터 세트에서 모델을 만드는 경우 어떻게 이전에 보지 못한 데이터를 얻을 수 있나요?<br>
+한 가지 방법은 데이터 세트를 다음 두 하위 세트로 나누는 것입니다.</p>
+
+<ul>
+<li>학습 세트 - 모델을 학습시키기 위한 하위 세트</li>
+<li>테스트 세트 - 모델을 테스트하기 위한 하위 세트</li>
+</ul>
+
+<p>테스트 세트에서 성능이 좋으면 일반적으로 다음과 같은 경우 새 데이터에서도 성능이 좋습니다.</p>
+
+<ul>
+<li>테스트 세트가 충분히 큽니다.</li>
+<li>같은 테스트 세트를 반복 사용하지 않습니다.</li>
+</ul>
+
+<h2 id="ml">
+<a class="anchor" href="#ml" aria-hidden="true"><span class="octicon octicon-link"></span></a>ML 세부사항</h2>
+
+<p>일반화에서는 기본적으로 다음 세 가지 사항을 가정합니다.</p>
+
+<ul>
+<li>분포에서 <strong>독립적이고 동일하게(i.i.d.)</strong> 임의로 예를 추출합니다. 즉, 예가 서로 영향을 미치지 않습니다. (대체 설명: i.i.d.는 변수의 임의성을 가리키는 한 가지 방법입니다.)</li>
+<li>분포가 <strong>정상성</strong>을 보입니다. 즉 데이터 세트 내에서 분포가 달라지지 않습니다.</li>
+<li>
+<strong>같은 분포</strong>를 따르는 부분에서 예를 추출합니다.</li>
+</ul>
+
+<blockquote>
+<p>i.i.d(Independent and Identically Distributed)</p>
+</blockquote>
+
+<p>실제로는 이러한 가정을 위반하는 경우가 있습니다. 예:</p>
+
+<ul>
+<li>표시할 광고를 선택하는 모델을 고려하는 경우. 모델이 선택된 광고, 부분적으로 사용자가 이전에 본 광고를 기반으로 하는 경우 i.i.d. 가정을 위반하게 됩니다.</li>
+<li>1년 동안의 소매 판매 정보가 포함된 데이터 세트를 고려하는 경우. 사용자의 구매 패턴이 계절에 따라 변경되어 정상성을 위반하게 됩니다.</li>
+</ul>
+
+<p>앞의 세 가지 가정을 위반한 것이 확인되면 측정항목에 세심하게 주의를 기울여야 합니다.</p>
+
+<blockquote>
+<p>Summary</p>
+
+<ul>
+<li>과적합은 모델이 새 데이터에 맞게 잘 일반화되지 않을 정도로 근접하게 학습 데이터를 적합하려고 시도하는 경우 발생합니다.</li>
+<li>지도 ML의 주요 가정이 충족되지 않으면 새 데이터에 대한 예측 성능이 더 이상 이론적으로 보장되지 않습니다.</li>
+</ul>
+</blockquote>
+
+<h2 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+<p><a href="https://developers.google.com/machine-learning/crash-course/generalization/peril-of-overfitting?hl=ko">https://developers.google.com/machine-learning/crash-course/generalization/peril-of-overfitting?hl=ko</a></p>
+
+  </div>
+
+<div>
+  <p><strong>일반화</strong>는 모델이 이를 만들기 위해 사용된 것과 같은 분포에서 추출된 이전에 보지 못했던 새로운 데이터에 제대로 적합할 수 있는지를 나타냅니다. (새로운 데이터가 이전 데이터 모델에 적합할 수 있는지)</p>
+
+<p><strong>과적합 모델</strong>은 학습하는 동안 손실이 적지만 새 데이터를 잘 예측하지 못합니다.<br>
+현재 샘플에 적합한 모델에서 새 데이터를 잘 예측할 것이라고 신뢰할 수 있나요?<br>
+<a href="https://developers.google.com/machine-learning/crash-course/regularization-for-simplicity/l2-regularization?hl=ko" rel="nofollow" target="_blank">나중에</a> 알게 되겠지만 필요 이상으로 복잡한 모델을 만들면 과적합이 발생합니다.<br>
+머신러닝의 근본적인 과제는 데이터 적합도를 유지하는 동시에 최대한 단순화하는 것입니다.</p>
+
+<p>머신러닝의 목표는 숨겨진 실제 확률 분포에서 추출되는 새 데이터를 잘 예측하는 것입니다.<br>
+모델에서는 모든 데이터를 볼 수 없으며 학습 데이터 세트에서만 샘플을 추출할 수 있습니다.<br>
+현재 예에 적합한 모델에서 처음 보는 예도 효과적으로 예측할 것이라고 신뢰할 수 있나요?</p>
+
+<p>Occam의 면도날 법칙을 머신러닝 용어로 표현하면 다음과 같습니다.</p>
+
+<blockquote>
+<p>ML 모델이 덜 복잡할수록 샘플의 특성 때문이 아니어도 좋은 경험적 결과를 얻을 가능성이 높습니다.</p>
+</blockquote>
+
+<p>이제 Occam의 면도날 법칙은 통계적 학습 이론 및 컴퓨터 학습 이론 분야에서 공식화되었습니다.
+이들 분야에서는 다음과 같은 요인을 기반으로 새 데이터에 맞게 모델이 일반화되는 정도를 통계적으로 설명하는 일반화 한계를 개발했습니다.</p>
+
+<ul>
+<li>모델의 복잡성</li>
+<li>학습 데이터에 대한 모델의 성능</li>
+</ul>
+
+<p>이론적 분석은 이상적인 가정하에 형식적인 결과를 보장하지만 실제로 적용하기 어려울 수 있습니다.
+머신러닝 단기집중과정에서는 대신 <strong>경험적 평가</strong>에 초점을 맞춰 새 데이터에 맞게 모델이 일반화되는 정도를 판단합니다.</p>
+
+<p>머신러닝의 목표는 이전에 보지 못한 새 데이터를 잘 예측하는 것입니다.<br>
+하지만 데이터 세트에서 모델을 만드는 경우 어떻게 이전에 보지 못한 데이터를 얻을 수 있나요?<br>
+한 가지 방법은 데이터 세트를 다음 두 하위 세트로 나누는 것입니다.</p>
+
+<ul>
+<li>학습 세트 - 모델을 학습시키기 위한 하위 세트</li>
+<li>테스트 세트 - 모델을 테스트하기 위한 하위 세트</li>
+</ul>
+
+<p>테스트 세트에서 성능이 좋으면 일반적으로 다음과 같은 경우 새 데이터에서도 성능이 좋습니다.</p>
+
+<ul>
+<li>테스트 세트가 충분히 큽니다.</li>
+<li>같은 테스트 세트를 반복 사용하지 않습니다.</li>
+</ul>
+
+<h2 id="ml">ML 세부사항</h2>
+
+<p>일반화에서는 기본적으로 다음 세 가지 사항을 가정합니다.</p>
+
+<ul>
+<li>분포에서 <strong>독립적이고 동일하게(i.i.d.)</strong> 임의로 예를 추출합니다. 즉, 예가 서로 영향을 미치지 않습니다. (대체 설명: i.i.d.는 변수의 임의성을 가리키는 한 가지 방법입니다.)</li>
+<li>분포가 <strong>정상성</strong>을 보입니다. 즉 데이터 세트 내에서 분포가 달라지지 않습니다.</li>
+<li>
+<strong>같은 분포</strong>를 따르는 부분에서 예를 추출합니다.</li>
+</ul>
+
+<blockquote>
+<p>i.i.d(Independent and Identically Distributed)</p>
+</blockquote>
+
+<p>실제로는 이러한 가정을 위반하는 경우가 있습니다. 예:</p>
+
+<ul>
+<li>표시할 광고를 선택하는 모델을 고려하는 경우. 모델이 선택된 광고, 부분적으로 사용자가 이전에 본 광고를 기반으로 하는 경우 i.i.d. 가정을 위반하게 됩니다.</li>
+<li>1년 동안의 소매 판매 정보가 포함된 데이터 세트를 고려하는 경우. 사용자의 구매 패턴이 계절에 따라 변경되어 정상성을 위반하게 됩니다.</li>
+</ul>
+
+<p>앞의 세 가지 가정을 위반한 것이 확인되면 측정항목에 세심하게 주의를 기울여야 합니다.</p>
+
+<blockquote>
+<p>Summary</p>
+
+<ul>
+<li>과적합은 모델이 새 데이터에 맞게 잘 일반화되지 않을 정도로 근접하게 학습 데이터를 적합하려고 시도하는 경우 발생합니다.</li>
+<li>지도 ML의 주요 가정이 충족되지 않으면 새 데이터에 대한 예측 성능이 더 이상 이론적으로 보장되지 않습니다.</li>
+</ul>
+</blockquote>
+
+<h2 id="reference">Reference</h2>
+
+<p><a href="https://developers.google.com/machine-learning/crash-course/generalization/peril-of-overfitting?hl=ko" rel="nofollow" target="_blank">https://developers.google.com/machine-learning/crash-course/generalization/peril-of-overfitting?hl=ko</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

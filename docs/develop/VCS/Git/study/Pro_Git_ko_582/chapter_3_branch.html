@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Chapter.3 Branch | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Chapter.3 Branch" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Branch 란?" />
+<meta property="og:description" content="Branch 란?" />
+<link rel="canonical" href="http://localhost:4000/blog/docs/develop/VCS/Git/study/Pro_Git_ko_582/chapter_3_branch.html" />
+<meta property="og:url" content="http://localhost:4000/blog/docs/develop/VCS/Git/study/Pro_Git_ko_582/chapter_3_branch.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-06T09:31:12+09:00" />
+<script type="application/ld+json">
+{"description":"Branch 란?","headline":"Chapter.3 Branch","dateModified":"2019-11-06T09:31:12+09:00","datePublished":"2019-11-06T09:31:12+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/docs/develop/VCS/Git/study/Pro_Git_ko_582/chapter_3_branch.html"},"url":"http://localhost:4000/blog/docs/develop/VCS/Git/study/Pro_Git_ko_582/chapter_3_branch.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Chapter.3 Branch</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#branch">Branch 란?</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#new-branch">new Branch 생성하기</a></li>
+<li class="toc-entry toc-h3"><a href="#branch">Branch 이동하기</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#branch-merge">Branch와 Merge의 기초</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#branch">Branch의 기초</a></li>
+<li class="toc-entry toc-h3"><a href="#merge">Merge 의 기초</a></li>
+<li class="toc-entry toc-h3"><a href="#conflict">Conflict(충돌)의 기초</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#part-3ef745405c7c107d">관리</a></li>
+<li class="toc-entry toc-h2"><a href="#branch-workflow">Branch Workflow</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#long-running-branch">Long-Running Branch</a></li>
+<li class="toc-entry toc-h3"><a href="#topic-branch">Topic Branch</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#remote-branch">Remote Branch</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#push">Push (중요)</a></li>
+<li class="toc-entry toc-h3"><a href="#branch">Branch 추적</a></li>
+<li class="toc-entry toc-h3"><a href="#pull">Pull 하기</a></li>
+<li class="toc-entry toc-h3"><a href="#remote-branch-delete">Remote Branch - Delete</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#rebase">Rebase</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#rebase-basic">Rebase Basic</a></li>
+<li class="toc-entry toc-h3"><a href="#rebase">Rebase 활용</a></li>
+<li class="toc-entry toc-h3"><a href="#rebase-risk">Rebase Risk (위험성)</a></li>
+<li class="toc-entry toc-h3"><a href="#rebase-rebase">Rebase 한 것을 다시 Rebase 하기</a></li>
+<li class="toc-entry toc-h3"><a href="#rebase-vs-merge">Rebase vs Merge</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#part-67c88d6a6c70c6fa">요약</a></li>
+</ul><h2 id="branch">
+<a class="anchor" href="#branch" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Branch 란?</strong>
+</h2>
+
+<ul>
+<li>
+<p>Commit 완료시</p>
+
+<ul>
+<li>Commit Objects</li>
+<li>메타데이터와 'Root Tree'를 가르키는 Pointer.</li>
+<li>현 Staging Area에 있는 데이터의 스냅샷에 대한 포인터, author 나 커밋 메시지 같은 메타데이터, 이전 커밋에 대한 포인터 등을 포함하는 커밋 개체(커밋 Object)를 저장한다.</li>
+<li>이전 커밋 포인터가 있어서 현재 커밋이 무엇을 기준으로 바뀌었는지를 알 수 있다.</li>
+<li>최초 커밋을 제외한 나머지 커밋은 이전 커밋 포인터가 적어도 하나씩 있고 브랜치를 합친 Merge 커밋 같은 경우에는 이전 커밋 포인터가 여러 개 있다.</li>
+<li>Tree Objects : Files, Directory structure.</li>
+<li>각 Files Blob 객체들</li>
+<li>Blob : 파일을 Stage 하면 Git 저장소에 파일을 저장.</li>
+<li>File 마다 생성됨, CheckSum, SHA-1 로 되어있음.</li>
+<li>최초 commit 시 master 이름의 Branch 생성됨.</li>
+</ul>
+
+<p>'master' Branch 는 특별하지 않다.</p>
+
+<p>git init 명령으로 초기화 때 자동으로 만들어진게 이유가 끝이다.
+- commit 을 만들 때 마다 Branch가 자동으로 가장 마지막 commit 을 가르킴.</p>
+</li>
+</ul>
+
+<h3 id="new-branch">
+<a class="anchor" href="#new-branch" aria-hidden="true"><span class="octicon octicon-link"></span></a>new Branch 생성하기</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">git branch &lt;branch-name&gt;
+</code></pre></div>
+<ul>
+<li><p>branch 는 HEAD 라는 pointer 가 있음. HEAD 는 현재 branch 위치를 가르킴.</p></li>
+<li><p>git branch 시 수동으로 HEAD 를 잡아줘야 함.</p></li>
+<li><p>확인하기</p></li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">  git log <span class="nt">--oneline</span> <span class="nt">--graph</span> <span class="nt">--all</span> <span class="nt">--decorate</span>  <span class="c"># --decorate 를 통해 볼 수 있음</span>
+</code></pre></div>
+<h3 id="branch">
+<a class="anchor" href="#branch" aria-hidden="true"><span class="octicon octicon-link"></span></a>Branch 이동하기</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">git checkout &lt;branch-name&gt;
+</code></pre></div>
+<ul>
+<li>
+<p>branch 이동하면 Working Dir의 Files 변경됨 :</p>
+
+<ul>
+<li>브랜치에서 가장 마지막으로 했던 작업 내용으로 변경.</li>
+<li>파일 변경시 문제시 브랜치를 이동 불가능한 경우 브랜치 이동 명령을 수행하지 않음.</li>
+<li>Tracked(unmodified, modified, staged) 만 변경.</li>
+</ul>
+</li>
+<li><p>브랜치를 만들어야 하면 프로젝트를 통째로 복사해야 하는 다른 버전 관리 도구와 Git의 차이는 극명하다. 통째로 복사하는 작업은 프로젝트 크기에 따라 다르겠지만 수십 초에서 수십 분까지 걸린다. 그에 비해 Git은 순식간이다. 게다가 커밋을 할 때마다 이전 커밋의 정보를 저장하기 때문에 Merge 할 때 어디서부터(Merge Base) 합쳐야 하는지 안다.</p></li>
+</ul>
+
+<h2 id="branch-merge">
+<a class="anchor" href="#branch-merge" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Branch와 Merge의 기초</strong>
+</h2>
+
+<ul>
+<li>Branch 와 Merge 의 보통의 경우</li>
+</ul>
+
+<ol>
+<li><p>작업중</p></li>
+<li><p>new issue 처리</p></li>
+<li><p>branch</p></li>
+</ol>
+
+<ul>
+<li>Hotfix</li>
+</ul>
+
+<ol>
+<li><p>이전의 Production(운영) 이동</p></li>
+<li><p>create Hotfix branch</p></li>
+<li><p>Fixed Hotfix branch &gt; Move Production &gt; Merge Production</p></li>
+<li><p>다시 작업중인 brach 로 가서 일 진행한다.</p></li>
+</ol>
+
+<h3 id="branch">
+<a class="anchor" href="#branch" aria-hidden="true"><span class="octicon octicon-link"></span></a>Branch의 기초</h3>
+
+<ul>
+<li><p>create new Branch, checkout branch 를 동시에 하기
+<code>bash
+git checkout -b &lt;new-branch-name&gt;
+</code></p></li>
+<li><p>branch 삭제
+<code>bash
+$ git branch -d &lt;branch-name&gt;
+</code></p></li>
+</ul>
+
+<h3 id="merge">
+<a class="anchor" href="#merge" aria-hidden="true"><span class="octicon octicon-link"></span></a>Merge 의 기초</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git checkout <span class="nt">-b</span> hotfix    <span class="c"># hotfix branch 를 만들면서 동시  checkout 함</span>
+<span class="nv">$ </span>vi hotfix.md
+<span class="nv">$ </span>git commit <span class="nt">-a</span> <span class="nt">-v</span> <span class="nt">-m</span> <span class="s1">'description'</span>
+
+<span class="nv">$ </span>git checkout master    <span class="c"># checkout 으로 master 로 이동해서 기준을 선택하고</span>
+<span class="nv">$ </span>git merge hotfix       <span class="c"># master &lt;- hotfix를 merge 함</span>
+
+Updating 2f54cf3..7531d07
+Fast-forward    <span class="c"># fast-forward Merge 방식</span>
+ hotfix.txt | 1 +
+ 1 file changed, 1 insertion<span class="o">(</span>+<span class="o">)</span>
+ create mode 100644 hotfix.txt
+
+
+<span class="nv">$ </span>git branch <span class="nt">-d</span> hotfix    <span class="c"># 'hotfix' branch delete</span>
+</code></pre></div>
+<ul>
+<li>
+<p>Merge</p>
+
+<ul>
+<li>3-way</li>
+<li>현재 Branch가 가리키는 Commit 이 Merge 할 Branch의 조상이 아닌 경우.</li>
+<li>각 Branch가 가리키는 Commit 두 개와 공통 조상 하나를 사용.</li>
+<li>fast-forward</li>
+<li>Merge 할 브랜치가 가리키는 커밋이 현 브랜치 커밋의 Upstream 브랜치인 경우.</li>
+<li>브랜치 포인터는 최신 커밋으로 이동한다.</li>
+<li>A 브랜치에서 다른 B 브랜치를 Merge 할 때 B가 A 이후의 커밋을 가리키고 있으면 그저 A가 B의 커밋을 가리키게 할 뿐이다.</li>
+</ul>
+</li>
+</ul>
+
+<h3 id="conflict">
+<a class="anchor" href="#conflict" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conflict(충돌)의 기초</h3>
+
+<ul>
+<li>3-way Merge 실패 : 같은 파일의 한 부분을 동시에 수정하고 Merge 시 발생.</li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git merge &lt;branch-name&gt;
+
+Auto-merging file3.txt
+CONFLICT <span class="o">(</span>content<span class="o">)</span>: Merge conflict <span class="k">in </span>file3.txt
+Automatic merge failed<span class="p">;</span> fix conflicts and <span class="k">then </span>commit the result.
+
+<span class="nv">$ </span>git status
+
+<span class="c"># On branch master</span>
+<span class="c"># Your branch is ahead of 'origin/master' by 11 commits.</span>
+<span class="c">#   (use "git push" to publish your local commits)</span>
+<span class="c">#</span>
+<span class="c"># You have unmerged paths.</span>
+<span class="c">#   (fix conflicts and run "git commit")</span>
+<span class="c">#</span>
+<span class="c"># Unmerged paths:</span>
+<span class="c">#   (use "git add &lt;file&gt;..." to mark resolution)</span>
+<span class="c">#</span>
+<span class="c">#       both modified:      file3.txt</span>
+<span class="c">#</span>
+<span class="c"># Untracked files:</span>
+<span class="c">#   (use "git add &lt;file&gt;..." to include in what will be committed)</span>
+<span class="c">#</span>
+<span class="c">#       .gitignore</span>
+<span class="c">#       file4.txt</span>
+<span class="c">#       file5.txt</span>
+<span class="c">#       logs/</span>
+
+<span class="nv">$ </span>vi file3.txt
+
+1 <span class="o">&lt;&lt;&lt;&lt;&lt;&lt;</span>&lt; HEAD  <span class="c"># current branch의 file3.txt 의 내용, 즉 HEAD 나타냄</span>
+2 file3
+3
+4 1
+5 2
+6 3
+7 <span class="o">=======</span>  <span class="c"># 기준선</span>
+8 <span class="c"># file3.txt  # testing branch의 file3.txt의 내용</span>
+9
+10
+11 testing
+12 <span class="o">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span> testing
+
+<span class="nv">$ </span>git mergetools    <span class="c"># tools=vimdiff 경우 아래 부분을 수정하면 됨</span>
+
+... 수정후 ...
+
+<span class="nv">$ </span>git status  <span class="c"># 다시 확인</span>
+
+<span class="c"># On branch master</span>
+<span class="c"># Your branch is ahead of 'origin/master' by 11 commits.</span>
+<span class="c">#   (use "git push" to publish your local commits)</span>
+<span class="c">#</span>
+<span class="c"># All conflicts fixed but you are still merging.</span>
+<span class="c">#   (use "git commit" to conclude merge)</span>
+<span class="c">#</span>
+<span class="c"># Changes to be committed:   # 상태가 변경되었음</span>
+<span class="c">#</span>
+<span class="c">#       modified:   file3.txt</span>
+
+<span class="nv">$ </span>git commit <span class="nt">-a</span> <span class="nt">-v</span> <span class="nt">-m</span> <span class="s1">'description'</span>
+<span class="nv">$ </span>git log
+
+<span class="k">*</span>   b18c4ce <span class="o">(</span>HEAD, master<span class="o">)</span> merge msater &lt;- testing
+|<span class="se">\</span>
+| <span class="k">*</span> fed0f02 <span class="o">(</span>testing<span class="o">)</span> fixed
+| <span class="k">*</span> aa9a30d testing
+<span class="k">*</span> | 7531d07 <span class="o">[</span>FIXED] hotfix
+| | <span class="k">*</span> 5ced1ec <span class="o">(</span>iss1<span class="o">)</span> <span class="o">[</span>FIXED] iss1
+| |/
+|/|
+<span class="k">*</span> | 2f54cf3 update file3.txt
+|/
+<span class="k">*</span> 806e37c <span class="o">(</span>tag: v1.0<span class="o">)</span> add file3.txt
+<span class="k">*</span> 226ae8b ADD file3.txt
+</code></pre></div>
+<ul>
+<li><p>Unmerged : merge 실패한 목록 표현.</p></li>
+<li>
+<p>충돌시 수동으로 해결해야 함.</p>
+
+<ul>
+<li>git mergetools : 변경가능함</li>
+</ul>
+</li>
+<li><p>Chapter.7 Git 도구 &gt; 고급 Merge 참조 (page.293)</p></li>
+</ul>
+
+<h2 id="part-3ef745405c7c107d">
+<a class="anchor" href="#part-3ef745405c7c107d" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>관리</strong>
+</h2>
+
+<p>branch 목록 보기</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">git branch
+git branch <span class="o">[</span>options]
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: left">Options</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left">-d</td>
+<td style="text-align: left">삭제</td>
+</tr>
+<tr>
+<td style="text-align: left">-D</td>
+<td style="text-align: left">Merge 하지 않은 Branch 삭제하기</td>
+</tr>
+<tr>
+<td style="text-align: left">-v</td>
+<td style="text-align: left">마지막 commit msg 보기</td>
+</tr>
+<tr>
+<td style="text-align: left">--merged</td>
+<td style="text-align: left">merge 된 branch 인지 필터링</td>
+</tr>
+<tr>
+<td style="text-align: left">--no-merged</td>
+<td style="text-align: left">no merge 된 branch 인지 필터링</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="branch-workflow">
+<a class="anchor" href="#branch-workflow" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Branch Workflow</strong>
+</h2>
+
+<h3 id="long-running-branch">
+<a class="anchor" href="#long-running-branch" aria-hidden="true"><span class="octicon octicon-link"></span></a>Long-Running Branch</h3>
+<div class="highlight"><pre><code class="language-" data-lang="">c1                     c9    [master]
+ |                     |
+ c2 - c3 - c4 - c5     c8    [devlop]
+                 |     |
+                 c6 - c7     [topic]
+</code></pre></div>
+<ul>
+<li><p>큰 Projects 에서도 자주 사용됨.</p></li>
+<li><p>proposed or pu (proposed updates) : merge 단계가 아닌 것을 우선 merge.</p></li>
+</ul>
+
+<h3 id="topic-branch">
+<a class="anchor" href="#topic-branch" aria-hidden="true"><span class="octicon octicon-link"></span></a>Topic Branch</h3>
+
+<ul>
+<li><p>프로젝트 크기에 상관없음.</p></li>
+<li><p>짧은 호흡의 branch.</p></li>
+<li><p>iss1, hotfix 등</p></li>
+<li><p>branch checkout 후 commit을 해야 마지막 저장이라고 생각하면 됨.</p></li>
+</ul>
+
+<h2 id="remote-branch">
+<a class="anchor" href="#remote-branch" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Remote Branch</strong>
+</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">git remote show &lt;remote-name&gt;  <span class="c"># remote Refs 조회</span>
+
+git remote <span class="nt">-v</span>  <span class="c"># 간단하게 보기</span>
+</code></pre></div>
+<ul>
+<li><p>remote Refs : remote repository 에 있는 pointer reference. (branch, tag 등등)</p></li>
+<li><p>보통 Remote Tracking Branch 를 사용.</p></li>
+<li>
+<p>Remote Tracking Branch</p>
+
+<ul>
+<li>리모트 브랜치를 추적하는 브랜치.</li>
+<li>Local 에 있지만 움직일 수 없다.</li>
+<li>remote Server 연결할 때마다 리모트 브랜치에 따라서 자동으로 움직일 뿐. (북마크)</li>
+<li>리모트 저장소에 마지막으로 연결했던 순간에 브랜치가 무슨 커밋을 가리키고 있었는지를 나타낸다.</li>
+<li>리모트 브랜치의 이름은 (remote)/(branch) 형식.</li>
+<li>리모트 저장소 origin의 master 브랜치를 보고 싶다면 origin/master 브랜치 확인.</li>
+</ul>
+</li>
+<li><p>'origin' 의미 없음, 변경가능하나 remote repository branch 위치 파악하기 위해 안하는게 좋을 듯.
+<code>bash
+git clone -o booyah -&gt; booyah/master
+</code></p></li>
+<li><p>Remote Repository 추가하기, fetch로 저장해서 git으로 관리.</p></li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">git remote add &lt;remote-name&gt; &lt;URL&gt;
+git fetch &lt;remote-name&gt;
+
+
+<span class="nv">$ </span>git remote add office http://localhost/mks/office.git
+<span class="c"># office가 origin/master 로 부터 나왔다면 git log 를 통해 연결된게 확인 된다.</span>
+<span class="nv">$ </span>git fetch office
+<span class="nv">$ </span>git log <span class="nt">--all</span> <span class="nt">--decorate</span> <span class="nt">--graph</span> <span class="nt">--oneline</span>
+</code></pre></div>
+<h3 id="push">
+<a class="anchor" href="#push" aria-hidden="true"><span class="octicon octicon-link"></span></a>Push (중요)</h3>
+
+<p>먼저 그룹 및 권한 확인하기. (403 erorr, authority)</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">git push &lt;remote-name&gt; &lt;branch-name&gt;
+
+<span class="c"># 'remote-server-branch-name' != 'local-branch-name' 필요</span>
+git push &lt;remote-name&gt; &lt;branch-name&gt;:&lt;awesomebranch-name&gt;
+
+git push origin serverfix:awesomebranch
+</code></pre></div>
+<ul>
+<li>
+<p>crediential cache : remote 접근때마다 매번 ID/Passwd 입력하지 않기 (v1.8.3.1 명령어가 없음)
+<code>bash
+git config --global credential.helper
+</code></p>
+
+<ul>
+<li>활성화시 Git은 몇 분 동안 입력한 ID 나 비밀번호를 저장.</li>
+<li>자세한 설명은 'Credential 저장소' 를 참고.</li>
+</ul>
+</li>
+<li>
+<p><strong>Fetch (중요)</strong></p>
+
+<ul>
+<li>My Repository 에 branch pointer가 생기는 것.</li>
+<li>적용</li>
+<li>Merge
+<code>bash
+$ git fetch origin            # git fetch &lt;remote-name&gt;
+$ git merge origin/serverfix  # git merge &lt;pointer-name&gt;
+</code>
+</li>
+<li>new Branch (Merge 하지 않고 remote tracking branch에서 시작)
+<code>bash
+# git checkout -b &lt;new-branch-name&gt; &lt;pointer-name&gt;
+$ git checkout -b iss3 origin/iss003
+# git pull origin iss003
+</code>
+</li>
+</ul>
+</li>
+</ul>
+
+<h3 id="branch">
+<a class="anchor" href="#branch" aria-hidden="true"><span class="octicon octicon-link"></span></a>Branch 추적</h3>
+
+<ul>
+<li>
+<p>Tracking Branch (= upstream Branch)</p>
+
+<ul>
+<li>Remote Tracking Branch 를 checkout 으로 만든 Branch.</li>
+<li>git push/pull 하면 자동으로 함.</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">git pull  <span class="c"># 자동 merge</span>
+
+<span class="c"># 생성</span>
+git log <span class="nt">--oneline</span> <span class="nt">--decorate</span>                      <span class="c"># 확인 존재유무</span>
+git checkout <span class="nt">--track</span> &lt;remote-tracking-branch&gt;     <span class="c"># 생성</span>
+<span class="c"># 생성 &lt;remote-tracking-branch&gt; -&gt; &lt;new-branch-name&gt;</span>
+git checkout <span class="nt">-b</span> &lt;new-branch-name&gt; &lt;remote-tracking-branch&gt;
+
+<span class="c"># 추적</span>
+git checkout &lt;target-branch-name&gt;       <span class="c"># 이동 &lt;target-branch-name&gt;</span>
+git branch <span class="nt">-u</span> &lt;remote-tracking-branch&gt;  <span class="c"># 생성 &lt;remote-tracking-branch&gt;</span>
+git branch <span class="nt">--set-upstream-to</span><span class="o">=</span>&lt;remote-tracking-branch&gt;  <span class="c"># 위와 동일</span>
+
+<span class="c"># 확인</span>
+git branch <span class="nt">-vv</span>
+
+<span class="c"># 삭제 (사용하지 않을 경우)</span>
+git branch <span class="nt">-d</span> &lt;remote-tracking-branch&gt;
+
+
+<span class="nv">$ </span>git log <span class="nt">--oneline</span> <span class="nt">--decorate</span>
+<span class="nv">$ </span>git checkout <span class="nt">--track</span> origin/iss001
+<span class="nv">$ </span>git checkout iss001
+<span class="nv">$ </span>git branch <span class="nt">--set-upstream-to</span><span class="o">=</span>origin/iss001
+<span class="nv">$ </span>git branch <span class="nt">-vv</span>
+</code></pre></div>
+<h3 id="pull">
+<a class="anchor" href="#pull" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pull 하기</h3>
+<div class="highlight"><pre><code class="language-" data-lang="">일반적으로 fetch와 merge 명령을 명시적으로 사용하는 것이
+pull 명령으로 한번에 두 작업을 하는 것보다 낫다.
+</code></pre></div>
+<h3 id="remote-branch-delete">
+<a class="anchor" href="#remote-branch-delete" aria-hidden="true"><span class="octicon octicon-link"></span></a>Remote Branch - Delete</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">git push branch <span class="nt">--delete</span> &lt;branch-name&gt;
+</code></pre></div>
+<ul>
+<li><p>Remote Repository 의 Branch 삭제.</p></li>
+<li><p>서버에서 가비지 컬렉터가 동작하지 않는 한 데이터는
+사라지지 않기 때문에 종종 의도치 않게 삭제한 경우에도
+커밋한 데이터를 살릴 수 있다.</p></li>
+<li><p>Example</p></li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git log
+
+<span class="c"># * 985a0a9 (HEAD, branch2/iss2, branch/iss003 iss3, iss2) Update iss2.txt</span>
+<span class="c"># ...</span>
+
+<span class="nv">$ </span>git push branch <span class="nt">--delete</span> iss003
+
+<span class="c"># Username for 'http://localhost': mkkim</span>
+<span class="c"># Password for 'http://mkkim@localhost':</span>
+<span class="c"># To http://localhost/mks/branch2.git</span>
+<span class="c">#  - [deleted]         iss003</span>
+
+<span class="nv">$ </span>git log
+
+<span class="c"># * 985a0a9 (HEAD, branch2/iss2, iss3, iss2) Update iss2.txt</span>
+<span class="c"># ...</span>
+
+<span class="nv">$ </span>git branch <span class="nt">-vv</span>
+
+<span class="c"># iss1   15b9853 [branch2/iss1] update iss1.txt</span>
+<span class="c"># iss2   985a0a9 [branch2/iss2] Update iss2.txt</span>
+<span class="c"># * iss3   985a0a9 [branch2/iss003] Update iss2.txt  &lt;- Tracking Branch?!</span>
+<span class="c"># master b21a755 [branch2/master] Merge branch 'iss1'</span>
+
+</code></pre></div>
+<h2 id="rebase">
+<a class="anchor" href="#rebase" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Rebase</strong>
+</h2>
+
+<ul>
+<li><p>한 branch에서 다른 branch로 합치는 방법. (Merge, Rebase)</p></li>
+<li><p>차이는 Rebase 는 Branch 를 만들지 않음.</p></li>
+<li><p>master branch 로 merge 하기 전 작업 중인 다른 branch 들을 정리 목적으로 사용.</p></li>
+</ul>
+
+<h3 id="rebase-basic">
+<a class="anchor" href="#rebase-basic" aria-hidden="true"><span class="octicon octicon-link"></span></a>Rebase Basic</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">git checkout &lt;topic-branch-name&gt;
+git rebase &lt;base-branch-name&gt;
+git checkout &lt;base-branch-name&gt;
+git merge &lt;topic-branch-name&gt;
+git log <span class="nt">--decorate</span> <span class="nt">--oneline</span>  <span class="c"># 이 때 iss1 이 tag 존재시 iss1이 남아 있음.</span>
+
+
+<span class="nv">$ </span>git checkout iss1
+<span class="nv">$ </span>git rebase master
+<span class="nv">$ </span>git checkout master
+<span class="nv">$ </span>git merge iss1
+<span class="nv">$ </span>git log <span class="nt">--decorate</span> <span class="nt">--oneline</span>  <span class="c"># 이 때 iss1 이 tag 존재시 iss1이 남아 있음.</span>
+
+<span class="c"># Tag 존재시</span>
+<span class="nv">$ </span>git log <span class="nt">--decorate</span> <span class="nt">--oneline</span>
+<span class="c"># * 073d13c (HEAD, tag: c4", master, iss1) c4</span>
+<span class="c"># * a2b1670 (tag: c3) c3</span>
+<span class="c"># | * 297b953 (tag: c4) c4</span>
+<span class="c"># |/</span>
+<span class="c"># * e1e72c5 (tag: c2) c2</span>
+<span class="c"># * 54ccb66 (tag: c1) c1</span>
+<span class="c"># * baf09b9 (tag: c0, origin/master, origin/HEAD) new Projects Start!!</span>
+
+<span class="c"># Tag 삭제시</span>
+<span class="nv">$ </span>git tab <span class="nt">--delete</span> c4
+<span class="nv">$ </span>git log <span class="nt">--decorate</span> <span class="nt">--oneline</span>
+<span class="c"># * 073d13c (HEAD, tag: c4", master, iss1) c4</span>
+<span class="c"># * a2b1670 (tag: c3) c3</span>
+<span class="c"># * e1e72c5 (tag: c2) c2</span>
+<span class="c"># * 54ccb66 (tag: c1) c1</span>
+<span class="c"># * baf09b9 (tag: c0, origin/master, origin/HEAD) new Projects Start!!</span>
+</code></pre></div>
+<ul>
+<li>보통 Remote Branch 에 commit 을 깔끔하게 적용하고 싶을 때 사용.</li>
+</ul>
+
+<p>(갈라져 나온 topic branch를 Rebase로 정리해서 master Branch에 merge를 위한 준비)</p>
+
+<ul>
+<li><p>그냥 참여하는 브랜치에서 메인 프로젝트에 Patch를 보낼 준비가 되면 하는 것.</p></li>
+<li><p>이렇게 Rebase 하고 나면 프로젝트 관리자는 어떠한 통합작업도 필요없다.
+그냥 master 브랜치를 Fast-forward 시키면 된다.</p></li>
+<li><p>Rebase 든 Merge 든 최종 결과물은 같고 commit History만 다르다는 것이 중요.</p></li>
+<li><p>Rebase 브랜치의 변경사항을 순서대로 다른 브랜치에 적용하면서 합치고</p></li>
+</ul>
+
+<p>Merge의 경우는 두 브랜치의 최종결과만을 가지고 합친다.</p>
+
+<h3 id="rebase">
+<a class="anchor" href="#rebase" aria-hidden="true"><span class="octicon octicon-link"></span></a>Rebase 활용</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># --onto : 건너띄어 rebase 하기</span>
+<span class="c"># &lt;base-branch&gt; -&gt; &lt;topic-branch-topic-branch&gt;, pass &lt;topic-branch&gt;</span>
+git rebase <span class="nt">--onto</span> &lt;base-branch&gt; &lt;topic-branch&gt; &lt;topic-branch-topic-branch&gt;
+
+
+<span class="c"># master -&gt; client, 무시 server</span>
+<span class="nv">$ </span>git rebase <span class="nt">--onto</span> master server client
+
+<span class="nv">$ </span>git checkout master
+<span class="nv">$ </span>git merge client
+
+<span class="c"># git rebase &lt;base-branch-name&gt; &lt;topic-branch-name&gt;</span>
+<span class="c"># master -&gt; server</span>
+<span class="nv">$ </span>git rebase master server
+
+<span class="nv">$ </span>git checkout master
+<span class="nv">$ </span>git merge server
+
+<span class="c"># 사용하지 않는 branch 삭제</span>
+<span class="nv">$ </span>git branch <span class="nt">-d</span> client server
+</code></pre></div>
+<h3 id="rebase-risk">
+<a class="anchor" href="#rebase-risk" aria-hidden="true"><span class="octicon octicon-link"></span></a>Rebase Risk (위험성)</h3>
+
+<ul>
+<li><p>(중요) 이미 Public Repository 에 Push 한 Commit 을 Rebase 하지 마라.</p></li>
+<li><p>Remote Repository 로 보내기 전 Local 에서 Rebase로 commit을 정리해야 함.</p></li>
+</ul>
+
+<h3 id="rebase-rebase">
+<a class="anchor" href="#rebase-rebase" aria-hidden="true"><span class="octicon octicon-link"></span></a>Rebase 한 것을 다시 Rebase 하기</h3>
+
+<ul>
+<li>다른 누군가 내가 한일을 덮어썼다고 하자. 그러면 내가 했던 일이 무엇이고</li>
+</ul>
+
+<p>덮어쓴 내용이 무엇인지 알아내야 한다.</p>
+
+<ul>
+<li>커밋 SHA 체크섬 외에도 Git은 커밋에 Patch 할 내용으로 SHA 체크섬을 한번 더 구한다.</li>
+</ul>
+
+<p>이 값은 'patch-id' 라고 한다.</p>
+
+<ul>
+<li>덮어쓴 커밋을 받아서 그 커밋을 기준으로 Rebase 할 때 Git은 원래 누가 작성한 코드인지 잘 찾아 낸다. 그래서 Patch가 원래대로 잘 적용된다.</li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">git rebase teamone/master
+
+<span class="c"># config</span>
+git config <span class="nt">--global</span> pull.rebase <span class="nb">true
+
+</span>git pull <span class="nt">--rebase</span> &lt;remote-name&gt;
+</code></pre></div>
+<ul>
+<li><p>동료가 생성했던 C4와 C4’ 커밋 내용이 완전히 같을 때만 이렇게 동작된다.</p></li>
+<li><p>커밋 내용이 아예 다르거나 비슷하다면 커밋이 두 개 생긴다(같은 내용이 두
+번 커밋될 수 있기 때문에 깔끔하지 않다).</p></li>
+<li><p>물론 git fetch와 git rebase teamone/master이 두 명령을 직접 순서대로 실행해도 된다.</p></li>
+<li><p>Push 하기 전에 정리하려고 Rebase 하는 것은 괜찮다.</p></li>
+<li><p>또 절대 공개하지 않고 혼자 Rebase 하는 경우도 괜찮다.</p></li>
+<li><p>하지만, 이미 공개하여 사람들이 사용하는 커밋을 Rebase 하면 틀림없이 문제가 생긴다.</p></li>
+<li><p>나중에 후회하지 말고 git pull --rebase.</p></li>
+</ul>
+
+<h3 id="rebase-vs-merge">
+<a class="anchor" href="#rebase-vs-merge" aria-hidden="true"><span class="octicon octicon-link"></span></a>Rebase vs Merge</h3>
+
+<ul>
+<li><p>History 를 변경하지 말아라.</p></li>
+<li><p>적재적소.</p></li>
+<li><p>Local branch 작업할 때는 History 를 정리하기 위해서 Rebase,</p></li>
+</ul>
+
+<p>Push로 Remote 밖으로 내보낸 Commit 은 절대 Rebase 하지 말아야 한다.</p>
+
+<h2 id="part-67c88d6a6c70c6fa">
+<a class="anchor" href="#part-67c88d6a6c70c6fa" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>요약</strong>
+</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># log</span>
+git log <span class="nt">--oneline</span> <span class="nt">--graph</span> <span class="nt">--all</span> <span class="nt">--decorate</span>  <span class="c"># 이력의 거의 모든 정보 확인</span>
+
+<span class="c"># merge</span>
+git checkout &lt;base-branch&gt;
+git merge &lt;topic-branch&gt;  <span class="c"># &lt;base-branch&gt;, HEAD &lt;- &lt;topic-branch&gt;</span>
+git mergetools  <span class="c"># 충돌시 해결</span>
+
+<span class="c"># branch</span>
+git branch &lt;branch-name&gt;       <span class="c"># 생성</span>
+git checkout &lt;branch-name&gt;     <span class="c"># 이동 &lt;branch-name&gt; 으로</span>
+git checkout <span class="nt">-b</span> &lt;branch-name&gt;  <span class="c"># 생성 &lt;branch-name&gt;, 이동 &lt;branch-name&gt; 으로</span>
+git branch <span class="nt">-vv</span>       <span class="c"># 목록 확인 (-vv 더 자세히)</span>
+git branch <span class="nt">-d</span>        <span class="c"># 삭제</span>
+git branch <span class="nt">-D</span>        <span class="c"># 강제 삭제</span>
+git branch <span class="nt">--merged</span>  <span class="c"># merge 목록만</span>
+
+<span class="c"># remote</span>
+git remote show &lt;remote-name&gt;           <span class="c"># 보기</span>
+git remote add &lt;new-remote-name&gt; &lt;URL&gt;  <span class="c"># 생성</span>
+git remote rename &lt;old&gt; &lt;new&gt;           <span class="c"># 변경: remote-name</span>
+git remote set-url &lt;remote-name&gt; &lt;URL&gt;  <span class="c"># 변경: URL</span>
+git remote remove &lt;remote-name&gt;         <span class="c"># 삭제</span>
+
+<span class="c"># push</span>
+git push &lt;remote-name&gt; &lt;branch-name&gt;  <span class="c"># 개별로도 branch-name 가능</span>
+git push &lt;remote-name&gt; &lt;remote-branch-name&gt;:&lt;awesomebranch-name&gt;  <span class="c">#</span>
+
+<span class="c"># fetch</span>
+git fetch &lt;remote-name&gt;   <span class="c"># fetch 로 가져온 &lt;pointer-name&gt;</span>
+git merge &lt;pointer-name&gt;  <span class="c"># &lt;pointer-name&gt; 형식 == &lt;origin/master&gt;</span>
+
+git fetch &lt;remote-name&gt;   <span class="c"># fetch 로 가져온 &lt;pointer-name&gt;</span>
+git checkout <span class="nt">-b</span> &lt;new-branch-name&gt; &lt;remote/pointer-name&gt;  <span class="c"># 새로운 branch 생성</span>
+
+<span class="c"># pull (fetch, merge 를 권장)</span>
+git pull &lt;remote-name&gt;  <span class="c"># 즉시 remote repositoy 에서 가져오기</span>
+
+<span class="c">#  tracking branch</span>
+git checkout <span class="nt">--track</span> &lt;remote-tracking-branch&gt;  <span class="c"># 생성</span>
+git checkout &lt;branch-name&gt;          <span class="c"># 이동, HEAD</span>
+git branch <span class="nt">-u</span> &lt;remote/branch-name&gt;  <span class="c"># 추가, HEAD에 tracking branch</span>
+git branch <span class="nt">-vv</span>                      <span class="c"># 확인, tracking branch</span>
+
+<span class="c"># rebase</span>
+git checkout &lt;topic-branch&gt;  <span class="c"># rebase 시작 방법 1</span>
+git rebase &lt;base-branch&gt;
+
+git rebase &lt;base-branch&gt; &lt;topic-branch&gt;  <span class="c"># rebase시작 방법 2</span>
+
+<span class="c"># rebase 시작, 가운데 건너띄기 방법3</span>
+git rebase <span class="nt">--onto</span> &lt;base-branch&gt; &lt;topic-branch&gt; &lt;topic-branch-topic-branch&gt;
+
+
+git checkout &lt;base-branch&gt;  <span class="c"># rebase 끝, merge</span>
+git merge &lt;topic-branch&gt;
+
+git branch <span class="nt">-d</span> &lt;topic-branch&gt;  <span class="c"># 사용하지 않는 topic branch 삭제</span>
+
+git log <span class="nt">--decorate</span> <span class="nt">--oneline</span>  <span class="c"># 이 때 iss1 이 tag 존재시 iss1이 남아 있음</span>
+
+git pull <span class="nt">--rebase</span>  <span class="c"># pull 하기전에 rebase</span>
+
+</code></pre></div><div class="highlight"><pre><code class="language-bash" data-lang="bash">push <span class="nt">-u</span> &lt;remote-name&gt; &lt;branch-name&gt;  <span class="c"># &lt;remote-name&gt; &lt;- &lt;branch-name&gt;</span>
+</code></pre></div>
+  </div>
+
+<div>
+  <h2 id="branch"><strong>Branch 란?</strong></h2>
+
+<ul>
+<li>
+<p>Commit 완료시</p>
+
+<ul>
+<li>Commit Objects</li>
+<li>메타데이터와 'Root Tree'를 가르키는 Pointer.</li>
+<li>현 Staging Area에 있는 데이터의 스냅샷에 대한 포인터, author 나 커밋 메시지 같은 메타데이터, 이전 커밋에 대한 포인터 등을 포함하는 커밋 개체(커밋 Object)를 저장한다.</li>
+<li>이전 커밋 포인터가 있어서 현재 커밋이 무엇을 기준으로 바뀌었는지를 알 수 있다.</li>
+<li>최초 커밋을 제외한 나머지 커밋은 이전 커밋 포인터가 적어도 하나씩 있고 브랜치를 합친 Merge 커밋 같은 경우에는 이전 커밋 포인터가 여러 개 있다.</li>
+<li>Tree Objects : Files, Directory structure.</li>
+<li>각 Files Blob 객체들</li>
+<li>Blob : 파일을 Stage 하면 Git 저장소에 파일을 저장.</li>
+<li>File 마다 생성됨, CheckSum, SHA-1 로 되어있음.</li>
+<li>최초 commit 시 master 이름의 Branch 생성됨.</li>
+</ul>
+
+<p>'master' Branch 는 특별하지 않다.</p>
+
+<p>git init 명령으로 초기화 때 자동으로 만들어진게 이유가 끝이다.
+- commit 을 만들 때 마다 Branch가 자동으로 가장 마지막 commit 을 가르킴.</p>
+</li>
+</ul>
+
+<h3 id="new-branch">new Branch 생성하기</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">git branch &lt;branch-name&gt;
+</code></pre></div>
+<ul>
+<li><p>branch 는 HEAD 라는 pointer 가 있음. HEAD 는 현재 branch 위치를 가르킴.</p></li>
+<li><p>git branch 시 수동으로 HEAD 를 잡아줘야 함.</p></li>
+<li><p>확인하기</p></li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">  git log <span class="nt">--oneline</span> <span class="nt">--graph</span> <span class="nt">--all</span> <span class="nt">--decorate</span>  <span class="c"># --decorate 를 통해 볼 수 있음</span>
+</code></pre></div>
+<h3 id="branch">Branch 이동하기</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">git checkout &lt;branch-name&gt;
+</code></pre></div>
+<ul>
+<li>
+<p>branch 이동하면 Working Dir의 Files 변경됨 :</p>
+
+<ul>
+<li>브랜치에서 가장 마지막으로 했던 작업 내용으로 변경.</li>
+<li>파일 변경시 문제시 브랜치를 이동 불가능한 경우 브랜치 이동 명령을 수행하지 않음.</li>
+<li>Tracked(unmodified, modified, staged) 만 변경.</li>
+</ul>
+</li>
+<li><p>브랜치를 만들어야 하면 프로젝트를 통째로 복사해야 하는 다른 버전 관리 도구와 Git의 차이는 극명하다. 통째로 복사하는 작업은 프로젝트 크기에 따라 다르겠지만 수십 초에서 수십 분까지 걸린다. 그에 비해 Git은 순식간이다. 게다가 커밋을 할 때마다 이전 커밋의 정보를 저장하기 때문에 Merge 할 때 어디서부터(Merge Base) 합쳐야 하는지 안다.</p></li>
+</ul>
+
+<h2 id="branch-merge"><strong>Branch와 Merge의 기초</strong></h2>
+
+<ul>
+<li>Branch 와 Merge 의 보통의 경우</li>
+</ul>
+
+<ol>
+<li><p>작업중</p></li>
+<li><p>new issue 처리</p></li>
+<li><p>branch</p></li>
+</ol>
+
+<ul>
+<li>Hotfix</li>
+</ul>
+
+<ol>
+<li><p>이전의 Production(운영) 이동</p></li>
+<li><p>create Hotfix branch</p></li>
+<li><p>Fixed Hotfix branch &gt; Move Production &gt; Merge Production</p></li>
+<li><p>다시 작업중인 brach 로 가서 일 진행한다.</p></li>
+</ol>
+
+<h3 id="branch">Branch의 기초</h3>
+
+<ul>
+<li><p>create new Branch, checkout branch 를 동시에 하기
+<code>bash
+git checkout -b &lt;new-branch-name&gt;
+</code></p></li>
+<li><p>branch 삭제
+<code>bash
+$ git branch -d &lt;branch-name&gt;
+</code></p></li>
+</ul>
+
+<h3 id="merge">Merge 의 기초</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git checkout <span class="nt">-b</span> hotfix    <span class="c"># hotfix branch 를 만들면서 동시  checkout 함</span>
+<span class="nv">$ </span>vi hotfix.md
+<span class="nv">$ </span>git commit <span class="nt">-a</span> <span class="nt">-v</span> <span class="nt">-m</span> <span class="s1">'description'</span>
+
+<span class="nv">$ </span>git checkout master    <span class="c"># checkout 으로 master 로 이동해서 기준을 선택하고</span>
+<span class="nv">$ </span>git merge hotfix       <span class="c"># master &lt;- hotfix를 merge 함</span>
+
+Updating 2f54cf3..7531d07
+Fast-forward    <span class="c"># fast-forward Merge 방식</span>
+ hotfix.txt | 1 +
+ 1 file changed, 1 insertion<span class="o">(</span>+<span class="o">)</span>
+ create mode 100644 hotfix.txt
+
+
+<span class="nv">$ </span>git branch <span class="nt">-d</span> hotfix    <span class="c"># 'hotfix' branch delete</span>
+</code></pre></div>
+<ul>
+<li>
+<p>Merge</p>
+
+<ul>
+<li>3-way</li>
+<li>현재 Branch가 가리키는 Commit 이 Merge 할 Branch의 조상이 아닌 경우.</li>
+<li>각 Branch가 가리키는 Commit 두 개와 공통 조상 하나를 사용.</li>
+<li>fast-forward</li>
+<li>Merge 할 브랜치가 가리키는 커밋이 현 브랜치 커밋의 Upstream 브랜치인 경우.</li>
+<li>브랜치 포인터는 최신 커밋으로 이동한다.</li>
+<li>A 브랜치에서 다른 B 브랜치를 Merge 할 때 B가 A 이후의 커밋을 가리키고 있으면 그저 A가 B의 커밋을 가리키게 할 뿐이다.</li>
+</ul>
+</li>
+</ul>
+
+<h3 id="conflict">Conflict(충돌)의 기초</h3>
+
+<ul>
+<li>3-way Merge 실패 : 같은 파일의 한 부분을 동시에 수정하고 Merge 시 발생.</li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git merge &lt;branch-name&gt;
+
+Auto-merging file3.txt
+CONFLICT <span class="o">(</span>content<span class="o">)</span>: Merge conflict <span class="k">in </span>file3.txt
+Automatic merge failed<span class="p">;</span> fix conflicts and <span class="k">then </span>commit the result.
+
+<span class="nv">$ </span>git status
+
+<span class="c"># On branch master</span>
+<span class="c"># Your branch is ahead of 'origin/master' by 11 commits.</span>
+<span class="c">#   (use "git push" to publish your local commits)</span>
+<span class="c">#</span>
+<span class="c"># You have unmerged paths.</span>
+<span class="c">#   (fix conflicts and run "git commit")</span>
+<span class="c">#</span>
+<span class="c"># Unmerged paths:</span>
+<span class="c">#   (use "git add &lt;file&gt;..." to mark resolution)</span>
+<span class="c">#</span>
+<span class="c">#       both modified:      file3.txt</span>
+<span class="c">#</span>
+<span class="c"># Untracked files:</span>
+<span class="c">#   (use "git add &lt;file&gt;..." to include in what will be committed)</span>
+<span class="c">#</span>
+<span class="c">#       .gitignore</span>
+<span class="c">#       file4.txt</span>
+<span class="c">#       file5.txt</span>
+<span class="c">#       logs/</span>
+
+<span class="nv">$ </span>vi file3.txt
+
+1 <span class="o">&lt;&lt;&lt;&lt;&lt;&lt;</span>&lt; HEAD  <span class="c"># current branch의 file3.txt 의 내용, 즉 HEAD 나타냄</span>
+2 file3
+3
+4 1
+5 2
+6 3
+7 <span class="o">=======</span>  <span class="c"># 기준선</span>
+8 <span class="c"># file3.txt  # testing branch의 file3.txt의 내용</span>
+9
+10
+11 testing
+12 <span class="o">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span> testing
+
+<span class="nv">$ </span>git mergetools    <span class="c"># tools=vimdiff 경우 아래 부분을 수정하면 됨</span>
+
+... 수정후 ...
+
+<span class="nv">$ </span>git status  <span class="c"># 다시 확인</span>
+
+<span class="c"># On branch master</span>
+<span class="c"># Your branch is ahead of 'origin/master' by 11 commits.</span>
+<span class="c">#   (use "git push" to publish your local commits)</span>
+<span class="c">#</span>
+<span class="c"># All conflicts fixed but you are still merging.</span>
+<span class="c">#   (use "git commit" to conclude merge)</span>
+<span class="c">#</span>
+<span class="c"># Changes to be committed:   # 상태가 변경되었음</span>
+<span class="c">#</span>
+<span class="c">#       modified:   file3.txt</span>
+
+<span class="nv">$ </span>git commit <span class="nt">-a</span> <span class="nt">-v</span> <span class="nt">-m</span> <span class="s1">'description'</span>
+<span class="nv">$ </span>git log
+
+<span class="k">*</span>   b18c4ce <span class="o">(</span>HEAD, master<span class="o">)</span> merge msater &lt;- testing
+|<span class="se">\</span>
+| <span class="k">*</span> fed0f02 <span class="o">(</span>testing<span class="o">)</span> fixed
+| <span class="k">*</span> aa9a30d testing
+<span class="k">*</span> | 7531d07 <span class="o">[</span>FIXED] hotfix
+| | <span class="k">*</span> 5ced1ec <span class="o">(</span>iss1<span class="o">)</span> <span class="o">[</span>FIXED] iss1
+| |/
+|/|
+<span class="k">*</span> | 2f54cf3 update file3.txt
+|/
+<span class="k">*</span> 806e37c <span class="o">(</span>tag: v1.0<span class="o">)</span> add file3.txt
+<span class="k">*</span> 226ae8b ADD file3.txt
+</code></pre></div>
+<ul>
+<li><p>Unmerged : merge 실패한 목록 표현.</p></li>
+<li>
+<p>충돌시 수동으로 해결해야 함.</p>
+
+<ul>
+<li>git mergetools : 변경가능함</li>
+</ul>
+</li>
+<li><p>Chapter.7 Git 도구 &gt; 고급 Merge 참조 (page.293)</p></li>
+</ul>
+
+<h2 id="part-3ef745405c7c107d"><strong>관리</strong></h2>
+
+<p>branch 목록 보기</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">git branch
+git branch <span class="o">[</span>options]
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: left">Options</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left">-d</td>
+<td style="text-align: left">삭제</td>
+</tr>
+<tr>
+<td style="text-align: left">-D</td>
+<td style="text-align: left">Merge 하지 않은 Branch 삭제하기</td>
+</tr>
+<tr>
+<td style="text-align: left">-v</td>
+<td style="text-align: left">마지막 commit msg 보기</td>
+</tr>
+<tr>
+<td style="text-align: left">--merged</td>
+<td style="text-align: left">merge 된 branch 인지 필터링</td>
+</tr>
+<tr>
+<td style="text-align: left">--no-merged</td>
+<td style="text-align: left">no merge 된 branch 인지 필터링</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="branch-workflow"><strong>Branch Workflow</strong></h2>
+
+<h3 id="long-running-branch">Long-Running Branch</h3>
+<div class="highlight"><pre><code class="language-" data-lang="">c1                     c9    [master]
+ |                     |
+ c2 - c3 - c4 - c5     c8    [devlop]
+                 |     |
+                 c6 - c7     [topic]
+</code></pre></div>
+<ul>
+<li><p>큰 Projects 에서도 자주 사용됨.</p></li>
+<li><p>proposed or pu (proposed updates) : merge 단계가 아닌 것을 우선 merge.</p></li>
+</ul>
+
+<h3 id="topic-branch">Topic Branch</h3>
+
+<ul>
+<li><p>프로젝트 크기에 상관없음.</p></li>
+<li><p>짧은 호흡의 branch.</p></li>
+<li><p>iss1, hotfix 등</p></li>
+<li><p>branch checkout 후 commit을 해야 마지막 저장이라고 생각하면 됨.</p></li>
+</ul>
+
+<h2 id="remote-branch"><strong>Remote Branch</strong></h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">git remote show &lt;remote-name&gt;  <span class="c"># remote Refs 조회</span>
+
+git remote <span class="nt">-v</span>  <span class="c"># 간단하게 보기</span>
+</code></pre></div>
+<ul>
+<li><p>remote Refs : remote repository 에 있는 pointer reference. (branch, tag 등등)</p></li>
+<li><p>보통 Remote Tracking Branch 를 사용.</p></li>
+<li>
+<p>Remote Tracking Branch</p>
+
+<ul>
+<li>리모트 브랜치를 추적하는 브랜치.</li>
+<li>Local 에 있지만 움직일 수 없다.</li>
+<li>remote Server 연결할 때마다 리모트 브랜치에 따라서 자동으로 움직일 뿐. (북마크)</li>
+<li>리모트 저장소에 마지막으로 연결했던 순간에 브랜치가 무슨 커밋을 가리키고 있었는지를 나타낸다.</li>
+<li>리모트 브랜치의 이름은 (remote)/(branch) 형식.</li>
+<li>리모트 저장소 origin의 master 브랜치를 보고 싶다면 origin/master 브랜치 확인.</li>
+</ul>
+</li>
+<li><p>'origin' 의미 없음, 변경가능하나 remote repository branch 위치 파악하기 위해 안하는게 좋을 듯.
+<code>bash
+git clone -o booyah -&gt; booyah/master
+</code></p></li>
+<li><p>Remote Repository 추가하기, fetch로 저장해서 git으로 관리.</p></li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">git remote add &lt;remote-name&gt; &lt;URL&gt;
+git fetch &lt;remote-name&gt;
+
+
+<span class="nv">$ </span>git remote add office http://localhost/mks/office.git
+<span class="c"># office가 origin/master 로 부터 나왔다면 git log 를 통해 연결된게 확인 된다.</span>
+<span class="nv">$ </span>git fetch office
+<span class="nv">$ </span>git log <span class="nt">--all</span> <span class="nt">--decorate</span> <span class="nt">--graph</span> <span class="nt">--oneline</span>
+</code></pre></div>
+<h3 id="push">Push (중요)</h3>
+
+<p>먼저 그룹 및 권한 확인하기. (403 erorr, authority)</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">git push &lt;remote-name&gt; &lt;branch-name&gt;
+
+<span class="c"># 'remote-server-branch-name' != 'local-branch-name' 필요</span>
+git push &lt;remote-name&gt; &lt;branch-name&gt;:&lt;awesomebranch-name&gt;
+
+git push origin serverfix:awesomebranch
+</code></pre></div>
+<ul>
+<li>
+<p>crediential cache : remote 접근때마다 매번 ID/Passwd 입력하지 않기 (v1.8.3.1 명령어가 없음)
+<code>bash
+git config --global credential.helper
+</code></p>
+
+<ul>
+<li>활성화시 Git은 몇 분 동안 입력한 ID 나 비밀번호를 저장.</li>
+<li>자세한 설명은 'Credential 저장소' 를 참고.</li>
+</ul>
+</li>
+<li>
+<p><strong>Fetch (중요)</strong></p>
+
+<ul>
+<li>My Repository 에 branch pointer가 생기는 것.</li>
+<li>적용</li>
+<li>Merge
+<code>bash
+$ git fetch origin            # git fetch &lt;remote-name&gt;
+$ git merge origin/serverfix  # git merge &lt;pointer-name&gt;
+</code>
+</li>
+<li>new Branch (Merge 하지 않고 remote tracking branch에서 시작)
+<code>bash
+# git checkout -b &lt;new-branch-name&gt; &lt;pointer-name&gt;
+$ git checkout -b iss3 origin/iss003
+# git pull origin iss003
+</code>
+</li>
+</ul>
+</li>
+</ul>
+
+<h3 id="branch">Branch 추적</h3>
+
+<ul>
+<li>
+<p>Tracking Branch (= upstream Branch)</p>
+
+<ul>
+<li>Remote Tracking Branch 를 checkout 으로 만든 Branch.</li>
+<li>git push/pull 하면 자동으로 함.</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">git pull  <span class="c"># 자동 merge</span>
+
+<span class="c"># 생성</span>
+git log <span class="nt">--oneline</span> <span class="nt">--decorate</span>                      <span class="c"># 확인 존재유무</span>
+git checkout <span class="nt">--track</span> &lt;remote-tracking-branch&gt;     <span class="c"># 생성</span>
+<span class="c"># 생성 &lt;remote-tracking-branch&gt; -&gt; &lt;new-branch-name&gt;</span>
+git checkout <span class="nt">-b</span> &lt;new-branch-name&gt; &lt;remote-tracking-branch&gt;
+
+<span class="c"># 추적</span>
+git checkout &lt;target-branch-name&gt;       <span class="c"># 이동 &lt;target-branch-name&gt;</span>
+git branch <span class="nt">-u</span> &lt;remote-tracking-branch&gt;  <span class="c"># 생성 &lt;remote-tracking-branch&gt;</span>
+git branch <span class="nt">--set-upstream-to</span><span class="o">=</span>&lt;remote-tracking-branch&gt;  <span class="c"># 위와 동일</span>
+
+<span class="c"># 확인</span>
+git branch <span class="nt">-vv</span>
+
+<span class="c"># 삭제 (사용하지 않을 경우)</span>
+git branch <span class="nt">-d</span> &lt;remote-tracking-branch&gt;
+
+
+<span class="nv">$ </span>git log <span class="nt">--oneline</span> <span class="nt">--decorate</span>
+<span class="nv">$ </span>git checkout <span class="nt">--track</span> origin/iss001
+<span class="nv">$ </span>git checkout iss001
+<span class="nv">$ </span>git branch <span class="nt">--set-upstream-to</span><span class="o">=</span>origin/iss001
+<span class="nv">$ </span>git branch <span class="nt">-vv</span>
+</code></pre></div>
+<h3 id="pull">Pull 하기</h3>
+<div class="highlight"><pre><code class="language-" data-lang="">일반적으로 fetch와 merge 명령을 명시적으로 사용하는 것이
+pull 명령으로 한번에 두 작업을 하는 것보다 낫다.
+</code></pre></div>
+<h3 id="remote-branch-delete">Remote Branch - Delete</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">git push branch <span class="nt">--delete</span> &lt;branch-name&gt;
+</code></pre></div>
+<ul>
+<li><p>Remote Repository 의 Branch 삭제.</p></li>
+<li><p>서버에서 가비지 컬렉터가 동작하지 않는 한 데이터는
+사라지지 않기 때문에 종종 의도치 않게 삭제한 경우에도
+커밋한 데이터를 살릴 수 있다.</p></li>
+<li><p>Example</p></li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git log
+
+<span class="c"># * 985a0a9 (HEAD, branch2/iss2, branch/iss003 iss3, iss2) Update iss2.txt</span>
+<span class="c"># ...</span>
+
+<span class="nv">$ </span>git push branch <span class="nt">--delete</span> iss003
+
+<span class="c"># Username for 'http://localhost': mkkim</span>
+<span class="c"># Password for 'http://mkkim@localhost':</span>
+<span class="c"># To http://localhost/mks/branch2.git</span>
+<span class="c">#  - [deleted]         iss003</span>
+
+<span class="nv">$ </span>git log
+
+<span class="c"># * 985a0a9 (HEAD, branch2/iss2, iss3, iss2) Update iss2.txt</span>
+<span class="c"># ...</span>
+
+<span class="nv">$ </span>git branch <span class="nt">-vv</span>
+
+<span class="c"># iss1   15b9853 [branch2/iss1] update iss1.txt</span>
+<span class="c"># iss2   985a0a9 [branch2/iss2] Update iss2.txt</span>
+<span class="c"># * iss3   985a0a9 [branch2/iss003] Update iss2.txt  &lt;- Tracking Branch?!</span>
+<span class="c"># master b21a755 [branch2/master] Merge branch 'iss1'</span>
+
+</code></pre></div>
+<h2 id="rebase"><strong>Rebase</strong></h2>
+
+<ul>
+<li><p>한 branch에서 다른 branch로 합치는 방법. (Merge, Rebase)</p></li>
+<li><p>차이는 Rebase 는 Branch 를 만들지 않음.</p></li>
+<li><p>master branch 로 merge 하기 전 작업 중인 다른 branch 들을 정리 목적으로 사용.</p></li>
+</ul>
+
+<h3 id="rebase-basic">Rebase Basic</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">git checkout &lt;topic-branch-name&gt;
+git rebase &lt;base-branch-name&gt;
+git checkout &lt;base-branch-name&gt;
+git merge &lt;topic-branch-name&gt;
+git log <span class="nt">--decorate</span> <span class="nt">--oneline</span>  <span class="c"># 이 때 iss1 이 tag 존재시 iss1이 남아 있음.</span>
+
+
+<span class="nv">$ </span>git checkout iss1
+<span class="nv">$ </span>git rebase master
+<span class="nv">$ </span>git checkout master
+<span class="nv">$ </span>git merge iss1
+<span class="nv">$ </span>git log <span class="nt">--decorate</span> <span class="nt">--oneline</span>  <span class="c"># 이 때 iss1 이 tag 존재시 iss1이 남아 있음.</span>
+
+<span class="c"># Tag 존재시</span>
+<span class="nv">$ </span>git log <span class="nt">--decorate</span> <span class="nt">--oneline</span>
+<span class="c"># * 073d13c (HEAD, tag: c4", master, iss1) c4</span>
+<span class="c"># * a2b1670 (tag: c3) c3</span>
+<span class="c"># | * 297b953 (tag: c4) c4</span>
+<span class="c"># |/</span>
+<span class="c"># * e1e72c5 (tag: c2) c2</span>
+<span class="c"># * 54ccb66 (tag: c1) c1</span>
+<span class="c"># * baf09b9 (tag: c0, origin/master, origin/HEAD) new Projects Start!!</span>
+
+<span class="c"># Tag 삭제시</span>
+<span class="nv">$ </span>git tab <span class="nt">--delete</span> c4
+<span class="nv">$ </span>git log <span class="nt">--decorate</span> <span class="nt">--oneline</span>
+<span class="c"># * 073d13c (HEAD, tag: c4", master, iss1) c4</span>
+<span class="c"># * a2b1670 (tag: c3) c3</span>
+<span class="c"># * e1e72c5 (tag: c2) c2</span>
+<span class="c"># * 54ccb66 (tag: c1) c1</span>
+<span class="c"># * baf09b9 (tag: c0, origin/master, origin/HEAD) new Projects Start!!</span>
+</code></pre></div>
+<ul>
+<li>보통 Remote Branch 에 commit 을 깔끔하게 적용하고 싶을 때 사용.</li>
+</ul>
+
+<p>(갈라져 나온 topic branch를 Rebase로 정리해서 master Branch에 merge를 위한 준비)</p>
+
+<ul>
+<li><p>그냥 참여하는 브랜치에서 메인 프로젝트에 Patch를 보낼 준비가 되면 하는 것.</p></li>
+<li><p>이렇게 Rebase 하고 나면 프로젝트 관리자는 어떠한 통합작업도 필요없다.
+그냥 master 브랜치를 Fast-forward 시키면 된다.</p></li>
+<li><p>Rebase 든 Merge 든 최종 결과물은 같고 commit History만 다르다는 것이 중요.</p></li>
+<li><p>Rebase 브랜치의 변경사항을 순서대로 다른 브랜치에 적용하면서 합치고</p></li>
+</ul>
+
+<p>Merge의 경우는 두 브랜치의 최종결과만을 가지고 합친다.</p>
+
+<h3 id="rebase">Rebase 활용</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># --onto : 건너띄어 rebase 하기</span>
+<span class="c"># &lt;base-branch&gt; -&gt; &lt;topic-branch-topic-branch&gt;, pass &lt;topic-branch&gt;</span>
+git rebase <span class="nt">--onto</span> &lt;base-branch&gt; &lt;topic-branch&gt; &lt;topic-branch-topic-branch&gt;
+
+
+<span class="c"># master -&gt; client, 무시 server</span>
+<span class="nv">$ </span>git rebase <span class="nt">--onto</span> master server client
+
+<span class="nv">$ </span>git checkout master
+<span class="nv">$ </span>git merge client
+
+<span class="c"># git rebase &lt;base-branch-name&gt; &lt;topic-branch-name&gt;</span>
+<span class="c"># master -&gt; server</span>
+<span class="nv">$ </span>git rebase master server
+
+<span class="nv">$ </span>git checkout master
+<span class="nv">$ </span>git merge server
+
+<span class="c"># 사용하지 않는 branch 삭제</span>
+<span class="nv">$ </span>git branch <span class="nt">-d</span> client server
+</code></pre></div>
+<h3 id="rebase-risk">Rebase Risk (위험성)</h3>
+
+<ul>
+<li><p>(중요) 이미 Public Repository 에 Push 한 Commit 을 Rebase 하지 마라.</p></li>
+<li><p>Remote Repository 로 보내기 전 Local 에서 Rebase로 commit을 정리해야 함.</p></li>
+</ul>
+
+<h3 id="rebase-rebase">Rebase 한 것을 다시 Rebase 하기</h3>
+
+<ul>
+<li>다른 누군가 내가 한일을 덮어썼다고 하자. 그러면 내가 했던 일이 무엇이고</li>
+</ul>
+
+<p>덮어쓴 내용이 무엇인지 알아내야 한다.</p>
+
+<ul>
+<li>커밋 SHA 체크섬 외에도 Git은 커밋에 Patch 할 내용으로 SHA 체크섬을 한번 더 구한다.</li>
+</ul>
+
+<p>이 값은 'patch-id' 라고 한다.</p>
+
+<ul>
+<li>덮어쓴 커밋을 받아서 그 커밋을 기준으로 Rebase 할 때 Git은 원래 누가 작성한 코드인지 잘 찾아 낸다. 그래서 Patch가 원래대로 잘 적용된다.</li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">git rebase teamone/master
+
+<span class="c"># config</span>
+git config <span class="nt">--global</span> pull.rebase <span class="nb">true
+
+</span>git pull <span class="nt">--rebase</span> &lt;remote-name&gt;
+</code></pre></div>
+<ul>
+<li><p>동료가 생성했던 C4와 C4’ 커밋 내용이 완전히 같을 때만 이렇게 동작된다.</p></li>
+<li><p>커밋 내용이 아예 다르거나 비슷하다면 커밋이 두 개 생긴다(같은 내용이 두
+번 커밋될 수 있기 때문에 깔끔하지 않다).</p></li>
+<li><p>물론 git fetch와 git rebase teamone/master이 두 명령을 직접 순서대로 실행해도 된다.</p></li>
+<li><p>Push 하기 전에 정리하려고 Rebase 하는 것은 괜찮다.</p></li>
+<li><p>또 절대 공개하지 않고 혼자 Rebase 하는 경우도 괜찮다.</p></li>
+<li><p>하지만, 이미 공개하여 사람들이 사용하는 커밋을 Rebase 하면 틀림없이 문제가 생긴다.</p></li>
+<li><p>나중에 후회하지 말고 git pull --rebase.</p></li>
+</ul>
+
+<h3 id="rebase-vs-merge">Rebase vs Merge</h3>
+
+<ul>
+<li><p>History 를 변경하지 말아라.</p></li>
+<li><p>적재적소.</p></li>
+<li><p>Local branch 작업할 때는 History 를 정리하기 위해서 Rebase,</p></li>
+</ul>
+
+<p>Push로 Remote 밖으로 내보낸 Commit 은 절대 Rebase 하지 말아야 한다.</p>
+
+<h2 id="part-67c88d6a6c70c6fa"><strong>요약</strong></h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># log</span>
+git log <span class="nt">--oneline</span> <span class="nt">--graph</span> <span class="nt">--all</span> <span class="nt">--decorate</span>  <span class="c"># 이력의 거의 모든 정보 확인</span>
+
+<span class="c"># merge</span>
+git checkout &lt;base-branch&gt;
+git merge &lt;topic-branch&gt;  <span class="c"># &lt;base-branch&gt;, HEAD &lt;- &lt;topic-branch&gt;</span>
+git mergetools  <span class="c"># 충돌시 해결</span>
+
+<span class="c"># branch</span>
+git branch &lt;branch-name&gt;       <span class="c"># 생성</span>
+git checkout &lt;branch-name&gt;     <span class="c"># 이동 &lt;branch-name&gt; 으로</span>
+git checkout <span class="nt">-b</span> &lt;branch-name&gt;  <span class="c"># 생성 &lt;branch-name&gt;, 이동 &lt;branch-name&gt; 으로</span>
+git branch <span class="nt">-vv</span>       <span class="c"># 목록 확인 (-vv 더 자세히)</span>
+git branch <span class="nt">-d</span>        <span class="c"># 삭제</span>
+git branch <span class="nt">-D</span>        <span class="c"># 강제 삭제</span>
+git branch <span class="nt">--merged</span>  <span class="c"># merge 목록만</span>
+
+<span class="c"># remote</span>
+git remote show &lt;remote-name&gt;           <span class="c"># 보기</span>
+git remote add &lt;new-remote-name&gt; &lt;URL&gt;  <span class="c"># 생성</span>
+git remote rename &lt;old&gt; &lt;new&gt;           <span class="c"># 변경: remote-name</span>
+git remote set-url &lt;remote-name&gt; &lt;URL&gt;  <span class="c"># 변경: URL</span>
+git remote remove &lt;remote-name&gt;         <span class="c"># 삭제</span>
+
+<span class="c"># push</span>
+git push &lt;remote-name&gt; &lt;branch-name&gt;  <span class="c"># 개별로도 branch-name 가능</span>
+git push &lt;remote-name&gt; &lt;remote-branch-name&gt;:&lt;awesomebranch-name&gt;  <span class="c">#</span>
+
+<span class="c"># fetch</span>
+git fetch &lt;remote-name&gt;   <span class="c"># fetch 로 가져온 &lt;pointer-name&gt;</span>
+git merge &lt;pointer-name&gt;  <span class="c"># &lt;pointer-name&gt; 형식 == &lt;origin/master&gt;</span>
+
+git fetch &lt;remote-name&gt;   <span class="c"># fetch 로 가져온 &lt;pointer-name&gt;</span>
+git checkout <span class="nt">-b</span> &lt;new-branch-name&gt; &lt;remote/pointer-name&gt;  <span class="c"># 새로운 branch 생성</span>
+
+<span class="c"># pull (fetch, merge 를 권장)</span>
+git pull &lt;remote-name&gt;  <span class="c"># 즉시 remote repositoy 에서 가져오기</span>
+
+<span class="c">#  tracking branch</span>
+git checkout <span class="nt">--track</span> &lt;remote-tracking-branch&gt;  <span class="c"># 생성</span>
+git checkout &lt;branch-name&gt;          <span class="c"># 이동, HEAD</span>
+git branch <span class="nt">-u</span> &lt;remote/branch-name&gt;  <span class="c"># 추가, HEAD에 tracking branch</span>
+git branch <span class="nt">-vv</span>                      <span class="c"># 확인, tracking branch</span>
+
+<span class="c"># rebase</span>
+git checkout &lt;topic-branch&gt;  <span class="c"># rebase 시작 방법 1</span>
+git rebase &lt;base-branch&gt;
+
+git rebase &lt;base-branch&gt; &lt;topic-branch&gt;  <span class="c"># rebase시작 방법 2</span>
+
+<span class="c"># rebase 시작, 가운데 건너띄기 방법3</span>
+git rebase <span class="nt">--onto</span> &lt;base-branch&gt; &lt;topic-branch&gt; &lt;topic-branch-topic-branch&gt;
+
+
+git checkout &lt;base-branch&gt;  <span class="c"># rebase 끝, merge</span>
+git merge &lt;topic-branch&gt;
+
+git branch <span class="nt">-d</span> &lt;topic-branch&gt;  <span class="c"># 사용하지 않는 topic branch 삭제</span>
+
+git log <span class="nt">--decorate</span> <span class="nt">--oneline</span>  <span class="c"># 이 때 iss1 이 tag 존재시 iss1이 남아 있음</span>
+
+git pull <span class="nt">--rebase</span>  <span class="c"># pull 하기전에 rebase</span>
+
+</code></pre></div><div class="highlight"><pre><code class="language-bash" data-lang="bash">push <span class="nt">-u</span> &lt;remote-name&gt; &lt;branch-name&gt;  <span class="c"># &lt;remote-name&gt; &lt;- &lt;branch-name&gt;</span>
+</code></pre></div>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

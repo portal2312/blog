@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>GitLab Install | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="GitLab Install" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Ubuntu" />
+<meta property="og:description" content="Ubuntu" />
+<link rel="canonical" href="http://localhost:4000/blog/docs/develop/VCS/GitLab/install.html" />
+<meta property="og:url" content="http://localhost:4000/blog/docs/develop/VCS/GitLab/install.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-06T09:31:12+09:00" />
+<script type="application/ld+json">
+{"description":"Ubuntu","headline":"GitLab Install","dateModified":"2019-11-06T09:31:12+09:00","datePublished":"2019-11-06T09:31:12+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/docs/develop/VCS/GitLab/install.html"},"url":"http://localhost:4000/blog/docs/develop/VCS/GitLab/install.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>GitLab Install</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#ubuntu">Ubuntu</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#1-install-and-configure-the-necessary-dependencies">1. Install and configure the necessary dependencies</a></li>
+<li class="toc-entry toc-h3"><a href="#2-add-the-gitlab-package-repository-and-install-the-package">2. Add the GitLab package repository and install the package</a></li>
+<li class="toc-entry toc-h3"><a href="#3-browse-to-the-hostname-and-login">3. Browse to the hostname and login</a></li>
+<li class="toc-entry toc-h3"><a href="#4-set-up-your-communication-preferences">4. Set up your communication preferences</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#except">Except</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#could-not-find-gem-underscore-rails-1-8-in-any-of-the-gem-sources-listed-in-your-gemfile-or-available-on-this-machine">Could not find gem &#39;underscore-rails (~&gt; 1.8)&#39; in any of the gem sources listed in your Gemfile or available on this machine.</a></li>
+<li class="toc-entry toc-h3"><a href="#tmp-s-pgsql-5432">&quot;/tmp/.s.PGSQL.5432&quot; 유닉스 도메인 소켓 접근이 가능한지 살펴보십시오.</a></li>
+<li class="toc-entry toc-h3"><a href="#failed-failed-to-connect-to-internal-api-gitlab-shell-self-check-failed">FAILED: Failed to connect to internal API gitlab-shell self-check failed</a></li>
+<li class="toc-entry toc-h3"><a href="#sidekiq">Sidekiq</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#reference">Reference</a></li>
+</ul><h2 id="ubuntu">
+<a class="anchor" href="#ubuntu" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ubuntu</h2>
+
+<p><a href="https://about.gitlab.com/installation/#ubuntu">https://about.gitlab.com/installation/#ubuntu</a></p>
+
+<h3 id="1-install-and-configure-the-necessary-dependencies">
+<a class="anchor" href="#1-install-and-configure-the-necessary-dependencies" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. Install and configure the necessary dependencies</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">sudo </span>apt-get update
+<span class="nb">sudo </span>apt-get <span class="nb">install</span> <span class="nt">-y</span> curl openssh-server ca-certificates
+</code></pre></div>
+<p>postfix: GitLab 이 default 로 사용하는 SMTP server</p>
+
+<p>외부 SMTP server 설정: <a href="https://docs.gitlab.com/omnibus/settings/smtp.html">https://docs.gitlab.com/omnibus/settings/smtp.html</a></p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">sudo </span>apt-get <span class="nb">install</span> <span class="nt">-y</span> postfix
+</code></pre></div>
+<p>Postfix 설치 구성 화면
+- <code>인터넷 사이트</code> 선택하기.
+- <code>메일 이름</code>에 서버의 외부 DNS를 사용 (<code>Enter</code> key).
+- 추가 화면이 나타나면 계속 (<code>Enter</code> key)를 눌러 기본값을 적용하기.</p>
+
+<h3 id="2-add-the-gitlab-package-repository-and-install-the-package">
+<a class="anchor" href="#2-add-the-gitlab-package-repository-and-install-the-package" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. Add the GitLab package repository and install the package</h3>
+
+<p>GitLab 패키지 저장소를 추가하십시오:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | <span class="nb">sudo </span>bash
+</code></pre></div>
+<p>그런 다음 GitLab 패키지를 설치하십시오.
+<code>http://gitlab.example.com</code> 을 GitLab 인스턴스에 접근하고자하는 URL로 변경하십시오.
+설치가 자동으로 해당 URL에서 GitLab을 구성하고 시작합니다.
+HTTPS 는 설치 후 <a href="https://docs.gitlab.com/omnibus/settings/nginx.html#enable-https">additional configuration</a>이 필요합니다.</p>
+
+<h3 id="3-browse-to-the-hostname-and-login">
+<a class="anchor" href="#3-browse-to-the-hostname-and-login" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. Browse to the hostname and login</h3>
+
+<p>처음 방문하면 비밀번호 재설정 화면으로 리디렉션됩니다.
+초기 관리자 계정에 대한 비밀번호를 입력하면 로그인 화면으로 다시 리디렉션됩니다.
+기본 계정의 사용자 이름 <code>root</code> 를 사용하여 로그인하십시오.</p>
+
+<p><a href="https://docs.gitlab.com/omnibus/README.html#installation-and-configuration-using-omnibus-package">설치 및 구성에 대한 자세한 지침은 설명서</a>를 참조하십시오.</p>
+
+<h3 id="4-set-up-your-communication-preferences">
+<a class="anchor" href="#4-set-up-your-communication-preferences" aria-hidden="true"><span class="octicon octicon-link"></span></a>4. Set up your communication preferences</h3>
+
+<p><em>통신 환경 설정하기</em></p>
+
+<p>이메일 구독 환경 설정 센터를 방문하여 귀하와 연락할 시기를 알려주십시오.
+우리는 당신에게 이메일을 보내는 방법과 빈도를 완벽하게 통제 할 수 있도록 명시적인 이메일 옵트 인 정책을 가지고 있습니다.</p>
+
+<p>한 달에 두 번, 우리는 새로운 기능, 통합, 문서 및 개발자 팀의 배경 이야기를 포함하여 알아야 할 GitLab 뉴스를 발송합니다.
+버그 및 시스템 성능과 관련된 치명적인 보안 업데이트를 원하시면 전용 보안 뉴스 레터에 가입하십시오.</p>
+
+<blockquote>
+<p>중요 정보 : 보안 뉴스 레터를 수신하지 않으면 보안 경고가 수신되지 않습니다.</p>
+</blockquote>
+
+<hr>
+
+<h2 id="except">
+<a class="anchor" href="#except" aria-hidden="true"><span class="octicon octicon-link"></span></a>Except</h2>
+
+<h3 id="could-not-find-gem-underscore-rails-1-8-in-any-of-the-gem-sources-listed-in-your-gemfile-or-available-on-this-machine">
+<a class="anchor" href="#could-not-find-gem-underscore-rails-1-8-in-any-of-the-gem-sources-listed-in-your-gemfile-or-available-on-this-machine" aria-hidden="true"><span class="octicon octicon-link"></span></a>Could not find gem 'underscore-rails (~&gt; 1.8)' in any of the gem sources listed in your Gemfile or available on this machine.</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>su -
+<span class="nv">$ </span>apt-get <span class="nb">install </span>gitlab
+
+패키지를 미리 설정하는 중입니다...
+Selecting previously unselected package gitlab.
+<span class="o">(</span>데이터베이스 읽는중 ...현재 757238개의 파일과 디렉터리가 설치되어 있습니다.<span class="o">)</span>
+Preparing to unpack .../gitlab_8.13.11+dfsg-8_all.deb ...
+Unpacking gitlab <span class="o">(</span>8.13.11+dfsg-8<span class="o">)</span> ...
+Processing triggers <span class="k">for </span>ureadahead <span class="o">(</span>0.100.0-19<span class="o">)</span> ...
+gitlab <span class="o">(</span>8.13.11+dfsg-8<span class="o">)</span> 설정하는 중입니다 ...
+<span class="nv">gitlab_user</span><span class="o">=</span>gitlab
+Creating/updating gitlab user account...
+Making gitlab owner of /var/lib/gitlab...
+Could not find gem <span class="s1">'underscore-rails (~&gt; 1.8)'</span> <span class="k">in </span>any of the gem sources listed
+<span class="k">in </span>your Gemfile or available on this machine.
+dpkg: error processing package gitlab <span class="o">(</span><span class="nt">--configure</span><span class="o">)</span>:
+ 설치한 post-installation 스크립트 하위 프로세스가 오류 1번을 리턴했습니다
+Processing triggers <span class="k">for </span>systemd <span class="o">(</span>232-21ubuntu7.1<span class="o">)</span> ...
+처리하는데 오류가 발생했습니다:
+ gitlab
+E: Sub-process /usr/bin/dpkg returned an error code <span class="o">(</span>1<span class="o">)</span>
+root@mkkimpc:~# <span class="nb">cd</span> /varlib
+<span class="nt">-su</span>: <span class="nb">cd</span>: /varlib: 그런 파일이나 디렉터리가 없습니다
+
+</code></pre></div>
+<p>해결:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">sudo </span>gem <span class="nb">install </span>underscore-rails
+
+Fetching: underscore-rails-1.8.3.gem <span class="o">(</span>100%<span class="o">)</span>
+Successfully installed underscore-rails-1.8.3
+Parsing documentation <span class="k">for </span>underscore-rails-1.8.3
+Installing ri documentation <span class="k">for </span>underscore-rails-1.8.3
+Done installing documentation <span class="k">for </span>underscore-rails after 0 seconds
+1 gem installed
+</code></pre></div>
+<h3 id="tmp-s-pgsql-5432">
+<a class="anchor" href="#tmp-s-pgsql-5432" aria-hidden="true"><span class="octicon octicon-link"></span></a>"/tmp/.s.PGSQL.5432" 유닉스 도메인 소켓 접근이 가능한지 살펴보십시오.</h3>
+<div class="highlight"><pre><code class="language-" data-lang="">Create database if not present
+psql: 서버에 연결할 수 없음: 그런 파일이나 디렉터리가 없습니다
+        로컬호스트에 서버가 가동 중인지,
+        "/tmp/.s.PGSQL.5432" 유닉스 도메인 소켓 접근이 가능한지 살펴보십시오.
+createdb: template1 데이터베이스에 연결 할 수 없음: 서버에 연결할 수 없음: 그런 파일이나 디렉터리가 없습니다
+        로컬호스트에 서버가 가동 중인지,
+        "/tmp/.s.PGSQL.5432" 유닉스 도메인 소켓 접근이 가능한지 살펴보십시오.
+dpkg: error processing package gitlab (--configure):
+ 설치한 post-installation 스크립트 하위 프로세스가 오류 1번을 리턴했습니다
+처리하는데 오류가 발생했습니다:
+ gitlab
+E: Sub-process /usr/bin/dpkg returned an error code (1)
+</code></pre></div>
+<p>해결:</p>
+
+<ul>
+<li>postgresql 삭제후 재설치</li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">  <span class="nv">$ </span><span class="nb">sudo </span>apt-get <span class="nt">--purge</span> remove postgresql<span class="k">*</span>
+</code></pre></div>
+<ul>
+<li>postgresql start 이후 /tmp/postgresql/.s.PGSQL.5432 로 구동되었는지 확인하기</li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">  <span class="nv">$ </span>netstat <span class="nt">-anp</span> | <span class="nb">grep </span>postgres
+
+  tcp        0      0 0.0.0.0:5432            0.0.0.0:<span class="k">*</span>               LISTEN      31134/postgres
+  tcp6       0      0 :::5432                 :::<span class="k">*</span>                    LISTEN      31134/postgres
+  udp        0      0 127.0.0.1:36326         127.0.0.1:36326         ESTABLISHED 31134/postgres
+  unix  2      <span class="o">[</span> ACC <span class="o">]</span>     STREAM     LISTENING     4712383  31134/postgres       /var/run/postgresql/.s.PGSQL.5432
+</code></pre></div>
+<p>해결:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">  <span class="nv">$ </span>su - postgres
+  <span class="nv">$ </span><span class="nb">ln</span> <span class="nt">-s</span> /var/run/postgresql/.s.PGSQL.5432 /tmp/.s.PGSQL.5432
+</code></pre></div>
+<ul>
+<li>
+<code>/lib/systemd/system/postgresql@.service</code> 설정 정보 확인하기</li>
+</ul>
+
+<h3 id="failed-failed-to-connect-to-internal-api-gitlab-shell-self-check-failed">
+<a class="anchor" href="#failed-failed-to-connect-to-internal-api-gitlab-shell-self-check-failed" aria-hidden="true"><span class="octicon octicon-link"></span></a>FAILED: Failed to connect to internal API gitlab-shell self-check failed</h3>
+<div class="highlight"><pre><code class="language-" data-lang="">Running /usr/share/gitlab-shell/bin/check
+Check GitLab API access: FAILED: Failed to connect to internal API gitlab-shell self-check failed
+  Try fixing it:
+  Make sure GitLab is running;
+  Check the gitlab-shell configuration file:
+  sudo -u gitlab -H editor /usr/share/gitlab-shell/config.yml
+  Please fix the error above and rerun the checks.
+
+Checking GitLab Shell ... Finished
+</code></pre></div>
+<h3 id="sidekiq">
+<a class="anchor" href="#sidekiq" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sidekiq</h3>
+<div class="highlight"><pre><code class="language-" data-lang="">Checking Sidekiq ...
+
+Running? ... no
+  Try fixing it:
+  sudo -u gitlab -H RAILS_ENV=production bin/background_jobs start
+  For more information see:
+  doc/install/installation.md in section "Install Init Script"
+  see log/sidekiq.log for possible errors
+  Please fix the error above and rerun the checks.
+
+Checking Sidekiq ... Finished
+</code></pre></div>
+<hr>
+
+<h2 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+<p><a href="https://about.gitlab.com/installation/#ubuntu">https://about.gitlab.com/installation/#ubuntu</a></p>
+
+  </div>
+
+<div>
+  <h2 id="ubuntu">Ubuntu</h2>
+
+<p><a href="https://about.gitlab.com/installation/#ubuntu" rel="nofollow" target="_blank">https://about.gitlab.com/installation/#ubuntu</a></p>
+
+<h3 id="1-install-and-configure-the-necessary-dependencies">1. Install and configure the necessary dependencies</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">sudo </span>apt-get update
+<span class="nb">sudo </span>apt-get <span class="nb">install</span> <span class="nt">-y</span> curl openssh-server ca-certificates
+</code></pre></div>
+<p>postfix: GitLab 이 default 로 사용하는 SMTP server</p>
+
+<p>외부 SMTP server 설정: <a href="https://docs.gitlab.com/omnibus/settings/smtp.html" rel="nofollow" target="_blank">https://docs.gitlab.com/omnibus/settings/smtp.html</a></p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">sudo </span>apt-get <span class="nb">install</span> <span class="nt">-y</span> postfix
+</code></pre></div>
+<p>Postfix 설치 구성 화면
+- <code>인터넷 사이트</code> 선택하기.
+- <code>메일 이름</code>에 서버의 외부 DNS를 사용 (<code>Enter</code> key).
+- 추가 화면이 나타나면 계속 (<code>Enter</code> key)를 눌러 기본값을 적용하기.</p>
+
+<h3 id="2-add-the-gitlab-package-repository-and-install-the-package">2. Add the GitLab package repository and install the package</h3>
+
+<p>GitLab 패키지 저장소를 추가하십시오:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | <span class="nb">sudo </span>bash
+</code></pre></div>
+<p>그런 다음 GitLab 패키지를 설치하십시오.
+<code>http://gitlab.example.com</code> 을 GitLab 인스턴스에 접근하고자하는 URL로 변경하십시오.
+설치가 자동으로 해당 URL에서 GitLab을 구성하고 시작합니다.
+HTTPS 는 설치 후 <a href="https://docs.gitlab.com/omnibus/settings/nginx.html#enable-https" rel="nofollow" target="_blank">additional configuration</a>이 필요합니다.</p>
+
+<h3 id="3-browse-to-the-hostname-and-login">3. Browse to the hostname and login</h3>
+
+<p>처음 방문하면 비밀번호 재설정 화면으로 리디렉션됩니다.
+초기 관리자 계정에 대한 비밀번호를 입력하면 로그인 화면으로 다시 리디렉션됩니다.
+기본 계정의 사용자 이름 <code>root</code> 를 사용하여 로그인하십시오.</p>
+
+<p><a href="https://docs.gitlab.com/omnibus/README.html#installation-and-configuration-using-omnibus-package" rel="nofollow" target="_blank">설치 및 구성에 대한 자세한 지침은 설명서</a>를 참조하십시오.</p>
+
+<h3 id="4-set-up-your-communication-preferences">4. Set up your communication preferences</h3>
+
+<p><em>통신 환경 설정하기</em></p>
+
+<p>이메일 구독 환경 설정 센터를 방문하여 귀하와 연락할 시기를 알려주십시오.
+우리는 당신에게 이메일을 보내는 방법과 빈도를 완벽하게 통제 할 수 있도록 명시적인 이메일 옵트 인 정책을 가지고 있습니다.</p>
+
+<p>한 달에 두 번, 우리는 새로운 기능, 통합, 문서 및 개발자 팀의 배경 이야기를 포함하여 알아야 할 GitLab 뉴스를 발송합니다.
+버그 및 시스템 성능과 관련된 치명적인 보안 업데이트를 원하시면 전용 보안 뉴스 레터에 가입하십시오.</p>
+
+<blockquote>
+<p>중요 정보 : 보안 뉴스 레터를 수신하지 않으면 보안 경고가 수신되지 않습니다.</p>
+</blockquote>
+
+<hr>
+
+<h2 id="except">Except</h2>
+
+<h3 id="could-not-find-gem-underscore-rails-1-8-in-any-of-the-gem-sources-listed-in-your-gemfile-or-available-on-this-machine">Could not find gem 'underscore-rails (~&gt; 1.8)' in any of the gem sources listed in your Gemfile or available on this machine.</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>su -
+<span class="nv">$ </span>apt-get <span class="nb">install </span>gitlab
+
+패키지를 미리 설정하는 중입니다...
+Selecting previously unselected package gitlab.
+<span class="o">(</span>데이터베이스 읽는중 ...현재 757238개의 파일과 디렉터리가 설치되어 있습니다.<span class="o">)</span>
+Preparing to unpack .../gitlab_8.13.11+dfsg-8_all.deb ...
+Unpacking gitlab <span class="o">(</span>8.13.11+dfsg-8<span class="o">)</span> ...
+Processing triggers <span class="k">for </span>ureadahead <span class="o">(</span>0.100.0-19<span class="o">)</span> ...
+gitlab <span class="o">(</span>8.13.11+dfsg-8<span class="o">)</span> 설정하는 중입니다 ...
+<span class="nv">gitlab_user</span><span class="o">=</span>gitlab
+Creating/updating gitlab user account...
+Making gitlab owner of /var/lib/gitlab...
+Could not find gem <span class="s1">'underscore-rails (~&gt; 1.8)'</span> <span class="k">in </span>any of the gem sources listed
+<span class="k">in </span>your Gemfile or available on this machine.
+dpkg: error processing package gitlab <span class="o">(</span><span class="nt">--configure</span><span class="o">)</span>:
+ 설치한 post-installation 스크립트 하위 프로세스가 오류 1번을 리턴했습니다
+Processing triggers <span class="k">for </span>systemd <span class="o">(</span>232-21ubuntu7.1<span class="o">)</span> ...
+처리하는데 오류가 발생했습니다:
+ gitlab
+E: Sub-process /usr/bin/dpkg returned an error code <span class="o">(</span>1<span class="o">)</span>
+root@mkkimpc:~# <span class="nb">cd</span> /varlib
+<span class="nt">-su</span>: <span class="nb">cd</span>: /varlib: 그런 파일이나 디렉터리가 없습니다
+
+</code></pre></div>
+<p>해결:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">sudo </span>gem <span class="nb">install </span>underscore-rails
+
+Fetching: underscore-rails-1.8.3.gem <span class="o">(</span>100%<span class="o">)</span>
+Successfully installed underscore-rails-1.8.3
+Parsing documentation <span class="k">for </span>underscore-rails-1.8.3
+Installing ri documentation <span class="k">for </span>underscore-rails-1.8.3
+Done installing documentation <span class="k">for </span>underscore-rails after 0 seconds
+1 gem installed
+</code></pre></div>
+<h3 id="tmp-s-pgsql-5432">"/tmp/.s.PGSQL.5432" 유닉스 도메인 소켓 접근이 가능한지 살펴보십시오.</h3>
+<div class="highlight"><pre><code class="language-" data-lang="">Create database if not present
+psql: 서버에 연결할 수 없음: 그런 파일이나 디렉터리가 없습니다
+        로컬호스트에 서버가 가동 중인지,
+        "/tmp/.s.PGSQL.5432" 유닉스 도메인 소켓 접근이 가능한지 살펴보십시오.
+createdb: template1 데이터베이스에 연결 할 수 없음: 서버에 연결할 수 없음: 그런 파일이나 디렉터리가 없습니다
+        로컬호스트에 서버가 가동 중인지,
+        "/tmp/.s.PGSQL.5432" 유닉스 도메인 소켓 접근이 가능한지 살펴보십시오.
+dpkg: error processing package gitlab (--configure):
+ 설치한 post-installation 스크립트 하위 프로세스가 오류 1번을 리턴했습니다
+처리하는데 오류가 발생했습니다:
+ gitlab
+E: Sub-process /usr/bin/dpkg returned an error code (1)
+</code></pre></div>
+<p>해결:</p>
+
+<ul>
+<li>postgresql 삭제후 재설치</li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">  <span class="nv">$ </span><span class="nb">sudo </span>apt-get <span class="nt">--purge</span> remove postgresql<span class="k">*</span>
+</code></pre></div>
+<ul>
+<li>postgresql start 이후 /tmp/postgresql/.s.PGSQL.5432 로 구동되었는지 확인하기</li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">  <span class="nv">$ </span>netstat <span class="nt">-anp</span> | <span class="nb">grep </span>postgres
+
+  tcp        0      0 0.0.0.0:5432            0.0.0.0:<span class="k">*</span>               LISTEN      31134/postgres
+  tcp6       0      0 :::5432                 :::<span class="k">*</span>                    LISTEN      31134/postgres
+  udp        0      0 127.0.0.1:36326         127.0.0.1:36326         ESTABLISHED 31134/postgres
+  unix  2      <span class="o">[</span> ACC <span class="o">]</span>     STREAM     LISTENING     4712383  31134/postgres       /var/run/postgresql/.s.PGSQL.5432
+</code></pre></div>
+<p>해결:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">  <span class="nv">$ </span>su - postgres
+  <span class="nv">$ </span><span class="nb">ln</span> <span class="nt">-s</span> /var/run/postgresql/.s.PGSQL.5432 /tmp/.s.PGSQL.5432
+</code></pre></div>
+<ul>
+<li>
+<code>/lib/systemd/system/postgresql@.service</code> 설정 정보 확인하기</li>
+</ul>
+
+<h3 id="failed-failed-to-connect-to-internal-api-gitlab-shell-self-check-failed">FAILED: Failed to connect to internal API gitlab-shell self-check failed</h3>
+<div class="highlight"><pre><code class="language-" data-lang="">Running /usr/share/gitlab-shell/bin/check
+Check GitLab API access: FAILED: Failed to connect to internal API gitlab-shell self-check failed
+  Try fixing it:
+  Make sure GitLab is running;
+  Check the gitlab-shell configuration file:
+  sudo -u gitlab -H editor /usr/share/gitlab-shell/config.yml
+  Please fix the error above and rerun the checks.
+
+Checking GitLab Shell ... Finished
+</code></pre></div>
+<h3 id="sidekiq">Sidekiq</h3>
+<div class="highlight"><pre><code class="language-" data-lang="">Checking Sidekiq ...
+
+Running? ... no
+  Try fixing it:
+  sudo -u gitlab -H RAILS_ENV=production bin/background_jobs start
+  For more information see:
+  doc/install/installation.md in section "Install Init Script"
+  see log/sidekiq.log for possible errors
+  Please fix the error above and rerun the checks.
+
+Checking Sidekiq ... Finished
+</code></pre></div>
+<hr>
+
+<h2 id="reference">Reference</h2>
+
+<p><a href="https://about.gitlab.com/installation/#ubuntu" rel="nofollow" target="_blank">https://about.gitlab.com/installation/#ubuntu</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

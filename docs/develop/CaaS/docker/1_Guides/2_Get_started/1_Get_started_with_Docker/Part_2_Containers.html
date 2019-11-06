@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Part 2 - Containers | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Part 2 - Containers" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Prerequisites" />
+<meta property="og:description" content="Prerequisites" />
+<link rel="canonical" href="http://localhost:4000/blog/docs/develop/CaaS/docker/1_Guides/2_Get_started/1_Get_started_with_Docker/Part_2_Containers.html" />
+<meta property="og:url" content="http://localhost:4000/blog/docs/develop/CaaS/docker/1_Guides/2_Get_started/1_Get_started_with_Docker/Part_2_Containers.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-06T09:31:12+09:00" />
+<script type="application/ld+json">
+{"description":"Prerequisites","headline":"Part 2 - Containers","dateModified":"2019-11-06T09:31:12+09:00","datePublished":"2019-11-06T09:31:12+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/docs/develop/CaaS/docker/1_Guides/2_Get_started/1_Get_started_with_Docker/Part_2_Containers.html"},"url":"http://localhost:4000/blog/docs/develop/CaaS/docker/1_Guides/2_Get_started/1_Get_started_with_Docker/Part_2_Containers.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Part 2 - Containers</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#prerequisites">Prerequisites</a></li>
+<li class="toc-entry toc-h2"><a href="#introduction">Introduction</a></li>
+<li class="toc-entry toc-h2"><a href="#you-new-development-environment">You new development environment</a></li>
+<li class="toc-entry toc-h2"><a href="#define-a-container-with-a-dockerfile">Define a container with a Dockerfile</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#dockerfile">Dockerfile</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#the-app-itself">The app itself</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#requirements-txt">requirements.txt</a></li>
+<li class="toc-entry toc-h3"><a href="#app-py">app.py</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#build-the-app">Build the app</a></li>
+<li class="toc-entry toc-h2"><a href="#run-the-app">Run the app</a></li>
+<li class="toc-entry toc-h2"><a href="#share-your-image">Share your image</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#log-in-with-your-docker-id">Log in with your Docker ID</a></li>
+<li class="toc-entry toc-h3"><a href="#tag-the-image">Tag the image</a></li>
+<li class="toc-entry toc-h3"><a href="#publish-the-image">Publish the image</a></li>
+<li class="toc-entry toc-h3"><a href="#pull-and-run-the-image-from-the-remote-repository">Pull and run the image from the remote repository</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#conclusion-of-part-2">Conclusion of part 2</a></li>
+<li class="toc-entry toc-h2"><a href="#reference">Reference</a></li>
+</ul><h2 id="prerequisites">
+<a class="anchor" href="#prerequisites" aria-hidden="true"><span class="octicon octicon-link"></span></a>Prerequisites</h2>
+
+<ul>
+<li>Docker 버전 1.13 이상을 설치하십시오</li>
+<li>Part 1 읽으십시오.</li>
+<li>
+<p>환경을 신속하게 테스트하여 모든 설정이 완료되었는지 확인하십시오.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">docker run hello-world
+</code></pre></div>
+</li>
+</ul>
+
+<hr>
+
+<h2 id="introduction">
+<a class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h2>
+
+<p>Docker 방식으로 앱을 제작할 때입니다.
+우리는 이 응용 프로그램의 계층 구조의 맨 아래부터 시작할 것입니다.
+이 응용 프로그램은 컨테이너이며, 이 페이지에서 다루고 있습니다.
+이 레벨 위에는 Part 3에서 다루는 컨테이너가 프로덕션 환경에서 작동하는 방식을 정의하는 서비스가 있습니다.
+마지막으로 최상위 레벨에는 스택 (Part 5)의 모든 서비스의 상호 작용을 정의하는 스택이 있습니다.</p>
+
+<ul>
+<li>Stack</li>
+<li>Services</li>
+<li>
+<strong>Container</strong> (you are here)</li>
+</ul>
+
+<hr>
+
+<h2 id="you-new-development-environment">
+<a class="anchor" href="#you-new-development-environment" aria-hidden="true"><span class="octicon octicon-link"></span></a>You new development environment</h2>
+
+<p>과거에는 Python 응용 프로그램을 작성하기 시작한 경우 비즈니스의 첫 번째 순서는 Python 런타임을 시스템에 설치하는 것이 었습니다.
+하지만, 이는 앱이 예상대로 실행되기 위해서는 컴퓨터 환경이 있어야 하는 상황을 만듭니다.
+귀하의 application 을 실행하는 서버에 대해.</p>
+
+<p>Docker를 사용하면 이식 가능한 Python 런타임을 이미지로 가져올 수 있으며 설치가 필요 없습니다.
+그런 다음 빌드는 앱 코드와 함께 기본 Python 이미지를 포함 할 수 있으므로 앱, 종속성 및 런타임이 함께 ​​여행 할 수 있습니다.</p>
+
+<p>이 휴대용 이미지는 <code>Dockerfile</code> 이라고하는 무언가에 의해 정의됩니다.</p>
+
+<hr>
+
+<h2 id="define-a-container-with-a-dockerfile">
+<a class="anchor" href="#define-a-container-with-a-dockerfile" aria-hidden="true"><span class="octicon octicon-link"></span></a>Define a container with a <code>Dockerfile</code>
+</h2>
+
+<p><code>Dockerfile</code> 은 Container 내부의 환경을 정의합니다.</p>
+
+<p>네트워킹 인터페이스 및 디스크 드라이브와 같은 리소스에 대한 액세스는 이 환경에서 가상화됩니다.</p>
+
+<p>나머지 시스템과 격리되어 있으므로 포트를 외부 세계에 매핑해야 합니다.</p>
+
+<p>그리고 해당 환경에 "복사"할 파일에 대해 구체적으로 설명하십시오.</p>
+
+<p>그러나 이 작업을 수행하면 이 <code>Dockerfile</code> 에 정의된 앱 빌드가 어디서나 똑같이 작동합니다.</p>
+
+<h3 id="dockerfile">
+<a class="anchor" href="#dockerfile" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>Dockerfile</code>
+</h3>
+
+<p>빈 디렉토리를 만듭니다.
+디렉토리 (<code>cd</code>)를 새 디렉토리로 변경하고 <code>Dockerfile</code> 이라는 파일을 작성한 후 다음 내용을 해당 파일에 복사하여 붙여넣고 저장하십시오.
+새로운 Dockerfile의 각 문장을 설명하는 주석을 기록하십시오.</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># Use an official Python runtime as a parent image
+</span><span class="n">FROM</span> <span class="n">python</span><span class="p">:</span><span class="mf">2.7</span><span class="o">-</span><span class="n">slim</span>
+
+<span class="c1"># Set the working directory to /app
+</span><span class="n">WORKDIR</span> <span class="o">/</span><span class="n">app</span>
+
+<span class="c1"># Copy the current directory contents into the container at /app
+</span><span class="n">ADD</span> <span class="o">.</span> <span class="o">/</span><span class="n">app</span>
+
+<span class="c1"># Install any needed packages specified in requirements.txt
+</span><span class="n">RUN</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+
+<span class="c1"># Make port 80 available to the world outside this container
+</span><span class="n">EXPOSE</span> <span class="mi">80</span>
+
+<span class="c1"># Define environment variable
+</span><span class="n">ENV</span> <span class="n">NAME</span> <span class="n">World</span>
+
+<span class="c1"># Run app.py when the container launches
+</span><span class="n">CMD</span> <span class="p">[</span><span class="s">"python"</span><span class="p">,</span> <span class="s">"app.py"</span><span class="p">]</span>
+</code></pre></div>
+<blockquote>
+<p>프록시 서버를 사용하고 있습니까?</p>
+
+<p>프록시 서버는 일단 실행되면 웹 응용 프로그램에 대한 연결을 차단할 수 있습니다.
+프록시 서버를 사용하는 경우 <code>ENV</code> 명령을 사용하여 프록시 서버의 호스트와 포트를 지정하여 다음 행을 Dockerfile에 추가하십시오.</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># Set proxy server, replace host:port with values for your servers
+</span><span class="n">ENV</span> <span class="n">http_proxy</span> <span class="n">host</span><span class="p">:</span><span class="n">port</span>
+<span class="n">ENV</span> <span class="n">https_proxy</span> <span class="n">host</span><span class="p">:</span><span class="n">port</span>
+</code></pre></div>
+</blockquote>
+
+<p>이 Dockerfile은 아직 작성하지 않은 몇 가지 파일, 즉 app.py 및 requirements.txt를 참조합니다. 다음 단계를 만들어 보겠습니다.</p>
+
+<hr>
+
+<h2 id="the-app-itself">
+<a class="anchor" href="#the-app-itself" aria-hidden="true"><span class="octicon octicon-link"></span></a>The app itself</h2>
+
+<p><code>requirements.txt</code> 와 <code>app.py</code> 파일을 두 개 더 만들고 <code>Dockerfile</code> 과 같은 폴더에 두십시오.
+이것은 우리의 앱을 완성 시켰는데, 당신이 알듯이 아주 간단합니다.
+위의 <code>Dockerfile</code> 이 이미지에 내장되면 <code>Dockerfile</code>의 <code>ADD</code> 명령으로 인해 <code>app.py</code> 및 <code>requirements.txt</code> 가 표시되고 <code>EXPOSE</code> 명령으로 인해 HTTP 를 통해 <code>app.py</code> 의 출력에 액세스 할 수 있습니다.</p>
+
+<h3 id="requirements-txt">
+<a class="anchor" href="#requirements-txt" aria-hidden="true"><span class="octicon octicon-link"></span></a>requirements.txt</h3>
+<div class="highlight"><pre><code class="language-txt" data-lang="txt">Flask
+Redis
+</code></pre></div>
+<h3 id="app-py">
+<a class="anchor" href="#app-py" aria-hidden="true"><span class="octicon octicon-link"></span></a>app.py</h3>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+<span class="kn">from</span> <span class="nn">redis</span> <span class="kn">import</span> <span class="n">Redis</span><span class="p">,</span> <span class="n">RedisError</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">socket</span>
+
+<span class="c1"># Connect to Redis
+</span><span class="n">redis</span> <span class="o">=</span> <span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s">"redis"</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">socket_connect_timeout</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">socket_timeout</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+<span class="o">@</span><span class="n">app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s">"/"</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">visits</span> <span class="o">=</span> <span class="n">redis</span><span class="o">.</span><span class="n">incr</span><span class="p">(</span><span class="s">"counter"</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">RedisError</span><span class="p">:</span>
+        <span class="n">visits</span> <span class="o">=</span> <span class="s">"&lt;i&gt;cannot connect to Redis, counter disabled&lt;/i&gt;"</span>
+
+    <span class="n">html</span> <span class="o">=</span> <span class="s">"&lt;h3&gt;Hello {name}!&lt;/h3&gt;"</span> \
+           <span class="s">"&lt;b&gt;Hostname:&lt;/b&gt; {hostname}&lt;br/&gt;"</span> \
+           <span class="s">"&lt;b&gt;Visits:&lt;/b&gt; {visits}"</span>
+    <span class="k">return</span> <span class="n">html</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">"NAME"</span><span class="p">,</span> <span class="s">"world"</span><span class="p">),</span> <span class="n">hostname</span><span class="o">=</span><span class="n">socket</span><span class="o">.</span><span class="n">gethostname</span><span class="p">(),</span> <span class="n">visits</span><span class="o">=</span><span class="n">visits</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s">'0.0.0.0'</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
+</code></pre></div>
+<p>이제 <code>pip install -r requirements.txt</code> 가 Python 용 Flask 및 Redis 라이브러리를 설치하고 app 이 socket.gethostname() 에 대한 호출 결과와 함께 환경 변수 <code>NAME</code>을 인쇄하는지 확인합니다.</p>
+
+<p>마지막으로, Redis가 실행되지 않기 때문에 (우리는 Redis 자체가 아닌 Python 라이브러리 만 설치했기 때문에) 여기에서 사용하려는 시도가 실패하고 오류 메시지가 생성 될 것으로 예상해야 합니다.</p>
+
+<blockquote>
+<p>Note: container 내부에서 host 이름에 액세스하면 실행중인 실행 파일의 프로세스 ID와 같은 컨테이너 ID가 검색됩니다.</p>
+</blockquote>
+
+<p>이게 다 입니다. 당신은 당신의 시스템에 Python 이나 <code>requirements.txt</code> 에 있는 어떤 것도 필요하지 않으며, 이 images 를 빌드하거나 실행하지 않아도 시스템에 설치됩니다.
+python 과 flask 로 환경을 설정한 것처럼 보이지는 않습니다.</p>
+
+<hr>
+
+<h2 id="build-the-app">
+<a class="anchor" href="#build-the-app" aria-hidden="true"><span class="octicon octicon-link"></span></a>Build the app</h2>
+
+<p>우리는 앱을 만들 준비가 되었습니다.
+새 디렉토리의 최상위 레벨에 있는지 확인하십시오. <code>ls</code>:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">ls
+</span>Dockerfile  app.py  requirements.txt
+</code></pre></div>
+<p>이제 빌드 명령을 실행하십시오.
+이렇게 하면 Docker <strong>images</strong> 가 생성됩니다.
+이 이미지는 <code>-t</code> 를 사용하여 tag를 지정하므로 friendlyhello 란 이름을 갖습니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker build <span class="nt">-t</span> friendlyhello <span class="nb">.</span>
+<span class="c"># Sending build context to Docker daemon  4.608kB</span>
+<span class="c"># Step 1/7 : FROM python:3.6-slim</span>
+<span class="c"># 3.6-slim: Pulling from library/python</span>
+<span class="c"># d13d02fa248d: Pull complete</span>
+<span class="c"># b41122b4bdfb: Pull complete</span>
+<span class="c"># 93a539ca9f40: Pull complete</span>
+<span class="c"># ca2abb6d8fe8: Pull complete</span>
+<span class="c"># 5058883765cd: Pull complete</span>
+<span class="c"># Digest: sha256:aa1781b8d48a2f5dc248cbe58193b4345abf3ca87b08535ccaefe7f6ed0327b1</span>
+<span class="c"># Status: Downloaded newer image for python:3.6-slim</span>
+<span class="c">#  ---&gt; c23cb4208584</span>
+<span class="c"># Step 2/7 : WORKDIR /app</span>
+<span class="c">#  ---&gt; a17d11d0f860</span>
+<span class="c"># Removing intermediate container 0bd4647a0397</span>
+<span class="c"># Step 3/7 : ADD . /app</span>
+<span class="c">#  ---&gt; 75bae28bce89</span>
+<span class="c"># Step 4/7 : RUN pip install -r requirements.txt</span>
+<span class="c">#  ---&gt; Running in ca1c15f4de2b</span>
+<span class="c"># ...(생략)...</span>
+<span class="c">#</span>
+<span class="c"># Successfully built 2e5340b0b6cf</span>
+<span class="c"># Successfully tagged friendlyhello:latest</span>
+</code></pre></div>
+<p>내장 된 이미지는 어디에 있습니까? 컴퓨터의 로컬 Docker 이미지 레지스트리에 있습니다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker images
+<span class="c"># REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE</span>
+<span class="c"># friendlyhello       latest              2e5340b0b6cf        2 minutes ago       167MB</span>
+<span class="c"># python              3.6-slim            c23cb4208584        6 days ago          156MB</span>
+<span class="c"># hello-world         latest              05a3bd381fc2        6 weeks ago         1.84kB</span>
+</code></pre></div>
+<blockquote>
+<p>Tip: <code>docker images</code> 또는 최신 docker 이미지 <code>ls list images</code> 명령을 사용할 수 있습니다. 그들은 당신에게 같은 결과를 줍니다.</p>
+</blockquote>
+
+<hr>
+
+<h2 id="run-the-app">
+<a class="anchor" href="#run-the-app" aria-hidden="true"><span class="octicon octicon-link"></span></a>Run the app</h2>
+
+<p>응용 프로그램을 실행하여 -p를 사용하여 컴퓨터의 포트 4000을 컨테이너의 게시 된 포트 80에 매핑합니다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker run <span class="nt">-p</span> 4000:80 friendlyhello
+</code></pre></div>
+<p>Python 이 <a href="http://0.0.0.0:80">http://0.0.0.0:80</a> 에서 앱을 제공한다는 알림을 보아야합니다.
+하지만 그 메시지는 컨테이너 내부에서 들어 오는데, 컨테이너의 포트 80을 4000으로 매핑했는지 모르므로 올바른 URL <a href="http://localhost:4000">http://localhost:4000</a> 을 작성합니다.</p>
+
+<p>웹 브라우저에서 해당 URL로 이동하여 "Hello World"텍스트, 컨테이너 ID 및 Redis 오류 메시지를 포함하여 웹 페이지에 표시되는 디스플레이 컨텐트를 확인하십시오.</p>
+
+<p>(이미지 생략)</p>
+
+<p>셸에서 curl 명령을 사용하여 동일한 내용을 볼 수도 있습니다.</p>
+<div class="highlight"><pre><code class="language-curl" data-lang="curl">$ curl http://localhost:4000
+&lt;h3&gt;Hello World!&lt;/h3&gt;&lt;b&gt;Hostname:&lt;/b&gt; 5b2eee1605c4&lt;br/&gt;&lt;b&gt;Visits:&lt;/b&gt; &lt;i&gt;cannot connect to Redis, counter disabled&lt;/i&gt;
+</code></pre></div>
+<blockquote>
+<p>Note: 4000:80의 이 포트 재 매핑은 Dockerfile 내에서 EXPOSE하는 것과 Docker run -p 를 사용하여 게시하는 것의 차이를 보여줍니다.
+나중 단계에서는 호스트의 포트 80을 컨테이너의 포트 80에 매핑하고 <a href="http://localhost">http://localhost</a> 를 사용합니다.</p>
+</blockquote>
+
+<p>CTRL + C를 눌러 종료하십시오.</p>
+
+<p>이제 백그라운드에서 분리 모드로 앱을 실행해 봅시다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">docker run <span class="nt">-d</span> <span class="nt">-p</span> 4000:80 friendlyhello
+</code></pre></div>
+<p>앱에 대한 긴 컨테이너 ID를 얻은 다음 터미널로 다시 가져옵니다.
+container 가 백그라운드에서 실행 중입니다.
+<code>docker container ls</code> 로 축약된 container ID를 볼 수도 있습니다
+(둘 다 명령을 실행할 때 상호 교환 적으로 작동합니다).</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker container <span class="nb">ls</span>
+<span class="c"># CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS                  NAMES</span>
+<span class="c"># 7e782fef4e4b        friendlyhello       "python app.py"     2 minutes ago       Up 2 minutes        0.0.0.0:4000-&gt;80/tcp   clever_morse</span>
+</code></pre></div>
+<p><code>CONTAINER ID</code>가 <code>http://localhost:4000</code> 에 있는 것과 일치하는 것을 볼 수 있습니다.</p>
+
+<p>다음과 같이 <code>CONTAINER ID</code>를 사용하여 프로세스를 종료하려면 <code>docker container stop</code>을 사용하십시오.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker container stop 7e782fef4e4b
+</code></pre></div>
+<hr>
+
+<h2 id="share-your-image">
+<a class="anchor" href="#share-your-image" aria-hidden="true"><span class="octicon octicon-link"></span></a>Share your image</h2>
+
+<p>방금 만든 이미지의 이식성을 보여주기 위해 빌드 된 이미지를 업로드하고 다른 곳으로 옮기자.</p>
+
+<p>결국 production 에 container 를 배포하려는 경우 레지스트리로 푸시하는 방법을 배워야합니다.</p>
+
+<p>레지스트리는 저장소의 모음이고 저장소는 이미 만들어진 코드를 제외하고는 GitHub 저장소와 같은 종류의 이미지 모음입니다.</p>
+
+<p>레지스트리의 계정은 많은 저장소를 생성 할 수 있습니다.</p>
+
+<p><code>docker</code> CLI는 기본적으로 Docker의 공용 레지스트리를 사용합니다.</p>
+
+<blockquote>
+<p>Note: Docker의 공용 레지스트리는 무료이며 사전 구성되어 있기 때문에 여기에서 사용하겠지만, 선택할 수있는 공용 레지스트리가 많으며 Docker Trusted Registry를 사용하여 개인 레지스트리를 설정할 수도 있습니다.</p>
+</blockquote>
+
+<h3 id="log-in-with-your-docker-id">
+<a class="anchor" href="#log-in-with-your-docker-id" aria-hidden="true"><span class="octicon octicon-link"></span></a>Log in with your Docker ID</h3>
+
+<p>Docker 계정이없는 경우 <a href="https://cloud.docker.com/">cloud.docker.com</a> 에서 가입하십시오.
+사용자 이름을 기록하십시오.
+로컬 시스템의 Docker 공용 레지스트리에 로그인하십시오.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker login
+</code></pre></div>
+<h3 id="tag-the-image">
+<a class="anchor" href="#tag-the-image" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tag the image</h3>
+
+<p>로컬 이미지를 레지스트리의 저장소와 연관시키는 표기법은 <code>username/repository:tag</code> 입니다.
+이 태그는 선택사항이지만 Docker 이미지에 버전을 제공하는 데 사용하는 메커니즘이기 때문에 권장됩니다.
+저장소에 제공하고 <code>get-start:part2</code> 와 같이 context에 의미있는 이름을 tag하십시오.
+그러면 이미지가 시작 저장소에 저장되고 <code>part2</code> 로 tag가 지정됩니다.</p>
+
+<p>이제 이미지를 모두 태그를 추가하십시오.
+이미지가 원하는 대상에 업로드되도록 사용자 이름, 저장소 및 태그 이름으로 도커 태그 이미지를 실행하십시오. 명령 구문은 다음과 같습니다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker tag image username/repository:tag
+</code></pre></div>
+<p>예:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker tag friendlyhello portal2312/get-started:part2
+</code></pre></div>
+<p>확인:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># $ docker image ls</span>
+<span class="nv">$ </span>docker images
+
+<span class="c"># REPOSITORY               TAG                 IMAGE ID            CREATED             SIZE</span>
+<span class="c"># friendlyhello            latest              2e5340b0b6cf        About an hour ago   167MB</span>
+<span class="c"># portal2312/get-started   part2               2e5340b0b6cf        About an hour ago   167MB</span>
+<span class="c"># python                   3.6-slim            c23cb4208584        6 days ago          156MB</span>
+<span class="c"># hello-world              latest              05a3bd381fc2        6 weeks ago         1.84kB</span>
+</code></pre></div>
+<h3 id="publish-the-image">
+<a class="anchor" href="#publish-the-image" aria-hidden="true"><span class="octicon octicon-link"></span></a>Publish the image</h3>
+
+<p>태그가 지정된 이미지를 저장소에 업로드하십시오:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker push username/repository:tag
+</code></pre></div>
+<h3 id="pull-and-run-the-image-from-the-remote-repository">
+<a class="anchor" href="#pull-and-run-the-image-from-the-remote-repository" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pull and run the image from the remote repository</h3>
+
+<p>이제부터는 다음 명령으로 모든 컴퓨터에서 <code>docker run</code> 과 앱을 실행할 수 있습니다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker run <span class="nt">-p</span> 4000:80 username/repository:tag
+</code></pre></div>
+<p>이미지가 컴퓨터에서 로컬로 사용할 수없는 경우 Docker는 리포지토리에서 이미지를 가져옵니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker run <span class="nt">-p</span> 4000:80 portal2312/get-started:part2
+<span class="c">#</span>
+</code></pre></div>
+<blockquote>
+<p>Note: 이 명령의 <code>:tag</code> 부분을 지정하지 않으면 빌드 할 때와 이미지를 실행할 때 모두 <code>:latest</code> 의 태그가 사용됩니다.
+Docker는 지정된 태그없이 실행 된 이미지의 마지막 버전을 사용합니다 (최신 이미지일 필요는 없습니다).</p>
+</blockquote>
+
+<p>위치에 관계없이 <code>docker run</code>은 Python 및 <code>requirements.txt</code> 의 모든 종속성과 함께 이미지를 가져 와서 코드를 실행합니다.
+모든 것이 깔끔하고 작은 패키지로 이루어지며, 호스트 컴퓨터는 Docker를 설치만 하면 됩니다.</p>
+
+<hr>
+
+<h2 id="conclusion-of-part-2">
+<a class="anchor" href="#conclusion-of-part-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion of part 2</h2>
+
+<p>명령어 모음:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker build <span class="nt">-t</span> friendlyname <span class="nb">.</span>  <span class="c"># Create image using this directory's Dockerfile</span>
+<span class="nv">$ </span>docker run <span class="nt">-p</span> 4000:80 friendlyname  <span class="c"># Run "friendlyname" mapping port 4000 to 80</span>
+<span class="nv">$ </span>docker run <span class="nt">-d</span> <span class="nt">-p</span> 4000:80 friendlyname         <span class="c"># Same thing, but in detached mode</span>
+<span class="nv">$ </span>docker container <span class="nb">ls</span>                                <span class="c"># List all running containers</span>
+<span class="nv">$ </span>docker container <span class="nb">ls</span> <span class="nt">-a</span>             <span class="c"># List all containers, even those not running</span>
+<span class="nv">$ </span>docker container stop &lt;<span class="nb">hash</span><span class="o">&gt;</span>           <span class="c"># Gracefully stop the specified container</span>
+<span class="nv">$ </span>docker container <span class="nb">kill</span> &lt;<span class="nb">hash</span><span class="o">&gt;</span>         <span class="c"># Force shutdown of the specified container</span>
+<span class="nv">$ </span>docker container <span class="nb">rm</span> &lt;<span class="nb">hash</span><span class="o">&gt;</span>        <span class="c"># Remove specified container from this machine</span>
+<span class="nv">$ </span>docker container <span class="nb">rm</span> <span class="si">$(</span>docker container <span class="nb">ls</span> <span class="nt">-a</span> <span class="nt">-q</span><span class="si">)</span>         <span class="c"># Remove all containers</span>
+<span class="nv">$ </span>docker image <span class="nb">ls</span> <span class="nt">-a</span>                             <span class="c"># List all images on this machine</span>
+<span class="nv">$ </span>docker image <span class="nb">rm</span> &lt;image <span class="nb">id</span><span class="o">&gt;</span>            <span class="c"># Remove specified image from this machine</span>
+<span class="nv">$ </span>docker image <span class="nb">rm</span> <span class="si">$(</span>docker image <span class="nb">ls</span> <span class="nt">-a</span> <span class="nt">-q</span><span class="si">)</span>   <span class="c"># Remove all images from this machine</span>
+<span class="nv">$ </span>docker login             <span class="c"># Log in this CLI session using your Docker credentials</span>
+<span class="nv">$ </span>docker tag &lt;image&gt; username/repository:tag  <span class="c"># Tag &lt;image&gt; for upload to registry</span>
+<span class="nv">$ </span>docker push username/repository:tag            <span class="c"># Upload tagged image to registry</span>
+<span class="nv">$ </span>docker run username/repository:tag                   <span class="c"># Run image from a registry</span>
+</code></pre></div>
+<p>다음 섹션(Part 3)에서는 service에서 이 container 를 실행하여 애플리케이션의 규모를 조정하는 방법을 학습합니다.</p>
+
+<hr>
+
+<h2 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+<hr>
+
+  </div>
+
+<div>
+  <h2 id="prerequisites">Prerequisites</h2>
+
+<ul>
+<li>Docker 버전 1.13 이상을 설치하십시오</li>
+<li>Part 1 읽으십시오.</li>
+<li>
+<p>환경을 신속하게 테스트하여 모든 설정이 완료되었는지 확인하십시오.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">docker run hello-world
+</code></pre></div>
+</li>
+</ul>
+
+<hr>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>Docker 방식으로 앱을 제작할 때입니다.
+우리는 이 응용 프로그램의 계층 구조의 맨 아래부터 시작할 것입니다.
+이 응용 프로그램은 컨테이너이며, 이 페이지에서 다루고 있습니다.
+이 레벨 위에는 Part 3에서 다루는 컨테이너가 프로덕션 환경에서 작동하는 방식을 정의하는 서비스가 있습니다.
+마지막으로 최상위 레벨에는 스택 (Part 5)의 모든 서비스의 상호 작용을 정의하는 스택이 있습니다.</p>
+
+<ul>
+<li>Stack</li>
+<li>Services</li>
+<li>
+<strong>Container</strong> (you are here)</li>
+</ul>
+
+<hr>
+
+<h2 id="you-new-development-environment">You new development environment</h2>
+
+<p>과거에는 Python 응용 프로그램을 작성하기 시작한 경우 비즈니스의 첫 번째 순서는 Python 런타임을 시스템에 설치하는 것이 었습니다.
+하지만, 이는 앱이 예상대로 실행되기 위해서는 컴퓨터 환경이 있어야 하는 상황을 만듭니다.
+귀하의 application 을 실행하는 서버에 대해.</p>
+
+<p>Docker를 사용하면 이식 가능한 Python 런타임을 이미지로 가져올 수 있으며 설치가 필요 없습니다.
+그런 다음 빌드는 앱 코드와 함께 기본 Python 이미지를 포함 할 수 있으므로 앱, 종속성 및 런타임이 함께 ​​여행 할 수 있습니다.</p>
+
+<p>이 휴대용 이미지는 <code>Dockerfile</code> 이라고하는 무언가에 의해 정의됩니다.</p>
+
+<hr>
+
+<h2 id="define-a-container-with-a-dockerfile">Define a container with a <code>Dockerfile</code>
+</h2>
+
+<p><code>Dockerfile</code> 은 Container 내부의 환경을 정의합니다.</p>
+
+<p>네트워킹 인터페이스 및 디스크 드라이브와 같은 리소스에 대한 액세스는 이 환경에서 가상화됩니다.</p>
+
+<p>나머지 시스템과 격리되어 있으므로 포트를 외부 세계에 매핑해야 합니다.</p>
+
+<p>그리고 해당 환경에 "복사"할 파일에 대해 구체적으로 설명하십시오.</p>
+
+<p>그러나 이 작업을 수행하면 이 <code>Dockerfile</code> 에 정의된 앱 빌드가 어디서나 똑같이 작동합니다.</p>
+
+<h3 id="dockerfile"><code>Dockerfile</code></h3>
+
+<p>빈 디렉토리를 만듭니다.
+디렉토리 (<code>cd</code>)를 새 디렉토리로 변경하고 <code>Dockerfile</code> 이라는 파일을 작성한 후 다음 내용을 해당 파일에 복사하여 붙여넣고 저장하십시오.
+새로운 Dockerfile의 각 문장을 설명하는 주석을 기록하십시오.</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># Use an official Python runtime as a parent image
+</span><span class="n">FROM</span> <span class="n">python</span><span class="p">:</span><span class="mf">2.7</span><span class="o">-</span><span class="n">slim</span>
+
+<span class="c1"># Set the working directory to /app
+</span><span class="n">WORKDIR</span> <span class="o">/</span><span class="n">app</span>
+
+<span class="c1"># Copy the current directory contents into the container at /app
+</span><span class="n">ADD</span> <span class="o">.</span> <span class="o">/</span><span class="n">app</span>
+
+<span class="c1"># Install any needed packages specified in requirements.txt
+</span><span class="n">RUN</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+
+<span class="c1"># Make port 80 available to the world outside this container
+</span><span class="n">EXPOSE</span> <span class="mi">80</span>
+
+<span class="c1"># Define environment variable
+</span><span class="n">ENV</span> <span class="n">NAME</span> <span class="n">World</span>
+
+<span class="c1"># Run app.py when the container launches
+</span><span class="n">CMD</span> <span class="p">[</span><span class="s">"python"</span><span class="p">,</span> <span class="s">"app.py"</span><span class="p">]</span>
+</code></pre></div>
+<blockquote>
+<p>프록시 서버를 사용하고 있습니까?</p>
+
+<p>프록시 서버는 일단 실행되면 웹 응용 프로그램에 대한 연결을 차단할 수 있습니다.
+프록시 서버를 사용하는 경우 <code>ENV</code> 명령을 사용하여 프록시 서버의 호스트와 포트를 지정하여 다음 행을 Dockerfile에 추가하십시오.</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># Set proxy server, replace host:port with values for your servers
+</span><span class="n">ENV</span> <span class="n">http_proxy</span> <span class="n">host</span><span class="p">:</span><span class="n">port</span>
+<span class="n">ENV</span> <span class="n">https_proxy</span> <span class="n">host</span><span class="p">:</span><span class="n">port</span>
+</code></pre></div>
+</blockquote>
+
+<p>이 Dockerfile은 아직 작성하지 않은 몇 가지 파일, 즉 app.py 및 requirements.txt를 참조합니다. 다음 단계를 만들어 보겠습니다.</p>
+
+<hr>
+
+<h2 id="the-app-itself">The app itself</h2>
+
+<p><code>requirements.txt</code> 와 <code>app.py</code> 파일을 두 개 더 만들고 <code>Dockerfile</code> 과 같은 폴더에 두십시오.
+이것은 우리의 앱을 완성 시켰는데, 당신이 알듯이 아주 간단합니다.
+위의 <code>Dockerfile</code> 이 이미지에 내장되면 <code>Dockerfile</code>의 <code>ADD</code> 명령으로 인해 <code>app.py</code> 및 <code>requirements.txt</code> 가 표시되고 <code>EXPOSE</code> 명령으로 인해 HTTP 를 통해 <code>app.py</code> 의 출력에 액세스 할 수 있습니다.</p>
+
+<h3 id="requirements-txt">requirements.txt</h3>
+<div class="highlight"><pre><code class="language-txt" data-lang="txt">Flask
+Redis
+</code></pre></div>
+<h3 id="app-py">app.py</h3>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+<span class="kn">from</span> <span class="nn">redis</span> <span class="kn">import</span> <span class="n">Redis</span><span class="p">,</span> <span class="n">RedisError</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">socket</span>
+
+<span class="c1"># Connect to Redis
+</span><span class="n">redis</span> <span class="o">=</span> <span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s">"redis"</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">socket_connect_timeout</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">socket_timeout</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+<span class="o">@</span><span class="n">app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s">"/"</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">visits</span> <span class="o">=</span> <span class="n">redis</span><span class="o">.</span><span class="n">incr</span><span class="p">(</span><span class="s">"counter"</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">RedisError</span><span class="p">:</span>
+        <span class="n">visits</span> <span class="o">=</span> <span class="s">"&lt;i&gt;cannot connect to Redis, counter disabled&lt;/i&gt;"</span>
+
+    <span class="n">html</span> <span class="o">=</span> <span class="s">"&lt;h3&gt;Hello {name}!&lt;/h3&gt;"</span> \
+           <span class="s">"&lt;b&gt;Hostname:&lt;/b&gt; {hostname}&lt;br/&gt;"</span> \
+           <span class="s">"&lt;b&gt;Visits:&lt;/b&gt; {visits}"</span>
+    <span class="k">return</span> <span class="n">html</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">"NAME"</span><span class="p">,</span> <span class="s">"world"</span><span class="p">),</span> <span class="n">hostname</span><span class="o">=</span><span class="n">socket</span><span class="o">.</span><span class="n">gethostname</span><span class="p">(),</span> <span class="n">visits</span><span class="o">=</span><span class="n">visits</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s">'0.0.0.0'</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
+</code></pre></div>
+<p>이제 <code>pip install -r requirements.txt</code> 가 Python 용 Flask 및 Redis 라이브러리를 설치하고 app 이 socket.gethostname() 에 대한 호출 결과와 함께 환경 변수 <code>NAME</code>을 인쇄하는지 확인합니다.</p>
+
+<p>마지막으로, Redis가 실행되지 않기 때문에 (우리는 Redis 자체가 아닌 Python 라이브러리 만 설치했기 때문에) 여기에서 사용하려는 시도가 실패하고 오류 메시지가 생성 될 것으로 예상해야 합니다.</p>
+
+<blockquote>
+<p>Note: container 내부에서 host 이름에 액세스하면 실행중인 실행 파일의 프로세스 ID와 같은 컨테이너 ID가 검색됩니다.</p>
+</blockquote>
+
+<p>이게 다 입니다. 당신은 당신의 시스템에 Python 이나 <code>requirements.txt</code> 에 있는 어떤 것도 필요하지 않으며, 이 images 를 빌드하거나 실행하지 않아도 시스템에 설치됩니다.
+python 과 flask 로 환경을 설정한 것처럼 보이지는 않습니다.</p>
+
+<hr>
+
+<h2 id="build-the-app">Build the app</h2>
+
+<p>우리는 앱을 만들 준비가 되었습니다.
+새 디렉토리의 최상위 레벨에 있는지 확인하십시오. <code>ls</code>:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">ls
+</span>Dockerfile  app.py  requirements.txt
+</code></pre></div>
+<p>이제 빌드 명령을 실행하십시오.
+이렇게 하면 Docker <strong>images</strong> 가 생성됩니다.
+이 이미지는 <code>-t</code> 를 사용하여 tag를 지정하므로 friendlyhello 란 이름을 갖습니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker build <span class="nt">-t</span> friendlyhello <span class="nb">.</span>
+<span class="c"># Sending build context to Docker daemon  4.608kB</span>
+<span class="c"># Step 1/7 : FROM python:3.6-slim</span>
+<span class="c"># 3.6-slim: Pulling from library/python</span>
+<span class="c"># d13d02fa248d: Pull complete</span>
+<span class="c"># b41122b4bdfb: Pull complete</span>
+<span class="c"># 93a539ca9f40: Pull complete</span>
+<span class="c"># ca2abb6d8fe8: Pull complete</span>
+<span class="c"># 5058883765cd: Pull complete</span>
+<span class="c"># Digest: sha256:aa1781b8d48a2f5dc248cbe58193b4345abf3ca87b08535ccaefe7f6ed0327b1</span>
+<span class="c"># Status: Downloaded newer image for python:3.6-slim</span>
+<span class="c">#  ---&gt; c23cb4208584</span>
+<span class="c"># Step 2/7 : WORKDIR /app</span>
+<span class="c">#  ---&gt; a17d11d0f860</span>
+<span class="c"># Removing intermediate container 0bd4647a0397</span>
+<span class="c"># Step 3/7 : ADD . /app</span>
+<span class="c">#  ---&gt; 75bae28bce89</span>
+<span class="c"># Step 4/7 : RUN pip install -r requirements.txt</span>
+<span class="c">#  ---&gt; Running in ca1c15f4de2b</span>
+<span class="c"># ...(생략)...</span>
+<span class="c">#</span>
+<span class="c"># Successfully built 2e5340b0b6cf</span>
+<span class="c"># Successfully tagged friendlyhello:latest</span>
+</code></pre></div>
+<p>내장 된 이미지는 어디에 있습니까? 컴퓨터의 로컬 Docker 이미지 레지스트리에 있습니다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker images
+<span class="c"># REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE</span>
+<span class="c"># friendlyhello       latest              2e5340b0b6cf        2 minutes ago       167MB</span>
+<span class="c"># python              3.6-slim            c23cb4208584        6 days ago          156MB</span>
+<span class="c"># hello-world         latest              05a3bd381fc2        6 weeks ago         1.84kB</span>
+</code></pre></div>
+<blockquote>
+<p>Tip: <code>docker images</code> 또는 최신 docker 이미지 <code>ls list images</code> 명령을 사용할 수 있습니다. 그들은 당신에게 같은 결과를 줍니다.</p>
+</blockquote>
+
+<hr>
+
+<h2 id="run-the-app">Run the app</h2>
+
+<p>응용 프로그램을 실행하여 -p를 사용하여 컴퓨터의 포트 4000을 컨테이너의 게시 된 포트 80에 매핑합니다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker run <span class="nt">-p</span> 4000:80 friendlyhello
+</code></pre></div>
+<p>Python 이 <a href="http://0.0.0.0:80" rel="nofollow" target="_blank">http://0.0.0.0:80</a> 에서 앱을 제공한다는 알림을 보아야합니다.
+하지만 그 메시지는 컨테이너 내부에서 들어 오는데, 컨테이너의 포트 80을 4000으로 매핑했는지 모르므로 올바른 URL <a href="http://localhost:4000" rel="nofollow" target="_blank">http://localhost:4000</a> 을 작성합니다.</p>
+
+<p>웹 브라우저에서 해당 URL로 이동하여 "Hello World"텍스트, 컨테이너 ID 및 Redis 오류 메시지를 포함하여 웹 페이지에 표시되는 디스플레이 컨텐트를 확인하십시오.</p>
+
+<p>(이미지 생략)</p>
+
+<p>셸에서 curl 명령을 사용하여 동일한 내용을 볼 수도 있습니다.</p>
+<div class="highlight"><pre><code class="language-curl" data-lang="curl">$ curl http://localhost:4000
+&lt;h3&gt;Hello World!&lt;/h3&gt;&lt;b&gt;Hostname:&lt;/b&gt; 5b2eee1605c4&lt;br/&gt;&lt;b&gt;Visits:&lt;/b&gt; &lt;i&gt;cannot connect to Redis, counter disabled&lt;/i&gt;
+</code></pre></div>
+<blockquote>
+<p>Note: 4000:80의 이 포트 재 매핑은 Dockerfile 내에서 EXPOSE하는 것과 Docker run -p 를 사용하여 게시하는 것의 차이를 보여줍니다.
+나중 단계에서는 호스트의 포트 80을 컨테이너의 포트 80에 매핑하고 <a href="http://localhost" rel="nofollow" target="_blank">http://localhost</a> 를 사용합니다.</p>
+</blockquote>
+
+<p>CTRL + C를 눌러 종료하십시오.</p>
+
+<p>이제 백그라운드에서 분리 모드로 앱을 실행해 봅시다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">docker run <span class="nt">-d</span> <span class="nt">-p</span> 4000:80 friendlyhello
+</code></pre></div>
+<p>앱에 대한 긴 컨테이너 ID를 얻은 다음 터미널로 다시 가져옵니다.
+container 가 백그라운드에서 실행 중입니다.
+<code>docker container ls</code> 로 축약된 container ID를 볼 수도 있습니다
+(둘 다 명령을 실행할 때 상호 교환 적으로 작동합니다).</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker container <span class="nb">ls</span>
+<span class="c"># CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS                  NAMES</span>
+<span class="c"># 7e782fef4e4b        friendlyhello       "python app.py"     2 minutes ago       Up 2 minutes        0.0.0.0:4000-&gt;80/tcp   clever_morse</span>
+</code></pre></div>
+<p><code>CONTAINER ID</code>가 <code>http://localhost:4000</code> 에 있는 것과 일치하는 것을 볼 수 있습니다.</p>
+
+<p>다음과 같이 <code>CONTAINER ID</code>를 사용하여 프로세스를 종료하려면 <code>docker container stop</code>을 사용하십시오.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker container stop 7e782fef4e4b
+</code></pre></div>
+<hr>
+
+<h2 id="share-your-image">Share your image</h2>
+
+<p>방금 만든 이미지의 이식성을 보여주기 위해 빌드 된 이미지를 업로드하고 다른 곳으로 옮기자.</p>
+
+<p>결국 production 에 container 를 배포하려는 경우 레지스트리로 푸시하는 방법을 배워야합니다.</p>
+
+<p>레지스트리는 저장소의 모음이고 저장소는 이미 만들어진 코드를 제외하고는 GitHub 저장소와 같은 종류의 이미지 모음입니다.</p>
+
+<p>레지스트리의 계정은 많은 저장소를 생성 할 수 있습니다.</p>
+
+<p><code>docker</code> CLI는 기본적으로 Docker의 공용 레지스트리를 사용합니다.</p>
+
+<blockquote>
+<p>Note: Docker의 공용 레지스트리는 무료이며 사전 구성되어 있기 때문에 여기에서 사용하겠지만, 선택할 수있는 공용 레지스트리가 많으며 Docker Trusted Registry를 사용하여 개인 레지스트리를 설정할 수도 있습니다.</p>
+</blockquote>
+
+<h3 id="log-in-with-your-docker-id">Log in with your Docker ID</h3>
+
+<p>Docker 계정이없는 경우 <a href="https://cloud.docker.com/" rel="nofollow" target="_blank">cloud.docker.com</a> 에서 가입하십시오.
+사용자 이름을 기록하십시오.
+로컬 시스템의 Docker 공용 레지스트리에 로그인하십시오.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker login
+</code></pre></div>
+<h3 id="tag-the-image">Tag the image</h3>
+
+<p>로컬 이미지를 레지스트리의 저장소와 연관시키는 표기법은 <code>username/repository:tag</code> 입니다.
+이 태그는 선택사항이지만 Docker 이미지에 버전을 제공하는 데 사용하는 메커니즘이기 때문에 권장됩니다.
+저장소에 제공하고 <code>get-start:part2</code> 와 같이 context에 의미있는 이름을 tag하십시오.
+그러면 이미지가 시작 저장소에 저장되고 <code>part2</code> 로 tag가 지정됩니다.</p>
+
+<p>이제 이미지를 모두 태그를 추가하십시오.
+이미지가 원하는 대상에 업로드되도록 사용자 이름, 저장소 및 태그 이름으로 도커 태그 이미지를 실행하십시오. 명령 구문은 다음과 같습니다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker tag image username/repository:tag
+</code></pre></div>
+<p>예:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker tag friendlyhello portal2312/get-started:part2
+</code></pre></div>
+<p>확인:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># $ docker image ls</span>
+<span class="nv">$ </span>docker images
+
+<span class="c"># REPOSITORY               TAG                 IMAGE ID            CREATED             SIZE</span>
+<span class="c"># friendlyhello            latest              2e5340b0b6cf        About an hour ago   167MB</span>
+<span class="c"># portal2312/get-started   part2               2e5340b0b6cf        About an hour ago   167MB</span>
+<span class="c"># python                   3.6-slim            c23cb4208584        6 days ago          156MB</span>
+<span class="c"># hello-world              latest              05a3bd381fc2        6 weeks ago         1.84kB</span>
+</code></pre></div>
+<h3 id="publish-the-image">Publish the image</h3>
+
+<p>태그가 지정된 이미지를 저장소에 업로드하십시오:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker push username/repository:tag
+</code></pre></div>
+<h3 id="pull-and-run-the-image-from-the-remote-repository">Pull and run the image from the remote repository</h3>
+
+<p>이제부터는 다음 명령으로 모든 컴퓨터에서 <code>docker run</code> 과 앱을 실행할 수 있습니다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker run <span class="nt">-p</span> 4000:80 username/repository:tag
+</code></pre></div>
+<p>이미지가 컴퓨터에서 로컬로 사용할 수없는 경우 Docker는 리포지토리에서 이미지를 가져옵니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker run <span class="nt">-p</span> 4000:80 portal2312/get-started:part2
+<span class="c">#</span>
+</code></pre></div>
+<blockquote>
+<p>Note: 이 명령의 <code>:tag</code> 부분을 지정하지 않으면 빌드 할 때와 이미지를 실행할 때 모두 <code>:latest</code> 의 태그가 사용됩니다.
+Docker는 지정된 태그없이 실행 된 이미지의 마지막 버전을 사용합니다 (최신 이미지일 필요는 없습니다).</p>
+</blockquote>
+
+<p>위치에 관계없이 <code>docker run</code>은 Python 및 <code>requirements.txt</code> 의 모든 종속성과 함께 이미지를 가져 와서 코드를 실행합니다.
+모든 것이 깔끔하고 작은 패키지로 이루어지며, 호스트 컴퓨터는 Docker를 설치만 하면 됩니다.</p>
+
+<hr>
+
+<h2 id="conclusion-of-part-2">Conclusion of part 2</h2>
+
+<p>명령어 모음:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker build <span class="nt">-t</span> friendlyname <span class="nb">.</span>  <span class="c"># Create image using this directory's Dockerfile</span>
+<span class="nv">$ </span>docker run <span class="nt">-p</span> 4000:80 friendlyname  <span class="c"># Run "friendlyname" mapping port 4000 to 80</span>
+<span class="nv">$ </span>docker run <span class="nt">-d</span> <span class="nt">-p</span> 4000:80 friendlyname         <span class="c"># Same thing, but in detached mode</span>
+<span class="nv">$ </span>docker container <span class="nb">ls</span>                                <span class="c"># List all running containers</span>
+<span class="nv">$ </span>docker container <span class="nb">ls</span> <span class="nt">-a</span>             <span class="c"># List all containers, even those not running</span>
+<span class="nv">$ </span>docker container stop &lt;<span class="nb">hash</span><span class="o">&gt;</span>           <span class="c"># Gracefully stop the specified container</span>
+<span class="nv">$ </span>docker container <span class="nb">kill</span> &lt;<span class="nb">hash</span><span class="o">&gt;</span>         <span class="c"># Force shutdown of the specified container</span>
+<span class="nv">$ </span>docker container <span class="nb">rm</span> &lt;<span class="nb">hash</span><span class="o">&gt;</span>        <span class="c"># Remove specified container from this machine</span>
+<span class="nv">$ </span>docker container <span class="nb">rm</span> <span class="si">$(</span>docker container <span class="nb">ls</span> <span class="nt">-a</span> <span class="nt">-q</span><span class="si">)</span>         <span class="c"># Remove all containers</span>
+<span class="nv">$ </span>docker image <span class="nb">ls</span> <span class="nt">-a</span>                             <span class="c"># List all images on this machine</span>
+<span class="nv">$ </span>docker image <span class="nb">rm</span> &lt;image <span class="nb">id</span><span class="o">&gt;</span>            <span class="c"># Remove specified image from this machine</span>
+<span class="nv">$ </span>docker image <span class="nb">rm</span> <span class="si">$(</span>docker image <span class="nb">ls</span> <span class="nt">-a</span> <span class="nt">-q</span><span class="si">)</span>   <span class="c"># Remove all images from this machine</span>
+<span class="nv">$ </span>docker login             <span class="c"># Log in this CLI session using your Docker credentials</span>
+<span class="nv">$ </span>docker tag &lt;image&gt; username/repository:tag  <span class="c"># Tag &lt;image&gt; for upload to registry</span>
+<span class="nv">$ </span>docker push username/repository:tag            <span class="c"># Upload tagged image to registry</span>
+<span class="nv">$ </span>docker run username/repository:tag                   <span class="c"># Run image from a registry</span>
+</code></pre></div>
+<p>다음 섹션(Part 3)에서는 service에서 이 container 를 실행하여 애플리케이션의 규모를 조정하는 방법을 학습합니다.</p>
+
+<hr>
+
+<h2 id="reference">Reference</h2>
+
+<hr>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

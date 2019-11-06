@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>ViewModel Internals | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="ViewModel Internals" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="뷰 모델은 두 가지 명확한 업무" />
+<meta property="og:description" content="뷰 모델은 두 가지 명확한 업무" />
+<link rel="canonical" href="http://localhost:4000/blog/docs/develop/Frontend/sencha/extjs/6.x/doc/5_architecture/5_view_model_internals.html" />
+<meta property="og:url" content="http://localhost:4000/blog/docs/develop/Frontend/sencha/extjs/6.x/doc/5_architecture/5_view_model_internals.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-06T09:31:12+09:00" />
+<script type="application/ld+json">
+{"description":"뷰 모델은 두 가지 명확한 업무","headline":"ViewModel Internals","dateModified":"2019-11-06T09:31:12+09:00","datePublished":"2019-11-06T09:31:12+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/docs/develop/Frontend/sencha/extjs/6.x/doc/5_architecture/5_view_model_internals.html"},"url":"http://localhost:4000/blog/docs/develop/Frontend/sencha/extjs/6.x/doc/5_architecture/5_view_model_internals.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>ViewModel Internals</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#viewmodel-data-and-inheritance">ViewModel Data and Inheritance</a></li>
+<li class="toc-entry toc-h2"><a href="#scheduling-and-dependencies">Scheduling and Dependencies</a></li>
+<li class="toc-entry toc-h2"><a href="#formula-dependencies">Formula Dependencies</a></li>
+</ul><p>뷰 모델은 두 가지 명확한 업무</p>
+
+<ul>
+<li><p>데이터 객체의 변경 관리</p></li>
+<li><p>데이터가 변경될 때 바인딩 스케쥴링 관리</p></li>
+</ul>
+
+<h2 id="viewmodel-data-and-inheritance">
+<a class="anchor" href="#viewmodel-data-and-inheritance" aria-hidden="true"><span class="octicon octicon-link"></span></a>ViewModel Data and Inheritance</h2>
+
+<p>ViewModel Class:</p>
+
+<p>"데이터" 객체를 관리하고 javascript prototype chain을 이용해 값을 상속.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">Container1/                --------&gt; ViewModel 1     ----&gt; Data 1
+    Container/                             ^                ^
+        Container/                  Parent ^      Prototype ^
+                                           ^                ^
+        Container2/        --------&gt; ViewModel 2     ----&gt; Data 2
+            Container/                     ^                ^
+                Container/          Parent ^      Prototype ^
+                                           ^                ^
+                Container3/     ----&gt; ViewModel 3    ----&gt; Data 3
+                    Container/
+                        Container/
+</code></pre></div>
+<p>위 도표의 의미는 모든 컴포넌트는 최상위 컨테이너 설정을 통해,</p>
+
+<p>"Data 1" 데이터 객체에 저장된 프로퍼티를 읽을 수 있다는 것.</p>
+
+<p>Container 1:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// Container 1</span>
+
+<span class="nx">viewModel</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nl">data</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nl">foo</span><span class="p">:</span> <span class="mi">42</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>모든 컴포넌트는 {foo}에 바인딩이 가능하다.</p>
+
+<p>일반적으로 중요한 기록(예: "currentUser"와 같은)을 추적하기 위한 용도로
+사용되며 많은 어플리케이션에서 요구되는 기능이다.</p>
+
+<p>사실, 데이터 표현은 자바스크립트 프로토타입 체인을 사용하기 때문에 뷰 모델에서
+객체 게시(publishing)는 만약 프로퍼티에 대한 변경이 공유될 경우 종종 좋은 아이디어가 될 수 있다.</p>
+
+<p>왜 그런지 알기 위해서 Container 2의 자식에서 {foo}에 대한 Two-way 바인딩을 한번 생각해보자.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// Container 2</span>
+
+<span class="p">{</span>
+    <span class="nl">xtype</span><span class="p">:</span> <span class="dl">'</span><span class="s1">textfield</span><span class="dl">'</span><span class="p">,</span>
+    <span class="nx">bind</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{foo}</span><span class="dl">'</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>textfield는 Data2를 경유해 Data1으로 부터 프로토타입 체인에 의해 전달된 "42"를 수신.</p>
+
+<p>그러나, 이 텍스트 필드 컴포넌트에 의해 수정된 값은 Data2에 저장.</p>
+
+<p>이점은 이런 컴포넌트들이 그들의 뷰 모델 및 데이터 객체와 바인딩 되기 때문으로 바인드의 양방향 특성에 따라 ViewModel2에서 set을 효과적으로 호출하는 것을 의미하며, 일반적인 자바스크립트 객체의 역할을 통해 Data 2에서 foo의 <code>set</code>을 호출하는 것이다.</p>
+
+<p>이러한 동작을 <code>forking</code>이라고 하며 View에 의해 분리된 값을 초기화 할 때 유용한 방법이 될 수 있다.</p>
+
+<p><code>live</code> 프로퍼티를 상속을 통해 공유하기 위해 root ViewModel에 객체가 저장된다면,</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// Container 1</span>
+<span class="nx">viewModel</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nl">data</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nl">stuff</span><span class="p">:</span> <span class="p">{</span>  <span class="c1">// XXX: stuff 명시</span>
+            <span class="nl">foo</span><span class="p">:</span> <span class="mi">42</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>이제 Two-way 바인딩은 공유된 <code>stuff</code> 객체에서 <code>foo</code> 프로퍼티를 업데이트 할 것이다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// Container 2</span>
+
+<span class="p">{</span>
+    <span class="nl">xtype</span><span class="p">:</span> <span class="dl">'</span><span class="s1">textfield</span><span class="dl">'</span><span class="p">,</span>
+    <span class="nx">bind</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{stuff.foo}</span><span class="dl">'</span>  <span class="c1">// XXX: stuff.foo == Container 1의 foo</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="scheduling-and-dependencies">
+<a class="anchor" href="#scheduling-and-dependencies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Scheduling and Dependencies</h2>
+
+<p>데이터 바인딩 속도를 높이는 핵심은 불필요하거나 잉여 연산을 회피하는 것.</p>
+
+<p>이것을 관리하기 위해 뷰 모델은 데이터간의 의존성을 추적.</p>
+
+<p>모든 binding과 formula는 의존성을 갖게 된다.</p>
+
+<p>framework 내부적으로 뷰 모델은 의존성에 따라 분할하여 하나의 선형적 스케줄을 생성.</p>
+
+<p>따라서 데이터가 변경되면 처리에 필요한 시간만큼 지연이 발생하게 되는 것이다.</p>
+
+<p>따라서, 뷰 모델이나 레코드의 한 필드 값을 변경하고 이를 Set 할 때 수 많은 재계산이 즉시 발생할 것을 염려할 필요는 없다.</p>
+
+<p>유사하게, 만약 forumla가 7개의 값에 의존성을 갖고, 그 값 모두를 변경해야 할 필요가 있다면, formula는 단지 한번의 재계산으로 충분할 것이다.</p>
+
+<p>좀더 다른 경우를 고려해서, 만약 7개의 formula가 각각 각각 사용되며 각각이 7개의 다른 값에 의존성을 갖는 경우, 모든 49개 값의 변경은 각 formula별로 한번의 재계산이 필요.</p>
+
+<p>이것의 구현을 위해 각 의존성은 뷰 모델이 알고 있어야 하며, 또한 비순환적이어야 한다.
+(순환적인 의존성 그래프는 에러로 보고됨)</p>
+
+<p>예:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Ext</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="dl">'</span><span class="s1">App.view.broken.BrokenModel</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">extend</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Ext.app.ViewModel</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">formulas</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">bar</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="kd">get</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">foo</span><span class="dl">'</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="p">},</span>
+        <span class="na">foo</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="kd">get</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">bar</span><span class="dl">'</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>실제 어플리케이션에서 이러한 버그는 사실 위와 같이 명확하게 드러나지 않는 경우가 많지만, 위 코드에서 "foo"와 "bar"는 서로 명확히 의존적 관계이기 때문에 두 메서드가 적절한 값을 찾기 위한 순서 평가는 수행 될 수 없다.</p>
+
+<h2 id="formula-dependencies">
+<a class="anchor" href="#formula-dependencies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Formula Dependencies</h2>
+
+<p>formula가 명시적 바인드를 사용하면 의존성 역시 명확해진다.</p>
+
+<p>formula가 단순한 function 또는 get 메서드만 제공하게 되면</p>
+
+<p>뷰 모델은 프로퍼티 레퍼런스를 찾기 위해 function의 text를 파싱(parse)하게 된다.</p>
+
+<p>극단의 편리함과 확신을 위해서는 의존성 목록을 명시적 바인드에서 잊지 않도록 하자.</p>
+
+<p>formula parsing에 대한 자세한 사항은 Ext.app.bind.Formula에서 찾을 수 있다.</p>
+
+  </div>
+
+<div>
+  <p>뷰 모델은 두 가지 명확한 업무</p>
+
+<ul>
+<li><p>데이터 객체의 변경 관리</p></li>
+<li><p>데이터가 변경될 때 바인딩 스케쥴링 관리</p></li>
+</ul>
+
+<h2 id="viewmodel-data-and-inheritance">ViewModel Data and Inheritance</h2>
+
+<p>ViewModel Class:</p>
+
+<p>"데이터" 객체를 관리하고 javascript prototype chain을 이용해 값을 상속.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">Container1/                --------&gt; ViewModel 1     ----&gt; Data 1
+    Container/                             ^                ^
+        Container/                  Parent ^      Prototype ^
+                                           ^                ^
+        Container2/        --------&gt; ViewModel 2     ----&gt; Data 2
+            Container/                     ^                ^
+                Container/          Parent ^      Prototype ^
+                                           ^                ^
+                Container3/     ----&gt; ViewModel 3    ----&gt; Data 3
+                    Container/
+                        Container/
+</code></pre></div>
+<p>위 도표의 의미는 모든 컴포넌트는 최상위 컨테이너 설정을 통해,</p>
+
+<p>"Data 1" 데이터 객체에 저장된 프로퍼티를 읽을 수 있다는 것.</p>
+
+<p>Container 1:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// Container 1</span>
+
+<span class="nx">viewModel</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nl">data</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nl">foo</span><span class="p">:</span> <span class="mi">42</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>모든 컴포넌트는 {foo}에 바인딩이 가능하다.</p>
+
+<p>일반적으로 중요한 기록(예: "currentUser"와 같은)을 추적하기 위한 용도로
+사용되며 많은 어플리케이션에서 요구되는 기능이다.</p>
+
+<p>사실, 데이터 표현은 자바스크립트 프로토타입 체인을 사용하기 때문에 뷰 모델에서
+객체 게시(publishing)는 만약 프로퍼티에 대한 변경이 공유될 경우 종종 좋은 아이디어가 될 수 있다.</p>
+
+<p>왜 그런지 알기 위해서 Container 2의 자식에서 {foo}에 대한 Two-way 바인딩을 한번 생각해보자.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// Container 2</span>
+
+<span class="p">{</span>
+    <span class="nl">xtype</span><span class="p">:</span> <span class="dl">'</span><span class="s1">textfield</span><span class="dl">'</span><span class="p">,</span>
+    <span class="nx">bind</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{foo}</span><span class="dl">'</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>textfield는 Data2를 경유해 Data1으로 부터 프로토타입 체인에 의해 전달된 "42"를 수신.</p>
+
+<p>그러나, 이 텍스트 필드 컴포넌트에 의해 수정된 값은 Data2에 저장.</p>
+
+<p>이점은 이런 컴포넌트들이 그들의 뷰 모델 및 데이터 객체와 바인딩 되기 때문으로 바인드의 양방향 특성에 따라 ViewModel2에서 set을 효과적으로 호출하는 것을 의미하며, 일반적인 자바스크립트 객체의 역할을 통해 Data 2에서 foo의 <code>set</code>을 호출하는 것이다.</p>
+
+<p>이러한 동작을 <code>forking</code>이라고 하며 View에 의해 분리된 값을 초기화 할 때 유용한 방법이 될 수 있다.</p>
+
+<p><code>live</code> 프로퍼티를 상속을 통해 공유하기 위해 root ViewModel에 객체가 저장된다면,</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// Container 1</span>
+<span class="nx">viewModel</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nl">data</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nl">stuff</span><span class="p">:</span> <span class="p">{</span>  <span class="c1">// XXX: stuff 명시</span>
+            <span class="nl">foo</span><span class="p">:</span> <span class="mi">42</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>이제 Two-way 바인딩은 공유된 <code>stuff</code> 객체에서 <code>foo</code> 프로퍼티를 업데이트 할 것이다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// Container 2</span>
+
+<span class="p">{</span>
+    <span class="nl">xtype</span><span class="p">:</span> <span class="dl">'</span><span class="s1">textfield</span><span class="dl">'</span><span class="p">,</span>
+    <span class="nx">bind</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{stuff.foo}</span><span class="dl">'</span>  <span class="c1">// XXX: stuff.foo == Container 1의 foo</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="scheduling-and-dependencies">Scheduling and Dependencies</h2>
+
+<p>데이터 바인딩 속도를 높이는 핵심은 불필요하거나 잉여 연산을 회피하는 것.</p>
+
+<p>이것을 관리하기 위해 뷰 모델은 데이터간의 의존성을 추적.</p>
+
+<p>모든 binding과 formula는 의존성을 갖게 된다.</p>
+
+<p>framework 내부적으로 뷰 모델은 의존성에 따라 분할하여 하나의 선형적 스케줄을 생성.</p>
+
+<p>따라서 데이터가 변경되면 처리에 필요한 시간만큼 지연이 발생하게 되는 것이다.</p>
+
+<p>따라서, 뷰 모델이나 레코드의 한 필드 값을 변경하고 이를 Set 할 때 수 많은 재계산이 즉시 발생할 것을 염려할 필요는 없다.</p>
+
+<p>유사하게, 만약 forumla가 7개의 값에 의존성을 갖고, 그 값 모두를 변경해야 할 필요가 있다면, formula는 단지 한번의 재계산으로 충분할 것이다.</p>
+
+<p>좀더 다른 경우를 고려해서, 만약 7개의 formula가 각각 각각 사용되며 각각이 7개의 다른 값에 의존성을 갖는 경우, 모든 49개 값의 변경은 각 formula별로 한번의 재계산이 필요.</p>
+
+<p>이것의 구현을 위해 각 의존성은 뷰 모델이 알고 있어야 하며, 또한 비순환적이어야 한다.
+(순환적인 의존성 그래프는 에러로 보고됨)</p>
+
+<p>예:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Ext</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="dl">'</span><span class="s1">App.view.broken.BrokenModel</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">extend</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Ext.app.ViewModel</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">formulas</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">bar</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="kd">get</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">foo</span><span class="dl">'</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="p">},</span>
+        <span class="na">foo</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="kd">get</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">bar</span><span class="dl">'</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>실제 어플리케이션에서 이러한 버그는 사실 위와 같이 명확하게 드러나지 않는 경우가 많지만, 위 코드에서 "foo"와 "bar"는 서로 명확히 의존적 관계이기 때문에 두 메서드가 적절한 값을 찾기 위한 순서 평가는 수행 될 수 없다.</p>
+
+<h2 id="formula-dependencies">Formula Dependencies</h2>
+
+<p>formula가 명시적 바인드를 사용하면 의존성 역시 명확해진다.</p>
+
+<p>formula가 단순한 function 또는 get 메서드만 제공하게 되면</p>
+
+<p>뷰 모델은 프로퍼티 레퍼런스를 찾기 위해 function의 text를 파싱(parse)하게 된다.</p>
+
+<p>극단의 편리함과 확신을 위해서는 의존성 목록을 명시적 바인드에서 잊지 않도록 하자.</p>
+
+<p>formula parsing에 대한 자세한 사항은 Ext.app.bind.Formula에서 찾을 수 있다.</p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

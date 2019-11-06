@@ -1,0 +1,13 @@
+일반 Cisco 스위치 장비의 Attribute 값은 아래와 같고
+
+cisco-avpair= "shell:priv-lvl=15"
+Cisco Nexus 7000 Series 는 아래의 Attribute 값을 사용하네요.
+
+Cisco-AVPair = "shell:roles=\"network-operator vdc-admin\""
+
+Cisco-AVPair = "shell:roles*\"network-operator vdc-admin\""
+
+아래의 관련 페이지 참조해보세요.
+Nexus 장비에 맞게 개발자가 RADIUS 데몬을 수정해야 합니다.
+
+http://www.cisco.com/c/en/us/td/docs/switches/datacenter/sw/4_1/nx-os/security/configuration/guide/sec_nx-os-cfg/sec_radius.html#wp1491389

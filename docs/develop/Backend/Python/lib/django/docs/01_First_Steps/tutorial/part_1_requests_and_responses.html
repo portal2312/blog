@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Part 1 - Requests and responses | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Part 1 - Requests and responses" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Language: en" />
+<meta property="og:description" content="Language: en" />
+<link rel="canonical" href="http://localhost:4000/blog/docs/develop/Backend/Python/lib/django/docs/01_First_Steps/tutorial/part_1_requests_and_responses.html" />
+<meta property="og:url" content="http://localhost:4000/blog/docs/develop/Backend/Python/lib/django/docs/01_First_Steps/tutorial/part_1_requests_and_responses.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-06T09:31:12+09:00" />
+<script type="application/ld+json">
+{"description":"Language: en","headline":"Part 1 - Requests and responses","dateModified":"2019-11-06T09:31:12+09:00","datePublished":"2019-11-06T09:31:12+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/docs/develop/Backend/Python/lib/django/docs/01_First_Steps/tutorial/part_1_requests_and_responses.html"},"url":"http://localhost:4000/blog/docs/develop/Backend/Python/lib/django/docs/01_First_Steps/tutorial/part_1_requests_and_responses.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Part 1 - Requests and responses</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#creating-a-project">Creating a Project</a></li>
+<li class="toc-entry toc-h2"><a href="#the-development-server">The development server</a></li>
+<li class="toc-entry toc-h2"><a href="#creating-the-polls-app">Creating the Polls app</a></li>
+<li class="toc-entry toc-h2"><a href="#write-your-first-view">Write your first view</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#url-arguments-regex">url() arguments: regex</a></li>
+<li class="toc-entry toc-h3"><a href="#url-arguments-view">url() arguments: view</a></li>
+<li class="toc-entry toc-h3"><a href="#url-arguments-kwargs">url() arguments: kwargs</a></li>
+<li class="toc-entry toc-h3"><a href="#url-arguments-name">url() arguments: name</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#reference-url">Reference.URL</a></li>
+</ul><p><code>Language: en</code></p>
+
+<p><code>Documentation version: 1.11</code></p>
+
+<ul>
+<li>Check installed django</li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">  <span class="nv">$ </span>python <span class="nt">-m</span> django <span class="nt">--version</span>
+  <span class="c"># 1.10.5</span>
+</code></pre></div>
+<h2 id="creating-a-project">
+<a class="anchor" href="#creating-a-project" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating a Project</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>django-admin startproject mysite
+<span class="c"># django-admin startproject &lt;project-name&gt;</span>
+
+mysite/
+    manage.py
+    mysite/
+        __init__.py
+        settings.py
+        urls.py
+        wsgi.py
+</code></pre></div>
+<ul>
+<li><p>namespace 충돌 고려 (&lt;project-name&gt;)</p></li>
+<li><p>project 경로 설정에 대한 참조글 (보안)
+```
+- 배경이 평범한 구형 PHP (현대 프레임 워크를 사용하지 않음) 인 경우
+웹 서버의 문서 루트 (/var/www와 같은 위치) 아래에 코드를 넣는 데 익숙.
+장고와 함께, 당신은 그렇게하지 않습니다.</p></li>
+</ul>
+
+<ul>
+<li><p>사람들이 웹에서 코드를 볼 수있는 가능성이 있기 때문에이 파이썬 코드를
+웹 서버의 문서 루트 내에 두는 것은 좋은 생각이 아닙니다.
+(보안에 좋지 않음)</p></li>
+<li><p>/home/mycode 와 같은 문서 루트 외부의 일부 디렉토리에 코드를 넣으십시오.
+```</p></li>
+</ul>
+
+<ul>
+<li><p>manage.py : 이 장고 프로젝트와 다양한 방식으로 상호 작용할 수있는 명령 행 유틸리티. django-admin과 manage.py에서 manage.py에 대한 모든 세부 사항을 읽을 수 있습니다.</p></li>
+<li><p>mysite/mysite/ : 내부 mysite Dir은 프로젝트의 실제 파이썬 패키지. 그 이름은 그 안에 무엇이든 가져 오기 위해 사용해야하는 Python 패키지 이름. (ex: mysite.urls)</p></li>
+<li><p>settings.py :  장고 프로젝트의 설정. <a href="https://docs.djangoproject.com/en/1.10/topics/settings/">Django settings</a></p></li>
+<li><p>urls.py : URL 선언. <a href="https://docs.djangoproject.com/en/1.10/topics/http/urls/">URL dispctcher</a></p></li>
+<li><p>wsgi.py : Project 가 wsgi 호환하는 웹 서버 경우 사용. <a href="https://docs.djangoproject.com/en/1.10/howto/deployment/wsgi/">How to deploy with WSGI</a></p></li>
+</ul>
+
+<hr>
+
+<h2 id="the-development-server">
+<a class="anchor" href="#the-development-server" aria-hidden="true"><span class="octicon octicon-link"></span></a>The development server</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd </span>mysite
+<span class="nv">$ </span>python manage.py runserver
+
+<span class="c"># You have 13 unapplied migration(s).</span>
+<span class="c"># Your project may not work properly until you apply the migrations for app(s):</span>
+<span class="c"># admin, auth, contenttypes, sessions.</span>
+<span class="c"># Run 'python manage.py migrate' to apply them.</span>
+<span class="c"># XXX:</span>
+<span class="c"># 적용되지 않은 데이터베이스 마이그레이션에 대한 경고는 지금 무시하십시오.</span>
+<span class="c"># 우리는 데이터베이스를 곧 다룰 것입니다.</span>
+
+<span class="c"># February 14, 2017 - 08:53:59</span>
+<span class="c"># Django version 1.10.5, using settings 'mysite.settings'</span>
+<span class="c"># Starting development server at http://127.0.0.1:8000/</span>
+<span class="c"># Quit the server with CONTROL-C.</span>
+
+</code></pre></div>
+<ul>
+<li>Changing the Port</li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>python manage.py runserver 8000          <span class="c"># XXX: Port</span>
+<span class="nv">$ </span>python manage.py runserver 0.0.0.0:8000  <span class="c"># XXX: URL:Port</span>
+<span class="c"># URL = [http://localhost:8000, 127.0.0.1, 0.0.0.0]</span>
+<span class="c"># 127.0.0.1 - localAddress 명시</span>
+<span class="c"># 0.0.0.0 - 자신이 호출된 모든 Address 대해 수락</span>
+</code></pre></div>
+<ul>
+<li>Automatic reloading of runserver</li>
+</ul>
+<div class="highlight"><pre><code class="language-" data-lang="">- 개발 서버는 필요에 따라 각 요청에 대한 Python 코드를 자동으로 reload 함.
+
+- 코드 변경 적용: Auto (서버를 다시 시작할 필요가 없음)
+
+- 파일 추가와 같은 일부 작업: Restart. (다시 시작을 trigger하지 않음)
+</code></pre></div>
+<hr>
+
+<h2 id="creating-the-polls-app">
+<a class="anchor" href="#creating-the-polls-app" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating the Polls app</h2>
+
+<ul>
+<li><p>Django로 작성하는 각 애플리케이션은 특정 규칙을 따르는 Python 패키지로 구성.</p></li>
+<li><p>Django에는 응용 프로그램의 기본 디렉토리 구조를 자동으로 생성하는 유틸리티가 있음.</p></li>
+<li><p>디렉토리를 만드는 대신 코드를 작성하는 데 집중할 수 있음.</p></li>
+</ul>
+<div class="highlight"><pre><code class="language-" data-lang="">* Projects vs apps
+
+- apps
+  - 웹 로그 시스템, 공개 기록 데이터베이스 또는 간단한 설문 조사 앱과 같은 기능을
+    수행하는 웹 애플리케이션입니다.
+  - 여러 Projects에 있을 수 있습니다.
+
+- Projects
+  - 특정 웹 사이트의 구성 및 응용 프로그램 모음입니다.
+  - 여러 개의 apps이 포함될 수 있습니다.
+</code></pre></div><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># python manage.py startapp &lt;apps-name&gt;</span>
+<span class="nv">$ </span>python manage.py startapp polls
+
+polls/
+    __init__.py
+    admin.py
+    apps.py
+    migrations/
+        __init__.py
+    models.py
+    tests.py
+    views.py
+
+</code></pre></div>
+<hr>
+
+<h2 id="write-your-first-view">
+<a class="anchor" href="#write-your-first-view" aria-hidden="true"><span class="octicon octicon-link"></span></a>Write your first view</h2>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">vi</span> <span class="o">./</span><span class="n">polls</span><span class="o">/</span><span class="n">views</span><span class="o">.</span><span class="n">py</span>
+
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+
+
+<span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="s">'Hello, world.'</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li><p>뷰를 호출하려면 URL에 매핑해야 함.</p></li>
+<li><p>이 경우 URLconfs 필요.</p></li>
+<li><p>URLconfs를 만들려면 해당경로 안의 urls.py 만듬. (../polls/urls.py)</p></li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">touch </span>urls.py  <span class="c"># XXX: create - urls.py</span>
+
+polls/
+    __init__.py
+    admin.py
+    apps.py
+    migrations/
+        __init__.py
+    models.py
+    tests.py
+    urls.py    <span class="c"># XXX: here</span>
+    views.py
+</code></pre></div><div class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">vi</span> <span class="o">./</span><span class="n">polls</span><span class="o">/</span><span class="n">urls</span><span class="o">.</span><span class="n">py</span>
+
+<span class="kn">from</span> <span class="nn">django.conf.urls</span> <span class="kn">import</span> <span class="n">url</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">views</span>
+
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">url</span><span class="p">(</span><span class="s">r'^$'</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">'index'</span><span class="p">),</span>
+<span class="p">]</span>
+</code></pre></div><div class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">vi</span> <span class="o">../</span><span class="n">mysite</span><span class="o">/</span><span class="n">urls</span><span class="o">.</span><span class="n">py</span>
+
+<span class="kn">from</span> <span class="nn">django.conf.urls</span> <span class="kn">import</span> <span class="n">include</span><span class="p">,</span> <span class="n">url</span>
+<span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">url</span><span class="p">(</span><span class="s">r'^admin/'</span><span class="p">,</span> <span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">urls</span><span class="p">),</span>
+    <span class="n">url</span><span class="p">(</span><span class="s">r'^polls/'</span><span class="p">,</span> <span class="n">include</span><span class="p">(</span><span class="s">'polls.urls'</span><span class="p">)),</span>
+<span class="p">]</span>
+</code></pre></div>
+<ul>
+<li>
+<p><strong>include()</strong></p>
+
+<ul>
+<li>from django.conf.urls import include</li>
+<li>다른 URLconfs 를 참조 할 수 있게 함.</li>
+<li>include() 함수의 일반 표현식에는 $(문자열 끝 일치 문자)가 없지만 뒤에 /가
+있음에 유의하십시오.</li>
+<li>Django가 include() 를 발견 할 때마다, 그 점까지 일치하는 URL 부분을 잘라 버리고 추가 처리를 위해 포함된 URLconfs에 나머지 문자열을 보냅니다.</li>
+<li>include() 뒤에있는 아이디어는 URL을 플러그 앤 플레이하기 쉽도록 만드는 것입니다.</li>
+<li>polls는 자신의 URLconfs (polls/urls.py)에 있기 때문에 "/polls/" or "/fun_polls/" or "/content/polls/" or 다른 경로 루트 아래에 배치 할 수 있음. 그러면 앱은 여전히 ​​작동.</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><code class="language-" data-lang="">* When to use in include()
+
+- include()를 사용하는 경우
+
+  다른 URL 패턴을 포함 할 때는 항상 include()를 사용해야 함.
+  이것에 대한 유일한 예외는 admin.site.urls 임.
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">* Doesn't match what you see?
+
+  admin.site.urls 대신 include (admin.site.urls)가 표시되면 django version check.
+</code></pre></div><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>python manage.py runserver
+
+<span class="c"># go to http://localhost:8000/polls/</span>
+</code></pre></div>
+<h3 id="url-arguments-regex">
+<a class="anchor" href="#url-arguments-regex" aria-hidden="true"><span class="octicon octicon-link"></span></a>url() arguments: regex</h3>
+
+<ul>
+<li><p>정규식 사용.</p></li>
+<li><p>정규식은 GET 과 POST 를 읽지 않음.</p></li>
+</ul>
+
+<p><a href="https://www.example.com/myapp/?page=3">https://www.example.com/myapp/?page=3</a> 는 myapp/ URLconf 를 바라봄</p>
+
+<hr>
+
+<h3 id="url-arguments-view">
+<a class="anchor" href="#url-arguments-view" aria-hidden="true"><span class="octicon octicon-link"></span></a>url() arguments: view</h3>
+
+<ul>
+<li><p>Django가 정규식 일치를 발견하면 Django는 HttpRequest 객체를 첫 번째 인수로 사용하고 정규 표현식의 "캡처 된"값을 다른 인수로 사용하여 지정된보기 함수를 호출합니다.</p></li>
+<li><p>regex가 단순 캡처를 사용하면 값은 위치 인수로 전달됩니다. 명명 된 캡처를 사용하는 경우 값은 키워드 인수로 전달됩니다. 우리는 이것을 약간의 예를 들어 설명 할 것입니다.</p></li>
+</ul>
+
+<hr>
+
+<h3 id="url-arguments-kwargs">
+<a class="anchor" href="#url-arguments-kwargs" aria-hidden="true"><span class="octicon octicon-link"></span></a>url() arguments: kwargs</h3>
+
+<ul>
+<li>임의의 키워드 인수는 사전에서 대상보기로 전달 될 수 있습니다. 튜토리얼에서 장고의 이 기능을 사용하지 않을 것입니다.</li>
+</ul>
+
+<hr>
+
+<h3 id="url-arguments-name">
+<a class="anchor" href="#url-arguments-name" aria-hidden="true"><span class="octicon octicon-link"></span></a>url() arguments: name</h3>
+
+<ul>
+<li><p>URL의 이름을 지정하면 특히 템플릿 내에서 장고의 다른 곳에서 명확하게 참조 할 수 있습니다. 이 강력한 기능을 사용하면 단일 파일 만 건드리지 만 프로젝트의 URL 패턴을 전체적으로 변경할 수 있습니다.</p></li>
+<li><p>자세한건 <a href="http://">part2</a> 에서.</p></li>
+</ul>
+
+<hr>
+
+<h1 id="reference-url">
+<a class="anchor" href="#reference-url" aria-hidden="true"><span class="octicon octicon-link"></span></a><em>Reference.URL</em>
+</h1>
+
+<ul>
+<li><p><a href="https://docs.djangoproject.com/en/1.10/topics/settings/">https://docs.djangoproject.com/en/1.10/topics/settings/</a></p></li>
+<li><p><a href="https://docs.djangoproject.com/en/1.10/topics/http/urls/">https://docs.djangoproject.com/en/1.10/topics/http/urls/</a></p></li>
+<li><p><a href="https://docs.djangoproject.com/en/1.10/howto/deployment/wsgi/">https://docs.djangoproject.com/en/1.10/howto/deployment/wsgi/</a></p></li>
+</ul>
+
+  </div>
+
+<div>
+  <p><code>Language: en</code></p>
+
+<p><code>Documentation version: 1.11</code></p>
+
+<ul>
+<li>Check installed django</li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">  <span class="nv">$ </span>python <span class="nt">-m</span> django <span class="nt">--version</span>
+  <span class="c"># 1.10.5</span>
+</code></pre></div>
+<h2 id="creating-a-project">Creating a Project</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>django-admin startproject mysite
+<span class="c"># django-admin startproject &lt;project-name&gt;</span>
+
+mysite/
+    manage.py
+    mysite/
+        __init__.py
+        settings.py
+        urls.py
+        wsgi.py
+</code></pre></div>
+<ul>
+<li><p>namespace 충돌 고려 (&lt;project-name&gt;)</p></li>
+<li><p>project 경로 설정에 대한 참조글 (보안)
+```
+- 배경이 평범한 구형 PHP (현대 프레임 워크를 사용하지 않음) 인 경우
+웹 서버의 문서 루트 (/var/www와 같은 위치) 아래에 코드를 넣는 데 익숙.
+장고와 함께, 당신은 그렇게하지 않습니다.</p></li>
+</ul>
+
+<ul>
+<li><p>사람들이 웹에서 코드를 볼 수있는 가능성이 있기 때문에이 파이썬 코드를
+웹 서버의 문서 루트 내에 두는 것은 좋은 생각이 아닙니다.
+(보안에 좋지 않음)</p></li>
+<li><p>/home/mycode 와 같은 문서 루트 외부의 일부 디렉토리에 코드를 넣으십시오.
+```</p></li>
+</ul>
+
+<ul>
+<li><p>manage.py : 이 장고 프로젝트와 다양한 방식으로 상호 작용할 수있는 명령 행 유틸리티. django-admin과 manage.py에서 manage.py에 대한 모든 세부 사항을 읽을 수 있습니다.</p></li>
+<li><p>mysite/mysite/ : 내부 mysite Dir은 프로젝트의 실제 파이썬 패키지. 그 이름은 그 안에 무엇이든 가져 오기 위해 사용해야하는 Python 패키지 이름. (ex: mysite.urls)</p></li>
+<li><p>settings.py :  장고 프로젝트의 설정. <a href="https://docs.djangoproject.com/en/1.10/topics/settings/" rel="nofollow" target="_blank">Django settings</a></p></li>
+<li><p>urls.py : URL 선언. <a href="https://docs.djangoproject.com/en/1.10/topics/http/urls/" rel="nofollow" target="_blank">URL dispctcher</a></p></li>
+<li><p>wsgi.py : Project 가 wsgi 호환하는 웹 서버 경우 사용. <a href="https://docs.djangoproject.com/en/1.10/howto/deployment/wsgi/" rel="nofollow" target="_blank">How to deploy with WSGI</a></p></li>
+</ul>
+
+<hr>
+
+<h2 id="the-development-server">The development server</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd </span>mysite
+<span class="nv">$ </span>python manage.py runserver
+
+<span class="c"># You have 13 unapplied migration(s).</span>
+<span class="c"># Your project may not work properly until you apply the migrations for app(s):</span>
+<span class="c"># admin, auth, contenttypes, sessions.</span>
+<span class="c"># Run 'python manage.py migrate' to apply them.</span>
+<span class="c"># XXX:</span>
+<span class="c"># 적용되지 않은 데이터베이스 마이그레이션에 대한 경고는 지금 무시하십시오.</span>
+<span class="c"># 우리는 데이터베이스를 곧 다룰 것입니다.</span>
+
+<span class="c"># February 14, 2017 - 08:53:59</span>
+<span class="c"># Django version 1.10.5, using settings 'mysite.settings'</span>
+<span class="c"># Starting development server at http://127.0.0.1:8000/</span>
+<span class="c"># Quit the server with CONTROL-C.</span>
+
+</code></pre></div>
+<ul>
+<li>Changing the Port</li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>python manage.py runserver 8000          <span class="c"># XXX: Port</span>
+<span class="nv">$ </span>python manage.py runserver 0.0.0.0:8000  <span class="c"># XXX: URL:Port</span>
+<span class="c"># URL = [http://localhost:8000, 127.0.0.1, 0.0.0.0]</span>
+<span class="c"># 127.0.0.1 - localAddress 명시</span>
+<span class="c"># 0.0.0.0 - 자신이 호출된 모든 Address 대해 수락</span>
+</code></pre></div>
+<ul>
+<li>Automatic reloading of runserver</li>
+</ul>
+<div class="highlight"><pre><code class="language-" data-lang="">- 개발 서버는 필요에 따라 각 요청에 대한 Python 코드를 자동으로 reload 함.
+
+- 코드 변경 적용: Auto (서버를 다시 시작할 필요가 없음)
+
+- 파일 추가와 같은 일부 작업: Restart. (다시 시작을 trigger하지 않음)
+</code></pre></div>
+<hr>
+
+<h2 id="creating-the-polls-app">Creating the Polls app</h2>
+
+<ul>
+<li><p>Django로 작성하는 각 애플리케이션은 특정 규칙을 따르는 Python 패키지로 구성.</p></li>
+<li><p>Django에는 응용 프로그램의 기본 디렉토리 구조를 자동으로 생성하는 유틸리티가 있음.</p></li>
+<li><p>디렉토리를 만드는 대신 코드를 작성하는 데 집중할 수 있음.</p></li>
+</ul>
+<div class="highlight"><pre><code class="language-" data-lang="">* Projects vs apps
+
+- apps
+  - 웹 로그 시스템, 공개 기록 데이터베이스 또는 간단한 설문 조사 앱과 같은 기능을
+    수행하는 웹 애플리케이션입니다.
+  - 여러 Projects에 있을 수 있습니다.
+
+- Projects
+  - 특정 웹 사이트의 구성 및 응용 프로그램 모음입니다.
+  - 여러 개의 apps이 포함될 수 있습니다.
+</code></pre></div><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># python manage.py startapp &lt;apps-name&gt;</span>
+<span class="nv">$ </span>python manage.py startapp polls
+
+polls/
+    __init__.py
+    admin.py
+    apps.py
+    migrations/
+        __init__.py
+    models.py
+    tests.py
+    views.py
+
+</code></pre></div>
+<hr>
+
+<h2 id="write-your-first-view">Write your first view</h2>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">vi</span> <span class="o">./</span><span class="n">polls</span><span class="o">/</span><span class="n">views</span><span class="o">.</span><span class="n">py</span>
+
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+
+
+<span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="s">'Hello, world.'</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li><p>뷰를 호출하려면 URL에 매핑해야 함.</p></li>
+<li><p>이 경우 URLconfs 필요.</p></li>
+<li><p>URLconfs를 만들려면 해당경로 안의 urls.py 만듬. (../polls/urls.py)</p></li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">touch </span>urls.py  <span class="c"># XXX: create - urls.py</span>
+
+polls/
+    __init__.py
+    admin.py
+    apps.py
+    migrations/
+        __init__.py
+    models.py
+    tests.py
+    urls.py    <span class="c"># XXX: here</span>
+    views.py
+</code></pre></div><div class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">vi</span> <span class="o">./</span><span class="n">polls</span><span class="o">/</span><span class="n">urls</span><span class="o">.</span><span class="n">py</span>
+
+<span class="kn">from</span> <span class="nn">django.conf.urls</span> <span class="kn">import</span> <span class="n">url</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">views</span>
+
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">url</span><span class="p">(</span><span class="s">r'^$'</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">'index'</span><span class="p">),</span>
+<span class="p">]</span>
+</code></pre></div><div class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">vi</span> <span class="o">../</span><span class="n">mysite</span><span class="o">/</span><span class="n">urls</span><span class="o">.</span><span class="n">py</span>
+
+<span class="kn">from</span> <span class="nn">django.conf.urls</span> <span class="kn">import</span> <span class="n">include</span><span class="p">,</span> <span class="n">url</span>
+<span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">url</span><span class="p">(</span><span class="s">r'^admin/'</span><span class="p">,</span> <span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">urls</span><span class="p">),</span>
+    <span class="n">url</span><span class="p">(</span><span class="s">r'^polls/'</span><span class="p">,</span> <span class="n">include</span><span class="p">(</span><span class="s">'polls.urls'</span><span class="p">)),</span>
+<span class="p">]</span>
+</code></pre></div>
+<ul>
+<li>
+<p><strong>include()</strong></p>
+
+<ul>
+<li>from django.conf.urls import include</li>
+<li>다른 URLconfs 를 참조 할 수 있게 함.</li>
+<li>include() 함수의 일반 표현식에는 $(문자열 끝 일치 문자)가 없지만 뒤에 /가
+있음에 유의하십시오.</li>
+<li>Django가 include() 를 발견 할 때마다, 그 점까지 일치하는 URL 부분을 잘라 버리고 추가 처리를 위해 포함된 URLconfs에 나머지 문자열을 보냅니다.</li>
+<li>include() 뒤에있는 아이디어는 URL을 플러그 앤 플레이하기 쉽도록 만드는 것입니다.</li>
+<li>polls는 자신의 URLconfs (polls/urls.py)에 있기 때문에 "/polls/" or "/fun_polls/" or "/content/polls/" or 다른 경로 루트 아래에 배치 할 수 있음. 그러면 앱은 여전히 ​​작동.</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><code class="language-" data-lang="">* When to use in include()
+
+- include()를 사용하는 경우
+
+  다른 URL 패턴을 포함 할 때는 항상 include()를 사용해야 함.
+  이것에 대한 유일한 예외는 admin.site.urls 임.
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">* Doesn't match what you see?
+
+  admin.site.urls 대신 include (admin.site.urls)가 표시되면 django version check.
+</code></pre></div><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>python manage.py runserver
+
+<span class="c"># go to http://localhost:8000/polls/</span>
+</code></pre></div>
+<h3 id="url-arguments-regex">url() arguments: regex</h3>
+
+<ul>
+<li><p>정규식 사용.</p></li>
+<li><p>정규식은 GET 과 POST 를 읽지 않음.</p></li>
+</ul>
+
+<p><a href="https://www.example.com/myapp/?page=3" rel="nofollow" target="_blank">https://www.example.com/myapp/?page=3</a> 는 myapp/ URLconf 를 바라봄</p>
+
+<hr>
+
+<h3 id="url-arguments-view">url() arguments: view</h3>
+
+<ul>
+<li><p>Django가 정규식 일치를 발견하면 Django는 HttpRequest 객체를 첫 번째 인수로 사용하고 정규 표현식의 "캡처 된"값을 다른 인수로 사용하여 지정된보기 함수를 호출합니다.</p></li>
+<li><p>regex가 단순 캡처를 사용하면 값은 위치 인수로 전달됩니다. 명명 된 캡처를 사용하는 경우 값은 키워드 인수로 전달됩니다. 우리는 이것을 약간의 예를 들어 설명 할 것입니다.</p></li>
+</ul>
+
+<hr>
+
+<h3 id="url-arguments-kwargs">url() arguments: kwargs</h3>
+
+<ul>
+<li>임의의 키워드 인수는 사전에서 대상보기로 전달 될 수 있습니다. 튜토리얼에서 장고의 이 기능을 사용하지 않을 것입니다.</li>
+</ul>
+
+<hr>
+
+<h3 id="url-arguments-name">url() arguments: name</h3>
+
+<ul>
+<li><p>URL의 이름을 지정하면 특히 템플릿 내에서 장고의 다른 곳에서 명확하게 참조 할 수 있습니다. 이 강력한 기능을 사용하면 단일 파일 만 건드리지 만 프로젝트의 URL 패턴을 전체적으로 변경할 수 있습니다.</p></li>
+<li><p>자세한건 <a href="http://" rel="nofollow" target="_blank">part2</a> 에서.</p></li>
+</ul>
+
+<hr>
+
+<h1 id="reference-url"><em>Reference.URL</em></h1>
+
+<ul>
+<li><p><a href="https://docs.djangoproject.com/en/1.10/topics/settings/" rel="nofollow" target="_blank">https://docs.djangoproject.com/en/1.10/topics/settings/</a></p></li>
+<li><p><a href="https://docs.djangoproject.com/en/1.10/topics/http/urls/" rel="nofollow" target="_blank">https://docs.djangoproject.com/en/1.10/topics/http/urls/</a></p></li>
+<li><p><a href="https://docs.djangoproject.com/en/1.10/howto/deployment/wsgi/" rel="nofollow" target="_blank">https://docs.djangoproject.com/en/1.10/howto/deployment/wsgi/</a></p></li>
+</ul>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

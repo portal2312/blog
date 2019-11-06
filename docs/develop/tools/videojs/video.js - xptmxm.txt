@@ -1,0 +1,41 @@
+1.
+tail -f /opt/hts/logs/nginx/access.log
+--------------------------------------
+tail -f /opt/hts/logs/nginx/error.log
+
+
+2.
+/opt/hts/etc/nginx.conf
+
+
+3
+vi /opt/hts/netcruz/webapps/nom/control/view.py
+
+
+4.
+vi /opt/hts/netcruz/webapps/nom/static/js/nom/glogs.js
+
+
+5.
+vi /opt/hts/lib/python2.7/site-packages/Twisted-12.3.0-py2.7-linux-x86_64.egg/twisted/internet/tcp.py
+
+vi /opt/hts/lib/python2.7/site-packages/Twisted-12.3.0-py2.7-linux-x86_64.egg/twisted/conch/telnet.py
+
+6.
+vi /opt/hts/netcruz/nom/scm/TelnetClientFactory.py
+vi /opt/hts/netcruz/nom/scm/TelnetClientTransport.py
+
+
+0.
+cd /opt/hts/logs/vod/ flv 저장경로
+
+tail -f /opt/hts/etc/nginx.conf
+
+tail -f /tmp/xxx.log
+
+
+
+
+
+
+

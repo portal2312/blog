@@ -1,0 +1,3 @@
+cd C:\Program Files\VMware\VMware Tools
+
+C:\Program Files\VMware\VMware Tools> VMwareToolboxCmd help disk

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>File System | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="File System" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="대게 마지막 파일 시스템을 사용 함." />
+<meta property="og:description" content="대게 마지막 파일 시스템을 사용 함." />
+<link rel="canonical" href="http://localhost:4000/blog/docs/develop/server/Linux/linux%20-%20file%20system.html" />
+<meta property="og:url" content="http://localhost:4000/blog/docs/develop/server/Linux/linux%20-%20file%20system.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-06T09:31:12+09:00" />
+<script type="application/ld+json">
+{"description":"대게 마지막 파일 시스템을 사용 함.","headline":"File System","dateModified":"2019-11-06T09:31:12+09:00","datePublished":"2019-11-06T09:31:12+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/docs/develop/server/Linux/linux%20-%20file%20system.html"},"url":"http://localhost:4000/blog/docs/develop/server/Linux/linux%20-%20file%20system.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>File System</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#ext4">ext4</a></li>
+<li class="toc-entry toc-h2"><a href="#btrfs">Btrfs</a></li>
+<li class="toc-entry toc-h2"><a href="#xfs">XFS</a></li>
+<li class="toc-entry toc-h2"><a href="#result">Result</a></li>
+<li class="toc-entry toc-h1"><a href="#reference-url">Reference.URL</a></li>
+</ul><ul>
+<li><p>대게 마지막 파일 시스템을 사용 함.</p></li>
+<li><p>현재 기본값 ext4 사용, 그러나 btrfs 가 더 나은 이유는 무엇인가?</p></li>
+<li><p>큰 이유는 data control을 상황에 맞게 효율적 사용을 이유로 선택함.</p></li>
+</ul>
+
+<p>(보안, 사용율, 효율성 등등)</p>
+
+<h2 id="ext4">
+<a class="anchor" href="#ext4" aria-hidden="true"><span class="octicon octicon-link"></span></a>ext4</h2>
+
+<p>The ext4 has some limits which are still a bit impressive. The maximum file size is 16 tebibytes (which is roughly 17.6 terabytes) and is much bigger than any hard drive a regular consumer can currently buy. While, the largest volume/partition you can make with ext4 is 1 exbibyte (which is roughly 1,152,921.5 terabytes). The ext4 is known to bring the speed improvements over ext3 by using multiple various techniques. Like in the most modern file systems, it is a journaling file system that means that it will keep a journal of where the files are mainly located on the disk and of any other changes that happen to the disk. Regardless all of its features, it doesn’t support the transparent compression, the data deduplication, or the transparent encryption. The snapshots are supported technically, but such feature is experimental at best.</p>
+
+<ul>
+<li><p>ext4에는 약간의 제한이 있지만 여전히 인상적입니다.</p></li>
+<li><p>최대 파일 크기는 16 테라 바이트 (약 17.6 테라 바이트)이며 일반 소비자가 현재 구입할 수있는 하드 드라이브보다 훨씬 큽니다. ext4로 만들 수있는 가장 큰 볼륨 / 파티션은 1 exbibyte (약 1,152,921.5 테라 바이트)입니다.</p></li>
+<li><p>ext4는 여러 가지 다양한 기술을 사용하여 ext3에 비해 속도가 향상되는 것으로 알려져 있습니다. 가장 현대적인 파일 시스템과 마찬가지로 저널링 파일 시스템이기도하므로 파일이 주로 디스크에있는 위치와 디스크에 발생한 다른 모든 변경 사항을 보관합니다.</p></li>
+<li><p>모든 기능에 관계없이 투명 압축, 데이터 중복 제거 또는 투명한 암호화는 지원하지 않습니다.</p></li>
+<li><p>스냅 샷은 기술적으로 지원되지만 이러한 기능은 실험적으로 최상의 것입니다.</p></li>
+</ul>
+
+<h2 id="btrfs">
+<a class="anchor" href="#btrfs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Btrfs</h2>
+
+<p>The btrfs, many of us pronounce it different ways, as an example, Better FS, Butter FS, or B-Tree FS. It is a file system which is completely made from scratch. The btrfs exists because its developers firstly wanted to expand the file system functionality in order to include snapshots, pooling, as well as checksums among the other things. While it is independent from the ext4, it also wants to build off the ideas present in the ext4 that are great for the consumers and the businesses alike as well as incorporate those additional features that will benefit everybody, but specifically the enterprises. For the enterprises who are using very large programs with very large databases, they are having a seemingly continuous file system across the multiple hard drives could be very beneficial as it will make a consolidation of the data much easier. The data deduplication could reduce the amount of the actual space data could occupy, and the data mirroring could become easier with the btrfs as well when there is a single and broad file system which needs to be mirrored.</p>
+
+<p>The user certainly can still choose to create multiple partitions so that he does not need to mirror everything. Considering that the btrfs will be able for spanning over the multiple hard drives, it is a very good thing that it can support 16 times more drive space than the ext4. A maximum partition size of the btrfs file system is 16 exbibytes, as well as maximum file size is 16 exbibytes too.</p>
+
+<ul>
+<li><p>btrfs, 우리 중 많은 사람들이 다른 방법으로 발음합니다. 예를 들어 Better FS, Butter FS 또는 B-Tree FS입니다.</p></li>
+<li><p>완전히 처음부터 만들어진 파일 시스템입니다.</p></li>
+<li><p>btrfs는 개발자가 먼저 스냅 샷, 풀링 및 기타 체크섬을 포함하기 위해 파일 시스템 기능을 확장하려고하므로 존재합니다.</p></li>
+<li><p>ext4와는 독립적이지만, ext4에있는 아이디어를 구축하여 소비자와 비즈니스 모두에게 좋은 것은 물론 모든 사람에게 도움이되는 추가 기능을 통합하고자합니다.</p></li>
+<li><p>특히 기업에 적합합니다.</p></li>
+<li><p>대용량 데이터베이스를 보유한 매우 큰 프로그램을 사용하는 기업의 경우 여러 하드 드라이브에서 겉으로보기에는 연속적인 파일 시스템을 사용하는 것이 데이터 통합을 훨씬 쉽게 해주므로 매우 유용 할 수 있습니다.</p></li>
+<li><p>데이터 중복 제거로 인해 실제 공간 데이터의 양을 줄일 수 있으며 미러링이 필요한 단일 파일 시스템과 광범위한 파일 시스템이있는 경우 btrfs를 사용하면 데이터 미러링이 쉬워 질 수 있습니다.</p></li>
+<li><p>사용자는 모든 파티션을 미러링 할 필요가 없도록 여러 개의 파티션을 만들 수 있습니다.</p></li>
+<li><p>btrfs가 여러 개의 하드 드라이브를 스패닝 할 수 있다는 점을 감안할 때 ext4보다 16 배 많은 드라이브 공간을 지원할 수 있다는 점이 매우 좋습니다.</p></li>
+<li><p>btrfs 파일 시스템의 최대 파티션 크기는 16 엑서 바이트이고 최대 파일 크기는 16 엑기 바이트입니다.</p></li>
+</ul>
+
+<h2 id="xfs">
+<a class="anchor" href="#xfs" aria-hidden="true"><span class="octicon octicon-link"></span></a>XFS</h2>
+
+<p>The XFS file system is an extension of the extent file system. The XFS is a high-performance 64-bit journaling file system. The support of the XFS was merged into Linux kernel in around 2002 and In 2009 Red Hat Enterprise Linux version 5.4 usage of the XFS file system. XFS supports maximum file system size of 8 exbibytes for the 64-bit file system. There is some comparison of XFS file system is XFS file system can’t be shrunk and poor performance with deletions of the large numbers of files. Now, the RHEL 7.0 uses XFS as the default filesystem.</p>
+
+<ul>
+<li><p>XFS 파일 시스템은 확장 파일 시스템의 확장입니다.</p></li>
+<li><p>XFS는 고성능 64 비트 저널링 파일 시스템입니다. XFS의 지원은 2002 년경에 Linux 커널에 통합되었으며 2009 년에는 Red Hat Enterprise Linux 버전 5.4에서 XFS 파일 시스템을 사용했습니다.</p></li>
+<li><p>XFS는 64 비트 파일 시스템에 대해 최대 8 개의 파일 시스템 크기를 지원합니다.</p></li>
+<li><p>XFS 파일 시스템은 XFS 파일 시스템이 축소 될 수없고 많은 파일을 삭제할 때 성능이 저하 될 수있는 몇 가지 비교가 있습니다.</p></li>
+<li><p>이제 RHEL 7.0은 XFS를 기본 파일 시스템으로 사용합니다.</p></li>
+</ul>
+
+<h2 id="result">
+<a class="anchor" href="#result" aria-hidden="true"><span class="octicon octicon-link"></span></a>Result</h2>
+
+<ul>
+<li><p>btrfs의 현재 완전하지 않다.</p></li>
+<li><p>btrfs는 그러나 공식적으로 차세대 파일 시스템은 여전히 ​​"불안정"으로 분류되지만 사용자가 최신 버전의 Ubuntu를 다운로드하면 btrfs 파티션에 설치하도록 선택할 수 있습니다.
+btrfs가 실제로 "stable"로 분류 될 때 여전히 미스테리이지만 사용자는 우분투가 실제로 "안정적인"것으로 간주 될 때까지 기본적으로 btrfs를 사용하지 않아야 합니다.</p></li>
+<li><p>Fedora 18은 btrfs를 파일 시스템 검사기가 있어야 릴리스 될 때까지 기본 파일 시스템으로 btrfs를 사용할 것으로보고 되었습니다.</p></li>
+<li><p>btrfs에는 여전히 많은 작업이 남아 있습니다. 아직 모든 기능이 구현되지 않았기 때문에 ext4와 비교해 보면 성능이 다소 느립니다.</p></li>
+<li><p>(결과) btrfs 를 사용하는 것이 더 좋다.</p></li>
+<li><p>(이유) 왜? 대답은 편의성과 편재성입니다.</p></li>
+<li><p>(중요) 지금까지 ext4가 동일한 성능에도 불구하고 승자가 될 것입니다. 전송 속도가 매우 중요하더라도 파일 전송 속도보다 파일 시스템이 더 중요합니다.</p></li>
+<li>
+<p>btrfs</p>
+
+<ul>
+<li>최대 16 엑사 바이트의 볼륨을 제공하고 내결함성을 향상시킬 수 있지만 지금까지는 Linux 운영 체제에 통합 된 파일 시스템이 아닌 추가 파일 시스템으로 더 많은 것을 느꼈습니다. 예를 들어, 드라이브가 btrfs로 포맷되기 전에 btrfs-tools가 있어야합니다. 즉, btrfs는 Linux 운영 체제 설치 중에 옵션이 아니지만 배포판에 따라 다를 수 있습니다.</li>
+<li>Copy-on-Write (CoW), 광범위한 체크섬, 스냅 샷, 스크러빙,자가 치유 데이터, 중복 제거 및 데이터 무결성을 보장하는 여러 가지 향상된 기능이 있습니다.</li>
+<li>ZFS의 RAID-Z 기능이 없으므로 RAID는 여전히 btrfs를 사용하는 실험 상태입니다. 그러나 순수한 데이터 스토리지의 경우 btrfs가 ext4보다 우위에 있지만 시간은 여전히 ​​알 수 있습니다.</li>
+</ul>
+</li>
+<li>
+<p>ext4</p>
+
+<ul>
+<li>ext4는 데스크탑이나 워크 스테이션에서 여전히 우수한 파일 시스템입니다. 기본적으로 제공되므로 사용자가 운영 체제를 설치할 수 있습니다. 또한, ext4는 최대 1 엑사 바이트 크기의 파일과 최대 16 테라 바이트 크기의 파일을 지원하므로 공간과 관련하여 여전히 성장할 여지가 충분합니다.</li>
+<li>데스크탑 시스템에서 기본 파일 시스템으로 제공되고 파일 전송시 btrfs보다 빠르기 때문에 더 나은 선택입니다.</li>
+</ul>
+</li>
+<li><p>btrfs는 조사 할 가치가 있지만, 데스크탑 Linux에서 ext4를 완전히 바꾸려면 몇 년 후가 될 수도 있습니다. 데이터 저장소와 대용량 저장소 풀은 서로 다른 이야기를 보여줄 수 있으며 ext4, XCF 및 btrfs 간의 올바른 차이점을 보여줍니다.</p></li>
+</ul>
+
+<h1 id="reference-url">
+<a class="anchor" href="#reference-url" aria-hidden="true"><span class="octicon octicon-link"></span></a><em>Reference.URL</em>
+</h1>
+
+<p><a href="https://www.unixmen.com/review-ext4-vs-btrfs-vs-xfs/">https://www.unixmen.com/review-ext4-vs-btrfs-vs-xfs/</a></p>
+
+  </div>
+
+<div>
+  <ul>
+<li><p>대게 마지막 파일 시스템을 사용 함.</p></li>
+<li><p>현재 기본값 ext4 사용, 그러나 btrfs 가 더 나은 이유는 무엇인가?</p></li>
+<li><p>큰 이유는 data control을 상황에 맞게 효율적 사용을 이유로 선택함.</p></li>
+</ul>
+
+<p>(보안, 사용율, 효율성 등등)</p>
+
+<h2 id="ext4">ext4</h2>
+
+<p>The ext4 has some limits which are still a bit impressive. The maximum file size is 16 tebibytes (which is roughly 17.6 terabytes) and is much bigger than any hard drive a regular consumer can currently buy. While, the largest volume/partition you can make with ext4 is 1 exbibyte (which is roughly 1,152,921.5 terabytes). The ext4 is known to bring the speed improvements over ext3 by using multiple various techniques. Like in the most modern file systems, it is a journaling file system that means that it will keep a journal of where the files are mainly located on the disk and of any other changes that happen to the disk. Regardless all of its features, it doesn’t support the transparent compression, the data deduplication, or the transparent encryption. The snapshots are supported technically, but such feature is experimental at best.</p>
+
+<ul>
+<li><p>ext4에는 약간의 제한이 있지만 여전히 인상적입니다.</p></li>
+<li><p>최대 파일 크기는 16 테라 바이트 (약 17.6 테라 바이트)이며 일반 소비자가 현재 구입할 수있는 하드 드라이브보다 훨씬 큽니다. ext4로 만들 수있는 가장 큰 볼륨 / 파티션은 1 exbibyte (약 1,152,921.5 테라 바이트)입니다.</p></li>
+<li><p>ext4는 여러 가지 다양한 기술을 사용하여 ext3에 비해 속도가 향상되는 것으로 알려져 있습니다. 가장 현대적인 파일 시스템과 마찬가지로 저널링 파일 시스템이기도하므로 파일이 주로 디스크에있는 위치와 디스크에 발생한 다른 모든 변경 사항을 보관합니다.</p></li>
+<li><p>모든 기능에 관계없이 투명 압축, 데이터 중복 제거 또는 투명한 암호화는 지원하지 않습니다.</p></li>
+<li><p>스냅 샷은 기술적으로 지원되지만 이러한 기능은 실험적으로 최상의 것입니다.</p></li>
+</ul>
+
+<h2 id="btrfs">Btrfs</h2>
+
+<p>The btrfs, many of us pronounce it different ways, as an example, Better FS, Butter FS, or B-Tree FS. It is a file system which is completely made from scratch. The btrfs exists because its developers firstly wanted to expand the file system functionality in order to include snapshots, pooling, as well as checksums among the other things. While it is independent from the ext4, it also wants to build off the ideas present in the ext4 that are great for the consumers and the businesses alike as well as incorporate those additional features that will benefit everybody, but specifically the enterprises. For the enterprises who are using very large programs with very large databases, they are having a seemingly continuous file system across the multiple hard drives could be very beneficial as it will make a consolidation of the data much easier. The data deduplication could reduce the amount of the actual space data could occupy, and the data mirroring could become easier with the btrfs as well when there is a single and broad file system which needs to be mirrored.</p>
+
+<p>The user certainly can still choose to create multiple partitions so that he does not need to mirror everything. Considering that the btrfs will be able for spanning over the multiple hard drives, it is a very good thing that it can support 16 times more drive space than the ext4. A maximum partition size of the btrfs file system is 16 exbibytes, as well as maximum file size is 16 exbibytes too.</p>
+
+<ul>
+<li><p>btrfs, 우리 중 많은 사람들이 다른 방법으로 발음합니다. 예를 들어 Better FS, Butter FS 또는 B-Tree FS입니다.</p></li>
+<li><p>완전히 처음부터 만들어진 파일 시스템입니다.</p></li>
+<li><p>btrfs는 개발자가 먼저 스냅 샷, 풀링 및 기타 체크섬을 포함하기 위해 파일 시스템 기능을 확장하려고하므로 존재합니다.</p></li>
+<li><p>ext4와는 독립적이지만, ext4에있는 아이디어를 구축하여 소비자와 비즈니스 모두에게 좋은 것은 물론 모든 사람에게 도움이되는 추가 기능을 통합하고자합니다.</p></li>
+<li><p>특히 기업에 적합합니다.</p></li>
+<li><p>대용량 데이터베이스를 보유한 매우 큰 프로그램을 사용하는 기업의 경우 여러 하드 드라이브에서 겉으로보기에는 연속적인 파일 시스템을 사용하는 것이 데이터 통합을 훨씬 쉽게 해주므로 매우 유용 할 수 있습니다.</p></li>
+<li><p>데이터 중복 제거로 인해 실제 공간 데이터의 양을 줄일 수 있으며 미러링이 필요한 단일 파일 시스템과 광범위한 파일 시스템이있는 경우 btrfs를 사용하면 데이터 미러링이 쉬워 질 수 있습니다.</p></li>
+<li><p>사용자는 모든 파티션을 미러링 할 필요가 없도록 여러 개의 파티션을 만들 수 있습니다.</p></li>
+<li><p>btrfs가 여러 개의 하드 드라이브를 스패닝 할 수 있다는 점을 감안할 때 ext4보다 16 배 많은 드라이브 공간을 지원할 수 있다는 점이 매우 좋습니다.</p></li>
+<li><p>btrfs 파일 시스템의 최대 파티션 크기는 16 엑서 바이트이고 최대 파일 크기는 16 엑기 바이트입니다.</p></li>
+</ul>
+
+<h2 id="xfs">XFS</h2>
+
+<p>The XFS file system is an extension of the extent file system. The XFS is a high-performance 64-bit journaling file system. The support of the XFS was merged into Linux kernel in around 2002 and In 2009 Red Hat Enterprise Linux version 5.4 usage of the XFS file system. XFS supports maximum file system size of 8 exbibytes for the 64-bit file system. There is some comparison of XFS file system is XFS file system can’t be shrunk and poor performance with deletions of the large numbers of files. Now, the RHEL 7.0 uses XFS as the default filesystem.</p>
+
+<ul>
+<li><p>XFS 파일 시스템은 확장 파일 시스템의 확장입니다.</p></li>
+<li><p>XFS는 고성능 64 비트 저널링 파일 시스템입니다. XFS의 지원은 2002 년경에 Linux 커널에 통합되었으며 2009 년에는 Red Hat Enterprise Linux 버전 5.4에서 XFS 파일 시스템을 사용했습니다.</p></li>
+<li><p>XFS는 64 비트 파일 시스템에 대해 최대 8 개의 파일 시스템 크기를 지원합니다.</p></li>
+<li><p>XFS 파일 시스템은 XFS 파일 시스템이 축소 될 수없고 많은 파일을 삭제할 때 성능이 저하 될 수있는 몇 가지 비교가 있습니다.</p></li>
+<li><p>이제 RHEL 7.0은 XFS를 기본 파일 시스템으로 사용합니다.</p></li>
+</ul>
+
+<h2 id="result">Result</h2>
+
+<ul>
+<li><p>btrfs의 현재 완전하지 않다.</p></li>
+<li><p>btrfs는 그러나 공식적으로 차세대 파일 시스템은 여전히 ​​"불안정"으로 분류되지만 사용자가 최신 버전의 Ubuntu를 다운로드하면 btrfs 파티션에 설치하도록 선택할 수 있습니다.
+btrfs가 실제로 "stable"로 분류 될 때 여전히 미스테리이지만 사용자는 우분투가 실제로 "안정적인"것으로 간주 될 때까지 기본적으로 btrfs를 사용하지 않아야 합니다.</p></li>
+<li><p>Fedora 18은 btrfs를 파일 시스템 검사기가 있어야 릴리스 될 때까지 기본 파일 시스템으로 btrfs를 사용할 것으로보고 되었습니다.</p></li>
+<li><p>btrfs에는 여전히 많은 작업이 남아 있습니다. 아직 모든 기능이 구현되지 않았기 때문에 ext4와 비교해 보면 성능이 다소 느립니다.</p></li>
+<li><p>(결과) btrfs 를 사용하는 것이 더 좋다.</p></li>
+<li><p>(이유) 왜? 대답은 편의성과 편재성입니다.</p></li>
+<li><p>(중요) 지금까지 ext4가 동일한 성능에도 불구하고 승자가 될 것입니다. 전송 속도가 매우 중요하더라도 파일 전송 속도보다 파일 시스템이 더 중요합니다.</p></li>
+<li>
+<p>btrfs</p>
+
+<ul>
+<li>최대 16 엑사 바이트의 볼륨을 제공하고 내결함성을 향상시킬 수 있지만 지금까지는 Linux 운영 체제에 통합 된 파일 시스템이 아닌 추가 파일 시스템으로 더 많은 것을 느꼈습니다. 예를 들어, 드라이브가 btrfs로 포맷되기 전에 btrfs-tools가 있어야합니다. 즉, btrfs는 Linux 운영 체제 설치 중에 옵션이 아니지만 배포판에 따라 다를 수 있습니다.</li>
+<li>Copy-on-Write (CoW), 광범위한 체크섬, 스냅 샷, 스크러빙,자가 치유 데이터, 중복 제거 및 데이터 무결성을 보장하는 여러 가지 향상된 기능이 있습니다.</li>
+<li>ZFS의 RAID-Z 기능이 없으므로 RAID는 여전히 btrfs를 사용하는 실험 상태입니다. 그러나 순수한 데이터 스토리지의 경우 btrfs가 ext4보다 우위에 있지만 시간은 여전히 ​​알 수 있습니다.</li>
+</ul>
+</li>
+<li>
+<p>ext4</p>
+
+<ul>
+<li>ext4는 데스크탑이나 워크 스테이션에서 여전히 우수한 파일 시스템입니다. 기본적으로 제공되므로 사용자가 운영 체제를 설치할 수 있습니다. 또한, ext4는 최대 1 엑사 바이트 크기의 파일과 최대 16 테라 바이트 크기의 파일을 지원하므로 공간과 관련하여 여전히 성장할 여지가 충분합니다.</li>
+<li>데스크탑 시스템에서 기본 파일 시스템으로 제공되고 파일 전송시 btrfs보다 빠르기 때문에 더 나은 선택입니다.</li>
+</ul>
+</li>
+<li><p>btrfs는 조사 할 가치가 있지만, 데스크탑 Linux에서 ext4를 완전히 바꾸려면 몇 년 후가 될 수도 있습니다. 데이터 저장소와 대용량 저장소 풀은 서로 다른 이야기를 보여줄 수 있으며 ext4, XCF 및 btrfs 간의 올바른 차이점을 보여줍니다.</p></li>
+</ul>
+
+<h1 id="reference-url"><em>Reference.URL</em></h1>
+
+<p><a href="https://www.unixmen.com/review-ext4-vs-btrfs-vs-xfs/" rel="nofollow" target="_blank">https://www.unixmen.com/review-ext4-vs-btrfs-vs-xfs/</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

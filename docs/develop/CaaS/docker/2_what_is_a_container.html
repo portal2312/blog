@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Container | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Container" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Container Package software into standardized units for development, shipment and deployment LIGHTWEIGHT STANDARD SECURE Comparing Containers and Virtual Machines Containers Virtual Machines" />
+<meta property="og:description" content="Container Package software into standardized units for development, shipment and deployment LIGHTWEIGHT STANDARD SECURE Comparing Containers and Virtual Machines Containers Virtual Machines" />
+<link rel="canonical" href="http://localhost:4000/blog/docs/develop/CaaS/docker/2_what_is_a_container.html" />
+<meta property="og:url" content="http://localhost:4000/blog/docs/develop/CaaS/docker/2_what_is_a_container.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-06T09:31:12+09:00" />
+<script type="application/ld+json">
+{"description":"Container Package software into standardized units for development, shipment and deployment LIGHTWEIGHT STANDARD SECURE Comparing Containers and Virtual Machines Containers Virtual Machines","headline":"Container","dateModified":"2019-11-06T09:31:12+09:00","datePublished":"2019-11-06T09:31:12+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/docs/develop/CaaS/docker/2_what_is_a_container.html"},"url":"http://localhost:4000/blog/docs/develop/CaaS/docker/2_what_is_a_container.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Container</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#package-software-into-standardized-units-for-development-shipment-and-deployment">Package software into standardized units for development, shipment and deployment</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#lightweight">LIGHTWEIGHT</a></li>
+<li class="toc-entry toc-h3"><a href="#standard">STANDARD</a></li>
+<li class="toc-entry toc-h3"><a href="#secure">SECURE</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#comparing-containers-and-virtual-machines">Comparing Containers and Virtual Machines</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#containers">Containers</a></li>
+<li class="toc-entry toc-h3"><a href="#virtual-machines">Virtual Machines</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#containers-and-virtual-machines-together">Containers and Virtual Machines Together</a></li>
+<li class="toc-entry toc-h2"><a href="#container-standards-and-industry-leadership">Container Standards and Industry Leadership</a></li>
+<li class="toc-entry toc-h2"><a href="#reference">Reference</a></li>
+</ul><ul>
+<li>
+<a href="#container">Container</a>
+
+<ul>
+<li>
+<a href="#package-software-into-standardized-units-for-development-shipment-and-deployment">Package software into standardized units for development, shipment and deployment</a>
+
+<ul>
+<li><a href="#lightweight">LIGHTWEIGHT</a></li>
+<li><a href="#standard">STANDARD</a></li>
+<li><a href="#secure">SECURE</a></li>
+</ul>
+</li>
+<li>
+<a href="#comparing-containers-and-virtual-machines">Comparing Containers and Virtual Machines</a>
+
+<ul>
+<li><a href="#containers">Containers</a></li>
+<li><a href="#virtual-machines">Virtual Machines</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<h2 id="package-software-into-standardized-units-for-development-shipment-and-deployment">
+<a class="anchor" href="#package-software-into-standardized-units-for-development-shipment-and-deployment" aria-hidden="true"><span class="octicon octicon-link"></span></a>Package software into standardized units for development, shipment and deployment</h2>
+
+<p>컨테이너 이미지는 코드, 런타임, 시스템 도구, 시스템 라이브러리, 설정 등 소프트웨어를 실행하는 데,
+필요한 모든 것을 포함하는 경량의 독립 실행형 실행 패키지입니다.</p>
+
+<p>Linux 및 Windows 기반 응용 프로그램 모두에서 사용할 수 있는 컨테이너화 소프트웨어는 환경에
+관계없이 항상 동일하게 실행됩니다.</p>
+
+<p>컨테이너는 개발 환경과 준비 환경의 차이점과 같은 주변 환경으로부터 소프트웨어를 격리하고 동일한
+인프라에서 다른 소프트웨어를 실행하는 팀 간의 충돌을 줄이는데 도움이 됩니다.</p>
+
+<h3 id="lightweight">
+<a class="anchor" href="#lightweight" aria-hidden="true"><span class="octicon octicon-link"></span></a>LIGHTWEIGHT</h3>
+
+<p>단일 컴퓨터에서 실행되는 Docker 컨테이너는 해당 컴퓨터의 운영 체제 커널을 공유합니다.</p>
+
+<p>그들은 즉시 시작하고 덜 계산 및 RAM을 사용합니다.</p>
+
+<p>이미지는 파일 시스템 레이어로 구성되며 공통 파일을 공유합니다.</p>
+
+<p>이렇게하면 디스크 사용이 최소화되고 이미지 다운로드가 훨씬 빨라집니다.</p>
+
+<h3 id="standard">
+<a class="anchor" href="#standard" aria-hidden="true"><span class="octicon octicon-link"></span></a>STANDARD</h3>
+
+<p>Docker 컨테이너는 개방형 표준을 기반으로하며 모든 주요 Linux 배포판, Microsoft Windows 및
+VM, 베어 메탈 및 클라우드를 포함한 모든 인프라에서 실행됩니다.</p>
+
+<h3 id="secure">
+<a class="anchor" href="#secure" aria-hidden="true"><span class="octicon octicon-link"></span></a>SECURE</h3>
+
+<p>Docker 컨테이너는 서로 및 기본 인프라에서 응용 프로그램을 격리합니다.</p>
+
+<p>Docker는 응용 프로그램 문제를 전체 시스템이 아닌 단일 컨테이너로 제한하기 위해 가장 강력한
+기본 격리를 제공합니다.</p>
+
+<hr>
+
+<h2 id="comparing-containers-and-virtual-machines">
+<a class="anchor" href="#comparing-containers-and-virtual-machines" aria-hidden="true"><span class="octicon octicon-link"></span></a>Comparing Containers and Virtual Machines</h2>
+
+<p>컨테이너와 가상 컴퓨터는 리소스 격리 및 할당 이점이 비슷하지만,
+컨테이너가 하드웨어가 아닌 운영 체제를 가상화하기 때문에 기능이 다르게 작동합니다.</p>
+
+<p>컨테이너는 더 휴대 가능하고 효율적입니다.</p>
+
+<h3 id="containers">
+<a class="anchor" href="#containers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Containers</h3>
+
+<p>컨테이너는 코드와 종속성을 함께 패키징하는 앱 계층의 추상화입니다.</p>
+
+<p>여러 컨테이너를 동일한 시스템에서 실행하고 OS 커널을 다른 컨테이너와 공유 할 수 있습니다.</p>
+
+<p>각 컨테이너는 사용자 공간에서 분리 된 프로세스로 실행됩니다.</p>
+
+<p>컨테이너는 VM보다 공간을 적게 차지하며 (컨테이너 이미지는 일반적으로 수십 MB 크기 임) 거의 즉시 시작됩니다.</p>
+
+<h3 id="virtual-machines">
+<a class="anchor" href="#virtual-machines" aria-hidden="true"><span class="octicon octicon-link"></span></a>Virtual Machines</h3>
+
+<p>가상 머신 (VM)은 하나의 서버를 여러 서버로 전환시키는 물리적 하드웨어의 추상화입니다.</p>
+
+<p>하이퍼 바이저를 사용하면 여러 대의 VM을 단일 시스템에서 실행할 수 있습니다.</p>
+
+<p>각 VM에는 운영 체제의 전체 복사본, 하나 이상의 응용 프로그램,
+필요한 바이너리 및 라이브러리가 포함되어 있습니다 (수십 GB를 차지함).</p>
+
+<p>VM도 부팅 속도가 느릴 수 있습니다.</p>
+
+<p>이미지 생략.</p>
+
+<hr>
+
+<h2 id="containers-and-virtual-machines-together">
+<a class="anchor" href="#containers-and-virtual-machines-together" aria-hidden="true"><span class="octicon octicon-link"></span></a>Containers and Virtual Machines Together</h2>
+
+<p>함께 사용되는 컨테이너와 VM은 응용 프로그램을 배포하고 관리하는 데있어 많은 유연성을 제공합니다.</p>
+
+<p>이미지 생략.</p>
+
+<hr>
+
+<h2 id="container-standards-and-industry-leadership">
+<a class="anchor" href="#container-standards-and-industry-leadership" aria-hidden="true"><span class="octicon octicon-link"></span></a>Container Standards and Industry Leadership</h2>
+
+<p>2013년에 Docker가 출시됨에 따라 소프트웨어 컨테이너를 대중에게 가져옴으로써 앱 개발에 혁명이 시작되었습니다.
+불과 몇 년 만에 Docker는 앱 개발, 패키징 및 관리에 새로운 어휘, 프레임 워크 및 표준으로 업계를 변화 시켰습니다.</p>
+
+<p>dotCloud의 피벗으로 시작하여 dotCloud를 더 나은 Linux 컨테이너 기술로 전환 할 수 있습니다.
+이 기술은 이식성 있고 유연하며 배포하기 쉽습니다.
+Docker는 libcontainer를 오픈 소스로 사용하고 전 세계 커뮤니티와 공동으로 개발을 진행했습니다.
+단 몇 년 후인 2015년 6월 Docker는 OCI (Open Container Initiative)에 runC 라고 하는
+사양 및 런타임 코드를 기증하여 컨테이너 생태계가 성장하고 성숙 해짐에 따라 표준화를 수립했습니다.</p>
+
+<p>이 진화에 따라 Docker는 계속해서 컨테이너 프로젝트를 포기합니다.
+Containerd는 Docker 엔진 데몬의 핵심 컨테이너 런타임으로 단순성, 견고성 및 이식성에 중점을
+둔 산업 표준 컨테이너 런타임으로 상위 수준 시스템에 내장 할 수있는 구성 요소로 설계되었습니다.
+도커 엔진은 runC 및 containerd를 기반으로합니다.
+이 공동 작업 프로젝트는 개발자를 위한 이식성, OCI를 통한 컨테이너 표준화, 성장하는 도구의
+생태계 및 공동체가 공유하고 구축할 수 있는 사전 제작 된 이미지의 무료 시장을 가능하게 합니다.</p>
+
+<p>containerd 는 단순성, 견고 함 및 휴대성을 강조한 업계 표준 컨테이너 런타임입니다.
+Linux 및 Windows 용 데몬으로 사용할 수 있으며 호스트 시스템의 전체 컨테이너 수명주기(
+이미지 전송 및 저장, 컨테이너 실행 및 감독, 저수준 스토리지 및 네트워크 첨부)를 관리할 수 ​​있습니다.</p>
+
+<p><a href="https://containerd.io/">Learn More About containerd</a></p>
+
+<h2 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+  </div>
+
+<div>
+  <ul>
+<li>
+<a href="#container">Container</a>
+
+<ul>
+<li>
+<a href="#package-software-into-standardized-units-for-development-shipment-and-deployment">Package software into standardized units for development, shipment and deployment</a>
+
+<ul>
+<li><a href="#lightweight">LIGHTWEIGHT</a></li>
+<li><a href="#standard">STANDARD</a></li>
+<li><a href="#secure">SECURE</a></li>
+</ul>
+</li>
+<li>
+<a href="#comparing-containers-and-virtual-machines">Comparing Containers and Virtual Machines</a>
+
+<ul>
+<li><a href="#containers">Containers</a></li>
+<li><a href="#virtual-machines">Virtual Machines</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<h2 id="package-software-into-standardized-units-for-development-shipment-and-deployment">Package software into standardized units for development, shipment and deployment</h2>
+
+<p>컨테이너 이미지는 코드, 런타임, 시스템 도구, 시스템 라이브러리, 설정 등 소프트웨어를 실행하는 데,
+필요한 모든 것을 포함하는 경량의 독립 실행형 실행 패키지입니다.</p>
+
+<p>Linux 및 Windows 기반 응용 프로그램 모두에서 사용할 수 있는 컨테이너화 소프트웨어는 환경에
+관계없이 항상 동일하게 실행됩니다.</p>
+
+<p>컨테이너는 개발 환경과 준비 환경의 차이점과 같은 주변 환경으로부터 소프트웨어를 격리하고 동일한
+인프라에서 다른 소프트웨어를 실행하는 팀 간의 충돌을 줄이는데 도움이 됩니다.</p>
+
+<h3 id="lightweight">LIGHTWEIGHT</h3>
+
+<p>단일 컴퓨터에서 실행되는 Docker 컨테이너는 해당 컴퓨터의 운영 체제 커널을 공유합니다.</p>
+
+<p>그들은 즉시 시작하고 덜 계산 및 RAM을 사용합니다.</p>
+
+<p>이미지는 파일 시스템 레이어로 구성되며 공통 파일을 공유합니다.</p>
+
+<p>이렇게하면 디스크 사용이 최소화되고 이미지 다운로드가 훨씬 빨라집니다.</p>
+
+<h3 id="standard">STANDARD</h3>
+
+<p>Docker 컨테이너는 개방형 표준을 기반으로하며 모든 주요 Linux 배포판, Microsoft Windows 및
+VM, 베어 메탈 및 클라우드를 포함한 모든 인프라에서 실행됩니다.</p>
+
+<h3 id="secure">SECURE</h3>
+
+<p>Docker 컨테이너는 서로 및 기본 인프라에서 응용 프로그램을 격리합니다.</p>
+
+<p>Docker는 응용 프로그램 문제를 전체 시스템이 아닌 단일 컨테이너로 제한하기 위해 가장 강력한
+기본 격리를 제공합니다.</p>
+
+<hr>
+
+<h2 id="comparing-containers-and-virtual-machines">Comparing Containers and Virtual Machines</h2>
+
+<p>컨테이너와 가상 컴퓨터는 리소스 격리 및 할당 이점이 비슷하지만,
+컨테이너가 하드웨어가 아닌 운영 체제를 가상화하기 때문에 기능이 다르게 작동합니다.</p>
+
+<p>컨테이너는 더 휴대 가능하고 효율적입니다.</p>
+
+<h3 id="containers">Containers</h3>
+
+<p>컨테이너는 코드와 종속성을 함께 패키징하는 앱 계층의 추상화입니다.</p>
+
+<p>여러 컨테이너를 동일한 시스템에서 실행하고 OS 커널을 다른 컨테이너와 공유 할 수 있습니다.</p>
+
+<p>각 컨테이너는 사용자 공간에서 분리 된 프로세스로 실행됩니다.</p>
+
+<p>컨테이너는 VM보다 공간을 적게 차지하며 (컨테이너 이미지는 일반적으로 수십 MB 크기 임) 거의 즉시 시작됩니다.</p>
+
+<h3 id="virtual-machines">Virtual Machines</h3>
+
+<p>가상 머신 (VM)은 하나의 서버를 여러 서버로 전환시키는 물리적 하드웨어의 추상화입니다.</p>
+
+<p>하이퍼 바이저를 사용하면 여러 대의 VM을 단일 시스템에서 실행할 수 있습니다.</p>
+
+<p>각 VM에는 운영 체제의 전체 복사본, 하나 이상의 응용 프로그램,
+필요한 바이너리 및 라이브러리가 포함되어 있습니다 (수십 GB를 차지함).</p>
+
+<p>VM도 부팅 속도가 느릴 수 있습니다.</p>
+
+<p>이미지 생략.</p>
+
+<hr>
+
+<h2 id="containers-and-virtual-machines-together">Containers and Virtual Machines Together</h2>
+
+<p>함께 사용되는 컨테이너와 VM은 응용 프로그램을 배포하고 관리하는 데있어 많은 유연성을 제공합니다.</p>
+
+<p>이미지 생략.</p>
+
+<hr>
+
+<h2 id="container-standards-and-industry-leadership">Container Standards and Industry Leadership</h2>
+
+<p>2013년에 Docker가 출시됨에 따라 소프트웨어 컨테이너를 대중에게 가져옴으로써 앱 개발에 혁명이 시작되었습니다.
+불과 몇 년 만에 Docker는 앱 개발, 패키징 및 관리에 새로운 어휘, 프레임 워크 및 표준으로 업계를 변화 시켰습니다.</p>
+
+<p>dotCloud의 피벗으로 시작하여 dotCloud를 더 나은 Linux 컨테이너 기술로 전환 할 수 있습니다.
+이 기술은 이식성 있고 유연하며 배포하기 쉽습니다.
+Docker는 libcontainer를 오픈 소스로 사용하고 전 세계 커뮤니티와 공동으로 개발을 진행했습니다.
+단 몇 년 후인 2015년 6월 Docker는 OCI (Open Container Initiative)에 runC 라고 하는
+사양 및 런타임 코드를 기증하여 컨테이너 생태계가 성장하고 성숙 해짐에 따라 표준화를 수립했습니다.</p>
+
+<p>이 진화에 따라 Docker는 계속해서 컨테이너 프로젝트를 포기합니다.
+Containerd는 Docker 엔진 데몬의 핵심 컨테이너 런타임으로 단순성, 견고성 및 이식성에 중점을
+둔 산업 표준 컨테이너 런타임으로 상위 수준 시스템에 내장 할 수있는 구성 요소로 설계되었습니다.
+도커 엔진은 runC 및 containerd를 기반으로합니다.
+이 공동 작업 프로젝트는 개발자를 위한 이식성, OCI를 통한 컨테이너 표준화, 성장하는 도구의
+생태계 및 공동체가 공유하고 구축할 수 있는 사전 제작 된 이미지의 무료 시장을 가능하게 합니다.</p>
+
+<p>containerd 는 단순성, 견고 함 및 휴대성을 강조한 업계 표준 컨테이너 런타임입니다.
+Linux 및 Windows 용 데몬으로 사용할 수 있으며 호스트 시스템의 전체 컨테이너 수명주기(
+이미지 전송 및 저장, 컨테이너 실행 및 감독, 저수준 스토리지 및 네트워크 첨부)를 관리할 수 ​​있습니다.</p>
+
+<p><a href="https://containerd.io/" rel="nofollow" target="_blank">Learn More About containerd</a></p>
+
+<h2 id="reference">Reference</h2>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

@@ -1,0 +1,214 @@
+[HP-UX] 네트워크 설정 방법
+HP-UX 네트워크 설정 방법
+ 
+ 
+[임시 반영 방법]
+#ifconfig lan0 192.168.1.5 netmask 255.255.0.0
+ 
+또는
+ 
+#ifconfig lan0 192.168.1.5 netmask 255.255.0.0 up
+ 
+[영구 반영 방법]
+/etc/rc.config.d/netconf 파일에 환경 설정
+
+  <설정전 내용>
+   INTERFACE_NAME[0]=lan0
+   IP_ADDRESS[0]=10.130.6.11
+   SUBNET_MASK[0]=255.255.255.0
+   BROADCAST_ADDRESS[0]=""
+   INTERFACE_STATE[0]=""
+   DHCP_ENABLE[0]=0
+   INTERFACE_MODULES[0]=""
+
+   <설정 추가 내용>                                       <-가상IP설정시
+   INTERFACE_NAME[1]=lan0:1
+   IP_ADDRESS[1]=10.130.6.10
+   SUBNET_MASK[1]=255.255.255.0
+   BROADCAST_ADDRESS[1]=""
+   INTERFACE_STATE[1]=""
+   DHCP_ENABLE[1]=0
+ 
+[/etc/nsswitch.conf 부분 수정]
+다음 부분에 다음과 같이 추가/수정하면 된다.
+hosts:        dns [NOTFOUND=return] nis [NOTFOUND=return] files
+/etc/nsswitch.conf 파일이 없다면 /etc/nsswitch.hp_defaults파일을 복사하여 사용
+#cp /etc/nsswitch.hp_defaults /etc/nsswitch.conf
+******* TIP *****
+hosts : files [NOTFOUND=continue] dns 
+위 내용은 hosts 파일(/etc/hosts)에 ip와  address가 매핑되어 있지 않다면 (NOTFOUND)  dns로 읽으라(continue)는  뜻.
+ 
+[Name server 등록-DNS주소 설정]
+/etc/resolv.conf 파일을 추가/수정 한다.
+# vi /etc/resolv.conf
+
+##하기 내용을 추가 
+
+nameserver 168.126.63.1    
+## 네임서버가 여러개 일 경우 다수 등록 가능
+[host명 변경]
+/etc/hosts 부분 추가/수정
+# vi /etc/hotst
+127.0.0.1       localhost loopback
+192.168.1.61    skttb1  
+ip 입력            사용할 호스트명 입력
+
+[재시작 방법]  
+ /sbin/init.d/net stop
+ /sbin/init.d/net start
+ 
+- 네트워크 인터페이스 검색 : #lanscan
+
+- 네트워크 설정명령(diag) : #lanadmin
+
+- 네트워크 인터페이스 지원 속도 확인 : #lanadmin -s 900
+※ 여기서 900은 PPA number
+
+- APA 구성 카드 목록 확인 : #lanscan -q
+※ HP APA 구성 시 config 설정 주의 : stanby=on 확인
+
+- 네트워크 인터페이스 현재 동작 속도 확인 : #lanadmin -x 1
+※ 여기서 1은 PPA number
+
+- 네트워크 인터페이스 autonegotiation 모드 설정 : #lanadmin -X auto_on 1
+ifconfig 인터페이스명
+ 
+ioscan -knfC lan
+ 
+==========================================================================
+[ IP 설정 ]
+/etc/rc.config.d/netconf파일 수정
+INTERFACE_NAME[1]="lan1“
+IP_ADDRESS[1]="192.168.1.30“
+SUBNET_MASK[1]="255.255.255.0“
+BROADCAST_ADDRESS[1]="“
+INTERFACE_STATE[1]="“
+DHCP_ENABLE[1]=0
+ 
+INTERFACE_MODULES[1]=""
+DEFAULT_INTERFACE_MODULES="“
+ROUTE_DESTINATION[0]="default“
+ROUTE_GATEWAY[0]=192.168.1.1
+ROUTE_COUNT[0]=1
+ROUTE_MASK[0]= ROUTE_ARGS[0]=
+ 
+[ NIC 속도 및 mode 설정 ]
+/etc/rc.config.d/hpbtlanconf 파일 수정
+ 
+##################################################################### # @(#)B.11.31_LR hpbtlanconf $Revision: i80/32002/09/1010:05:45
+# hpbase100conf: contains configuration values for HP PCI/HSC 100BASE-T
+# interfaces
+#
+# HP_BTLAN_INTERFACE_NAMEName of interface (lan0, lan1...)
+# HP_BTLAN_STATION_ADDRESSStation address of interface
+# HP_BTLAN_SPEEDSpeed and duplex mode
+# Can be one of : 10HD, 10FD, 100HD, 100FD and
+# AUTO_ON.
+# HP_BTLAN_MTU Maximum Transmission Unit (MTU)
+# Integer value between 257 and 1500, inclusive.
+#
+# The interface name, major number, card instance and ppa may be # obtained from the lanscan(1m) command. # # The station address and duplex are set through the lanadmin(1m) command.
+# #####################################################################
+HP_BTLAN_INTERFACE_NAME[0]=
+HP_BTLAN_STATION_ADDRESS[0]=
+HP_BTLAN_SPEED[0]= HP_BTLAN_MTU[0]=
+###########################################################################
+#The HP_BTLAN_INIT_ARGS are reserved by HP.They are NOT user changeable.
+###########################################################################
+HP_BTLAN_INIT_ARGS=“
+HP_BTLAN_STATION_ADDRESS
+HP_BTLAN_SPEED HP_BTLAN_MTU"
+# End of hpbtlanconf configuration file
+ 
+ 
+[ NameServer 설정 ]
+cat /etc/resolv.conf domain test.com
+nameserver192.168.1.2 # primary dns
+ 
+[ Net Service 구동/재시작 ]
+# /sbin/init.d/net stop
+# /sbin/init.d/net start
+ 
+[ IP 설정 ]
+ifconfig lan6192.168.0.100 netmask 255.255.255.0 up
+route add net192.168.0.0 netmask 255.255.255.0 192.168.0.1 1
+ 
+[ 네트웍 카드별 아이피 확인 ]
+# netstat ?in
+Name Mtu Network Address Ipkts Ierrs Opkts Oerrs Coll
+lan1 1500 192.168.1.0 192.168.1.111 57846873 0 173730152 0 0
+lo0 32808 127.0.0.0 127.0.0.1 41611065 0 41611062 0 0
+lan900 1500 xxx.xxx.xxx.0 xxx.xxx.xxx.xxx 3053587325 0 2956102205 0 0
+ 
+--> lan0, lan1, lan2 등은 물리적 NIC이고,lan900 부터는 APA로 구성된 논리적 NIC이다.
+ 
+[ 시스템에 인식된 물리적 NIC 확인 ]
+# ioscan -fnk ?C lan
+ClassIH/W PathDriver S/W StateH/W TypeDescription
+ 
+케이블 port 와 연결 확인
+연결 안되었을 경우 
+skttbsvr:[/]lanadmin -x 7
+The link is down. The speed and other link state information
+are undefined. The configuration specified for this card is:
+Speed = 100 Full-Duplex.
+Autonegotiation = Off.
+연결 되었을 경우 
+skttbsvr:[/]lanadmin -x 0
+Speed = 1000 Full-Duplex.
+Autonegotiation = On.
+=================================================================== lan20/3/1/0ietherCLAIMEDINTERFACEHP A7012-60001 PCI/PCI-X 1000Base-T Dual-port Adapter
+lan30/3/1/1ietherCLAIMEDINTERFACEHP A7012-60001 PCI/PCI-X 1000Base-T Dual-port Adapter
+lan00/4/2/0ietherCLAIMEDINTERFACEHP AB352-60003 PCI/PCI-X 1000Base-T Dual-port Core
+lan10/4/2/1ietherCLAIMEDINTERFACEHP AB352-60003 PCI/PCI-X 1000Base-T Dual-port Core
+--> Core 는 보드에 내장된 NIC.Adapter는 추가로 장착된 NIC
+ 
+[ NIC별 Link 상태 ]
+# lanscan
+Message catalog can't be opened/accessed for language ko_KR.eucKR.
+Language C will used.
+Hardware StationCrd HdwNet-InterfaceNMMACHP-DLPI DLPI
+Path Address In# State NamePPA ID Type Support Mjr#
+0/3/1/0 0x00306E5DFA7C 2 UP lan2 snap2 2 ETHER Yes 119
+0/4/2/1 0x001A4B08963D 1 UP lan1 snap1 4 ETHER Yes 119
+LinkAgg0 0x001A4B08963C 900 UP lan900 snap900 6 ETHER Yes 119
+LinkAgg1 0x000000000000 901 DOWN lan901 snap901 7 ETHER Yes 119
+LinkAgg2 0x000000000000 902 DOWN lan902 snap902 8 ETHER Yes 119
+LinkAgg3 0x000000000000 903 DOWN lan903 snap903 9 ETHER Yes 119
+LinkAgg4 0x000000000000 904 DOWN lan904 snap904 10 ETHER Yes 119
+ 
+ 
+[ NIC 속도/모드확인 ]
+속도확인
+# lanadmin -s 900 Speed= 1000000000
+-s 옵션 뒤에 PPA Number(lanscan -p 로 확인가능)를 적어준다.
+ 
+속도 및 모드 확인
+# lanscan -x 1
+ 
+전체 설정 및 통계 확인
+# lanscan -g 900
+ 
+ 
+[ APA 구성된 물리적 NIC 확인하기 ]
+# lanscan ?q
+2
+1
+9000
+3
+901
+902
+903
+904
+논리적 NIC 900 에 할당된 물리적 NIC이lan0와 lan3으로 묶였다는 걸 알 수 있다.
+========================================================================
+ 
+routing
+ 
+ 
+route add default 211.115.7.254 1
+ 
+ 
+ 
+lanadmin -X auto_off 3
+lanadmin -X 100fd 3

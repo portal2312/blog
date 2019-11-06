@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>View Models and Data Binding | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="View Models and Data Binding" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="View Model" />
+<meta property="og:description" content="View Model" />
+<link rel="canonical" href="http://localhost:4000/blog/docs/develop/Frontend/sencha/extjs/6.x/doc/5_architecture/4_view_models_and_binding.html" />
+<meta property="og:url" content="http://localhost:4000/blog/docs/develop/Frontend/sencha/extjs/6.x/doc/5_architecture/4_view_models_and_binding.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-06T09:31:12+09:00" />
+<script type="application/ld+json">
+{"description":"View Model","headline":"View Models and Data Binding","dateModified":"2019-11-06T09:31:12+09:00","datePublished":"2019-11-06T09:31:12+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/docs/develop/Frontend/sencha/extjs/6.x/doc/5_architecture/4_view_models_and_binding.html"},"url":"http://localhost:4000/blog/docs/develop/Frontend/sencha/extjs/6.x/doc/5_architecture/4_view_models_and_binding.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>View Models and Data Binding</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#component-binding">Component Binding</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#binding-and-configs">Binding and Configs</a></li>
+<li class="toc-entry toc-h3"><a href="#binding-boolean-configs">Binding Boolean Configs</a></li>
+<li class="toc-entry toc-h3"><a href="#binding-and-priority">Binding and Priority</a></li>
+<li class="toc-entry toc-h3"><a href="#binding-and-child-components">Binding and Child Components</a></li>
+<li class="toc-entry toc-h3"><a href="#two-way-binding">Two Way Binding</a></li>
+<li class="toc-entry toc-h3"><a href="#binding-and-component-state">Binding and Component State</a></li>
+<li class="toc-entry toc-h3"><a href="#bind-descriptors">Bind Descriptors</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#multi-bind">Multi-Bind</a></li>
+<li class="toc-entry toc-h4"><a href="#record-bind">Record Bind</a></li>
+<li class="toc-entry toc-h4"><a href="#association-bind">association bind (결합)</a></li>
+<li class="toc-entry toc-h4"><a href="#bind-options">Bind Options</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#creating-viewmodels">Creating ViewModels</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#formulas">Formulas (방식)</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#formulas-with-explicit-binding-binding-formulas">Formulas With Explicit Binding (명시적 Binding 을 이용한 Formulas)</a></li>
+<li class="toc-entry toc-h4"><a href="#two-way-formulas">Two-Way Formulas</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#recommendations">Recommendations (권고)</a></li>
+</ul>
+</li>
+</ul><p>View Model</p>
+
+<ul>
+<li><p>데이터 객체를 관리하는 클래스라고 할 수 있음.</p></li>
+<li><p>데이터 바인딩과 데이터 변경을 알려주는 역할을 담당.</p></li>
+<li><p><strong>View Controller</strong> 와 유사하게 <code>reference</code>에 의해 View에 귀속.</p></li>
+<li><p>View Model이 View와 연결되기 때문에 컴포넌트 계층구조에서 상위의 부모 View Model과 연결되는 것 역시 가능.</p></li>
+<li><p>부모 View Model의 데이터를 자식 View에서 상속 받기 가능.</p></li>
+</ul>
+
+<p>Component</p>
+
+<ul>
+<li><p><code>bind</code> 설정을 갖게 되어 뷰 모델로부터 받는 데이터를 자체적인 다른 설정과 연동 가능.</p></li>
+<li><p><code>bind</code> 사용함으로서, 적절한 컴포넌트 설정은 연동된 값이 변경될 때 호출 할 수 있는</p></li>
+</ul>
+
+<p>자체적인 <code>setter</code> 메서드를 사용가능 되어 더이상 사용자 이벤트 핸들러는 필요 없음.</p>
+
+<hr>
+
+<h2 id="component-binding">
+<a class="anchor" href="#component-binding" aria-hidden="true"><span class="octicon octicon-link"></span></a>Component Binding</h2>
+
+<p>뷰모델과 바인딩을 이해하는 가장 최선의 방법은 컴포넌트에 바인딩을 사용하는 다양한 예를 살펴보는 방법 일 것이다.</p>
+
+<p>컴포넌트가 데이터 바인딩의 가장 큰 수요자이기 때문이기도 하고,</p>
+
+<p>컴포넌트가 대부분의 Ext JS 개발자에게 친숙한 항목이기 때문이기도 하다.</p>
+
+<p>바인딩을 구현하기 전에 레퍼런스로 지정하고 나중에 정의할 뷰 모델이 우선 필요하다.</p>
+
+<h3 id="binding-and-configs">
+<a class="anchor" href="#binding-and-configs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Binding and Configs</h3>
+
+<p>컴포넌트 바인딩은 <code>Ext.app.ViewModel</code>의 데이터를 컴포넌트 설정 프로퍼티에 연결하는 절차라고 할 수 있다.</p>
+
+<p><code>Setter</code> 메서드를 갖는 한 모든 컴포넌트 설정은 바인딩 대상 가능.</p>
+
+<p>예: Ext.panel.Panel의 <code>setTitle()</code> 메서드가 있기 때문에 <code>title</code> 설정에 이를 바인딩.</p>
+
+<p>아래 예에서는 뷰 모델의 data를 기반으로 패널의 width를 설정하는 것을 살펴보기.</p>
+
+<p>Ext.panel.Panel에서 사용할 수 있는 setWidth()를 활용해 데이터를 바인딩 할 것이다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Ext</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="dl">'</span><span class="s1">Ext.panel.Panel</span><span class="dl">'</span> <span class="p">{</span>
+    <span class="nl">title</span><span class="p">:</span><span class="dl">'</span><span class="s1">Simple Form</span><span class="dl">'</span><span class="p">,</span>
+
+    <span class="nx">viewModel</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nl">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">test</span><span class="dl">'</span> <span class="c1">// 'test' 뷰 모델은 나중에 정의 할 예정</span>
+    <span class="p">},</span>
+
+    <span class="nx">bind</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nl">html</span><span class="p">:</span> <span class="dl">'</span><span class="s1">&lt;p&gt;Hello {name}&lt;/p&gt;</span><span class="dl">'</span><span class="p">,</span>
+        <span class="nx">width</span><span class="p">:</span><span class="dl">'</span><span class="s1">{someWidth}</span><span class="dl">'</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>데이터를 바인딩하기 위한 문법: 위 <code>Ext.Template</code>에서 사용하는 것과 매우 유사.</p>
+
+<p><code>{}</code>안에 텍스트를 집어 넣고 <code>''</code>로 감싸면 됨(!=<code>""</code>). formatter 사용가능.</p>
+
+<h3 id="binding-boolean-configs">
+<a class="anchor" href="#binding-boolean-configs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Binding Boolean Configs</h3>
+
+<p>bind templates은 "inline"으로 Boolean 논리를 지원.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="p">{</span>
+    <span class="nl">xtype</span><span class="p">:</span><span class="dl">'</span><span class="s1">button</span><span class="dl">'</span><span class="p">,</span>
+    <span class="nx">bind</span><span class="p">:{</span>
+        <span class="nl">hidden</span><span class="p">:</span><span class="dl">'</span><span class="s1">{!name}</span><span class="dl">'</span> <span class="c1">// negated</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>'name' 문자열값을 Boolean 처리후 button의 <code>setHidden</code> 메서드로 전달.</p>
+
+<h3 id="binding-and-priority">
+<a class="anchor" href="#binding-and-priority" aria-hidden="true"><span class="octicon octicon-link"></span></a>Binding and Priority</h3>
+
+<p><code>bind</code> 설정 Property</p>
+
+<ul>
+<li><p>언제나 설정에 의해 정적으로 지정된 값을 데이터 바인딩의 결과 값으로 덮어 쓰게. (우선 순위: 정적 설정 &gt; 바인드 설정)</p></li>
+<li><p>데이터가 패치되는 시간만큼 지연은 있을 수 있다.</p></li>
+</ul>
+
+<p>예: title: 'Simple Form' -&gt; 'Hello {name}'</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Ext</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="dl">'</span><span class="s1">Ext.panel.Panel</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">title</span><span class="p">:</span><span class="dl">'</span><span class="s1">Simple Form</span><span class="dl">'</span><span class="p">,</span>
+
+    <span class="na">viewModel</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">test</span><span class="dl">'</span><span class="p">,</span>
+    <span class="p">},</span>
+
+    <span class="na">bind</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">title</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Hello {name}</span><span class="dl">'</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+<h3 id="binding-and-child-components">
+<a class="anchor" href="#binding-and-child-components" aria-hidden="true"><span class="octicon octicon-link"></span></a>Binding and Child Components</h3>
+
+<p>뷰 모델이 있는 컴포넌트의 모든 자식에 대해 컨테이너 데이터 접근이 가능하다는 점.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Ext</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="dl">'</span><span class="s1">Ext.panel.Panel</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">title</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Simple Form</span><span class="dl">'</span><span class="p">,</span>
+
+    <span class="na">viewModel</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="na">type</span><span class="p">:</span><span class="dl">'</span><span class="s1">test</span><span class="dl">'</span>
+    <span class="p">},</span>
+
+    <span class="na">layout</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">form</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">defaultType</span><span class="p">:</span> <span class="dl">'</span><span class="s1">textfield</span><span class="dl">'</span><span class="p">,</span>
+
+    <span class="na">items</span><span class="p">:</span> <span class="p">[{</span>
+        <span class="na">fieldLabel</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">First Name</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">bind</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{firstName}</span><span class="dl">'</span>  <span class="c1">// XXX: 부모의 "test" 뷰 모델을 사용</span>
+    <span class="p">},{</span>
+        <span class="na">fieldLabel</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">Last Name</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">bind</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{lastName}</span><span class="dl">'</span>
+    <span class="p">}]</span>
+<span class="p">});</span>
+</code></pre></div>
+<h3 id="two-way-binding">
+<a class="anchor" href="#two-way-binding" aria-hidden="true"><span class="octicon octicon-link"></span></a>Two Way Binding</h3>
+
+<p><code>bind</code> 설정</p>
+
+<ul>
+<li><p>two-way 데이터 바인딩을 지원, View와 Model 간의 실시간 동기화를 가능하게 함.</p></li>
+<li><p>View에서 변경된 데이터는 모두 자동으로 Model에 반영 됨.</p></li>
+<li><p>자동적인 update 통해 같은 데이터를 공유하는 다른 컴포넌트들이 동일한 데이터를 사용 가능.</p></li>
+<li><p>위 예제의 "firstName"와 "lastName" 프로퍼티:</p></li>
+</ul>
+
+<p>textfield에 bind 되어 사용자 입력에 의해 수정된 데이터는 다시 View Model에 갱신.</p>
+
+<p>예:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Ext</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="dl">'</span><span class="s1">MyApp.view.TestViewModel</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">extend</span><span class="p">:</span><span class="dl">'</span><span class="s1">Ext.app.ViewModel</span><span class="dl">'</span><span class="p">,</span>
+
+    <span class="na">alias</span> <span class="p">:</span><span class="dl">'</span><span class="s1">viewmodel.test</span><span class="dl">'</span><span class="p">,</span> <span class="c1">// XXX: viewModel에 연결</span>
+
+    <span class="na">data</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">firstName</span><span class="p">:</span><span class="dl">'</span><span class="s1">John</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">lastName</span><span class="p">:</span><span class="dl">'</span><span class="s1">Doe</span><span class="dl">'</span>
+    <span class="p">},</span>
+
+    <span class="na">formulas</span><span class="p">:</span> <span class="p">{</span>
+        <span class="c1">// XXX: 나중에 상세하게 formulas에 대해 설명예정</span>
+        <span class="na">name</span><span class="p">:</span><span class="kd">function</span><span class="p">(</span><span class="kd">get</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">fn</span> <span class="o">=</span> <span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">firstName</span><span class="dl">'</span><span class="p">),</span> <span class="nx">ln</span> <span class="o">=</span> <span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">lastName</span><span class="dl">'</span><span class="p">);</span>
+            <span class="k">return</span> <span class="p">(</span><span class="nx">fn</span> <span class="o">&amp;&amp;</span> <span class="nx">ln</span><span class="p">)</span> <span class="p">?</span> <span class="p">(</span><span class="nx">fn</span> <span class="o">+</span> <span class="dl">'</span><span class="s1"> </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">ln</span><span class="p">):</span> <span class="p">(</span><span class="nx">fn</span> <span class="o">||</span> <span class="nx">ln</span> <span class="o">||</span> <span class="dl">''</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="nx">Ext</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="dl">'</span><span class="s1">MyApp.view.TestView</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">extend</span><span class="p">:</span><span class="dl">'</span><span class="s1">Ext.panel.Panel</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">layout</span><span class="p">:</span><span class="dl">'</span><span class="s1">form</span><span class="dl">'</span><span class="p">,</span>
+
+    <span class="c1">// Always use this form when defining a view class. This</span>
+        <span class="c1">// allows the creator of the component to pass data without</span>
+        <span class="c1">// erasing the ViewModel type that we want.</span>
+    <span class="na">viewModel</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">type</span><span class="p">:</span><span class="dl">'</span><span class="s1">test</span><span class="dl">'</span>
+    <span class="p">},</span>
+
+    <span class="na">bind</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">title</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Hello {name}</span><span class="dl">'</span>
+    <span class="p">},</span>
+
+    <span class="na">defaultType</span><span class="p">:</span> <span class="dl">'</span><span class="s1">textfield</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">item</span><span class="p">:</span> <span class="p">[{</span>
+        <span class="na">fieldLabel</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">First Name</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">bind</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{firstName}</span><span class="dl">'</span>
+    <span class="p">},{</span>
+        <span class="na">fieldLabel</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">Last Name</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">bind</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{lastName}</span><span class="dl">'</span>
+    <span class="p">},{</span>
+        <span class="na">type</span><span class="p">:</span><span class="dl">'</span><span class="s1">button</span><span class="dl">'</span>
+        <span class="na">text</span><span class="p">:</span><span class="dl">'</span><span class="s1">Submit</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">bind</span><span class="p">:</span> <span class="p">{</span>
+            <span class="na">hidden</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{!name}</span><span class="dl">'</span>
+        <span class="p">}</span>
+    <span class="p">}]</span>
+<span class="p">});</span>
+
+<span class="nx">Ext</span><span class="p">.</span><span class="nx">onReady</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">Ext</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="dl">'</span><span class="s1">TestView</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+        <span class="na">renderTo</span><span class="p">:</span><span class="nx">Ext</span><span class="p">.</span><span class="nx">getBody</span><span class="p">(),</span>
+        <span class="na">width</span><span class="p">:</span> <span class="mi">400</span>
+    <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>위 패널이 화면에 그려질 때, textfield의 값이 패널 title에 반영되면서 동시에 Submit 버튼이 hidden으로 변경되는 것을 볼 수 있을 것.</p>
+
+<h3 id="binding-and-component-state">
+<a class="anchor" href="#binding-and-component-state" aria-hidden="true"><span class="octicon octicon-link"></span></a>Binding and Component State</h3>
+
+<p>CheckBox 또는 Grid에서 선택된 레코드의 "checked"와 같이 가끔은 컴포넌트의 상태가
+다른 컴포넌트에 의해 주목 될 때가 있음.</p>
+
+<p>컴포넌트에 식별을 위한 <code>reference</code> 속성이 지정되면 뷰 모델에 몇가지 key 프로퍼티를 전달함.</p>
+
+<p>예:</p>
+
+<ul>
+<li><p>checkbox의 checked 상태에 연동하여 "Admin Key" textfield를 비활성화하는 설정을 지정.</p></li>
+<li><p>이 결과로 checkbox가 checked 상태가 될 때까지 textfield는 비활성화 상태를 유지할 것.</p></li>
+</ul>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Ext</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="dl">'</span><span class="s1">Ext.panel.Panel</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">title</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Sign Up Form</span><span class="dl">'</span><span class="p">,</span>
+
+    <span class="na">viewModel</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">test</span><span class="dl">'</span>
+    <span class="p">},</span>
+
+    <span class="na">items</span> <span class="p">:</span> <span class="p">[{</span>
+        <span class="na">xtype</span><span class="p">:</span> <span class="dl">'</span><span class="s1">checkbox</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">boxLabel</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Is Admin</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">reference</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">isAdmin</span><span class="dl">'</span>  <span class="c1">// XXX: reference 지정</span>
+    <span class="p">},{</span>
+        <span class="na">xtype</span><span class="p">:</span> <span class="dl">'</span><span class="s1">textfield</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">fieldLabel</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Admin Key</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">bind</span><span class="p">:</span> <span class="p">{</span>
+            <span class="na">disabled</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{!isAdmin.checked}</span><span class="dl">'</span>
+        <span class="p">}</span>
+    <span class="p">}]</span>
+<span class="p">});</span>
+</code></pre></div>
+<hr>
+
+<h3 id="bind-descriptors">
+<a class="anchor" href="#bind-descriptors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Bind Descriptors</h3>
+
+<p>3가지 기본 형태의 <code>bind</code> 설명자</p>
+
+<ul>
+<li>
+<p>{firstName}</p>
+
+<ul>
+<li>뷰 모델의 어떤 값에 대한 "direct bind".</li>
+<li>이 값은 unmodified 상태로 전달되어 데이터 타입에 상관없이 어떤 값이든지 수신가능.</li>
+</ul>
+</li>
+<li>
+<p>Hello {name}</p>
+
+<ul>
+<li>
+<code>bind</code> template 은 항상 다양한 표현식에 의해 삽입된 문자열 값을 생산.</li>
+<li>
+<code>bind</code> template 또한 <strong>Ext.Template</strong> 과 같이 formatter를 사용가능.</li>
+</ul>
+
+<p>(예: 'Hello{name:capitalize}')</p>
+</li>
+<li>
+<p>{!isAdmin.checked}</p>
+
+<ul>
+<li>direct bind의 부정형으로 블린 설정 프로퍼티를 바인딩할 때 사용.</li>
+</ul>
+</li>
+</ul>
+
+<h4 id="multi-bind">
+<a class="anchor" href="#multi-bind" aria-hidden="true"><span class="octicon octicon-link"></span></a>Multi-Bind</h4>
+
+<p>만약 객체 또는 배열이 바인드 설명자로 주어진다면, 뷰 모델은 객체 또는 같은 형태의 배열을 생성할 것이지만, 다양한 프로퍼티들은 바인딩 결과 값으로 대체될 것.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Ext</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="dl">'</span><span class="s1">Ext.Component</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">bind</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">data</span><span class="p">:</span> <span class="p">{</span>
+            <span class="na">fame</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{firstName}</span><span class="dl">'</span><span class="p">,</span>  <span class="c1">// XXX: bind</span>
+            <span class="na">lname</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{lastName}</span><span class="dl">'</span>  <span class="c1">// XXX: bind</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>Ext.Component의 <code>data</code> 설정을 뷰 모델로부터 두개의 프로퍼티를 얻는 객체로 설정.</p>
+
+<h4 id="record-bind">
+<a class="anchor" href="#record-bind" aria-hidden="true"><span class="octicon octicon-link"></span></a>Record Bind</h4>
+
+<p>예를 들어 42를 id로 갖는 "User"와 같은 형태의 특정한 레코드가 요구될 때,</p>
+
+<p><code>reference</code> 프로퍼티를 갖는 객체로 bind 설명자를 지정 가능.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Ext</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="dl">'</span><span class="s1">Ext.Component</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">bind</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">data</span><span class="p">:</span> <span class="p">{</span>
+            <span class="na">reference</span><span class="p">:</span> <span class="dl">'</span><span class="s1">User</span><span class="dl">'</span><span class="p">,</span>
+            <span class="na">id</span><span class="p">:</span> <span class="mi">42</span>  <span class="c1">// XXX: bind</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>컴포넌트의 tpl은 컴포넌트가 로딩될 때 한번에 User 레코드를 수신.</p>
+
+<p>이 방법을 사용하기 위해서는 <strong>Ext.data.Session</strong> 을 사용해야 함.</p>
+
+<h4 id="association-bind">
+<a class="anchor" href="#association-bind" aria-hidden="true"><span class="octicon octicon-link"></span></a>association bind (결합)</h4>
+
+<p>Record bind와 유사하게 바인드도 결합을 갖을 수 있다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Ext</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="dl">'</span><span class="s1">Ext.Component</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">bind</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">data</span><span class="p">:</span> <span class="p">{</span>
+            <span class="na">reference</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">User</span><span class="dl">'</span><span class="p">,</span>
+            <span class="na">id</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>
+            <span class="na">association</span><span class="p">:</span> <span class="dl">'</span><span class="s1">address</span><span class="dl">'</span>  <span class="c1">// XXX: associatio</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>컴포넌트의 tpl은 로딩될 때 User의 "address" 레코드를 수신할 것이다.</p>
+
+<p>마찬가지로 Ext.data.Session의 사용이 요구 됨.</p>
+
+<h4 id="bind-options">
+<a class="anchor" href="#bind-options" aria-hidden="true"><span class="octicon octicon-link"></span></a>Bind Options</h4>
+
+<p>바인드 설명자의 마지막 형식은 바인딩 옵션을 설명 해야 할 필요가 있을 때 사용된다.</p>
+
+<p>바인드를 통해 단 하나의 값을 수신하고 수신한 이후 자동으로 연결을 끊는지:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Ext</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="dl">'</span><span class="s1">Ext.Component</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">bind</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">data</span><span class="p">:</span> <span class="p">{</span>
+            <span class="na">bindTo</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{name}</span><span class="dl">'</span><span class="p">,</span>
+            <span class="na">single</span><span class="p">:</span> <span class="kc">true</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+<p><strong>bindTo</strong></p>
+
+<ul>
+<li>
+<code>bind</code> 설명자 객체에서 두번째로 예약된 이름으로 (첫번째는 <code>reference</code>),</li>
+</ul>
+
+<p>이 옵션이 설정되면 <code>bindTo</code>로 지정된 값이 실제 바인드 설명자로 대체되며,</p>
+
+<p>다른 프로퍼티들은 바인딩 설정 옵션에서 지정된 바에 따르게 됨.</p>
+
+<p><strong>deep</strong></p>
+
+<ul>
+<li>객체에 바인딩 할 때 객체의 어떤 프로퍼티가 변경시</li>
+</ul>
+
+<p>단순히 래퍼런스로만 갖고 있는 것이 아니라 변경에 대한 알림까지 바인딩 하는 것.</p>
+
+<ul>
+<li>데이터로 객체를 수신하는 컴포넌트의 <code>data</code> 설정에서 지정 함.</li>
+</ul>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Ext</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="dl">'</span><span class="s1">Ext.Component</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">bind</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">data</span><span class="p">:</span> <span class="p">{</span>
+            <span class="na">bindTo</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{someObject}</span><span class="dl">'</span><span class="p">,</span>
+            <span class="na">deep</span><span class="p">:</span> <span class="kc">true</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+<hr>
+
+<h2 id="creating-viewmodels">
+<a class="anchor" href="#creating-viewmodels" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating ViewModels</h2>
+
+<p>자식 뷰 모델의 데이터 객체는 프로토타입으로서의 부모 뷰 모델의 데이터 객체로 정의 됨.</p>
+
+<hr>
+
+<h3 id="formulas">
+<a class="anchor" href="#formulas" aria-hidden="true"><span class="octicon octicon-link"></span></a>Formulas (방식)</h3>
+
+<ul>
+<li>데이터를 유지하고 바인딩을 통해 제공하는 것에 덧붙여,</li>
+</ul>
+
+<p>뷰 모델은 "formulas"를 통해 다른 데이터로부터 데이터를 계산(조작) 해내는 쉬운 방법을 제공.</p>
+
+<ul>
+<li><p>뷰 모델에서 데이터 독립성을 추상화하고 뷰의 구조를 자유롭게 선언하도록 지원.</p></li>
+<li><p>다른 의미로 데이터는 뷰 모델의 데이터에서 변경되지 않지만,</p></li>
+</ul>
+
+<p>formulas를 활용해 다른 식으로 변형되어 화면에 나타내어 질 수 있는 것이다.</p>
+
+<p>이 점은 전통적인 데이터 모델의 필드에서 <code>convert</code> 설정이 동작하는 방식과 유사하다.</p>
+
+<ul>
+<li>앞선 예제의 경우 "name" formula는 뷰 모델에서 서로 다른 두 값 "firstName"과 "lastName"을 조합하는 것.</li>
+</ul>
+
+<p>다른 예로 formula는 또한 다른 formula의 결과값을 참조 사용 가능:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Ext</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="dl">'</span><span class="s1">MyApp.view.TestViewModel2</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">extend</span><span class="p">:</span><span class="dl">'</span><span class="s1">Ext.app.ViewModel</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">alias</span><span class="p">:</span> <span class="dl">'</span><span class="s1">viewmodel.test2</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">formulas</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">x2y</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="kd">get</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">x2</span><span class="dl">'</span><span class="p">)</span><span class="o">*</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">y</span><span class="dl">'</span><span class="p">);</span>
+        <span class="p">},</span>
+        <span class="na">x2</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="kd">get</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">x</span><span class="dl">'</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>"x2" formula는 "x' 프로퍼티를 "x * 2"로 처리하여 "x2"로 정의하기 위해 사용.</p>
+
+<p>"x2y" formula는 "x2"와 "y"를 둘다 사용.</p>
+
+<p>이 정의의 의미는 만약 "x"가 변경되면 "x2"가 재계산되어 "x2y"가 된다는 의미.</p>
+
+<p>그러나 "y"가 변경되면 "x2y"만 재계산 될 것.</p>
+
+<h4 id="formulas-with-explicit-binding-binding-formulas">
+<a class="anchor" href="#formulas-with-explicit-binding-binding-formulas" aria-hidden="true"><span class="octicon octicon-link"></span></a>Formulas With Explicit Binding (명시적 Binding 을 이용한 Formulas)</h4>
+
+<p>위 예제에서 formula의 의존성은 함수 검사를 통해 확인할 수 있다.</p>
+
+<p>그러나 이것은 항상 좋은 예는 아니다.</p>
+
+<p>바인드의 모든 데이터가 준비되었을 때 간단한 객체를 반환하는 명시적 바인딩 선언을</p>
+
+<p>사용하는 방법을 아래와 같이 소개한다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Ext</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="dl">'</span><span class="s1">MyApp.view.TestViewModel2</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">extend</span><span class="p">:</span><span class="dl">'</span><span class="s1">Ext.app.ViewModel</span><span class="dl">'</span><span class="p">,</span>
+
+    <span class="na">alias</span><span class="p">:</span> <span class="dl">'</span><span class="s1">viewmodel.test2</span><span class="dl">'</span><span class="p">,</span>
+
+    <span class="na">formulas</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">something</span><span class="p">:</span> <span class="p">{</span>
+            <span class="na">bind</span><span class="p">:</span> <span class="p">{</span>
+                <span class="na">x</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{foo.bar.x}</span><span class="dl">'</span><span class="p">,</span>
+                <span class="na">y</span><span class="p">:</span><span class="dl">'</span><span class="s1">{bar.foo.thing.zip.y}</span><span class="dl">'</span>
+            <span class="p">},</span>
+
+            <span class="na">get</span><span class="p">:</span><span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="nx">data</span><span class="p">.</span><span class="nx">x</span> <span class="o">+</span> <span class="nx">data</span><span class="p">.</span><span class="nx">y</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+<h4 id="two-way-formulas">
+<a class="anchor" href="#two-way-formulas" aria-hidden="true"><span class="octicon octicon-link"></span></a>Two-Way Formulas</h4>
+
+<p>값이 설정될 때 two-way 바인딩 개념에 따라 <code>set</code> 메서드 호출을 이용한 Formula 처리도 가능.
+<code>this</code> 포인터가 뷰 모델에 있기 때문에 <code>set</code> 메서드를 <code>this.set()</code>으로 호출해서 뷰 모델에 적당한 값을 설정할 수 있다.
+아래의 TestViewModel의 수정된 코드는 <code>name</code>이 어떻게 two-way formula로서 설정되는 지를 설명한다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Ext</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="dl">'</span><span class="s1">MyApp.view.TestViewModel</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">extend</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Ext.app.ViewModel</span><span class="dl">'</span><span class="p">,</span>
+
+    <span class="na">alias</span><span class="p">:</span><span class="dl">'</span><span class="s1">viewmodel.test</span><span class="dl">'</span><span class="p">,</span>
+
+    <span class="na">formulas</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">name</span><span class="p">:</span> <span class="p">{</span>
+            <span class="na">get</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="kd">get</span><span class="p">)</span> <span class="p">{</span>
+                <span class="kd">var</span> <span class="nx">fn</span> <span class="o">=</span> <span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">firstName</span><span class="dl">'</span><span class="p">),</span> <span class="nx">ln</span> <span class="o">=</span> <span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">lastName</span><span class="dl">'</span><span class="p">);</span>
+                <span class="k">return</span> <span class="p">(</span><span class="nx">fn</span> <span class="o">&amp;&amp;</span> <span class="nx">ln</span><span class="p">)</span> <span class="p">?</span> <span class="p">(</span><span class="nx">fn</span> <span class="o">+</span> <span class="dl">'</span><span class="s1"> </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">ln</span><span class="p">)</span> <span class="p">:</span> <span class="p">(</span><span class="nx">fn</span> <span class="o">||</span> <span class="nx">ln</span> <span class="o">||</span> <span class="dl">'</span><span class="s1"> </span><span class="dl">'</span><span class="p">);</span>
+            <span class="p">},</span>
+
+            <span class="na">set</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+                <span class="kd">var</span> <span class="nx">space</span> <span class="o">=</span> <span class="nx">value</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="dl">'</span><span class="s1"> </span><span class="dl">'</span><span class="p">),</span>
+                    <span class="nx">split</span> <span class="o">=</span> <span class="p">(</span><span class="nx">space</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">?</span> <span class="nx">value</span><span class="p">.</span><span class="nx">length</span> <span class="p">:</span> <span class="nx">space</span><span class="p">;</span>
+                <span class="k">this</span><span class="p">.</span><span class="kd">set</span><span class="p">({</span>
+                    <span class="na">firstName</span> <span class="p">:</span> <span class="nx">value</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">split</span><span class="p">),</span>
+                    <span class="na">lastName</span><span class="p">:</span> <span class="nx">value</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="nx">split</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="p">});</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+<hr>
+
+<h3 id="recommendations">
+<a class="anchor" href="#recommendations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Recommendations (권고)</h3>
+
+<p>뷰 모델의 formula와 데이터 바인딩과 같은 강력한 기능은 사용하기 나름에 따라 남발하게 될 수도 있고 나중에 코드를 이해하거나 디버깅이 어려운 어플리케이션을 작성하게 할 가능성도 있으며, 성능 저하 또는 메모리 누수의 원인으로 작용할 수도 있다.
+이러한 문제를 회피하고 뷰 모델의 적정한 사용을 위해 다음과 같은 기법을 권고:</p>
+
+<ul>
+<li>뷰 모델을 설정할 때 항상 다음과 같은 형식을 준수.</li>
+</ul>
+
+<p>Config System이 설정 값을 병합하는 방법을 고려하면 매우 중요 함.</p>
+
+<p><code>type</code> 프로퍼티는 병합될 때 그 값이 보전 됨.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js">  <span class="nx">Ext</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="dl">'</span><span class="s1">MyApp.view.TestView</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+      <span class="c1">// …</span>
+      <span class="na">viewModel</span> <span class="p">:</span> <span class="p">{</span>
+          <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">test</span><span class="dl">'</span>
+      <span class="p">},</span>
+      <span class="c1">// …</span>
+  <span class="p">});</span>
+</code></pre></div>
+<ul>
+<li>명확한 이름을 부여.</li>
+</ul>
+
+<p>특별히 상속 계층에서 최상위에 위치할 뷰 모델에서는 명확한 이름을 부여해야 한다. 자바 스크립트에서는 문자열 기반의 검색에 의존하기 때문에 이름을 명확하게 부여하는 것은 검색을 쉽게하여 사용성을 높일 수 있다. 프로퍼티, 클래스 및 변수 이름은 유일하거나 이름에서 그 용도를 충분히 짐작할 수 있도록 네이밍을 하는 것이 중요하다.</p>
+
+<ul>
+<li>객체에 데이터를 중첩하지 말고 필요하면 깊이를 더하라.</li>
+</ul>
+
+<p>뷰 모델에 저장된 여러개의 최고 수준 객체들은 하나의 객체에 여러개의 서브 객체들이 중첩된 것과 비교해서 더 작은 예약 공간을 소모 함.</p>
+
+<p>나아가 많은 컴포넌트들이 어떤 커다란 컨테이너 객체에 의존하는 것과 비교해서 데이터 의존 관계를 파악함에 있어 훨씬 명확하게 하는 효과.</p>
+
+<p>객체를 공유하는 이유는 있을 수 있겠지만, 뷰 모델은 단지 관리된 객체이며 개발자는 이것의 프로퍼티를 이용하는 것이 목적임을 기억하라.</p>
+
+<ul>
+<li>데이터의 깔끔한 관리를 위해 자식 View Model과 필요하다면 Component를 사용하라.</li>
+</ul>
+
+<p>만약 모든 데이터를 최상위 뷰모델에 몰아 넣어놓고 자식 뷰에서 사용하도록 한다면, 이것이 소멸되어 필요 없어졌을 때에도 계속 데이터는 제거되지 않고 메모리를 점유하고 있을 것이다.</p>
+
+<p>대신에 자식 뷰를 위한 뷰 모델을 생성하고, 데이터를 거기로 보내라.</p>
+
+<ul>
+<li>진짜 필요하지 않으면 자식 뷰 모델을 만들지 마라.</li>
+</ul>
+
+<p>각 뷰 모델 인스턴스는 생성할 때 시간과 메모리를 소모한다. 만약 자식 뷰가 자체적으로 유일한 데이터를 필요로 하지 않는다면, 컨테이너로부터 뷰 모델을 상속받아 데이터를 사용할 수 있을 것이다. 이전 권고사항 항목과 대비하여, 부모 뷰 모델을 많이 건드려야 하고 메모리 점유 측면에서 효율성이 있을 때에만 자식 뷰 모델을 생성하는 것이 좋다.</p>
+
+<ul>
+<li>바인딩의 반복보다 Formula를 사용하라.</li>
+</ul>
+
+<p>만약 formula가 어떻게 여러 개의 바인딩 결과를 조합할 수 있는지 안다면 formula를 사용함으로써 많은 곳에서 직접 같은 값을 여러번 사용하는 것과 비교해서 얼마나 의존성을 줄일 수 있는지 알 수 있을 것이다. 예를 들어, 뷰 모델에서 3개의 의존성을 갖는 하나의 formula가 있고 4명의 사용자가 있다면 3+4 =7, 즉 7개의 의존성이 발생하게 된다. 만약 4명의 사용자가 각각의 3개의 의존성이 있는 동작을 수행한다면, 4*3 = 12개의 의존성이 발생하게 된다. 더 작은 의존성은 작은 메모리를 사용하고 더 짧은 프로세스 시간을 사용한다.</p>
+
+<ul>
+<li>formula를 너무 깊게 연결하지 마라.</li>
+</ul>
+
+<p>코드 간결성 이슈 측면에서 이것은 그렇게 큰 런타임 비용을 유발하지는 않지만, 체인으로 연결된 formula는 데이터와 컴포넌트의 연결을 명확하게 볼 수 없게 하여 무슨 일이 일어나는지 이해하기 어렵게 만든다.</p>
+
+<ul>
+<li>Two-way formula는 반드시 안정적이게 작성해야 한다.</li>
+</ul>
+
+<p>formula "foo"는 "bar" 값을 계산한다. "foo"가 값을 set하면 "bar"는 get 메서드로부터 formula의 역행에 따라 설정될 것이다. 이 결과는 만약 get 메서드가 방금 set 한 "foo"의 값과 정확히 동일한 값을 산출한다면 안정적이라고 할 수 있다. 만약 그렇지 않다면, 프로세스는 안정점을 찾을 때까지 반복되거나 불명확하게 계속 될 것이다.</p>
+
+  </div>
+
+<div>
+  <p>View Model</p>
+
+<ul>
+<li><p>데이터 객체를 관리하는 클래스라고 할 수 있음.</p></li>
+<li><p>데이터 바인딩과 데이터 변경을 알려주는 역할을 담당.</p></li>
+<li><p><strong>View Controller</strong> 와 유사하게 <code>reference</code>에 의해 View에 귀속.</p></li>
+<li><p>View Model이 View와 연결되기 때문에 컴포넌트 계층구조에서 상위의 부모 View Model과 연결되는 것 역시 가능.</p></li>
+<li><p>부모 View Model의 데이터를 자식 View에서 상속 받기 가능.</p></li>
+</ul>
+
+<p>Component</p>
+
+<ul>
+<li><p><code>bind</code> 설정을 갖게 되어 뷰 모델로부터 받는 데이터를 자체적인 다른 설정과 연동 가능.</p></li>
+<li><p><code>bind</code> 사용함으로서, 적절한 컴포넌트 설정은 연동된 값이 변경될 때 호출 할 수 있는</p></li>
+</ul>
+
+<p>자체적인 <code>setter</code> 메서드를 사용가능 되어 더이상 사용자 이벤트 핸들러는 필요 없음.</p>
+
+<hr>
+
+<h2 id="component-binding">Component Binding</h2>
+
+<p>뷰모델과 바인딩을 이해하는 가장 최선의 방법은 컴포넌트에 바인딩을 사용하는 다양한 예를 살펴보는 방법 일 것이다.</p>
+
+<p>컴포넌트가 데이터 바인딩의 가장 큰 수요자이기 때문이기도 하고,</p>
+
+<p>컴포넌트가 대부분의 Ext JS 개발자에게 친숙한 항목이기 때문이기도 하다.</p>
+
+<p>바인딩을 구현하기 전에 레퍼런스로 지정하고 나중에 정의할 뷰 모델이 우선 필요하다.</p>
+
+<h3 id="binding-and-configs">Binding and Configs</h3>
+
+<p>컴포넌트 바인딩은 <code>Ext.app.ViewModel</code>의 데이터를 컴포넌트 설정 프로퍼티에 연결하는 절차라고 할 수 있다.</p>
+
+<p><code>Setter</code> 메서드를 갖는 한 모든 컴포넌트 설정은 바인딩 대상 가능.</p>
+
+<p>예: Ext.panel.Panel의 <code>setTitle()</code> 메서드가 있기 때문에 <code>title</code> 설정에 이를 바인딩.</p>
+
+<p>아래 예에서는 뷰 모델의 data를 기반으로 패널의 width를 설정하는 것을 살펴보기.</p>
+
+<p>Ext.panel.Panel에서 사용할 수 있는 setWidth()를 활용해 데이터를 바인딩 할 것이다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Ext</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="dl">'</span><span class="s1">Ext.panel.Panel</span><span class="dl">'</span> <span class="p">{</span>
+    <span class="nl">title</span><span class="p">:</span><span class="dl">'</span><span class="s1">Simple Form</span><span class="dl">'</span><span class="p">,</span>
+
+    <span class="nx">viewModel</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nl">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">test</span><span class="dl">'</span> <span class="c1">// 'test' 뷰 모델은 나중에 정의 할 예정</span>
+    <span class="p">},</span>
+
+    <span class="nx">bind</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nl">html</span><span class="p">:</span> <span class="dl">'</span><span class="s1">&lt;p&gt;Hello {name}&lt;/p&gt;</span><span class="dl">'</span><span class="p">,</span>
+        <span class="nx">width</span><span class="p">:</span><span class="dl">'</span><span class="s1">{someWidth}</span><span class="dl">'</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>데이터를 바인딩하기 위한 문법: 위 <code>Ext.Template</code>에서 사용하는 것과 매우 유사.</p>
+
+<p><code>{}</code>안에 텍스트를 집어 넣고 <code>''</code>로 감싸면 됨(!=<code>""</code>). formatter 사용가능.</p>
+
+<h3 id="binding-boolean-configs">Binding Boolean Configs</h3>
+
+<p>bind templates은 "inline"으로 Boolean 논리를 지원.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="p">{</span>
+    <span class="nl">xtype</span><span class="p">:</span><span class="dl">'</span><span class="s1">button</span><span class="dl">'</span><span class="p">,</span>
+    <span class="nx">bind</span><span class="p">:{</span>
+        <span class="nl">hidden</span><span class="p">:</span><span class="dl">'</span><span class="s1">{!name}</span><span class="dl">'</span> <span class="c1">// negated</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>'name' 문자열값을 Boolean 처리후 button의 <code>setHidden</code> 메서드로 전달.</p>
+
+<h3 id="binding-and-priority">Binding and Priority</h3>
+
+<p><code>bind</code> 설정 Property</p>
+
+<ul>
+<li><p>언제나 설정에 의해 정적으로 지정된 값을 데이터 바인딩의 결과 값으로 덮어 쓰게. (우선 순위: 정적 설정 &gt; 바인드 설정)</p></li>
+<li><p>데이터가 패치되는 시간만큼 지연은 있을 수 있다.</p></li>
+</ul>
+
+<p>예: title: 'Simple Form' -&gt; 'Hello {name}'</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Ext</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="dl">'</span><span class="s1">Ext.panel.Panel</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">title</span><span class="p">:</span><span class="dl">'</span><span class="s1">Simple Form</span><span class="dl">'</span><span class="p">,</span>
+
+    <span class="na">viewModel</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">test</span><span class="dl">'</span><span class="p">,</span>
+    <span class="p">},</span>
+
+    <span class="na">bind</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">title</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Hello {name}</span><span class="dl">'</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+<h3 id="binding-and-child-components">Binding and Child Components</h3>
+
+<p>뷰 모델이 있는 컴포넌트의 모든 자식에 대해 컨테이너 데이터 접근이 가능하다는 점.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Ext</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="dl">'</span><span class="s1">Ext.panel.Panel</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">title</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Simple Form</span><span class="dl">'</span><span class="p">,</span>
+
+    <span class="na">viewModel</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="na">type</span><span class="p">:</span><span class="dl">'</span><span class="s1">test</span><span class="dl">'</span>
+    <span class="p">},</span>
+
+    <span class="na">layout</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">form</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">defaultType</span><span class="p">:</span> <span class="dl">'</span><span class="s1">textfield</span><span class="dl">'</span><span class="p">,</span>
+
+    <span class="na">items</span><span class="p">:</span> <span class="p">[{</span>
+        <span class="na">fieldLabel</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">First Name</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">bind</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{firstName}</span><span class="dl">'</span>  <span class="c1">// XXX: 부모의 "test" 뷰 모델을 사용</span>
+    <span class="p">},{</span>
+        <span class="na">fieldLabel</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">Last Name</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">bind</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{lastName}</span><span class="dl">'</span>
+    <span class="p">}]</span>
+<span class="p">});</span>
+</code></pre></div>
+<h3 id="two-way-binding">Two Way Binding</h3>
+
+<p><code>bind</code> 설정</p>
+
+<ul>
+<li><p>two-way 데이터 바인딩을 지원, View와 Model 간의 실시간 동기화를 가능하게 함.</p></li>
+<li><p>View에서 변경된 데이터는 모두 자동으로 Model에 반영 됨.</p></li>
+<li><p>자동적인 update 통해 같은 데이터를 공유하는 다른 컴포넌트들이 동일한 데이터를 사용 가능.</p></li>
+<li><p>위 예제의 "firstName"와 "lastName" 프로퍼티:</p></li>
+</ul>
+
+<p>textfield에 bind 되어 사용자 입력에 의해 수정된 데이터는 다시 View Model에 갱신.</p>
+
+<p>예:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Ext</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="dl">'</span><span class="s1">MyApp.view.TestViewModel</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">extend</span><span class="p">:</span><span class="dl">'</span><span class="s1">Ext.app.ViewModel</span><span class="dl">'</span><span class="p">,</span>
+
+    <span class="na">alias</span> <span class="p">:</span><span class="dl">'</span><span class="s1">viewmodel.test</span><span class="dl">'</span><span class="p">,</span> <span class="c1">// XXX: viewModel에 연결</span>
+
+    <span class="na">data</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">firstName</span><span class="p">:</span><span class="dl">'</span><span class="s1">John</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">lastName</span><span class="p">:</span><span class="dl">'</span><span class="s1">Doe</span><span class="dl">'</span>
+    <span class="p">},</span>
+
+    <span class="na">formulas</span><span class="p">:</span> <span class="p">{</span>
+        <span class="c1">// XXX: 나중에 상세하게 formulas에 대해 설명예정</span>
+        <span class="na">name</span><span class="p">:</span><span class="kd">function</span><span class="p">(</span><span class="kd">get</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">fn</span> <span class="o">=</span> <span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">firstName</span><span class="dl">'</span><span class="p">),</span> <span class="nx">ln</span> <span class="o">=</span> <span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">lastName</span><span class="dl">'</span><span class="p">);</span>
+            <span class="k">return</span> <span class="p">(</span><span class="nx">fn</span> <span class="o">&amp;&amp;</span> <span class="nx">ln</span><span class="p">)</span> <span class="p">?</span> <span class="p">(</span><span class="nx">fn</span> <span class="o">+</span> <span class="dl">'</span><span class="s1"> </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">ln</span><span class="p">):</span> <span class="p">(</span><span class="nx">fn</span> <span class="o">||</span> <span class="nx">ln</span> <span class="o">||</span> <span class="dl">''</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="nx">Ext</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="dl">'</span><span class="s1">MyApp.view.TestView</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">extend</span><span class="p">:</span><span class="dl">'</span><span class="s1">Ext.panel.Panel</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">layout</span><span class="p">:</span><span class="dl">'</span><span class="s1">form</span><span class="dl">'</span><span class="p">,</span>
+
+    <span class="c1">// Always use this form when defining a view class. This</span>
+        <span class="c1">// allows the creator of the component to pass data without</span>
+        <span class="c1">// erasing the ViewModel type that we want.</span>
+    <span class="na">viewModel</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">type</span><span class="p">:</span><span class="dl">'</span><span class="s1">test</span><span class="dl">'</span>
+    <span class="p">},</span>
+
+    <span class="na">bind</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">title</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Hello {name}</span><span class="dl">'</span>
+    <span class="p">},</span>
+
+    <span class="na">defaultType</span><span class="p">:</span> <span class="dl">'</span><span class="s1">textfield</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">item</span><span class="p">:</span> <span class="p">[{</span>
+        <span class="na">fieldLabel</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">First Name</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">bind</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{firstName}</span><span class="dl">'</span>
+    <span class="p">},{</span>
+        <span class="na">fieldLabel</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">Last Name</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">bind</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{lastName}</span><span class="dl">'</span>
+    <span class="p">},{</span>
+        <span class="na">type</span><span class="p">:</span><span class="dl">'</span><span class="s1">button</span><span class="dl">'</span>
+        <span class="na">text</span><span class="p">:</span><span class="dl">'</span><span class="s1">Submit</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">bind</span><span class="p">:</span> <span class="p">{</span>
+            <span class="na">hidden</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{!name}</span><span class="dl">'</span>
+        <span class="p">}</span>
+    <span class="p">}]</span>
+<span class="p">});</span>
+
+<span class="nx">Ext</span><span class="p">.</span><span class="nx">onReady</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">Ext</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="dl">'</span><span class="s1">TestView</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+        <span class="na">renderTo</span><span class="p">:</span><span class="nx">Ext</span><span class="p">.</span><span class="nx">getBody</span><span class="p">(),</span>
+        <span class="na">width</span><span class="p">:</span> <span class="mi">400</span>
+    <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>위 패널이 화면에 그려질 때, textfield의 값이 패널 title에 반영되면서 동시에 Submit 버튼이 hidden으로 변경되는 것을 볼 수 있을 것.</p>
+
+<h3 id="binding-and-component-state">Binding and Component State</h3>
+
+<p>CheckBox 또는 Grid에서 선택된 레코드의 "checked"와 같이 가끔은 컴포넌트의 상태가
+다른 컴포넌트에 의해 주목 될 때가 있음.</p>
+
+<p>컴포넌트에 식별을 위한 <code>reference</code> 속성이 지정되면 뷰 모델에 몇가지 key 프로퍼티를 전달함.</p>
+
+<p>예:</p>
+
+<ul>
+<li><p>checkbox의 checked 상태에 연동하여 "Admin Key" textfield를 비활성화하는 설정을 지정.</p></li>
+<li><p>이 결과로 checkbox가 checked 상태가 될 때까지 textfield는 비활성화 상태를 유지할 것.</p></li>
+</ul>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Ext</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="dl">'</span><span class="s1">Ext.panel.Panel</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">title</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Sign Up Form</span><span class="dl">'</span><span class="p">,</span>
+
+    <span class="na">viewModel</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">test</span><span class="dl">'</span>
+    <span class="p">},</span>
+
+    <span class="na">items</span> <span class="p">:</span> <span class="p">[{</span>
+        <span class="na">xtype</span><span class="p">:</span> <span class="dl">'</span><span class="s1">checkbox</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">boxLabel</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Is Admin</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">reference</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">isAdmin</span><span class="dl">'</span>  <span class="c1">// XXX: reference 지정</span>
+    <span class="p">},{</span>
+        <span class="na">xtype</span><span class="p">:</span> <span class="dl">'</span><span class="s1">textfield</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">fieldLabel</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Admin Key</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">bind</span><span class="p">:</span> <span class="p">{</span>
+            <span class="na">disabled</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{!isAdmin.checked}</span><span class="dl">'</span>
+        <span class="p">}</span>
+    <span class="p">}]</span>
+<span class="p">});</span>
+</code></pre></div>
+<hr>
+
+<h3 id="bind-descriptors">Bind Descriptors</h3>
+
+<p>3가지 기본 형태의 <code>bind</code> 설명자</p>
+
+<ul>
+<li>
+<p>{firstName}</p>
+
+<ul>
+<li>뷰 모델의 어떤 값에 대한 "direct bind".</li>
+<li>이 값은 unmodified 상태로 전달되어 데이터 타입에 상관없이 어떤 값이든지 수신가능.</li>
+</ul>
+</li>
+<li>
+<p>Hello {name}</p>
+
+<ul>
+<li>
+<code>bind</code> template 은 항상 다양한 표현식에 의해 삽입된 문자열 값을 생산.</li>
+<li>
+<code>bind</code> template 또한 <strong>Ext.Template</strong> 과 같이 formatter를 사용가능.</li>
+</ul>
+
+<p>(예: 'Hello{name:capitalize}')</p>
+</li>
+<li>
+<p>{!isAdmin.checked}</p>
+
+<ul>
+<li>direct bind의 부정형으로 블린 설정 프로퍼티를 바인딩할 때 사용.</li>
+</ul>
+</li>
+</ul>
+
+<h4 id="multi-bind">Multi-Bind</h4>
+
+<p>만약 객체 또는 배열이 바인드 설명자로 주어진다면, 뷰 모델은 객체 또는 같은 형태의 배열을 생성할 것이지만, 다양한 프로퍼티들은 바인딩 결과 값으로 대체될 것.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Ext</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="dl">'</span><span class="s1">Ext.Component</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">bind</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">data</span><span class="p">:</span> <span class="p">{</span>
+            <span class="na">fame</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{firstName}</span><span class="dl">'</span><span class="p">,</span>  <span class="c1">// XXX: bind</span>
+            <span class="na">lname</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{lastName}</span><span class="dl">'</span>  <span class="c1">// XXX: bind</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>Ext.Component의 <code>data</code> 설정을 뷰 모델로부터 두개의 프로퍼티를 얻는 객체로 설정.</p>
+
+<h4 id="record-bind">Record Bind</h4>
+
+<p>예를 들어 42를 id로 갖는 "User"와 같은 형태의 특정한 레코드가 요구될 때,</p>
+
+<p><code>reference</code> 프로퍼티를 갖는 객체로 bind 설명자를 지정 가능.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Ext</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="dl">'</span><span class="s1">Ext.Component</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">bind</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">data</span><span class="p">:</span> <span class="p">{</span>
+            <span class="na">reference</span><span class="p">:</span> <span class="dl">'</span><span class="s1">User</span><span class="dl">'</span><span class="p">,</span>
+            <span class="na">id</span><span class="p">:</span> <span class="mi">42</span>  <span class="c1">// XXX: bind</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>컴포넌트의 tpl은 컴포넌트가 로딩될 때 한번에 User 레코드를 수신.</p>
+
+<p>이 방법을 사용하기 위해서는 <strong>Ext.data.Session</strong> 을 사용해야 함.</p>
+
+<h4 id="association-bind">association bind (결합)</h4>
+
+<p>Record bind와 유사하게 바인드도 결합을 갖을 수 있다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Ext</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="dl">'</span><span class="s1">Ext.Component</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">bind</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">data</span><span class="p">:</span> <span class="p">{</span>
+            <span class="na">reference</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">User</span><span class="dl">'</span><span class="p">,</span>
+            <span class="na">id</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>
+            <span class="na">association</span><span class="p">:</span> <span class="dl">'</span><span class="s1">address</span><span class="dl">'</span>  <span class="c1">// XXX: associatio</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>컴포넌트의 tpl은 로딩될 때 User의 "address" 레코드를 수신할 것이다.</p>
+
+<p>마찬가지로 Ext.data.Session의 사용이 요구 됨.</p>
+
+<h4 id="bind-options">Bind Options</h4>
+
+<p>바인드 설명자의 마지막 형식은 바인딩 옵션을 설명 해야 할 필요가 있을 때 사용된다.</p>
+
+<p>바인드를 통해 단 하나의 값을 수신하고 수신한 이후 자동으로 연결을 끊는지:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Ext</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="dl">'</span><span class="s1">Ext.Component</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">bind</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">data</span><span class="p">:</span> <span class="p">{</span>
+            <span class="na">bindTo</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{name}</span><span class="dl">'</span><span class="p">,</span>
+            <span class="na">single</span><span class="p">:</span> <span class="kc">true</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+<p><strong>bindTo</strong></p>
+
+<ul>
+<li>
+<code>bind</code> 설명자 객체에서 두번째로 예약된 이름으로 (첫번째는 <code>reference</code>),</li>
+</ul>
+
+<p>이 옵션이 설정되면 <code>bindTo</code>로 지정된 값이 실제 바인드 설명자로 대체되며,</p>
+
+<p>다른 프로퍼티들은 바인딩 설정 옵션에서 지정된 바에 따르게 됨.</p>
+
+<p><strong>deep</strong></p>
+
+<ul>
+<li>객체에 바인딩 할 때 객체의 어떤 프로퍼티가 변경시</li>
+</ul>
+
+<p>단순히 래퍼런스로만 갖고 있는 것이 아니라 변경에 대한 알림까지 바인딩 하는 것.</p>
+
+<ul>
+<li>데이터로 객체를 수신하는 컴포넌트의 <code>data</code> 설정에서 지정 함.</li>
+</ul>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Ext</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="dl">'</span><span class="s1">Ext.Component</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">bind</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">data</span><span class="p">:</span> <span class="p">{</span>
+            <span class="na">bindTo</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{someObject}</span><span class="dl">'</span><span class="p">,</span>
+            <span class="na">deep</span><span class="p">:</span> <span class="kc">true</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+<hr>
+
+<h2 id="creating-viewmodels">Creating ViewModels</h2>
+
+<p>자식 뷰 모델의 데이터 객체는 프로토타입으로서의 부모 뷰 모델의 데이터 객체로 정의 됨.</p>
+
+<hr>
+
+<h3 id="formulas">Formulas (방식)</h3>
+
+<ul>
+<li>데이터를 유지하고 바인딩을 통해 제공하는 것에 덧붙여,</li>
+</ul>
+
+<p>뷰 모델은 "formulas"를 통해 다른 데이터로부터 데이터를 계산(조작) 해내는 쉬운 방법을 제공.</p>
+
+<ul>
+<li><p>뷰 모델에서 데이터 독립성을 추상화하고 뷰의 구조를 자유롭게 선언하도록 지원.</p></li>
+<li><p>다른 의미로 데이터는 뷰 모델의 데이터에서 변경되지 않지만,</p></li>
+</ul>
+
+<p>formulas를 활용해 다른 식으로 변형되어 화면에 나타내어 질 수 있는 것이다.</p>
+
+<p>이 점은 전통적인 데이터 모델의 필드에서 <code>convert</code> 설정이 동작하는 방식과 유사하다.</p>
+
+<ul>
+<li>앞선 예제의 경우 "name" formula는 뷰 모델에서 서로 다른 두 값 "firstName"과 "lastName"을 조합하는 것.</li>
+</ul>
+
+<p>다른 예로 formula는 또한 다른 formula의 결과값을 참조 사용 가능:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Ext</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="dl">'</span><span class="s1">MyApp.view.TestViewModel2</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">extend</span><span class="p">:</span><span class="dl">'</span><span class="s1">Ext.app.ViewModel</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">alias</span><span class="p">:</span> <span class="dl">'</span><span class="s1">viewmodel.test2</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">formulas</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">x2y</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="kd">get</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">x2</span><span class="dl">'</span><span class="p">)</span><span class="o">*</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">y</span><span class="dl">'</span><span class="p">);</span>
+        <span class="p">},</span>
+        <span class="na">x2</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="kd">get</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">x</span><span class="dl">'</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>"x2" formula는 "x' 프로퍼티를 "x * 2"로 처리하여 "x2"로 정의하기 위해 사용.</p>
+
+<p>"x2y" formula는 "x2"와 "y"를 둘다 사용.</p>
+
+<p>이 정의의 의미는 만약 "x"가 변경되면 "x2"가 재계산되어 "x2y"가 된다는 의미.</p>
+
+<p>그러나 "y"가 변경되면 "x2y"만 재계산 될 것.</p>
+
+<h4 id="formulas-with-explicit-binding-binding-formulas">Formulas With Explicit Binding (명시적 Binding 을 이용한 Formulas)</h4>
+
+<p>위 예제에서 formula의 의존성은 함수 검사를 통해 확인할 수 있다.</p>
+
+<p>그러나 이것은 항상 좋은 예는 아니다.</p>
+
+<p>바인드의 모든 데이터가 준비되었을 때 간단한 객체를 반환하는 명시적 바인딩 선언을</p>
+
+<p>사용하는 방법을 아래와 같이 소개한다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Ext</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="dl">'</span><span class="s1">MyApp.view.TestViewModel2</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">extend</span><span class="p">:</span><span class="dl">'</span><span class="s1">Ext.app.ViewModel</span><span class="dl">'</span><span class="p">,</span>
+
+    <span class="na">alias</span><span class="p">:</span> <span class="dl">'</span><span class="s1">viewmodel.test2</span><span class="dl">'</span><span class="p">,</span>
+
+    <span class="na">formulas</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">something</span><span class="p">:</span> <span class="p">{</span>
+            <span class="na">bind</span><span class="p">:</span> <span class="p">{</span>
+                <span class="na">x</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{foo.bar.x}</span><span class="dl">'</span><span class="p">,</span>
+                <span class="na">y</span><span class="p">:</span><span class="dl">'</span><span class="s1">{bar.foo.thing.zip.y}</span><span class="dl">'</span>
+            <span class="p">},</span>
+
+            <span class="na">get</span><span class="p">:</span><span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="nx">data</span><span class="p">.</span><span class="nx">x</span> <span class="o">+</span> <span class="nx">data</span><span class="p">.</span><span class="nx">y</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+<h4 id="two-way-formulas">Two-Way Formulas</h4>
+
+<p>값이 설정될 때 two-way 바인딩 개념에 따라 <code>set</code> 메서드 호출을 이용한 Formula 처리도 가능.
+<code>this</code> 포인터가 뷰 모델에 있기 때문에 <code>set</code> 메서드를 <code>this.set()</code>으로 호출해서 뷰 모델에 적당한 값을 설정할 수 있다.
+아래의 TestViewModel의 수정된 코드는 <code>name</code>이 어떻게 two-way formula로서 설정되는 지를 설명한다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Ext</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="dl">'</span><span class="s1">MyApp.view.TestViewModel</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">extend</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Ext.app.ViewModel</span><span class="dl">'</span><span class="p">,</span>
+
+    <span class="na">alias</span><span class="p">:</span><span class="dl">'</span><span class="s1">viewmodel.test</span><span class="dl">'</span><span class="p">,</span>
+
+    <span class="na">formulas</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">name</span><span class="p">:</span> <span class="p">{</span>
+            <span class="na">get</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="kd">get</span><span class="p">)</span> <span class="p">{</span>
+                <span class="kd">var</span> <span class="nx">fn</span> <span class="o">=</span> <span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">firstName</span><span class="dl">'</span><span class="p">),</span> <span class="nx">ln</span> <span class="o">=</span> <span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">lastName</span><span class="dl">'</span><span class="p">);</span>
+                <span class="k">return</span> <span class="p">(</span><span class="nx">fn</span> <span class="o">&amp;&amp;</span> <span class="nx">ln</span><span class="p">)</span> <span class="p">?</span> <span class="p">(</span><span class="nx">fn</span> <span class="o">+</span> <span class="dl">'</span><span class="s1"> </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">ln</span><span class="p">)</span> <span class="p">:</span> <span class="p">(</span><span class="nx">fn</span> <span class="o">||</span> <span class="nx">ln</span> <span class="o">||</span> <span class="dl">'</span><span class="s1"> </span><span class="dl">'</span><span class="p">);</span>
+            <span class="p">},</span>
+
+            <span class="na">set</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+                <span class="kd">var</span> <span class="nx">space</span> <span class="o">=</span> <span class="nx">value</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="dl">'</span><span class="s1"> </span><span class="dl">'</span><span class="p">),</span>
+                    <span class="nx">split</span> <span class="o">=</span> <span class="p">(</span><span class="nx">space</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">?</span> <span class="nx">value</span><span class="p">.</span><span class="nx">length</span> <span class="p">:</span> <span class="nx">space</span><span class="p">;</span>
+                <span class="k">this</span><span class="p">.</span><span class="kd">set</span><span class="p">({</span>
+                    <span class="na">firstName</span> <span class="p">:</span> <span class="nx">value</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">split</span><span class="p">),</span>
+                    <span class="na">lastName</span><span class="p">:</span> <span class="nx">value</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="nx">split</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="p">});</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+<hr>
+
+<h3 id="recommendations">Recommendations (권고)</h3>
+
+<p>뷰 모델의 formula와 데이터 바인딩과 같은 강력한 기능은 사용하기 나름에 따라 남발하게 될 수도 있고 나중에 코드를 이해하거나 디버깅이 어려운 어플리케이션을 작성하게 할 가능성도 있으며, 성능 저하 또는 메모리 누수의 원인으로 작용할 수도 있다.
+이러한 문제를 회피하고 뷰 모델의 적정한 사용을 위해 다음과 같은 기법을 권고:</p>
+
+<ul>
+<li>뷰 모델을 설정할 때 항상 다음과 같은 형식을 준수.</li>
+</ul>
+
+<p>Config System이 설정 값을 병합하는 방법을 고려하면 매우 중요 함.</p>
+
+<p><code>type</code> 프로퍼티는 병합될 때 그 값이 보전 됨.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js">  <span class="nx">Ext</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="dl">'</span><span class="s1">MyApp.view.TestView</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+      <span class="c1">// …</span>
+      <span class="na">viewModel</span> <span class="p">:</span> <span class="p">{</span>
+          <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">test</span><span class="dl">'</span>
+      <span class="p">},</span>
+      <span class="c1">// …</span>
+  <span class="p">});</span>
+</code></pre></div>
+<ul>
+<li>명확한 이름을 부여.</li>
+</ul>
+
+<p>특별히 상속 계층에서 최상위에 위치할 뷰 모델에서는 명확한 이름을 부여해야 한다. 자바 스크립트에서는 문자열 기반의 검색에 의존하기 때문에 이름을 명확하게 부여하는 것은 검색을 쉽게하여 사용성을 높일 수 있다. 프로퍼티, 클래스 및 변수 이름은 유일하거나 이름에서 그 용도를 충분히 짐작할 수 있도록 네이밍을 하는 것이 중요하다.</p>
+
+<ul>
+<li>객체에 데이터를 중첩하지 말고 필요하면 깊이를 더하라.</li>
+</ul>
+
+<p>뷰 모델에 저장된 여러개의 최고 수준 객체들은 하나의 객체에 여러개의 서브 객체들이 중첩된 것과 비교해서 더 작은 예약 공간을 소모 함.</p>
+
+<p>나아가 많은 컴포넌트들이 어떤 커다란 컨테이너 객체에 의존하는 것과 비교해서 데이터 의존 관계를 파악함에 있어 훨씬 명확하게 하는 효과.</p>
+
+<p>객체를 공유하는 이유는 있을 수 있겠지만, 뷰 모델은 단지 관리된 객체이며 개발자는 이것의 프로퍼티를 이용하는 것이 목적임을 기억하라.</p>
+
+<ul>
+<li>데이터의 깔끔한 관리를 위해 자식 View Model과 필요하다면 Component를 사용하라.</li>
+</ul>
+
+<p>만약 모든 데이터를 최상위 뷰모델에 몰아 넣어놓고 자식 뷰에서 사용하도록 한다면, 이것이 소멸되어 필요 없어졌을 때에도 계속 데이터는 제거되지 않고 메모리를 점유하고 있을 것이다.</p>
+
+<p>대신에 자식 뷰를 위한 뷰 모델을 생성하고, 데이터를 거기로 보내라.</p>
+
+<ul>
+<li>진짜 필요하지 않으면 자식 뷰 모델을 만들지 마라.</li>
+</ul>
+
+<p>각 뷰 모델 인스턴스는 생성할 때 시간과 메모리를 소모한다. 만약 자식 뷰가 자체적으로 유일한 데이터를 필요로 하지 않는다면, 컨테이너로부터 뷰 모델을 상속받아 데이터를 사용할 수 있을 것이다. 이전 권고사항 항목과 대비하여, 부모 뷰 모델을 많이 건드려야 하고 메모리 점유 측면에서 효율성이 있을 때에만 자식 뷰 모델을 생성하는 것이 좋다.</p>
+
+<ul>
+<li>바인딩의 반복보다 Formula를 사용하라.</li>
+</ul>
+
+<p>만약 formula가 어떻게 여러 개의 바인딩 결과를 조합할 수 있는지 안다면 formula를 사용함으로써 많은 곳에서 직접 같은 값을 여러번 사용하는 것과 비교해서 얼마나 의존성을 줄일 수 있는지 알 수 있을 것이다. 예를 들어, 뷰 모델에서 3개의 의존성을 갖는 하나의 formula가 있고 4명의 사용자가 있다면 3+4 =7, 즉 7개의 의존성이 발생하게 된다. 만약 4명의 사용자가 각각의 3개의 의존성이 있는 동작을 수행한다면, 4*3 = 12개의 의존성이 발생하게 된다. 더 작은 의존성은 작은 메모리를 사용하고 더 짧은 프로세스 시간을 사용한다.</p>
+
+<ul>
+<li>formula를 너무 깊게 연결하지 마라.</li>
+</ul>
+
+<p>코드 간결성 이슈 측면에서 이것은 그렇게 큰 런타임 비용을 유발하지는 않지만, 체인으로 연결된 formula는 데이터와 컴포넌트의 연결을 명확하게 볼 수 없게 하여 무슨 일이 일어나는지 이해하기 어렵게 만든다.</p>
+
+<ul>
+<li>Two-way formula는 반드시 안정적이게 작성해야 한다.</li>
+</ul>
+
+<p>formula "foo"는 "bar" 값을 계산한다. "foo"가 값을 set하면 "bar"는 get 메서드로부터 formula의 역행에 따라 설정될 것이다. 이 결과는 만약 get 메서드가 방금 set 한 "foo"의 값과 정확히 동일한 값을 산출한다면 안정적이라고 할 수 있다. 만약 그렇지 않다면, 프로세스는 안정점을 찾을 때까지 반복되거나 불명확하게 계속 될 것이다.</p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

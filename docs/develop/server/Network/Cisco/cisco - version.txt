@@ -1,0 +1,5 @@
+show ?
+
+show version
+
+HD SW 내용 출력.

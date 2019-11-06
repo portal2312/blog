@@ -1,0 +1,39 @@
+﻿openSSH 접속 이슈
+
+
+
+1. 테스트 환경
+----------------------------------------------------------
+: CentOS 에서는 제공되는 부분이 많이 부족하여 OS 변경함.
+: CentOS 에서는 너무 많은 패키지를 업데이트해야 됨.
+: CentOS 에서 openssl-1.0.2h 설치 이후 openssh-7.x 설치시 openssh-lib-1.0.2h 로 필요한데 complie 할 알맞는 os버전의 tar.gz 가 없었음.
+: Fedora.24 OS 에서는 rpm 까지 지원되서 OS 를 아에 변경함.
+  (24 는 홈페이지에 받을 수 있음, server 버전으로 설치)
+: network 설정은 nmcli 로 설정 함.
+
+2. version 확인
+-----------------------------------------------------------
+su -
+rpm -qa | grep open
+
+openssh-clients-7.2p2-6.fc24.x86_64
+openssl-1.0.2h-1.fc24.x86_64
+openssh-server-7.2p2-6.fc24.x86_64
+openldap-2.4.44-1.fc24.x86_64
+openssh-7.2p2-6.fc24.x86_64
+openssl-libs-1.0.2h-1.fc24.x86_64
+
+
+[참조]
+http://fr2.rpmfind.net/linux/rpm2html/search.php?query=openssh&submit=Search+...&system=fedora&arch=
+http://www.linuxfromscratch.org/blfs/view/svn/postlfs/openssh.html
+http://zetawiki.com/wiki/Heartbleed_%EB%B2%84%EA%B7%B8_%EC%A1%B0%EC%B9%98,_OpenSSL_%EC%BB%B4%ED%8C%8C%EC%9D%BC_%EC%84%A4%EC%B9%98
+
+
+3. twsited 패치 방법
+-----------------------------------------------------------
+
+
+
+
+# EOF

@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Get Docker CE for Ubuntu | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Get Docker CE for Ubuntu" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Get Docker CE for Ubuntu Prerequisites Docker EE customers OS requirements Uninstall old versions Recommended extra packages for Trusty 14.04 Install Docker CE Install using the repository SET UP THE REPOSITORY INSTALL DOCKER CE Install from a package UPGARDE DOCKER CE Install using the convenience script UPGRADE DOCKER AFTER USING THE CONVENIENCE SCRIPT Uninstall Docker CE Reference" />
+<meta property="og:description" content="Get Docker CE for Ubuntu Prerequisites Docker EE customers OS requirements Uninstall old versions Recommended extra packages for Trusty 14.04 Install Docker CE Install using the repository SET UP THE REPOSITORY INSTALL DOCKER CE Install from a package UPGARDE DOCKER CE Install using the convenience script UPGRADE DOCKER AFTER USING THE CONVENIENCE SCRIPT Uninstall Docker CE Reference" />
+<link rel="canonical" href="http://localhost:4000/blog/docs/develop/CaaS/docker/1_Guides/1_Get_Docker/3_Docker_CE/Ubuntu.html" />
+<meta property="og:url" content="http://localhost:4000/blog/docs/develop/CaaS/docker/1_Guides/1_Get_Docker/3_Docker_CE/Ubuntu.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-06T09:31:12+09:00" />
+<script type="application/ld+json">
+{"description":"Get Docker CE for Ubuntu Prerequisites Docker EE customers OS requirements Uninstall old versions Recommended extra packages for Trusty 14.04 Install Docker CE Install using the repository SET UP THE REPOSITORY INSTALL DOCKER CE Install from a package UPGARDE DOCKER CE Install using the convenience script UPGRADE DOCKER AFTER USING THE CONVENIENCE SCRIPT Uninstall Docker CE Reference","headline":"Get Docker CE for Ubuntu","dateModified":"2019-11-06T09:31:12+09:00","datePublished":"2019-11-06T09:31:12+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/docs/develop/CaaS/docker/1_Guides/1_Get_Docker/3_Docker_CE/Ubuntu.html"},"url":"http://localhost:4000/blog/docs/develop/CaaS/docker/1_Guides/1_Get_Docker/3_Docker_CE/Ubuntu.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Get Docker CE for Ubuntu</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#prerequisites">Prerequisites</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#docker-ee-customers">Docker EE customers</a></li>
+<li class="toc-entry toc-h3"><a href="#os-requirements">OS requirements</a></li>
+<li class="toc-entry toc-h3"><a href="#uninstall-old-versions">Uninstall old versions</a></li>
+<li class="toc-entry toc-h3"><a href="#recommended-extra-packages-for-trusty-14-04">Recommended extra packages for Trusty 14.04</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#install-docker-ce">Install Docker CE</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#install-using-the-repository">Install using the repository</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#set-up-the-repository">SET UP THE REPOSITORY</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#install-docker-ce">INSTALL DOCKER CE</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#install-from-a-package">Install from a package</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#upgarde-docker-ce">UPGARDE DOCKER CE</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#install-using-the-convenience-script">Install using the convenience script</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#upgrade-docker-after-using-the-convenience-script">UPGRADE DOCKER AFTER USING THE CONVENIENCE SCRIPT</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#uninstall-docker-ce">Uninstall Docker CE</a></li>
+<li class="toc-entry toc-h2"><a href="#reference">Reference</a></li>
+</ul><ul>
+<li>
+<a href="#get-docker-ce-for-ubuntu">Get Docker CE for Ubuntu</a>
+
+<ul>
+<li>
+<a href="#prerequisites">Prerequisites</a>
+
+<ul>
+<li><a href="#docker-ee-customers">Docker EE customers</a></li>
+<li><a href="#os-requirements">OS requirements</a></li>
+<li><a href="#uninstall-old-versions">Uninstall old versions</a></li>
+<li><a href="#recommended-extra-packages-for-trusty-1404">Recommended extra packages for Trusty 14.04</a></li>
+</ul>
+</li>
+<li>
+<a href="#install-docker-ce">Install Docker CE</a>
+
+<ul>
+<li>
+<a href="#install-using-the-repository">Install using the repository</a>
+
+<ul>
+<li><a href="#set-up-the-repository">SET UP THE REPOSITORY</a></li>
+</ul>
+</li>
+<li><a href="#install-docker-ce">INSTALL DOCKER CE</a></li>
+</ul>
+</li>
+<li>
+<a href="#install-from-a-package">Install from a package</a>
+
+<ul>
+<li><a href="#upgarde-docker-ce">UPGARDE DOCKER CE</a></li>
+</ul>
+</li>
+<li>
+<a href="#install-using-the-convenience-script">Install using the convenience script</a>
+
+<ul>
+<li><a href="#upgrade-docker-after-using-the-convenience-script">UPGRADE DOCKER AFTER USING THE CONVENIENCE SCRIPT</a></li>
+</ul>
+</li>
+<li><a href="#uninstall-docker-ce">Uninstall Docker CE</a></li>
+<li><a href="#reference">Reference</a></li>
+</ul>
+</li>
+</ul>
+
+<h2 id="prerequisites">
+<a class="anchor" href="#prerequisites" aria-hidden="true"><span class="octicon octicon-link"></span></a>Prerequisites</h2>
+
+<h3 id="docker-ee-customers">
+<a class="anchor" href="#docker-ee-customers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Docker EE customers</h3>
+
+<p>생략</p>
+
+<h3 id="os-requirements">
+<a class="anchor" href="#os-requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>OS requirements</h3>
+
+<p>다음 우분투 버전 중 하나의 64 비트 버전이 필요합니다.</p>
+
+<ul>
+<li>Zesty 17.04</li>
+<li>Xenial 16.04 (LTS) - Long Term Support</li>
+<li>Trusty 14.04 (LTS)</li>
+</ul>
+
+<p>Docker CE 는 x86_64, armhf 및 s390x (IBM z Systems) 아키텍처의 Ubuntu에서 지원됩니다.</p>
+
+<blockquote>
+<p><code>s390x</code> Limitations: System Z 는 Ubuntu Xenial 및 Zesty에서만 지원됩니다.</p>
+</blockquote>
+
+<h3 id="uninstall-old-versions">
+<a class="anchor" href="#uninstall-old-versions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Uninstall old versions</h3>
+
+<p>Docker의 이전 버전은 docker 또는 docker-engine으로 불렸습니다. 설치되어 있으면 제거하십시오.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">apt-get remove docker docker-engine docker.io
+</code></pre></div>
+<p><code>apt-get</code> 이 설치되어 있지 않다는 보고가 있으면 괜찮습니다.</p>
+
+<p>images, containers, volumns 그리고 networks 포함하여 <code>/var/lib/docker/</code> 의 내용이 보존됩니다.</p>
+
+<p>Docker CE packages 는 이제 <code>docker-ce</code> 라고 합니다.</p>
+
+<h3 id="recommended-extra-packages-for-trusty-14-04">
+<a class="anchor" href="#recommended-extra-packages-for-trusty-14-04" aria-hidden="true"><span class="octicon octicon-link"></span></a>Recommended extra packages for Trusty 14.04</h3>
+
+<p>생략</p>
+
+<hr>
+
+<h2 id="install-docker-ce">
+<a class="anchor" href="#install-docker-ce" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install Docker CE</h2>
+
+<p>다양한 방법으로 설치</p>
+
+<ul>
+<li>대부분의 사용자는 설치 및 업그레이드 작업을 쉽게하기 위해 <code>set up Docker's repositories</code> 하고 설치합니다.</li>
+</ul>
+
+<p>이 방법이 권장됩니다.</p>
+
+<ul>
+<li>일부 사용자는 DEB 패키지를 다운로드하여 <code>install it manually</code>(수동 설치) 하고 업그레이드를 완전히 수동으로 관리합니다.</li>
+</ul>
+
+<p>이 기능은 Docker를 인터넷에 접속할 수없는 에어 갭 시스템에 설치하는 경우에 유용합니다.</p>
+
+<ul>
+<li>테스트 및 개발 환경에서 일부 사용자는 자동화 된 <code>convenience scripts</code> 를 사용하여 Docker를 설치하기로 선택합니다.</li>
+</ul>
+
+<h3 id="install-using-the-repository">
+<a class="anchor" href="#install-using-the-repository" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install using the repository</h3>
+
+<p>새 호스트 시스템에 Docker CE를 처음 설치하기 전에 Docker 저장소를 설정해야합니다.</p>
+
+<p>그런 다음 저장소에서 Docker를 설치하고 업데이트 할 수 있습니다.</p>
+
+<h4 id="set-up-the-repository">
+<a class="anchor" href="#set-up-the-repository" aria-hidden="true"><span class="octicon octicon-link"></span></a>SET UP THE REPOSITORY</h4>
+
+<ol>
+<li>
+<p>Update the apt package index:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">sudo </span>apt-get update
+</code></pre></div>
+</li>
+<li>
+<p><code>apt</code>가 HTTPS를 통해 저장소를 사용할 수 있도록 패키지를 설치하십시오.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">sudo </span>apt-get <span class="nb">install</span> <span class="se">\</span>
+    apt-transport-https <span class="se">\</span>
+    ca-certificates <span class="se">\</span>
+    curl <span class="se">\</span>
+    software-properties-common
+</code></pre></div>
+</li>
+<li>
+<p>Docker 공식 GPG key 추가:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">sudo </span>curl <span class="nt">-fsSL</span> https://download.docker.com/linux/ubuntu/gpg | <span class="nb">sudo </span>apt-key add -
+</code></pre></div>
+<p>지문의 마지막 8자를 검색하여 지문 인식 키 <code>9DC8 5822 9FC7 DD38 854A E2D8 8D81 803C 0EBF CD88</code>가 있는지 확인하십시오.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">sudo </span>apt-key fingerprint 0EBFCD88
+
+<span class="c"># pub   rsa4096 2017-02-22 [SCEA]</span>
+<span class="c"># 9DC8 5822 9FC7 DD38 854A  E2D8 8D81 803C 0EBF CD88</span>
+<span class="c"># uid           [ unknown] Docker Release (CE deb) &lt;docker@docker.com&gt;</span>
+<span class="c"># sub   rsa4096 2017-02-22 [S]</span>
+</code></pre></div>
+</li>
+<li>
+<p><strong>stable</strong> 저장소를 설정하려면 다음 명령을 사용하십시오. <strong>edge</strong> 또는 <strong>test</strong> 저장소에서 빌드를 설치하려는 경우에도 항상 <strong>stable</strong> 저장소가 필요합니다. <strong>edge</strong> 또는 <strong>test</strong> 저장소를 추가하려면 아래 명령에서 <strong>stable</strong> 이라는 단어 뒤에 <code>edge</code> 또는 <code>test</code> (또는 둘 다)를 추가하십시오.</p>
+
+<blockquote>
+<p>Note:
+아래의 <code>lsb_release -cs</code> 하위 명령은 <code>xenial</code>과 같은 우분투 배포본의 이름을 반환합니다.
+때로는 Linux Mint와 같은 배포판에서 <code>$(lsb_release -cs)</code>를 상위 우분투 배포본으로 변경해야 할 수도 있습니다.
+예를 들어, <code>Linux Mint Rafaela</code>를 사용하는 경우 <code>trusty</code>할 수 있습니다.</p>
+</blockquote>
+
+<p><strong>amd64</strong>:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">sudo </span>add-apt-repository <span class="se">\</span>
+    <span class="s2">"deb [arch=amd64] https://download.docker.com/linux/ubuntu </span><span class="se">\</span><span class="s2">
+    </span><span class="si">$(</span>lsb_release <span class="nt">-cs</span><span class="si">)</span><span class="s2"> </span><span class="se">\</span><span class="s2">
+    stable"</span>
+</code></pre></div>
+<p><strong>armhf</strong>:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">sudo </span>add-apt-repository <span class="se">\</span>
+    <span class="s2">"deb [arch=armhf] https://download.docker.com/linux/ubuntu </span><span class="se">\</span><span class="s2">
+    </span><span class="si">$(</span>lsb_release <span class="nt">-cs</span><span class="si">)</span><span class="s2"> </span><span class="se">\</span><span class="s2">
+    stable"</span>
+</code></pre></div>
+<p><strong>s390x</strong>:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">sudo </span>add-apt-repository <span class="se">\</span>
+    <span class="s2">"deb [arch=s390x] https://download.docker.com/linux/ubuntu </span><span class="se">\</span><span class="s2">
+    </span><span class="si">$(</span>lsb_release <span class="nt">-cs</span><span class="si">)</span><span class="s2"> </span><span class="se">\</span><span class="s2">
+    stable"</span>
+</code></pre></div>
+<blockquote>
+<p>Note: Docker 17.06부터 안정 버전은 <strong>edge</strong> 및 <strong>test</strong> 저장소로 푸시됩니다.</p>
+</blockquote>
+
+<p><a href="https://docs.docker.com/engine/installation/">Learn about stable and edge channels</a></p>
+</li>
+</ol>
+
+<h3 id="install-docker-ce">
+<a class="anchor" href="#install-docker-ce" aria-hidden="true"><span class="octicon octicon-link"></span></a>INSTALL DOCKER CE</h3>
+
+<ol>
+<li>
+<p>Update the <code>apt</code> package index.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">sudo </span>apt-get update
+</code></pre></div>
+</li>
+<li><p>Docker CE 최신 버전을 설치하거나 다음 단계로 이동하여 특정 버전을 설치하십시오.</p></li>
+</ol>
+
+<p>Docker의 기존 설치가 모두 대체됩니다.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">```bash
+$ sudo apt-get install docker-ce
+```
+
+&gt; Q. 여러 개의 Docker 저장소가 있습니까?
+&gt;
+&gt; Docker repository 가 여러 개있는 경우 `apt-get install` 또는 `apt-get update` 명령에서 버전을 지정하지 않고 설치 또는 업데이트하면 항상 가능한 가장 높은 버전이 설치되므로 안정성 요구에 적합하지 않을 수 있습니다.
+</code></pre></div>
+<ol>
+<li>
+<p>프로덕션 시스템에서는 항상 최신 버전을 사용하는 대신 특정 버전의 Docker CE를 설치해야 합니다.</p>
+
+<blockquote>
+<p>MY-Note: 해당 <strong>3</strong> 은 <strong>2</strong>와 다른 설치 방법을 설명한다. (<strong>2</strong>로 설치시 넘어가기)</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>apt-cache madison docker-ce | 17.09.0~ce-0~ubuntu | https://download.docker.com/linux/ubuntu xenial/stable amd64 Packages
+</code></pre></div>
+<p>목록의 내용은 사용할 수있는 리포지토리에 따라 다릅니다.</p>
+
+<p>설치할 특정 버전을 선택하십시오.</p>
+
+<p>두 번째 열은 버전 문자열입니다.</p>
+
+<p>세 번째 열은 저장소 이름이며, 패키지가있는 저장소와 안정성 수준을 나타냅니다.</p>
+
+<p>특정 버전을 설치하려면 패키지 이름에 버전 문자열을 추가하고 등호 (=)로 구분하십시오:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">sudo </span>apt-get <span class="nb">install </span>docker-ce<span class="o">=</span>&lt;VERSION&gt;
+</code></pre></div>
+<p>Docker daemon 는 자동으로 시작됩니다.</p>
+</li>
+<li>
+<p>hello-world 이미지를 실행하여 Docker CE가 올바르게 설치되었는지 확인하십시오.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">sudo </span>docker run hello-world
+
+<span class="c"># Unable to find image 'hello-world:latest' locally</span>
+<span class="c"># latest: Pulling from library/hello-world</span>
+<span class="c"># 5b0f327be733: Pull complete</span>
+<span class="c"># Digest: sha256:07d5f7800dfe37b8c2196c7b1c524c33808ce2e0f74e7aa00e603295ca9a0972</span>
+<span class="c"># Status: Downloaded newer image for hello-world:latest</span>
+<span class="c">#</span>
+<span class="c"># Hello from Docker!</span>
+<span class="c"># This message shows that your installation appears to be working correctly.</span>
+<span class="c">#</span>
+<span class="c"># To generate this message, Docker took the following steps:</span>
+<span class="c"># 1. The Docker client contacted the Docker daemon.</span>
+<span class="c"># 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.</span>
+<span class="c"># 3. The Docker daemon created a new container from that image which runs the</span>
+<span class="c"># executable that produces the output you are currently reading.</span>
+<span class="c"># 4. The Docker daemon streamed that output to the Docker client, which sent it</span>
+<span class="c"># to your terminal.</span>
+<span class="c">#</span>
+<span class="c"># To try something more ambitious, you can run an Ubuntu container with:</span>
+<span class="c"># $ docker run -it ubuntu bash</span>
+<span class="c">#</span>
+<span class="c"># Share images, automate workflows, and more with a free Docker ID:</span>
+<span class="c"># https://cloud.docker.com/</span>
+<span class="c">#</span>
+<span class="c"># For more examples and ideas, visit:</span>
+<span class="c"># https://docs.docker.com/engine/userguide/</span>
+</code></pre></div>
+<p>이 명령은 테스트 이미지를 다운로드하여 컨테이너에서 실행합니다.</p>
+
+<p>컨테이너가 실행되면 정보 메시지를 인쇄하고 종료합니다.</p>
+</li>
+</ol>
+
+<p>Docker CE가 설치되어 실행 중입니다.</p>
+
+<p>Docker 명령을 실행하려면 <code>sudo</code> 를 사용해야 합니다.</p>
+
+<p>권한이 없는 사용자가 Docker 명령을 실행하고 다른 선택적 구성 단계를 수행 할 수 있도록 <a href="https://docs.docker.com/engine/installation/linux/linux-postinstall/">Linux postinstall</a> 를 계속하십시오.</p>
+
+<hr>
+
+<h2 id="install-from-a-package">
+<a class="anchor" href="#install-from-a-package" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install from a package</h2>
+
+<p>Docker의 저장소를 사용하여 Docker CE를 설치할 수 없는 경우 릴리스 용 <code>.deb</code> 파일을 다운로드하여 수동으로 설치할 수 있습니다.</p>
+
+<p>Docker CE를 업그레이드 할 때마다 새 파일을 다운로드해야 합니다.</p>
+
+<ol>
+<li>
+<a href="https://download.docker.com/linux/ubuntu/dists/%EC%97%90%EC%84%9C">https://download.docker.com/linux/ubuntu/dists/에서</a> 우분투 버전을 선택하고</li>
+</ol>
+
+<p><code>pool/stable/</code>로 이동 한 다음 <code>amd64</code>, <code>armhf</code> 또는 <code>s390x</code> 를 선택하십시오.</p>
+
+<p>설치할 Docker 버전의 .deb 파일을 다운로드하십시오.</p>
+
+<blockquote>
+<p>Note: <strong>edge</strong> package를 설치하려면 URL의 <code>stable</code> 이라는 단어를 <code>edge</code>로 변경하십시오.</p>
+
+<p><a href="https://docs.docker.com/engine/installation/">Learn about stable and edge channels</a>에 대해 알아보십시오.</p>
+</blockquote>
+
+<ol>
+<li>
+<p>Docker CE 설치하고, 아래 경로를 Docker package 다운로드한 경로 변경하기</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">sudo </span>dpkg <span class="nt">-i</span> /path/to/package.deb
+</code></pre></div>
+<p>Docker daemon 은 자동으로 시작한다.</p>
+</li>
+<li>
+<p>hello-world 이미지를 실행하여 Docker CE가 올바르게 설치되었는지 확인하십시오.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">sudo </span>docker run hello-world
+</code></pre></div>
+</li>
+</ol>
+
+<p>Docker CE 가 설치되어 실행 중입니다.</p>
+
+<p>Docker 명령을 실행하려면 sudo를 사용해야합니다.</p>
+
+<p>비 특권 사용자가 Docker 명령을 실행하고 다른 선택적 구성 단계를 수행 할 수 있도록 <a href="https://docs.docker.com/engine/installation/linux/linux-postinstall/">Linux postinstall</a> 를 계속하십시오.</p>
+
+<h3 id="upgarde-docker-ce">
+<a class="anchor" href="#upgarde-docker-ce" aria-hidden="true"><span class="octicon octicon-link"></span></a>UPGARDE DOCKER CE</h3>
+
+<p>최신 패키지 파일을 다운로드하고 설치 절차를 반복하여 새 파일을 가리킵니다.</p>
+
+<hr>
+
+<h2 id="install-using-the-convenience-script">
+<a class="anchor" href="#install-using-the-convenience-script" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install using the convenience script</h2>
+
+<p>생략</p>
+
+<ul>
+<li>생략</li>
+<li>생략</li>
+<li>생략</li>
+<li>생략</li>
+</ul>
+
+<p>text</p>
+
+<blockquote>
+<p>Warnning:</p>
+
+<p>생략</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"></code></pre></div>
+<p>생략</p>
+
+<h3 id="upgrade-docker-after-using-the-convenience-script">
+<a class="anchor" href="#upgrade-docker-after-using-the-convenience-script" aria-hidden="true"><span class="octicon octicon-link"></span></a>UPGRADE DOCKER AFTER USING THE CONVENIENCE SCRIPT</h3>
+
+<hr>
+
+<h2 id="uninstall-docker-ce">
+<a class="anchor" href="#uninstall-docker-ce" aria-hidden="true"><span class="octicon octicon-link"></span></a>Uninstall Docker CE</h2>
+
+<ol>
+<li>
+<p>패키지 삭제</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">sudo </span>apt-get purge docker-ce
+</code></pre></div>
+</li>
+<li>
+<p>host 의 images, containers, volumns 또는 customized 구성 파일은 자동으로 제거되지 않습니다. 모든 것을 삭제하려면:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">sudo rm</span> <span class="nt">-rf</span> /var/lib/docker
+</code></pre></div>
+</li>
+</ol>
+
+<p>편집된 구성 파일은 수동으로 삭제해야 합니다.</p>
+
+<hr>
+
+<h2 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+<p><a href="https://docs.docker.com/install/linux/docker-ce/ubuntu/">https://docs.docker.com/install/linux/docker-ce/ubuntu/</a></p>
+
+  </div>
+
+<div>
+  <ul>
+<li>
+<a href="#get-docker-ce-for-ubuntu">Get Docker CE for Ubuntu</a>
+
+<ul>
+<li>
+<a href="#prerequisites">Prerequisites</a>
+
+<ul>
+<li><a href="#docker-ee-customers">Docker EE customers</a></li>
+<li><a href="#os-requirements">OS requirements</a></li>
+<li><a href="#uninstall-old-versions">Uninstall old versions</a></li>
+<li><a href="#recommended-extra-packages-for-trusty-1404">Recommended extra packages for Trusty 14.04</a></li>
+</ul>
+</li>
+<li>
+<a href="#install-docker-ce">Install Docker CE</a>
+
+<ul>
+<li>
+<a href="#install-using-the-repository">Install using the repository</a>
+
+<ul>
+<li><a href="#set-up-the-repository">SET UP THE REPOSITORY</a></li>
+</ul>
+</li>
+<li><a href="#install-docker-ce">INSTALL DOCKER CE</a></li>
+</ul>
+</li>
+<li>
+<a href="#install-from-a-package">Install from a package</a>
+
+<ul>
+<li><a href="#upgarde-docker-ce">UPGARDE DOCKER CE</a></li>
+</ul>
+</li>
+<li>
+<a href="#install-using-the-convenience-script">Install using the convenience script</a>
+
+<ul>
+<li><a href="#upgrade-docker-after-using-the-convenience-script">UPGRADE DOCKER AFTER USING THE CONVENIENCE SCRIPT</a></li>
+</ul>
+</li>
+<li><a href="#uninstall-docker-ce">Uninstall Docker CE</a></li>
+<li><a href="#reference">Reference</a></li>
+</ul>
+</li>
+</ul>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<h3 id="docker-ee-customers">Docker EE customers</h3>
+
+<p>생략</p>
+
+<h3 id="os-requirements">OS requirements</h3>
+
+<p>다음 우분투 버전 중 하나의 64 비트 버전이 필요합니다.</p>
+
+<ul>
+<li>Zesty 17.04</li>
+<li>Xenial 16.04 (LTS) - Long Term Support</li>
+<li>Trusty 14.04 (LTS)</li>
+</ul>
+
+<p>Docker CE 는 x86_64, armhf 및 s390x (IBM z Systems) 아키텍처의 Ubuntu에서 지원됩니다.</p>
+
+<blockquote>
+<p><code>s390x</code> Limitations: System Z 는 Ubuntu Xenial 및 Zesty에서만 지원됩니다.</p>
+</blockquote>
+
+<h3 id="uninstall-old-versions">Uninstall old versions</h3>
+
+<p>Docker의 이전 버전은 docker 또는 docker-engine으로 불렸습니다. 설치되어 있으면 제거하십시오.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">apt-get remove docker docker-engine docker.io
+</code></pre></div>
+<p><code>apt-get</code> 이 설치되어 있지 않다는 보고가 있으면 괜찮습니다.</p>
+
+<p>images, containers, volumns 그리고 networks 포함하여 <code>/var/lib/docker/</code> 의 내용이 보존됩니다.</p>
+
+<p>Docker CE packages 는 이제 <code>docker-ce</code> 라고 합니다.</p>
+
+<h3 id="recommended-extra-packages-for-trusty-14-04">Recommended extra packages for Trusty 14.04</h3>
+
+<p>생략</p>
+
+<hr>
+
+<h2 id="install-docker-ce">Install Docker CE</h2>
+
+<p>다양한 방법으로 설치</p>
+
+<ul>
+<li>대부분의 사용자는 설치 및 업그레이드 작업을 쉽게하기 위해 <code>set up Docker's repositories</code> 하고 설치합니다.</li>
+</ul>
+
+<p>이 방법이 권장됩니다.</p>
+
+<ul>
+<li>일부 사용자는 DEB 패키지를 다운로드하여 <code>install it manually</code>(수동 설치) 하고 업그레이드를 완전히 수동으로 관리합니다.</li>
+</ul>
+
+<p>이 기능은 Docker를 인터넷에 접속할 수없는 에어 갭 시스템에 설치하는 경우에 유용합니다.</p>
+
+<ul>
+<li>테스트 및 개발 환경에서 일부 사용자는 자동화 된 <code>convenience scripts</code> 를 사용하여 Docker를 설치하기로 선택합니다.</li>
+</ul>
+
+<h3 id="install-using-the-repository">Install using the repository</h3>
+
+<p>새 호스트 시스템에 Docker CE를 처음 설치하기 전에 Docker 저장소를 설정해야합니다.</p>
+
+<p>그런 다음 저장소에서 Docker를 설치하고 업데이트 할 수 있습니다.</p>
+
+<h4 id="set-up-the-repository">SET UP THE REPOSITORY</h4>
+
+<ol>
+<li>
+<p>Update the apt package index:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">sudo </span>apt-get update
+</code></pre></div>
+</li>
+<li>
+<p><code>apt</code>가 HTTPS를 통해 저장소를 사용할 수 있도록 패키지를 설치하십시오.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">sudo </span>apt-get <span class="nb">install</span> <span class="se">\</span>
+    apt-transport-https <span class="se">\</span>
+    ca-certificates <span class="se">\</span>
+    curl <span class="se">\</span>
+    software-properties-common
+</code></pre></div>
+</li>
+<li>
+<p>Docker 공식 GPG key 추가:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">sudo </span>curl <span class="nt">-fsSL</span> https://download.docker.com/linux/ubuntu/gpg | <span class="nb">sudo </span>apt-key add -
+</code></pre></div>
+<p>지문의 마지막 8자를 검색하여 지문 인식 키 <code>9DC8 5822 9FC7 DD38 854A E2D8 8D81 803C 0EBF CD88</code>가 있는지 확인하십시오.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">sudo </span>apt-key fingerprint 0EBFCD88
+
+<span class="c"># pub   rsa4096 2017-02-22 [SCEA]</span>
+<span class="c"># 9DC8 5822 9FC7 DD38 854A  E2D8 8D81 803C 0EBF CD88</span>
+<span class="c"># uid           [ unknown] Docker Release (CE deb) &lt;docker@docker.com&gt;</span>
+<span class="c"># sub   rsa4096 2017-02-22 [S]</span>
+</code></pre></div>
+</li>
+<li>
+<p><strong>stable</strong> 저장소를 설정하려면 다음 명령을 사용하십시오. <strong>edge</strong> 또는 <strong>test</strong> 저장소에서 빌드를 설치하려는 경우에도 항상 <strong>stable</strong> 저장소가 필요합니다. <strong>edge</strong> 또는 <strong>test</strong> 저장소를 추가하려면 아래 명령에서 <strong>stable</strong> 이라는 단어 뒤에 <code>edge</code> 또는 <code>test</code> (또는 둘 다)를 추가하십시오.</p>
+
+<blockquote>
+<p>Note:
+아래의 <code>lsb_release -cs</code> 하위 명령은 <code>xenial</code>과 같은 우분투 배포본의 이름을 반환합니다.
+때로는 Linux Mint와 같은 배포판에서 <code>$(lsb_release -cs)</code>를 상위 우분투 배포본으로 변경해야 할 수도 있습니다.
+예를 들어, <code>Linux Mint Rafaela</code>를 사용하는 경우 <code>trusty</code>할 수 있습니다.</p>
+</blockquote>
+
+<p><strong>amd64</strong>:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">sudo </span>add-apt-repository <span class="se">\</span>
+    <span class="s2">"deb [arch=amd64] https://download.docker.com/linux/ubuntu </span><span class="se">\</span><span class="s2">
+    </span><span class="si">$(</span>lsb_release <span class="nt">-cs</span><span class="si">)</span><span class="s2"> </span><span class="se">\</span><span class="s2">
+    stable"</span>
+</code></pre></div>
+<p><strong>armhf</strong>:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">sudo </span>add-apt-repository <span class="se">\</span>
+    <span class="s2">"deb [arch=armhf] https://download.docker.com/linux/ubuntu </span><span class="se">\</span><span class="s2">
+    </span><span class="si">$(</span>lsb_release <span class="nt">-cs</span><span class="si">)</span><span class="s2"> </span><span class="se">\</span><span class="s2">
+    stable"</span>
+</code></pre></div>
+<p><strong>s390x</strong>:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">sudo </span>add-apt-repository <span class="se">\</span>
+    <span class="s2">"deb [arch=s390x] https://download.docker.com/linux/ubuntu </span><span class="se">\</span><span class="s2">
+    </span><span class="si">$(</span>lsb_release <span class="nt">-cs</span><span class="si">)</span><span class="s2"> </span><span class="se">\</span><span class="s2">
+    stable"</span>
+</code></pre></div>
+<blockquote>
+<p>Note: Docker 17.06부터 안정 버전은 <strong>edge</strong> 및 <strong>test</strong> 저장소로 푸시됩니다.</p>
+</blockquote>
+
+<p><a href="https://docs.docker.com/engine/installation/" rel="nofollow" target="_blank">Learn about stable and edge channels</a></p>
+</li>
+</ol>
+
+<h3 id="install-docker-ce">INSTALL DOCKER CE</h3>
+
+<ol>
+<li>
+<p>Update the <code>apt</code> package index.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">sudo </span>apt-get update
+</code></pre></div>
+</li>
+<li><p>Docker CE 최신 버전을 설치하거나 다음 단계로 이동하여 특정 버전을 설치하십시오.</p></li>
+</ol>
+
+<p>Docker의 기존 설치가 모두 대체됩니다.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">```bash
+$ sudo apt-get install docker-ce
+```
+
+&gt; Q. 여러 개의 Docker 저장소가 있습니까?
+&gt;
+&gt; Docker repository 가 여러 개있는 경우 `apt-get install` 또는 `apt-get update` 명령에서 버전을 지정하지 않고 설치 또는 업데이트하면 항상 가능한 가장 높은 버전이 설치되므로 안정성 요구에 적합하지 않을 수 있습니다.
+</code></pre></div>
+<ol>
+<li>
+<p>프로덕션 시스템에서는 항상 최신 버전을 사용하는 대신 특정 버전의 Docker CE를 설치해야 합니다.</p>
+
+<blockquote>
+<p>MY-Note: 해당 <strong>3</strong> 은 <strong>2</strong>와 다른 설치 방법을 설명한다. (<strong>2</strong>로 설치시 넘어가기)</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>apt-cache madison docker-ce | 17.09.0~ce-0~ubuntu | https://download.docker.com/linux/ubuntu xenial/stable amd64 Packages
+</code></pre></div>
+<p>목록의 내용은 사용할 수있는 리포지토리에 따라 다릅니다.</p>
+
+<p>설치할 특정 버전을 선택하십시오.</p>
+
+<p>두 번째 열은 버전 문자열입니다.</p>
+
+<p>세 번째 열은 저장소 이름이며, 패키지가있는 저장소와 안정성 수준을 나타냅니다.</p>
+
+<p>특정 버전을 설치하려면 패키지 이름에 버전 문자열을 추가하고 등호 (=)로 구분하십시오:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">sudo </span>apt-get <span class="nb">install </span>docker-ce<span class="o">=</span>&lt;VERSION&gt;
+</code></pre></div>
+<p>Docker daemon 는 자동으로 시작됩니다.</p>
+</li>
+<li>
+<p>hello-world 이미지를 실행하여 Docker CE가 올바르게 설치되었는지 확인하십시오.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">sudo </span>docker run hello-world
+
+<span class="c"># Unable to find image 'hello-world:latest' locally</span>
+<span class="c"># latest: Pulling from library/hello-world</span>
+<span class="c"># 5b0f327be733: Pull complete</span>
+<span class="c"># Digest: sha256:07d5f7800dfe37b8c2196c7b1c524c33808ce2e0f74e7aa00e603295ca9a0972</span>
+<span class="c"># Status: Downloaded newer image for hello-world:latest</span>
+<span class="c">#</span>
+<span class="c"># Hello from Docker!</span>
+<span class="c"># This message shows that your installation appears to be working correctly.</span>
+<span class="c">#</span>
+<span class="c"># To generate this message, Docker took the following steps:</span>
+<span class="c"># 1. The Docker client contacted the Docker daemon.</span>
+<span class="c"># 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.</span>
+<span class="c"># 3. The Docker daemon created a new container from that image which runs the</span>
+<span class="c"># executable that produces the output you are currently reading.</span>
+<span class="c"># 4. The Docker daemon streamed that output to the Docker client, which sent it</span>
+<span class="c"># to your terminal.</span>
+<span class="c">#</span>
+<span class="c"># To try something more ambitious, you can run an Ubuntu container with:</span>
+<span class="c"># $ docker run -it ubuntu bash</span>
+<span class="c">#</span>
+<span class="c"># Share images, automate workflows, and more with a free Docker ID:</span>
+<span class="c"># https://cloud.docker.com/</span>
+<span class="c">#</span>
+<span class="c"># For more examples and ideas, visit:</span>
+<span class="c"># https://docs.docker.com/engine/userguide/</span>
+</code></pre></div>
+<p>이 명령은 테스트 이미지를 다운로드하여 컨테이너에서 실행합니다.</p>
+
+<p>컨테이너가 실행되면 정보 메시지를 인쇄하고 종료합니다.</p>
+</li>
+</ol>
+
+<p>Docker CE가 설치되어 실행 중입니다.</p>
+
+<p>Docker 명령을 실행하려면 <code>sudo</code> 를 사용해야 합니다.</p>
+
+<p>권한이 없는 사용자가 Docker 명령을 실행하고 다른 선택적 구성 단계를 수행 할 수 있도록 <a href="https://docs.docker.com/engine/installation/linux/linux-postinstall/" rel="nofollow" target="_blank">Linux postinstall</a> 를 계속하십시오.</p>
+
+<hr>
+
+<h2 id="install-from-a-package">Install from a package</h2>
+
+<p>Docker의 저장소를 사용하여 Docker CE를 설치할 수 없는 경우 릴리스 용 <code>.deb</code> 파일을 다운로드하여 수동으로 설치할 수 있습니다.</p>
+
+<p>Docker CE를 업그레이드 할 때마다 새 파일을 다운로드해야 합니다.</p>
+
+<ol>
+<li>
+<a href="https://download.docker.com/linux/ubuntu/dists/%EC%97%90%EC%84%9C" rel="nofollow" target="_blank">https://download.docker.com/linux/ubuntu/dists/에서</a> 우분투 버전을 선택하고</li>
+</ol>
+
+<p><code>pool/stable/</code>로 이동 한 다음 <code>amd64</code>, <code>armhf</code> 또는 <code>s390x</code> 를 선택하십시오.</p>
+
+<p>설치할 Docker 버전의 .deb 파일을 다운로드하십시오.</p>
+
+<blockquote>
+<p>Note: <strong>edge</strong> package를 설치하려면 URL의 <code>stable</code> 이라는 단어를 <code>edge</code>로 변경하십시오.</p>
+
+<p><a href="https://docs.docker.com/engine/installation/" rel="nofollow" target="_blank">Learn about stable and edge channels</a>에 대해 알아보십시오.</p>
+</blockquote>
+
+<ol>
+<li>
+<p>Docker CE 설치하고, 아래 경로를 Docker package 다운로드한 경로 변경하기</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">sudo </span>dpkg <span class="nt">-i</span> /path/to/package.deb
+</code></pre></div>
+<p>Docker daemon 은 자동으로 시작한다.</p>
+</li>
+<li>
+<p>hello-world 이미지를 실행하여 Docker CE가 올바르게 설치되었는지 확인하십시오.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">sudo </span>docker run hello-world
+</code></pre></div>
+</li>
+</ol>
+
+<p>Docker CE 가 설치되어 실행 중입니다.</p>
+
+<p>Docker 명령을 실행하려면 sudo를 사용해야합니다.</p>
+
+<p>비 특권 사용자가 Docker 명령을 실행하고 다른 선택적 구성 단계를 수행 할 수 있도록 <a href="https://docs.docker.com/engine/installation/linux/linux-postinstall/" rel="nofollow" target="_blank">Linux postinstall</a> 를 계속하십시오.</p>
+
+<h3 id="upgarde-docker-ce">UPGARDE DOCKER CE</h3>
+
+<p>최신 패키지 파일을 다운로드하고 설치 절차를 반복하여 새 파일을 가리킵니다.</p>
+
+<hr>
+
+<h2 id="install-using-the-convenience-script">Install using the convenience script</h2>
+
+<p>생략</p>
+
+<ul>
+<li>생략</li>
+<li>생략</li>
+<li>생략</li>
+<li>생략</li>
+</ul>
+
+<p>text</p>
+
+<blockquote>
+<p>Warnning:</p>
+
+<p>생략</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"></code></pre></div>
+<p>생략</p>
+
+<h3 id="upgrade-docker-after-using-the-convenience-script">UPGRADE DOCKER AFTER USING THE CONVENIENCE SCRIPT</h3>
+
+<hr>
+
+<h2 id="uninstall-docker-ce">Uninstall Docker CE</h2>
+
+<ol>
+<li>
+<p>패키지 삭제</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">sudo </span>apt-get purge docker-ce
+</code></pre></div>
+</li>
+<li>
+<p>host 의 images, containers, volumns 또는 customized 구성 파일은 자동으로 제거되지 않습니다. 모든 것을 삭제하려면:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">sudo rm</span> <span class="nt">-rf</span> /var/lib/docker
+</code></pre></div>
+</li>
+</ol>
+
+<p>편집된 구성 파일은 수동으로 삭제해야 합니다.</p>
+
+<hr>
+
+<h2 id="reference">Reference</h2>
+
+<p><a href="https://docs.docker.com/install/linux/docker-ce/ubuntu/" rel="nofollow" target="_blank">https://docs.docker.com/install/linux/docker-ce/ubuntu/</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

@@ -1,0 +1,13 @@
+﻿# postgresql error msg: cannot set transaction read-write mode during recovery
+
+vi /home/postgres/data/recovery.conf
+
+standby_mode          = 'on'
+primary_conninfo      = 'host=nom-master port=5432 user=postgres'
+trigger_file          = '/var/log/pgpool/trigger/trigger'   <<< 이 파일을 참조 (*단일망 구성해도 반드시 있어야 함)
+
+현재 nom 단일망 5432 구성
+
+pgpool 9999 또는 pgbounce 6432 사용함
+
+당연 pgpool을 사용안하기에 pgpool down 후 postgresql 재구동하니 해결됨

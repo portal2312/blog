@@ -1,0 +1,28 @@
+2239                 {
+2240                     text: COMMON.DESC,
+2241                     dataIndex: 'desc',
+2242                     width: 250,
+2243                     sortable: false,
+2244                     renderer: function(value, meta, record) {
+2245                         // TODO: keyCode 의 key 값은 backend code 함께 고민해야 한다.
+2246                         var key = null,
+2247                             keyCode = {
+2248                                 '[SPACE]': '<font style="background:#A6A6A6;"> </font>',
+2249                                 '[CTRL]': '<font style="background:#0100FF;"> </font>'
+2250                             };
+2251
+2252                         for (key in keyCode) {
+2253                             if (value.indexOf(key) > -1) {
+2254                                 value = value.replace(key, keyCode[key]);
+2255                             }
+2256                         }
+2257
+2258                         // TODO: special key([])
+2259                         value = value.replace(/\[/g, '<font color="#ff0000;">[</font>');
+2260                         value = value.replace(/\]/g, '<font color="#ff0000;">]</font>');
+2261
+2262                         // TODO: except(<)
+2263                         value = value.replace(/<(?!(f|\/))/g, '<font color="#0000ff;"><</font>');
+2264                         return value;
+2265                     }
+2266                 },{

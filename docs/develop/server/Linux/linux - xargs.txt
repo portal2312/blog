@@ -1,0 +1,39 @@
+# xagrs 사용하기
+
+서버 운영을 하다 보면 다양한 파일 목록을 추출해서 삭제, 복사 등을 해야 할때가 있다
+이런 작업을 단순하게 진행할 수 있게 도움을 주는 명령어가 xargs이다. 
+
+보통 기본적인 명령어(find, ls, cat) 뒤에 파이프로 추가하여 사용함 
+간단히 설명하면 파이프 이전의 내용을 인자로 받아 명령어를 실행하는 구조
+
+기본적인 사용법은
+xargs [-0prtx] [-e[eof-str]] [-i[replace-str]] [-l[max-lines]] [-n max-args] [-s max-chars] [-P max-procs] [--null] [--eof[=eof-str]] [--replace[=replace-str]] [--max-lines[=max-lines]] [--interactive] [--max-chars=max-chars] [--verbose] [--exit] [--max-procs=max-procs] [--max-args=max-args] [--no-run-if-empty] [--version] [--help] [명령 [기본인수]]  
+
+ㅋㅋ 거참 길다 옵션이나 자세한 내용이 필요하면 아래 페이지에 가서 찾아보고
+http://man.kldp.net/wiki/ManPage/xargs.1 
+
+# 간단한 사용법
+ - find를 이용하여 mtime이 30일 이상된 파일들을 ..bak으로 바꾸기
+$ find . -mtime +30 | xargs mv -i {} {}.bak  
+
+ - find를 이용하여 *.mp3 파일을 지우기
+$ find . -name '*.mp3' | xargs rm 
+
+ - ls 를 이용해서 text 파일 목록을 가져온 뒤 각각의 파일내용을  cat으로 읽고 병합파일 만듬
+$ ls *.txt | xargs cat >> abc.merge 
+이런식으로 사용하면 된다.
+
+하다보니 find명령어랑 많이 쓰게 되는데 find 명령어의 -exec를 이용해도 된다 
+하지만!! 기본적으로 find의 -exec는 명령의 인자가 길 때 argument too long (메시지 정확치 않음) 이 발생함 
+그리고 find 의 exec 구문에 비해서 명령을 수행시키는 횟수를 현격히 줄일 수 있기 때문에 유리함
+그래서 xargs를 이용하는 편이 속시원한 옵션에 한번에 처리할수 있는 개수를 지정하는 옵션도 있음 
+
+추가로 kldp에 xargs 관련 질문에 달린 고급 정보
+
+[find후 삭제의 예에서 exec를 사용할 경우 찾아낸 하나 하나 파일 마다 rm명령어가 실행되어
+서브 프로세스가 생성됩니다.
+그러므로 pc에서의 적은양의 파일을 삭제 할 경우엔 별 문제가 없지만, 서버 급과 같은 곳에서 많은 파일들을 처리 할 경우 문제 퍼포먼스에 문제가 있을 수 있다고 들었습니다. ( IBM 포럼?에서)
+그리고 xargs 역시 처리할수 있는 인자 수에는 제한이 있습니다.
+sysctl 에서 확인해 보면 된다고 하네요. 제가 본 기사에서는 655xx 문자(바이트) 였던거 같습니다.
+그래서 find 후 삭제시에는 find 자체에 있는 -delete 스위치(옵션 철자 틀릴 수 있음) 를 사용해서 지우는 것이 가장 이상적이다고 언급하고 있었습니다.]
+[출처] [Linux] xargs 사용법|작성자 juner84

@@ -1,0 +1,83 @@
+﻿0. 설치 파일 위치
+ftp.netcruz.co.kr/Public/pgbouncer/ 폴더 아래에 있는 관련 파일을 해당 서버의
+
+/ 밑에 
+ibevent-1.4.13-4.el6.x86_64.rpm
+libevent-devel-1.4.13-4.el6.x86_64.rpm
+libevent-doc-1.4.13-4.el6.noarch.rpm
+libevent-headers-1.4.13-4.el6.noarch.rpm
+pgbouncer-1.5.4.tar.gz
+를 복사
+
+1. 필요 RPM 설치
+rpm -Uvh --nodeps libevent-1.4.13-4.el6.x86_64.rpm
+rpm -Uvh --nodeps libevent-devel-1.4.13-4.el6.x86_64.rpm
+rpm -Uvh --nodeps libevent-doc-1.4.13-4.el6.noarch.rpm
+rpm -Uvh --nodeps libevent-headers-1.4.13-4.el6.noarch.rpm
+
+2. pgbouncer 설치 및 nOM 설정 변경(root 계정으로 실행)
+tar zxvf pgbouncer-1.5.4.tar.gz
+cd /pgbouncer-1.5.4
+./configure --prefix=/usr/local --with-libevent=libevent-prefix
+make
+make install
+mkdir /var/log/pgbouncer/
+mkdir /var/run/pgbouncer/
+chown -R postgres:postgres /var/log/pgbouncer/
+chown -R postgres:postgres /var/run/pgbouncer/
+cd /usr/local/share/doc/pgbouncer
+
+vi pgbouncer.ini
+	13 line : nom = host=127.0.0.1 port=9999 dbname=nom user=postgres password=netcruz!1
+	39 line : listen_addr = *
+	53 line : auth_type = any
+	55 line : ;auth_file = userlist.txt
+	62 line : admin_users = postgres
+	65 line : stats_users = stats, root
+	119 line : default_pool_size = 100
+
+vi /opt/hts/etc/nom/nOM.conf
+	117 line : DB_PORT: 6432
+
+vi /opt/hts/netcruz/webapps/nom/settings.py
+	19 line : 'PORT': '6432',
+
+vi /opt/hts/.bashrc
+	26 line : alias p="/usr/local/pgsql/bin/psql -U postgres -p 6432 nom"
+
+3. pgbouncer 실행(postgres 계정으로 실행)
+su - postgres
+
+-pgbouncer 시작 명령어-
+pgbouncer -d /usr/local/share/doc/pgbouncer/pgbouncer.ini
+
+-pgbouncer 재시작 명령어-
+pgbouncer -R -d /usr/local/share/doc/pgbouncer/pgbouncer.ini
+-pgbouncer 접속 명령어-
+psql -p 6432 -U pgbouncer pgbouncer
+
+-pgbouncer 종료 명령어-
+psql -p 6432 -U pgbouncer pgbouncer
+로 접속 후
+shutdown; 
+입력
+
+
+
+다 내려간경우
+
+일단 모든 서비스 종료후
+1) uwsgi, nginx 재시작
+2) 127.0.0.1:8080 웹접속
+3) postgres/net****!* 접속
+4) /etc/init.d/postgres start
+5) /etc/init.d/pgpool restart
+6) 웹에서 debug 만 체크해재후 restart
+7) disconnected 나오면 성공
+8) /etc/init.d/pgbouncer start
+
+
+
+
+
+

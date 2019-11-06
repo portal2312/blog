@@ -1,0 +1,18 @@
+﻿1. cd C:\Windows\ShellNew
+
+2. make file 'TXTUTF-8.txt'  (=filename choice)
+
+3. save as.. file encoding type: utf-8
+
+4. cmd
+
+5. regedit > HKEY_CLASSES_ROOT > .txt > ShellNew >
+
+  right click > New > String Value >
+
+  'FileName' create name > 'TXTUTF-8.txt' data input
+
+
+# *Reference.URL*
+
+https://answers.microsoft.com/en-us/windows/forum/windows_7-windows_programs/default-utf-8-encoding-for-new-notepad-documents/525f0ae7-121e-4eac-a6c2-cfe6b498712c

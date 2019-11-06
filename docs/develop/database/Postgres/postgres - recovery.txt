@@ -1,0 +1,140 @@
+# $PGDATA/global/pg_control
+- initdb static info
+- postgresql.conf
+- write logging and check point static info
+
+> pg_controldata /home/postgres/data
+
+
+# postgres nom info view
+pg_controldata /home/postgres/data
+
+
+# TEST
+rm -rf /home/postgres/data/global/pg_control
+touch /home/postgres/data/global/pg_control
+chmod 600 /home/postgres/data/global/pg_control
+pg_controldata /home/postgres/data
+
+pg_controldata: could not read file "/home/postgres/data/global/pg_control"
+
+
+
+# pg_resetxlog [option]
+
+-l pg_xlog(./data/pg_xlog)
+
+    000000220000000F00000096 (hex,hex,hex)
+
+    00000022 = 0x22
+    0000000F = 0xf
+    00000096 = 0x96 + 1 = 0x97
+
+    -l 0x22,0xf,0x97
+
+-x pg_clog(./data/pg_clog)
+
+    0028 (hex)
+
+    0x2900000 = 0x28 + 1 + '0'*5
+
+    -x 0x2900000
+
+-m MXID,MXID     set next and oldest multitransaction ID
+    ./data/pg_multixact/offsets
+
+    (file 없는 경우 0x10000 = '0x1' + '0'*4)
+
+    0002
+
+    0x30000 = '0x' + 2+1 + '0'*4
+
+    -m 0x30000,0x20000
+
+
+-O OFFSET        set next multitransaction offset
+    ./data/pg_multixact/member
+
+    (file 없는 경우 0x10000 = '0x1' + '0'*4)
+
+    0000
+
+    0x10000 = '0x' + 0+1 + '0'*4
+
+    -O 0x10000
+
+
+-f force update to be done
+
+    -f $PGDATA (=/home/postgres/data)
+
+
+ex) pg_resetxlog -l 0x1,0x96E8,0x60 -x 0x046A00000 -m 0x10000 -O 0x10000 -f $PGDATA
+
+> pg_resetxlog -l 0x22,0xf,0x97 -x 0x2900000 -m 0x30000,0x20000 -O 0x10000 -f /home/postgres/data
+
+
+pg_resetxlog -l 000000220000000F000000A0 -x 0x046A00000 -m 0x3 -O 0x1 -f $PGDATA
+
+pg_resetxlog -l 000000220000000F000000A0 -x 0x046A00000 -m 0x3,0x2 -O 0x1 -f /home/postgres/data
+
+
+# check
+Latest checkpoint's NextXID:          0/1184890880
+Latest checkpoint's NextOID:          388358
+
+
+# restart
+pg_ctl -D /home/postgres/data start
+pg_ctl -m fast -D /home/postgres/data stop
+
+
+
+# tip
+
+- ls -alhtr | tail -n 5
+
+- $PGDATA = /home/postgres/data
+
+
+# fail log
+
+  1 LOG:  database system was interrupted; last known up at 2016-10-18 09:53:16 GMT
+  2 LOG:  database system was not properly shut down; automatic recovery in progress
+  3 LOG:  record with zero length at F/A0000090
+  4 LOG:  redo is not required
+  5 FATAL:  could not access status of transaction 3
+  6 DETAIL:  Could not open file "pg_multixact/offsets/0000": 그런 파일이나 디렉터리가 없습니다.
+  7 LOG:  startup process (PID 30596) exited with exit code 1
+  8 LOG:  aborting startup due to startup process failure
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/usr/local/pgsql/bin/postgres --single -D /home/postgres/data -P -d 1
+
+
+1. conf 비교
+> vi /home/postgres/data/postgresql.conf
+
+wal_level = hot_standby
+hot_standby = on
+max_wal_senders = 1
+
+
+2. 
+
+/usr/local/pgsql/bin/postgres --single -D /home/postgres/data -P -d 1
+
+ctrl+d

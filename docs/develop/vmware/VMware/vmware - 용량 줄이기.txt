@@ -1,0 +1,67 @@
+# VMware 용량 줄이기
+
+## Clean Up Disks
+
+해당 가상머신 선택 > VM > Manage > Clean Up Disks... > Clean up now
+
+
+(예외)
+- Cleanup is not necessary.
+: Clean up now 누르기 전 상태이며 실패한 것이다, 다른 방법을 사용해야 함.
+
+
+## Defragment (디스크 모음)
+
+> cd c:\Program Files (x86)\VMware\VMware Workstation
+> vmware-vdiskmanager.exe -d "D:\nom\CentOS 64-bit.vmdk"
+
+VixDiskLib: Invalid configuration file parameter.  Failed to read configuration
+file.
+This disk is read-only in the snapshot chain in 'D:\nom\CentOS 64-bit.vmx'.
+In this chain you may only modify the following disk(s):
+   - D:\nom\CentOS 64-bit-000002.vmdk
+
+
+> vmware-vdiskmanager.exe -d "D:\nom\CentOS 64-bit-000002.vmdk"
+
+VixDiskLib: Invalid configuration file parameter.  Failed to read configuration
+file.
+  Defragment: 2% done.
+
+
+
+## (가상디스크 축소)
+
+> vmware-vdiskmanager.exe -k "D:\nom\CentOS 64-bit-000002.vmdk"
+
+vmware-vdiskmanager.exe -k "D:\nom\CentOS 64-bit.vmdk"
+
+
+## 현재 snapshot 만 clone 후 old 지우기 (full clone)
+
+- 해당 snapshot 에 대한 내용만 full clone 가능.
+
+- network 설정 다시해야 될 경우
+
+  linux - network reset all.txt 에서 vmware 사용중 네트워크가 갑자기 변경 되었을 때 보고 변경.
+
+
+> 해당 VMware 우클릭
+> snapshot
+> snapshot manager > clone 할 snapshot 선택
+> clone
+> The current state in the virtual machine > next
+> create a full clone > next
+> 경로설정 > 마침
+
+
+# *Reference*
+http://bbaddoroid.tistory.com/16
+
+http://shinb.tistory.com/16
+
+http://m.blog.naver.com/baljern/140108605076
+
+http://blog.piano000.net/
+
+http://egloos.zum.com/Esunny/v/4020191

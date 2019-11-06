@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Working with forms | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Working with forms" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="About this document 이 문서는 웹 폼의 기본 사항과 장고에서 다루는 방법을 소개합니다. 양식 API의 특정 영역에 대한 자세한 내용은 Forms API, 양식 필드 및 양식 및 필드 유효성 검증을 참조하십시오." />
+<meta property="og:description" content="About this document 이 문서는 웹 폼의 기본 사항과 장고에서 다루는 방법을 소개합니다. 양식 API의 특정 영역에 대한 자세한 내용은 Forms API, 양식 필드 및 양식 및 필드 유효성 검증을 참조하십시오." />
+<link rel="canonical" href="http://localhost:4000/blog/docs/develop/Backend/Python/lib/django/docs/05_Forms/01_The_basics/01_overview.html" />
+<meta property="og:url" content="http://localhost:4000/blog/docs/develop/Backend/Python/lib/django/docs/05_Forms/01_The_basics/01_overview.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-06T09:31:12+09:00" />
+<script type="application/ld+json">
+{"description":"About this document 이 문서는 웹 폼의 기본 사항과 장고에서 다루는 방법을 소개합니다. 양식 API의 특정 영역에 대한 자세한 내용은 Forms API, 양식 필드 및 양식 및 필드 유효성 검증을 참조하십시오.","headline":"Working with forms","dateModified":"2019-11-06T09:31:12+09:00","datePublished":"2019-11-06T09:31:12+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/docs/develop/Backend/Python/lib/django/docs/05_Forms/01_The_basics/01_overview.html"},"url":"http://localhost:4000/blog/docs/develop/Backend/Python/lib/django/docs/05_Forms/01_The_basics/01_overview.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Working with forms</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#html-forms">HTML forms</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#get-and-post">GET and POST</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#django-s-role-in-forms">Django’s role in forms</a></li>
+<li class="toc-entry toc-h2"><a href="#forms-in-django">Forms in Django</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#the-django-form-class">The Django Form class</a></li>
+<li class="toc-entry toc-h3"><a href="#instantiating-processing-and-rendering-forms">Instantiating, processing, and rendering forms</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#building-a-form">Building a form</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#the-work-that-needs-to-be-done">The work that needs to be done</a></li>
+<li class="toc-entry toc-h3"><a href="#building-a-form-in-django">Building a form in Django</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#the-form-class">The Form class</a></li>
+<li class="toc-entry toc-h4"><a href="#the-view">The view</a></li>
+<li class="toc-entry toc-h4"><a href="#the-template">The template</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#more-about-django-form-classes">More about Django Form classes</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#bound-and-unbound-form-instances">Bound and unbound form instances</a></li>
+<li class="toc-entry toc-h3"><a href="#more-on-fields">More on fields</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#widgets">Widgets</a></li>
+<li class="toc-entry toc-h4"><a href="#field-data">Field data</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#working-with-form-templates">Working with form templates</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#form-rendering-options">Form rendering options</a></li>
+<li class="toc-entry toc-h3"><a href="#rendering-fields-manually">Rendering fields manually</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#rendering-form-error-messages">Rendering form error messages</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#looping-over-the-form-s-fields">Looping over the form’s fields</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#looping-over-hidden-and-visible-fields">Looping over hidden and visible fields</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#reusable-form-templates">Reusable form templates</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#further-topics">Further topics</a></li>
+<li class="toc-entry toc-h2"><a href="#references">References</a></li>
+</ul><blockquote>
+<p>About this document</p>
+
+<p>이 문서는 웹 폼의 기본 사항과 장고에서 다루는 방법을 소개합니다.
+양식 API의 특정 영역에 대한 자세한 내용은 Forms API, 양식 필드 및 양식 및 필드 유효성 검증을 참조하십시오.</p>
+</blockquote>
+
+<p>콘텐츠를 게시하고 방문자의 의견을 수락하지 않는 웹 사이트 및 응용 프로그램을 만들 계획이 아니라면 양식을 이해하고 사용해야합니다.</p>
+
+<p>Django는 사이트 방문자로부터 입력을 받아 양식을 작성한 다음 입력을 처리하고 응답하는 데 도움이되는 다양한 도구와 라이브러리를 제공합니다.</p>
+
+<h2 id="html-forms">
+<a class="anchor" href="#html-forms" aria-hidden="true"><span class="octicon octicon-link"></span></a>HTML forms</h2>
+
+<p>html에서 양식은 방문자가 텍스트 입력, 옵션 선택, 객체 또는 컨트롤 조작 등과 같은 작업을 수행 할 수있는 <code>&lt;form&gt; ... &lt;/ form&gt;</code> 내의 요소 모음입니다. 서버에.</p>
+
+<p>이러한 양식 인터페이스 요소 중 일부 (텍스트 입력 또는 확인란)는 매우 간단하며 html 자체에 내장되어 있습니다.</p>
+
+<p>다른 것들은 훨씬 더 복잡합니다. 날짜 선택 도구를 팝업하거나 슬라이더를 이동하거나 컨트롤을 조작 할 수있는 인터페이스는 일반적으로 html 양식 <code>&lt;input&gt;</code> 요소와 함께 javascript 및 css를 사용하여 이러한 효과를 얻습니다.</p>
+
+<p><code>&lt;input&gt;</code> 요소뿐만 아니라 양식도 두 가지를 지정해야합니다:</p>
+
+<ul>
+<li>where: 사용자의 입력에 해당하는 데이터가 반환되어야하는 URL</li>
+<li>how: 데이터가 반환해야하는 HTTP 메소드</li>
+</ul>
+
+<p>예를 들어, Django 관리자의 로그인 폼은 여러 개의 <code>&lt;input&gt;</code> 요소를 포함합니다.
+하나는 사용자 이름의 type="text", password는 type="password", 다른 하나는 type="submit"입니다. "로그인"버튼. 또한 사용자가 볼 수없는 몇 가지 숨겨진 텍스트 필드가 포함되어 있으며 장고는 다음에 수행 할 작업을 결정할 때 사용합니다.</p>
+
+<p>또한 폼 데이터가 <code>&lt;form&gt;</code>의 action 속성 - <strong>/admin/</strong> -에 지정된 URL로 보내 져야하며 메서드 속성 -post에 지정된 HTTP 메커니즘을 사용하여 보내야한다고 브라우저에 알립니다.</p>
+
+<p><code>&lt;input type="submit" value="Login"&gt;</code> 요소가 트리거되면 데이터는 <strong>/admin/</strong> 로 리턴됩니다.</p>
+
+<h3 id="get-and-post">
+<a class="anchor" href="#get-and-post" aria-hidden="true"><span class="octicon octicon-link"></span></a>GET and POST</h3>
+
+<p>GET과 POST는 폼을 다룰 때 사용할 수있는 유일한 HTTP 메소드입니다.</p>
+
+<p>Django의 로그인 폼은 POST 메서드를 사용하여 반환됩니다.
+POST 메서드는 브라우저가 양식 데이터를 묶어서 전송 인코딩하고 서버로 보낸 다음 응답을 수신합니다.</p>
+
+<p>반대로 GET은 제출 된 데이터를 문자열로 묶어 URL을 작성하는 데 사용합니다.
+URL에는 데이터를 전송해야하는 주소는 물론 데이터 키와 값이 포함됩니다.
+Django 문서에서 검색을하면 <a href="https://docs.djangoproject.com/search/?q=forms&amp;release=1">https://docs.djangoproject.com/search/?q=forms&amp;release=1</a> 형식의 URL이 생성됩니다.</p>
+
+<p>GET 및 POST는 일반적으로 다른 용도로 사용됩니다.</p>
+
+<p>시스템의 상태를 변경하는 데 사용할 수있는 요청 (예: 데이터베이스에서 변경 요청)은 <strong>POST</strong>를 사용해야합니다.
+<strong>GET</strong>은 시스템 상태에 영향을주지 않는 요청에만 사용해야합니다.</p>
+
+<p>비밀번호는 URL에 표시되고 브라우저 기록 및 서버 로그에도 일반 텍스트로 표시되므로 <strong>GET</strong>은 비밀번호 양식에 적합하지 않습니다.
+대량의 데이터나 이미지와 같은 바이너리 데이터에는 적합하지 않습니다.
+관리자 양식에 <strong>GET</strong>요청을 사용하는 웹 응용 프로그램은 보안 위험이 있습니다.
+공격자가 양식의 민감한 부분에 대한 액세스 권한을 얻으려는 요청을 쉽게 모방할 수 있습니다.
+<strong>POST</strong>는 Django의 [CSRF] 보호와 같은 다른 보호 기능과 결합되어 액세스를보다 효율적으로 제어합니다.</p>
+
+<p>반면 <strong>GET</strong>요청을 나타내는 URL은 쉽게 책갈피, 공유 또는 다시 제출할 수 있기 때문에 <strong>GET</strong>은 웹 검색 양식과 같은 것에 적합합니다.</p>
+
+<hr>
+
+<h2 id="django-s-role-in-forms">
+<a class="anchor" href="#django-s-role-in-forms" aria-hidden="true"><span class="octicon octicon-link"></span></a>Django’s role in forms</h2>
+
+<p>양식 처리는 복잡한 사업입니다.
+Django의 관리자를 생각해보십시오.
+다양한 유형의 여러 데이터 항목을 양식으로 표시하고 HTML로 렌더링하고 편리한 인터페이스를 사용하여 편집하고 서버로 반환하고 유효성을 검사하고 정리 한 다음 저장하거나 전달해야 할 수도 있습니다 추가 처리를 위해.</p>
+
+<p>Django의 폼 기능은이 작업의 상당 부분을 단순화하고 자동화 할 수 있으며 대부분의 프로그래머가 작성한 코드에서 수행 할 수있는 것보다 더 안전하게 수행 할 수 있습니다.
+Django는 폼과 관련된 세 가지 부분을 처리합니다.</p>
+
+<ul>
+<li>데이터 준비 및 재구성하여 렌더링 준비</li>
+<li>데이터에 대한 HTML 양식 작성</li>
+<li>클라이언트로부터 제출 된 양식 및 데이터 수신 및 처리</li>
+</ul>
+
+<p>이 모든 작업을 수동으로 수행하는 코드를 작성하는 것은 가능하지만 Django가 모든 작업을 처리 할 수 ​​있습니다.</p>
+
+<hr>
+
+<h2 id="forms-in-django">
+<a class="anchor" href="#forms-in-django" aria-hidden="true"><span class="octicon octicon-link"></span></a>Forms in Django</h2>
+
+<p>우리는 HTML 양식을 간단히 설명했지만 HTML <code>&lt;form&gt;</code>은 필요한 기계의 일부 일뿐입니다.
+웹 응용 프로그램의 컨텍스트에서 'form'은 HTML <code>&lt;form&gt;</code>을 참조하거나 생성 된 Django Form 또는 제출 될 때 반환 된 구조화 된 데이터 나 엔드 투 엔드 작업 콜렉션 이 부분들.</p>
+
+<h3 id="the-django-form-class">
+<a class="anchor" href="#the-django-form-class" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Django Form class</h3>
+
+<p>이 컴포넌트 시스템의 핵심은 Django의 <strong>Form</strong> 클래스입니다.
+Django 모델이 객체의 논리적 구조, 동작 및 파트가 우리에게 표시되는 방식을 설명하는 것과 거의 같은 방식으로 <strong>Form</strong> 클래스는 양식을 설명하고 양식이 작동하고 나타나는 방식을 결정합니다.</p>
+
+<p>모델 클래스의 필드가 데이터베이스 필드에 매핑되는 것과 비슷한 방식으로 양식 클래스의 필드는 HTML 양식 <code>&lt;input&gt;</code> 요소에 매핑됩니다.
+(<strong>ModelForm</strong> 은 <strong>Form</strong>을 통해 모델 클래스의 필드를 HTML 폼의 <code>&lt;input&gt;</code> 요소로 매핑합니다; 이것이 장고 관리자의 기반입니다.)</p>
+
+<p>form's fields 자체는 클래스입니다; form이 제출되면 양식 데이터를 관리하고 유효성 검사를 수행합니다.
+<strong>DateField</strong>와 <strong>FileField</strong>는 매우 다른 종류의 데이터를 처리하고 그 데이터와 다른 작업을 수행해야합니다.</p>
+
+<p>form field는 브라우저의 사용자에게 HTML "widget"(사용자 인터페이스 기계류)으로 표시됩니다.
+각 필드 유형에는 적절한 기본 <a href="https://docs.djangoproject.com/en/2.1/ref/forms/widgets/">Widget class</a>가 있지만 필요에 따라 재정의 할 수 있습니다.</p>
+
+<hr>
+
+<h3 id="instantiating-processing-and-rendering-forms">
+<a class="anchor" href="#instantiating-processing-and-rendering-forms" aria-hidden="true"><span class="octicon octicon-link"></span></a>Instantiating, processing, and rendering forms</h3>
+
+<hr>
+
+<h2 id="building-a-form">
+<a class="anchor" href="#building-a-form" aria-hidden="true"><span class="octicon octicon-link"></span></a>Building a form</h2>
+
+<h3 id="the-work-that-needs-to-be-done">
+<a class="anchor" href="#the-work-that-needs-to-be-done" aria-hidden="true"><span class="octicon octicon-link"></span></a>The work that needs to be done</h3>
+
+<h3 id="building-a-form-in-django">
+<a class="anchor" href="#building-a-form-in-django" aria-hidden="true"><span class="octicon octicon-link"></span></a>Building a form in Django</h3>
+
+<h4 id="the-form-class">
+<a class="anchor" href="#the-form-class" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Form class</h4>
+
+<h4 id="the-view">
+<a class="anchor" href="#the-view" aria-hidden="true"><span class="octicon octicon-link"></span></a>The view</h4>
+
+<h4 id="the-template">
+<a class="anchor" href="#the-template" aria-hidden="true"><span class="octicon octicon-link"></span></a>The template</h4>
+
+<hr>
+
+<h2 id="more-about-django-form-classes">
+<a class="anchor" href="#more-about-django-form-classes" aria-hidden="true"><span class="octicon octicon-link"></span></a>More about Django Form classes</h2>
+
+<h3 id="bound-and-unbound-form-instances">
+<a class="anchor" href="#bound-and-unbound-form-instances" aria-hidden="true"><span class="octicon octicon-link"></span></a>Bound and unbound form instances</h3>
+
+<h3 id="more-on-fields">
+<a class="anchor" href="#more-on-fields" aria-hidden="true"><span class="octicon octicon-link"></span></a>More on fields</h3>
+
+<h4 id="widgets">
+<a class="anchor" href="#widgets" aria-hidden="true"><span class="octicon octicon-link"></span></a>Widgets</h4>
+
+<h4 id="field-data">
+<a class="anchor" href="#field-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Field data</h4>
+
+<hr>
+
+<h2 id="working-with-form-templates">
+<a class="anchor" href="#working-with-form-templates" aria-hidden="true"><span class="octicon octicon-link"></span></a>Working with form templates</h2>
+
+<h3 id="form-rendering-options">
+<a class="anchor" href="#form-rendering-options" aria-hidden="true"><span class="octicon octicon-link"></span></a>Form rendering options</h3>
+
+<h3 id="rendering-fields-manually">
+<a class="anchor" href="#rendering-fields-manually" aria-hidden="true"><span class="octicon octicon-link"></span></a>Rendering fields manually</h3>
+
+<h4 id="rendering-form-error-messages">
+<a class="anchor" href="#rendering-form-error-messages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Rendering form error messages</h4>
+
+<h3 id="looping-over-the-form-s-fields">
+<a class="anchor" href="#looping-over-the-form-s-fields" aria-hidden="true"><span class="octicon octicon-link"></span></a>Looping over the form’s fields</h3>
+
+<h4 id="looping-over-hidden-and-visible-fields">
+<a class="anchor" href="#looping-over-hidden-and-visible-fields" aria-hidden="true"><span class="octicon octicon-link"></span></a>Looping over hidden and visible fields</h4>
+
+<h3 id="reusable-form-templates">
+<a class="anchor" href="#reusable-form-templates" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reusable form templates</h3>
+
+<hr>
+
+<h2 id="further-topics">
+<a class="anchor" href="#further-topics" aria-hidden="true"><span class="octicon octicon-link"></span></a>Further topics</h2>
+
+<hr>
+
+<h2 id="references">
+<a class="anchor" href="#references" aria-hidden="true"><span class="octicon octicon-link"></span></a>References</h2>
+
+<p><a href="https://docs.djangoproject.com/en/2.1/topics/forms/">https://docs.djangoproject.com/en/2.1/topics/forms/</a></p>
+
+  </div>
+
+<div>
+  <blockquote>
+<p>About this document</p>
+
+<p>이 문서는 웹 폼의 기본 사항과 장고에서 다루는 방법을 소개합니다.
+양식 API의 특정 영역에 대한 자세한 내용은 Forms API, 양식 필드 및 양식 및 필드 유효성 검증을 참조하십시오.</p>
+</blockquote>
+
+<p>콘텐츠를 게시하고 방문자의 의견을 수락하지 않는 웹 사이트 및 응용 프로그램을 만들 계획이 아니라면 양식을 이해하고 사용해야합니다.</p>
+
+<p>Django는 사이트 방문자로부터 입력을 받아 양식을 작성한 다음 입력을 처리하고 응답하는 데 도움이되는 다양한 도구와 라이브러리를 제공합니다.</p>
+
+<h2 id="html-forms">HTML forms</h2>
+
+<p>html에서 양식은 방문자가 텍스트 입력, 옵션 선택, 객체 또는 컨트롤 조작 등과 같은 작업을 수행 할 수있는 <code>&lt;form&gt; ... &lt;/ form&gt;</code> 내의 요소 모음입니다. 서버에.</p>
+
+<p>이러한 양식 인터페이스 요소 중 일부 (텍스트 입력 또는 확인란)는 매우 간단하며 html 자체에 내장되어 있습니다.</p>
+
+<p>다른 것들은 훨씬 더 복잡합니다. 날짜 선택 도구를 팝업하거나 슬라이더를 이동하거나 컨트롤을 조작 할 수있는 인터페이스는 일반적으로 html 양식 <code>&lt;input&gt;</code> 요소와 함께 javascript 및 css를 사용하여 이러한 효과를 얻습니다.</p>
+
+<p><code>&lt;input&gt;</code> 요소뿐만 아니라 양식도 두 가지를 지정해야합니다:</p>
+
+<ul>
+<li>where: 사용자의 입력에 해당하는 데이터가 반환되어야하는 URL</li>
+<li>how: 데이터가 반환해야하는 HTTP 메소드</li>
+</ul>
+
+<p>예를 들어, Django 관리자의 로그인 폼은 여러 개의 <code>&lt;input&gt;</code> 요소를 포함합니다.
+하나는 사용자 이름의 type="text", password는 type="password", 다른 하나는 type="submit"입니다. "로그인"버튼. 또한 사용자가 볼 수없는 몇 가지 숨겨진 텍스트 필드가 포함되어 있으며 장고는 다음에 수행 할 작업을 결정할 때 사용합니다.</p>
+
+<p>또한 폼 데이터가 <code>&lt;form&gt;</code>의 action 속성 - <strong>/admin/</strong> -에 지정된 URL로 보내 져야하며 메서드 속성 -post에 지정된 HTTP 메커니즘을 사용하여 보내야한다고 브라우저에 알립니다.</p>
+
+<p><code>&lt;input type="submit" value="Login"&gt;</code> 요소가 트리거되면 데이터는 <strong>/admin/</strong> 로 리턴됩니다.</p>
+
+<h3 id="get-and-post">GET and POST</h3>
+
+<p>GET과 POST는 폼을 다룰 때 사용할 수있는 유일한 HTTP 메소드입니다.</p>
+
+<p>Django의 로그인 폼은 POST 메서드를 사용하여 반환됩니다.
+POST 메서드는 브라우저가 양식 데이터를 묶어서 전송 인코딩하고 서버로 보낸 다음 응답을 수신합니다.</p>
+
+<p>반대로 GET은 제출 된 데이터를 문자열로 묶어 URL을 작성하는 데 사용합니다.
+URL에는 데이터를 전송해야하는 주소는 물론 데이터 키와 값이 포함됩니다.
+Django 문서에서 검색을하면 <a href="https://docs.djangoproject.com/search/?q=forms&amp;release=1" rel="nofollow" target="_blank">https://docs.djangoproject.com/search/?q=forms&amp;release=1</a> 형식의 URL이 생성됩니다.</p>
+
+<p>GET 및 POST는 일반적으로 다른 용도로 사용됩니다.</p>
+
+<p>시스템의 상태를 변경하는 데 사용할 수있는 요청 (예: 데이터베이스에서 변경 요청)은 <strong>POST</strong>를 사용해야합니다.
+<strong>GET</strong>은 시스템 상태에 영향을주지 않는 요청에만 사용해야합니다.</p>
+
+<p>비밀번호는 URL에 표시되고 브라우저 기록 및 서버 로그에도 일반 텍스트로 표시되므로 <strong>GET</strong>은 비밀번호 양식에 적합하지 않습니다.
+대량의 데이터나 이미지와 같은 바이너리 데이터에는 적합하지 않습니다.
+관리자 양식에 <strong>GET</strong>요청을 사용하는 웹 응용 프로그램은 보안 위험이 있습니다.
+공격자가 양식의 민감한 부분에 대한 액세스 권한을 얻으려는 요청을 쉽게 모방할 수 있습니다.
+<strong>POST</strong>는 Django의 [CSRF] 보호와 같은 다른 보호 기능과 결합되어 액세스를보다 효율적으로 제어합니다.</p>
+
+<p>반면 <strong>GET</strong>요청을 나타내는 URL은 쉽게 책갈피, 공유 또는 다시 제출할 수 있기 때문에 <strong>GET</strong>은 웹 검색 양식과 같은 것에 적합합니다.</p>
+
+<hr>
+
+<h2 id="django-s-role-in-forms">Django’s role in forms</h2>
+
+<p>양식 처리는 복잡한 사업입니다.
+Django의 관리자를 생각해보십시오.
+다양한 유형의 여러 데이터 항목을 양식으로 표시하고 HTML로 렌더링하고 편리한 인터페이스를 사용하여 편집하고 서버로 반환하고 유효성을 검사하고 정리 한 다음 저장하거나 전달해야 할 수도 있습니다 추가 처리를 위해.</p>
+
+<p>Django의 폼 기능은이 작업의 상당 부분을 단순화하고 자동화 할 수 있으며 대부분의 프로그래머가 작성한 코드에서 수행 할 수있는 것보다 더 안전하게 수행 할 수 있습니다.
+Django는 폼과 관련된 세 가지 부분을 처리합니다.</p>
+
+<ul>
+<li>데이터 준비 및 재구성하여 렌더링 준비</li>
+<li>데이터에 대한 HTML 양식 작성</li>
+<li>클라이언트로부터 제출 된 양식 및 데이터 수신 및 처리</li>
+</ul>
+
+<p>이 모든 작업을 수동으로 수행하는 코드를 작성하는 것은 가능하지만 Django가 모든 작업을 처리 할 수 ​​있습니다.</p>
+
+<hr>
+
+<h2 id="forms-in-django">Forms in Django</h2>
+
+<p>우리는 HTML 양식을 간단히 설명했지만 HTML <code>&lt;form&gt;</code>은 필요한 기계의 일부 일뿐입니다.
+웹 응용 프로그램의 컨텍스트에서 'form'은 HTML <code>&lt;form&gt;</code>을 참조하거나 생성 된 Django Form 또는 제출 될 때 반환 된 구조화 된 데이터 나 엔드 투 엔드 작업 콜렉션 이 부분들.</p>
+
+<h3 id="the-django-form-class">The Django Form class</h3>
+
+<p>이 컴포넌트 시스템의 핵심은 Django의 <strong>Form</strong> 클래스입니다.
+Django 모델이 객체의 논리적 구조, 동작 및 파트가 우리에게 표시되는 방식을 설명하는 것과 거의 같은 방식으로 <strong>Form</strong> 클래스는 양식을 설명하고 양식이 작동하고 나타나는 방식을 결정합니다.</p>
+
+<p>모델 클래스의 필드가 데이터베이스 필드에 매핑되는 것과 비슷한 방식으로 양식 클래스의 필드는 HTML 양식 <code>&lt;input&gt;</code> 요소에 매핑됩니다.
+(<strong>ModelForm</strong> 은 <strong>Form</strong>을 통해 모델 클래스의 필드를 HTML 폼의 <code>&lt;input&gt;</code> 요소로 매핑합니다; 이것이 장고 관리자의 기반입니다.)</p>
+
+<p>form's fields 자체는 클래스입니다; form이 제출되면 양식 데이터를 관리하고 유효성 검사를 수행합니다.
+<strong>DateField</strong>와 <strong>FileField</strong>는 매우 다른 종류의 데이터를 처리하고 그 데이터와 다른 작업을 수행해야합니다.</p>
+
+<p>form field는 브라우저의 사용자에게 HTML "widget"(사용자 인터페이스 기계류)으로 표시됩니다.
+각 필드 유형에는 적절한 기본 <a href="https://docs.djangoproject.com/en/2.1/ref/forms/widgets/" rel="nofollow" target="_blank">Widget class</a>가 있지만 필요에 따라 재정의 할 수 있습니다.</p>
+
+<hr>
+
+<h3 id="instantiating-processing-and-rendering-forms">Instantiating, processing, and rendering forms</h3>
+
+<hr>
+
+<h2 id="building-a-form">Building a form</h2>
+
+<h3 id="the-work-that-needs-to-be-done">The work that needs to be done</h3>
+
+<h3 id="building-a-form-in-django">Building a form in Django</h3>
+
+<h4 id="the-form-class">The Form class</h4>
+
+<h4 id="the-view">The view</h4>
+
+<h4 id="the-template">The template</h4>
+
+<hr>
+
+<h2 id="more-about-django-form-classes">More about Django Form classes</h2>
+
+<h3 id="bound-and-unbound-form-instances">Bound and unbound form instances</h3>
+
+<h3 id="more-on-fields">More on fields</h3>
+
+<h4 id="widgets">Widgets</h4>
+
+<h4 id="field-data">Field data</h4>
+
+<hr>
+
+<h2 id="working-with-form-templates">Working with form templates</h2>
+
+<h3 id="form-rendering-options">Form rendering options</h3>
+
+<h3 id="rendering-fields-manually">Rendering fields manually</h3>
+
+<h4 id="rendering-form-error-messages">Rendering form error messages</h4>
+
+<h3 id="looping-over-the-form-s-fields">Looping over the form’s fields</h3>
+
+<h4 id="looping-over-hidden-and-visible-fields">Looping over hidden and visible fields</h4>
+
+<h3 id="reusable-form-templates">Reusable form templates</h3>
+
+<hr>
+
+<h2 id="further-topics">Further topics</h2>
+
+<hr>
+
+<h2 id="references">References</h2>
+
+<p><a href="https://docs.djangoproject.com/en/2.1/topics/forms/" rel="nofollow" target="_blank">https://docs.djangoproject.com/en/2.1/topics/forms/</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

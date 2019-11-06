@@ -1,0 +1,23 @@
+[error]
+
+Taking ownership of this virtual machine failed.
+
+The virtual machine is in use by an application on your host computer.
+
+
+[해결]
+-----------------------
+folders = [
+    vm_name.vmx.lck
+]
+
+files = [
+    vm_name.vmdk
+]
+
+
+folders, files 삭제후 vm_name.vmx 실행
+
+
+
+# EOF

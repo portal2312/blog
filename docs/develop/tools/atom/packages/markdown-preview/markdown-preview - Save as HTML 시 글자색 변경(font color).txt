@@ -1,0 +1,16 @@
+markdown-preview 중일 때 우클릭으로 Save as HTML 로 저장시
+
+<pre><code>
+
+commands...
+
+</code></pre>
+
+code 안의 font color 변경시 HTML 로 변경된 문서에서 css 속성을 수정해준다.
+
+위치는
+
+pre.editor-colors,
+.host {
+  color: #000000    <- 이부분을 삭제한다. 그럼 기본값 black 으로 표현됨.
+}

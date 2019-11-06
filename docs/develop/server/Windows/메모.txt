@@ -1,0 +1,40 @@
+wmic -U "k%321321aa" //211.241.161.151 "select * from Win32_UserAccount"
+
+C:\WINDOWS\WINEXESVC.EXE
+---------------------------------------------
+sc create winexesvc binPath= C:\WINDOWS\WINEXESVC.EXE start= auto DisplayName= winexesvc
+
+
+
+sc description winexesvc "Remote command provider for nOM monitoring"
+
+
+---------------------------------------------
+
+
+
+RDP서비스의 신규계정 생성입니다. 아래사항을 작업 후 진행하세요.
+(※ 아래 작업을 진행해야 해당 호스트에 계정이 생성됩니다)
+
+[Window 7] 
+1 . [CMD 창에서 관리자권한으로 실행] 
+  a) sc create winexesvc binPath= C:\WINDOWS\WINEXESVC.EXE start= auto DisplayName= winexesvc 
+  b) sc description winexesvc "Remote co mmand provider for nOM monitoring " 
+2. Window기본 방화벽해제 
+3. 제어판 -> 시스템 및 보안 -> 사용자 계정 컨트롤 설정 변경 -> 제일 낮음 상태변경 
+
+[Window XP] 
+1. [CMD > 창에서 실행] 
+  a) sc create winexesvc binPath= C:\WINDOWS\WINEXESVC.EXE start= auto DisplayName= winexesvc 
+  b) sc description winexesvc "Remote command provider for nOM monitoring" 
+2. Window기본 방화벽해제 
+3. 제어판 -> 관리도구 -> 로컬 보안 설정 
+  a) 네트워크 보안 : Everyone 사용 권한을 익명 사용자에게 적용 -> Enable 
+  b) > 네트워크 보안 : 로컬 계정에 대한 공유 및 보안 - > 일반 - 로컬 사용자를 그대로 인증 
+4. 시작 -> 실행 -> DCOMCNF 실행 
+  a) 콘솔 루트 -> 구성 요소 서비스 -> 컴퓨터 -> 내컴퓨터 우 측버튼 속성 클릭 
+  b) 기본속성 탭 -> 이 컴퓨터에서 DCOM 사용 : 체크, 기본 인증 수준 : 연결 , 기본 가장 수정 : ID 
+  c) COM 보안탭 -> 엑세스 권한 -> 제한값 편집 : "Anony mous", "Everyone" 추가 후 로컬 엑세스, 원격 엑세스 허용 체크 
+  d) COM 보안탭 -> 엑세스 권한 -> 제한값 편집 : "Anonymous", "Everyone" 추가 후 로컬 엑세스, 원격 엑세스 허용 체크 
+위 사항을 진행하셔야 정상 등록이 됩니다.
+

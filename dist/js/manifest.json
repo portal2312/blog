@@ -1,0 +1,11 @@
+{
+  "vendors~jquery.js": "/blog/dist/js/vendors~jquery.bundle.js",
+  "about.js": "/blog/dist/js/about.bundle.js",
+  "common.js": "/blog/dist/js/common.bundle.js",
+  "docs.js": "/blog/dist/js/docs.bundle.js",
+  "history.js": "/blog/dist/js/history.bundle.js",
+  "posts.js": "/blog/dist/js/posts.bundle.js",
+  "6.bundle.js": "/blog/dist/js/6.bundle.js",
+  "7.bundle.js": "/blog/dist/js/7.bundle.js",
+  "8.bundle.js": "/blog/dist/js/8.bundle.js"
+}

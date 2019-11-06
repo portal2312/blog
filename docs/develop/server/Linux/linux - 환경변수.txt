@@ -1,0 +1,1 @@
+export GREP_OPTIONS='--color=always'    (grep 시 해당문자열에 색상보이게)

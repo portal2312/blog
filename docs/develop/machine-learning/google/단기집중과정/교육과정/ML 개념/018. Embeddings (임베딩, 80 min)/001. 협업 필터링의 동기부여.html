@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Embeddings - Motivation From Collaborative Filtering (임베딩 - 협업 필터링의 동기부여) | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Embeddings - Motivation From Collaborative Filtering (임베딩 - 협업 필터링의 동기부여)" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="협업 필터링은 다른 여러 사용자의 관심분야를 바탕으로 특정 사용자의 관심분야를 예측하는 작업입니다. 예를 들어 영화 추천 작업을 살펴보겠습니다. 1,000,000명의 사용자와 500,000편의 영화 중 각 사용자가 본 영화의 목록이 있다고 가정합니다. 사용자에게 영화를 추천하는 것이 목표입니다." />
+<meta property="og:description" content="협업 필터링은 다른 여러 사용자의 관심분야를 바탕으로 특정 사용자의 관심분야를 예측하는 작업입니다. 예를 들어 영화 추천 작업을 살펴보겠습니다. 1,000,000명의 사용자와 500,000편의 영화 중 각 사용자가 본 영화의 목록이 있다고 가정합니다. 사용자에게 영화를 추천하는 것이 목표입니다." />
+<link rel="canonical" href="http://localhost:4000/blog/docs/develop/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML%20%EA%B0%9C%EB%85%90/018.%20Embeddings%20(%EC%9E%84%EB%B2%A0%EB%94%A9,%2080%20min)/001.%20%ED%98%91%EC%97%85%20%ED%95%84%ED%84%B0%EB%A7%81%EC%9D%98%20%EB%8F%99%EA%B8%B0%EB%B6%80%EC%97%AC.html" />
+<meta property="og:url" content="http://localhost:4000/blog/docs/develop/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML%20%EA%B0%9C%EB%85%90/018.%20Embeddings%20(%EC%9E%84%EB%B2%A0%EB%94%A9,%2080%20min)/001.%20%ED%98%91%EC%97%85%20%ED%95%84%ED%84%B0%EB%A7%81%EC%9D%98%20%EB%8F%99%EA%B8%B0%EB%B6%80%EC%97%AC.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-06T09:31:12+09:00" />
+<script type="application/ld+json">
+{"description":"협업 필터링은 다른 여러 사용자의 관심분야를 바탕으로 특정 사용자의 관심분야를 예측하는 작업입니다. 예를 들어 영화 추천 작업을 살펴보겠습니다. 1,000,000명의 사용자와 500,000편의 영화 중 각 사용자가 본 영화의 목록이 있다고 가정합니다. 사용자에게 영화를 추천하는 것이 목표입니다.","headline":"Embeddings - Motivation From Collaborative Filtering (임베딩 - 협업 필터링의 동기부여)","dateModified":"2019-11-06T09:31:12+09:00","datePublished":"2019-11-06T09:31:12+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/docs/develop/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML%20%EA%B0%9C%EB%85%90/018.%20Embeddings%20(%EC%9E%84%EB%B2%A0%EB%94%A9,%2080%20min)/001.%20%ED%98%91%EC%97%85%20%ED%95%84%ED%84%B0%EB%A7%81%EC%9D%98%20%EB%8F%99%EA%B8%B0%EB%B6%80%EC%97%AC.html"},"url":"http://localhost:4000/blog/docs/develop/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML%20%EA%B0%9C%EB%85%90/018.%20Embeddings%20(%EC%9E%84%EB%B2%A0%EB%94%A9,%2080%20min)/001.%20%ED%98%91%EC%97%85%20%ED%95%84%ED%84%B0%EB%A7%81%EC%9D%98%20%EB%8F%99%EA%B8%B0%EB%B6%80%EC%97%AC.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Embeddings - Motivation From Collaborative Filtering (임베딩 - 협업 필터링의 동기부여)</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#1">1차원 수직선에 영화 정렬</a></li>
+<li class="toc-entry toc-h2"><a href="#2">2차원 공간에서 영화 정렬</a></li>
+<li class="toc-entry toc-h2"><a href="#refernece">Refernece</a></li>
+</ul><p><strong>협업 필터링</strong>은 다른 여러 사용자의 관심분야를 바탕으로 특정 사용자의 관심분야를 예측하는 작업입니다.
+예를 들어 영화 추천 작업을 살펴보겠습니다.
+1,000,000명의 사용자와 500,000편의 영화 중 각 사용자가 본 영화의 목록이 있다고 가정합니다.
+사용자에게 영화를 추천하는 것이 목표입니다.</p>
+
+<p>이 문제를 해결하려면 어떤 영화가 서로 비슷한지 파악하는 방법이 필요합니다.
+이를 위해 비슷한 영화가 서로 인접하도록 만들어진 저차원 공간에 영화를 임베딩할 수 있습니다.</p>
+
+<p>임베딩을 학습하는 방법을 설명하기 전에 우선 임베딩에 필요한 유형의 품질과 임베딩 학습을 위해 학습 데이터를 표현하는 방법을 알아보겠습니다.</p>
+
+<h2 id="1">
+<a class="anchor" href="#1" aria-hidden="true"><span class="octicon octicon-link"></span></a>1차원 수직선에 영화 정렬</h2>
+
+<p>임베딩에 대한 직관력을 키우기 위해 종이 한 장 위에 다음 영화를 1차원 수직선에 배열하여 서로 가장 가까운 관련성이 있는 영화가 서로 가장 가까이에 있도록 해보세요.</p>
+
+<table>
+<thead>
+<tr>
+<th>영화</th>
+<th>등급</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>세 가지 색: 블루</td>
+<td>R</td>
+<td>프랑스의 미망인이 교통사고로 남편과 딸을 잃은 후 슬픔에 빠집니다.</td>
+</tr>
+<tr>
+<td>다크 나이트 라이즈</td>
+<td>PG-13</td>
+<td>DC 코믹스 유니버스를 배경으로 하는 다크 나이트의 속편으로, 배트맨이 핵폭발로부터 고담시를 지키기 위해 고군분투합니다.</td>
+</tr>
+<tr>
+<td>해리 포터와 마법사의 돌</td>
+<td>PG</td>
+<td>고아가 된 소년은 자신이 마법사임을 깨닫고 호그와트 마법학교에 입학해 사악한 볼드모트 경과 첫 전투를 벌입니다.</td>
+</tr>
+<tr>
+<td>인크레더블</td>
+<td>PG</td>
+<td>교외에서 평범한 삶을 살게 된 슈퍼히어로 가족이 은퇴 생활에서 벗어나 악당 신드롬과 로봇 군단으로부터 슈퍼히어로들을 구합니다.</td>
+</tr>
+<tr>
+<td>슈렉</td>
+<td>PG</td>
+<td>친근한 괴물과 동료 당나귀가 용에 의해 성에 갇힌 피오나 공주를 구하기 위한 여정을 떠납니다.</td>
+</tr>
+<tr>
+<td>스타워즈</td>
+<td>PG</td>
+<td>루크 스카이워커와 한 솔로는 로봇 두 대와 함께 레아 공주와 은하계를 구하기 위해 힘을 합칩니다.</td>
+</tr>
+<tr>
+<td>벨빌의 세쌍둥이</td>
+<td>PG-13</td>
+<td>자전거 경주 선수가 투르 드 프랑스 경기 도중 납치당하자 그의 할머니와 뚱뚱한 개가 재즈 음악가 세 명의 도움을 받아 바다를 건너 손자를 구하기 위해 떠납니다.</td>
+</tr>
+<tr>
+<td>메멘토</td>
+<td>R</td>
+<td>기억 상실증 환자가 자신의 몸에 문신을 남기며 아내의 살인 사건을 해결하기 위해 고군분투합니다.</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><code class="language-" data-lang="">[슈렉, 인크레더블, 벨빌의 세쌍둥이, 해리포터, 스타워즈, 세가지색:블루, 다크나이트라이즈, 메멘토]
+</code></pre></div>
+<blockquote>
+<p>한 가지 솔루션 예(매우 부정확)</p>
+
+<p>아동에게 더 적절한 영화에서 성인에게 더 적절한 영화로 영화를 1차원 임베딩한 그림입니다.</p>
+
+<p>이 임베딩 작업은 영화가 아동과 성인 중 어느 쪽을 대상으로 하는지 파악하는 데 도움이 되지만 영화를 추천하려면 영화의 특성을 더 많이 캡처해야 합니다.
+이 예를 한 단계 발전시켜 두 번째 임베딩 차원을 추가하겠습니다.</p>
+</blockquote>
+
+<h2 id="2">
+<a class="anchor" href="#2" aria-hidden="true"><span class="octicon octicon-link"></span></a>2차원 공간에서 영화 정렬</h2>
+<div class="highlight"><pre><code class="language-" data-lang="">              블록버스터
+      슈렉       |
+                |
+어린이 ----------+------------ 성인
+                |
+                |   블루
+               예술영화
+</code></pre></div>
+<p>이 2차원 임베딩을 통해 아동과 성인 쪽 어느 쪽을 대상으로 하는지 여부와 블록버스터 영화와 예술 영화 중 어느 쪽에 가까운지 여부에 따라 서로 가깝고 따라서 비슷한 것으로 추론되는 영화 간의 거리를 정의합니다. 이 방법은 물론 영화에서 중요한 수많은 특성 중 두 가지에 불과합니다.</p>
+
+<p>좀 더 쉽게 말하면 각 단어가 2차원 좌표로 표현되는 <strong>임베딩 공간</strong>에 이 영화들을 매핑시킨 것입니다.
+예를 들어 이 공간에서 '슈렉'은 (-1,0, 0.95), '세 가지 색: 블루'는 (0.65, -0.2)로 매핑됩니다.
+일반적으로 d차원 임베딩을 학습할 때 각 영화는 각 차원의 좌표를 나타내는 실수 값 d개로 표현됩니다.</p>
+
+<p>이 예에서는 각 차원에 이름을 지정했습니다.
+임베딩을 학습할 때 개별 차원은 이름으로 학습되지 않습니다.
+임베딩을 보고 차원에 의미론적인 뜻을 할당할 수도 있지만 그러지 못하는 경우도 있습니다.
+이러한 각 차원을 간혹 <strong>잠재 차원</strong>이라고 하는데 잠재 차원이 나타내는 특징이 데이터상에 명확하게 드러나는 것이 아니라 유추되는 것이기 때문에 이렇게 불리곤 합니다.</p>
+
+<p>결국 중요한 것은 주어진 차원에서 특정 영화의 값이라기보다는 임베딩 공간에서 영화들 간의 거리값입니다.</p>
+
+<h2 id="refernece">
+<a class="anchor" href="#refernece" aria-hidden="true"><span class="octicon octicon-link"></span></a>Refernece</h2>
+
+<p><a href="https://developers.google.com/machine-learning/crash-course/embeddings/motivation-from-collaborative-filtering">https://developers.google.com/machine-learning/crash-course/embeddings/motivation-from-collaborative-filtering</a></p>
+
+  </div>
+
+<div>
+  <p><strong>협업 필터링</strong>은 다른 여러 사용자의 관심분야를 바탕으로 특정 사용자의 관심분야를 예측하는 작업입니다.
+예를 들어 영화 추천 작업을 살펴보겠습니다.
+1,000,000명의 사용자와 500,000편의 영화 중 각 사용자가 본 영화의 목록이 있다고 가정합니다.
+사용자에게 영화를 추천하는 것이 목표입니다.</p>
+
+<p>이 문제를 해결하려면 어떤 영화가 서로 비슷한지 파악하는 방법이 필요합니다.
+이를 위해 비슷한 영화가 서로 인접하도록 만들어진 저차원 공간에 영화를 임베딩할 수 있습니다.</p>
+
+<p>임베딩을 학습하는 방법을 설명하기 전에 우선 임베딩에 필요한 유형의 품질과 임베딩 학습을 위해 학습 데이터를 표현하는 방법을 알아보겠습니다.</p>
+
+<h2 id="1">1차원 수직선에 영화 정렬</h2>
+
+<p>임베딩에 대한 직관력을 키우기 위해 종이 한 장 위에 다음 영화를 1차원 수직선에 배열하여 서로 가장 가까운 관련성이 있는 영화가 서로 가장 가까이에 있도록 해보세요.</p>
+
+<table>
+<thead>
+<tr>
+<th>영화</th>
+<th>등급</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>세 가지 색: 블루</td>
+<td>R</td>
+<td>프랑스의 미망인이 교통사고로 남편과 딸을 잃은 후 슬픔에 빠집니다.</td>
+</tr>
+<tr>
+<td>다크 나이트 라이즈</td>
+<td>PG-13</td>
+<td>DC 코믹스 유니버스를 배경으로 하는 다크 나이트의 속편으로, 배트맨이 핵폭발로부터 고담시를 지키기 위해 고군분투합니다.</td>
+</tr>
+<tr>
+<td>해리 포터와 마법사의 돌</td>
+<td>PG</td>
+<td>고아가 된 소년은 자신이 마법사임을 깨닫고 호그와트 마법학교에 입학해 사악한 볼드모트 경과 첫 전투를 벌입니다.</td>
+</tr>
+<tr>
+<td>인크레더블</td>
+<td>PG</td>
+<td>교외에서 평범한 삶을 살게 된 슈퍼히어로 가족이 은퇴 생활에서 벗어나 악당 신드롬과 로봇 군단으로부터 슈퍼히어로들을 구합니다.</td>
+</tr>
+<tr>
+<td>슈렉</td>
+<td>PG</td>
+<td>친근한 괴물과 동료 당나귀가 용에 의해 성에 갇힌 피오나 공주를 구하기 위한 여정을 떠납니다.</td>
+</tr>
+<tr>
+<td>스타워즈</td>
+<td>PG</td>
+<td>루크 스카이워커와 한 솔로는 로봇 두 대와 함께 레아 공주와 은하계를 구하기 위해 힘을 합칩니다.</td>
+</tr>
+<tr>
+<td>벨빌의 세쌍둥이</td>
+<td>PG-13</td>
+<td>자전거 경주 선수가 투르 드 프랑스 경기 도중 납치당하자 그의 할머니와 뚱뚱한 개가 재즈 음악가 세 명의 도움을 받아 바다를 건너 손자를 구하기 위해 떠납니다.</td>
+</tr>
+<tr>
+<td>메멘토</td>
+<td>R</td>
+<td>기억 상실증 환자가 자신의 몸에 문신을 남기며 아내의 살인 사건을 해결하기 위해 고군분투합니다.</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><code class="language-" data-lang="">[슈렉, 인크레더블, 벨빌의 세쌍둥이, 해리포터, 스타워즈, 세가지색:블루, 다크나이트라이즈, 메멘토]
+</code></pre></div>
+<blockquote>
+<p>한 가지 솔루션 예(매우 부정확)</p>
+
+<p>아동에게 더 적절한 영화에서 성인에게 더 적절한 영화로 영화를 1차원 임베딩한 그림입니다.</p>
+
+<p>이 임베딩 작업은 영화가 아동과 성인 중 어느 쪽을 대상으로 하는지 파악하는 데 도움이 되지만 영화를 추천하려면 영화의 특성을 더 많이 캡처해야 합니다.
+이 예를 한 단계 발전시켜 두 번째 임베딩 차원을 추가하겠습니다.</p>
+</blockquote>
+
+<h2 id="2">2차원 공간에서 영화 정렬</h2>
+<div class="highlight"><pre><code class="language-" data-lang="">              블록버스터
+      슈렉       |
+                |
+어린이 ----------+------------ 성인
+                |
+                |   블루
+               예술영화
+</code></pre></div>
+<p>이 2차원 임베딩을 통해 아동과 성인 쪽 어느 쪽을 대상으로 하는지 여부와 블록버스터 영화와 예술 영화 중 어느 쪽에 가까운지 여부에 따라 서로 가깝고 따라서 비슷한 것으로 추론되는 영화 간의 거리를 정의합니다. 이 방법은 물론 영화에서 중요한 수많은 특성 중 두 가지에 불과합니다.</p>
+
+<p>좀 더 쉽게 말하면 각 단어가 2차원 좌표로 표현되는 <strong>임베딩 공간</strong>에 이 영화들을 매핑시킨 것입니다.
+예를 들어 이 공간에서 '슈렉'은 (-1,0, 0.95), '세 가지 색: 블루'는 (0.65, -0.2)로 매핑됩니다.
+일반적으로 d차원 임베딩을 학습할 때 각 영화는 각 차원의 좌표를 나타내는 실수 값 d개로 표현됩니다.</p>
+
+<p>이 예에서는 각 차원에 이름을 지정했습니다.
+임베딩을 학습할 때 개별 차원은 이름으로 학습되지 않습니다.
+임베딩을 보고 차원에 의미론적인 뜻을 할당할 수도 있지만 그러지 못하는 경우도 있습니다.
+이러한 각 차원을 간혹 <strong>잠재 차원</strong>이라고 하는데 잠재 차원이 나타내는 특징이 데이터상에 명확하게 드러나는 것이 아니라 유추되는 것이기 때문에 이렇게 불리곤 합니다.</p>
+
+<p>결국 중요한 것은 주어진 차원에서 특정 영화의 값이라기보다는 임베딩 공간에서 영화들 간의 거리값입니다.</p>
+
+<h2 id="refernece">Refernece</h2>
+
+<p><a href="https://developers.google.com/machine-learning/crash-course/embeddings/motivation-from-collaborative-filtering" rel="nofollow" target="_blank">https://developers.google.com/machine-learning/crash-course/embeddings/motivation-from-collaborative-filtering</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

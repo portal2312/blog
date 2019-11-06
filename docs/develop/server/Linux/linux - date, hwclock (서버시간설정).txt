@@ -1,0 +1,69 @@
+﻿# 자동 (인터넷 시간)
+
+- date
+
+date
+ln -sf /usr/share/zoneinfo/UTC /etc/localtime
+rdate -p time.bora.net
+rdate -s time.bora.net
+date
+
+
+# 수동 (임의 시간, 동기화 하드웨어_시간 > 소프트웨어_시간)
+
+- hwclock
+
+date
+hwclock --show
+hwclock --utc --set --date="11/24/2016 10:22:00"
+hwclock --hctosys
+hwclock --show
+date
+
+
+#> hwclock --help
+
+hwclock - query and set the hardware clock (RTC)
+
+Usage: hwclock [function] [options...]
+
+Functions:
+  -h | --help         show this help
+  -r | --show         read hardware clock and print result
+       --set          set the rtc to the time given with --date
+  -s | --hctosys      set the system time from the hardware clock
+  -w | --systohc      set the hardware clock to the current system time
+       --systz        set the system time based on the current timezone
+       --adjust       adjust the rtc to account for systematic drift since
+                      the clock was last set or adjusted
+  -c | --compare      periodically compare the system clock with the CMOS clock
+       --getepoch     print out the kernel's hardware clock epoch value
+       --setepoch     set the kernel's hardware clock epoch value to the
+                      value given with --epoch
+  -v | --version      print out the version of hwclock to stdout
+
+Options:
+  -u | --utc          the hardware clock is kept in UTC
+       --localtime    the hardware clock is kept in local time
+  -f | --rtc=path     special /dev/... file to use instead of default
+       --directisa    access the ISA bus directly instead of /dev/rtc
+       --badyear      ignore rtc's year because the bios is broken
+       --date         specifies the time to which to set the hardware clock
+       --epoch=year   specifies the year which is the beginning of the
+                      hardware clock's epoch value
+       --noadjfile    do not access /etc/adjtime. Requires the use of
+                      either --utc or --localtime
+       --adjfile=path specifies the path to the adjust file (default is
+                      /etc/adjtime)
+       --test         do everything except actually updating the hardware
+                      clock or anything else
+  -D | --debug        debug mode
+
+
+
+# 수동.2
+
+#> date -s "2014-01-01 00:00:00" (-s: 소프트웨어 시간 설정)
+#> date (확인, 소프트웨어 시간)
+#> hwclock --localtime --systohc (hwclock: 하드웨어 시간을 소프트웨어 시간으로 동기화)
+#> hwclock --localtime --systohc (확인, 하드웨어 시간)

@@ -1,0 +1,21 @@
+< shutdown >
+: 전원종료
+
+
+[option]
+
+-s -t [second] : 지정한 초 뒤에 종료
+-p : 종료
+-r : 재시작
+-a : shutdown 명령어 취소
+-f : 실행중인 프로그램 경고없이 강제종료
+
+ex)
+* 즉시 강제 종료
+shutdown -p -f -t 0
+
+* 즉시 강제 재시작
+shutdown -r -f -t 0
+
+
+# EOF

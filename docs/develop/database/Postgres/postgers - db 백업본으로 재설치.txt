@@ -1,0 +1,14 @@
+
+> su - postgres
+
+> pg_ctl restart -w -s -D /home/postgres/data -m immediate
+
+> dropdb nom
+
+> createdb nom
+
+> psql -d nom -f DB_FILE_NAME
+
+> please, waiting...
+
+> complate pompte msg.

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Terms | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Terms" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="해당 내용이 많을 경우 파일 및 폴더로 재정의 됩니다." />
+<meta property="og:description" content="해당 내용이 많을 경우 파일 및 폴더로 재정의 됩니다." />
+<link rel="canonical" href="http://localhost:4000/blog/docs/develop/terms/terms%20-%20Protocol.html" />
+<meta property="og:url" content="http://localhost:4000/blog/docs/develop/terms/terms%20-%20Protocol.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-06T09:31:12+09:00" />
+<script type="application/ld+json">
+{"description":"해당 내용이 많을 경우 파일 및 폴더로 재정의 됩니다.","headline":"Terms","dateModified":"2019-11-06T09:31:12+09:00","datePublished":"2019-11-06T09:31:12+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/docs/develop/terms/terms%20-%20Protocol.html"},"url":"http://localhost:4000/blog/docs/develop/terms/terms%20-%20Protocol.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Terms</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#email">EMAIL</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#smtp-simple-mail-transfer-protocol">SMTP (Simple Mail Transfer Protocol)</a></li>
+<li class="toc-entry toc-h2"><a href="#imap-internet-message-access-protocol">IMAP (Internet Message Access Protocol)</a></li>
+<li class="toc-entry toc-h2"><a href="#pop3-post-office-protocol-version-3">POP3 (Post Office Protocol version 3)</a></li>
+<li class="toc-entry toc-h2"><a href="#mime-multipurpose-internet-mail-extensions">MIME (Multipurpose Internet Mail Extensions)</a></li>
+<li class="toc-entry toc-h2"><a href="#snmp-simple-network-management-protocol">SNMP (Simple Network Management Protocol)</a></li>
+<li class="toc-entry toc-h2"><a href="#icmp-internet-control-management-protocol">ICMP (Internet Control Management Protocol)</a></li>
+</ul>
+</li>
+</ul><ul>
+<li>해당 내용이 많을 경우 파일 및 폴더로 재정의 됩니다.</li>
+</ul>
+
+<h1 id="email">
+<a class="anchor" href="#email" aria-hidden="true"><span class="octicon octicon-link"></span></a>EMAIL</h1>
+
+<hr>
+
+<h2 id="smtp-simple-mail-transfer-protocol">
+<a class="anchor" href="#smtp-simple-mail-transfer-protocol" aria-hidden="true"><span class="octicon octicon-link"></span></a>SMTP (Simple Mail Transfer Protocol)</h2>
+
+<ul>
+<li><p>인터넷에서 이메일을 보내기 위해 이용되는 프로토콜.</p></li>
+<li><p>사용하는 TCP 포트번호는 25번이다.</p></li>
+<li><p>상대 서버를 지시하기 위해서 DNS의 MX레코드가 사용.</p></li>
+<li><p>RFC2821에 따라 규정되어 있다. 메일 서버간의 송수신뿐만 아니라, 메일 클라이언트에서 메일 서버로 메일을 보낼 때에도 사용되는 경우가 많다.</p></li>
+<li><p>SMTP는 텍스트 기반의 프로토콜로서 요구/응답 메시지뿐 아니라 모든 문자가 7bit ASCII로 되어있어야 한다고 규정되어 있다. 이 때문에 문자 표현에 8비트 이상의 코드를 사용하는 언어나 첨부파일과 자주 사용되는 각종 바이너리는 마임(MIME)이라고 불리는 방식으로 7비트로 변환되어 전달된다.</p></li>
+<li><p>SMTP는 메시지를 생성하는 방법을 규정하지 않는다. 메시지 생성을 위하여 로컬 편집이나 단순한 전자 우편 응용이 사용된다. 메시지가 생성되면 호출된 SMTP가 메시지를 받고 TCP를 이용하여 다른 호스트의 SMTP에게 전달한다.</p></li>
+</ul>
+
+<h2 id="imap-internet-message-access-protocol">
+<a class="anchor" href="#imap-internet-message-access-protocol" aria-hidden="true"><span class="octicon octicon-link"></span></a>IMAP (Internet Message Access Protocol)</h2>
+
+<ul>
+<li><p>응용 계층 인터넷 프로토콜 중 하나.</p></li>
+<li><p>원격 서버로부터 TCP/IP 연결을 통해 이메일을 가져오는데 사용.</p></li>
+<li><p>IMAP는 온라인 모드와 오프라인 모드를 모두 지원.</p></li>
+<li><p>POP3를 사용할 때와 달리 이메일 메시지를 서버에 남겨 두었다가 나중에 지울 수 있다. 그러므로 다른 컴퓨터 환경에서 서로 다른 이메일 클라이언트가 같은 이메일을 받아올 수 있는 장점을 가지고 있다.</p></li>
+<li><p>이메일 메시지는 서버로 보내져 받는 사람의 이메일 보관함에 저장된다. 사용자는 마이크로소프트 아웃룩, 모질라 선더버드 같은 메일 클라이언트를 사용하여 편지의 기본 헤더(제목, 송신자명, 이메일 주소 등)를 보고 메일 본문의 다운로드 여부를 정할 수도 있다.</p></li>
+<li><p>단점, 통신 트래픽이 높음, POP3에 비해.</p></li>
+</ul>
+
+<h2 id="pop3-post-office-protocol-version-3">
+<a class="anchor" href="#pop3-post-office-protocol-version-3" aria-hidden="true"><span class="octicon octicon-link"></span></a>POP3 (Post Office Protocol version 3)</h2>
+
+<ul>
+<li><p>응용 계층 인터넷 프로토콜 중 하나.</p></li>
+<li><p>원격 서버로부터 TCP/IP 연결을 통해 이메일을 가져오는데 사용.</p></li>
+<li><p>여러 버전의 POP 프로토콜이 개발 되었지만 일반적으로 POP를 지칭하는 경우 보통 POP3을 가리킨다. 윈도우 라이브 핫메일, G메일, 및 Yahoo! 메일과 같은 대부분의 웹 메일에서 지원한다.</p></li>
+</ul>
+
+<h2 id="mime-multipurpose-internet-mail-extensions">
+<a class="anchor" href="#mime-multipurpose-internet-mail-extensions" aria-hidden="true"><span class="octicon octicon-link"></span></a>MIME (Multipurpose Internet Mail Extensions)</h2>
+
+<ul>
+<li><p>기본적으로 인터넷 전자 우편 전송 프로토콜인 SMTP는 7비트 ASCII 문자만을 지원한다.</p></li>
+<li><p>이것은 7비트 ASCII 문자로 표현할 수 없는 영어 이외의 언어로 쓰인 전자 우편은 제대로 전송될 수 없다는 것을 의미한다.</p></li>
+<li><p>MIME은 ASCII가 아닌 문자 인코딩을 이용해 영어가 아닌 다른 언어로 된 전자 우편을 보낼 수 있는 방식을 정의한다. 또한 그림, 음악, 영화, 컴퓨터 프로그램과 같은 8비트짜리 이진 파일을 전자 우편으로 보낼 수 있도록 한다. MIME은 또한 전자우편과 비슷한 형식의 메시지를 사용하는 HTTP와 같은 통신 프로토콜의 기본 구성 요소이다. 메시지를 MIME 형식으로 변환하는 것은 전자 우편 프로그램이나 서버 상에서 자동으로 이루어진다.</p></li>
+</ul>
+
+<h2 id="snmp-simple-network-management-protocol">
+<a class="anchor" href="#snmp-simple-network-management-protocol" aria-hidden="true"><span class="octicon octicon-link"></span></a>SNMP (Simple Network Management Protocol)</h2>
+
+<p>간이 망 관리 프로토콜(Simple Network Management Protocol, SNMP)은 IP 네트워크상의 장치로부터 정보를 수집 및 관리하며, 또한 정보를 수정하여 장치의 동작을 변경하는 데에 사용되는 인터넷 표준 프로토콜이다.</p>
+
+<h2 id="icmp-internet-control-management-protocol">
+<a class="anchor" href="#icmp-internet-control-management-protocol" aria-hidden="true"><span class="octicon octicon-link"></span></a>ICMP (Internet Control Management Protocol)</h2>
+
+<p>ICMP(Internet Control Message Protocol, 인터넷 제어 메시지 프로토콜)는 인터넷 프로토콜 스위트에 기록된 주요 프로토콜 가운데 하나이다.</p>
+
+<p>Ping 등</p>
+
+  </div>
+
+<div>
+  <ul>
+<li>해당 내용이 많을 경우 파일 및 폴더로 재정의 됩니다.</li>
+</ul>
+
+<h1 id="email">EMAIL</h1>
+
+<hr>
+
+<h2 id="smtp-simple-mail-transfer-protocol">SMTP (Simple Mail Transfer Protocol)</h2>
+
+<ul>
+<li><p>인터넷에서 이메일을 보내기 위해 이용되는 프로토콜.</p></li>
+<li><p>사용하는 TCP 포트번호는 25번이다.</p></li>
+<li><p>상대 서버를 지시하기 위해서 DNS의 MX레코드가 사용.</p></li>
+<li><p>RFC2821에 따라 규정되어 있다. 메일 서버간의 송수신뿐만 아니라, 메일 클라이언트에서 메일 서버로 메일을 보낼 때에도 사용되는 경우가 많다.</p></li>
+<li><p>SMTP는 텍스트 기반의 프로토콜로서 요구/응답 메시지뿐 아니라 모든 문자가 7bit ASCII로 되어있어야 한다고 규정되어 있다. 이 때문에 문자 표현에 8비트 이상의 코드를 사용하는 언어나 첨부파일과 자주 사용되는 각종 바이너리는 마임(MIME)이라고 불리는 방식으로 7비트로 변환되어 전달된다.</p></li>
+<li><p>SMTP는 메시지를 생성하는 방법을 규정하지 않는다. 메시지 생성을 위하여 로컬 편집이나 단순한 전자 우편 응용이 사용된다. 메시지가 생성되면 호출된 SMTP가 메시지를 받고 TCP를 이용하여 다른 호스트의 SMTP에게 전달한다.</p></li>
+</ul>
+
+<h2 id="imap-internet-message-access-protocol">IMAP (Internet Message Access Protocol)</h2>
+
+<ul>
+<li><p>응용 계층 인터넷 프로토콜 중 하나.</p></li>
+<li><p>원격 서버로부터 TCP/IP 연결을 통해 이메일을 가져오는데 사용.</p></li>
+<li><p>IMAP는 온라인 모드와 오프라인 모드를 모두 지원.</p></li>
+<li><p>POP3를 사용할 때와 달리 이메일 메시지를 서버에 남겨 두었다가 나중에 지울 수 있다. 그러므로 다른 컴퓨터 환경에서 서로 다른 이메일 클라이언트가 같은 이메일을 받아올 수 있는 장점을 가지고 있다.</p></li>
+<li><p>이메일 메시지는 서버로 보내져 받는 사람의 이메일 보관함에 저장된다. 사용자는 마이크로소프트 아웃룩, 모질라 선더버드 같은 메일 클라이언트를 사용하여 편지의 기본 헤더(제목, 송신자명, 이메일 주소 등)를 보고 메일 본문의 다운로드 여부를 정할 수도 있다.</p></li>
+<li><p>단점, 통신 트래픽이 높음, POP3에 비해.</p></li>
+</ul>
+
+<h2 id="pop3-post-office-protocol-version-3">POP3 (Post Office Protocol version 3)</h2>
+
+<ul>
+<li><p>응용 계층 인터넷 프로토콜 중 하나.</p></li>
+<li><p>원격 서버로부터 TCP/IP 연결을 통해 이메일을 가져오는데 사용.</p></li>
+<li><p>여러 버전의 POP 프로토콜이 개발 되었지만 일반적으로 POP를 지칭하는 경우 보통 POP3을 가리킨다. 윈도우 라이브 핫메일, G메일, 및 Yahoo! 메일과 같은 대부분의 웹 메일에서 지원한다.</p></li>
+</ul>
+
+<h2 id="mime-multipurpose-internet-mail-extensions">MIME (Multipurpose Internet Mail Extensions)</h2>
+
+<ul>
+<li><p>기본적으로 인터넷 전자 우편 전송 프로토콜인 SMTP는 7비트 ASCII 문자만을 지원한다.</p></li>
+<li><p>이것은 7비트 ASCII 문자로 표현할 수 없는 영어 이외의 언어로 쓰인 전자 우편은 제대로 전송될 수 없다는 것을 의미한다.</p></li>
+<li><p>MIME은 ASCII가 아닌 문자 인코딩을 이용해 영어가 아닌 다른 언어로 된 전자 우편을 보낼 수 있는 방식을 정의한다. 또한 그림, 음악, 영화, 컴퓨터 프로그램과 같은 8비트짜리 이진 파일을 전자 우편으로 보낼 수 있도록 한다. MIME은 또한 전자우편과 비슷한 형식의 메시지를 사용하는 HTTP와 같은 통신 프로토콜의 기본 구성 요소이다. 메시지를 MIME 형식으로 변환하는 것은 전자 우편 프로그램이나 서버 상에서 자동으로 이루어진다.</p></li>
+</ul>
+
+<h2 id="snmp-simple-network-management-protocol">SNMP (Simple Network Management Protocol)</h2>
+
+<p>간이 망 관리 프로토콜(Simple Network Management Protocol, SNMP)은 IP 네트워크상의 장치로부터 정보를 수집 및 관리하며, 또한 정보를 수정하여 장치의 동작을 변경하는 데에 사용되는 인터넷 표준 프로토콜이다.</p>
+
+<h2 id="icmp-internet-control-management-protocol">ICMP (Internet Control Management Protocol)</h2>
+
+<p>ICMP(Internet Control Message Protocol, 인터넷 제어 메시지 프로토콜)는 인터넷 프로토콜 스위트에 기록된 주요 프로토콜 가운데 하나이다.</p>
+
+<p>Ping 등</p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

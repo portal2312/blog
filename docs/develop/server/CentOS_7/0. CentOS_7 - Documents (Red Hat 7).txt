@@ -1,0 +1,12 @@
+# CentOS
+
+CentOS 는 RedHat의 안정적인 버전에서 파생되어 나온 운영체제 입니다.
+
+
+# CentOS home page
+
+https://www.centos.org/about/
+
+# RedHat document
+
+https://access.redhat.com/documentation/en/red-hat-enterprise-linux/?version=7/

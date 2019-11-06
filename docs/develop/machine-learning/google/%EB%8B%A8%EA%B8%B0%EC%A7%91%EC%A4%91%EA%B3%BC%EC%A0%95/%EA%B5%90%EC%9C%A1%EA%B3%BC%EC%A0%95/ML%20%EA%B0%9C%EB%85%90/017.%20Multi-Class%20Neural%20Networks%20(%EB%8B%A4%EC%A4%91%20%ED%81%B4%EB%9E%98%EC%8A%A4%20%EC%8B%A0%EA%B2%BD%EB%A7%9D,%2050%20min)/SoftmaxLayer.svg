@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 335.5 235.6" style="enable-background:new 0 0 335.5 235.6;" xml:space="preserve">
+<desc>입력 레이어 하나, 별 특징이 없는 히든 레이어 두 개, 소프트맥스 레이어 하나, 노드 수가 소프트맥스 레이어와 같은 출력 레이어 하나가 포함된 심층 신경망</desc>
+<style type="text/css">
+	.kosml-st0{fill-rule:evenodd;clip-rule:evenodd;fill:#B4A7D6;}
+	.kosml-st1{fill-rule:evenodd;clip-rule:evenodd;fill:#FFE599;}
+	.kosml-st2{fill-rule:evenodd;clip-rule:evenodd;fill:#FFFFFF;}
+	.kosml-st3{fill:none;stroke:#424242;stroke-width:0.75;stroke-linejoin:round;stroke-miterlimit:14.3356;}
+	.kosml-st4{opacity:0;fill-rule:evenodd;clip-rule:evenodd;}
+	.kosml-st5{fill:none;stroke:#000000;stroke-width:0.75;stroke-linejoin:round;stroke-miterlimit:14.3356;}
+	.kosml-st6{fill:#666666;}
+	.kosml-st7{font-family:'AdobeMyungjoStd-Medium-KSCpc-EUC-H';}
+	.kosml-st8{font-size:12px;}
+	.kosml-st9{font-family:'Roboto-Regular';}
+	.kosml-st10{fill:none;stroke:#424242;stroke-width:0.75;stroke-linejoin:round;stroke-miterlimit:14.3356;stroke-dasharray:0.75,2.25;}
+	.kosml-st11{fill-rule:evenodd;clip-rule:evenodd;fill:#424242;}
+	.kosml-st12{fill:none;stroke:#424242;stroke-width:0.75;stroke-miterlimit:11.4737;}
+</style>
+<path class="kosml-st0" d="M200.2,52.5L200.2,52.5c0-3.3,2.7-6,6-6h24c1.6,0,3.1,0.6,4.2,1.8c1.1,1.1,1.8,2.6,1.8,4.2V197c0,3.3-2.7,6-6,6
+	h-24c-3.3,0-6-2.7-6-6V52.5z"/>
+<path class="kosml-st1" d="M44,32.2L44,32.2c0-3.3,2.7-6,6-6h24c1.6,0,3.1,0.6,4.2,1.8c1.1,1.1,1.8,2.6,1.8,4.2v186.4c0,3.3-2.7,6-6,6H50
+	c-3.3,0-6-2.7-6-6V32.2z"/>
+<path class="kosml-st1" d="M122.2,52.5L122.2,52.5c0-3.3,2.7-6,6-6h24c1.6,0,3.1,0.6,4.2,1.8c1.1,1.1,1.8,2.6,1.8,4.2V197c0,3.3-2.7,6-6,6
+	h-24c-3.3,0-6-2.7-6-6V52.5z"/>
+<path class="kosml-st2" d="M129.7,66.8L129.7,66.8c0-5.4,4.7-9.8,10.5-9.8c5.8,0,10.5,4.4,10.5,9.8c0,5.4-4.7,9.8-10.5,9.8
+	C134.4,76.5,129.7,72.2,129.7,66.8z"/>
+<path class="kosml-st3" d="M129.7,66.8L129.7,66.8c0-5.4,4.7-9.8,10.5-9.8c5.8,0,10.5,4.4,10.5,9.8c0,5.4-4.7,9.8-10.5,9.8
+	C134.4,76.5,129.7,72.2,129.7,66.8z"/>
+<path class="kosml-st2" d="M129.6,94.9L129.6,94.9c0-5.4,4.7-9.8,10.5-9.8c5.8,0,10.5,4.4,10.5,9.8c0,5.4-4.7,9.8-10.5,9.8
+	C134.3,104.7,129.6,100.3,129.6,94.9z"/>
+<path class="kosml-st3" d="M129.6,94.9L129.6,94.9c0-5.4,4.7-9.8,10.5-9.8c5.8,0,10.5,4.4,10.5,9.8c0,5.4-4.7,9.8-10.5,9.8
+	C134.3,104.7,129.6,100.3,129.6,94.9z"/>
+<path class="kosml-st2" d="M129.6,123.1L129.6,123.1c0-5.4,4.7-9.8,10.5-9.8c5.8,0,10.5,4.4,10.5,9.8c0,5.4-4.7,9.8-10.5,9.8
+	C134.3,132.9,129.6,128.5,129.6,123.1z"/>
+<path class="kosml-st3" d="M129.6,123.1L129.6,123.1c0-5.4,4.7-9.8,10.5-9.8c5.8,0,10.5,4.4,10.5,9.8c0,5.4-4.7,9.8-10.5,9.8
+	C134.3,132.9,129.6,128.5,129.6,123.1z"/>
+<path class="kosml-st2" d="M129.6,151.3L129.6,151.3c0-5.4,4.7-9.8,10.5-9.8c5.8,0,10.5,4.4,10.5,9.8c0,5.4-4.7,9.8-10.5,9.8
+	C134.3,161.1,129.6,156.7,129.6,151.3z"/>
+<path class="kosml-st3" d="M129.6,151.3L129.6,151.3c0-5.4,4.7-9.8,10.5-9.8c5.8,0,10.5,4.4,10.5,9.8c0,5.4-4.7,9.8-10.5,9.8
+	C134.3,161.1,129.6,156.7,129.6,151.3z"/>
+<path class="kosml-st2" d="M129.6,179.5L129.6,179.5c0-5.4,4.7-9.8,10.5-9.8c5.8,0,10.5,4.4,10.5,9.8s-4.7,9.8-10.5,9.8
+	C134.3,189.3,129.6,184.9,129.6,179.5z"/>
+<path class="kosml-st3" d="M129.6,179.5L129.6,179.5c0-5.4,4.7-9.8,10.5-9.8c5.8,0,10.5,4.4,10.5,9.8s-4.7,9.8-10.5,9.8
+	C134.3,189.3,129.6,184.9,129.6,179.5z"/>
+<path class="kosml-st2" d="M207.8,66.8L207.8,66.8c0-5.4,4.7-9.8,10.5-9.8c5.8,0,10.5,4.4,10.5,9.8c0,5.4-4.7,9.8-10.5,9.8
+	C212.5,76.5,207.8,72.2,207.8,66.8z"/>
+<path class="kosml-st3" d="M207.8,66.8L207.8,66.8c0-5.4,4.7-9.8,10.5-9.8c5.8,0,10.5,4.4,10.5,9.8c0,5.4-4.7,9.8-10.5,9.8
+	C212.5,76.5,207.8,72.2,207.8,66.8z"/>
+<path class="kosml-st2" d="M207.8,94.9L207.8,94.9c0-5.4,4.7-9.8,10.5-9.8c5.8,0,10.5,4.4,10.5,9.8c0,5.4-4.7,9.8-10.5,9.8
+	C212.5,104.7,207.8,100.3,207.8,94.9z"/>
+<path class="kosml-st3" d="M207.8,94.9L207.8,94.9c0-5.4,4.7-9.8,10.5-9.8c5.8,0,10.5,4.4,10.5,9.8c0,5.4-4.7,9.8-10.5,9.8
+	C212.5,104.7,207.8,100.3,207.8,94.9z"/>
+<path class="kosml-st2" d="M207.8,123.1L207.8,123.1c0-5.4,4.7-9.8,10.5-9.8c5.8,0,10.5,4.4,10.5,9.8c0,5.4-4.7,9.8-10.5,9.8
+	C212.5,132.9,207.8,128.5,207.8,123.1z"/>
+<path class="kosml-st3" d="M207.8,123.1L207.8,123.1c0-5.4,4.7-9.8,10.5-9.8c5.8,0,10.5,4.4,10.5,9.8c0,5.4-4.7,9.8-10.5,9.8
+	C212.5,132.9,207.8,128.5,207.8,123.1z"/>
+<path class="kosml-st2" d="M207.8,151.3L207.8,151.3c0-5.4,4.7-9.8,10.5-9.8c5.8,0,10.5,4.4,10.5,9.8c0,5.4-4.7,9.8-10.5,9.8
+	C212.5,161.1,207.8,156.7,207.8,151.3z"/>
+<path class="kosml-st3" d="M207.8,151.3L207.8,151.3c0-5.4,4.7-9.8,10.5-9.8c5.8,0,10.5,4.4,10.5,9.8c0,5.4-4.7,9.8-10.5,9.8
+	C212.5,161.1,207.8,156.7,207.8,151.3z"/>
+<path class="kosml-st2" d="M207.8,179.5L207.8,179.5c0-5.4,4.7-9.8,10.5-9.8c5.8,0,10.5,4.4,10.5,9.8s-4.7,9.8-10.5,9.8
+	C212.5,189.3,207.8,184.9,207.8,179.5z"/>
+<path class="kosml-st3" d="M207.8,179.5L207.8,179.5c0-5.4,4.7-9.8,10.5-9.8c5.8,0,10.5,4.4,10.5,9.8s-4.7,9.8-10.5,9.8
+	C212.5,189.3,207.8,184.9,207.8,179.5z"/>
+<line class="kosml-st4" x1="150.7" y1="66.8" x2="207.8" y2="66.8"/>
+<line class="kosml-st3" x1="150.7" y1="66.8" x2="207.8" y2="66.8"/>
+<line class="kosml-st4" x1="150.7" y1="94.9" x2="207.8" y2="94.9"/>
+<line class="kosml-st3" x1="150.7" y1="94.9" x2="207.8" y2="94.9"/>
+<line class="kosml-st4" x1="150.7" y1="123.1" x2="207.8" y2="123.1"/>
+<line class="kosml-st3" x1="150.7" y1="123.1" x2="207.8" y2="123.1"/>
+<line class="kosml-st4" x1="150.7" y1="151.3" x2="207.8" y2="151.3"/>
+<line class="kosml-st3" x1="150.7" y1="151.3" x2="207.8" y2="151.3"/>
+<line class="kosml-st4" x1="150.7" y1="179.5" x2="207.8" y2="179.5"/>
+<line class="kosml-st3" x1="150.7" y1="179.5" x2="207.8" y2="179.5"/>
+<line class="kosml-st4" x1="150.7" y1="66.8" x2="207.8" y2="94.9"/>
+<line class="kosml-st3" x1="150.7" y1="66.8" x2="207.8" y2="94.9"/>
+<line class="kosml-st4" x1="150.7" y1="94.9" x2="207.8" y2="123.1"/>
+<line class="kosml-st3" x1="150.7" y1="94.9" x2="207.8" y2="123.1"/>
+<line class="kosml-st4" x1="150.7" y1="123.1" x2="207.8" y2="151.3"/>
+<line class="kosml-st3" x1="150.7" y1="123.1" x2="207.8" y2="151.3"/>
+<line class="kosml-st4" x1="150.7" y1="151.3" x2="207.8" y2="179.5"/>
+<line class="kosml-st3" x1="150.7" y1="151.3" x2="207.8" y2="179.5"/>
+<line class="kosml-st4" x1="150.7" y1="179.5" x2="207.8" y2="151.3"/>
+<line class="kosml-st3" x1="150.7" y1="179.5" x2="207.8" y2="151.3"/>
+<line class="kosml-st4" x1="150.7" y1="151.3" x2="207.8" y2="123.1"/>
+<line class="kosml-st3" x1="150.7" y1="151.3" x2="207.8" y2="123.1"/>
+<line class="kosml-st4" x1="150.7" y1="123.1" x2="207.8" y2="94.9"/>
+<line class="kosml-st3" x1="150.7" y1="123.1" x2="207.8" y2="94.9"/>
+<line class="kosml-st4" x1="150.7" y1="94.9" x2="207.8" y2="66.8"/>
+<line class="kosml-st3" x1="150.7" y1="94.9" x2="207.8" y2="66.8"/>
+<line class="kosml-st4" x1="150.7" y1="66.8" x2="207.8" y2="123.1"/>
+<line class="kosml-st3" x1="150.7" y1="66.8" x2="207.8" y2="123.1"/>
+<line class="kosml-st4" x1="150.7" y1="94.9" x2="207.8" y2="151.3"/>
+<line class="kosml-st3" x1="150.7" y1="94.9" x2="207.8" y2="151.3"/>
+<line class="kosml-st4" x1="150.7" y1="123.1" x2="207.8" y2="179.5"/>
+<line class="kosml-st3" x1="150.7" y1="123.1" x2="207.8" y2="179.5"/>
+<line class="kosml-st4" x1="150.7" y1="179.5" x2="207.8" y2="123.1"/>
+<line class="kosml-st3" x1="150.7" y1="179.5" x2="207.8" y2="123.1"/>
+<line class="kosml-st4" x1="150.7" y1="151.3" x2="207.8" y2="94.9"/>
+<line class="kosml-st3" x1="150.7" y1="151.3" x2="207.8" y2="94.9"/>
+<line class="kosml-st4" x1="150.7" y1="123.1" x2="207.8" y2="66.8"/>
+<line class="kosml-st3" x1="150.7" y1="123.1" x2="207.8" y2="66.8"/>
+<line class="kosml-st4" x1="150.7" y1="66.8" x2="207.8" y2="151.3"/>
+<line class="kosml-st3" x1="150.7" y1="66.8" x2="207.8" y2="151.3"/>
+<line class="kosml-st4" x1="150.7" y1="94.9" x2="207.8" y2="179.5"/>
+<line class="kosml-st3" x1="150.7" y1="94.9" x2="207.8" y2="179.5"/>
+<line class="kosml-st4" x1="150.7" y1="179.5" x2="207.8" y2="94.9"/>
+<line class="kosml-st3" x1="150.7" y1="179.5" x2="207.8" y2="94.9"/>
+<line class="kosml-st4" x1="150.7" y1="151.3" x2="207.8" y2="66.8"/>
+<line class="kosml-st3" x1="150.7" y1="151.3" x2="207.8" y2="66.8"/>
+<line class="kosml-st4" x1="150.7" y1="179.5" x2="207.8" y2="66.8"/>
+<line class="kosml-st3" x1="150.7" y1="179.5" x2="207.8" y2="66.8"/>
+<line class="kosml-st4" x1="150.7" y1="66.8" x2="207.8" y2="179.5"/>
+<line class="kosml-st3" x1="150.7" y1="66.8" x2="207.8" y2="179.5"/>
+<path class="kosml-st2" d="M50.1,68.8L50.1,68.8c0-5.4,4.7-9.8,10.5-9.8s10.5,4.4,10.5,9.8c0,5.4-4.7,9.8-10.5,9.8S50.1,74.2,50.1,68.8z"
+	/>
+<path class="kosml-st5" d="M50.1,68.8L50.1,68.8c0-5.4,4.7-9.8,10.5-9.8s10.5,4.4,10.5,9.8c0,5.4-4.7,9.8-10.5,9.8S50.1,74.2,50.1,68.8z"
+	/>
+<path class="kosml-st2" d="M50.8,97L50.8,97c0-5.4,4.7-9.8,10.5-9.8s10.5,4.4,10.5,9.8s-4.7,9.8-10.5,9.8S50.8,102.4,50.8,97z"/>
+<path class="kosml-st5" d="M50.8,97L50.8,97c0-5.4,4.7-9.8,10.5-9.8s10.5,4.4,10.5,9.8s-4.7,9.8-10.5,9.8S50.8,102.4,50.8,97z"/>
+<path class="kosml-st2" d="M50.8,125.2L50.8,125.2c0-5.4,4.7-9.8,10.5-9.8s10.5,4.4,10.5,9.8s-4.7,9.8-10.5,9.8S50.8,130.6,50.8,125.2z"/>
+<path class="kosml-st5" d="M50.8,125.2L50.8,125.2c0-5.4,4.7-9.8,10.5-9.8s10.5,4.4,10.5,9.8s-4.7,9.8-10.5,9.8S50.8,130.6,50.8,125.2z"/>
+<path class="kosml-st2" d="M50.8,153.3L50.8,153.3c0-5.4,4.7-9.8,10.5-9.8s10.5,4.4,10.5,9.8c0,5.4-4.7,9.8-10.5,9.8
+	S50.8,158.7,50.8,153.3z"/>
+<path class="kosml-st5" d="M50.8,153.3L50.8,153.3c0-5.4,4.7-9.8,10.5-9.8s10.5,4.4,10.5,9.8c0,5.4-4.7,9.8-10.5,9.8
+	S50.8,158.7,50.8,153.3z"/>
+<path class="kosml-st2" d="M50.8,181.5L50.8,181.5c0-5.4,4.7-9.8,10.5-9.8s10.5,4.4,10.5,9.8s-4.7,9.8-10.5,9.8S50.8,186.9,50.8,181.5z"/>
+<path class="kosml-st5" d="M50.8,181.5L50.8,181.5c0-5.4,4.7-9.8,10.5-9.8s10.5,4.4,10.5,9.8s-4.7,9.8-10.5,9.8S50.8,186.9,50.8,181.5z"/>
+<line class="kosml-st4" x1="71.1" y1="68.8" x2="128.3" y2="68.8"/>
+<line class="kosml-st3" x1="71.1" y1="68.8" x2="128.3" y2="68.8"/>
+<line class="kosml-st4" x1="71.8" y1="97" x2="129" y2="97"/>
+<line class="kosml-st3" x1="71.8" y1="97" x2="129" y2="97"/>
+<line class="kosml-st4" x1="71.8" y1="125.2" x2="129" y2="125.2"/>
+<line class="kosml-st3" x1="71.8" y1="125.2" x2="129" y2="125.2"/>
+<line class="kosml-st4" x1="71.8" y1="153.3" x2="129" y2="153.3"/>
+<line class="kosml-st3" x1="71.8" y1="153.3" x2="129" y2="153.3"/>
+<line class="kosml-st4" x1="71.8" y1="181.5" x2="129" y2="181.5"/>
+<line class="kosml-st3" x1="71.8" y1="181.5" x2="129" y2="181.5"/>
+<line class="kosml-st4" x1="71.1" y1="68.8" x2="128.3" y2="97"/>
+<line class="kosml-st3" x1="71.1" y1="68.8" x2="128.3" y2="97"/>
+<line class="kosml-st4" x1="71.8" y1="97" x2="129" y2="125.2"/>
+<line class="kosml-st3" x1="71.8" y1="97" x2="129" y2="125.2"/>
+<line class="kosml-st4" x1="71.8" y1="125.2" x2="129" y2="153.3"/>
+<line class="kosml-st3" x1="71.8" y1="125.2" x2="129" y2="153.3"/>
+<line class="kosml-st4" x1="71.8" y1="153.3" x2="129" y2="181.5"/>
+<line class="kosml-st3" x1="71.8" y1="153.3" x2="129" y2="181.5"/>
+<line class="kosml-st4" x1="71.8" y1="181.5" x2="129" y2="153.3"/>
+<line class="kosml-st3" x1="71.8" y1="181.5" x2="129" y2="153.3"/>
+<line class="kosml-st4" x1="71.8" y1="153.3" x2="129" y2="125.2"/>
+<line class="kosml-st3" x1="71.8" y1="153.3" x2="129" y2="125.2"/>
+<line class="kosml-st4" x1="71.8" y1="125.2" x2="129" y2="97"/>
+<line class="kosml-st3" x1="71.8" y1="125.2" x2="129" y2="97"/>
+<line class="kosml-st4" x1="71.8" y1="97" x2="129" y2="68.8"/>
+<line class="kosml-st3" x1="71.8" y1="97" x2="129" y2="68.8"/>
+<line class="kosml-st4" x1="71.1" y1="68.8" x2="128.3" y2="125.2"/>
+<line class="kosml-st3" x1="71.1" y1="68.8" x2="128.3" y2="125.2"/>
+<line class="kosml-st4" x1="71.8" y1="97" x2="129" y2="153.3"/>
+<line class="kosml-st3" x1="71.8" y1="97" x2="129" y2="153.3"/>
+<line class="kosml-st4" x1="71.8" y1="125.2" x2="129" y2="181.5"/>
+<line class="kosml-st3" x1="71.8" y1="125.2" x2="129" y2="181.5"/>
+<line class="kosml-st4" x1="71.8" y1="181.5" x2="129" y2="125.2"/>
+<line class="kosml-st3" x1="71.8" y1="181.5" x2="129" y2="125.2"/>
+<line class="kosml-st4" x1="71.8" y1="153.3" x2="129" y2="97"/>
+<line class="kosml-st3" x1="71.8" y1="153.3" x2="129" y2="97"/>
+<line class="kosml-st4" x1="71.8" y1="125.2" x2="129" y2="68.8"/>
+<line class="kosml-st3" x1="71.8" y1="125.2" x2="129" y2="68.8"/>
+<line class="kosml-st4" x1="71.1" y1="68.8" x2="128.3" y2="153.3"/>
+<line class="kosml-st3" x1="71.1" y1="68.8" x2="128.3" y2="153.3"/>
+<line class="kosml-st4" x1="71.8" y1="97" x2="129" y2="181.5"/>
+<line class="kosml-st3" x1="71.8" y1="97" x2="129" y2="181.5"/>
+<line class="kosml-st4" x1="71.8" y1="181.5" x2="129" y2="97"/>
+<line class="kosml-st3" x1="71.8" y1="181.5" x2="129" y2="97"/>
+<line class="kosml-st4" x1="71.8" y1="153.3" x2="129" y2="68.8"/>
+<line class="kosml-st3" x1="71.8" y1="153.3" x2="129" y2="68.8"/>
+<line class="kosml-st4" x1="71.8" y1="181.5" x2="129" y2="68.8"/>
+<line class="kosml-st3" x1="71.8" y1="181.5" x2="129" y2="68.8"/>
+<line class="kosml-st4" x1="71.1" y1="68.8" x2="128.3" y2="181.5"/>
+<line class="kosml-st3" x1="71.1" y1="68.8" x2="128.3" y2="181.5"/>
+<rect x="238.4" y="51.3" class="kosml-st4" width="100.6" height="30.9"/>
+<text transform="matrix(1 0 0 1 245.1044 69.5664)"><tspan x="0" y="0" class="kosml-st6 kosml-st7 kosml-st8">사과</tspan><tspan x="24" y="0" class="kosml-st6 kosml-st9 kosml-st8">: </tspan><tspan x="29.9" y="0" class="kosml-st6 kosml-st7 kosml-st8">예</tspan><tspan x="41.9" y="0" class="kosml-st6 kosml-st9 kosml-st8">/</tspan><tspan x="46.8" y="0" class="kosml-st6 kosml-st7 kosml-st8">아니요</tspan><tspan x="82.8" y="0" class="kosml-st6 kosml-st9 kosml-st8">?</tspan></text>
+<line class="kosml-st4" x1="0" y1="124.9" x2="27.8" y2="125.4"/>
+<line class="kosml-st10" x1="0" y1="124.9" x2="23.3" y2="125.3"/>
+<polygon class="kosml-st11" points="23.2,126.6 26.7,125.4 23.3,124.1 "/>
+<polygon class="kosml-st12" points="23.2,126.6 26.7,125.4 23.3,124.1 "/>
+<rect x="238.4" y="79.5" class="kosml-st4" width="100.6" height="30.9"/>
+<text transform="matrix(1 0 0 1 245.1044 97.7383)"><tspan x="0" y="0" class="kosml-st6 kosml-st7 kosml-st8">곰</tspan><tspan x="12" y="0" class="kosml-st6 kosml-st9 kosml-st8">: </tspan><tspan x="17.9" y="0" class="kosml-st6 kosml-st7 kosml-st8">예</tspan><tspan x="29.9" y="0" class="kosml-st6 kosml-st9 kosml-st8">/</tspan><tspan x="34.8" y="0" class="kosml-st6 kosml-st7 kosml-st8">아니요</tspan><tspan x="70.8" y="0" class="kosml-st6 kosml-st9 kosml-st8">?</tspan></text>
+<rect x="238.4" y="107.7" class="kosml-st4" width="100.6" height="30.9"/>
+<text transform="matrix(1 0 0 1 245.1044 125.9248)"><tspan x="0" y="0" class="kosml-st6 kosml-st7 kosml-st8">사탕</tspan><tspan x="24" y="0" class="kosml-st6 kosml-st9 kosml-st8">: </tspan><tspan x="29.9" y="0" class="kosml-st6 kosml-st7 kosml-st8">예</tspan><tspan x="41.9" y="0" class="kosml-st6 kosml-st9 kosml-st8">/</tspan><tspan x="46.8" y="0" class="kosml-st6 kosml-st7 kosml-st8">아니요</tspan><tspan x="82.8" y="0" class="kosml-st6 kosml-st9 kosml-st8">?</tspan></text>
+<rect x="238.4" y="135.8" class="kosml-st4" width="100.6" height="30.9"/>
+<text transform="matrix(1 0 0 1 245.1044 154.106)"><tspan x="0" y="0" class="kosml-st6 kosml-st7 kosml-st8">개</tspan><tspan x="12" y="0" class="kosml-st6 kosml-st9 kosml-st8">: </tspan><tspan x="17.9" y="0" class="kosml-st6 kosml-st7 kosml-st8">예</tspan><tspan x="29.9" y="0" class="kosml-st6 kosml-st9 kosml-st8">/</tspan><tspan x="34.8" y="0" class="kosml-st6 kosml-st7 kosml-st8">아니요</tspan><tspan x="70.8" y="0" class="kosml-st6 kosml-st9 kosml-st8">?</tspan></text>
+<rect x="238.4" y="164" class="kosml-st4" width="100.6" height="30.9"/>
+<text transform="matrix(1 0 0 1 245.1044 182.2833)"><tspan x="0" y="0" class="kosml-st6 kosml-st7 kosml-st8">계란</tspan><tspan x="24" y="0" class="kosml-st6 kosml-st9 kosml-st8">: </tspan><tspan x="29.9" y="0" class="kosml-st6 kosml-st7 kosml-st8">예</tspan><tspan x="41.9" y="0" class="kosml-st6 kosml-st9 kosml-st8">/</tspan><tspan x="46.8" y="0" class="kosml-st6 kosml-st7 kosml-st8">아니요</tspan><tspan x="82.8" y="0" class="kosml-st6 kosml-st9 kosml-st8">?</tspan></text>
+<path class="kosml-st0" d="M182.2,206.6L182.2,206.6c0-3.2,2.6-5.8,5.8-5.8h67.4c1.5,0,3,0.6,4.1,1.7c1.1,1.1,1.7,2.6,1.7,4.1v23.2
+	c0,3.2-2.6,5.8-5.8,5.8H188c-3.2,0-5.8-2.6-5.8-5.8V206.6z"/>
+<text transform="matrix(1 0 0 1 191.7342 222.5569)" class="kosml-st7 kosml-st8">소프트맥스</text>
+<rect x="35.2" class="kosml-st4" width="52.2" height="19.6"/>
+<text transform="matrix(1 0 0 1 48.6064 18.2697)" class="kosml-st7 kosml-st8">히든</text>
+<rect x="113.2" y="20.7" class="kosml-st4" width="52.2" height="19.6"/>
+<text transform="matrix(1 0 0 1 127.3248 39.006)" class="kosml-st7 kosml-st8">히든</text>
+<rect x="197.2" y="21" class="kosml-st4" width="52.2" height="19.6"/>
+<text transform="matrix(1 0 0 1 200.3083 40.2954)" class="kosml-st7 kosml-st8">로지트</text>
+<path class="kosml-st2" d="M50.8,209.7L50.8,209.7c0-5.4,4.7-9.8,10.5-9.8s10.5,4.4,10.5,9.8c0,5.4-4.7,9.8-10.5,9.8
+	S50.8,215.1,50.8,209.7z"/>
+<path class="kosml-st5" d="M50.8,209.7L50.8,209.7c0-5.4,4.7-9.8,10.5-9.8s10.5,4.4,10.5,9.8c0,5.4-4.7,9.8-10.5,9.8
+	S50.8,215.1,50.8,209.7z"/>
+<path class="kosml-st2" d="M50.8,40.5L50.8,40.5c0-5.4,4.7-9.8,10.5-9.8s10.5,4.4,10.5,9.8c0,5.4-4.7,9.8-10.5,9.8S50.8,45.9,50.8,40.5z"
+	/>
+<path class="kosml-st5" d="M50.8,40.5L50.8,40.5c0-5.4,4.7-9.8,10.5-9.8s10.5,4.4,10.5,9.8c0,5.4-4.7,9.8-10.5,9.8S50.8,45.9,50.8,40.5z"
+	/>
+<line class="kosml-st4" x1="71.8" y1="41.9" x2="128.1" y2="68.2"/>
+<line class="kosml-st3" x1="71.8" y1="41.9" x2="128.1" y2="68.2"/>
+<line class="kosml-st4" x1="71.8" y1="41.6" x2="129.6" y2="98.3"/>
+<line class="kosml-st3" x1="71.8" y1="41.6" x2="129.6" y2="98.3"/>
+<line class="kosml-st4" x1="71.8" y1="42.2" x2="129.6" y2="124.9"/>
+<line class="kosml-st3" x1="71.8" y1="42.2" x2="129.6" y2="124.9"/>
+<line class="kosml-st4" x1="71.8" y1="41" x2="128.1" y2="153.4"/>
+<line class="kosml-st3" x1="71.8" y1="41" x2="128.1" y2="153.4"/>
+<line class="kosml-st4" x1="71.8" y1="43.2" x2="129.6" y2="182.2"/>
+<line class="kosml-st3" x1="71.8" y1="43.2" x2="129.6" y2="182.2"/>
+<line class="kosml-st4" x1="69.1" y1="203.2" x2="128.5" y2="67.1"/>
+<line class="kosml-st3" x1="69.1" y1="203.2" x2="128.5" y2="67.1"/>
+<line class="kosml-st4" x1="69.1" y1="203.2" x2="130" y2="95.3"/>
+<line class="kosml-st3" x1="69.1" y1="203.2" x2="130" y2="95.3"/>
+<line class="kosml-st4" x1="69.1" y1="203.2" x2="130" y2="123.5"/>
+<line class="kosml-st3" x1="69.1" y1="203.2" x2="130" y2="123.5"/>
+<line class="kosml-st4" x1="69.1" y1="203.2" x2="130" y2="151.7"/>
+<line class="kosml-st3" x1="69.1" y1="203.2" x2="130" y2="151.7"/>
+<line class="kosml-st4" x1="68.8" y1="203.9" x2="129.6" y2="179.5"/>
+<line class="kosml-st3" x1="68.8" y1="203.9" x2="129.6" y2="179.5"/>
+</svg>

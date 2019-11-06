@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Request and resposne objects | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Request and resposne objects" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Quick overview" />
+<meta property="og:description" content="Quick overview" />
+<link rel="canonical" href="http://localhost:4000/blog/docs/develop/Backend/Python/lib/django/api_reference/16_Request%20and%20response%20objects.html" />
+<meta property="og:url" content="http://localhost:4000/blog/docs/develop/Backend/Python/lib/django/api_reference/16_Request%20and%20response%20objects.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-06T09:31:12+09:00" />
+<script type="application/ld+json">
+{"description":"Quick overview","headline":"Request and resposne objects","dateModified":"2019-11-06T09:31:12+09:00","datePublished":"2019-11-06T09:31:12+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/docs/develop/Backend/Python/lib/django/api_reference/16_Request%20and%20response%20objects.html"},"url":"http://localhost:4000/blog/docs/develop/Backend/Python/lib/django/api_reference/16_Request%20and%20response%20objects.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Request and resposne objects</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#quick-overview">Quick overview</a></li>
+<li class="toc-entry toc-h2"><a href="#httprequest-objects">HttpRequest objects</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#attributes">Attributes</a></li>
+<li class="toc-entry toc-h3"><a href="#attributes-set-by-application-code">Attributes set by application code</a></li>
+<li class="toc-entry toc-h3"><a href="#attributes-set-by-middleware">Attributes set by middleware</a></li>
+<li class="toc-entry toc-h3"><a href="#methods">Methods</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#querydict-objects">QueryDict objects</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#methods">Methods</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#httpresponse-objects">HttpResponse objects</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#usage">Usage</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#passing-strings">Passing strings</a></li>
+<li class="toc-entry toc-h4"><a href="#passing-iterators">Passing iterators</a></li>
+<li class="toc-entry toc-h4"><a href="#setting-header-fields">Setting header fields</a></li>
+<li class="toc-entry toc-h4"><a href="#telling-the-browser-to-treat-the-response-as-a-file-attachment">Telling the browser to treat the response as a file attachment</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#attributes">Attributes</a></li>
+<li class="toc-entry toc-h3"><a href="#methods">Methods</a></li>
+<li class="toc-entry toc-h3"><a href="#httpresponse-subclasses">HttpResponse subclasses</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#jsonresponse-objects">JsonResponse objects</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#usage">Usage</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#serializing-non-dictionary-objects">Serializing non-dictionary objects</a></li>
+<li class="toc-entry toc-h4"><a href="#changing-the-default-json-encoder">Changing the default JSON encoder</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#streaminghttpresponse-objects">StreamingHttpResponse objects</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#attributes">Attributes</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#fileresponse-objects">FileResponse objects</a></li>
+<li class="toc-entry toc-h2"><a href="#references">References</a></li>
+</ul><h2 id="quick-overview">
+<a class="anchor" href="#quick-overview" aria-hidden="true"><span class="octicon octicon-link"></span></a>Quick overview</h2>
+
+<p>Django는 요청 및 응답 객체를 사용하여 시스템을 통해 상태를 전달합니다.</p>
+
+<p>페이지가 요청되면 장고는 요청에 대한 메타 데이터가 포함 된 HttpRequest 객체를 생성합니다.
+그런 다음 Django는 HttpRequest를 뷰 함수의 첫 번째 인수로 전달하여 적절한 뷰를 로드합니다.
+각 뷰는 HttpResponse 객체를 반환합니다.</p>
+
+<p>이 문서는 <strong>django.http</strong> 모듈에 정의 된 <strong>HttpRequest</strong> 및 <strong>HttpResponse</strong> 객체에 대한 API를 설명합니다.</p>
+
+<p> </p>
+
+<hr>
+
+<h2 id="httprequest-objects">
+<a class="anchor" href="#httprequest-objects" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>HttpRequest</strong> objects</h2>
+
+<h3 id="attributes">
+<a class="anchor" href="#attributes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Attributes</h3>
+
+<h3 id="attributes-set-by-application-code">
+<a class="anchor" href="#attributes-set-by-application-code" aria-hidden="true"><span class="octicon octicon-link"></span></a>Attributes set by application code</h3>
+
+<h3 id="attributes-set-by-middleware">
+<a class="anchor" href="#attributes-set-by-middleware" aria-hidden="true"><span class="octicon octicon-link"></span></a>Attributes set by middleware</h3>
+
+<h3 id="methods">
+<a class="anchor" href="#methods" aria-hidden="true"><span class="octicon octicon-link"></span></a>Methods</h3>
+
+<p> </p>
+
+<hr>
+
+<h2 id="querydict-objects">
+<a class="anchor" href="#querydict-objects" aria-hidden="true"><span class="octicon octicon-link"></span></a>QueryDict objects</h2>
+
+<h3 id="methods">
+<a class="anchor" href="#methods" aria-hidden="true"><span class="octicon octicon-link"></span></a>Methods</h3>
+
+<p> </p>
+
+<hr>
+
+<h2 id="httpresponse-objects">
+<a class="anchor" href="#httpresponse-objects" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>HttpResponse</strong> objects</h2>
+
+<p><strong>class Httpresponse</strong></p>
+
+<p>Django에 의해 자동으로 생성되는 <strong>HttpRequest</strong> 객체와 달리 <strong>HttpResponse</strong> 객체는 사용자의 책임입니다.
+작성한 각 뷰는 <strong>HttpResponse</strong>의 인스턴스화, 채우기 및 리턴을 담당합니다.
+<strong>HttpResponse</strong> 클래스는 <strong>django.http</strong> 모듈에 있습니다.</p>
+
+<h3 id="usage">
+<a class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h3>
+
+<h4 id="passing-strings">
+<a class="anchor" href="#passing-strings" aria-hidden="true"><span class="octicon octicon-link"></span></a>Passing strings</h4>
+
+<p>일반적인 사용법은 페이지의 내용을 문자열로 <strong>HttpResponse</strong> 생성자에 전달하는 것입니다:</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="s">"Here's the text of the Web page."</span><span class="p">)</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="s">"Text only, please."</span><span class="p">,</span> <span class="n">content_type</span><span class="o">=</span><span class="s">"text/plain"</span><span class="p">)</span>
+</code></pre></div>
+<p>그러나 content를 점진적으로 추가하려면 응답을 파일과 같은 객체로 사용할 수 있습니다:</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">response</span> <span class="o">=</span> <span class="n">HttpResponse</span><span class="p">()</span>
+<span class="n">response</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">"&lt;p&gt;Here's the text of the Web page.&lt;/p&gt;"</span><span class="p">)</span>
+<span class="n">response</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">"&lt;p&gt;Here's another paragraph.&lt;/p&gt;"</span><span class="p">)</span>
+</code></pre></div>
+<hr>
+
+<h4 id="passing-iterators">
+<a class="anchor" href="#passing-iterators" aria-hidden="true"><span class="octicon octicon-link"></span></a>Passing iterators</h4>
+
+<h4 id="setting-header-fields">
+<a class="anchor" href="#setting-header-fields" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setting header fields</h4>
+
+<h4 id="telling-the-browser-to-treat-the-response-as-a-file-attachment">
+<a class="anchor" href="#telling-the-browser-to-treat-the-response-as-a-file-attachment" aria-hidden="true"><span class="octicon octicon-link"></span></a>Telling the browser to treat the response as a file attachment</h4>
+
+<p>응답을 파일 첨부로 처리하도록 브라우저에 알리려면 content_type 인수를 사용하고 Content-Disposition 헤더를 설정하십시오. 예를 들어 Microsoft Excel 스프레드 시트를 반환하는 방법은 다음과 같습니다.</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">response</span> <span class="o">=</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">my_data</span><span class="p">,</span> <span class="n">content_type</span><span class="o">=</span><span class="s">'application/vnd.ms-excel'</span><span class="p">)</span>
+<span class="n">response</span><span class="p">[</span><span class="s">'Content-Disposition'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'attachment; filename="foo.xls"'</span>
+</code></pre></div>
+<p>Django의 Content-Disposition 헤더에 관한 것은 없지만 구문을 잊어 버리기 쉽기 때문에 여기에 포함 시켰습니다.</p>
+
+<hr>
+
+<h3 id="attributes">
+<a class="anchor" href="#attributes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Attributes</h3>
+
+<h3 id="methods">
+<a class="anchor" href="#methods" aria-hidden="true"><span class="octicon octicon-link"></span></a>Methods</h3>
+
+<h3 id="httpresponse-subclasses">
+<a class="anchor" href="#httpresponse-subclasses" aria-hidden="true"><span class="octicon octicon-link"></span></a>HttpResponse subclasses</h3>
+
+<p> </p>
+
+<hr>
+
+<h2 id="jsonresponse-objects">
+<a class="anchor" href="#jsonresponse-objects" aria-hidden="true"><span class="octicon octicon-link"></span></a>JsonResponse objects</h2>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">JsonResponse</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">encoder</span><span class="o">=</span><span class="n">DjangoJSONEncoder</span><span class="p">,</span> <span class="n">safe</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">json_dumps_params</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+<p>JSON 인코딩 된 응답을 만드는 데 도움이되는 <strong>HttpRespone</strong> 하위 클래스입니다.
+몇 가지 차이점을 가지고 수퍼 클래스에서 대부분의 동작을 상속받습니다:</p>
+
+<p>기본 <strong>Content-Type</strong> 헤더는 <strong>application/json</strong> 으로 설정됩니다.</p>
+
+<p>첫 번째 매개 변수 인 data는 <strong>dict</strong> 인스턴스 여야합니다.
+<strong>safe</strong> 매개 변수가 False 로 설정되면 (아래 참조) 모든 JSON 직렬화 가능 객체가 될 수 있습니다.</p>
+
+<p><strong>encoder</strong> 는 기본적으로 <strong>django.core.serializers.json.DjangoJSONEncoder</strong> 로 데이터를 직렬화하는 데 사용됩니다.
+이 serializer에 대한 자세한 내용은 JSON serialization을 참조하십시오.</p>
+
+<p><strong>safe</strong> 부울 매개 변수의 기본값은 <strong>True</strong> 입니다.
+<strong>False</strong> 로 설정하면 직렬화를 위해 모든 객체를 전달할 수 있습니다 (그렇지 않으면 dict 인스턴스 만 허용됨). safe가 True이고 딕셔너리가 아닌 객체가 첫 번째 인수로 전달되면 <strong>TypeError</strong>_ 가 발생합니다.</p>
+
+<p><strong>json_dumps_params</strong> 매개 변수는 응답을 생성하는 데 사용되는 <strong>json.dumps()</strong> 호출에 전달할 키워드 인수 사전입니다.</p>
+
+<h3 id="usage">
+<a class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h3>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">JsonResponse</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s">'foo'</span><span class="p">:</span> <span class="s">'bar'</span><span class="p">})</span>
+<span class="n">response</span><span class="o">.</span><span class="n">content</span>
+<span class="n">b</span><span class="s">'{"foo": "bar"}'</span>
+</code></pre></div>
+<h4 id="serializing-non-dictionary-objects">
+<a class="anchor" href="#serializing-non-dictionary-objects" aria-hidden="true"><span class="octicon octicon-link"></span></a>Serializing non-dictionary objects</h4>
+
+<p>dict 이외의 객체를 직렬화하려면 safe 매개 변수를 False로 설정해야합니다:</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">response</span> <span class="o">=</span> <span class="n">JsonResponse</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">safe</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div>
+<p>Safe = False를 건네주지 않으면 TypeError가 발생합니다.</p>
+
+<blockquote>
+<p>Warning</p>
+
+<p>ECMAScript의 5 판 이전에 JavaScript Array 생성자를 독살하는 것이 가능했습니다. 이런 이유로 Django는 기본적으로 비 dict 객체를 JsonResponse 생성자에 전달할 수 없습니다. 그러나 대부분의 최신 브라우저는이 공격 벡터를 제거하는 EcmaScript 5를 구현합니다. 따라서이 보안 예방 조치를 해제 할 수 있습니다.</p>
+</blockquote>
+
+<hr>
+
+<h4 id="changing-the-default-json-encoder">
+<a class="anchor" href="#changing-the-default-json-encoder" aria-hidden="true"><span class="octicon octicon-link"></span></a>Changing the default JSON encoder</h4>
+
+<p>다른 인코더 클래스를 사용해야 할 경우 인코더 매개 변수를 생성자 메서드에 전달할 수 있습니다:</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">response</span> <span class="o">=</span> <span class="n">JsonResponse</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">encoder</span><span class="o">=</span><span class="n">MyJSONEncoder</span><span class="p">)</span>
+</code></pre></div>
+<p> </p>
+
+<hr>
+
+<h2 id="streaminghttpresponse-objects">
+<a class="anchor" href="#streaminghttpresponse-objects" aria-hidden="true"><span class="octicon octicon-link"></span></a>StreamingHttpResponse objects</h2>
+
+<h3 id="attributes">
+<a class="anchor" href="#attributes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Attributes</h3>
+
+<hr>
+
+<h2 id="fileresponse-objects">
+<a class="anchor" href="#fileresponse-objects" aria-hidden="true"><span class="octicon octicon-link"></span></a>FileResponse objects</h2>
+
+<hr>
+
+<h2 id="references">
+<a class="anchor" href="#references" aria-hidden="true"><span class="octicon octicon-link"></span></a>References</h2>
+
+<p><a href="https://docs.djangoproject.com/en/2.0/ref/request-response/">Request and resposne objects</a></p>
+
+  </div>
+
+<div>
+  <h2 id="quick-overview">Quick overview</h2>
+
+<p>Django는 요청 및 응답 객체를 사용하여 시스템을 통해 상태를 전달합니다.</p>
+
+<p>페이지가 요청되면 장고는 요청에 대한 메타 데이터가 포함 된 HttpRequest 객체를 생성합니다.
+그런 다음 Django는 HttpRequest를 뷰 함수의 첫 번째 인수로 전달하여 적절한 뷰를 로드합니다.
+각 뷰는 HttpResponse 객체를 반환합니다.</p>
+
+<p>이 문서는 <strong>django.http</strong> 모듈에 정의 된 <strong>HttpRequest</strong> 및 <strong>HttpResponse</strong> 객체에 대한 API를 설명합니다.</p>
+
+<p> </p>
+
+<hr>
+
+<h2 id="httprequest-objects">
+<strong>HttpRequest</strong> objects</h2>
+
+<h3 id="attributes">Attributes</h3>
+
+<h3 id="attributes-set-by-application-code">Attributes set by application code</h3>
+
+<h3 id="attributes-set-by-middleware">Attributes set by middleware</h3>
+
+<h3 id="methods">Methods</h3>
+
+<p> </p>
+
+<hr>
+
+<h2 id="querydict-objects">QueryDict objects</h2>
+
+<h3 id="methods">Methods</h3>
+
+<p> </p>
+
+<hr>
+
+<h2 id="httpresponse-objects">
+<strong>HttpResponse</strong> objects</h2>
+
+<p><strong>class Httpresponse</strong></p>
+
+<p>Django에 의해 자동으로 생성되는 <strong>HttpRequest</strong> 객체와 달리 <strong>HttpResponse</strong> 객체는 사용자의 책임입니다.
+작성한 각 뷰는 <strong>HttpResponse</strong>의 인스턴스화, 채우기 및 리턴을 담당합니다.
+<strong>HttpResponse</strong> 클래스는 <strong>django.http</strong> 모듈에 있습니다.</p>
+
+<h3 id="usage">Usage</h3>
+
+<h4 id="passing-strings">Passing strings</h4>
+
+<p>일반적인 사용법은 페이지의 내용을 문자열로 <strong>HttpResponse</strong> 생성자에 전달하는 것입니다:</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="s">"Here's the text of the Web page."</span><span class="p">)</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="s">"Text only, please."</span><span class="p">,</span> <span class="n">content_type</span><span class="o">=</span><span class="s">"text/plain"</span><span class="p">)</span>
+</code></pre></div>
+<p>그러나 content를 점진적으로 추가하려면 응답을 파일과 같은 객체로 사용할 수 있습니다:</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">response</span> <span class="o">=</span> <span class="n">HttpResponse</span><span class="p">()</span>
+<span class="n">response</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">"&lt;p&gt;Here's the text of the Web page.&lt;/p&gt;"</span><span class="p">)</span>
+<span class="n">response</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">"&lt;p&gt;Here's another paragraph.&lt;/p&gt;"</span><span class="p">)</span>
+</code></pre></div>
+<hr>
+
+<h4 id="passing-iterators">Passing iterators</h4>
+
+<h4 id="setting-header-fields">Setting header fields</h4>
+
+<h4 id="telling-the-browser-to-treat-the-response-as-a-file-attachment">Telling the browser to treat the response as a file attachment</h4>
+
+<p>응답을 파일 첨부로 처리하도록 브라우저에 알리려면 content_type 인수를 사용하고 Content-Disposition 헤더를 설정하십시오. 예를 들어 Microsoft Excel 스프레드 시트를 반환하는 방법은 다음과 같습니다.</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">response</span> <span class="o">=</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">my_data</span><span class="p">,</span> <span class="n">content_type</span><span class="o">=</span><span class="s">'application/vnd.ms-excel'</span><span class="p">)</span>
+<span class="n">response</span><span class="p">[</span><span class="s">'Content-Disposition'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'attachment; filename="foo.xls"'</span>
+</code></pre></div>
+<p>Django의 Content-Disposition 헤더에 관한 것은 없지만 구문을 잊어 버리기 쉽기 때문에 여기에 포함 시켰습니다.</p>
+
+<hr>
+
+<h3 id="attributes">Attributes</h3>
+
+<h3 id="methods">Methods</h3>
+
+<h3 id="httpresponse-subclasses">HttpResponse subclasses</h3>
+
+<p> </p>
+
+<hr>
+
+<h2 id="jsonresponse-objects">JsonResponse objects</h2>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">JsonResponse</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">encoder</span><span class="o">=</span><span class="n">DjangoJSONEncoder</span><span class="p">,</span> <span class="n">safe</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">json_dumps_params</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+<p>JSON 인코딩 된 응답을 만드는 데 도움이되는 <strong>HttpRespone</strong> 하위 클래스입니다.
+몇 가지 차이점을 가지고 수퍼 클래스에서 대부분의 동작을 상속받습니다:</p>
+
+<p>기본 <strong>Content-Type</strong> 헤더는 <strong>application/json</strong> 으로 설정됩니다.</p>
+
+<p>첫 번째 매개 변수 인 data는 <strong>dict</strong> 인스턴스 여야합니다.
+<strong>safe</strong> 매개 변수가 False 로 설정되면 (아래 참조) 모든 JSON 직렬화 가능 객체가 될 수 있습니다.</p>
+
+<p><strong>encoder</strong> 는 기본적으로 <strong>django.core.serializers.json.DjangoJSONEncoder</strong> 로 데이터를 직렬화하는 데 사용됩니다.
+이 serializer에 대한 자세한 내용은 JSON serialization을 참조하십시오.</p>
+
+<p><strong>safe</strong> 부울 매개 변수의 기본값은 <strong>True</strong> 입니다.
+<strong>False</strong> 로 설정하면 직렬화를 위해 모든 객체를 전달할 수 있습니다 (그렇지 않으면 dict 인스턴스 만 허용됨). safe가 True이고 딕셔너리가 아닌 객체가 첫 번째 인수로 전달되면 <strong>TypeError</strong>_ 가 발생합니다.</p>
+
+<p><strong>json_dumps_params</strong> 매개 변수는 응답을 생성하는 데 사용되는 <strong>json.dumps()</strong> 호출에 전달할 키워드 인수 사전입니다.</p>
+
+<h3 id="usage">Usage</h3>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">JsonResponse</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s">'foo'</span><span class="p">:</span> <span class="s">'bar'</span><span class="p">})</span>
+<span class="n">response</span><span class="o">.</span><span class="n">content</span>
+<span class="n">b</span><span class="s">'{"foo": "bar"}'</span>
+</code></pre></div>
+<h4 id="serializing-non-dictionary-objects">Serializing non-dictionary objects</h4>
+
+<p>dict 이외의 객체를 직렬화하려면 safe 매개 변수를 False로 설정해야합니다:</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">response</span> <span class="o">=</span> <span class="n">JsonResponse</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">safe</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div>
+<p>Safe = False를 건네주지 않으면 TypeError가 발생합니다.</p>
+
+<blockquote>
+<p>Warning</p>
+
+<p>ECMAScript의 5 판 이전에 JavaScript Array 생성자를 독살하는 것이 가능했습니다. 이런 이유로 Django는 기본적으로 비 dict 객체를 JsonResponse 생성자에 전달할 수 없습니다. 그러나 대부분의 최신 브라우저는이 공격 벡터를 제거하는 EcmaScript 5를 구현합니다. 따라서이 보안 예방 조치를 해제 할 수 있습니다.</p>
+</blockquote>
+
+<hr>
+
+<h4 id="changing-the-default-json-encoder">Changing the default JSON encoder</h4>
+
+<p>다른 인코더 클래스를 사용해야 할 경우 인코더 매개 변수를 생성자 메서드에 전달할 수 있습니다:</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">response</span> <span class="o">=</span> <span class="n">JsonResponse</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">encoder</span><span class="o">=</span><span class="n">MyJSONEncoder</span><span class="p">)</span>
+</code></pre></div>
+<p> </p>
+
+<hr>
+
+<h2 id="streaminghttpresponse-objects">StreamingHttpResponse objects</h2>
+
+<h3 id="attributes">Attributes</h3>
+
+<hr>
+
+<h2 id="fileresponse-objects">FileResponse objects</h2>
+
+<hr>
+
+<h2 id="references">References</h2>
+
+<p><a href="https://docs.djangoproject.com/en/2.0/ref/request-response/" rel="nofollow" target="_blank">Request and resposne objects</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

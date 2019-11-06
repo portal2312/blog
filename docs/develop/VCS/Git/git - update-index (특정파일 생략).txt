@@ -1,0 +1,4 @@
+git update-index --assume-unchanged
+
+
+git update-index --skip-worktree

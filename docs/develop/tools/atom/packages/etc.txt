@@ -1,0 +1,2 @@
+- 완료후 설치 경로 = C:\Users\mkkim\.atom
+- .less 설정은 덮어쓰기 해야 됨.

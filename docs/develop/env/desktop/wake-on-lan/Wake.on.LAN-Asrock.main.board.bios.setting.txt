@@ -1,0 +1,12 @@
+﻿# Asrock main board 설정
+
+F2
+
+Advanced > ACPI configuration > PCI Devices Power On [Enabled]
+
+## 공유기 URL 접속하여 Wak on LAN 실행하기
+
+브라우저에서 공유기 URL(122.42.204.6:737*) 이동하기
+
+> 먼저 공유기 설정 필요
+> 원격제어 설정과 접속할 Port 설정하기

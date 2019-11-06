@@ -1,0 +1,96 @@
+[프로그램 명령어]
+ 
+ 
+ 
+calc : 계산기
+charmap : 문자표
+cleanmgr : 디스크정리
+clipbrd : 클립보드에 복사된 내용표시
+cmd : 명령 프롬프트
+regedit : 레지스트리 편집기
+Desk.cpl : 디스플레이 
+dxdiag : 다이렉트X 정보
+eudcedit : 사용자정의 문자 편집기
+explorer : 윈도우 탐색기
+maqnify : 돋보기
+mobsync : 동기화
+mmc.exe : 콘솔 루터
+msconfig : 시스템 구성요소 유틸리티
+msinfo32 : 시스템 정보
+mspaint, pbrush : 그림판
+notepad : 메모장 
+osk : 화상키보드
+recent : 최근에 사용한 문서
+regedit : 레지스트리 편집 창   
+system.ini : 시스템구성편집기
+taskmgr.exe : 작업 관리자 
+Telephon.cpl : 전화 및 모뎀 옵션 
+Timedate.cpl : 날짜 및 시간 
+winver : 윈도우 버전확인
+wmplayer : 윈도우 미디어 플레이어
+wordpad : 워드패드
+ 
+ 
+ 
+ 
+ 
+[제어판]
+ 
+ 
+ 
+access.cpl : 내게 필요한 옵션
+appwiz.cpl : 프로그램 추가/제거 
+control : 제어판
+control admintools : 관리 도구 
+control userpasswords : 사용자계정
+control userpasswords2 : 사용자계정(고급)
+hdwwiz.cpl : 새 하드웨어 추가 
+Intl.cpl : 국가 및 언어 옵션 
+Irprops.cpl : 적외선 포트 
+Joy.cpl : 게임 컨트롤러 
+Main.cpl : 마우스 
+Mmsys.cpl : 사운드 및 오디오 장치 
+ntbackup : 백업 및 복원 마법사
+Powercfg.cpl : 전원 옵션 
+sysdm.cpl : 시스템 등록정보
+telephon.cpl : 전화 및 모뎀 옵션
+wscui.cpl : 보안센터
+ 
+ 
+ 
+ 
+ 
+[네트워크 명령어]
+ 
+ 
+ 
+Inetcpl.cpl : 인터넷 옵션 
+mstsc : 원격 데스크톱 연결
+netstat : 열린포트와 TCP/IP 프로토콜 정보
+ncpa.cpl : 네트워크 연결 
+ping 주소 : 핑 테스트
+telnet open 주소 : 텔넷 접속
+ 
+ 
+ 
+ 
+ 
+[MSC 명령어]
+ 
+ 
+ 
+compmgmt.msc : 컴퓨터 관리 
+devmgmt.msc : 장치관리자
+diskmgmt.msc : 디스크 관리
+dfrg.msc : 디스크 조각모음
+eventvwr.msc : 이벤트 뷰어 
+fsmgmt.msc : 공유폴더
+gpedit.msc : 로컬 컴퓨터 정책 
+lusrmgr.msc : 로컬 사용자 및 그룹
+perfmon.msc : 성능모니터 뷰 
+rsop.msc : 정책의 결과와 집합
+secpol.msc : 로컬 보안설정 
+services.msc : 서비스
+
+
+

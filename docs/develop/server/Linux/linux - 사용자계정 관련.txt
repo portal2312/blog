@@ -1,0 +1,92 @@
+1. 계정 생성 및 암호 설정 : useradd 명령을 통해 계정을 생성한 후 passwd 명령으로 패스워드를 지정한다.
+> su -                              (관리자 계정으로 변경)
+> useradd [옵션] "계정ID"    ( 계정 생성 )
+
+  //--------------------------------------------- 
+  [ 옵션 ]
+    -c : comment : 사용자 이름 또는 정보
+    -d : home_dir : 사용자 계정 홈 디렉토리
+    -e : expire_date : 사용자 계정 유효기간
+    -f : inactivie_time : 비활성 기간
+    -g : initial_group : 기본그룹
+    -G : group[,...] : 다중그룹
+    -s : shell : 로그인 기본 쉘
+    -u : uid : 사용자 계정 uid 
+  ---------------------------------------------//
+
+> vi /etc/passwd     (생성된 모든 계정을 볼 수 있음)
+  //---------------------------------------------
+    root : x : 0 : 0 : root : root : /bin/bash
+     ①   ②  ③  ④   ⑤     ⑥         ⑦
+   
+    ① : 사용자명
+    ② : 패스워드(/etc/shadow파일에 암호화되어 있음)
+    ③ : 사용자 계정 uid
+    ④ : 사용자 계정 gid
+    ⑤ : 사용자 계정 이름(정보)
+    ⑥ : 사용자 계정 홈디렉토리
+    ⑦ : 사용자 계정 로그인 쉘
+  ---------------------------------------------//
+
+> passwd "계정ID"   (암호 지정)
+
+
+
+
+
+2. 패스워드의 암호화  : 보안 문제로 패스워드를 암호화 하는 프로그램
+> shadows
+ /etc/shadow 파일 
+
+  // ---------------------------------------------
+   root : $1$0L2L0oTwd : 12751 : 0 : 99999 : 7 :    :      :
+     ①             ②              ③    ④     ⑤     ⑥  ⑦   ⑧   ⑨
+   
+    ① : 사용자명
+    ② : 패스워드
+    ③ : 패스워드 파일 최종 수정일
+    ④ : 패스워드 변경 최소일
+    ⑤ : 패스워드 변경 최대일
+    ⑥ : 패스워드 만료 경고기간
+    ⑦ : 패스워드 파기 기간(패스워드 파기 후 계정 비활성 기간)
+    ⑧ : 계정 만료 기간
+    ⑨ : 예약 필드 
+  ---------------------------------------------//
+
+3. 종료 및 재부팅
+> sudo init 10 (= 종료)
+> sudo init 6   (= 재부팅)
+
+
+
+
+
+
+
+
+
+
+4. 해상도 조정
+
+#vi /etc/default/grub
+
+in file
+
+GRUB_CMDLINE_LINUX="quite vga=795"
+
+#update-grub
+
+<vga>
+
+color| 640x480    800x600    1024x768   1280x1024
+
+
+
+6. ssh 설정 (http://blog.naver.com/ssamba/129099379)
+> apt-get install openssh-server  (서버올리기)
+> sudo /etc/init.d/ssh restart       (ssh 서버 재구동)
+> sudo netstat -ntlp | grep ssh   (포트22번으로 ssh가 보임)
+
+
+http://blog.naver.com/ssamba?Redirect=Log&logNo=163333072
+http://blog.naver.com/nforce7050?Redirect=Log&logNo=140134002627

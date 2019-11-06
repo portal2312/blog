@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Class System | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Class System" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="wikidoc 2. 핵심 컨셉 &gt; 2.03 class system" />
+<meta property="og:description" content="wikidoc 2. 핵심 컨셉 &gt; 2.03 class system" />
+<link rel="canonical" href="http://localhost:4000/blog/docs/develop/Frontend/sencha/extjs/6.x/doc/4_core_concepts/1_the_class_system.html" />
+<meta property="og:url" content="http://localhost:4000/blog/docs/develop/Frontend/sencha/extjs/6.x/doc/4_core_concepts/1_the_class_system.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-06T09:31:12+09:00" />
+<script type="application/ld+json">
+{"description":"wikidoc 2. 핵심 컨셉 &gt; 2.03 class system","headline":"Class System","dateModified":"2019-11-06T09:31:12+09:00","datePublished":"2019-11-06T09:31:12+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/docs/develop/Frontend/sencha/extjs/6.x/doc/4_core_concepts/1_the_class_system.html"},"url":"http://localhost:4000/blog/docs/develop/Frontend/sencha/extjs/6.x/doc/4_core_concepts/1_the_class_system.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Class System</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#overview">Overview</a></li>
+<li class="toc-entry toc-h2"><a href="#naming-conventions">Naming Conventions</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#classes">Classes</a></li>
+<li class="toc-entry toc-h3"><a href="#source-files">Source Files</a></li>
+<li class="toc-entry toc-h3"><a href="#methods-and-variables">Methods and Variables</a></li>
+<li class="toc-entry toc-h3"><a href="#examples">Examples</a></li>
+<li class="toc-entry toc-h3"><a href="#properties">Properties</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#declaration">Declaration</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#configuration">Configuration</a></li>
+<li class="toc-entry toc-h3"><a href="#statics">Statics</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#errors-handling-debugging">Errors Handling &amp; Debugging</a></li>
+<li class="toc-entry toc-h1"><a href="#reference">Reference</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#url">URL</a></li>
+</ul>
+</li>
+</ul><div class="highlight"><pre><code class="language-" data-lang="">wikidoc
+2. 핵심 컨셉 &gt; 2.03 class system
+</code></pre></div>
+<h2 id="overview">
+<a class="anchor" href="#overview" aria-hidden="true"><span class="octicon octicon-link"></span></a>Overview</h2>
+
+<ul>
+<li><p>친숙하고 배우기 쉬울 것</p></li>
+<li><p>빠른 개발, 쉬운 디버그, 신속하고 힘들지 않은 배포</p></li>
+<li><p>조직화, 확장성 및 유지 보수성 확보</p></li>
+</ul>
+
+<p>class 없고 프로타입 지향적(Prototype-oriented) 언어 (javascript 특징)</p>
+
+<ul>
+<li><p>유연함은 가장 강력한 기능이 된다.</p></li>
+<li><p>서로 다른 코딩 스타일과 기법을 사용함으로해서 발생되는 문제를 해결하는 방법은 다양</p></li>
+<li><p>비용이 예측 불가능하다면 곤란하다.</p></li>
+<li><p>통일 되지 않은 구조의 자바스크립트 코드가 재사용, 유지보수 및 이해가 어려움.</p></li>
+</ul>
+
+<p>class 기반 프로그래밍</p>
+
+<ul>
+<li><p>객체지향 프로그래밍의 가장 대중적인 모델</p></li>
+<li><p>클래스 기반 언어 들은 일반적으로 변수 형식에 대한 강한 제약(strong-typing), 캡슐화, 표준 코딩 규칙 등을 요구.</p></li>
+<li><p>개발자에 의해 더해진 이런 저런 원칙들로 인해서 코드는 향후 예측, 확장성 등을 시간의 흐름에 따라 갖음.</p></li>
+<li><p>자바스크립가 갖는 유연함이라는 장점은 제공하지 못함.</p></li>
+</ul>
+
+<h2 id="naming-conventions">
+<a class="anchor" href="#naming-conventions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Naming Conventions</h2>
+
+<p>코드 조직화, 구조화 하여 가독성을 높힘.</p>
+
+<h3 id="classes">
+<a class="anchor" href="#classes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Classes</h3>
+
+<p>적정한 네임스페이스를 명시하는 객체 속성 점 표시법(Object property dot-notation)에 의해 (.)으로 구분되어 패키지에 그룹으로 묶여야 하며, 최소한 하나의 유니크한 최상위 네임 스페이스에 속해야함.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">MyCompany.data.CoolProxyMyCompany.Applicaton
+</code></pre></div>
+<p>최상위 네임 스페이스와 실제 클래스 이름은 카멜 표기법. 그외 소문자 표기:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">MyCompany.form.action.AutoLoad
+</code></pre></div>
+<p>sencha에서 배포하지 않는 클래스는 절대 최상위 네임 스페이스로 Ext를 사용 못함.</p>
+
+<p>축약어 역시 위에서 설명한 카멜 표기법에 따라.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">MyCompany.server.Http
+</code></pre></div>
+<h3 id="source-files">
+<a class="anchor" href="#source-files" aria-hidden="true"><span class="octicon octicon-link"></span></a>Source Files</h3>
+
+<p>class 맵의 이름은 직접적으로 저장되는 경로를 나타냄.</p>
+
+<p>파일 하나당 한 class 만 포함해야 함.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// XXX: app root path == myapp</span>
+<span class="c1">// XXX: myapp/classic/src/view/main/Main.js</span>
+
+<span class="nx">requires</span><span class="p">:</span> <span class="p">[</span>
+    <span class="dl">'</span><span class="s1">Ext.plugin.Viewport</span><span class="dl">'</span><span class="p">,</span> <span class="c1">// XXX: myapp/ext/classic/classic/src/plugin/Viewport.js</span>
+    <span class="dl">'</span><span class="s1">Ext.window.MessageBox</span><span class="dl">'</span><span class="p">,</span>
+
+    <span class="dl">'</span><span class="s1">myapp.view.main.MainController</span><span class="dl">'</span><span class="p">,</span>  <span class="c1">// XXX: myapp/app/view/main/MainController.js</span>
+    <span class="dl">'</span><span class="s1">myapp.view.main.MainModel</span><span class="dl">'</span><span class="p">,</span>
+    <span class="dl">'</span><span class="s1">myapp.view.main.List</span><span class="dl">'</span>  <span class="c1">// XXX: myapp/classic/src/view/main/List.js</span>
+<span class="p">]</span>
+</code></pre></div>
+<ul>
+<li><p>myapp/ext: Extjs 소스.</p></li>
+<li><p>myapp/app: 공통 Application 소스.</p></li>
+<li><p>myapp/{\% toolkit-name \%}: 특정 toolkit만 적용되는 소스.</p></li>
+</ul>
+
+<p>모든 class는 최적의 개발, 유지보수 및 배포 위해 반드시 저장 규칙과 네임 스페이스 규칙을 준수.</p>
+
+<h3 id="methods-and-variables">
+<a class="anchor" href="#methods-and-variables" aria-hidden="true"><span class="octicon octicon-link"></span></a>Methods and Variables</h3>
+
+<ul>
+<li><p>class 이름과 비슷한 유형으로 메서드와 변수 이름도 알파벳 및 숫자(alphanumeric)로만 구성.</p></li>
+<li><p>기술적 용어에 포함된 숫자를 제외하면, 숫자는 허용은 되지만 권장 안함.</p></li>
+<li><p><code>_</code>, <code>-</code> 및 알파벳/숫자를 제외한 다른 문자는 사용할 수 없음.</p></li>
+<li><p>메서드 및 변수 이름은 항상 카멜 표기법. (축약어도 마찬가지)</p></li>
+</ul>
+
+<h3 id="examples">
+<a class="anchor" href="#examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples</h3>
+
+<p>생략</p>
+
+<h3 id="properties">
+<a class="anchor" href="#properties" aria-hidden="true"><span class="octicon octicon-link"></span></a>Properties</h3>
+
+<p>클래스 프로퍼티 이름은 상수(static constants)일 경우를 제외하고 위에서 설명한 규칙을 그대로 따른다.</p>
+
+<p>정적(Static) 클래스 프로퍼티는 반드시 모두 대문자로 표기:</p>
+
+<ul>
+<li><p>Ext.MessageBox.YES = “Yes”</p></li>
+<li><p>Ext.MessageBox.NO =“No”</p></li>
+<li><p>MyCompany.alien.Math.PI = “4.13”</p></li>
+</ul>
+
+<hr>
+
+<h2 id="declaration">
+<a class="anchor" href="#declaration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Declaration</h2>
+
+<p>class 는 <code>Ext.define()</code>만 선언 가능.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Ext</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="nx">className</span><span class="p">,</span> <span class="nx">members</span><span class="p">,</span> <span class="nx">onClassCreated</span><span class="p">);</span>
+</code></pre></div>
+<ul>
+<li><p>className: 클래스 이름</p></li>
+<li><p>member: 키(key) - 값(value) 쌍으로 이루어진 클래스 멤버의 컬랙션</p></li>
+<li><p>onClassCreated:</p></li>
+</ul>
+
+<p>선택적인 콜백 함수.</p>
+
+<p>선언된 클래스에서 require, include 하고 있는 패키지가 준비완료 되고,
+  클래스 자체가 완전히 생성되었을 때 호출.</p>
+
+<p>클래스 생성의 비동기적 특성 때문에 이 콜백 함수는 다양한 상황에서 유용하게 사용.</p>
+
+<p>참조: <a href="http://docs.sencha.com/extjs/6.2.1/guides/core_concepts/classes.html#Errors_Handling__amp__Debugging">Error Handling &amp; Debugging Section</a></p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Ext</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="dl">'</span><span class="s1">My.sample.Person</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Unknown</span><span class="dl">'</span><span class="p">,</span>
+
+    <span class="na">constructor</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+
+    <span class="na">eat</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">foodType</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> is eating: </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">foodType</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">bob</span> <span class="o">=</span> <span class="nx">Ext</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="dl">'</span><span class="s1">My.sample.Person</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">Bob</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="nx">bob</span><span class="p">.</span><span class="nx">eat</span><span class="p">(</span><span class="dl">"</span><span class="s2">Salad</span><span class="dl">"</span><span class="p">);</span> <span class="c1">// alert("Bob is eating: Salad");</span>
+</code></pre></div>
+<p><strong>주의:</strong> <code>Ext.create()</code> 사용해 My.sample.Person 인스턴스를 생성.
+new My.sample.Person() 사용가능. 그러나, 동적 로딩(Dynamic Loading)의 장점 이용하려면 항상 권장. 동적 로딩에 관한 정보는 [Getting Started Guide] 참고.</p>
+
+<h3 id="configuration">
+<a class="anchor" href="#configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuration</h3>
+
+<p><code>config</code> Propert: class 생성되기 전 강력한 <code>Ext.Class</code> 전처리기에 의해 처리.</p>
+
+<ul>
+<li><p>캡슐화 되어 다른 클래스 멤버와 분리.</p></li>
+<li><p>모든 <code>config</code> property에 대한 <code>getter</code>와 <code>setter</code> 메서드는</p></li>
+</ul>
+
+<p>정의되어 있지 않더라도 class 프로토타이핑을 통해 자동으로 생성.</p>
+
+<ul>
+<li>자동 생성된 <code>setter</code> 메서드가 내부적으로 값을 설정하기 전에 <code>apply</code> 메서드를 호출.</li>
+</ul>
+
+<p>(클래스에 정의 되어 있다면).</p>
+
+<ul>
+<li>
+<p>값을 설정하기 전에 사용자 로직의 실행이 필요한 경우,</p>
+
+<p><code>config</code> property의 <code>apply</code> 메서드를 오버라이드 가능.</p>
+</li>
+<li>
+<p>apply 메서드가 return 값이 없을 경우, <code>setter</code> 메서드는 값을 설정 안함.</p>
+
+<ul>
+<li>또한 <code>update</code> 메서드(정의 되어 있는 경우)가 설정 값이 변경되었을 경우 호출.</li>
+<li>apply, update 메서드 둘다 newValue값과 oldValue을 파라미터로 받음.</li>
+<li>
+<code>config</code> 사용 Ext Class는 <code>initConfig()</code> 수동 호출 필요 없음.</li>
+</ul>
+</li>
+</ul>
+
+<p>단, 사용 Class가 <code>Ext.Base</code> 상속하여 확장된 Class시 수동 호출 반드시 필요.</p>
+
+<p>예:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Ext</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="dl">'</span><span class="s1">My.own.Window</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">extend</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">Ext.Component</span><span class="dl">'</span><span class="p">,</span>
+
+   <span class="cm">/** @readonly */</span>
+   <span class="na">isWindow</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+
+   <span class="na">config</span><span class="p">:</span> <span class="p">{</span>
+       <span class="na">title</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Title Here</span><span class="dl">'</span><span class="p">,</span>
+
+       <span class="na">bottomBar</span><span class="p">:</span> <span class="p">{</span>
+           <span class="na">height</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+           <span class="na">resizable</span><span class="p">:</span> <span class="kc">false</span>
+       <span class="p">}</span>
+   <span class="p">},</span>
+
+   <span class="na">applyTitle</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">title</span><span class="p">)</span> <span class="p">{</span>
+       <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">Ext</span><span class="p">.</span><span class="nx">isString</span><span class="p">(</span><span class="nx">title</span><span class="p">)</span> <span class="o">||</span> <span class="nx">title</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+           <span class="nx">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">Error: Title must be a valid non-empty string</span><span class="dl">'</span><span class="p">);</span>
+       <span class="p">}</span>
+       <span class="k">else</span> <span class="p">{</span>
+           <span class="k">return</span> <span class="nx">title</span><span class="p">;</span>
+       <span class="p">}</span>
+   <span class="p">},</span>
+
+   <span class="na">applyBottomBar</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">bottomBar</span><span class="p">)</span> <span class="p">{</span>
+       <span class="k">if</span> <span class="p">(</span><span class="nx">bottomBar</span><span class="p">)</span> <span class="p">{</span>
+           <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">bottomBar</span><span class="p">)</span> <span class="p">{</span>
+               <span class="k">return</span> <span class="nx">Ext</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="dl">'</span><span class="s1">My.own.WindowBottomBar</span><span class="dl">'</span><span class="p">,</span> <span class="nx">bottomBar</span><span class="p">);</span>
+           <span class="p">}</span>
+           <span class="k">else</span> <span class="p">{</span>
+               <span class="k">this</span><span class="p">.</span><span class="nx">bottomBar</span><span class="p">.</span><span class="nx">setConfig</span><span class="p">(</span><span class="nx">bottomBar</span><span class="p">);</span>
+           <span class="p">}</span>
+       <span class="p">}</span>
+   <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="cm">/** A child component to complete the example. */</span>
+<span class="nx">Ext</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="dl">'</span><span class="s1">My.own.WindowBottomBar</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+   <span class="na">config</span><span class="p">:</span> <span class="p">{</span>
+       <span class="na">height</span><span class="p">:</span> <span class="kc">undefined</span><span class="p">,</span>
+       <span class="na">resizable</span><span class="p">:</span> <span class="kc">true</span>
+   <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>사용:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">myWindow</span> <span class="o">=</span> <span class="nx">Ext</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="dl">'</span><span class="s1">My.own.Window</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">title</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Hello World</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">bottomBar</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">height</span><span class="p">:</span> <span class="mi">60</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">myWindow</span><span class="p">.</span><span class="nx">getTitle</span><span class="p">());</span> <span class="c1">// alerts "Hello World"</span>
+
+<span class="nx">myWindow</span><span class="p">.</span><span class="nx">setTitle</span><span class="p">(</span><span class="dl">'</span><span class="s1">Something New</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">myWindow</span><span class="p">.</span><span class="nx">getTitle</span><span class="p">());</span> <span class="c1">// alerts "Something New"</span>
+
+<span class="nx">myWindow</span><span class="p">.</span><span class="nx">setTitle</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span> <span class="c1">// alerts "Error: Title must be a valid non-empty string"</span>
+
+<span class="nx">myWindow</span><span class="p">.</span><span class="nx">setBottomBar</span><span class="p">({</span> <span class="na">height</span><span class="p">:</span> <span class="mi">100</span> <span class="p">});</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">myWindow</span><span class="p">.</span><span class="nx">getBottomBar</span><span class="p">().</span><span class="nx">getHeight</span><span class="p">());</span> <span class="c1">// alerts 100</span>
+</code></pre></div>
+<h3 id="statics">
+<a class="anchor" href="#statics" aria-hidden="true"><span class="octicon octicon-link"></span></a>Statics</h3>
+
+<p>상수 멤버는 static config 이용해서 설정 가능.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Ext</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="dl">'</span><span class="s1">Computer</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">statics</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">instancesCount</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="na">factory</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">brand</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// 'this' in static methods refer to the class itself</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="k">this</span><span class="p">({</span><span class="na">brand</span><span class="p">:</span><span class="nx">brand</span><span class="p">});</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="na">config</span><span class="p">:{</span>
+        <span class="na">brand</span><span class="p">:</span><span class="kc">null</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+<span class="kd">var</span> <span class="nx">dellComputer</span> <span class="o">=</span> <span class="nx">Computer</span><span class="p">.</span><span class="nx">factory</span><span class="p">(</span><span class="dl">'</span><span class="s1">Dell</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">appleComputer</span> <span class="o">=</span> <span class="nx">Computer</span><span class="p">.</span><span class="nx">factory</span><span class="p">(</span><span class="dl">'</span><span class="s1">Mac</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">appleComputer</span><span class="p">.</span><span class="nx">getBrand</span><span class="p">());</span> <span class="c1">// using the auto-generated getter to get the value of a config property, Alerts “Mac”</span>
+</code></pre></div>
+<hr>
+
+<h2 id="errors-handling-debugging">
+<a class="anchor" href="#errors-handling-debugging" aria-hidden="true"><span class="octicon octicon-link"></span></a>Errors Handling &amp; Debugging</h2>
+
+<p><code>Ext.getDisplayName()</code> 메서드</p>
+
+<ul>
+<li><p>어떤 메서드라도 display name을 얻을 수 있음.</p></li>
+<li><p>오류가 발생하는 클래스와 메서드를 알려주기 때문에 유용하다.</p></li>
+</ul>
+<div class="highlight"><pre><code class="language-js" data-lang="js">  <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="dl">'</span><span class="s1">[</span><span class="dl">'</span><span class="o">+</span> <span class="nx">Ext</span><span class="p">.</span><span class="nx">getDisplayName</span><span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">callee</span><span class="p">)</span> <span class="o">+</span><span class="dl">'</span><span class="s1">] Some message here</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div>
+<p>브라우저 개발자 도구 참조.</p>
+
+<h1 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a><em>Reference</em>
+</h1>
+
+<h2 id="url">
+<a class="anchor" href="#url" aria-hidden="true"><span class="octicon octicon-link"></span></a>URL</h2>
+
+<ul>
+<li><a href="http://docs.sencha.com/extjs/6.2.1/guides/core_concepts/classes.html#Errors_Handling__amp__Debugging">http://docs.sencha.com/extjs/6.2.1/guides/core_concepts/classes.html#Errors_Handling__amp__Debugging</a></li>
+</ul>
+
+  </div>
+
+<div>
+  <div class="highlight"><pre><code class="language-" data-lang="">wikidoc
+2. 핵심 컨셉 &gt; 2.03 class system
+</code></pre></div>
+<h2 id="overview">Overview</h2>
+
+<ul>
+<li><p>친숙하고 배우기 쉬울 것</p></li>
+<li><p>빠른 개발, 쉬운 디버그, 신속하고 힘들지 않은 배포</p></li>
+<li><p>조직화, 확장성 및 유지 보수성 확보</p></li>
+</ul>
+
+<p>class 없고 프로타입 지향적(Prototype-oriented) 언어 (javascript 특징)</p>
+
+<ul>
+<li><p>유연함은 가장 강력한 기능이 된다.</p></li>
+<li><p>서로 다른 코딩 스타일과 기법을 사용함으로해서 발생되는 문제를 해결하는 방법은 다양</p></li>
+<li><p>비용이 예측 불가능하다면 곤란하다.</p></li>
+<li><p>통일 되지 않은 구조의 자바스크립트 코드가 재사용, 유지보수 및 이해가 어려움.</p></li>
+</ul>
+
+<p>class 기반 프로그래밍</p>
+
+<ul>
+<li><p>객체지향 프로그래밍의 가장 대중적인 모델</p></li>
+<li><p>클래스 기반 언어 들은 일반적으로 변수 형식에 대한 강한 제약(strong-typing), 캡슐화, 표준 코딩 규칙 등을 요구.</p></li>
+<li><p>개발자에 의해 더해진 이런 저런 원칙들로 인해서 코드는 향후 예측, 확장성 등을 시간의 흐름에 따라 갖음.</p></li>
+<li><p>자바스크립가 갖는 유연함이라는 장점은 제공하지 못함.</p></li>
+</ul>
+
+<h2 id="naming-conventions">Naming Conventions</h2>
+
+<p>코드 조직화, 구조화 하여 가독성을 높힘.</p>
+
+<h3 id="classes">Classes</h3>
+
+<p>적정한 네임스페이스를 명시하는 객체 속성 점 표시법(Object property dot-notation)에 의해 (.)으로 구분되어 패키지에 그룹으로 묶여야 하며, 최소한 하나의 유니크한 최상위 네임 스페이스에 속해야함.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">MyCompany.data.CoolProxyMyCompany.Applicaton
+</code></pre></div>
+<p>최상위 네임 스페이스와 실제 클래스 이름은 카멜 표기법. 그외 소문자 표기:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">MyCompany.form.action.AutoLoad
+</code></pre></div>
+<p>sencha에서 배포하지 않는 클래스는 절대 최상위 네임 스페이스로 Ext를 사용 못함.</p>
+
+<p>축약어 역시 위에서 설명한 카멜 표기법에 따라.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">MyCompany.server.Http
+</code></pre></div>
+<h3 id="source-files">Source Files</h3>
+
+<p>class 맵의 이름은 직접적으로 저장되는 경로를 나타냄.</p>
+
+<p>파일 하나당 한 class 만 포함해야 함.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// XXX: app root path == myapp</span>
+<span class="c1">// XXX: myapp/classic/src/view/main/Main.js</span>
+
+<span class="nx">requires</span><span class="p">:</span> <span class="p">[</span>
+    <span class="dl">'</span><span class="s1">Ext.plugin.Viewport</span><span class="dl">'</span><span class="p">,</span> <span class="c1">// XXX: myapp/ext/classic/classic/src/plugin/Viewport.js</span>
+    <span class="dl">'</span><span class="s1">Ext.window.MessageBox</span><span class="dl">'</span><span class="p">,</span>
+
+    <span class="dl">'</span><span class="s1">myapp.view.main.MainController</span><span class="dl">'</span><span class="p">,</span>  <span class="c1">// XXX: myapp/app/view/main/MainController.js</span>
+    <span class="dl">'</span><span class="s1">myapp.view.main.MainModel</span><span class="dl">'</span><span class="p">,</span>
+    <span class="dl">'</span><span class="s1">myapp.view.main.List</span><span class="dl">'</span>  <span class="c1">// XXX: myapp/classic/src/view/main/List.js</span>
+<span class="p">]</span>
+</code></pre></div>
+<ul>
+<li><p>myapp/ext: Extjs 소스.</p></li>
+<li><p>myapp/app: 공통 Application 소스.</p></li>
+<li><p>myapp/{\% toolkit-name \%}: 특정 toolkit만 적용되는 소스.</p></li>
+</ul>
+
+<p>모든 class는 최적의 개발, 유지보수 및 배포 위해 반드시 저장 규칙과 네임 스페이스 규칙을 준수.</p>
+
+<h3 id="methods-and-variables">Methods and Variables</h3>
+
+<ul>
+<li><p>class 이름과 비슷한 유형으로 메서드와 변수 이름도 알파벳 및 숫자(alphanumeric)로만 구성.</p></li>
+<li><p>기술적 용어에 포함된 숫자를 제외하면, 숫자는 허용은 되지만 권장 안함.</p></li>
+<li><p><code>_</code>, <code>-</code> 및 알파벳/숫자를 제외한 다른 문자는 사용할 수 없음.</p></li>
+<li><p>메서드 및 변수 이름은 항상 카멜 표기법. (축약어도 마찬가지)</p></li>
+</ul>
+
+<h3 id="examples">Examples</h3>
+
+<p>생략</p>
+
+<h3 id="properties">Properties</h3>
+
+<p>클래스 프로퍼티 이름은 상수(static constants)일 경우를 제외하고 위에서 설명한 규칙을 그대로 따른다.</p>
+
+<p>정적(Static) 클래스 프로퍼티는 반드시 모두 대문자로 표기:</p>
+
+<ul>
+<li><p>Ext.MessageBox.YES = “Yes”</p></li>
+<li><p>Ext.MessageBox.NO =“No”</p></li>
+<li><p>MyCompany.alien.Math.PI = “4.13”</p></li>
+</ul>
+
+<hr>
+
+<h2 id="declaration">Declaration</h2>
+
+<p>class 는 <code>Ext.define()</code>만 선언 가능.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Ext</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="nx">className</span><span class="p">,</span> <span class="nx">members</span><span class="p">,</span> <span class="nx">onClassCreated</span><span class="p">);</span>
+</code></pre></div>
+<ul>
+<li><p>className: 클래스 이름</p></li>
+<li><p>member: 키(key) - 값(value) 쌍으로 이루어진 클래스 멤버의 컬랙션</p></li>
+<li><p>onClassCreated:</p></li>
+</ul>
+
+<p>선택적인 콜백 함수.</p>
+
+<p>선언된 클래스에서 require, include 하고 있는 패키지가 준비완료 되고,
+  클래스 자체가 완전히 생성되었을 때 호출.</p>
+
+<p>클래스 생성의 비동기적 특성 때문에 이 콜백 함수는 다양한 상황에서 유용하게 사용.</p>
+
+<p>참조: <a href="http://docs.sencha.com/extjs/6.2.1/guides/core_concepts/classes.html#Errors_Handling__amp__Debugging" rel="nofollow" target="_blank">Error Handling &amp; Debugging Section</a></p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Ext</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="dl">'</span><span class="s1">My.sample.Person</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Unknown</span><span class="dl">'</span><span class="p">,</span>
+
+    <span class="na">constructor</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+
+    <span class="na">eat</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">foodType</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> is eating: </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">foodType</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">bob</span> <span class="o">=</span> <span class="nx">Ext</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="dl">'</span><span class="s1">My.sample.Person</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">Bob</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="nx">bob</span><span class="p">.</span><span class="nx">eat</span><span class="p">(</span><span class="dl">"</span><span class="s2">Salad</span><span class="dl">"</span><span class="p">);</span> <span class="c1">// alert("Bob is eating: Salad");</span>
+</code></pre></div>
+<p><strong>주의:</strong> <code>Ext.create()</code> 사용해 My.sample.Person 인스턴스를 생성.
+new My.sample.Person() 사용가능. 그러나, 동적 로딩(Dynamic Loading)의 장점 이용하려면 항상 권장. 동적 로딩에 관한 정보는 [Getting Started Guide] 참고.</p>
+
+<h3 id="configuration">Configuration</h3>
+
+<p><code>config</code> Propert: class 생성되기 전 강력한 <code>Ext.Class</code> 전처리기에 의해 처리.</p>
+
+<ul>
+<li><p>캡슐화 되어 다른 클래스 멤버와 분리.</p></li>
+<li><p>모든 <code>config</code> property에 대한 <code>getter</code>와 <code>setter</code> 메서드는</p></li>
+</ul>
+
+<p>정의되어 있지 않더라도 class 프로토타이핑을 통해 자동으로 생성.</p>
+
+<ul>
+<li>자동 생성된 <code>setter</code> 메서드가 내부적으로 값을 설정하기 전에 <code>apply</code> 메서드를 호출.</li>
+</ul>
+
+<p>(클래스에 정의 되어 있다면).</p>
+
+<ul>
+<li>
+<p>값을 설정하기 전에 사용자 로직의 실행이 필요한 경우,</p>
+
+<p><code>config</code> property의 <code>apply</code> 메서드를 오버라이드 가능.</p>
+</li>
+<li>
+<p>apply 메서드가 return 값이 없을 경우, <code>setter</code> 메서드는 값을 설정 안함.</p>
+
+<ul>
+<li>또한 <code>update</code> 메서드(정의 되어 있는 경우)가 설정 값이 변경되었을 경우 호출.</li>
+<li>apply, update 메서드 둘다 newValue값과 oldValue을 파라미터로 받음.</li>
+<li>
+<code>config</code> 사용 Ext Class는 <code>initConfig()</code> 수동 호출 필요 없음.</li>
+</ul>
+</li>
+</ul>
+
+<p>단, 사용 Class가 <code>Ext.Base</code> 상속하여 확장된 Class시 수동 호출 반드시 필요.</p>
+
+<p>예:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Ext</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="dl">'</span><span class="s1">My.own.Window</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">extend</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">Ext.Component</span><span class="dl">'</span><span class="p">,</span>
+
+   <span class="cm">/** @readonly */</span>
+   <span class="na">isWindow</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+
+   <span class="na">config</span><span class="p">:</span> <span class="p">{</span>
+       <span class="na">title</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Title Here</span><span class="dl">'</span><span class="p">,</span>
+
+       <span class="na">bottomBar</span><span class="p">:</span> <span class="p">{</span>
+           <span class="na">height</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+           <span class="na">resizable</span><span class="p">:</span> <span class="kc">false</span>
+       <span class="p">}</span>
+   <span class="p">},</span>
+
+   <span class="na">applyTitle</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">title</span><span class="p">)</span> <span class="p">{</span>
+       <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">Ext</span><span class="p">.</span><span class="nx">isString</span><span class="p">(</span><span class="nx">title</span><span class="p">)</span> <span class="o">||</span> <span class="nx">title</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+           <span class="nx">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">Error: Title must be a valid non-empty string</span><span class="dl">'</span><span class="p">);</span>
+       <span class="p">}</span>
+       <span class="k">else</span> <span class="p">{</span>
+           <span class="k">return</span> <span class="nx">title</span><span class="p">;</span>
+       <span class="p">}</span>
+   <span class="p">},</span>
+
+   <span class="na">applyBottomBar</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">bottomBar</span><span class="p">)</span> <span class="p">{</span>
+       <span class="k">if</span> <span class="p">(</span><span class="nx">bottomBar</span><span class="p">)</span> <span class="p">{</span>
+           <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">bottomBar</span><span class="p">)</span> <span class="p">{</span>
+               <span class="k">return</span> <span class="nx">Ext</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="dl">'</span><span class="s1">My.own.WindowBottomBar</span><span class="dl">'</span><span class="p">,</span> <span class="nx">bottomBar</span><span class="p">);</span>
+           <span class="p">}</span>
+           <span class="k">else</span> <span class="p">{</span>
+               <span class="k">this</span><span class="p">.</span><span class="nx">bottomBar</span><span class="p">.</span><span class="nx">setConfig</span><span class="p">(</span><span class="nx">bottomBar</span><span class="p">);</span>
+           <span class="p">}</span>
+       <span class="p">}</span>
+   <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="cm">/** A child component to complete the example. */</span>
+<span class="nx">Ext</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="dl">'</span><span class="s1">My.own.WindowBottomBar</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+   <span class="na">config</span><span class="p">:</span> <span class="p">{</span>
+       <span class="na">height</span><span class="p">:</span> <span class="kc">undefined</span><span class="p">,</span>
+       <span class="na">resizable</span><span class="p">:</span> <span class="kc">true</span>
+   <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>사용:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">myWindow</span> <span class="o">=</span> <span class="nx">Ext</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="dl">'</span><span class="s1">My.own.Window</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">title</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Hello World</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">bottomBar</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">height</span><span class="p">:</span> <span class="mi">60</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">myWindow</span><span class="p">.</span><span class="nx">getTitle</span><span class="p">());</span> <span class="c1">// alerts "Hello World"</span>
+
+<span class="nx">myWindow</span><span class="p">.</span><span class="nx">setTitle</span><span class="p">(</span><span class="dl">'</span><span class="s1">Something New</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">myWindow</span><span class="p">.</span><span class="nx">getTitle</span><span class="p">());</span> <span class="c1">// alerts "Something New"</span>
+
+<span class="nx">myWindow</span><span class="p">.</span><span class="nx">setTitle</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span> <span class="c1">// alerts "Error: Title must be a valid non-empty string"</span>
+
+<span class="nx">myWindow</span><span class="p">.</span><span class="nx">setBottomBar</span><span class="p">({</span> <span class="na">height</span><span class="p">:</span> <span class="mi">100</span> <span class="p">});</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">myWindow</span><span class="p">.</span><span class="nx">getBottomBar</span><span class="p">().</span><span class="nx">getHeight</span><span class="p">());</span> <span class="c1">// alerts 100</span>
+</code></pre></div>
+<h3 id="statics">Statics</h3>
+
+<p>상수 멤버는 static config 이용해서 설정 가능.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Ext</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="dl">'</span><span class="s1">Computer</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">statics</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">instancesCount</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="na">factory</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">brand</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// 'this' in static methods refer to the class itself</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="k">this</span><span class="p">({</span><span class="na">brand</span><span class="p">:</span><span class="nx">brand</span><span class="p">});</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="na">config</span><span class="p">:{</span>
+        <span class="na">brand</span><span class="p">:</span><span class="kc">null</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+<span class="kd">var</span> <span class="nx">dellComputer</span> <span class="o">=</span> <span class="nx">Computer</span><span class="p">.</span><span class="nx">factory</span><span class="p">(</span><span class="dl">'</span><span class="s1">Dell</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">appleComputer</span> <span class="o">=</span> <span class="nx">Computer</span><span class="p">.</span><span class="nx">factory</span><span class="p">(</span><span class="dl">'</span><span class="s1">Mac</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">appleComputer</span><span class="p">.</span><span class="nx">getBrand</span><span class="p">());</span> <span class="c1">// using the auto-generated getter to get the value of a config property, Alerts “Mac”</span>
+</code></pre></div>
+<hr>
+
+<h2 id="errors-handling-debugging">Errors Handling &amp; Debugging</h2>
+
+<p><code>Ext.getDisplayName()</code> 메서드</p>
+
+<ul>
+<li><p>어떤 메서드라도 display name을 얻을 수 있음.</p></li>
+<li><p>오류가 발생하는 클래스와 메서드를 알려주기 때문에 유용하다.</p></li>
+</ul>
+<div class="highlight"><pre><code class="language-js" data-lang="js">  <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="dl">'</span><span class="s1">[</span><span class="dl">'</span><span class="o">+</span> <span class="nx">Ext</span><span class="p">.</span><span class="nx">getDisplayName</span><span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">callee</span><span class="p">)</span> <span class="o">+</span><span class="dl">'</span><span class="s1">] Some message here</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div>
+<p>브라우저 개발자 도구 참조.</p>
+
+<h1 id="reference"><em>Reference</em></h1>
+
+<h2 id="url">URL</h2>
+
+<ul>
+<li><a href="http://docs.sencha.com/extjs/6.2.1/guides/core_concepts/classes.html#Errors_Handling__amp__Debugging" rel="nofollow" target="_blank">http://docs.sencha.com/extjs/6.2.1/guides/core_concepts/classes.html#Errors_Handling__amp__Debugging</a></li>
+</ul>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Posts | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Posts" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Posts 최근 글 01:00 git - clean.md Views 0 19-10-29 &lt;!----&gt; 06:07 except.md Views 0 19-10-07 &lt;!----&gt; 01:00 git - submodule remove.md Views 0 19-10-07 &lt;!----&gt; 01:00 README.md Views 0 19-10-07 &lt;!----&gt; 01:00 6_3_Stashing.md Views 0 19-10-07 &lt;!----&gt; 26:48 chapter_3_branch.md Views 0 19-10-07 &lt;!----&gt; 01:00 11_02_서브모듈 포한한 프로젝트 Clone.md Views 0 19-10-07 &lt;!----&gt; 01:00 11_06_서브모듈 팁.md Views 0 19-10-07 &lt;!----&gt; 17:45 11_03_서브모듈 포함한 프로젝트 작업.md Views 0 19-10-07 &lt;!----&gt; 13:36 git - submodule examples.md Views 0 19-10-07 &lt;!----&gt; 최근 작성된 10개의 문서입니다." />
+<meta property="og:description" content="Posts 최근 글 01:00 git - clean.md Views 0 19-10-29 &lt;!----&gt; 06:07 except.md Views 0 19-10-07 &lt;!----&gt; 01:00 git - submodule remove.md Views 0 19-10-07 &lt;!----&gt; 01:00 README.md Views 0 19-10-07 &lt;!----&gt; 01:00 6_3_Stashing.md Views 0 19-10-07 &lt;!----&gt; 26:48 chapter_3_branch.md Views 0 19-10-07 &lt;!----&gt; 01:00 11_02_서브모듈 포한한 프로젝트 Clone.md Views 0 19-10-07 &lt;!----&gt; 01:00 11_06_서브모듈 팁.md Views 0 19-10-07 &lt;!----&gt; 17:45 11_03_서브모듈 포함한 프로젝트 작업.md Views 0 19-10-07 &lt;!----&gt; 13:36 git - submodule examples.md Views 0 19-10-07 &lt;!----&gt; 최근 작성된 10개의 문서입니다." />
+<link rel="canonical" href="http://localhost:4000/blog/posts" />
+<meta property="og:url" content="http://localhost:4000/blog/posts" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<script type="application/ld+json">
+{"description":"Posts 최근 글 01:00 git - clean.md Views 0 19-10-29 &lt;!----&gt; 06:07 except.md Views 0 19-10-07 &lt;!----&gt; 01:00 git - submodule remove.md Views 0 19-10-07 &lt;!----&gt; 01:00 README.md Views 0 19-10-07 &lt;!----&gt; 01:00 6_3_Stashing.md Views 0 19-10-07 &lt;!----&gt; 26:48 chapter_3_branch.md Views 0 19-10-07 &lt;!----&gt; 01:00 11_02_서브모듈 포한한 프로젝트 Clone.md Views 0 19-10-07 &lt;!----&gt; 01:00 11_06_서브모듈 팁.md Views 0 19-10-07 &lt;!----&gt; 17:45 11_03_서브모듈 포함한 프로젝트 작업.md Views 0 19-10-07 &lt;!----&gt; 13:36 git - submodule examples.md Views 0 19-10-07 &lt;!----&gt; 최근 작성된 10개의 문서입니다.","headline":"Posts","@type":"WebPage","url":"http://localhost:4000/blog/posts","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <script src='/blog/dist/js/posts.bundle.js'></script>
+<h1>Posts</h1><div>
+    <h2>최근 글</h2><div id="card-slider-current" class="card-slider">
+  <div class="card-slider-row">
+    <div class="card-slider-column"><div class="card-slider-card">
+  <div class="card-slider-thumbnail">
+    <a href="/blog/docs/develop/VCS/Git/git%20-%20clean.html">
+      <img src="https://git-scm.com/images/logo@2x.png" alt="git - clean.md"><div class="card-slider-thumbnail-estimated-time">
+          01:00
+        </div></a>
+  </div>
+  <div class="card-slider-details">
+    <div class="card-slider-channel">
+      <a href="/blog">
+        <img src="/blog/assets/images/avatar-face.png" alt="">
+      </a>
+    </div>
+    <div class="card-slider-metadata">
+      <a href="/blog/docs/develop/VCS/Git/git%20-%20clean.html">
+        <h3><span>git - clean.md</span></h3>
+        <div class="card-slider-info">
+          <span>Views 0</span>
+          <span>19-10-29</span>
+        </div>
+      </a>
+    </div>
+    <div class="card-slider-menu">
+      <span><i class="fas fa-ellipsis-v"></i></span>
+      <!--<span><i class="fas fa-ellipsis-h"></i></span>-->
+    </div>
+  </div>
+</div>
+<div class="card-slider-card">
+  <div class="card-slider-thumbnail">
+    <a href="/blog/docs/develop/VCS/Git/except.html">
+      <img src="https://git-scm.com/images/logo@2x.png" alt="except.md"><div class="card-slider-thumbnail-estimated-time">
+          06:07
+        </div></a>
+  </div>
+  <div class="card-slider-details">
+    <div class="card-slider-channel">
+      <a href="/blog">
+        <img src="/blog/assets/images/avatar-face.png" alt="">
+      </a>
+    </div>
+    <div class="card-slider-metadata">
+      <a href="/blog/docs/develop/VCS/Git/except.html">
+        <h3><span>except.md</span></h3>
+        <div class="card-slider-info">
+          <span>Views 0</span>
+          <span>19-10-07</span>
+        </div>
+      </a>
+    </div>
+    <div class="card-slider-menu">
+      <span><i class="fas fa-ellipsis-v"></i></span>
+      <!--<span><i class="fas fa-ellipsis-h"></i></span>-->
+    </div>
+  </div>
+</div>
+<div class="card-slider-card">
+  <div class="card-slider-thumbnail">
+    <a href="/blog/docs/develop/VCS/Git/git%20-%20submodule%20remove.html">
+      <img src="https://git-scm.com/images/logo@2x.png" alt="git - submodule remove.md"><div class="card-slider-thumbnail-estimated-time">
+          01:00
+        </div></a>
+  </div>
+  <div class="card-slider-details">
+    <div class="card-slider-channel">
+      <a href="/blog">
+        <img src="/blog/assets/images/avatar-face.png" alt="">
+      </a>
+    </div>
+    <div class="card-slider-metadata">
+      <a href="/blog/docs/develop/VCS/Git/git%20-%20submodule%20remove.html">
+        <h3><span>git - submodule remove.md</span></h3>
+        <div class="card-slider-info">
+          <span>Views 0</span>
+          <span>19-10-07</span>
+        </div>
+      </a>
+    </div>
+    <div class="card-slider-menu">
+      <span><i class="fas fa-ellipsis-v"></i></span>
+      <!--<span><i class="fas fa-ellipsis-h"></i></span>-->
+    </div>
+  </div>
+</div>
+<div class="card-slider-card">
+  <div class="card-slider-thumbnail">
+    <a href="/blog/docs/develop/VCS/Git/README.html">
+      <img src="https://git-scm.com/images/logo@2x.png" alt="README.md"><div class="card-slider-thumbnail-estimated-time">
+          01:00
+        </div></a>
+  </div>
+  <div class="card-slider-details">
+    <div class="card-slider-channel">
+      <a href="/blog">
+        <img src="/blog/assets/images/avatar-face.png" alt="">
+      </a>
+    </div>
+    <div class="card-slider-metadata">
+      <a href="/blog/docs/develop/VCS/Git/README.html">
+        <h3><span>README.md</span></h3>
+        <div class="card-slider-info">
+          <span>Views 0</span>
+          <span>19-10-07</span>
+        </div>
+      </a>
+    </div>
+    <div class="card-slider-menu">
+      <span><i class="fas fa-ellipsis-v"></i></span>
+      <!--<span><i class="fas fa-ellipsis-h"></i></span>-->
+    </div>
+  </div>
+</div>
+<div class="card-slider-card">
+  <div class="card-slider-thumbnail">
+    <a href="/blog/docs/develop/VCS/Git/study/Pro_Git_ko_582/6/6_3_Stashing.html">
+      <img src="https://git-scm.com/images/logo@2x.png" alt="6_3_Stashing.md"><div class="card-slider-thumbnail-estimated-time">
+          01:00
+        </div></a>
+  </div>
+  <div class="card-slider-details">
+    <div class="card-slider-channel">
+      <a href="/blog">
+        <img src="/blog/assets/images/avatar-face.png" alt="">
+      </a>
+    </div>
+    <div class="card-slider-metadata">
+      <a href="/blog/docs/develop/VCS/Git/study/Pro_Git_ko_582/6/6_3_Stashing.html">
+        <h3><span>6_3_Stashing.md</span></h3>
+        <div class="card-slider-info">
+          <span>Views 0</span>
+          <span>19-10-07</span>
+        </div>
+      </a>
+    </div>
+    <div class="card-slider-menu">
+      <span><i class="fas fa-ellipsis-v"></i></span>
+      <!--<span><i class="fas fa-ellipsis-h"></i></span>-->
+    </div>
+  </div>
+</div>
+<div class="card-slider-card">
+  <div class="card-slider-thumbnail">
+    <a href="/blog/docs/develop/VCS/Git/study/Pro_Git_ko_582/chapter_3_branch.html">
+      <img src="https://git-scm.com/images/logo@2x.png" alt="chapter_3_branch.md"><div class="card-slider-thumbnail-estimated-time">
+          26:48
+        </div></a>
+  </div>
+  <div class="card-slider-details">
+    <div class="card-slider-channel">
+      <a href="/blog">
+        <img src="/blog/assets/images/avatar-face.png" alt="">
+      </a>
+    </div>
+    <div class="card-slider-metadata">
+      <a href="/blog/docs/develop/VCS/Git/study/Pro_Git_ko_582/chapter_3_branch.html">
+        <h3><span>chapter_3_branch.md</span></h3>
+        <div class="card-slider-info">
+          <span>Views 0</span>
+          <span>19-10-07</span>
+        </div>
+      </a>
+    </div>
+    <div class="card-slider-menu">
+      <span><i class="fas fa-ellipsis-v"></i></span>
+      <!--<span><i class="fas fa-ellipsis-h"></i></span>-->
+    </div>
+  </div>
+</div>
+<div class="card-slider-card">
+  <div class="card-slider-thumbnail">
+    <a href="/blog/docs/develop/VCS/Git/study/Pro_Git_ko_582/07_Git_%EB%8F%84%EA%B5%AC/11_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88/11_02_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88%20%ED%8F%AC%ED%95%9C%ED%95%9C%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20Clone.html">
+      <img src="https://git-scm.com/images/logo@2x.png" alt="11_02_서브모듈 포한한 프로젝트 Clone.md"><div class="card-slider-thumbnail-estimated-time">
+          01:00
+        </div></a>
+  </div>
+  <div class="card-slider-details">
+    <div class="card-slider-channel">
+      <a href="/blog">
+        <img src="/blog/assets/images/avatar-face.png" alt="">
+      </a>
+    </div>
+    <div class="card-slider-metadata">
+      <a href="/blog/docs/develop/VCS/Git/study/Pro_Git_ko_582/07_Git_%EB%8F%84%EA%B5%AC/11_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88/11_02_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88%20%ED%8F%AC%ED%95%9C%ED%95%9C%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20Clone.html">
+        <h3><span>11_02_서브모듈 포한한 프로젝트 Clone.md</span></h3>
+        <div class="card-slider-info">
+          <span>Views 0</span>
+          <span>19-10-07</span>
+        </div>
+      </a>
+    </div>
+    <div class="card-slider-menu">
+      <span><i class="fas fa-ellipsis-v"></i></span>
+      <!--<span><i class="fas fa-ellipsis-h"></i></span>-->
+    </div>
+  </div>
+</div>
+<div class="card-slider-card">
+  <div class="card-slider-thumbnail">
+    <a href="/blog/docs/develop/VCS/Git/study/Pro_Git_ko_582/07_Git_%EB%8F%84%EA%B5%AC/11_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88/11_06_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88%20%ED%8C%81.html">
+      <img src="https://git-scm.com/images/logo@2x.png" alt="11_06_서브모듈 팁.md"><div class="card-slider-thumbnail-estimated-time">
+          01:00
+        </div></a>
+  </div>
+  <div class="card-slider-details">
+    <div class="card-slider-channel">
+      <a href="/blog">
+        <img src="/blog/assets/images/avatar-face.png" alt="">
+      </a>
+    </div>
+    <div class="card-slider-metadata">
+      <a href="/blog/docs/develop/VCS/Git/study/Pro_Git_ko_582/07_Git_%EB%8F%84%EA%B5%AC/11_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88/11_06_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88%20%ED%8C%81.html">
+        <h3><span>11_06_서브모듈 팁.md</span></h3>
+        <div class="card-slider-info">
+          <span>Views 0</span>
+          <span>19-10-07</span>
+        </div>
+      </a>
+    </div>
+    <div class="card-slider-menu">
+      <span><i class="fas fa-ellipsis-v"></i></span>
+      <!--<span><i class="fas fa-ellipsis-h"></i></span>-->
+    </div>
+  </div>
+</div>
+<div class="card-slider-card">
+  <div class="card-slider-thumbnail">
+    <a href="/blog/docs/develop/VCS/Git/study/Pro_Git_ko_582/07_Git_%EB%8F%84%EA%B5%AC/11_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88/11_03_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88%20%ED%8F%AC%ED%95%A8%ED%95%9C%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%EC%9E%91%EC%97%85.html">
+      <img src="https://git-scm.com/images/logo@2x.png" alt="11_03_서브모듈 포함한 프로젝트 작업.md"><div class="card-slider-thumbnail-estimated-time">
+          17:45
+        </div></a>
+  </div>
+  <div class="card-slider-details">
+    <div class="card-slider-channel">
+      <a href="/blog">
+        <img src="/blog/assets/images/avatar-face.png" alt="">
+      </a>
+    </div>
+    <div class="card-slider-metadata">
+      <a href="/blog/docs/develop/VCS/Git/study/Pro_Git_ko_582/07_Git_%EB%8F%84%EA%B5%AC/11_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88/11_03_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88%20%ED%8F%AC%ED%95%A8%ED%95%9C%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%EC%9E%91%EC%97%85.html">
+        <h3><span>11_03_서브모듈 포함한 프로젝트 작업.md</span></h3>
+        <div class="card-slider-info">
+          <span>Views 0</span>
+          <span>19-10-07</span>
+        </div>
+      </a>
+    </div>
+    <div class="card-slider-menu">
+      <span><i class="fas fa-ellipsis-v"></i></span>
+      <!--<span><i class="fas fa-ellipsis-h"></i></span>-->
+    </div>
+  </div>
+</div>
+<div class="card-slider-card">
+  <div class="card-slider-thumbnail">
+    <a href="/blog/docs/develop/VCS/Git/study/Pro_Git_ko_582/07_Git_%EB%8F%84%EA%B5%AC/11_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88/git%20-%20submodule%20examples.html">
+      <img src="https://git-scm.com/images/logo@2x.png" alt="git - submodule examples.md"><div class="card-slider-thumbnail-estimated-time">
+          13:36
+        </div></a>
+  </div>
+  <div class="card-slider-details">
+    <div class="card-slider-channel">
+      <a href="/blog">
+        <img src="/blog/assets/images/avatar-face.png" alt="">
+      </a>
+    </div>
+    <div class="card-slider-metadata">
+      <a href="/blog/docs/develop/VCS/Git/study/Pro_Git_ko_582/07_Git_%EB%8F%84%EA%B5%AC/11_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88/git%20-%20submodule%20examples.html">
+        <h3><span>git - submodule examples.md</span></h3>
+        <div class="card-slider-info">
+          <span>Views 0</span>
+          <span>19-10-07</span>
+        </div>
+      </a>
+    </div>
+    <div class="card-slider-menu">
+      <span><i class="fas fa-ellipsis-v"></i></span>
+      <!--<span><i class="fas fa-ellipsis-h"></i></span>-->
+    </div>
+  </div>
+</div>
+</div>
+  </div><div class="card-slider-btn card-slider-btn-left">
+  <div class="card-slider-btn-arrow">
+    <span>
+      <i class="card-slider-btn-arrow-left"></i>
+    </span>
+  </div>
+</div>
+<div class="card-slider-btn card-slider-btn-right">
+  <div class="card-slider-btn-arrow">
+    <span>
+      <i class="card-slider-btn-arrow-right"></i>
+    </span>
+  </div>
+</div>
+</div><p>최근 작성된 10개의 문서입니다.</p>
+  </div>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

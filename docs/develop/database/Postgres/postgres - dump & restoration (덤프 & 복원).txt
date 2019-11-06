@@ -1,0 +1,51 @@
+# postgres - dump﻿
+
+1. dump - nom database (= backup)
+su - postgres
+pg_dump -U postgres nom > /home/postgres/nom.sql
+
+2. 복원
+1) postgresql restart (기존 DB 연결 client 일괄 리셋)
+> su -
+#> /etc/init.d/postgresql restart
+su - postgres
+dropdb -U postgres nom
+createdb -U postgres nom
+
+4) 복원
+psql -U postgres nom < /home/postgres/nom.sql
+
+5) 테스트
+psql -U postgres nom 진입
+
+\dt  <-- 테이블 목록 보기
+
+## 대용량 데이터베이스 다루기
+
+dump 내용 압축:
+
+```bash
+pg_dump -U postgres --dbname=dbname | gzip > filename.gz
+```
+
+분할:
+
+```
+split -b 32m filename.gz filename_gz.split
+```
+
+분할 복원:
+
+```
+cat filename_gz.split* > filename.gz
+```
+
+Database 복원:
+
+```
+gunzip -c filename.gz | psql dbname
+```
+
+## Reference
+
+http://postgresql.kr/docs/9.6/backup-dump.html

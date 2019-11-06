@@ -1,0 +1,2 @@
+﻿[v] Auto Reveal
+file open 시 tree-view 목록에서 자동으로 선택해줌.

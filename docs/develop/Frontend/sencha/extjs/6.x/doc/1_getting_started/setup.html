@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Getting Started | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Getting Started" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="단일 명령을 사용하면 로컬 웹 서버에서 실행할 수있는 완전한 기능의 &quot;범용&quot;시작 응용 프로그램을 사용." />
+<meta property="og:description" content="단일 명령을 사용하면 로컬 웹 서버에서 실행할 수있는 완전한 기능의 &quot;범용&quot;시작 응용 프로그램을 사용." />
+<link rel="canonical" href="http://localhost:4000/blog/docs/develop/Frontend/sencha/extjs/6.x/doc/1_getting_started/setup.html" />
+<meta property="og:url" content="http://localhost:4000/blog/docs/develop/Frontend/sencha/extjs/6.x/doc/1_getting_started/setup.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-06T09:31:12+09:00" />
+<script type="application/ld+json">
+{"description":"단일 명령을 사용하면 로컬 웹 서버에서 실행할 수있는 완전한 기능의 &quot;범용&quot;시작 응용 프로그램을 사용.","headline":"Getting Started","dateModified":"2019-11-06T09:31:12+09:00","datePublished":"2019-11-06T09:31:12+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/docs/develop/Frontend/sencha/extjs/6.x/doc/1_getting_started/setup.html"},"url":"http://localhost:4000/blog/docs/develop/Frontend/sencha/extjs/6.x/doc/1_getting_started/setup.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Getting Started</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#next-steps">Next Steps</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#classic">Classic</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#tabs">Tabs</a>
+<ul>
+<li class="toc-entry toc-h5"><a href="#ui-styling">UI Styling</a></li>
+<li class="toc-entry toc-h5"><a href="#responsive">Responsive</a></li>
+<li class="toc-entry toc-h5"><a href="#view-models-and-data-binding">View Models and Data Binding</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h4"><a href="#grid">Grid</a>
+<ul>
+<li class="toc-entry toc-h5"><a href="#store">Store</a></li>
+<li class="toc-entry toc-h5"><a href="#listeners">Listeners</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#mordern">Mordern</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#tabs">Tabs</a></li>
+<li class="toc-entry toc-h4"><a href="#modern-grid">Modern Grid</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#universal">Universal</a></li>
+<li class="toc-entry toc-h3"><a href="#change-themes">Change Themes</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#styling-your-application">Styling Your Application</a></li>
+<li class="toc-entry toc-h1"><a href="#reference">Reference</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#url">URL</a></li>
+</ul>
+</li>
+</ul><p>단일 명령을 사용하면 로컬 웹 서버에서 실행할 수있는 완전한 기능의 "범용"시작 응용 프로그램을 사용.</p>
+
+<p>"보편적인" 응용 프로그램에는 저장소, 모델 및 컨트롤러의 핵심 세트가 포함되어 있으며 Classic, Modern의 두 가지 툴킷을 통해 두 가지보기 세트가 제공.</p>
+
+<p><code>Classic Toolkit</code>: 레거시 브라우저, 태블릿 및 터치 스크린 랩톱을 지원하는 Ext JS 코드베이스의 전통적인 부분이 포함.</p>
+
+<p><code>Modern Toolkit</code>: 최신 브라우저, 태블릿 및 휴대 전화를 지원하는 터치 친화적인 코드베이스가 포함.
+ (Sencha Touch)</p>
+
+<ol>
+<li><p>Download Cmd</p></li>
+<li><p>Downlaod Extjs SDK</p></li>
+<li>
+<p>commands</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sencha <span class="nt">-sdk</span> /path/to/extjs/framework generate app AppName path/to/app
+<span class="nv">$ </span><span class="nb">cd</span> /path/to/app
+<span class="nv">$ </span>sencha app watch
+
+<span class="c"># ...</span>
+<span class="c"># [INF] Waiting for changes...</span>
+</code></pre></div>
+</li>
+</ol>
+
+<p><a href="http://localhost:1841">http://localhost:1841</a> 로 접속.</p>
+
+<p><code>sencha app watch</code> 은 application 이 최신상태가 됨을 말함.</p>
+
+<p><strong>Note:</strong> <code>Ctrl + c</code> 현재 상태 취소.</p>
+
+<p><strong>Note:</strong> 자세한 내용은 Sencha Cmd 확인.</p>
+
+<hr>
+
+<h2 id="next-steps">
+<a class="anchor" href="#next-steps" aria-hidden="true"><span class="octicon octicon-link"></span></a>Next Steps</h2>
+
+<p>위에서 언급했듯이 Universal 응용 프로그램은 세 가지 중요한 영역으로 구성됩니다.</p>
+
+<ul>
+<li>Shard app area (stores, models, controllers 가장 적합).</li>
+</ul>
+
+<p>이 영역은 application의 root에 있는 app 폴더에서 찾을 수 있음.</p>
+
+<ul>
+<li>Classic app area (응용 프로그램의 고전적인 측면에 특정한보기 및 논리).</li>
+</ul>
+
+<p>이 영역은 application의 root에 있는 classic/src 폴더에서 찾을 수 있음.</p>
+
+<ul>
+<li>Modern app area (응용 프로그램의 현대적인 측면에 특정한보기 및 논리).</li>
+</ul>
+
+<p>이 영역은 application의 root에 있는 modern/src 폴더에서 찾을 수 있음.</p>
+
+<p>이 작은 application은 Ext JS의 많은 기능을 보여줌. 모든 것을 충분히 논의 할 공간이 없으므로 관련 비트에 대한 간략한 개요를 살펴 보겠음. 가능한 경우 각 주제에 대해보다 자세한 정보를 제공하도록하겠음.</p>
+
+<p><code>MyApp/classic/src/view/main/</code> 에 있는 Main classic view를 평가 해보겠음.</p>
+
+<hr>
+
+<h3 id="classic">
+<a class="anchor" href="#classic" aria-hidden="true"><span class="octicon octicon-link"></span></a>Classic</h3>
+
+<p>Main classic view는 [build target]에서 달리 지정하지 않는 한 누군가
+데스크톱 브라우저나 태블릿을 사용할 때마다 표시됨.
+IDE 또는 텍스트 편집기를 사용하여 MyApp/classic/src/view/main/Main.js 열기.
+이것은 고전적인 응용 프로그램의 주요 진입 점입니다.
+또한 tabpanel과 네 개의 tab이있는 container입니다.
+또한 첫 번째 tab에는 grid class가 포함되어 있습니다.
+tabs을 살펴 봅시다.</p>
+
+<h4 id="tabs">
+<a class="anchor" href="#tabs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tabs</h4>
+
+<p>생략</p>
+
+<h5 id="ui-styling">
+<a class="anchor" href="#ui-styling" aria-hidden="true"><span class="octicon octicon-link"></span></a>UI Styling</h5>
+
+<p>ExtJS framework의 모든 구성 요소에는 기본적으로 <code>default</code>인 <code>UI</code> 구성이 있음.</p>
+
+<p>이 속성은 application의 구성 요소가 다른 스타일을 가지도록 변경 될 수 있음.</p>
+
+<p>대부분의 ExtJS 구성 요소에는 새 UI를 빠르게 생성 할 수있는 <code>SASS @mixin</code>이 있습니다.</p>
+
+<p>포함: Ext.panel.Panel, Ext.button.Button, Ext.Toolbar, Ext.window.Window 등</p>
+
+<p>우리의 tabpanel의 사용자 정의 UI를 열고 무엇이 완료되고 있는지 살펴보기.</p>
+
+<p>tab panel UI 정의는 다음에서 찾을 수 있음:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">classic/sass/src/view/main/Main.scss
+</code></pre></div>
+<p>UI를 만드는 것은 간단. UI를 만들려는 구성 요소에 대해 <code>@mixin</code>을 호출만 하면 됨.</p>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="k">@include</span> <span class="n">extjs-tab-panel-ui</span><span class="p">(</span>
+    <span class="err">$</span><span class="n">ui</span><span class="p">:</span> <span class="s2">'navigation'</span>
+<span class="p">);</span>
+</code></pre></div>
+<p><code>@mixin</code> 내의 모든 변수는 원하는대로 수정할 수 있음.</p>
+
+<p>다음과 같이 구성 요소에 UI를 연결:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// classic/src/view/main/Main.js</span>
+
+<span class="nx">ui</span><span class="p">:</span> <span class="dl">'</span><span class="s1">navigation</span><span class="dl">'</span><span class="p">,</span>
+</code></pre></div>
+<p>아래에서 SASS로 application을 Styling하는 방법에 대해 자세히 설명.</p>
+
+<h5 id="responsive">
+<a class="anchor" href="#responsive" aria-hidden="true"><span class="octicon octicon-link"></span></a>Responsive</h5>
+
+<p>또한 우리는 tabPanel과 <code>tabConfig</code>의 Plugin에 <a href="http://docs.sencha.com/extjs/6.2.0/classic/Ext.plugin.Responsive.html">responsive</a>을 추가 한 것을 봤을 것임.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// classic/src/view/main/Main.js</span>
+
+<span class="c1">// TabPanel    </span>
+<span class="nx">responsiveConfig</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nl">tall</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nl">headerPosition</span><span class="p">:</span> <span class="dl">'</span><span class="s1">top</span><span class="dl">'</span>
+    <span class="p">},</span>
+    <span class="nx">wide</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nl">headerPosition</span><span class="p">:</span> <span class="dl">'</span><span class="s1">left</span><span class="dl">'</span>
+    <span class="p">}</span>
+<span class="p">},</span>
+
+<span class="c1">// Tab Config</span>
+<span class="nx">tabConfig</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nl">plugins</span><span class="p">:</span> <span class="dl">'</span><span class="s1">responsive</span><span class="dl">'</span><span class="p">,</span>
+    <span class="nx">responsiveConfig</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nl">wide</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nl">iconAlign</span><span class="p">:</span> <span class="dl">'</span><span class="s1">left</span><span class="dl">'</span><span class="p">,</span>
+            <span class="nx">textAlign</span><span class="p">:</span> <span class="dl">'</span><span class="s1">left</span><span class="dl">'</span>
+        <span class="p">},</span>
+        <span class="nx">tall</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nl">iconAlign</span><span class="p">:</span> <span class="dl">'</span><span class="s1">top</span><span class="dl">'</span><span class="p">,</span>
+            <span class="nx">textAlign</span><span class="p">:</span> <span class="dl">'</span><span class="s1">center</span><span class="dl">'</span><span class="p">,</span>
+            <span class="nx">width</span><span class="p">:</span> <span class="mi">120</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>이 plugin을 사용하면 viewport의 너비와 높이를 기준으로 탭 패널 및 탭 텍스트/글리프 위치를 수정하는 규칙을 설정할 수 있음.
+이 경우 브라우저 창을 키가 아닌 너비보다 작게 만들면 탭 패널이 화면 상단으로 이동하고 탭 텍스트와 글리프의 위치가 변경됨.</p>
+
+<p>viewport가 너비보다 넓은 경우 tab이 왼쪽에 나타나고 tab 텍스트/글리프 위치를 적절하게 조정함.</p>
+
+<p>반응 형 plugin에 대한 자세한 내용을 읽고 [here]에 여러 환경을 위한 application을 build.</p>
+
+<p>tab 2, 3 및 4에는 하드 코딩 된 데이터가 없음을 알 수 있음. 이는 ViewModel에서 데이터를 바인딩하기 때문.</p>
+
+<h5 id="view-models-and-data-binding">
+<a class="anchor" href="#view-models-and-data-binding" aria-hidden="true"><span class="octicon octicon-link"></span></a>View Models and Data Binding</h5>
+
+<p>View Models 및 Data Binding 적은 코드로 더 많은 작업을 수행 할 수 있고 더 많은 선언적 스타일로 작성할 수 있음.</p>
+
+<p>[View Model] 데이터 객체를 관리하는 class.
+그런 다음이 데이터에 관심이있는 구성 요소를 바인딩하고 변경할 때 이를 알림.
+[ViewController] 와 같은 ViewModel은 이를 참조하는 view가 소유합니다.</p>
+
+<p>대부분 Setter 메서드로 "설정" 될 수 있는 모든 구성은 ViewModel의 Data에 binding될 수 있음.
+이 예제에서는 <code>setHtml()</code> 및 <code>setTitle()</code>을 사용.</p>
+
+<p>다음:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// View Model Declaration</span>
+<span class="nx">viewModel</span><span class="p">:</span> <span class="dl">'</span><span class="s1">main</span><span class="dl">'</span><span class="p">,</span>
+
+<span class="c1">// Binding to header's title</span>
+<span class="nx">header</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nl">title</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nl">bind</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nl">text</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{name}</span><span class="dl">'</span>  <span class="c1">// XXX: MainModel.js 에서 정의되어 있음</span>
+        <span class="p">},</span>
+        <span class="nx">flex</span><span class="p">:</span> <span class="mi">0</span>
+    <span class="p">}</span>
+<span class="p">},</span>
+
+<span class="c1">// Binding to tab's HTML config</span>
+<span class="p">{</span>
+    <span class="na">title</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Users</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">iconCls</span><span class="p">:</span> <span class="dl">'</span><span class="s1">fa-user</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">bind</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">html</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{loremIpsum}</span><span class="dl">'</span>  <span class="c1">// XXX: MainModel.js 에서 정의되어 있음</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>데이터가 범용 ViewModel(<code>./myapp/app/view/main/MainModel.js</code>)에서 tabs 및 app title에 바인딩되어 있음.
+ViewModel의 데이터는 정적으로 설정되지만 대부분의 경우 proxy를 통해 생성.</p>
+
+<p>참조: <a href="http://docs.sencha.com/extjs/6.2.1/guides/application_architecture/view_models_data_binding.html">ViewModels and Data Binding Guide</a></p>
+
+<h4 id="grid">
+<a class="anchor" href="#grid" aria-hidden="true"><span class="octicon octicon-link"></span></a>Grid</h4>
+
+<p><code>MyApp/classic/src/view/main/List.js</code> 열어 Ext.grid.Panel 살펴보기.</p>
+
+<p>List.js는 main tab panel의 첫 번째 tab 내에 laod되는 grid를 포함.</p>
+
+<h5 id="store">
+<a class="anchor" href="#store" aria-hidden="true"><span class="octicon octicon-link"></span></a>Store</h5>
+
+<p>보시다시피 store을 일종의 직원으로 지정하고 있음.
+신중하게 보면 고전적인 영역 어디에도 상점 정의가 없다는 것을 알 수 있음.
+이 store은 보편적인 영역인 <code>app/store/Personnel.js</code>에 있음.
+Classic Grid와 Modern Grid가 동일한 store과 data를 공유 할 수 있도록 여기에 배치.</p>
+
+<p>실제 상황에서 위의 저장소에는 proxy가 서버에서 정보를 가져올 수 있도록하는
+url 속성이 있는 proxy가 있음.</p>
+
+<p>예제에서는 시각화를 위해 data를 인라인으로 유지. (대부분의 상황은 inline data 필요없음)</p>
+
+<h5 id="listeners">
+<a class="anchor" href="#listeners" aria-hidden="true"><span class="octicon octicon-link"></span></a>Listeners</h5>
+
+<p>Listener 객체에는 'onItemSelected'를 호출하는 select 이벤트가 포함되어 있음.</p>
+
+<p>다시, class 영역에서 해당 로직을 가진 view controller를 찾을 수 없음.</p>
+
+<p>Modern과 Classic의 Grid 모두 <code>select</code> 이벤트를 공유하고 유사하게 반응하기 때문에
+범용 섹션에서 MainController.js를 찾을 수 있음.</p>
+
+<p>아직 <code>myapp/app/view/main/MainController.js</code> 열지 않은 경우.</p>
+
+<p>기본 로직:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">onItemSelected</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">sender</span><span class="p">,</span> <span class="nx">record</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">Ext</span><span class="p">.</span><span class="nx">Msg</span><span class="p">.</span><span class="nx">confirm</span><span class="p">(</span><span class="dl">'</span><span class="s1">Confirm</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">Are you sure?</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">onConfirm</span><span class="dl">'</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+<span class="p">},</span>
+</code></pre></div>
+<p>우리의 grid와 Modern toolkit의 grid(more minute)에서 우리는 <code>select</code> 이벤트를 처리하고 있음.
+controller 로직은 두 구성 요소의 <code>select</code> 이벤트를 동일하게 처리.</p>
+
+<p>범용 controller에 대한 자세한 내용은 페이지 아래로 더 자세히 설명.</p>
+
+<hr>
+
+<h3 id="mordern">
+<a class="anchor" href="#mordern" aria-hidden="true"><span class="octicon octicon-link"></span></a>Mordern</h3>
+
+<p>Classic과 마찬가지로 MyApp/modern/src/view/main/Main.js를 검토.</p>
+
+<p>이것은 현대 application의 주요 진입 점.</p>
+
+<p>거의 같은 방식으로 Main은 tab panel과 4개의 tab이있는 container임을 알 수 있음.</p>
+
+<p>또한 첫 번째 tab에는 Modern Grid가 포함되어 있음.</p>
+
+<h4 id="tabs">
+<a class="anchor" href="#tabs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tabs</h4>
+
+<p>현대 toolkit의 tab panel은 전체 화면인 여러보기간에 전환 할 수있는 좋은 방법임.</p>
+
+<p>TabPanel의 각 구성 요소는 탭될 때 구성 요소를 보여주는 고유 한 탭을 가져옴.</p>
+
+<p>탭은 TabPanel의 상단 또는 하단에 배치 할 수 있습니다.</p>
+
+<p>이보기와 클래식보기 사이에는 많은 유사점이 있습니다. 예를 들면 :</p>
+
+<ul>
+<li><p>ViewController 공유</p></li>
+<li><p>ViewModel 공유</p></li>
+<li><p>Bound Config (설정 나눔)</p></li>
+</ul>
+
+<h4 id="modern-grid">
+<a class="anchor" href="#modern-grid" aria-hidden="true"><span class="octicon octicon-link"></span></a>Modern Grid</h4>
+
+<p>Modern Toolkit에는 touch 장치에 최적화 된 간단한 grid가 포함되어 있습니다.</p>
+
+<p>생략</p>
+
+<hr>
+
+<h3 id="universal">
+<a class="anchor" href="#universal" aria-hidden="true"><span class="octicon octicon-link"></span></a>Universal</h3>
+
+<p>우리는 application의 보편적인 섹션에 있는 모든 코드를 다루었음.</p>
+
+<p>즉, 이 공간을 사용할 때 조심스럽고 일관성이 있는지 확인해야 함.</p>
+
+<p>이때 응용 프로그램보기 자체는 범용 섹션에 배치하지 않아야 함.</p>
+
+<p>하나의 toolkit이나 다른 toolkit에 존재하지 않는 class를 필요로하거나 참조 할 경우,
+application을 빌드할 때 오류가 발생함.</p>
+
+<p>이 영역은 일반적으로 두 toolkit의 핵심에 있는 것들을 위해 약속되어야 함.</p>
+
+<ul>
+<li><p>ViewControllers</p></li>
+<li><p>ViewModels</p></li>
+<li><p>Models</p></li>
+<li><p>Store</p></li>
+</ul>
+
+<p>앞으로, 우리는 구성 요소 패리티를 위해 노력하고 있으므로 기술적 공유 관점에서 용어가
+덜 우려 될 것임.</p>
+
+<p>마지막으로, 활용하려고 하는 모든 이벤트가 동일한 매개 변수를 가지며 두 toolkit에서
+동일한 의도로 실행되도록 하는 것이 좋음.</p>
+
+<hr>
+
+<h3 id="change-themes">
+<a class="anchor" href="#change-themes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Change Themes</h3>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// myapp/app.json</span>
+
+<span class="c1">// XXX: 기본 테마</span>
+<span class="c1">// "theme": "theme-neptune"</span>
+<span class="dl">"</span><span class="s2">theme</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">theme-crisp</span><span class="dl">"</span>
+</code></pre></div><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sencha app watch
+<span class="c"># ...</span>
+</code></pre></div>
+<hr>
+
+<h2 id="styling-your-application">
+<a class="anchor" href="#styling-your-application" aria-hidden="true"><span class="octicon octicon-link"></span></a>Styling Your Application</h2>
+
+<p>대부분의 경우 기본 테마의 용량 이상으로 application의 모양을 사용자 정의해야 함.
+응용 프로그램은 꽤 좋아 보이지만 파란색은 제대로 작동하지 않음.
+활성 탭 색상을 응용 프로그램에보다 고유하게 적용해 보기.</p>
+
+<p><strong>Note:</strong> 다음 단계는 application 내에서 classic views 스타일을 지정.
+가까운 미래에 ExtJS 6은 개선되어 동일한 애플리케이션 내에서 두 toolkit 모두의
+시각을 고려할 수있게 될 것임.</p>
+
+<p>SCSS 파일을 작성하고 수정하여 application의 style을 쉽고 효율적으로 지정할 수 있음.</p>
+
+<p>SCSS(Sassy CSS)는 SASS의 구문으로, 중첩 된 규칙, 변수 및 mixin을 디자인 코드에 추가 할 수 있음.
+이러한 새로운 추가 기능은 처리되어 application의 소비를 위해 기존 CSS 파일로 변환.</p>
+
+<p>global SCSS 변수 목록 보기: <a href="http://docs.sencha.com/extjs/6.2.0/classic/Global_CSS.html">Global_CSS</a></p>
+
+<p>Global_CSS 개별 구성 요소에는 사용자가 변경할 수 있는 특정 SCSS 변수가 있음.
+예를 들어, Panel API 페이지를 방문하여 "CSS 변수"섹션으로 스크롤하여 특정 Panel SCSS 변수를 볼 수 있음: <a href="http://docs.sencha.com/extjs/6.2.0/classic/Ext.panel.Panel.html">Ext.panel.Panel</a></p>
+
+<p>classic/sass/src/view/main/ 폴더를 열면 Main.scss라는 파일이 표시.
+이러한 폴더 및 파일은 필요에 따라 수동으로 추가해야 함.
+application의 각 class에 대해 Sencha Cmd는 sass/var/ 변수 및 sass/src/ 규칙에서
+해당 SCSS 파일을 확인함.</p>
+
+<p>이 파일들은 추가 할 때 <code>sencha app watch</code> 에 의해 선택 될 것.</p>
+
+<p>먼저 <code>Main.scss</code> 파일을 살펴 보겠음.</p>
+
+<p>보시다시피, 우리는 기본 보기에 대해 설정된 특정 SCSS 규칙을 갖음. 상단 panel은 다음 줄로 설정됨:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">$ui-header-background-color: $base-color,
+</code></pre></div>
+<p>색상 변경 범위에 대한 몇 가지 옵션이 있음:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">$ui-header-background-color: #87BD3E,
+</code></pre></div>
+<p>수정 후 새로고침.</p>
+
+<p>그러나 전체 application 색을 변경은 <code>$base-color</code> 값을 변경할 수 있음.</p>
+
+<p>다음 위치에 전역 규칙을 설정할 SCSS 파일을 생성:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">touch </span>classic/sass/etc/all.scss // all.scss may contain any SASS / CSS rules
+</code></pre></div>
+<p>생성후 소스 추가: (나는 error 남)</p>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="err">$</span><span class="nt">base-color</span><span class="o">:</span> <span class="nf">#87BD3E</span> <span class="nt">dynamic</span><span class="o">();</span>
+</code></pre></div>
+<p>새로고침.</p>
+
+<h1 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a><em>Reference</em>
+</h1>
+
+<h2 id="url">
+<a class="anchor" href="#url" aria-hidden="true"><span class="octicon octicon-link"></span></a>URL</h2>
+
+<ul>
+<li><p><a href="http://docs.sencha.com/extjs/6.2.0/classic/Ext.plugin.Responsive.html">http://docs.sencha.com/extjs/6.2.0/classic/Ext.plugin.Responsive.html</a></p></li>
+<li><p><a href="http://docs.sencha.com/extjs/6.2.1/guides/application_architecture/view_models_data_binding.html">http://docs.sencha.com/extjs/6.2.1/guides/application_architecture/view_models_data_binding.html</a></p></li>
+<li><p><a href="http://docs.sencha.com/extjs/6.2.0/classic/Global_CSS.html">http://docs.sencha.com/extjs/6.2.0/classic/Global_CSS.html</a></p></li>
+<li><p><a href="http://docs.sencha.com/extjs/6.2.0/classic/Ext.panel.Panel.html">http://docs.sencha.com/extjs/6.2.0/classic/Ext.panel.Panel.html</a></p></li>
+</ul>
+
+  </div>
+
+<div>
+  <p>단일 명령을 사용하면 로컬 웹 서버에서 실행할 수있는 완전한 기능의 "범용"시작 응용 프로그램을 사용.</p>
+
+<p>"보편적인" 응용 프로그램에는 저장소, 모델 및 컨트롤러의 핵심 세트가 포함되어 있으며 Classic, Modern의 두 가지 툴킷을 통해 두 가지보기 세트가 제공.</p>
+
+<p><code>Classic Toolkit</code>: 레거시 브라우저, 태블릿 및 터치 스크린 랩톱을 지원하는 Ext JS 코드베이스의 전통적인 부분이 포함.</p>
+
+<p><code>Modern Toolkit</code>: 최신 브라우저, 태블릿 및 휴대 전화를 지원하는 터치 친화적인 코드베이스가 포함.
+ (Sencha Touch)</p>
+
+<ol>
+<li><p>Download Cmd</p></li>
+<li><p>Downlaod Extjs SDK</p></li>
+<li>
+<p>commands</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sencha <span class="nt">-sdk</span> /path/to/extjs/framework generate app AppName path/to/app
+<span class="nv">$ </span><span class="nb">cd</span> /path/to/app
+<span class="nv">$ </span>sencha app watch
+
+<span class="c"># ...</span>
+<span class="c"># [INF] Waiting for changes...</span>
+</code></pre></div>
+</li>
+</ol>
+
+<p><a href="http://localhost:1841" rel="nofollow" target="_blank">http://localhost:1841</a> 로 접속.</p>
+
+<p><code>sencha app watch</code> 은 application 이 최신상태가 됨을 말함.</p>
+
+<p><strong>Note:</strong> <code>Ctrl + c</code> 현재 상태 취소.</p>
+
+<p><strong>Note:</strong> 자세한 내용은 Sencha Cmd 확인.</p>
+
+<hr>
+
+<h2 id="next-steps">Next Steps</h2>
+
+<p>위에서 언급했듯이 Universal 응용 프로그램은 세 가지 중요한 영역으로 구성됩니다.</p>
+
+<ul>
+<li>Shard app area (stores, models, controllers 가장 적합).</li>
+</ul>
+
+<p>이 영역은 application의 root에 있는 app 폴더에서 찾을 수 있음.</p>
+
+<ul>
+<li>Classic app area (응용 프로그램의 고전적인 측면에 특정한보기 및 논리).</li>
+</ul>
+
+<p>이 영역은 application의 root에 있는 classic/src 폴더에서 찾을 수 있음.</p>
+
+<ul>
+<li>Modern app area (응용 프로그램의 현대적인 측면에 특정한보기 및 논리).</li>
+</ul>
+
+<p>이 영역은 application의 root에 있는 modern/src 폴더에서 찾을 수 있음.</p>
+
+<p>이 작은 application은 Ext JS의 많은 기능을 보여줌. 모든 것을 충분히 논의 할 공간이 없으므로 관련 비트에 대한 간략한 개요를 살펴 보겠음. 가능한 경우 각 주제에 대해보다 자세한 정보를 제공하도록하겠음.</p>
+
+<p><code>MyApp/classic/src/view/main/</code> 에 있는 Main classic view를 평가 해보겠음.</p>
+
+<hr>
+
+<h3 id="classic">Classic</h3>
+
+<p>Main classic view는 [build target]에서 달리 지정하지 않는 한 누군가
+데스크톱 브라우저나 태블릿을 사용할 때마다 표시됨.
+IDE 또는 텍스트 편집기를 사용하여 MyApp/classic/src/view/main/Main.js 열기.
+이것은 고전적인 응용 프로그램의 주요 진입 점입니다.
+또한 tabpanel과 네 개의 tab이있는 container입니다.
+또한 첫 번째 tab에는 grid class가 포함되어 있습니다.
+tabs을 살펴 봅시다.</p>
+
+<h4 id="tabs">Tabs</h4>
+
+<p>생략</p>
+
+<h5 id="ui-styling">UI Styling</h5>
+
+<p>ExtJS framework의 모든 구성 요소에는 기본적으로 <code>default</code>인 <code>UI</code> 구성이 있음.</p>
+
+<p>이 속성은 application의 구성 요소가 다른 스타일을 가지도록 변경 될 수 있음.</p>
+
+<p>대부분의 ExtJS 구성 요소에는 새 UI를 빠르게 생성 할 수있는 <code>SASS @mixin</code>이 있습니다.</p>
+
+<p>포함: Ext.panel.Panel, Ext.button.Button, Ext.Toolbar, Ext.window.Window 등</p>
+
+<p>우리의 tabpanel의 사용자 정의 UI를 열고 무엇이 완료되고 있는지 살펴보기.</p>
+
+<p>tab panel UI 정의는 다음에서 찾을 수 있음:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">classic/sass/src/view/main/Main.scss
+</code></pre></div>
+<p>UI를 만드는 것은 간단. UI를 만들려는 구성 요소에 대해 <code>@mixin</code>을 호출만 하면 됨.</p>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="k">@include</span> <span class="n">extjs-tab-panel-ui</span><span class="p">(</span>
+    <span class="err">$</span><span class="n">ui</span><span class="p">:</span> <span class="s2">'navigation'</span>
+<span class="p">);</span>
+</code></pre></div>
+<p><code>@mixin</code> 내의 모든 변수는 원하는대로 수정할 수 있음.</p>
+
+<p>다음과 같이 구성 요소에 UI를 연결:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// classic/src/view/main/Main.js</span>
+
+<span class="nx">ui</span><span class="p">:</span> <span class="dl">'</span><span class="s1">navigation</span><span class="dl">'</span><span class="p">,</span>
+</code></pre></div>
+<p>아래에서 SASS로 application을 Styling하는 방법에 대해 자세히 설명.</p>
+
+<h5 id="responsive">Responsive</h5>
+
+<p>또한 우리는 tabPanel과 <code>tabConfig</code>의 Plugin에 <a href="http://docs.sencha.com/extjs/6.2.0/classic/Ext.plugin.Responsive.html" rel="nofollow" target="_blank">responsive</a>을 추가 한 것을 봤을 것임.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// classic/src/view/main/Main.js</span>
+
+<span class="c1">// TabPanel    </span>
+<span class="nx">responsiveConfig</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nl">tall</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nl">headerPosition</span><span class="p">:</span> <span class="dl">'</span><span class="s1">top</span><span class="dl">'</span>
+    <span class="p">},</span>
+    <span class="nx">wide</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nl">headerPosition</span><span class="p">:</span> <span class="dl">'</span><span class="s1">left</span><span class="dl">'</span>
+    <span class="p">}</span>
+<span class="p">},</span>
+
+<span class="c1">// Tab Config</span>
+<span class="nx">tabConfig</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nl">plugins</span><span class="p">:</span> <span class="dl">'</span><span class="s1">responsive</span><span class="dl">'</span><span class="p">,</span>
+    <span class="nx">responsiveConfig</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nl">wide</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nl">iconAlign</span><span class="p">:</span> <span class="dl">'</span><span class="s1">left</span><span class="dl">'</span><span class="p">,</span>
+            <span class="nx">textAlign</span><span class="p">:</span> <span class="dl">'</span><span class="s1">left</span><span class="dl">'</span>
+        <span class="p">},</span>
+        <span class="nx">tall</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nl">iconAlign</span><span class="p">:</span> <span class="dl">'</span><span class="s1">top</span><span class="dl">'</span><span class="p">,</span>
+            <span class="nx">textAlign</span><span class="p">:</span> <span class="dl">'</span><span class="s1">center</span><span class="dl">'</span><span class="p">,</span>
+            <span class="nx">width</span><span class="p">:</span> <span class="mi">120</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>이 plugin을 사용하면 viewport의 너비와 높이를 기준으로 탭 패널 및 탭 텍스트/글리프 위치를 수정하는 규칙을 설정할 수 있음.
+이 경우 브라우저 창을 키가 아닌 너비보다 작게 만들면 탭 패널이 화면 상단으로 이동하고 탭 텍스트와 글리프의 위치가 변경됨.</p>
+
+<p>viewport가 너비보다 넓은 경우 tab이 왼쪽에 나타나고 tab 텍스트/글리프 위치를 적절하게 조정함.</p>
+
+<p>반응 형 plugin에 대한 자세한 내용을 읽고 [here]에 여러 환경을 위한 application을 build.</p>
+
+<p>tab 2, 3 및 4에는 하드 코딩 된 데이터가 없음을 알 수 있음. 이는 ViewModel에서 데이터를 바인딩하기 때문.</p>
+
+<h5 id="view-models-and-data-binding">View Models and Data Binding</h5>
+
+<p>View Models 및 Data Binding 적은 코드로 더 많은 작업을 수행 할 수 있고 더 많은 선언적 스타일로 작성할 수 있음.</p>
+
+<p>[View Model] 데이터 객체를 관리하는 class.
+그런 다음이 데이터에 관심이있는 구성 요소를 바인딩하고 변경할 때 이를 알림.
+[ViewController] 와 같은 ViewModel은 이를 참조하는 view가 소유합니다.</p>
+
+<p>대부분 Setter 메서드로 "설정" 될 수 있는 모든 구성은 ViewModel의 Data에 binding될 수 있음.
+이 예제에서는 <code>setHtml()</code> 및 <code>setTitle()</code>을 사용.</p>
+
+<p>다음:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// View Model Declaration</span>
+<span class="nx">viewModel</span><span class="p">:</span> <span class="dl">'</span><span class="s1">main</span><span class="dl">'</span><span class="p">,</span>
+
+<span class="c1">// Binding to header's title</span>
+<span class="nx">header</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nl">title</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nl">bind</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nl">text</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{name}</span><span class="dl">'</span>  <span class="c1">// XXX: MainModel.js 에서 정의되어 있음</span>
+        <span class="p">},</span>
+        <span class="nx">flex</span><span class="p">:</span> <span class="mi">0</span>
+    <span class="p">}</span>
+<span class="p">},</span>
+
+<span class="c1">// Binding to tab's HTML config</span>
+<span class="p">{</span>
+    <span class="na">title</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Users</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">iconCls</span><span class="p">:</span> <span class="dl">'</span><span class="s1">fa-user</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">bind</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">html</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{loremIpsum}</span><span class="dl">'</span>  <span class="c1">// XXX: MainModel.js 에서 정의되어 있음</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>데이터가 범용 ViewModel(<code>./myapp/app/view/main/MainModel.js</code>)에서 tabs 및 app title에 바인딩되어 있음.
+ViewModel의 데이터는 정적으로 설정되지만 대부분의 경우 proxy를 통해 생성.</p>
+
+<p>참조: <a href="http://docs.sencha.com/extjs/6.2.1/guides/application_architecture/view_models_data_binding.html" rel="nofollow" target="_blank">ViewModels and Data Binding Guide</a></p>
+
+<h4 id="grid">Grid</h4>
+
+<p><code>MyApp/classic/src/view/main/List.js</code> 열어 Ext.grid.Panel 살펴보기.</p>
+
+<p>List.js는 main tab panel의 첫 번째 tab 내에 laod되는 grid를 포함.</p>
+
+<h5 id="store">Store</h5>
+
+<p>보시다시피 store을 일종의 직원으로 지정하고 있음.
+신중하게 보면 고전적인 영역 어디에도 상점 정의가 없다는 것을 알 수 있음.
+이 store은 보편적인 영역인 <code>app/store/Personnel.js</code>에 있음.
+Classic Grid와 Modern Grid가 동일한 store과 data를 공유 할 수 있도록 여기에 배치.</p>
+
+<p>실제 상황에서 위의 저장소에는 proxy가 서버에서 정보를 가져올 수 있도록하는
+url 속성이 있는 proxy가 있음.</p>
+
+<p>예제에서는 시각화를 위해 data를 인라인으로 유지. (대부분의 상황은 inline data 필요없음)</p>
+
+<h5 id="listeners">Listeners</h5>
+
+<p>Listener 객체에는 'onItemSelected'를 호출하는 select 이벤트가 포함되어 있음.</p>
+
+<p>다시, class 영역에서 해당 로직을 가진 view controller를 찾을 수 없음.</p>
+
+<p>Modern과 Classic의 Grid 모두 <code>select</code> 이벤트를 공유하고 유사하게 반응하기 때문에
+범용 섹션에서 MainController.js를 찾을 수 있음.</p>
+
+<p>아직 <code>myapp/app/view/main/MainController.js</code> 열지 않은 경우.</p>
+
+<p>기본 로직:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">onItemSelected</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">sender</span><span class="p">,</span> <span class="nx">record</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">Ext</span><span class="p">.</span><span class="nx">Msg</span><span class="p">.</span><span class="nx">confirm</span><span class="p">(</span><span class="dl">'</span><span class="s1">Confirm</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">Are you sure?</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">onConfirm</span><span class="dl">'</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+<span class="p">},</span>
+</code></pre></div>
+<p>우리의 grid와 Modern toolkit의 grid(more minute)에서 우리는 <code>select</code> 이벤트를 처리하고 있음.
+controller 로직은 두 구성 요소의 <code>select</code> 이벤트를 동일하게 처리.</p>
+
+<p>범용 controller에 대한 자세한 내용은 페이지 아래로 더 자세히 설명.</p>
+
+<hr>
+
+<h3 id="mordern">Mordern</h3>
+
+<p>Classic과 마찬가지로 MyApp/modern/src/view/main/Main.js를 검토.</p>
+
+<p>이것은 현대 application의 주요 진입 점.</p>
+
+<p>거의 같은 방식으로 Main은 tab panel과 4개의 tab이있는 container임을 알 수 있음.</p>
+
+<p>또한 첫 번째 tab에는 Modern Grid가 포함되어 있음.</p>
+
+<h4 id="tabs">Tabs</h4>
+
+<p>현대 toolkit의 tab panel은 전체 화면인 여러보기간에 전환 할 수있는 좋은 방법임.</p>
+
+<p>TabPanel의 각 구성 요소는 탭될 때 구성 요소를 보여주는 고유 한 탭을 가져옴.</p>
+
+<p>탭은 TabPanel의 상단 또는 하단에 배치 할 수 있습니다.</p>
+
+<p>이보기와 클래식보기 사이에는 많은 유사점이 있습니다. 예를 들면 :</p>
+
+<ul>
+<li><p>ViewController 공유</p></li>
+<li><p>ViewModel 공유</p></li>
+<li><p>Bound Config (설정 나눔)</p></li>
+</ul>
+
+<h4 id="modern-grid">Modern Grid</h4>
+
+<p>Modern Toolkit에는 touch 장치에 최적화 된 간단한 grid가 포함되어 있습니다.</p>
+
+<p>생략</p>
+
+<hr>
+
+<h3 id="universal">Universal</h3>
+
+<p>우리는 application의 보편적인 섹션에 있는 모든 코드를 다루었음.</p>
+
+<p>즉, 이 공간을 사용할 때 조심스럽고 일관성이 있는지 확인해야 함.</p>
+
+<p>이때 응용 프로그램보기 자체는 범용 섹션에 배치하지 않아야 함.</p>
+
+<p>하나의 toolkit이나 다른 toolkit에 존재하지 않는 class를 필요로하거나 참조 할 경우,
+application을 빌드할 때 오류가 발생함.</p>
+
+<p>이 영역은 일반적으로 두 toolkit의 핵심에 있는 것들을 위해 약속되어야 함.</p>
+
+<ul>
+<li><p>ViewControllers</p></li>
+<li><p>ViewModels</p></li>
+<li><p>Models</p></li>
+<li><p>Store</p></li>
+</ul>
+
+<p>앞으로, 우리는 구성 요소 패리티를 위해 노력하고 있으므로 기술적 공유 관점에서 용어가
+덜 우려 될 것임.</p>
+
+<p>마지막으로, 활용하려고 하는 모든 이벤트가 동일한 매개 변수를 가지며 두 toolkit에서
+동일한 의도로 실행되도록 하는 것이 좋음.</p>
+
+<hr>
+
+<h3 id="change-themes">Change Themes</h3>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// myapp/app.json</span>
+
+<span class="c1">// XXX: 기본 테마</span>
+<span class="c1">// "theme": "theme-neptune"</span>
+<span class="dl">"</span><span class="s2">theme</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">theme-crisp</span><span class="dl">"</span>
+</code></pre></div><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sencha app watch
+<span class="c"># ...</span>
+</code></pre></div>
+<hr>
+
+<h2 id="styling-your-application">Styling Your Application</h2>
+
+<p>대부분의 경우 기본 테마의 용량 이상으로 application의 모양을 사용자 정의해야 함.
+응용 프로그램은 꽤 좋아 보이지만 파란색은 제대로 작동하지 않음.
+활성 탭 색상을 응용 프로그램에보다 고유하게 적용해 보기.</p>
+
+<p><strong>Note:</strong> 다음 단계는 application 내에서 classic views 스타일을 지정.
+가까운 미래에 ExtJS 6은 개선되어 동일한 애플리케이션 내에서 두 toolkit 모두의
+시각을 고려할 수있게 될 것임.</p>
+
+<p>SCSS 파일을 작성하고 수정하여 application의 style을 쉽고 효율적으로 지정할 수 있음.</p>
+
+<p>SCSS(Sassy CSS)는 SASS의 구문으로, 중첩 된 규칙, 변수 및 mixin을 디자인 코드에 추가 할 수 있음.
+이러한 새로운 추가 기능은 처리되어 application의 소비를 위해 기존 CSS 파일로 변환.</p>
+
+<p>global SCSS 변수 목록 보기: <a href="http://docs.sencha.com/extjs/6.2.0/classic/Global_CSS.html" rel="nofollow" target="_blank">Global_CSS</a></p>
+
+<p>Global_CSS 개별 구성 요소에는 사용자가 변경할 수 있는 특정 SCSS 변수가 있음.
+예를 들어, Panel API 페이지를 방문하여 "CSS 변수"섹션으로 스크롤하여 특정 Panel SCSS 변수를 볼 수 있음: <a href="http://docs.sencha.com/extjs/6.2.0/classic/Ext.panel.Panel.html" rel="nofollow" target="_blank">Ext.panel.Panel</a></p>
+
+<p>classic/sass/src/view/main/ 폴더를 열면 Main.scss라는 파일이 표시.
+이러한 폴더 및 파일은 필요에 따라 수동으로 추가해야 함.
+application의 각 class에 대해 Sencha Cmd는 sass/var/ 변수 및 sass/src/ 규칙에서
+해당 SCSS 파일을 확인함.</p>
+
+<p>이 파일들은 추가 할 때 <code>sencha app watch</code> 에 의해 선택 될 것.</p>
+
+<p>먼저 <code>Main.scss</code> 파일을 살펴 보겠음.</p>
+
+<p>보시다시피, 우리는 기본 보기에 대해 설정된 특정 SCSS 규칙을 갖음. 상단 panel은 다음 줄로 설정됨:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">$ui-header-background-color: $base-color,
+</code></pre></div>
+<p>색상 변경 범위에 대한 몇 가지 옵션이 있음:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">$ui-header-background-color: #87BD3E,
+</code></pre></div>
+<p>수정 후 새로고침.</p>
+
+<p>그러나 전체 application 색을 변경은 <code>$base-color</code> 값을 변경할 수 있음.</p>
+
+<p>다음 위치에 전역 규칙을 설정할 SCSS 파일을 생성:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">touch </span>classic/sass/etc/all.scss // all.scss may contain any SASS / CSS rules
+</code></pre></div>
+<p>생성후 소스 추가: (나는 error 남)</p>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="err">$</span><span class="nt">base-color</span><span class="o">:</span> <span class="nf">#87BD3E</span> <span class="nt">dynamic</span><span class="o">();</span>
+</code></pre></div>
+<p>새로고침.</p>
+
+<h1 id="reference"><em>Reference</em></h1>
+
+<h2 id="url">URL</h2>
+
+<ul>
+<li><p><a href="http://docs.sencha.com/extjs/6.2.0/classic/Ext.plugin.Responsive.html" rel="nofollow" target="_blank">http://docs.sencha.com/extjs/6.2.0/classic/Ext.plugin.Responsive.html</a></p></li>
+<li><p><a href="http://docs.sencha.com/extjs/6.2.1/guides/application_architecture/view_models_data_binding.html" rel="nofollow" target="_blank">http://docs.sencha.com/extjs/6.2.1/guides/application_architecture/view_models_data_binding.html</a></p></li>
+<li><p><a href="http://docs.sencha.com/extjs/6.2.0/classic/Global_CSS.html" rel="nofollow" target="_blank">http://docs.sencha.com/extjs/6.2.0/classic/Global_CSS.html</a></p></li>
+<li><p><a href="http://docs.sencha.com/extjs/6.2.0/classic/Ext.panel.Panel.html" rel="nofollow" target="_blank">http://docs.sencha.com/extjs/6.2.0/classic/Ext.panel.Panel.html</a></p></li>
+</ul>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

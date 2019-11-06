@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Locate | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Locate" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="locate 는 이름으로 파일을 빠르게 찾는 유닉스 도구이다." />
+<meta property="og:description" content="locate 는 이름으로 파일을 빠르게 찾는 유닉스 도구이다." />
+<link rel="canonical" href="http://localhost:4000/blog/docs/develop/server/Linux/linux%20-%20updatedb.html" />
+<meta property="og:url" content="http://localhost:4000/blog/docs/develop/server/Linux/linux%20-%20updatedb.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-06T09:31:12+09:00" />
+<script type="application/ld+json">
+{"description":"locate 는 이름으로 파일을 빠르게 찾는 유닉스 도구이다.","headline":"Locate","dateModified":"2019-11-06T09:31:12+09:00","datePublished":"2019-11-06T09:31:12+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/docs/develop/server/Linux/linux%20-%20updatedb.html"},"url":"http://localhost:4000/blog/docs/develop/server/Linux/linux%20-%20updatedb.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Locate</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#part-65438130e36">설치</a></li>
+<li class="toc-entry toc-h2"><a href="#part-46a5afb81a46e04a">데이터베이스를 최신 상태로 유지하기</a></li>
+<li class="toc-entry toc-h2"><a href="#reference">Reference</a></li>
+</ul><p><code>locate</code> 는 이름으로 파일을 빠르게 찾는 유닉스 도구이다.</p>
+
+<p>이 도구는 파일 시스템을 직접적인 대상으로 하지 않고 미리 생성된 데이터베이스 파일을 찾기 때문에 find 도구에 비해 속도가 향상되었다.</p>
+
+<p>이 방법의 단점은 데이터베이스 파일이 생성된 후에 생긴 변화는 <code>locate</code> 가 탐지하지 못한다는 점이다.</p>
+
+<p>이 문제는 <code>updatedb</code> 라는 명령어가 그 이름이 암시하듯이 데이터베이스를 갱신하는 명령어인데 이를 주기적으로 사용하여 문제의 가능성을 줄일 수 있다.</p>
+
+<h2 id="part-65438130e36">
+<a class="anchor" href="#part-65438130e36" aria-hidden="true"><span class="octicon octicon-link"></span></a>설치</h2>
+
+<p>다른 배포판에서는 locate와 updatedb가 findutils 꾸러미에 있지만, 아치 꾸러미에는 더 이상 없다.</p>
+
+<p>이를 사용하려면 mlocate 꾸러미를 설치하라. mlocate 꾸러미는 이전의 도구를 더욱 향상시켰으나 사용법은 똑같다.</p>
+
+<p>locate를 사용하기에 앞서 데이터베이스를 생성해야 한다. 이를 위해 간단히 updatedb 명령어를 루트 권한으로 실행하라.</p>
+
+<h2 id="part-46a5afb81a46e04a">
+<a class="anchor" href="#part-46a5afb81a46e04a" aria-hidden="true"><span class="octicon octicon-link"></span></a>데이터베이스를 최신 상태로 유지하기</h2>
+
+<p>When mlocate가 설치될 때 데이터베이스를 갱신할 /etc/cron.daily( cron이 매일 실행) 스크립트가 자동으로 설치된다. 또한 언제라도 updatedb를 수동으로 실행할 수 있다.</p>
+
+<p>시간을 절약하기 위해 updatedb는 특정한 파일시스템과 경로를 무시하도록 /etc/updatedb.conf를 편집해서 설정할 수 있다. updatedb.conf(5)는 이 파일의 의미를 설명한다. 디폴트 설정 파일에서 무시되는 경로("PRUNEPATHS" 문자열에 지정됨) 중에서 /media와 /mnt가 있다. 따라서 locate는 외부 장치에 있는 파일을 찾지 못할 수도 있다.</p>
+
+<h2 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+<p><a href="https://wiki.archlinux.org/index.php/Locate_%ED%95%9C%EA%B5%AD%EC%96%B4">https://wiki.archlinux.org/index.php/Locate_한국어</a></p>
+
+  </div>
+
+<div>
+  <p><code>locate</code> 는 이름으로 파일을 빠르게 찾는 유닉스 도구이다.</p>
+
+<p>이 도구는 파일 시스템을 직접적인 대상으로 하지 않고 미리 생성된 데이터베이스 파일을 찾기 때문에 find 도구에 비해 속도가 향상되었다.</p>
+
+<p>이 방법의 단점은 데이터베이스 파일이 생성된 후에 생긴 변화는 <code>locate</code> 가 탐지하지 못한다는 점이다.</p>
+
+<p>이 문제는 <code>updatedb</code> 라는 명령어가 그 이름이 암시하듯이 데이터베이스를 갱신하는 명령어인데 이를 주기적으로 사용하여 문제의 가능성을 줄일 수 있다.</p>
+
+<h2 id="part-65438130e36">설치</h2>
+
+<p>다른 배포판에서는 locate와 updatedb가 findutils 꾸러미에 있지만, 아치 꾸러미에는 더 이상 없다.</p>
+
+<p>이를 사용하려면 mlocate 꾸러미를 설치하라. mlocate 꾸러미는 이전의 도구를 더욱 향상시켰으나 사용법은 똑같다.</p>
+
+<p>locate를 사용하기에 앞서 데이터베이스를 생성해야 한다. 이를 위해 간단히 updatedb 명령어를 루트 권한으로 실행하라.</p>
+
+<h2 id="part-46a5afb81a46e04a">데이터베이스를 최신 상태로 유지하기</h2>
+
+<p>When mlocate가 설치될 때 데이터베이스를 갱신할 /etc/cron.daily( cron이 매일 실행) 스크립트가 자동으로 설치된다. 또한 언제라도 updatedb를 수동으로 실행할 수 있다.</p>
+
+<p>시간을 절약하기 위해 updatedb는 특정한 파일시스템과 경로를 무시하도록 /etc/updatedb.conf를 편집해서 설정할 수 있다. updatedb.conf(5)는 이 파일의 의미를 설명한다. 디폴트 설정 파일에서 무시되는 경로("PRUNEPATHS" 문자열에 지정됨) 중에서 /media와 /mnt가 있다. 따라서 locate는 외부 장치에 있는 파일을 찾지 못할 수도 있다.</p>
+
+<h2 id="reference">Reference</h2>
+
+<p><a href="https://wiki.archlinux.org/index.php/Locate_%ED%95%9C%EA%B5%AD%EC%96%B4" rel="nofollow" target="_blank">https://wiki.archlinux.org/index.php/Locate_한국어</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

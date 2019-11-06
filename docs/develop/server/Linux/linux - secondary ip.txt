@@ -1,0 +1,9 @@
+# Secondary IP
+
+: 네트워크가 갖고 있는 class 대역에서 추가로 더 많은 IP를 사용 할 때
+: 일반적으로 네트워크를 나누는게 맞지만, router에서 VLAN을 지원하거나, router에서 ethernet interface 2개가 필요한데
+  두 방법다 불가능 한 상태일 때.
+: secondary IP address가 필요.
+: 연속 추가 가능.
+: 브로드케스트 영역 증가해서 router 부담 증가.
+: secondary ip - first ip

@@ -1,0 +1,87 @@
+﻿# network all reset & set static IP
+
+- CentOS 6.x 기반으로 작성됨.
+
+
+## reset (CLI)
+
+su - 
+rm -rfv /etc/sysconfig/networking/profiles/default/*
+
+rm -rfv /etc/sysconfig/networking/devices/*
+
+rm -rfv /etc/udev/rules.d/70-persistent-net.rules
+
+cd /etc/sysconfig/network-scripts/
+rm -rfv ifcfg-eth1 ifcfg-eth2 ifcfg-eth[NUM]    (ifcfg-lo 는 삭제x)
+
+shutdown -r now
+
+
+## GUI (CentOS 6.x startx 후 GUI 에서 설정하는게 더 잘됨)
+
+startx 후 설정
+
+
+## CLI
+
+1. VMware network 설정에서 Bridged 설정
+
+2. HWADDR
+
+  - #> ifconfig
+
+  - #> cat /etc/udev/rules.d/70-persistent-net.rules
+
+> vi /etc/sysconfig/network-scripts/ifcfg-eth0
+
+HWADDR=00:00:00:00:00:00
+NAME="offics"
+DEVICE=eth0
+TYPE=Ethernet
+IPADDR=127.0.0.1
+NETMASK=255.255.255.0
+GATEWAY=127.0.0.1
+DNS1=8.8.8.8
+BOOTPROTO=static
+ONBOOT=yes
+USERCTL=no
+PEERDNS=no
+IPV6INIT=no
+PREFIX=24
+DEFROUTE=yes
+
+:wq
+
+> /etc/init.d/network restart    (network 재시작)
+
+> ifconfig    (확인하기)
+
+> setup    (확인하기)
+
+
+## vmware 사용중 네트워크가 갑자기 변경 되었을 때
+
+> su -
+#> ifconfig
+
+출력되는 eth번호 확인
+
+#> cat /etc/udev/rules.d/70-persistent-net.rules
+
+HWADDR 확인하기
+
+#> cd /etc/sysconfig/network-scripts
+#> mv ifcfg-eth0 ifcfg-eth1
+#> vi ifcfg-eth1
+
+DEVICE=eth1
+HWADDR=00:00:00:00:00:00
+
+:wq
+
+#> /etc/init.d/network restart
+
+
+
+00:0c:29:3f:c5:a1

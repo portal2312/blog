@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Neural Network - Structure (신경망 소개 - 해부) | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Neural Network - Structure (신경망 소개 - 해부)" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="특성 교차 단원에서 설명한 대로 이제 비선형 분류 문제를 설명하겠습니다:" />
+<meta property="og:description" content="특성 교차 단원에서 설명한 대로 이제 비선형 분류 문제를 설명하겠습니다:" />
+<link rel="canonical" href="http://localhost:4000/blog/docs/develop/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML%20%EA%B0%9C%EB%85%90/015.%20Neural%20Networks%20(%EC%8B%A0%EA%B2%BD%EB%A7%9D,%2055%20min)/002.%20Structure%20(%EA%B5%AC%EC%A1%B0).html" />
+<meta property="og:url" content="http://localhost:4000/blog/docs/develop/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML%20%EA%B0%9C%EB%85%90/015.%20Neural%20Networks%20(%EC%8B%A0%EA%B2%BD%EB%A7%9D,%2055%20min)/002.%20Structure%20(%EA%B5%AC%EC%A1%B0).html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-06T09:31:12+09:00" />
+<script type="application/ld+json">
+{"description":"특성 교차 단원에서 설명한 대로 이제 비선형 분류 문제를 설명하겠습니다:","headline":"Neural Network - Structure (신경망 소개 - 해부)","dateModified":"2019-11-06T09:31:12+09:00","datePublished":"2019-11-06T09:31:12+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/docs/develop/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML%20%EA%B0%9C%EB%85%90/015.%20Neural%20Networks%20(%EC%8B%A0%EA%B2%BD%EB%A7%9D,%2055%20min)/002.%20Structure%20(%EA%B5%AC%EC%A1%B0).html"},"url":"http://localhost:4000/blog/docs/develop/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML%20%EA%B0%9C%EB%85%90/015.%20Neural%20Networks%20(%EC%8B%A0%EA%B2%BD%EB%A7%9D,%2055%20min)/002.%20Structure%20(%EA%B5%AC%EC%A1%B0).html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Neural Network - Structure (신경망 소개 - 해부)</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h3"><a href="#hidden-layers">Hidden Layers</a></li>
+<li class="toc-entry toc-h3"><a href="#activation-functions">Activation Functions (활성화 함수)</a></li>
+<li class="toc-entry toc-h3"><a href="#common-activation-functions">Common Activation Functions (일반적인 활성화 함수)</a></li>
+<li class="toc-entry toc-h3"><a href="#part-65439985ebd">요약</a></li>
+<li class="toc-entry toc-h2"><a href="#reference">Reference</a></li>
+</ul><p><a href="(https://developers.google.com/machine-learning/crash-course/feature-crosses/video-lecture)">특성 교차</a> 단원에서 설명한 대로 이제 비선형 분류 문제를 설명하겠습니다:</p>
+
+<p><img src="FeatureCrosses1.png" alt="FeatureCrosses1.png"></p>
+
+<p>'비선형'이라는 의미는 아래 형태의 모델로 라벨을 정확하게 예측할 수 없다는 의미입니다:</p>
+
+<p>$$
+b + w_1x_1 + w_2x_2
+$$</p>
+
+<p>다시 말해, '결정 표면'은 <strong>선이 아닙니다</strong>.</p>
+
+<p>이와 같은 경우 앞서 비선형 문제의 가능한 모델링 방식으로는 <a href="(https://developers.google.com/machine-learning/crash-course/feature-crosses/video-lecture)">특성 교차</a>를 살펴보았습니다.</p>
+
+<p>다음 데이터 세트를 고려해 보겠습니다. 해당 데이터 세트는 선형 모델로는 해결할 수 없습니다:</p>
+
+<p><img src="NonLinearSpiral.png" alt="NonLinearSpiral.png"></p>
+
+<p>신경망이 비선형 문제를 해결하는 데 어떻게 도움이 되는지 알아보기 위해 선형 모델을 그래프로 나타내 보겠습니다.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">       (Out-put)
+          /|\
+         / | \
+        /  |  \
+       /   |   \
+      /    |    \
+     /     |     \
+    /      |      \
+(In-put) (In-put) (In-put)
+</code></pre></div>
+<ul>
+<li>In-put: 입력 기능</li>
+<li>Out-put: 입력의 가중 합</li>
+</ul>
+
+<p>모델을 어떻게 변경하여 비선형 문제 해결 능력을 개선할 수 있을까요?</p>
+
+<h3 id="hidden-layers">
+<a class="anchor" href="#hidden-layers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Hidden Layers</h3>
+
+<p>중간값의 '히든 레이어'를 추가:
+히든 레이어에서 각 노란색 노드: 파란색 입력 노드 값의 가중 합
+출력: 노란색 노드의 가중 합입니다.</p>
+
+<p><img src="1hidden.svg" alt="1hidden.svg"></p>
+
+<p>위 모델은 선형. 출력 역시 입력의 선형 조합.</p>
+
+<p>아래 그림의 그래프로 나타낸 모델에서 가중 합의 두 번째 히든 레이어를 추가했습니다:</p>
+
+<p><img src="2hidden.svg" alt="2hidden.svg"></p>
+
+<p>위 모델은 선형.</p>
+
+<p>출력을 입력의 함수로 표현하고 단순화하면 입력의 또 다른 가중 합을 얻게 됩니다.</p>
+
+<p>이 합계는 그림 2의 비선형 문제를 효과적으로 모델링하지 않습니다.</p>
+
+<h3 id="activation-functions">
+<a class="anchor" href="#activation-functions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Activation Functions (활성화 함수)</h3>
+
+<p>비선형 문제를 모델링하기 위해 비선형성을 직접 도입할 수 있습니다.<br>
+우리는 각 히든 레이어의 노드가 비선형 함수를 통과하도록 할 수 있습니다.</p>
+
+<p>아래 그림의 그래프로 나타낸 모델에서 히든 레이어 1의 각 노드 값이 <em>비선형 함수</em> 로 변환된 후에 다음 레이어의 가중 합으로 전달. 이 <em>비선형 함수</em> 를 <strong>활성화 함수</strong> 라고 합니다:</p>
+
+<p><img src="activation.svg" alt="activation.svg"></p>
+
+<p>이제 활성화 함수를 추가하였으므로 레이어를 추가하면 효과가 더 큽니다.
+비선형성을 누적하면 입력과 예측 출력 간의 매우 복잡한 관계를 모델링할 수 있습니다.
+간단히 말해, 각 레이어는 원시 입력에 적용되는 더 높은 수준의 복잡한 함수를 효과적으로 학습합니다.
+함수의 작동 방식을 자세히 알아보려면 <a href="post">Chris Olah의 유용한 블로그</a> 게시물을 참조하세요.</p>
+
+<h3 id="common-activation-functions">
+<a class="anchor" href="#common-activation-functions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Common Activation Functions (일반적인 활성화 함수)</h3>
+
+<p>다음 <strong>시그모이드</strong> 활성화 함수는 가중 합을 0과 1 사이의 값으로 변환합니다:</p>
+
+<p>$$
+F(x)=\frac{1} {1+e^{-x}}
+$$</p>
+
+<p><img src="sigmoid.svg" alt="sigmoid.svg"></p>
+
+<p>다음 <strong>정류 선형 유닛(ReLU)</strong> 활성화 함수는 시그모이드와 같은 매끄러운 함수보다 조금 더 효과적이지만, 훨씬 쉽게 계산할 수 있습니다:</p>
+
+<p>$$
+F(x)=max(0, x)
+$$</p>
+
+<p><strong>ReLU</strong> 의 우월성은 경험적 결과를 바탕으로 하며, 이는 <strong>ReLU</strong> 의 반응성 범위가 더 유용하기 때문일 것입니다. 시그모이드의 반응성은 양측에서 상대적으로 빨리 떨어집니다.</p>
+
+<p><img src="relu.svg" alt="relu.svg"></p>
+
+<p>사실 어떠한 수학 함수라도 활성화 함수의 역할을 할 수 있습니다. $\sigma$가 활성화 함수(ReLU, 시그모이드 등)를 나타낸다고 가정해 보세요. 결과적으로 네트워크의 노드 값은 다음 수식으로 나타냅니다:</p>
+
+<p>$$
+\sigma(\boldsymbol w \cdot \boldsymbol x+b)
+$$</p>
+
+<p>텐서플로우에서는 <a href="https://www.tensorflow.org/api_docs/python/nn.html">다양한 활성화 함수</a>를 바로 사용할 수 있습니다.
+하지만 ReLU로 시작하시는 것이 좋습니다.</p>
+
+<h3 id="part-65439985ebd">
+<a class="anchor" href="#part-65439985ebd" aria-hidden="true"><span class="octicon octicon-link"></span></a>요약</h3>
+
+<p>Google 모델은 일반적인 '신경망'의 표준 구성요소를 갖추고 있습니다.</p>
+
+<ul>
+<li>뉴런과 유사한 노드 집합이 레이어에 구성되어 있습니다.</li>
+<li>각 신경망 레이어와 하위 레이어와의 연결을 나타내는 가중치 집합이 있습니다.<br>
+하위 레이어는 또 다른 신경망 레이어이거나 유형이 다른 레이어일 수도 있습니다.</li>
+<li>편향 집합이 각 노드에 하나씩 존재합니다.</li>
+<li>레이어에서 각 노드의 출력을 변환하는 활성화 함수가 있습니다.<br>
+레이어에 따라 활성화 함수가 다를 수 있습니다.</li>
+</ul>
+
+<blockquote>
+<p><strong>주의:</strong> 신경망은 특성 교차보다 효과적이지 않은 경우도 있지만, 대개 효과적인 유연한 대안을 제공합니다.</p>
+</blockquote>
+
+<h2 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+<p><a href="https://developers.google.com/machine-learning/crash-course/introduction-to-neural-networks/anatomy">https://developers.google.com/machine-learning/crash-course/introduction-to-neural-networks/anatomy</a></p>
+
+  </div>
+
+<div>
+  <p><a href="(https://developers.google.com/machine-learning/crash-course/feature-crosses/video-lecture)">특성 교차</a> 단원에서 설명한 대로 이제 비선형 분류 문제를 설명하겠습니다:</p>
+
+<p><img src="FeatureCrosses1.png" alt="FeatureCrosses1.png"></p>
+
+<p>'비선형'이라는 의미는 아래 형태의 모델로 라벨을 정확하게 예측할 수 없다는 의미입니다:</p>
+
+<p>$$
+b + w_1x_1 + w_2x_2
+$$</p>
+
+<p>다시 말해, '결정 표면'은 <strong>선이 아닙니다</strong>.</p>
+
+<p>이와 같은 경우 앞서 비선형 문제의 가능한 모델링 방식으로는 <a href="(https://developers.google.com/machine-learning/crash-course/feature-crosses/video-lecture)">특성 교차</a>를 살펴보았습니다.</p>
+
+<p>다음 데이터 세트를 고려해 보겠습니다. 해당 데이터 세트는 선형 모델로는 해결할 수 없습니다:</p>
+
+<p><img src="NonLinearSpiral.png" alt="NonLinearSpiral.png"></p>
+
+<p>신경망이 비선형 문제를 해결하는 데 어떻게 도움이 되는지 알아보기 위해 선형 모델을 그래프로 나타내 보겠습니다.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">       (Out-put)
+          /|\
+         / | \
+        /  |  \
+       /   |   \
+      /    |    \
+     /     |     \
+    /      |      \
+(In-put) (In-put) (In-put)
+</code></pre></div>
+<ul>
+<li>In-put: 입력 기능</li>
+<li>Out-put: 입력의 가중 합</li>
+</ul>
+
+<p>모델을 어떻게 변경하여 비선형 문제 해결 능력을 개선할 수 있을까요?</p>
+
+<h3 id="hidden-layers">Hidden Layers</h3>
+
+<p>중간값의 '히든 레이어'를 추가:
+히든 레이어에서 각 노란색 노드: 파란색 입력 노드 값의 가중 합
+출력: 노란색 노드의 가중 합입니다.</p>
+
+<p><img src="1hidden.svg" alt="1hidden.svg"></p>
+
+<p>위 모델은 선형. 출력 역시 입력의 선형 조합.</p>
+
+<p>아래 그림의 그래프로 나타낸 모델에서 가중 합의 두 번째 히든 레이어를 추가했습니다:</p>
+
+<p><img src="2hidden.svg" alt="2hidden.svg"></p>
+
+<p>위 모델은 선형.</p>
+
+<p>출력을 입력의 함수로 표현하고 단순화하면 입력의 또 다른 가중 합을 얻게 됩니다.</p>
+
+<p>이 합계는 그림 2의 비선형 문제를 효과적으로 모델링하지 않습니다.</p>
+
+<h3 id="activation-functions">Activation Functions (활성화 함수)</h3>
+
+<p>비선형 문제를 모델링하기 위해 비선형성을 직접 도입할 수 있습니다.<br>
+우리는 각 히든 레이어의 노드가 비선형 함수를 통과하도록 할 수 있습니다.</p>
+
+<p>아래 그림의 그래프로 나타낸 모델에서 히든 레이어 1의 각 노드 값이 <em>비선형 함수</em> 로 변환된 후에 다음 레이어의 가중 합으로 전달. 이 <em>비선형 함수</em> 를 <strong>활성화 함수</strong> 라고 합니다:</p>
+
+<p><img src="activation.svg" alt="activation.svg"></p>
+
+<p>이제 활성화 함수를 추가하였으므로 레이어를 추가하면 효과가 더 큽니다.
+비선형성을 누적하면 입력과 예측 출력 간의 매우 복잡한 관계를 모델링할 수 있습니다.
+간단히 말해, 각 레이어는 원시 입력에 적용되는 더 높은 수준의 복잡한 함수를 효과적으로 학습합니다.
+함수의 작동 방식을 자세히 알아보려면 <a href="post">Chris Olah의 유용한 블로그</a> 게시물을 참조하세요.</p>
+
+<h3 id="common-activation-functions">Common Activation Functions (일반적인 활성화 함수)</h3>
+
+<p>다음 <strong>시그모이드</strong> 활성화 함수는 가중 합을 0과 1 사이의 값으로 변환합니다:</p>
+
+<p>$$
+F(x)=\frac{1} {1+e^{-x}}
+$$</p>
+
+<p><img src="sigmoid.svg" alt="sigmoid.svg"></p>
+
+<p>다음 <strong>정류 선형 유닛(ReLU)</strong> 활성화 함수는 시그모이드와 같은 매끄러운 함수보다 조금 더 효과적이지만, 훨씬 쉽게 계산할 수 있습니다:</p>
+
+<p>$$
+F(x)=max(0, x)
+$$</p>
+
+<p><strong>ReLU</strong> 의 우월성은 경험적 결과를 바탕으로 하며, 이는 <strong>ReLU</strong> 의 반응성 범위가 더 유용하기 때문일 것입니다. 시그모이드의 반응성은 양측에서 상대적으로 빨리 떨어집니다.</p>
+
+<p><img src="relu.svg" alt="relu.svg"></p>
+
+<p>사실 어떠한 수학 함수라도 활성화 함수의 역할을 할 수 있습니다. $\sigma$가 활성화 함수(ReLU, 시그모이드 등)를 나타낸다고 가정해 보세요. 결과적으로 네트워크의 노드 값은 다음 수식으로 나타냅니다:</p>
+
+<p>$$
+\sigma(\boldsymbol w \cdot \boldsymbol x+b)
+$$</p>
+
+<p>텐서플로우에서는 <a href="https://www.tensorflow.org/api_docs/python/nn.html" rel="nofollow" target="_blank">다양한 활성화 함수</a>를 바로 사용할 수 있습니다.
+하지만 ReLU로 시작하시는 것이 좋습니다.</p>
+
+<h3 id="part-65439985ebd">요약</h3>
+
+<p>Google 모델은 일반적인 '신경망'의 표준 구성요소를 갖추고 있습니다.</p>
+
+<ul>
+<li>뉴런과 유사한 노드 집합이 레이어에 구성되어 있습니다.</li>
+<li>각 신경망 레이어와 하위 레이어와의 연결을 나타내는 가중치 집합이 있습니다.<br>
+하위 레이어는 또 다른 신경망 레이어이거나 유형이 다른 레이어일 수도 있습니다.</li>
+<li>편향 집합이 각 노드에 하나씩 존재합니다.</li>
+<li>레이어에서 각 노드의 출력을 변환하는 활성화 함수가 있습니다.<br>
+레이어에 따라 활성화 함수가 다를 수 있습니다.</li>
+</ul>
+
+<blockquote>
+<p><strong>주의:</strong> 신경망은 특성 교차보다 효과적이지 않은 경우도 있지만, 대개 효과적인 유연한 대안을 제공합니다.</p>
+</blockquote>
+
+<h2 id="reference">Reference</h2>
+
+<p><a href="https://developers.google.com/machine-learning/crash-course/introduction-to-neural-networks/anatomy" rel="nofollow" target="_blank">https://developers.google.com/machine-learning/crash-course/introduction-to-neural-networks/anatomy</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

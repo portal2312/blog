@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Functions(함수) | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Functions(함수)" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="JavaScript에서 기본적인 빌딩 블록 중의 하나입니다." />
+<meta property="og:description" content="JavaScript에서 기본적인 빌딩 블록 중의 하나입니다." />
+<link rel="canonical" href="http://localhost:4000/blog/docs/develop/Frontend/javascript(ECMAScript)/tutorials/guide/05_functions.html" />
+<meta property="og:url" content="http://localhost:4000/blog/docs/develop/Frontend/javascript(ECMAScript)/tutorials/guide/05_functions.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-06T09:31:12+09:00" />
+<script type="application/ld+json">
+{"description":"JavaScript에서 기본적인 빌딩 블록 중의 하나입니다.","headline":"Functions(함수)","dateModified":"2019-11-06T09:31:12+09:00","datePublished":"2019-11-06T09:31:12+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/docs/develop/Frontend/javascript(ECMAScript)/tutorials/guide/05_functions.html"},"url":"http://localhost:4000/blog/docs/develop/Frontend/javascript(ECMAScript)/tutorials/guide/05_functions.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Functions(함수)</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#part-602a366b9ed1b89d">함수 정의</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#part-602a366b9cdd11e5">함수 선언</a></li>
+<li class="toc-entry toc-h3"><a href="#part-85c17a5697d92592">함수 표현식</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#part-602a366ba0a951b6">함수 호출</a></li>
+<li class="toc-entry toc-h2"><a href="#fucntion-scope">Fucntion scope(함수의 범위)</a></li>
+<li class="toc-entry toc-h2"><a href="#scope-and-function-stack">Scope and function stack(범위와 함수 스택)</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#recursion">Recursion(재귀)</a></li>
+<li class="toc-entry toc-h3"><a href="#part-90d55f933bd6d855">중첩된 함수와 클로저</a></li>
+<li class="toc-entry toc-h3"><a href="#part-7c632cbd5b3d0963">변수의 보존</a></li>
+<li class="toc-entry toc-h3"><a href="#part-6f1ccb4444b524fe">다중 중첩 함수</a></li>
+<li class="toc-entry toc-h3"><a href="#part-4ee272e946653128">이름 충돌</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#closures">Closures(클로저)</a></li>
+<li class="toc-entry toc-h2"><a href="#arguments">인수(arguments) 객체 사용하기</a></li>
+<li class="toc-entry toc-h2"><a href="#function-parameters">Function parameters(함수의 매개변수)</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#default-parameters">Default parameters(디폴트 매개변수)</a></li>
+<li class="toc-entry toc-h3"><a href="#rest-parameters">Rest parameters(나머지 매개변수)</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#arrow-functions">Arrow functions(화살표 함수)</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#part-6c17b57003af644a">더 짧은 함수</a></li>
+<li class="toc-entry toc-h3"><a href="#this">사전적 this</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#part-5d2133852b2f40e5">미리 정의된 함수들</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#eval">eval()</a></li>
+<li class="toc-entry toc-h3"><a href="#uneval">uneval()</a></li>
+<li class="toc-entry toc-h3"><a href="#isfinite">isFinite()</a></li>
+<li class="toc-entry toc-h3"><a href="#isnan">isNaN()</a></li>
+<li class="toc-entry toc-h3"><a href="#parsefloat">parseFloat()</a></li>
+<li class="toc-entry toc-h3"><a href="#parseint">parseInt()</a></li>
+<li class="toc-entry toc-h3"><a href="#decodeuri">decodeURI()</a></li>
+<li class="toc-entry toc-h3"><a href="#decodeuricomponent">decodeURIComponent()</a></li>
+<li class="toc-entry toc-h3"><a href="#encodeuri">encodeURI()</a></li>
+<li class="toc-entry toc-h3"><a href="#encodeuricomponent">encodeURIComponent()</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#reference">Reference</a></li>
+</ul><p>JavaScript에서 기본적인 빌딩 블록 중의 하나입니다.</p>
+
+<p>함수는 작업을 수행하거나 값을 계산하는 문장 집합 같은 자바스크립트 절차입니다.</p>
+
+<p>함수를 사용하려면 함수를 호출하고자 하는 범위 내에서 함수를 정의해야만 합니다.</p>
+
+<h2 id="part-602a366b9ed1b89d">
+<a class="anchor" href="#part-602a366b9ed1b89d" aria-hidden="true"><span class="octicon octicon-link"></span></a>함수 정의</h2>
+
+<h3 id="part-602a366b9cdd11e5">
+<a class="anchor" href="#part-602a366b9cdd11e5" aria-hidden="true"><span class="octicon octicon-link"></span></a>함수 선언</h3>
+
+<p>함수 정의(또는 함수 선언)는 다음과 같은 함수 키워드로 구성되어 있습니다:</p>
+
+<ul>
+<li>함수의 이름</li>
+<li>괄호 안에서 콤마로 분리된 함수의 인수 목록</li>
+<li>중괄호 { } 안에서 함수를 정의하는 자바스크립트 표현</li>
+</ul>
+
+<blockquote>
+<p>비고: 매개변수에서 새로운 객체를 할당하는 것은 객체의 속성값보다 매개변수의 값이 변하는 것이기 때문에 함수 외부에 어떠한 영향도 미치지 않을 것입니다.</p>
+</blockquote>
+
+<h3 id="part-85c17a5697d92592">
+<a class="anchor" href="#part-85c17a5697d92592" aria-hidden="true"><span class="octicon octicon-link"></span></a>함수 표현식</h3>
+
+<p>위에서 함수의 선언은 구문적인 문(statement)이지만, <strong>함수 표현식</strong>에 의해서 함수가 만들어 질 수도 있습니다. 이 같은 함수를 <strong>익명</strong>이라고 합니다. 이 말은 모든 함수가 이름을 가질 필요는 없다는 것을 뜻합니다. 예를 들어, 함수 square은 다음과 같이 정의 될 수도 있습니다:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">square</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">number</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">number</span> <span class="o">*</span> <span class="nx">number</span> <span class="p">};</span>
+<span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="nx">square</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="c1">// x 의 값은 16 입니다.</span>
+</code></pre></div>
+<p>하지만, 이름은 함수 표현식과 함께 제공될 수 있고, 함수내에서 자신을 참조하는데 사용되거나 디버거내 스택 추적에서 함수를 식별하는데 사용될 수 있습니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">factorial</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">fac</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">n</span><span class="o">&lt;</span><span class="mi">2</span> <span class="p">?</span> <span class="mi">1</span> <span class="p">:</span> <span class="nx">n</span><span class="o">*</span><span class="nx">fac</span><span class="p">(</span><span class="nx">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">};</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">factorial</span><span class="p">(</span><span class="mi">3</span><span class="p">));</span>
+</code></pre></div>
+<p>함수 표현식은 함수를 다른 함수의 인수로 전달할 때 편리합니다:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">map</span><span class="p">(</span><span class="nx">f</span><span class="p">,</span> <span class="nx">a</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="p">[];</span> <span class="c1">// Create a new Array</span>
+  <span class="kd">var</span> <span class="nx">i</span><span class="p">;</span> <span class="c1">// Declare variable</span>
+  <span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">!=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="nx">result</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">f</span><span class="p">(</span><span class="nx">a</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+      <span class="k">return</span> <span class="nx">result</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">f</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+   <span class="k">return</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">x</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">];</span>
+<span class="kd">var</span> <span class="nx">cube</span> <span class="o">=</span> <span class="nx">map</span><span class="p">(</span><span class="nx">f</span><span class="p">,</span><span class="nx">numbers</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">cube</span><span class="p">);</span>  <span class="c1">// [0, 1, 8, 125, 1000]</span>
+</code></pre></div>
+<p>JavaScript에서 함수는 조건에 의해 정의될 수 있습니다. 예를 들어, 다음 함수 정의는 오직 num이 0일 때 경우에 만 myFunc을 정의합니다:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">myFunc</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">num</span> <span class="o">==</span> <span class="mi">0</span><span class="p">){</span>
+  <span class="nx">myFunc</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">theObject</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">theObject</span><span class="p">.</span><span class="nx">make</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Toyota</span><span class="dl">"</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>여기에 기술된 바와 같이 함수를 정의하는것에 더하여 <a href="ihttps://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/eval">eval()</a> 과 같이 런타임에 문자열에서 함수들을 만들기위해 <a href="ihttps://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a> 생성자를 사용할 수 있습니다.</p>
+
+<p>객체내의 한 속성이 함수인 경우 <strong>메서드</strong>라고 합니다.
+<a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/Working_with_Objects">Working with objects</a>에서 객체와 방법에 대해 자세히 알아보세요.</p>
+
+<hr>
+
+<h2 id="part-602a366ba0a951b6">
+<a class="anchor" href="#part-602a366ba0a951b6" aria-hidden="true"><span class="octicon octicon-link"></span></a>함수 호출</h2>
+
+<p>함수 정의: 함수를 실행하는 것이 아닙니다. 간단히 함수의 이름을 지어주고, 함수가 호출될 때 무엇을 할지 지정을 해주는 것입니다.</p>
+
+<p>함수 호출: 나타나있는 매개변수를 가지고 지정된 행위를 수행하는 것입니다.</p>
+
+<p>함수는 호출될 때 범위내에 있어야 합니다. 그러나 함수의 선언은 이 예에서와 같이 위에서 작성될 수 있습니다. (코드에서 호출 아래에 나타납니다.):</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">square</span><span class="p">(</span><span class="mi">5</span><span class="p">));</span>  <span class="c1">// 25</span>
+<span class="cm">/* ... */</span>
+<span class="kd">function</span> <span class="nx">square</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">n</span><span class="o">*</span><span class="nx">n</span> <span class="p">}</span>
+</code></pre></div>
+<p>함수의 범위는 함수가 선언된 곳이거나 맨 위에 함수가 선언된 경우에는 전체 프로그램에서입니다.</p>
+
+<blockquote>
+<p>비고: 위에 구문을 사용하여 함수를 정의하는 경우에만 작동합니다.(즉, function funcName(){} ) 아래의 코드는 작동되지 않습니다. 이것이 의미하는 바는 함수 호이스팅은 오직 함수선언과 함께 작동하고, 함수표현식과는 동작하지 않는다는 것입니다.</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">square</span><span class="p">);</span>   <span class="c1">// square는 초기값으로 undefined를 가지고 호이스트된다.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">square</span><span class="p">(</span><span class="mi">5</span><span class="p">));</span>  <span class="c1">// TypeError: square는 함수가 아니다.</span>
+<span class="nx">square</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">n</span> <span class="o">*</span> <span class="nx">n</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>함수의 인수는 문자열과 숫자에 제한되지 않습니다.</p>
+
+<p>여러분은 함수에 전체 객체를 전달할 수 있습니다.</p>
+
+<p>show-props() 함수(Working with objects에서 정의된)는 인수로 객체를 취하는 함수의 예입니다.</p>
+
+<p>함수는 자신을 호출할 수 있습니다. 예를 들어, 팩토리얼을 재귀적으로 계산하는 함수가 있습니다:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">factorial</span><span class="p">(</span><span class="nx">n</span><span class="p">){</span>
+  <span class="k">if</span> <span class="p">((</span><span class="nx">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="nx">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">else</span>
+    <span class="k">return</span> <span class="p">(</span><span class="nx">n</span> <span class="o">*</span> <span class="nx">factorial</span><span class="p">(</span><span class="nx">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">c</span><span class="p">,</span> <span class="nx">d</span><span class="p">,</span> <span class="nx">e</span><span class="p">;</span>
+<span class="nx">a</span> <span class="o">=</span> <span class="nx">factorial</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// a gets the value 1</span>
+<span class="nx">b</span> <span class="o">=</span> <span class="nx">factorial</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span> <span class="c1">// b gets the value 2</span>
+<span class="nx">c</span> <span class="o">=</span> <span class="nx">factorial</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span> <span class="c1">// c gets the value 6</span>
+<span class="nx">d</span> <span class="o">=</span> <span class="nx">factorial</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span> <span class="c1">// d gets the value 24</span>
+<span class="nx">e</span> <span class="o">=</span> <span class="nx">factorial</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span> <span class="c1">// e gets the value 120</span>
+</code></pre></div>
+<p>함수를 호출하는 다른 방법들이 있습니다.</p>
+
+<p>함수를 동적 호출해야 하거나, 함수의 인수의 수가 달라져야 하거나, 함수 호출의 맥락이 런타임에서 결정된 특정한 객체로 설정될 필요가 있는 경우가 자주 있습니다.</p>
+
+<p>함수가 그 자체로 객체이고 이들 객체는 차례로 메서드를(Function 객체를 참조) 가지고 있습니다.</p>
+
+<p>이들 중 하나인 <a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Function/apply">apply()</a> 메서드는 이러한 목표를 달성하기 위해 사용될 수 있습니다.</p>
+
+<hr>
+
+<h2 id="fucntion-scope">
+<a class="anchor" href="#fucntion-scope" aria-hidden="true"><span class="octicon octicon-link"></span></a>Fucntion scope(함수의 범위)</h2>
+
+<p>변수가 함수의 범위에서만 정의되어 있기 때문에, 함수 내에서 정의된 변수는 함수 외부에서는 어디서든 액세스할 수 없습니다.</p>
+
+<p>그러나 함수는 함수가 정의된 범위 내에서 정의된 모든 변수 및 함수들을 액세스할 수 있습니다.</p>
+
+<p>즉, 전역함수는 모든 전역 변수를 액세스할 수 있습니다.</p>
+
+<p>다른 함수 내에서 정의 된 함수는 부모 함수와 부모 함수가 액세스 할 수 있는 다른 변수에 정의된 모든 변수를 액세스할 수 있습니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// The following variables are defined in the global scope</span>
+<span class="kd">var</span> <span class="nx">num1</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span>
+    <span class="nx">num2</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="nx">name</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Chamahk</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="c1">// This function is defined in the global scope</span>
+<span class="kd">function</span> <span class="nx">multiply</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">num1</span> <span class="o">*</span> <span class="nx">num2</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">multiply</span><span class="p">();</span> <span class="c1">// Returns 60</span>
+
+<span class="c1">// A nested function example</span>
+<span class="kd">function</span> <span class="nx">getScore</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">num1</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+      <span class="nx">num2</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+
+  <span class="kd">function</span> <span class="nx">add</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">name</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> scored </span><span class="dl">"</span> <span class="o">+</span> <span class="p">(</span><span class="nx">num1</span> <span class="o">+</span> <span class="nx">num2</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">return</span> <span class="nx">add</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="nx">getScore</span><span class="p">();</span> <span class="c1">// Returns "Chamahk scored 5"</span>
+</code></pre></div>
+<hr>
+
+<h2 id="scope-and-function-stack">
+<a class="anchor" href="#scope-and-function-stack" aria-hidden="true"><span class="octicon octicon-link"></span></a>Scope and function stack(범위와 함수 스택)</h2>
+
+<h3 id="recursion">
+<a class="anchor" href="#recursion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Recursion(재귀)</h3>
+
+<p>함수는 자신을 참조하고 호출할 수 있습니다:</p>
+
+<ul>
+<li>함수의 이름</li>
+<li><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Functions/arguments/callee">arguments.callee</a></li>
+<li>함수를 참조하는 범위 내 변수</li>
+</ul>
+
+<p>자신을 호출하는 함수를 재귀 함수라고 합니다. 어떤 면에서, 재귀는 루프와 유사합니다. 둘 다 동일한 코드를 여러 번 실행하고, 조건(무한 루프를 방지하거나, 이 경우에는 오히려 무한 재귀하는)을 요구합니다.</p>
+
+<p>일부 알고리즘은 단순 재귀 루프로 변환할 수 없습니다. 예를 들어, 트리 구조(가령, DOM)의 모든 노드를 얻는 것은 재귀를 사용하여 보다 쉽게 할 수 있습니다:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">walkTree</span><span class="p">(</span><span class="nx">node</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">node</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="c1">//</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="c1">// do something with node</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">node</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">walkTree</span><span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>재귀적 알고리즘은 비재귀적인 알고리즘으로 변환 할 수 있습니다.
+그러나 변환된 알고리즘이 훨씬 더 복잡하며 그렇게 함으로써 스택의 사용을 요구합니다.
+사실, 재귀 자체가 함수 스택을 사용합니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">begin:</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">i</span><span class="p">);</span>
+  <span class="nx">foo</span><span class="p">(</span><span class="nx">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">end:</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">i</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">foo</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+
+<span class="c1">// Output:</span>
+
+<span class="c1">// begin:3</span>
+<span class="c1">// begin:2</span>
+<span class="c1">// begin:1</span>
+<span class="c1">// begin:0</span>
+<span class="c1">// end:0</span>
+<span class="c1">// end:1</span>
+<span class="c1">// end:2</span>
+<span class="c1">// end:3</span>
+</code></pre></div>
+<h3 id="part-90d55f933bd6d855">
+<a class="anchor" href="#part-90d55f933bd6d855" aria-hidden="true"><span class="octicon octicon-link"></span></a>중첩된 함수와 클로저</h3>
+
+<p>여러분은 함수 내에 함수를 끼워 넣을 수 있습니다.</p>
+
+<p>중첩된 (내부) 함수는 그것을 포함하는 (외부) 함수와 별개입니다. 그것은 또한 클로저를 형성합니다.</p>
+
+<p><strong>클로저</strong>: 그 변수(“폐쇄”라는 표현)를 결합하는 환경을 자유롭게 변수와 함께 가질 수 있는 표현(전형적인 함수)입니다.</p>
+
+<p>요약하면 내부 함수는:</p>
+
+<ul>
+<li><p>외부 함수의 명령문에서만 액세스할 수 있습니다.</p></li>
+<li><p><strong>클로저</strong>를 형성합니다. 외부 함수는 내부 함수의 인수와 변수를 사용할 수 없는 반면에, 내부 함수는 외부 함수의 인수와 변수를 사용할 수 있습니다.</p></li>
+<li><p>외부 함수를 호출, 외부 및 내부 함수 모두에 인수를 지정가능.</p></li>
+</ul>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">outside</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">function</span> <span class="nx">inside</span><span class="p">(</span><span class="nx">y</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">x</span> <span class="o">+</span> <span class="nx">y</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">inside</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">fn_inside</span> <span class="o">=</span> <span class="nx">outside</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span> <span class="c1">// Think of it like: give me a function that adds 3 to whatever you give it</span>
+<span class="nx">result</span> <span class="o">=</span> <span class="nx">fn_inside</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span> <span class="c1">// returns 8</span>
+
+<span class="nx">result1</span> <span class="o">=</span> <span class="nx">outside</span><span class="p">(</span><span class="mi">3</span><span class="p">)(</span><span class="mi">5</span><span class="p">);</span> <span class="c1">// returns 8</span>
+</code></pre></div>
+<h3 id="part-7c632cbd5b3d0963">
+<a class="anchor" href="#part-7c632cbd5b3d0963" aria-hidden="true"><span class="octicon octicon-link"></span></a>변수의 보존</h3>
+
+<p>중첩된 내부 함수가 반환될 때 외부 함수의 인수 x가 보존된다는 점을 알 수 있습니다.</p>
+
+<p>클로저</p>
+
+<ul>
+<li><p>그것을 참조하는 모든 범위에서 인수와 변수를 보존해두어야 합니다.</p></li>
+<li><p>매번 호출될 때마다 잠재적으로 다른 인수를 제공할 수 있기 때문에, 클로저는 외부 함수에 대하여 매번 새로 생성됩니다.</p></li>
+</ul>
+
+<p>메모리는 그 무엇도 내부 함수에 접근하지 않을 때만 해제됩니다.</p>
+
+<p>변수의 보존은 일반 객체에서 참조를 저장해두는 것과 다르지 않지만, 사용자가 직접 참조를 설정하는 것이 아니고 자세히 들여다볼 수 없어서 종종 명확하지 않습니다.</p>
+
+<h3 id="part-6f1ccb4444b524fe">
+<a class="anchor" href="#part-6f1ccb4444b524fe" aria-hidden="true"><span class="octicon octicon-link"></span></a>다중 중첩 함수</h3>
+
+<p>범위 체이닝이라 합니다. (추후 설명)</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">A</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">function</span> <span class="nx">B</span><span class="p">(</span><span class="nx">y</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">function</span> <span class="nx">C</span><span class="p">(</span><span class="nx">z</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">x</span> <span class="o">+</span> <span class="nx">y</span> <span class="o">+</span> <span class="nx">z</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="nx">C</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="nx">B</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">A</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// logs 6 (1 + 2 + 3)</span>
+</code></pre></div>
+<p>이 예에서, C는 B의 y와 A의 x를 엑세스 합니다. 이 때문에 수행할 수 있습니다:</p>
+
+<ol>
+<li><p>B는 A를 포함하는 클로저를 형성합니다. 즉, B는 A의 인수와 변수를 엑세스할 수 있습니다.</p></li>
+<li><p>C는 B를 포함하는 클로저를 형성합니다.</p></li>
+<li><p>B의 클로저는 A를 포함하고, C의 클로저는 A를 포함하기 때문에, C는 B와 A의 인수와 변수를 엑세스할 수 있습니다. 즉, 순서대로 C는 A와 B의 범위를 체이닝합니다.</p></li>
+</ol>
+
+<p>그러나 역은 사실이 아닙니다. A는 C에 접근 할 수 없습니다. 왜냐하면 A는 B의 인수와 변수(C는 B변수)에 접근할수 없기 때문입니다. 그래서 C는 B에게만 사적으로 남게됩니다.</p>
+
+<h3 id="part-4ee272e946653128">
+<a class="anchor" href="#part-4ee272e946653128" aria-hidden="true"><span class="octicon octicon-link"></span></a>이름 충돌</h3>
+
+<p>클로저의 범위에서 두 개의 인수 또는 변수의 이름이 같은 경우, 이름 충돌이 있습니다. 더 안쪽 범위가 우선순위를 갖습니다. 그래서 가장 바깥 범위는 우선순위가 가장 낮은 반면에, 가장 안쪽 범위는 가장 높은 우선순위를 갖습니다. 이것이 범위 체인(scope chaini)입니다. 체인에서 첫번째는 가장 안쪽 범위이고, 마지막은 가장 바깥 쪽의 범위입니다. 다음 사항을 고려하세요:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">outside</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+  <span class="kd">function</span> <span class="nx">inside</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">x</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">inside</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">result</span> <span class="o">=</span> <span class="nx">outside</span><span class="p">()(</span><span class="mi">20</span><span class="p">);</span> <span class="c1">// returns 20 instead of 10</span>
+</code></pre></div>
+<hr>
+
+<h2 id="closures">
+<a class="anchor" href="#closures" aria-hidden="true"><span class="octicon octicon-link"></span></a>Closures(클로저)</h2>
+
+<p>Closures는 Javascript의 강력한 기능 중 하나입니다.</p>
+
+<ul>
+<li>Javascript는 함수의 중첩(함수 안에 함수를 정의하는것)을 허용하고, 내부함수가 외부 함수 안에서 정의된 모든 변수와 함수들을 완전하게 접근 할 수 있도록 승인해줍니다.</li>
+</ul>
+
+<p>(그리고 외부함수가 접근할수 있는 모든 다른 변수와 함수들까지)</p>
+
+<ul>
+<li><p>그러나 외부 함수는 내부 함수 안에서 정의된 변수와 함수들에 접근 할 수 없습니다.</p></li>
+<li><p>이는 내부 함수의 변수에 대한 일종의 캡슐화를 제공합니다.</p></li>
+<li><p>또한, 내부함수는 외부함수의 범위에 접근할 수 있기 때문에, 내부 함수가 외부 함수의 수명을 초과하여 생존하는 경우, 외부함수에서 선언된 변수나 함수는 외부함수의 실행 기간보다 오래갑니다.</p></li>
+<li><p><strong>Closures</strong>는 내부 함수가 어떻게든 외부 함수 범위 밖의 모든 범위에서 사용 가능해지면 생성됩니다.</p></li>
+</ul>
+
+<p>외부 함수의 내부 변수를 다루는 메서드를 포함한 객체도 반환될 수도 있습니다:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">createPet</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">sex</span><span class="p">;</span>
+
+  <span class="k">return</span> <span class="p">{</span>
+    <span class="na">setName</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">newName</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">name</span> <span class="o">=</span> <span class="nx">newName</span><span class="p">;</span>
+    <span class="p">},</span>
+
+    <span class="na">getName</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">name</span><span class="p">;</span>
+    <span class="p">},</span>
+
+    <span class="na">getSex</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">sex</span><span class="p">;</span>
+    <span class="p">},</span>
+
+    <span class="na">setSex</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">newSex</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">newSex</span> <span class="o">==</span> <span class="dl">"</span><span class="s2">string</span><span class="dl">"</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">newSex</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span> <span class="o">==</span> <span class="dl">"</span><span class="s2">male</span><span class="dl">"</span> <span class="o">||</span> <span class="nx">newSex</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span> <span class="o">==</span> <span class="dl">"</span><span class="s2">female</span><span class="dl">"</span><span class="p">))</span> <span class="p">{</span>
+        <span class="nx">sex</span> <span class="o">=</span> <span class="nx">newSex</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">pet</span> <span class="o">=</span> <span class="nx">createPet</span><span class="p">(</span><span class="dl">"</span><span class="s2">Vivie</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">pet</span><span class="p">.</span><span class="nx">getName</span><span class="p">();</span>                  <span class="c1">// Vivie</span>
+
+<span class="nx">pet</span><span class="p">.</span><span class="nx">setName</span><span class="p">(</span><span class="dl">"</span><span class="s2">Oliver</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">pet</span><span class="p">.</span><span class="nx">setSex</span><span class="p">(</span><span class="dl">"</span><span class="s2">male</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">pet</span><span class="p">.</span><span class="nx">getSex</span><span class="p">();</span>                   <span class="c1">// male</span>
+<span class="nx">pet</span><span class="p">.</span><span class="nx">getName</span><span class="p">();</span>                  <span class="c1">// Oliver</span>
+</code></pre></div>
+<p>위 코드에서, 외부 함수의 'name' 이란 변수는 내부 함수에서 접근이 가능합니다. 그리고 그 내장 함수를 통하는 방법 말고는 내부 변수로 접근할 수 없습니다. 내부 함수의 내부 변수는 외부 인수와 변수를 안전하게 저장합니다. 내부 변수는 내부 함수가 작동하기 위해 '지속적'이고 '갭슐화된' 데이터를 보유합니다. 함수는 변수로 할당되거나, 이름을 가질 필요가 없습니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">getCode</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+  <span class="kd">var</span> <span class="nx">secureCode</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">0]Eal(eh&amp;2</span><span class="dl">"</span><span class="p">;</span>    <span class="c1">// A code we do not want outsiders to be able to modify...</span>
+
+  <span class="k">return</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">secureCode</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">})();</span>
+
+<span class="nx">getCode</span><span class="p">();</span>    <span class="c1">// Returns the secureCode</span>
+</code></pre></div>
+<p>그러나 클로저를 쓰면서 조심해야 할 <strong>위험</strong>이 많이 있습니다.</p>
+
+<p>만약 내부 함수가 외부 함수의 범위에 있는 이름과 같은 변수를 정의하였을 경우, 다시는 외부 함수 범위의 변수를 참조(접근)할 방법이 없습니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">createPet</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">// 외부 함수가 "name" 이라는 변수를 정의하였다</span>
+  <span class="k">return</span> <span class="p">{</span>
+    <span class="na">setName</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>    <span class="c1">// 내부 함수 또한 "name" 이라는 변수를 정의하였다</span>
+      <span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>               <span class="c1">// ??? 어떻게 우리는 외부 함수에 정의된 "name"에 접근할까???</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr>
+
+<h2 id="arguments">
+<a class="anchor" href="#arguments" aria-hidden="true"><span class="octicon octicon-link"></span></a>인수(arguments) 객체 사용하기</h2>
+
+<p>함수의 인수는 배열과 비슷한 객체로 처리가 됩니다.
+함수 내에서는, 전달된 인수를 다음과 같이 다룰 수 있습니다:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">arguments</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
+</code></pre></div>
+<p>i 는 0 으로 시작하는 순서 번호입니다. 따라서 함수에 전달된 첫 번째 인수는 <code>arguments[0]</code> 입니다. 총 인수의 개수는 <code>arguments.length</code> 에서 얻을 수 있습니다.</p>
+
+<p>인수(arguments) 객체를 이용하면, 보통 함수에 정의된 개수보다 많은 인수를 넘겨주면서 함수를 호출할 수 있습니다. 이것은 <strong>얼마나 많은 인수가 함수로 넘겨질지 모르는 상황에서 유용합니다.</strong></p>
+
+<p>arguments.length를 함수에 실제로 넘겨받은 인수의 수를 알아낼 때 사용할 수 있고, 각각의 인수에 인수(arguments) 객체를 이용하여 접근할 수 있습니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">myConcat</span><span class="p">(</span><span class="nx">separator</span><span class="p">)</span> <span class="p">{</span>
+   <span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="dl">""</span><span class="p">;</span> <span class="c1">// 리스트를 초기화한다</span>
+   <span class="kd">var</span> <span class="nx">i</span><span class="p">;</span>
+   <span class="c1">// arguments를 이용하여 반복한다</span>
+   <span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">result</span> <span class="o">+=</span> <span class="nx">arguments</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">+</span> <span class="nx">separator</span><span class="p">;</span>
+   <span class="p">}</span>
+   <span class="k">return</span> <span class="nx">result</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// returns "red, orange, blue, "</span>
+<span class="nx">myConcat</span><span class="p">(</span><span class="dl">"</span><span class="s2">, </span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">red</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">orange</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">blue</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="c1">// returns "elephant; giraffe; lion; cheetah; "</span>
+<span class="nx">myConcat</span><span class="p">(</span><span class="dl">"</span><span class="s2">; </span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">elephant</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">giraffe</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">lion</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">cheetah</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="c1">// returns "sage. basil. oregano. pepper. parsley. "</span>
+<span class="nx">myConcat</span><span class="p">(</span><span class="dl">"</span><span class="s2">. </span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">sage</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">basil</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">oregano</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">pepper</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">parsley</span><span class="dl">"</span><span class="p">);</span>
+</code></pre></div>
+<blockquote>
+<p><strong>NOTE:</strong> 인수(arguments) 객체는 배열과 닮은 것이지 배열이 아닙니다. 인수(arguments) 객체는 번호 붙여진 인덱스와 길이 속성을 가지고 있다는 점에서 배열과 닮은 것입니다. 인수(arguments) 객체는 배열을 다루는 모든 메서드를 가지고 있지 않습니다.</p>
+</blockquote>
+
+<p>더 자세한 정보를 얻고 싶으면 자바스크립트 참조문의 <a href="ihttps://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a>객체에 대하여 보세요.</p>
+
+<hr>
+
+<h2 id="function-parameters">
+<a class="anchor" href="#function-parameters" aria-hidden="true"><span class="octicon octicon-link"></span></a>Function parameters(함수의 매개변수)</h2>
+
+<p><em>ECMAScript 6</em> 와 함께 시작된 두 종류의 매개변수: <em>디폴트 매개변수, 나머지 매개변수.</em></p>
+
+<h3 id="default-parameters">
+<a class="anchor" href="#default-parameters" aria-hidden="true"><span class="octicon octicon-link"></span></a>Default parameters(디폴트 매개변수)</h3>
+
+<p>자바스크립트에서, 함수의 매개변수는 undefined 가 기본으로 설정됩니다. 그러나, 어떤 상황에서는 다른 값을 기본값으로 가진 것이 유용할 때가 있습니다. 이때가 디폴트 매개변수가 도움을 줄 수 있는 상황입니다.</p>
+
+<p>옛날엔, 기본값을 설정하는 보편적인 전략은 함수의 본문에서 매개변수 값을 테스트하여 그 값이 undefined 인 경우에 값을 할당하는 것이었습니다. 다음과 같은 예제에서, 함수호출 시 b 매개변수에 아무 값을 주지 않으면, a*b 계산 시 b 매개변수의 값은 undefined 일 것이므로 multiply 함수 호출은 NaN을 리턴할 것입니다. 그러나 이런 것은 이 예제의 2번째 줄에서 걸립니다:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">multiply</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">b</span> <span class="o">=</span> <span class="k">typeof</span> <span class="nx">b</span> <span class="o">!==</span> <span class="dl">'</span><span class="s1">undefined</span><span class="dl">'</span> <span class="p">?</span>  <span class="nx">b</span> <span class="p">:</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="k">return</span> <span class="nx">a</span><span class="o">*</span><span class="nx">b</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">multiply</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span> <span class="c1">// 5</span>
+</code></pre></div>
+<p>디폴트 매개변수와 함께라면, 함수 본문에서 검사하는 부분은 필요가 없습니다. 이제 , 함수 머리에서 b 의 기본값에 간단히 1을 넣어주면 됩니다:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">multiply</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">a</span><span class="o">*</span><span class="nx">b</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">multiply</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span> <span class="c1">// 5</span>
+
+<span class="kd">function</span> <span class="nx">multiply</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nx">c</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">a</span><span class="o">*</span><span class="nx">b</span><span class="o">*</span><span class="nx">c</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="nx">multiply</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>  <span class="c1">// NaN</span>
+
+<span class="nx">multiply</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="kc">undefined</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>  <span class="c1">// 2</span>
+
+<span class="nx">multiply</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>  <span class="c1">// 0</span>
+</code></pre></div>
+<p>더 자세한 내용을 보고 싶으시면, <a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Functions/Default_parameters">Default parameters</a> 문서를 참조하세요.</p>
+
+<h3 id="rest-parameters">
+<a class="anchor" href="#rest-parameters" aria-hidden="true"><span class="octicon octicon-link"></span></a>Rest parameters(나머지 매개변수)</h3>
+
+<p><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Functions/rest_parameters">Rest parameters</a> 구문을 사용하면 배열로 불확실한 개수의 인수를 나타낼 수 있습니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">multiply</span><span class="p">(</span><span class="nx">multiplier</span><span class="p">,</span> <span class="p">...</span><span class="nx">theArgs</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">theArgs</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">x</span> <span class="o">=&gt;</span> <span class="nx">multiplier</span> <span class="o">*</span> <span class="nx">x</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="nx">multiply</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arr</span><span class="p">);</span> <span class="c1">// [2, 4, 6]</span>
+</code></pre></div>
+<hr>
+
+<h2 id="arrow-functions">
+<a class="anchor" href="#arrow-functions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Arrow functions(화살표 함수)</h2>
+
+<p><a href="%EB%9A%B1%EB%9A%B1%ED%95%9C%20%ED%99%94%EC%82%B4%ED%91%9C(fat%20arrow)%20%ED%95%A8%EC%88%98%EB%9D%BC%EA%B3%A0%20%EC%95%8C%EB%A0%A4%EC%A7%84">화살표 함수 표현</a>은 함수 표현과 비교하였을때 짧은 문법을 가지고 있고 사전적으로 this 값을 묶습니다. 화살표 함수는 언제나 익명입니다. hacks.mozilla.org 블로그 포스트 "ES6 In Depth: Arrow functions" 를 참조하세요.</p>
+
+<p>화살표 함수 소개에 영향을 주는 두 요소: <em>더 짧은 함수</em>와 <em>사전적 <code>this</code></em>.</p>
+
+<h3 id="part-6c17b57003af644a">
+<a class="anchor" href="#part-6c17b57003af644a" aria-hidden="true"><span class="octicon octicon-link"></span></a>더 짧은 함수</h3>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="dl">"</span><span class="s2">Hydrogen</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">Helium</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">Lithium</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">Beryl­lium</span><span class="dl">"</span>
+<span class="p">];</span>
+
+<span class="kd">var</span> <span class="nx">a2</span> <span class="o">=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">s</span><span class="p">){</span> <span class="k">return</span> <span class="nx">s</span><span class="p">.</span><span class="nx">length</span> <span class="p">});</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a2</span><span class="p">);</span> <span class="c1">// logs [8, 6, 7, 9]</span>
+
+<span class="kd">var</span> <span class="nx">a3</span> <span class="o">=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span> <span class="nx">s</span> <span class="o">=&gt;</span> <span class="nx">s</span><span class="p">.</span><span class="nx">length</span> <span class="p">);</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a3</span><span class="p">);</span> <span class="c1">// logs [8, 6, 7, 9]</span>
+</code></pre></div>
+<h3 id="this">
+<a class="anchor" href="#this" aria-hidden="true"><span class="octicon octicon-link"></span></a>사전적 <code>this</code>
+</h3>
+
+<p>화살표 함수에서, 모든 new함수들은 그들의 this 값을 정의합니다(생성자로서의 새로운 객체, 정의되지 않은 strict mode의 함수 호출, 함수가 "object method"로 호출했을때의 context object ,등등).
+이런 것은 객체지향 프로그래밍 스타일에서 짜증을 불러 일으킵니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">Person</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// The Person() constructor defines `this` as itself.</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="nx">setInterval</span><span class="p">(</span><span class="kd">function</span> <span class="nx">growUp</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// In nonstrict mode, the growUp() function defines `this`</span>
+    <span class="c1">// as the global object, which is different from the `this`</span>
+    <span class="c1">// defined by the Person() constructor.</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">age</span><span class="o">++</span><span class="p">;</span>
+  <span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">p</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">();</span>
+</code></pre></div>
+<p>IECMAScript 3/5 에서는, 이 문제는 this 안의 값을 뒤덮을 수 있는변수에 할당하면서 고쳐졌습니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">Person</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nb">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span> <span class="c1">// Some choose `that` instead of `self`.</span>
+                   <span class="c1">// Choose one and be consistent.</span>
+  <span class="nb">self</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="nx">setInterval</span><span class="p">(</span><span class="kd">function</span> <span class="nx">growUp</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// The callback refers to the `self` variable of which</span>
+    <span class="c1">// the value is the expected object.</span>
+    <span class="nb">self</span><span class="p">.</span><span class="nx">age</span><span class="o">++</span><span class="p">;</span>
+  <span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>또는, 적절한 <code>this</code> 값이 growUp() 함수에 전달되도록, 바인딩된 함수가 생성될 수 있습니다.</p>
+
+<p>화살표 함수는 둘러싼 콘텍스트의 <code>this</code> 값을 캡처하므로, 다음 코드는 예상대로 작동합니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">Person</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="nx">setInterval</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">age</span><span class="o">++</span><span class="p">;</span> <span class="c1">// |this| properly refers to the person object</span>
+  <span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">p</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">();</span>
+</code></pre></div>
+<hr>
+
+<h2 id="part-5d2133852b2f40e5">
+<a class="anchor" href="#part-5d2133852b2f40e5" aria-hidden="true"><span class="octicon octicon-link"></span></a>미리 정의된 함수들</h2>
+
+<h3 id="eval">
+<a class="anchor" href="#eval" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="ihttps://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/eval">eval()</a>
+</h3>
+
+<p>문자열로 표현된 자바스크립트 코드를 수행합니다.</p>
+
+<h3 id="uneval">
+<a class="anchor" href="#uneval" aria-hidden="true"><span class="octicon octicon-link"></span></a>uneval()</h3>
+
+<p>Object의 소스코드를 표현하는 문자열을 만듭니다. <strong>(비표준)</strong></p>
+
+<h3 id="isfinite">
+<a class="anchor" href="#isfinite" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/isFinite">isFinite()</a>
+</h3>
+
+<p>전역 isFinite() 함수는 전달받은 값이 유한한지 결정합니다.</p>
+
+<p>만약 필요하다면, 매개변수는 첫번째로 숫자로 변환됩니다.</p>
+
+<h3 id="isnan">
+<a class="anchor" href="#isnan" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/isNaN">isNaN()</a>
+</h3>
+
+<p>NaN인지 아닌지 결정합니다.</p>
+
+<blockquote>
+<p>Note: <code>isNaN()</code>함수 안의 강제 변환은 흥미로운 규칙을 가지고 있습니다.
+<code>Number.isNaN()</code> 을 대신 사용하고 싶을것입니다, ECMAScript 6 에서 정의된 또는 값이 숫자값이 아닐때, <code>typeof</code> 를 사용할 수도 있습니다 .</p>
+</blockquote>
+
+<h3 id="parsefloat">
+<a class="anchor" href="#parsefloat" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/parseFloat">parseFloat()</a>
+</h3>
+
+<p>문자열 인수 값을 해석하여 부동 소숫점수를 반환합니다.</p>
+
+<h3 id="parseint">
+<a class="anchor" href="#parseint" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/parseInt">parseInt()</a>
+</h3>
+
+<p>문자열 인수 값을 해석하여 특정한 진법의 정수를 반환합니다(수학적 수 체계를 기반으로 해서).</p>
+
+<h3 id="decodeuri">
+<a class="anchor" href="#decodeuri" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/decodeURI">decodeURI()</a>
+</h3>
+
+<p>decodeURI() 함수는 사전에 encodeURI을 통해 만들어지거나 비슷한 과정을 통해 만들어진 URI(Uniform Resource Identifier) 를 해독합니다.</p>
+
+<h3 id="decodeuricomponent">
+<a class="anchor" href="#decodeuricomponent" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/decodeURIComponent">decodeURIComponent()</a>
+</h3>
+
+<p>사전에 encodeURIComponent를 통하여 만들어 지거나 또는 비슷한 과정을 통해 만들어진 URI (Uniform Resource Identifier) 컴포넌트를 해독합니다.</p>
+
+<h3 id="encodeuri">
+<a class="anchor" href="#encodeuri" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/encodeURI">encodeURI()</a>
+</h3>
+
+<p>URI(Uniform Resource Identifier)를 각 인스턴스의 특정한 문자를 한개, 두개,세개, 또는 네개의 UTF-8인코딩으로 나타내어지는 연속된 확장문자들과 바꾸는 방법으로 부호화 합니다.</p>
+
+<p>(두"surrogate"문자로 구성된 문자들은 오직 네개의 연속된 확장문자 입니다)</p>
+
+<h3 id="encodeuricomponent">
+<a class="anchor" href="#encodeuricomponent" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent">encodeURIComponent()</a>
+</h3>
+
+<p>URI(Uniform Resource Identifier) 컴포넌트를 각 인스턴스의 특정한 문자를 한개, 두개, 세개, 또는 네개의 UTF-8인코딩으로 나타내어지는 연속된 확장문자들과 바꾸는 방법으로 부호화 합니다.</p>
+
+<p>(두"surrogate"문자로 구성된 문자들은 오직 네개의 연속된 확장문자 입니다)</p>
+
+<hr>
+
+<h2 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+<p><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/%ED%95%A8%EC%88%98">https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/%ED%95%A8%EC%88%98</a></p>
+
+  </div>
+
+<div>
+  <p>JavaScript에서 기본적인 빌딩 블록 중의 하나입니다.</p>
+
+<p>함수는 작업을 수행하거나 값을 계산하는 문장 집합 같은 자바스크립트 절차입니다.</p>
+
+<p>함수를 사용하려면 함수를 호출하고자 하는 범위 내에서 함수를 정의해야만 합니다.</p>
+
+<h2 id="part-602a366b9ed1b89d">함수 정의</h2>
+
+<h3 id="part-602a366b9cdd11e5">함수 선언</h3>
+
+<p>함수 정의(또는 함수 선언)는 다음과 같은 함수 키워드로 구성되어 있습니다:</p>
+
+<ul>
+<li>함수의 이름</li>
+<li>괄호 안에서 콤마로 분리된 함수의 인수 목록</li>
+<li>중괄호 { } 안에서 함수를 정의하는 자바스크립트 표현</li>
+</ul>
+
+<blockquote>
+<p>비고: 매개변수에서 새로운 객체를 할당하는 것은 객체의 속성값보다 매개변수의 값이 변하는 것이기 때문에 함수 외부에 어떠한 영향도 미치지 않을 것입니다.</p>
+</blockquote>
+
+<h3 id="part-85c17a5697d92592">함수 표현식</h3>
+
+<p>위에서 함수의 선언은 구문적인 문(statement)이지만, <strong>함수 표현식</strong>에 의해서 함수가 만들어 질 수도 있습니다. 이 같은 함수를 <strong>익명</strong>이라고 합니다. 이 말은 모든 함수가 이름을 가질 필요는 없다는 것을 뜻합니다. 예를 들어, 함수 square은 다음과 같이 정의 될 수도 있습니다:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">square</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">number</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">number</span> <span class="o">*</span> <span class="nx">number</span> <span class="p">};</span>
+<span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="nx">square</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="c1">// x 의 값은 16 입니다.</span>
+</code></pre></div>
+<p>하지만, 이름은 함수 표현식과 함께 제공될 수 있고, 함수내에서 자신을 참조하는데 사용되거나 디버거내 스택 추적에서 함수를 식별하는데 사용될 수 있습니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">factorial</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">fac</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">n</span><span class="o">&lt;</span><span class="mi">2</span> <span class="p">?</span> <span class="mi">1</span> <span class="p">:</span> <span class="nx">n</span><span class="o">*</span><span class="nx">fac</span><span class="p">(</span><span class="nx">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">};</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">factorial</span><span class="p">(</span><span class="mi">3</span><span class="p">));</span>
+</code></pre></div>
+<p>함수 표현식은 함수를 다른 함수의 인수로 전달할 때 편리합니다:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">map</span><span class="p">(</span><span class="nx">f</span><span class="p">,</span> <span class="nx">a</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="p">[];</span> <span class="c1">// Create a new Array</span>
+  <span class="kd">var</span> <span class="nx">i</span><span class="p">;</span> <span class="c1">// Declare variable</span>
+  <span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">!=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="nx">result</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">f</span><span class="p">(</span><span class="nx">a</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+      <span class="k">return</span> <span class="nx">result</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">f</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+   <span class="k">return</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">x</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">];</span>
+<span class="kd">var</span> <span class="nx">cube</span> <span class="o">=</span> <span class="nx">map</span><span class="p">(</span><span class="nx">f</span><span class="p">,</span><span class="nx">numbers</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">cube</span><span class="p">);</span>  <span class="c1">// [0, 1, 8, 125, 1000]</span>
+</code></pre></div>
+<p>JavaScript에서 함수는 조건에 의해 정의될 수 있습니다. 예를 들어, 다음 함수 정의는 오직 num이 0일 때 경우에 만 myFunc을 정의합니다:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">myFunc</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">num</span> <span class="o">==</span> <span class="mi">0</span><span class="p">){</span>
+  <span class="nx">myFunc</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">theObject</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">theObject</span><span class="p">.</span><span class="nx">make</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Toyota</span><span class="dl">"</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>여기에 기술된 바와 같이 함수를 정의하는것에 더하여 <a href="ihttps://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/eval">eval()</a> 과 같이 런타임에 문자열에서 함수들을 만들기위해 <a href="ihttps://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a> 생성자를 사용할 수 있습니다.</p>
+
+<p>객체내의 한 속성이 함수인 경우 <strong>메서드</strong>라고 합니다.
+<a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/Working_with_Objects" rel="nofollow" target="_blank">Working with objects</a>에서 객체와 방법에 대해 자세히 알아보세요.</p>
+
+<hr>
+
+<h2 id="part-602a366ba0a951b6">함수 호출</h2>
+
+<p>함수 정의: 함수를 실행하는 것이 아닙니다. 간단히 함수의 이름을 지어주고, 함수가 호출될 때 무엇을 할지 지정을 해주는 것입니다.</p>
+
+<p>함수 호출: 나타나있는 매개변수를 가지고 지정된 행위를 수행하는 것입니다.</p>
+
+<p>함수는 호출될 때 범위내에 있어야 합니다. 그러나 함수의 선언은 이 예에서와 같이 위에서 작성될 수 있습니다. (코드에서 호출 아래에 나타납니다.):</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">square</span><span class="p">(</span><span class="mi">5</span><span class="p">));</span>  <span class="c1">// 25</span>
+<span class="cm">/* ... */</span>
+<span class="kd">function</span> <span class="nx">square</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">n</span><span class="o">*</span><span class="nx">n</span> <span class="p">}</span>
+</code></pre></div>
+<p>함수의 범위는 함수가 선언된 곳이거나 맨 위에 함수가 선언된 경우에는 전체 프로그램에서입니다.</p>
+
+<blockquote>
+<p>비고: 위에 구문을 사용하여 함수를 정의하는 경우에만 작동합니다.(즉, function funcName(){} ) 아래의 코드는 작동되지 않습니다. 이것이 의미하는 바는 함수 호이스팅은 오직 함수선언과 함께 작동하고, 함수표현식과는 동작하지 않는다는 것입니다.</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">square</span><span class="p">);</span>   <span class="c1">// square는 초기값으로 undefined를 가지고 호이스트된다.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">square</span><span class="p">(</span><span class="mi">5</span><span class="p">));</span>  <span class="c1">// TypeError: square는 함수가 아니다.</span>
+<span class="nx">square</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">n</span> <span class="o">*</span> <span class="nx">n</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>함수의 인수는 문자열과 숫자에 제한되지 않습니다.</p>
+
+<p>여러분은 함수에 전체 객체를 전달할 수 있습니다.</p>
+
+<p>show-props() 함수(Working with objects에서 정의된)는 인수로 객체를 취하는 함수의 예입니다.</p>
+
+<p>함수는 자신을 호출할 수 있습니다. 예를 들어, 팩토리얼을 재귀적으로 계산하는 함수가 있습니다:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">factorial</span><span class="p">(</span><span class="nx">n</span><span class="p">){</span>
+  <span class="k">if</span> <span class="p">((</span><span class="nx">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="nx">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">else</span>
+    <span class="k">return</span> <span class="p">(</span><span class="nx">n</span> <span class="o">*</span> <span class="nx">factorial</span><span class="p">(</span><span class="nx">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">c</span><span class="p">,</span> <span class="nx">d</span><span class="p">,</span> <span class="nx">e</span><span class="p">;</span>
+<span class="nx">a</span> <span class="o">=</span> <span class="nx">factorial</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// a gets the value 1</span>
+<span class="nx">b</span> <span class="o">=</span> <span class="nx">factorial</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span> <span class="c1">// b gets the value 2</span>
+<span class="nx">c</span> <span class="o">=</span> <span class="nx">factorial</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span> <span class="c1">// c gets the value 6</span>
+<span class="nx">d</span> <span class="o">=</span> <span class="nx">factorial</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span> <span class="c1">// d gets the value 24</span>
+<span class="nx">e</span> <span class="o">=</span> <span class="nx">factorial</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span> <span class="c1">// e gets the value 120</span>
+</code></pre></div>
+<p>함수를 호출하는 다른 방법들이 있습니다.</p>
+
+<p>함수를 동적 호출해야 하거나, 함수의 인수의 수가 달라져야 하거나, 함수 호출의 맥락이 런타임에서 결정된 특정한 객체로 설정될 필요가 있는 경우가 자주 있습니다.</p>
+
+<p>함수가 그 자체로 객체이고 이들 객체는 차례로 메서드를(Function 객체를 참조) 가지고 있습니다.</p>
+
+<p>이들 중 하나인 <a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Function/apply" rel="nofollow" target="_blank">apply()</a> 메서드는 이러한 목표를 달성하기 위해 사용될 수 있습니다.</p>
+
+<hr>
+
+<h2 id="fucntion-scope">Fucntion scope(함수의 범위)</h2>
+
+<p>변수가 함수의 범위에서만 정의되어 있기 때문에, 함수 내에서 정의된 변수는 함수 외부에서는 어디서든 액세스할 수 없습니다.</p>
+
+<p>그러나 함수는 함수가 정의된 범위 내에서 정의된 모든 변수 및 함수들을 액세스할 수 있습니다.</p>
+
+<p>즉, 전역함수는 모든 전역 변수를 액세스할 수 있습니다.</p>
+
+<p>다른 함수 내에서 정의 된 함수는 부모 함수와 부모 함수가 액세스 할 수 있는 다른 변수에 정의된 모든 변수를 액세스할 수 있습니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// The following variables are defined in the global scope</span>
+<span class="kd">var</span> <span class="nx">num1</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span>
+    <span class="nx">num2</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="nx">name</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Chamahk</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="c1">// This function is defined in the global scope</span>
+<span class="kd">function</span> <span class="nx">multiply</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">num1</span> <span class="o">*</span> <span class="nx">num2</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">multiply</span><span class="p">();</span> <span class="c1">// Returns 60</span>
+
+<span class="c1">// A nested function example</span>
+<span class="kd">function</span> <span class="nx">getScore</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">num1</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+      <span class="nx">num2</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+
+  <span class="kd">function</span> <span class="nx">add</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">name</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> scored </span><span class="dl">"</span> <span class="o">+</span> <span class="p">(</span><span class="nx">num1</span> <span class="o">+</span> <span class="nx">num2</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">return</span> <span class="nx">add</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="nx">getScore</span><span class="p">();</span> <span class="c1">// Returns "Chamahk scored 5"</span>
+</code></pre></div>
+<hr>
+
+<h2 id="scope-and-function-stack">Scope and function stack(범위와 함수 스택)</h2>
+
+<h3 id="recursion">Recursion(재귀)</h3>
+
+<p>함수는 자신을 참조하고 호출할 수 있습니다:</p>
+
+<ul>
+<li>함수의 이름</li>
+<li><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Functions/arguments/callee" rel="nofollow" target="_blank">arguments.callee</a></li>
+<li>함수를 참조하는 범위 내 변수</li>
+</ul>
+
+<p>자신을 호출하는 함수를 재귀 함수라고 합니다. 어떤 면에서, 재귀는 루프와 유사합니다. 둘 다 동일한 코드를 여러 번 실행하고, 조건(무한 루프를 방지하거나, 이 경우에는 오히려 무한 재귀하는)을 요구합니다.</p>
+
+<p>일부 알고리즘은 단순 재귀 루프로 변환할 수 없습니다. 예를 들어, 트리 구조(가령, DOM)의 모든 노드를 얻는 것은 재귀를 사용하여 보다 쉽게 할 수 있습니다:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">walkTree</span><span class="p">(</span><span class="nx">node</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">node</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="c1">//</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="c1">// do something with node</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">node</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">walkTree</span><span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>재귀적 알고리즘은 비재귀적인 알고리즘으로 변환 할 수 있습니다.
+그러나 변환된 알고리즘이 훨씬 더 복잡하며 그렇게 함으로써 스택의 사용을 요구합니다.
+사실, 재귀 자체가 함수 스택을 사용합니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">begin:</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">i</span><span class="p">);</span>
+  <span class="nx">foo</span><span class="p">(</span><span class="nx">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">end:</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">i</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">foo</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+
+<span class="c1">// Output:</span>
+
+<span class="c1">// begin:3</span>
+<span class="c1">// begin:2</span>
+<span class="c1">// begin:1</span>
+<span class="c1">// begin:0</span>
+<span class="c1">// end:0</span>
+<span class="c1">// end:1</span>
+<span class="c1">// end:2</span>
+<span class="c1">// end:3</span>
+</code></pre></div>
+<h3 id="part-90d55f933bd6d855">중첩된 함수와 클로저</h3>
+
+<p>여러분은 함수 내에 함수를 끼워 넣을 수 있습니다.</p>
+
+<p>중첩된 (내부) 함수는 그것을 포함하는 (외부) 함수와 별개입니다. 그것은 또한 클로저를 형성합니다.</p>
+
+<p><strong>클로저</strong>: 그 변수(“폐쇄”라는 표현)를 결합하는 환경을 자유롭게 변수와 함께 가질 수 있는 표현(전형적인 함수)입니다.</p>
+
+<p>요약하면 내부 함수는:</p>
+
+<ul>
+<li><p>외부 함수의 명령문에서만 액세스할 수 있습니다.</p></li>
+<li><p><strong>클로저</strong>를 형성합니다. 외부 함수는 내부 함수의 인수와 변수를 사용할 수 없는 반면에, 내부 함수는 외부 함수의 인수와 변수를 사용할 수 있습니다.</p></li>
+<li><p>외부 함수를 호출, 외부 및 내부 함수 모두에 인수를 지정가능.</p></li>
+</ul>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">outside</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">function</span> <span class="nx">inside</span><span class="p">(</span><span class="nx">y</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">x</span> <span class="o">+</span> <span class="nx">y</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">inside</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">fn_inside</span> <span class="o">=</span> <span class="nx">outside</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span> <span class="c1">// Think of it like: give me a function that adds 3 to whatever you give it</span>
+<span class="nx">result</span> <span class="o">=</span> <span class="nx">fn_inside</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span> <span class="c1">// returns 8</span>
+
+<span class="nx">result1</span> <span class="o">=</span> <span class="nx">outside</span><span class="p">(</span><span class="mi">3</span><span class="p">)(</span><span class="mi">5</span><span class="p">);</span> <span class="c1">// returns 8</span>
+</code></pre></div>
+<h3 id="part-7c632cbd5b3d0963">변수의 보존</h3>
+
+<p>중첩된 내부 함수가 반환될 때 외부 함수의 인수 x가 보존된다는 점을 알 수 있습니다.</p>
+
+<p>클로저</p>
+
+<ul>
+<li><p>그것을 참조하는 모든 범위에서 인수와 변수를 보존해두어야 합니다.</p></li>
+<li><p>매번 호출될 때마다 잠재적으로 다른 인수를 제공할 수 있기 때문에, 클로저는 외부 함수에 대하여 매번 새로 생성됩니다.</p></li>
+</ul>
+
+<p>메모리는 그 무엇도 내부 함수에 접근하지 않을 때만 해제됩니다.</p>
+
+<p>변수의 보존은 일반 객체에서 참조를 저장해두는 것과 다르지 않지만, 사용자가 직접 참조를 설정하는 것이 아니고 자세히 들여다볼 수 없어서 종종 명확하지 않습니다.</p>
+
+<h3 id="part-6f1ccb4444b524fe">다중 중첩 함수</h3>
+
+<p>범위 체이닝이라 합니다. (추후 설명)</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">A</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">function</span> <span class="nx">B</span><span class="p">(</span><span class="nx">y</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">function</span> <span class="nx">C</span><span class="p">(</span><span class="nx">z</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">x</span> <span class="o">+</span> <span class="nx">y</span> <span class="o">+</span> <span class="nx">z</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="nx">C</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="nx">B</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">A</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// logs 6 (1 + 2 + 3)</span>
+</code></pre></div>
+<p>이 예에서, C는 B의 y와 A의 x를 엑세스 합니다. 이 때문에 수행할 수 있습니다:</p>
+
+<ol>
+<li><p>B는 A를 포함하는 클로저를 형성합니다. 즉, B는 A의 인수와 변수를 엑세스할 수 있습니다.</p></li>
+<li><p>C는 B를 포함하는 클로저를 형성합니다.</p></li>
+<li><p>B의 클로저는 A를 포함하고, C의 클로저는 A를 포함하기 때문에, C는 B와 A의 인수와 변수를 엑세스할 수 있습니다. 즉, 순서대로 C는 A와 B의 범위를 체이닝합니다.</p></li>
+</ol>
+
+<p>그러나 역은 사실이 아닙니다. A는 C에 접근 할 수 없습니다. 왜냐하면 A는 B의 인수와 변수(C는 B변수)에 접근할수 없기 때문입니다. 그래서 C는 B에게만 사적으로 남게됩니다.</p>
+
+<h3 id="part-4ee272e946653128">이름 충돌</h3>
+
+<p>클로저의 범위에서 두 개의 인수 또는 변수의 이름이 같은 경우, 이름 충돌이 있습니다. 더 안쪽 범위가 우선순위를 갖습니다. 그래서 가장 바깥 범위는 우선순위가 가장 낮은 반면에, 가장 안쪽 범위는 가장 높은 우선순위를 갖습니다. 이것이 범위 체인(scope chaini)입니다. 체인에서 첫번째는 가장 안쪽 범위이고, 마지막은 가장 바깥 쪽의 범위입니다. 다음 사항을 고려하세요:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">outside</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+  <span class="kd">function</span> <span class="nx">inside</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">x</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">inside</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">result</span> <span class="o">=</span> <span class="nx">outside</span><span class="p">()(</span><span class="mi">20</span><span class="p">);</span> <span class="c1">// returns 20 instead of 10</span>
+</code></pre></div>
+<hr>
+
+<h2 id="closures">Closures(클로저)</h2>
+
+<p>Closures는 Javascript의 강력한 기능 중 하나입니다.</p>
+
+<ul>
+<li>Javascript는 함수의 중첩(함수 안에 함수를 정의하는것)을 허용하고, 내부함수가 외부 함수 안에서 정의된 모든 변수와 함수들을 완전하게 접근 할 수 있도록 승인해줍니다.</li>
+</ul>
+
+<p>(그리고 외부함수가 접근할수 있는 모든 다른 변수와 함수들까지)</p>
+
+<ul>
+<li><p>그러나 외부 함수는 내부 함수 안에서 정의된 변수와 함수들에 접근 할 수 없습니다.</p></li>
+<li><p>이는 내부 함수의 변수에 대한 일종의 캡슐화를 제공합니다.</p></li>
+<li><p>또한, 내부함수는 외부함수의 범위에 접근할 수 있기 때문에, 내부 함수가 외부 함수의 수명을 초과하여 생존하는 경우, 외부함수에서 선언된 변수나 함수는 외부함수의 실행 기간보다 오래갑니다.</p></li>
+<li><p><strong>Closures</strong>는 내부 함수가 어떻게든 외부 함수 범위 밖의 모든 범위에서 사용 가능해지면 생성됩니다.</p></li>
+</ul>
+
+<p>외부 함수의 내부 변수를 다루는 메서드를 포함한 객체도 반환될 수도 있습니다:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">createPet</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">sex</span><span class="p">;</span>
+
+  <span class="k">return</span> <span class="p">{</span>
+    <span class="na">setName</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">newName</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">name</span> <span class="o">=</span> <span class="nx">newName</span><span class="p">;</span>
+    <span class="p">},</span>
+
+    <span class="na">getName</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">name</span><span class="p">;</span>
+    <span class="p">},</span>
+
+    <span class="na">getSex</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">sex</span><span class="p">;</span>
+    <span class="p">},</span>
+
+    <span class="na">setSex</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">newSex</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">newSex</span> <span class="o">==</span> <span class="dl">"</span><span class="s2">string</span><span class="dl">"</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">newSex</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span> <span class="o">==</span> <span class="dl">"</span><span class="s2">male</span><span class="dl">"</span> <span class="o">||</span> <span class="nx">newSex</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span> <span class="o">==</span> <span class="dl">"</span><span class="s2">female</span><span class="dl">"</span><span class="p">))</span> <span class="p">{</span>
+        <span class="nx">sex</span> <span class="o">=</span> <span class="nx">newSex</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">pet</span> <span class="o">=</span> <span class="nx">createPet</span><span class="p">(</span><span class="dl">"</span><span class="s2">Vivie</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">pet</span><span class="p">.</span><span class="nx">getName</span><span class="p">();</span>                  <span class="c1">// Vivie</span>
+
+<span class="nx">pet</span><span class="p">.</span><span class="nx">setName</span><span class="p">(</span><span class="dl">"</span><span class="s2">Oliver</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">pet</span><span class="p">.</span><span class="nx">setSex</span><span class="p">(</span><span class="dl">"</span><span class="s2">male</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">pet</span><span class="p">.</span><span class="nx">getSex</span><span class="p">();</span>                   <span class="c1">// male</span>
+<span class="nx">pet</span><span class="p">.</span><span class="nx">getName</span><span class="p">();</span>                  <span class="c1">// Oliver</span>
+</code></pre></div>
+<p>위 코드에서, 외부 함수의 'name' 이란 변수는 내부 함수에서 접근이 가능합니다. 그리고 그 내장 함수를 통하는 방법 말고는 내부 변수로 접근할 수 없습니다. 내부 함수의 내부 변수는 외부 인수와 변수를 안전하게 저장합니다. 내부 변수는 내부 함수가 작동하기 위해 '지속적'이고 '갭슐화된' 데이터를 보유합니다. 함수는 변수로 할당되거나, 이름을 가질 필요가 없습니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">getCode</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+  <span class="kd">var</span> <span class="nx">secureCode</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">0]Eal(eh&amp;2</span><span class="dl">"</span><span class="p">;</span>    <span class="c1">// A code we do not want outsiders to be able to modify...</span>
+
+  <span class="k">return</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">secureCode</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">})();</span>
+
+<span class="nx">getCode</span><span class="p">();</span>    <span class="c1">// Returns the secureCode</span>
+</code></pre></div>
+<p>그러나 클로저를 쓰면서 조심해야 할 <strong>위험</strong>이 많이 있습니다.</p>
+
+<p>만약 내부 함수가 외부 함수의 범위에 있는 이름과 같은 변수를 정의하였을 경우, 다시는 외부 함수 범위의 변수를 참조(접근)할 방법이 없습니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">createPet</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">// 외부 함수가 "name" 이라는 변수를 정의하였다</span>
+  <span class="k">return</span> <span class="p">{</span>
+    <span class="na">setName</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>    <span class="c1">// 내부 함수 또한 "name" 이라는 변수를 정의하였다</span>
+      <span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>               <span class="c1">// ??? 어떻게 우리는 외부 함수에 정의된 "name"에 접근할까???</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr>
+
+<h2 id="arguments">인수(arguments) 객체 사용하기</h2>
+
+<p>함수의 인수는 배열과 비슷한 객체로 처리가 됩니다.
+함수 내에서는, 전달된 인수를 다음과 같이 다룰 수 있습니다:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">arguments</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
+</code></pre></div>
+<p>i 는 0 으로 시작하는 순서 번호입니다. 따라서 함수에 전달된 첫 번째 인수는 <code>arguments[0]</code> 입니다. 총 인수의 개수는 <code>arguments.length</code> 에서 얻을 수 있습니다.</p>
+
+<p>인수(arguments) 객체를 이용하면, 보통 함수에 정의된 개수보다 많은 인수를 넘겨주면서 함수를 호출할 수 있습니다. 이것은 <strong>얼마나 많은 인수가 함수로 넘겨질지 모르는 상황에서 유용합니다.</strong></p>
+
+<p>arguments.length를 함수에 실제로 넘겨받은 인수의 수를 알아낼 때 사용할 수 있고, 각각의 인수에 인수(arguments) 객체를 이용하여 접근할 수 있습니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">myConcat</span><span class="p">(</span><span class="nx">separator</span><span class="p">)</span> <span class="p">{</span>
+   <span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="dl">""</span><span class="p">;</span> <span class="c1">// 리스트를 초기화한다</span>
+   <span class="kd">var</span> <span class="nx">i</span><span class="p">;</span>
+   <span class="c1">// arguments를 이용하여 반복한다</span>
+   <span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">result</span> <span class="o">+=</span> <span class="nx">arguments</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">+</span> <span class="nx">separator</span><span class="p">;</span>
+   <span class="p">}</span>
+   <span class="k">return</span> <span class="nx">result</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// returns "red, orange, blue, "</span>
+<span class="nx">myConcat</span><span class="p">(</span><span class="dl">"</span><span class="s2">, </span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">red</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">orange</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">blue</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="c1">// returns "elephant; giraffe; lion; cheetah; "</span>
+<span class="nx">myConcat</span><span class="p">(</span><span class="dl">"</span><span class="s2">; </span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">elephant</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">giraffe</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">lion</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">cheetah</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="c1">// returns "sage. basil. oregano. pepper. parsley. "</span>
+<span class="nx">myConcat</span><span class="p">(</span><span class="dl">"</span><span class="s2">. </span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">sage</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">basil</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">oregano</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">pepper</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">parsley</span><span class="dl">"</span><span class="p">);</span>
+</code></pre></div>
+<blockquote>
+<p><strong>NOTE:</strong> 인수(arguments) 객체는 배열과 닮은 것이지 배열이 아닙니다. 인수(arguments) 객체는 번호 붙여진 인덱스와 길이 속성을 가지고 있다는 점에서 배열과 닮은 것입니다. 인수(arguments) 객체는 배열을 다루는 모든 메서드를 가지고 있지 않습니다.</p>
+</blockquote>
+
+<p>더 자세한 정보를 얻고 싶으면 자바스크립트 참조문의 <a href="ihttps://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a>객체에 대하여 보세요.</p>
+
+<hr>
+
+<h2 id="function-parameters">Function parameters(함수의 매개변수)</h2>
+
+<p><em>ECMAScript 6</em> 와 함께 시작된 두 종류의 매개변수: <em>디폴트 매개변수, 나머지 매개변수.</em></p>
+
+<h3 id="default-parameters">Default parameters(디폴트 매개변수)</h3>
+
+<p>자바스크립트에서, 함수의 매개변수는 undefined 가 기본으로 설정됩니다. 그러나, 어떤 상황에서는 다른 값을 기본값으로 가진 것이 유용할 때가 있습니다. 이때가 디폴트 매개변수가 도움을 줄 수 있는 상황입니다.</p>
+
+<p>옛날엔, 기본값을 설정하는 보편적인 전략은 함수의 본문에서 매개변수 값을 테스트하여 그 값이 undefined 인 경우에 값을 할당하는 것이었습니다. 다음과 같은 예제에서, 함수호출 시 b 매개변수에 아무 값을 주지 않으면, a*b 계산 시 b 매개변수의 값은 undefined 일 것이므로 multiply 함수 호출은 NaN을 리턴할 것입니다. 그러나 이런 것은 이 예제의 2번째 줄에서 걸립니다:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">multiply</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">b</span> <span class="o">=</span> <span class="k">typeof</span> <span class="nx">b</span> <span class="o">!==</span> <span class="dl">'</span><span class="s1">undefined</span><span class="dl">'</span> <span class="p">?</span>  <span class="nx">b</span> <span class="p">:</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="k">return</span> <span class="nx">a</span><span class="o">*</span><span class="nx">b</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">multiply</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span> <span class="c1">// 5</span>
+</code></pre></div>
+<p>디폴트 매개변수와 함께라면, 함수 본문에서 검사하는 부분은 필요가 없습니다. 이제 , 함수 머리에서 b 의 기본값에 간단히 1을 넣어주면 됩니다:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">multiply</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">a</span><span class="o">*</span><span class="nx">b</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">multiply</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span> <span class="c1">// 5</span>
+
+<span class="kd">function</span> <span class="nx">multiply</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nx">c</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">a</span><span class="o">*</span><span class="nx">b</span><span class="o">*</span><span class="nx">c</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="nx">multiply</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>  <span class="c1">// NaN</span>
+
+<span class="nx">multiply</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="kc">undefined</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>  <span class="c1">// 2</span>
+
+<span class="nx">multiply</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>  <span class="c1">// 0</span>
+</code></pre></div>
+<p>더 자세한 내용을 보고 싶으시면, <a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Functions/Default_parameters" rel="nofollow" target="_blank">Default parameters</a> 문서를 참조하세요.</p>
+
+<h3 id="rest-parameters">Rest parameters(나머지 매개변수)</h3>
+
+<p><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Functions/rest_parameters" rel="nofollow" target="_blank">Rest parameters</a> 구문을 사용하면 배열로 불확실한 개수의 인수를 나타낼 수 있습니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">multiply</span><span class="p">(</span><span class="nx">multiplier</span><span class="p">,</span> <span class="p">...</span><span class="nx">theArgs</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">theArgs</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">x</span> <span class="o">=&gt;</span> <span class="nx">multiplier</span> <span class="o">*</span> <span class="nx">x</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="nx">multiply</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arr</span><span class="p">);</span> <span class="c1">// [2, 4, 6]</span>
+</code></pre></div>
+<hr>
+
+<h2 id="arrow-functions">Arrow functions(화살표 함수)</h2>
+
+<p><a href="%EB%9A%B1%EB%9A%B1%ED%95%9C%20%ED%99%94%EC%82%B4%ED%91%9C(fat%20arrow)%20%ED%95%A8%EC%88%98%EB%9D%BC%EA%B3%A0%20%EC%95%8C%EB%A0%A4%EC%A7%84">화살표 함수 표현</a>은 함수 표현과 비교하였을때 짧은 문법을 가지고 있고 사전적으로 this 값을 묶습니다. 화살표 함수는 언제나 익명입니다. hacks.mozilla.org 블로그 포스트 "ES6 In Depth: Arrow functions" 를 참조하세요.</p>
+
+<p>화살표 함수 소개에 영향을 주는 두 요소: <em>더 짧은 함수</em>와 <em>사전적 <code>this</code></em>.</p>
+
+<h3 id="part-6c17b57003af644a">더 짧은 함수</h3>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="dl">"</span><span class="s2">Hydrogen</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">Helium</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">Lithium</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">Beryl­lium</span><span class="dl">"</span>
+<span class="p">];</span>
+
+<span class="kd">var</span> <span class="nx">a2</span> <span class="o">=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">s</span><span class="p">){</span> <span class="k">return</span> <span class="nx">s</span><span class="p">.</span><span class="nx">length</span> <span class="p">});</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a2</span><span class="p">);</span> <span class="c1">// logs [8, 6, 7, 9]</span>
+
+<span class="kd">var</span> <span class="nx">a3</span> <span class="o">=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span> <span class="nx">s</span> <span class="o">=&gt;</span> <span class="nx">s</span><span class="p">.</span><span class="nx">length</span> <span class="p">);</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a3</span><span class="p">);</span> <span class="c1">// logs [8, 6, 7, 9]</span>
+</code></pre></div>
+<h3 id="this">사전적 <code>this</code>
+</h3>
+
+<p>화살표 함수에서, 모든 new함수들은 그들의 this 값을 정의합니다(생성자로서의 새로운 객체, 정의되지 않은 strict mode의 함수 호출, 함수가 "object method"로 호출했을때의 context object ,등등).
+이런 것은 객체지향 프로그래밍 스타일에서 짜증을 불러 일으킵니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">Person</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// The Person() constructor defines `this` as itself.</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="nx">setInterval</span><span class="p">(</span><span class="kd">function</span> <span class="nx">growUp</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// In nonstrict mode, the growUp() function defines `this`</span>
+    <span class="c1">// as the global object, which is different from the `this`</span>
+    <span class="c1">// defined by the Person() constructor.</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">age</span><span class="o">++</span><span class="p">;</span>
+  <span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">p</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">();</span>
+</code></pre></div>
+<p>IECMAScript 3/5 에서는, 이 문제는 this 안의 값을 뒤덮을 수 있는변수에 할당하면서 고쳐졌습니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">Person</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nb">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span> <span class="c1">// Some choose `that` instead of `self`.</span>
+                   <span class="c1">// Choose one and be consistent.</span>
+  <span class="nb">self</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="nx">setInterval</span><span class="p">(</span><span class="kd">function</span> <span class="nx">growUp</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// The callback refers to the `self` variable of which</span>
+    <span class="c1">// the value is the expected object.</span>
+    <span class="nb">self</span><span class="p">.</span><span class="nx">age</span><span class="o">++</span><span class="p">;</span>
+  <span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>또는, 적절한 <code>this</code> 값이 growUp() 함수에 전달되도록, 바인딩된 함수가 생성될 수 있습니다.</p>
+
+<p>화살표 함수는 둘러싼 콘텍스트의 <code>this</code> 값을 캡처하므로, 다음 코드는 예상대로 작동합니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">Person</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="nx">setInterval</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">age</span><span class="o">++</span><span class="p">;</span> <span class="c1">// |this| properly refers to the person object</span>
+  <span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">p</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">();</span>
+</code></pre></div>
+<hr>
+
+<h2 id="part-5d2133852b2f40e5">미리 정의된 함수들</h2>
+
+<h3 id="eval"><a href="ihttps://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/eval">eval()</a></h3>
+
+<p>문자열로 표현된 자바스크립트 코드를 수행합니다.</p>
+
+<h3 id="uneval">uneval()</h3>
+
+<p>Object의 소스코드를 표현하는 문자열을 만듭니다. <strong>(비표준)</strong></p>
+
+<h3 id="isfinite"><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/isFinite" rel="nofollow" target="_blank">isFinite()</a></h3>
+
+<p>전역 isFinite() 함수는 전달받은 값이 유한한지 결정합니다.</p>
+
+<p>만약 필요하다면, 매개변수는 첫번째로 숫자로 변환됩니다.</p>
+
+<h3 id="isnan"><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/isNaN" rel="nofollow" target="_blank">isNaN()</a></h3>
+
+<p>NaN인지 아닌지 결정합니다.</p>
+
+<blockquote>
+<p>Note: <code>isNaN()</code>함수 안의 강제 변환은 흥미로운 규칙을 가지고 있습니다.
+<code>Number.isNaN()</code> 을 대신 사용하고 싶을것입니다, ECMAScript 6 에서 정의된 또는 값이 숫자값이 아닐때, <code>typeof</code> 를 사용할 수도 있습니다 .</p>
+</blockquote>
+
+<h3 id="parsefloat"><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/parseFloat" rel="nofollow" target="_blank">parseFloat()</a></h3>
+
+<p>문자열 인수 값을 해석하여 부동 소숫점수를 반환합니다.</p>
+
+<h3 id="parseint"><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/parseInt" rel="nofollow" target="_blank">parseInt()</a></h3>
+
+<p>문자열 인수 값을 해석하여 특정한 진법의 정수를 반환합니다(수학적 수 체계를 기반으로 해서).</p>
+
+<h3 id="decodeuri"><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/decodeURI" rel="nofollow" target="_blank">decodeURI()</a></h3>
+
+<p>decodeURI() 함수는 사전에 encodeURI을 통해 만들어지거나 비슷한 과정을 통해 만들어진 URI(Uniform Resource Identifier) 를 해독합니다.</p>
+
+<h3 id="decodeuricomponent"><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/decodeURIComponent" rel="nofollow" target="_blank">decodeURIComponent()</a></h3>
+
+<p>사전에 encodeURIComponent를 통하여 만들어 지거나 또는 비슷한 과정을 통해 만들어진 URI (Uniform Resource Identifier) 컴포넌트를 해독합니다.</p>
+
+<h3 id="encodeuri"><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/encodeURI" rel="nofollow" target="_blank">encodeURI()</a></h3>
+
+<p>URI(Uniform Resource Identifier)를 각 인스턴스의 특정한 문자를 한개, 두개,세개, 또는 네개의 UTF-8인코딩으로 나타내어지는 연속된 확장문자들과 바꾸는 방법으로 부호화 합니다.</p>
+
+<p>(두"surrogate"문자로 구성된 문자들은 오직 네개의 연속된 확장문자 입니다)</p>
+
+<h3 id="encodeuricomponent"><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent" rel="nofollow" target="_blank">encodeURIComponent()</a></h3>
+
+<p>URI(Uniform Resource Identifier) 컴포넌트를 각 인스턴스의 특정한 문자를 한개, 두개, 세개, 또는 네개의 UTF-8인코딩으로 나타내어지는 연속된 확장문자들과 바꾸는 방법으로 부호화 합니다.</p>
+
+<p>(두"surrogate"문자로 구성된 문자들은 오직 네개의 연속된 확장문자 입니다)</p>
+
+<hr>
+
+<h2 id="reference">Reference</h2>
+
+<p><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/%ED%95%A8%EC%88%98" rel="nofollow" target="_blank">https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/%ED%95%A8%EC%88%98</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

@@ -1,0 +1,10 @@
+< 포트로 실행중이 데몬 찾기 >
+> lsof -i tcp:8415
+로 PID를 구하고
+
+> ps -ef | grep PID 로 찾아 경로로 이동 후 grep 해서 Method 명을 찾아 분석한다.
+
+
+
+
+https://www.lesstif.com/pages/viewpage.action?pageId=20776078

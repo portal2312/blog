@@ -1,0 +1,7 @@
+# vm disk pull
+
+1. target VM power [OFF]
+
+2. VM > Manage > Clean Up Disks...
+
+3. Clean up now (...0.5 ~ 1 hour)

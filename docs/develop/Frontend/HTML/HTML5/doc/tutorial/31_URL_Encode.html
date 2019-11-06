@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>HTML Uniform Resource Locators | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="HTML Uniform Resource Locators" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="URL은 웹 주소의 또 다른 단어입니다." />
+<meta property="og:description" content="URL은 웹 주소의 또 다른 단어입니다." />
+<link rel="canonical" href="http://localhost:4000/blog/docs/develop/Frontend/HTML/HTML5/doc/tutorial/31_URL_Encode.html" />
+<meta property="og:url" content="http://localhost:4000/blog/docs/develop/Frontend/HTML/HTML5/doc/tutorial/31_URL_Encode.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-06T09:31:12+09:00" />
+<script type="application/ld+json">
+{"description":"URL은 웹 주소의 또 다른 단어입니다.","headline":"HTML Uniform Resource Locators","dateModified":"2019-11-06T09:31:12+09:00","datePublished":"2019-11-06T09:31:12+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/docs/develop/Frontend/HTML/HTML5/doc/tutorial/31_URL_Encode.html"},"url":"http://localhost:4000/blog/docs/develop/Frontend/HTML/HTML5/doc/tutorial/31_URL_Encode.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>HTML Uniform Resource Locators</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#url-uniform-resource-locator">URL - Uniform Resource Locator</a></li>
+<li class="toc-entry toc-h2"><a href="#common-url-schemes">Common URL Schemes</a></li>
+<li class="toc-entry toc-h2"><a href="#url-encoding">URL Encoding</a></li>
+<li class="toc-entry toc-h2"><a href="#try-it-yourself">Try It Yourself</a></li>
+<li class="toc-entry toc-h2"><a href="#ascii-encoding-examples">ASCII Encoding Examples</a></li>
+<li class="toc-entry toc-h2"><a href="#reference">Reference</a></li>
+</ul><p>URL은 웹 주소의 또 다른 단어입니다.</p>
+
+<p>URL은 단어 (w3schools.com) 또는 인터넷 프로토콜 (IP) 주소 (192.68.20.50)로 구성 될 수 있습니다.</p>
+
+<p>서핑을 할 때 대부분의 사람들은 이름을 입력합니다.</p>
+
+<p>이름이 숫자보다 더 기억하기 쉽기 때문입니다.</p>
+
+<h2 id="url-uniform-resource-locator">
+<a class="anchor" href="#url-uniform-resource-locator" aria-hidden="true"><span class="octicon octicon-link"></span></a>URL - Uniform Resource Locator</h2>
+
+<p>웹 브라우저 페이지는 URL을 사용하여 웹 서버로부터 페이지로 요청합니다.</p>
+
+<p>Uniform Resource Locator(URL) 는 웹에 문서(또는 데이터) 주소로 사용됩니다.</p>
+
+<p>이 웹 주소는 <a href="https://www.w3schools.com/html/default.asp">https://www.w3schools.com/html/default.asp</a> 와 같은 syntax 규칙을 따릅니다:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">scheme://prefix.domain:port/path/filename
+</code></pre></div>
+<p>설명:</p>
+
+<ul>
+<li>scheme - 인터넷 서비스 유형을 정의합니다 (가장 일반적인 것은 http 또는 https 임)</li>
+<li>prefix - 도메인 접두사를 정의합니다 (http의 기본값은 www 임).</li>
+<li>domain - 인터넷 도메인 이름을 정의합니다 (예 : w3schools.com).</li>
+<li>port - 호스트에서 포트 번호를 정의합니다 (http의 기본값은 80입니다).</li>
+<li>path - 서버의 경로를 정의합니다 (생략 된 경우 : 사이트의 루트 디렉토리).</li>
+<li>filename - 문서 또는 자원의 이름을 정의합니다.</li>
+</ul>
+
+<hr>
+
+<h2 id="common-url-schemes">
+<a class="anchor" href="#common-url-schemes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Common URL Schemes</h2>
+
+<p>아래 표에는 몇 가지 공통적 인 구성표가 나와 있습니다:</p>
+
+<table>
+<thead>
+<tr>
+<th>Scheme</th>
+<th>Short for</th>
+<th>Used for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>http</td>
+<td>HyperText Transfer Protocol</td>
+<td>Common web pages. Not encrypted</td>
+</tr>
+<tr>
+<td>https</td>
+<td>Secure HyperText Transfer Protocol</td>
+<td>Secure web pages. Encrypted</td>
+</tr>
+<tr>
+<td>ftp</td>
+<td>File Transfer Protocol</td>
+<td>Downloading or uploading files</td>
+</tr>
+<tr>
+<td>file</td>
+<td></td>
+<td>A file on your computer</td>
+</tr>
+</tbody>
+</table>
+
+<hr>
+
+<h2 id="url-encoding">
+<a class="anchor" href="#url-encoding" aria-hidden="true"><span class="octicon octicon-link"></span></a>URL Encoding</h2>
+
+<p>URL은 ASCII 문자 집합을 사용하여 인터넷을 통해서만 전송할 수 있습니다.</p>
+
+<p>URL에 ASCII 세트 외부의 문자가 포함되어 있으면 URL을 변환해야합니다.</p>
+
+<p>URL 인코딩은 비 ASCII 문자를 인터넷을 통해 전송할 수있는 형식으로 변환합니다.</p>
+
+<p>URL 인코딩은 비 ASCII 문자를 "%"다음에 16 진수로 대체합니다.</p>
+
+<p>URL에는 공백이 포함될 수 없습니다. URL 인코딩은 일반적으로 공백을 더하기 (+) 기호 또는 % 20으로 바꿉니다.</p>
+
+<hr>
+
+<h2 id="try-it-yourself">
+<a class="anchor" href="#try-it-yourself" aria-hidden="true"><span class="octicon octicon-link"></span></a>Try It Yourself</h2>
+
+<p>"Submit" 을 클릭하면 브라우저가 입력을 URL 인코딩하여 서버로 전송합니다.
+서버의 페이지에 수신 된 입력이 표시됩니다.
+다른 입력을 시도한 다음 제출을 다시 클릭하십시오.</p>
+
+<hr>
+
+<h2 id="ascii-encoding-examples">
+<a class="anchor" href="#ascii-encoding-examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>ASCII Encoding Examples</h2>
+
+<p>귀하의 브라우저는 귀하의 페이지에서 사용 된 문자 세트에 따라 입력을 인코딩합니다.</p>
+
+<p>HTML5의 기본 문자 집합은 UTF-8입니다.</p>
+
+<p><a href="https://www.w3schools.com/tags/ref_urlencode.asp">https://www.w3schools.com/tags/ref_urlencode.asp</a></p>
+
+<hr>
+
+<h2 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+<p><a href="https://www.w3schools.com/html/html_urlencode.asp">https://www.w3schools.com/html/html_urlencode.asp</a></p>
+
+  </div>
+
+<div>
+  <p>URL은 웹 주소의 또 다른 단어입니다.</p>
+
+<p>URL은 단어 (w3schools.com) 또는 인터넷 프로토콜 (IP) 주소 (192.68.20.50)로 구성 될 수 있습니다.</p>
+
+<p>서핑을 할 때 대부분의 사람들은 이름을 입력합니다.</p>
+
+<p>이름이 숫자보다 더 기억하기 쉽기 때문입니다.</p>
+
+<h2 id="url-uniform-resource-locator">URL - Uniform Resource Locator</h2>
+
+<p>웹 브라우저 페이지는 URL을 사용하여 웹 서버로부터 페이지로 요청합니다.</p>
+
+<p>Uniform Resource Locator(URL) 는 웹에 문서(또는 데이터) 주소로 사용됩니다.</p>
+
+<p>이 웹 주소는 <a href="https://www.w3schools.com/html/default.asp" rel="nofollow" target="_blank">https://www.w3schools.com/html/default.asp</a> 와 같은 syntax 규칙을 따릅니다:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">scheme://prefix.domain:port/path/filename
+</code></pre></div>
+<p>설명:</p>
+
+<ul>
+<li>scheme - 인터넷 서비스 유형을 정의합니다 (가장 일반적인 것은 http 또는 https 임)</li>
+<li>prefix - 도메인 접두사를 정의합니다 (http의 기본값은 www 임).</li>
+<li>domain - 인터넷 도메인 이름을 정의합니다 (예 : w3schools.com).</li>
+<li>port - 호스트에서 포트 번호를 정의합니다 (http의 기본값은 80입니다).</li>
+<li>path - 서버의 경로를 정의합니다 (생략 된 경우 : 사이트의 루트 디렉토리).</li>
+<li>filename - 문서 또는 자원의 이름을 정의합니다.</li>
+</ul>
+
+<hr>
+
+<h2 id="common-url-schemes">Common URL Schemes</h2>
+
+<p>아래 표에는 몇 가지 공통적 인 구성표가 나와 있습니다:</p>
+
+<table>
+<thead>
+<tr>
+<th>Scheme</th>
+<th>Short for</th>
+<th>Used for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>http</td>
+<td>HyperText Transfer Protocol</td>
+<td>Common web pages. Not encrypted</td>
+</tr>
+<tr>
+<td>https</td>
+<td>Secure HyperText Transfer Protocol</td>
+<td>Secure web pages. Encrypted</td>
+</tr>
+<tr>
+<td>ftp</td>
+<td>File Transfer Protocol</td>
+<td>Downloading or uploading files</td>
+</tr>
+<tr>
+<td>file</td>
+<td></td>
+<td>A file on your computer</td>
+</tr>
+</tbody>
+</table>
+
+<hr>
+
+<h2 id="url-encoding">URL Encoding</h2>
+
+<p>URL은 ASCII 문자 집합을 사용하여 인터넷을 통해서만 전송할 수 있습니다.</p>
+
+<p>URL에 ASCII 세트 외부의 문자가 포함되어 있으면 URL을 변환해야합니다.</p>
+
+<p>URL 인코딩은 비 ASCII 문자를 인터넷을 통해 전송할 수있는 형식으로 변환합니다.</p>
+
+<p>URL 인코딩은 비 ASCII 문자를 "%"다음에 16 진수로 대체합니다.</p>
+
+<p>URL에는 공백이 포함될 수 없습니다. URL 인코딩은 일반적으로 공백을 더하기 (+) 기호 또는 % 20으로 바꿉니다.</p>
+
+<hr>
+
+<h2 id="try-it-yourself">Try It Yourself</h2>
+
+<p>"Submit" 을 클릭하면 브라우저가 입력을 URL 인코딩하여 서버로 전송합니다.
+서버의 페이지에 수신 된 입력이 표시됩니다.
+다른 입력을 시도한 다음 제출을 다시 클릭하십시오.</p>
+
+<hr>
+
+<h2 id="ascii-encoding-examples">ASCII Encoding Examples</h2>
+
+<p>귀하의 브라우저는 귀하의 페이지에서 사용 된 문자 세트에 따라 입력을 인코딩합니다.</p>
+
+<p>HTML5의 기본 문자 집합은 UTF-8입니다.</p>
+
+<p><a href="https://www.w3schools.com/tags/ref_urlencode.asp" rel="nofollow" target="_blank">https://www.w3schools.com/tags/ref_urlencode.asp</a></p>
+
+<hr>
+
+<h2 id="reference">Reference</h2>
+
+<p><a href="https://www.w3schools.com/html/html_urlencode.asp" rel="nofollow" target="_blank">https://www.w3schools.com/html/html_urlencode.asp</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

@@ -1,0 +1,11 @@
+> history (= 사용한 명령어목록보기)
+
+예)
+
+입력> history
+출력>  1 ls
+       2 pwd
+       3 cd
+입력> !3
+출력> /opt/hts/
+

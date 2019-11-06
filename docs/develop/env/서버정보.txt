@@ -1,0 +1,42 @@
+211.241.161.20  ( 넷크루즈 파일서버 ) file://211.241.161.20/Source_DB/Web/v4.2_010826
+
+ id : administrator 
+ pw : netcruz!20
+
+
+ 211.241.161.30  ( NMS 5.0 개발 서버[DB] )
+	id : administrator
+	pw : netcruz
+1. backup폴더에서 오늘날짜를 제외한 나머지 삭제
+2. nms5.0-bin-n**Mrg.exe실행
+
+
+211.241.161.33  ( NMS 4.2 개발 서버[DB] ) 
+
+ id : administrator 
+ pw : netcruz
+
+
+웹접속
+
+ id : masteradmin
+ pw : masteradmin
+
+출입문 비밀번호
+
+ pw : 09250925
+ 
+
+///////// 주간보고 작성요령 /////////
+
+kms 로 접속
+
+제목에 NMS 5.0 소스분석
+
+공용문서함 > 업무계획 >  주간보고 >  팀별주간업무보고 >  망관리개발팀
+
+서식파일
+
+프린터
+10.1.1.100
+

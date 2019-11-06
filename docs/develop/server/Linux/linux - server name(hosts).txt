@@ -1,0 +1,2 @@
+vi /etc/hosts/
+vi /etc/sysconfig/network

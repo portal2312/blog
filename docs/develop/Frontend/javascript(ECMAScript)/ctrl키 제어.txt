@@ -1,0 +1,27 @@
+- 주민등록번호 체크
+ 
+var r = new RegExp(/\d{6}(\-|)[1-4]\d{6}$/);
+ 
+if ( r.test("주민등록번호") ) {
+alert("올바른 주민등록번호");
+} else {
+alert("올바르지 않은 주민등록번호");
+}
+
+---------------------------------------
+var rgExp = /(\w*)-*(\w*)/;
+var str = "Java--Script";
+var resultStrng = str.replace( rgExp,"$2-$1" );
+document.writeln( resultStrng );
+
+---------------------------------------
+
+function keydown(){
+    if(event.keyCode==17 || event.keyCode==116 || event.CtrlKey==false || event.altKey ==true || event.altLeft==true){
+        event.KeyCode=0;
+        event.cancelBubble=true;
+        event.returnValue=false;
+        alert("Alt키와 Ctrl키는 사용할 수 없습니다.");
+    }
+}
+document.onkeydown=keydown;

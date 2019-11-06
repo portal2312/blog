@@ -1,0 +1,58 @@
+a.html
+ 
+<input type="text" name="aaa" id="aaa" value="하하하" />
+ <div><iframe src="b.html" id="aaaa"></iframe></div>
+ <script type="text/javascript">
+ <!--
+ // : iframe속에 form 생성
+ var doc = document.getElementById("aaaa").contentWindow;
+ var aaa_func = function() {
+  alert("iframe바깥 함수");
+ }
+ //-->
+ </script>
+ 
+<input type="button" value="iframe속 aaa값출력하기" onClick="alert(doc.document.getElementById('bbb').value)" />
+ <input type="button" value="iframe속 함수실행하기" onClick="doc.bbb_func()" />
+ 
+
+ 
+ 
+ 
+ 
+b.html
+ 
+<input type="text" name="bbb" value="b.html">
+ <div><input type="button" value="iframe바깥 aaa값출력하기" onClick="alert(parent.document.getElementById('aaa').value)" /></div>
+ <div><input type="button" value="iframe바깥 함수실행하기" onClick="parent.aaa_func()" /></div>
+ <script type="text/javascript">
+ <!--
+ var bbb_func = function() {
+  alert("iframe안의 함수");
+ }
+ //-->
+ </script>
+ 
+ 
+ 
+a.html의 버튼 클릭하면 b.html이 나옵니다.
+ 
+이거 맞죠?
+ 
+ 
+ 
+[ iframe접근법 ]
+ 
+doc = document.getElementById("aaaa").contentWindow.bbb_func();
+ 
+iframe 은 이렇게 접근합니다.
+ 
+ 
+ 
+////////////////
+ 
+var iframeObj = document.getElementById("아이프레임").contentWindow; // : iframe Object
+ 
+var inaaa = iframeObj.bbb_func(); // : 그속의 input
+ 
+//////////////

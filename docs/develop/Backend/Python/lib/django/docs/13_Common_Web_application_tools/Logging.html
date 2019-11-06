@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Logging | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Logging" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A quick logging primer The cast of players Loggers Handlers Filters Formatters Using logging Naming loggers Making logging calls Configuring logging Examples" />
+<meta property="og:description" content="A quick logging primer The cast of players Loggers Handlers Filters Formatters Using logging Naming loggers Making logging calls Configuring logging Examples" />
+<link rel="canonical" href="http://localhost:4000/blog/docs/develop/Backend/Python/lib/django/docs/13_Common_Web_application_tools/Logging.html" />
+<meta property="og:url" content="http://localhost:4000/blog/docs/develop/Backend/Python/lib/django/docs/13_Common_Web_application_tools/Logging.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-06T09:31:12+09:00" />
+<script type="application/ld+json">
+{"description":"A quick logging primer The cast of players Loggers Handlers Filters Formatters Using logging Naming loggers Making logging calls Configuring logging Examples","headline":"Logging","dateModified":"2019-11-06T09:31:12+09:00","datePublished":"2019-11-06T09:31:12+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/docs/develop/Backend/Python/lib/django/docs/13_Common_Web_application_tools/Logging.html"},"url":"http://localhost:4000/blog/docs/develop/Backend/Python/lib/django/docs/13_Common_Web_application_tools/Logging.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Logging</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#a-quick-logging-primer">A quick logging primer</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#the-cast-of-players">The cast of players</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#loggers">Loggers</a></li>
+<li class="toc-entry toc-h4"><a href="#handlers">Handlers</a></li>
+<li class="toc-entry toc-h4"><a href="#filters">Filters</a></li>
+<li class="toc-entry toc-h4"><a href="#formatters">Formatters</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#using-logging">Using logging</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#naming-loggers">Naming loggers</a></li>
+<li class="toc-entry toc-h3"><a href="#making-logging-calls">Making logging calls</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#configuring-logging">Configuring logging</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#examples">Examples</a></li>
+<li class="toc-entry toc-h3"><a href="#custom-logging-configuration">Custom logging configuration</a></li>
+<li class="toc-entry toc-h3"><a href="#disabling-logging-configuration">Disabling logging configuration</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#django-s-logging-extensions">Django’s logging extensions</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#loggers">Loggers</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#django">django</a></li>
+<li class="toc-entry toc-h4"><a href="#django-request">django.request</a></li>
+<li class="toc-entry toc-h4"><a href="#django-server">django.server</a></li>
+<li class="toc-entry toc-h4"><a href="#django-template">django.template</a></li>
+<li class="toc-entry toc-h4"><a href="#django-db-backends">django.db.backends</a></li>
+<li class="toc-entry toc-h4"><a href="#django-security">django.security.*</a></li>
+<li class="toc-entry toc-h4"><a href="#django-db-backends-schema">django.db.backends.schema</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#handlers">Handlers</a></li>
+<li class="toc-entry toc-h3"><a href="#filters">Filters</a></li>
+<li class="toc-entry toc-h3"><a href="#django-s-default-logging-configuration">Django’s default logging configuration</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#reference">Reference</a></li>
+</ul><h2 id="a-quick-logging-primer">
+<a class="anchor" href="#a-quick-logging-primer" aria-hidden="true"><span class="octicon octicon-link"></span></a>A quick logging primer</h2>
+
+<h3 id="the-cast-of-players">
+<a class="anchor" href="#the-cast-of-players" aria-hidden="true"><span class="octicon octicon-link"></span></a>The cast of players</h3>
+
+<h4 id="loggers">
+<a class="anchor" href="#loggers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Loggers</h4>
+
+<h4 id="handlers">
+<a class="anchor" href="#handlers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Handlers</h4>
+
+<h4 id="filters">
+<a class="anchor" href="#filters" aria-hidden="true"><span class="octicon octicon-link"></span></a>Filters</h4>
+
+<h4 id="formatters">
+<a class="anchor" href="#formatters" aria-hidden="true"><span class="octicon octicon-link"></span></a>Formatters</h4>
+
+<hr>
+
+<h2 id="using-logging">
+<a class="anchor" href="#using-logging" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using logging</h2>
+
+<h3 id="naming-loggers">
+<a class="anchor" href="#naming-loggers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Naming loggers</h3>
+
+<h3 id="making-logging-calls">
+<a class="anchor" href="#making-logging-calls" aria-hidden="true"><span class="octicon octicon-link"></span></a>Making logging calls</h3>
+
+<hr>
+
+<h2 id="configuring-logging">
+<a class="anchor" href="#configuring-logging" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuring logging</h2>
+
+<h3 id="examples">
+<a class="anchor" href="#examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples</h3>
+
+<p>dictConfig 형식의 전체 문서는 구성 사전 로깅에 대한 최상의 정보 소스입니다.</p>
+
+<p>첫째, Django logger의 모든 logging을 local file에 기록하는 간단한 구성.</p>
+
+<ul>
+<li>'filename' 경로를 Django 응용 프로그램 실행 권한있는 사용자 위치로 변경.</li>
+</ul>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">LOGGING</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">'version'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s">'disable_existing_loggers'</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="s">'handlers'</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">'file'</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">'level'</span><span class="p">:</span> <span class="s">'DEBUG'</span><span class="p">,</span>
+            <span class="s">'class'</span><span class="p">:</span> <span class="s">'logging.FileHandler'</span><span class="p">,</span>
+            <span class="s">'filename'</span><span class="p">:</span> <span class="s">'/path/to/django/debug.log'</span><span class="p">,</span>  <span class="c1"># XXX: 변경
+</span>        <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="s">'loggers'</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">'django'</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">'handlers'</span><span class="p">:</span> <span class="p">[</span><span class="s">'file'</span><span class="p">],</span>
+            <span class="s">'level'</span><span class="p">:</span> <span class="s">'DEBUG'</span><span class="p">,</span>
+            <span class="s">'propagate'</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>둘째, 로깅 시스템이 장고의 콘솔 로깅을 출력하는 방법.</p>
+
+<ul>
+<li><p>지역 개발 중에 유용.</p></li>
+<li><p>기본적으로이 설정은 INFO 이상의 레벨의 메세지만을 콘솔에 전송합니다 (Django의 기본 로그 설정과 동일합니다.</p></li>
+</ul>
+
+<p>단, 기본값은 DEBUG = True 일 때 로그 레코드 만 표시합니다).</p>
+
+<ul>
+<li>장고는 그러한 메시지를 많이 기록하지 않습니다.</li>
+</ul>
+
+<p>그러나 이 설정을 사용하면 DJANGO_LOG_LEVEL = DEBUG 환경 변수를 설정하여 장고의 모든 디버그 로깅을 볼 수 있습니다.</p>
+
+<ul>
+<li>모든 데이터베이스 쿼리를 포함하므로 매우 장황함.</li>
+</ul>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">LOGGING</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">'version'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s">'disable_existing_loggers'</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="s">'handlers'</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">'console'</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">'class'</span><span class="p">:</span> <span class="s">'logging.StreamHandler'</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="s">'loggers'</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">'django'</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">'handlers'</span><span class="p">:</span> <span class="p">[</span><span class="s">'console'</span><span class="p">],</span>
+            <span class="c1"># XXX: 아래 부분 에러시
+</span>            <span class="c1"># 'level': 'DEBUG' 으로 변경해도 됨.
+</span>            <span class="s">'level'</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">'DJANGO_LOG_LEVEL'</span><span class="p">,</span> <span class="s">'INFO'</span><span class="p">),</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="custom-logging-configuration">
+<a class="anchor" href="#custom-logging-configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Custom logging configuration</h3>
+
+<h3 id="disabling-logging-configuration">
+<a class="anchor" href="#disabling-logging-configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Disabling logging configuration</h3>
+
+<hr>
+
+<h2 id="django-s-logging-extensions">
+<a class="anchor" href="#django-s-logging-extensions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Django’s logging extensions</h2>
+
+<h3 id="loggers">
+<a class="anchor" href="#loggers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Loggers</h3>
+
+<h4 id="django">
+<a class="anchor" href="#django" aria-hidden="true"><span class="octicon octicon-link"></span></a>django</h4>
+
+<h4 id="django-request">
+<a class="anchor" href="#django-request" aria-hidden="true"><span class="octicon octicon-link"></span></a>django.request</h4>
+
+<h4 id="django-server">
+<a class="anchor" href="#django-server" aria-hidden="true"><span class="octicon octicon-link"></span></a>django.server</h4>
+
+<h4 id="django-template">
+<a class="anchor" href="#django-template" aria-hidden="true"><span class="octicon octicon-link"></span></a>django.template</h4>
+
+<h4 id="django-db-backends">
+<a class="anchor" href="#django-db-backends" aria-hidden="true"><span class="octicon octicon-link"></span></a>django.db.backends</h4>
+
+<h4 id="django-security">
+<a class="anchor" href="#django-security" aria-hidden="true"><span class="octicon octicon-link"></span></a>django.security.*</h4>
+
+<h4 id="django-db-backends-schema">
+<a class="anchor" href="#django-db-backends-schema" aria-hidden="true"><span class="octicon octicon-link"></span></a>django.db.backends.schema</h4>
+
+<hr>
+
+<h3 id="handlers">
+<a class="anchor" href="#handlers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Handlers</h3>
+
+<h3 id="filters">
+<a class="anchor" href="#filters" aria-hidden="true"><span class="octicon octicon-link"></span></a>Filters</h3>
+
+<hr>
+
+<h3 id="django-s-default-logging-configuration">
+<a class="anchor" href="#django-s-default-logging-configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Django’s default logging configuration</h3>
+
+<h1 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a><em>Reference</em>
+</h1>
+
+<p><a href="https://docs.djangoproject.com/en/1.11/topics/logging/">https://docs.djangoproject.com/en/1.11/topics/logging/</a></p>
+
+  </div>
+
+<div>
+  <h2 id="a-quick-logging-primer">A quick logging primer</h2>
+
+<h3 id="the-cast-of-players">The cast of players</h3>
+
+<h4 id="loggers">Loggers</h4>
+
+<h4 id="handlers">Handlers</h4>
+
+<h4 id="filters">Filters</h4>
+
+<h4 id="formatters">Formatters</h4>
+
+<hr>
+
+<h2 id="using-logging">Using logging</h2>
+
+<h3 id="naming-loggers">Naming loggers</h3>
+
+<h3 id="making-logging-calls">Making logging calls</h3>
+
+<hr>
+
+<h2 id="configuring-logging">Configuring logging</h2>
+
+<h3 id="examples">Examples</h3>
+
+<p>dictConfig 형식의 전체 문서는 구성 사전 로깅에 대한 최상의 정보 소스입니다.</p>
+
+<p>첫째, Django logger의 모든 logging을 local file에 기록하는 간단한 구성.</p>
+
+<ul>
+<li>'filename' 경로를 Django 응용 프로그램 실행 권한있는 사용자 위치로 변경.</li>
+</ul>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">LOGGING</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">'version'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s">'disable_existing_loggers'</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="s">'handlers'</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">'file'</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">'level'</span><span class="p">:</span> <span class="s">'DEBUG'</span><span class="p">,</span>
+            <span class="s">'class'</span><span class="p">:</span> <span class="s">'logging.FileHandler'</span><span class="p">,</span>
+            <span class="s">'filename'</span><span class="p">:</span> <span class="s">'/path/to/django/debug.log'</span><span class="p">,</span>  <span class="c1"># XXX: 변경
+</span>        <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="s">'loggers'</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">'django'</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">'handlers'</span><span class="p">:</span> <span class="p">[</span><span class="s">'file'</span><span class="p">],</span>
+            <span class="s">'level'</span><span class="p">:</span> <span class="s">'DEBUG'</span><span class="p">,</span>
+            <span class="s">'propagate'</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>둘째, 로깅 시스템이 장고의 콘솔 로깅을 출력하는 방법.</p>
+
+<ul>
+<li><p>지역 개발 중에 유용.</p></li>
+<li><p>기본적으로이 설정은 INFO 이상의 레벨의 메세지만을 콘솔에 전송합니다 (Django의 기본 로그 설정과 동일합니다.</p></li>
+</ul>
+
+<p>단, 기본값은 DEBUG = True 일 때 로그 레코드 만 표시합니다).</p>
+
+<ul>
+<li>장고는 그러한 메시지를 많이 기록하지 않습니다.</li>
+</ul>
+
+<p>그러나 이 설정을 사용하면 DJANGO_LOG_LEVEL = DEBUG 환경 변수를 설정하여 장고의 모든 디버그 로깅을 볼 수 있습니다.</p>
+
+<ul>
+<li>모든 데이터베이스 쿼리를 포함하므로 매우 장황함.</li>
+</ul>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">LOGGING</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">'version'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s">'disable_existing_loggers'</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="s">'handlers'</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">'console'</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">'class'</span><span class="p">:</span> <span class="s">'logging.StreamHandler'</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="s">'loggers'</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">'django'</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">'handlers'</span><span class="p">:</span> <span class="p">[</span><span class="s">'console'</span><span class="p">],</span>
+            <span class="c1"># XXX: 아래 부분 에러시
+</span>            <span class="c1"># 'level': 'DEBUG' 으로 변경해도 됨.
+</span>            <span class="s">'level'</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">'DJANGO_LOG_LEVEL'</span><span class="p">,</span> <span class="s">'INFO'</span><span class="p">),</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="custom-logging-configuration">Custom logging configuration</h3>
+
+<h3 id="disabling-logging-configuration">Disabling logging configuration</h3>
+
+<hr>
+
+<h2 id="django-s-logging-extensions">Django’s logging extensions</h2>
+
+<h3 id="loggers">Loggers</h3>
+
+<h4 id="django">django</h4>
+
+<h4 id="django-request">django.request</h4>
+
+<h4 id="django-server">django.server</h4>
+
+<h4 id="django-template">django.template</h4>
+
+<h4 id="django-db-backends">django.db.backends</h4>
+
+<h4 id="django-security">django.security.*</h4>
+
+<h4 id="django-db-backends-schema">django.db.backends.schema</h4>
+
+<hr>
+
+<h3 id="handlers">Handlers</h3>
+
+<h3 id="filters">Filters</h3>
+
+<hr>
+
+<h3 id="django-s-default-logging-configuration">Django’s default logging configuration</h3>
+
+<h1 id="reference"><em>Reference</em></h1>
+
+<p><a href="https://docs.djangoproject.com/en/1.11/topics/logging/" rel="nofollow" target="_blank">https://docs.djangoproject.com/en/1.11/topics/logging/</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

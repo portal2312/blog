@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   id="svg87"
+   stroke-miterlimit="10"
+   stroke-linecap="square"
+   stroke="none"
+   fill="none"
+   viewBox="0.0 0.0 960.0 540.0"
+   version="1.1">
+  <desc>그림 2와 비슷하지만 테스트 세트를 기준으로 모델을 평가하는 대신 검증 세트를 기준으로 평가하는 워크플로우입니다.학습 세트와 검증 세트에서 대략적으로 일치하는 결과가 나온 후에 테스트 세트를 기준으로 모델을 확인합니다.</desc>
+  <metadata
+     id="metadata93">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs91" />
+  <clipPath
+     id="g3265f266ac_0_158.0">
+    <path
+       id="path2"
+       clip-rule="nonzero"
+       d="m0 0l960.0 0l0 540.0l-960.0 0l0 -540.0z" />
+  </clipPath>
+  <g
+     id="g85"
+     clip-path="url(#g3265f266ac_0_158.0)">
+    <path
+       fill="#ffffff"
+       fill-rule="evenodd"
+       id="path5"
+       d="m0 0l960.0 0l0 540.0l-960.0 0z" />
+    <path
+       id="path7"
+       fill-rule="evenodd"
+       d="m5.5091863 4.5905514l945.0079 0l0 274.83466l-945.0079 0z"
+       fill-opacity="0.0"
+       fill="#000000" />
+    <path
+       id="path9"
+       fill-rule="evenodd"
+       d="m5.5091863 4.5905514l945.0079 0l0 274.83466l-945.0079 0z"
+       stroke-dasharray="8.0,6.0"
+       stroke-linecap="butt"
+       stroke-linejoin="round"
+       stroke-width="2.0"
+       stroke="#999999" />
+    <path
+       id="path11"
+       fill-rule="evenodd"
+       d="m47.065617 15.099737l378.07874 0l0 113.54331l-378.07874 0z"
+       fill="#4285f4" />
+    <path
+       fill="#4fc3f7"
+       fill-rule="evenodd"
+       id="path15"
+       d="m469.2152 15.107612l437.88977 0l0 113.54331l-437.88977 0z" />
+    <path
+       id="path19"
+       fill-rule="evenodd"
+       d="m425.14435 71.87139l44.06299 0"
+       fill-opacity="0.0"
+       fill="#000000" />
+    <path
+       id="path21"
+       fill-rule="evenodd"
+       d="m425.14435 71.87139l33.78174 0"
+       stroke-linecap="butt"
+       stroke-linejoin="round"
+       stroke-width="3.0"
+       stroke="#424242" />
+    <path
+       id="path23"
+       fill-rule="evenodd"
+       d="m458.9261 71.87139l-3.3737488 3.3737488l9.269318 -3.3737488l-9.269318 -3.3737488z"
+       stroke-linecap="butt"
+       stroke-width="3.0"
+       stroke="#424242"
+       fill="#424242" />
+    <path
+       id="path25"
+       fill-rule="evenodd"
+       d="m907.105 71.879265l24.999634 0l0 146.07874l-274.32245 0"
+       fill-opacity="0.0"
+       fill="#000000" />
+    <path
+       id="path27"
+       fill-rule="evenodd"
+       d="m907.105 71.879265l24.999573 0l0 146.07874l-264.04114 0"
+       stroke-linecap="butt"
+       stroke-linejoin="round"
+       stroke-width="3.0"
+       stroke="#424242" />
+    <path
+       id="path29"
+       fill-rule="evenodd"
+       d="m668.0634 217.95801l3.3737183 -3.3737488l-9.269287 3.3737488l9.269287 3.3737488z"
+       stroke-linecap="butt"
+       stroke-width="3.0"
+       stroke="#424242"
+       fill="#424242" />
+    <path
+       id="path31"
+       fill-rule="evenodd"
+       d="m259.66928 167.13387l398.11026 0l0 101.6693l-398.11026 0z"
+       fill-opacity="0.0"
+       fill="#000000" />
+    <path
+       style="fill:#4fc3f7;fill-rule:nonzero;stroke-width:0.75121677"
+       id="path35"
+       d="m 333.24671,178.51045 h 119.40801 v 38.39999 H 333.24671 Z" />
+    <path
+       id="path41"
+       fill-rule="evenodd"
+       d="m47.065617 71.87139l-24.999449 0l0 146.11023l237.59787 0"
+       fill-opacity="0.0"
+       fill="#000000" />
+    <path
+       id="path43"
+       fill-rule="evenodd"
+       d="m36.784355 71.87139l-14.718187 0l0 146.11023l237.59787 0"
+       stroke-linecap="butt"
+       stroke-linejoin="round"
+       stroke-width="3.0"
+       stroke="#424242" />
+    <path
+       id="path45"
+       fill-rule="evenodd"
+       d="m36.78436 71.87139l-3.3737526 3.3737488l9.269302 -3.3737488l-9.269302 -3.3737488z"
+       stroke-linecap="butt"
+       stroke-width="3.0"
+       stroke="#424242"
+       fill="#424242" />
+    <path
+       id="path47"
+       fill-rule="evenodd"
+       d="m31.68504 346.59198l402.23624 0l0 101.66928l-402.23624 0z"
+       fill-opacity="0.0"
+       fill="#000000" />
+    <path
+       style="fill-rule:evenodd;stroke:#000000;stroke-width:2.12463903;stroke-linecap:butt;stroke-linejoin:round"
+       id="path49"
+       d="M 31.747359,346.6543 H 486.23724 V 448.19894 H 31.747359 Z" />
+    <path
+       id="path51"
+       fill-rule="evenodd"
+       d="m31.065617 347.1286l391.1496 0l0 54.015747l-391.1496 0z"
+       fill-opacity="0.0"
+       fill="#000000" />
+    <path
+       style="fill:#4fc3f7;fill-rule:nonzero;stroke-width:0.70357287"
+       id="path55"
+       d="M 63.470736,355.36867 H 168.2128 v 38.39999 H 63.470736 Z" />
+    <path
+       id="path61"
+       fill-rule="evenodd"
+       d="m278.95398 279.41208l-0.4409485 60.59842"
+       fill-opacity="0.0"
+       fill="#000000" />
+    <path
+       id="path63"
+       fill-rule="evenodd"
+       d="m278.95398 279.41208l-0.3661499 50.317444"
+       stroke-linecap="butt"
+       stroke-linejoin="round"
+       stroke-width="3.0"
+       stroke="#424242" />
+    <path
+       id="path65"
+       fill-rule="evenodd"
+       d="m278.58786 329.72952l-3.349121 -3.3982239l3.3062134 9.29361l3.441101 -9.244507z"
+       stroke-linecap="butt"
+       stroke-width="3.0"
+       stroke="#424242"
+       fill="#424242" />
+    <path
+       id="path67"
+       fill-rule="evenodd"
+       d="m533.2746 346.5944l318.32977 0l0 101.66928l-318.32977 0z"
+       fill-opacity="0.0"
+       fill="#000000" />
+    <path
+       style="fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:round"
+       id="path69"
+       d="M 588.79558,347.64197 H 907.12535 V 449.31125 H 588.79558 Z" />
+    <path
+       id="path71"
+       fill-rule="evenodd"
+       d="m532.78436 347.131l309.55585 0l0 54.015747l-309.55585 0z"
+       fill-opacity="0.0"
+       fill="#000000" />
+    <path
+       style="fill:#f4b400;fill-rule:nonzero;stroke-width:1.07212698"
+       id="path75"
+       d="m 664.64892,356.41863 h 136.96487 v 38.4 H 664.64892 Z" />
+    <path
+       id="path79"
+       fill-rule="evenodd"
+       d="m439.76642 397.42783l89.22833 0"
+       fill-opacity="0.0"
+       fill="#000000" />
+    <path
+       style="fill-rule:evenodd;stroke:#424242;stroke-width:3;stroke-linecap:butt;stroke-linejoin:round"
+       id="path81"
+       d="m 495.2874,398.4754 h 78.94708" />
+    <path
+       style="fill:#424242;fill-rule:evenodd;stroke:#424242;stroke-width:3;stroke-linecap:butt"
+       id="path83"
+       d="m 574.23448,398.4754 -3.37378,3.37374 9.26935,-3.37374 -9.26935,-3.37375 z" />
+    <text
+       id="text3786"
+       y="66.08493"
+       x="228.9792"
+       style="font-style:normal;font-weight:normal;font-size:26.66666603px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       xml:space="preserve"><tspan
+         style="font-size:29.33333397px;text-align:center;text-anchor:middle"
+         y="66.08493"
+         x="233.04691"
+         id="tspan3784">학습 세트로 모델을 </tspan><tspan
+         id="tspan91"
+         style="font-size:29.33333397px;text-align:center;text-anchor:middle"
+         y="102.75159"
+         x="228.9792">학습시킵니다.</tspan></text>
+    <text
+       id="text3790"
+       y="66.08493"
+       x="693.59583"
+       style="font-style:normal;font-weight:normal;font-size:26.66666603px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       xml:space="preserve"><tspan
+         style="font-size:29.33333397px;text-align:center;text-anchor:middle"
+         y="66.08493"
+         x="697.66351"
+         id="tspan3788">검증세트로 모델을 </tspan><tspan
+         id="tspan93"
+         style="font-size:29.33333397px;text-align:center;text-anchor:middle"
+         y="102.75159"
+         x="693.59583">평가합니다.</tspan></text>
+    <text
+       id="text3794"
+       y="210.01683"
+       x="456.70139"
+       style="font-style:normal;font-weight:normal;font-size:26.66666603px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       xml:space="preserve"><tspan
+         id="tspan58"
+         style="font-size:32px;text-align:center;text-anchor:middle"
+         y="210.01683"
+         x="461.13889">검증세트의 결과에 </tspan><tspan
+         id="tspan97"
+         style="font-size:32px;text-align:center;text-anchor:middle"
+         y="250.01683"
+         x="456.70139">따라 모델을 조정합니다.</tspan></text>
+    <text
+       id="text3800"
+       y="229.92058"
+       x="426.35919"
+       style="font-style:normal;font-weight:normal;font-size:26.66666603px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       xml:space="preserve"><tspan
+         style="font-weight:bold;font-size:29.33333397px"
+         y="253.51433"
+         x="426.35919"
+         id="tspan3798" /></text>
+    <text
+       id="text3804"
+       y="387.05545"
+       x="257.62564"
+       style="font-style:normal;font-weight:normal;font-size:26.66666603px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       xml:space="preserve"><tspan
+         id="tspan105"
+         style="font-size:29.33333397px;text-align:center;text-anchor:middle"
+         y="387.05545"
+         x="261.69336">검증세트에서 가장 우수한 결과를 </tspan><tspan
+         id="tspan109"
+         style="font-size:29.33333397px;text-align:center;text-anchor:middle"
+         y="423.72211"
+         x="257.62564">보이는 모델을 선택합니다.</tspan></text>
+    <text
+       id="text3814"
+       y="388.10303"
+       x="747.68127"
+       style="font-style:normal;font-weight:normal;font-size:26.66666603px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       xml:space="preserve"><tspan
+         id="tspan68"
+         style="font-weight:bold;font-size:29.33333397px;text-align:center;text-anchor:middle"
+         y="388.10303"
+         x="751.74896">테스트 세트의 </tspan><tspan
+         id="tspan119"
+         style="font-weight:bold;font-size:29.33333397px;text-align:center;text-anchor:middle"
+         y="424.76968"
+         x="747.68127">결과를 확인합니다.</tspan></text>
+    <text
+       id="text115"
+       y="381.8176"
+       x="664.15662"
+       style="font-style:normal;font-weight:normal;font-size:26.66666603px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       xml:space="preserve"><tspan
+         y="405.41135"
+         x="664.15662"
+         id="tspan113" /><tspan
+         id="tspan117"
+         y="438.74469"
+         x="664.15662" /></text>
+  </g>
+</svg>

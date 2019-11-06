@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>HTML Tables | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="HTML Tables" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Defing an HTML Table" />
+<meta property="og:description" content="Defing an HTML Table" />
+<link rel="canonical" href="http://localhost:4000/blog/docs/develop/Frontend/HTML/HTML5/doc/tutorial/17_tables.html" />
+<meta property="og:url" content="http://localhost:4000/blog/docs/develop/Frontend/HTML/HTML5/doc/tutorial/17_tables.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-06T09:31:12+09:00" />
+<script type="application/ld+json">
+{"description":"Defing an HTML Table","headline":"HTML Tables","dateModified":"2019-11-06T09:31:12+09:00","datePublished":"2019-11-06T09:31:12+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/docs/develop/Frontend/HTML/HTML5/doc/tutorial/17_tables.html"},"url":"http://localhost:4000/blog/docs/develop/Frontend/HTML/HTML5/doc/tutorial/17_tables.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>HTML Tables</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#defing-an-html-table">Defing an HTML Table</a></li>
+<li class="toc-entry toc-h2"><a href="#html-table-adding-a-border">HTML Table - Adding a Border</a></li>
+<li class="toc-entry toc-h2"><a href="#html-table-collapsed-borders">HTML Table - Collapsed Borders</a></li>
+<li class="toc-entry toc-h2"><a href="#html-table-adding-cell-padding">HTML Table - Adding Cell Padding</a></li>
+<li class="toc-entry toc-h2"><a href="#table-left-align-headings">Table - Left-align Headings</a></li>
+<li class="toc-entry toc-h2"><a href="#table-adding-border-spacing">Table - Adding Border Spacing</a></li>
+<li class="toc-entry toc-h2"><a href="#table-cells-that-span-many-columns">Table - Cells that Span Many Columns</a></li>
+<li class="toc-entry toc-h2"><a href="#table-cells-that-span-many-rows">Table - Cells that Span Many Rows</a></li>
+<li class="toc-entry toc-h2"><a href="#table-adding-a-caption">Table - Adding a Caption</a></li>
+<li class="toc-entry toc-h2"><a href="#a-special-style-for-one-table">A Special Style for One Table</a></li>
+<li class="toc-entry toc-h2"><a href="#chapter-summary">Chapter Summary</a></li>
+<li class="toc-entry toc-h2"><a href="#table-tags">Table Tags</a></li>
+<li class="toc-entry toc-h2"><a href="#reference">Reference</a></li>
+</ul><h2 id="defing-an-html-table">
+<a class="anchor" href="#defing-an-html-table" aria-hidden="true"><span class="octicon octicon-link"></span></a>Defing an HTML Table</h2>
+
+<p>HTML 테이블은 <code>&lt;table&gt;</code> 태그로 정의됩니다.</p>
+
+<p>각 테이블 행은 <code>&lt;tr&gt;</code> 태그로 정의됩니다.</p>
+
+<p>표 머리글은 <code>&lt;th&gt;</code> 태그로 정의됩니다.</p>
+
+<p>기본적으로 테이블 표제는 굵게 표시되고 중앙에 배치됩니다.</p>
+
+<p>테이블 data/cell 은 <code>&lt;td&gt;</code> 태그로 정의됩니다.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+
+<span class="nt">&lt;table</span> <span class="na">style=</span><span class="s">"width:100%"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;th&gt;</span>Firstname<span class="nt">&lt;/th&gt;</span>
+    <span class="nt">&lt;th&gt;</span>Lastname<span class="nt">&lt;/th&gt;</span>
+    <span class="nt">&lt;th&gt;</span>Age<span class="nt">&lt;/th&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;</span>Jill<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>Smith<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>50<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;</span>Eve<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>Jackson<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>94<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;</span>John<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>Doe<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>80<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+<span class="nt">&lt;/table&gt;</span>
+
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
+<blockquote>
+<p>Note:<br>
+&lt;td&gt; 요소는 표의 데이터 컨테이너입니다.<br>
+여기에는 모든 종류의 HTML 요소가 포함될 수 있습니다. 텍스트, 이미지, 목록, 다른 테이블 등</p>
+</blockquote>
+
+<hr>
+
+<h2 id="html-table-adding-a-border">
+<a class="anchor" href="#html-table-adding-a-border" aria-hidden="true"><span class="octicon octicon-link"></span></a>HTML Table - Adding a Border</h2>
+
+<p>표에 테두리를 지정하지 않으면 테두리없이 테두리가 표시됩니다.</p>
+
+<p>테두리는 CSS 테두리 속성을 사용하여 설정됩니다.</p>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">table</span><span class="o">,</span> <span class="nt">tr</span><span class="o">,</span> <span class="nt">td</span> <span class="p">{</span>
+    <span class="nl">border</span><span class="p">:</span> <span class="m">1px</span> <span class="nb">solid</span> <span class="no">black</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p>표 셀과 표 셀의 테두리를 정의해야 합니다.</p>
+</blockquote>
+
+<hr>
+
+<h2 id="html-table-collapsed-borders">
+<a class="anchor" href="#html-table-collapsed-borders" aria-hidden="true"><span class="octicon octicon-link"></span></a>HTML Table - Collapsed Borders</h2>
+
+<p>테두리를 하나의 테두리로 축소하려면 CSS border-collapse 속성을 추가하십시오:</p>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">table</span><span class="o">,</span> <span class="nt">th</span><span class="o">,</span> <span class="nt">td</span> <span class="p">{</span>
+    <span class="nl">border</span><span class="p">:</span> <span class="m">1px</span> <span class="nb">solid</span> <span class="no">black</span><span class="p">;</span>
+    <span class="nl">border-collapse</span><span class="p">:</span> <span class="nb">collapse</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr>
+
+<h2 id="html-table-adding-cell-padding">
+<a class="anchor" href="#html-table-adding-cell-padding" aria-hidden="true"><span class="octicon octicon-link"></span></a>HTML Table - Adding Cell Padding</h2>
+
+<p>셀 패딩은 셀 내용과 경계 사이의 간격을 지정합니다.</p>
+
+<p>패딩을 지정하지 않으면 테이블 셀이 패딩없이 표시됩니다.</p>
+
+<p>패딩을 설정하려면 CSS <strong>padding</strong> 속성을 사용하십시오.</p>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">th</span><span class="o">,</span> <span class="nt">td</span> <span class="p">{</span>
+    <span class="nl">padding</span><span class="p">:</span> <span class="m">15px</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr>
+
+<h2 id="table-left-align-headings">
+<a class="anchor" href="#table-left-align-headings" aria-hidden="true"><span class="octicon octicon-link"></span></a>Table - Left-align Headings</h2>
+
+<p>기본적으로 테이블 표제는 굵게 표시되고 중앙에 배치됩니다.</p>
+
+<p>표 머리글을 왼쪽 정렬하려면 CSS text-align 속성을 사용하십시오.</p>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">th</span> <span class="p">{</span>
+    <span class="nl">text-align</span><span class="p">:</span> <span class="nb">left</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr>
+
+<h2 id="table-adding-border-spacing">
+<a class="anchor" href="#table-adding-border-spacing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Table - Adding Border Spacing</h2>
+
+<p>셀 사이의 간격 조절.</p>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">table</span> <span class="p">{</span>
+  <span class="nl">border-spacing</span><span class="p">:</span> <span class="m">15px</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p>Note: 만일 table 이 border collapsed 를 갖으면, border-spacing 은 효과가 없다.</p>
+</blockquote>
+
+<hr>
+
+<h2 id="table-cells-that-span-many-columns">
+<a class="anchor" href="#table-cells-that-span-many-columns" aria-hidden="true"><span class="octicon octicon-link"></span></a>Table - Cells that Span Many Columns</h2>
+
+<p>셀이 둘 이상의 열에 걸쳐 있도록하려면 <strong>colspan</strong> 속성을 사용하십시오:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;table</span> <span class="na">style=</span><span class="s">"width:100%"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;th&gt;</span>Name<span class="nt">&lt;/th&gt;</span>
+    <span class="nt">&lt;th</span> <span class="na">colspan=</span><span class="s">"2"</span><span class="nt">&gt;</span>Telephone<span class="nt">&lt;/th&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;</span>Bill Gates<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>55577854<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>55577855<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+<span class="nt">&lt;/table&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="table-cells-that-span-many-rows">
+<a class="anchor" href="#table-cells-that-span-many-rows" aria-hidden="true"><span class="octicon octicon-link"></span></a>Table - Cells that Span Many Rows</h2>
+
+<p>셀이 둘 이상의 행에 걸쳐 있도록하려면 <strong>rowspan</strong> 속성을 사용하십시오:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;table</span> <span class="na">style=</span><span class="s">"width:100%"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;th&gt;</span>Name:<span class="nt">&lt;/th&gt;</span>
+    <span class="nt">&lt;td&gt;</span>Bill Gates<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;th</span> <span class="na">rowspan=</span><span class="s">"2"</span><span class="nt">&gt;</span>Telephone:<span class="nt">&lt;/th&gt;</span>
+    <span class="nt">&lt;td&gt;</span>55577854<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;</span>55577855<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+<span class="nt">&lt;/table&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="table-adding-a-caption">
+<a class="anchor" href="#table-adding-a-caption" aria-hidden="true"><span class="octicon octicon-link"></span></a>Table - Adding a Caption</h2>
+
+<p>태그: <code>&lt;caption&gt;</code> ... <code>&lt;/caption&gt;</code></p>
+
+<p>정의: table 에 제목 표시하기</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;table</span> <span class="na">style=</span><span class="s">"width:100%"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;caption&gt;</span>Monthly savings<span class="nt">&lt;/caption&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;th&gt;</span>Month<span class="nt">&lt;/th&gt;</span>
+    <span class="nt">&lt;th&gt;</span>Savings<span class="nt">&lt;/th&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;</span>January<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>$100<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;</span>February<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>$50<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+<span class="nt">&lt;/table&gt;</span>
+</code></pre></div>
+<blockquote>
+<p>Note: <code>&lt;caption&gt;</code> 태그는 <code>&lt;table&gt;</code> 태그 바로 뒤에 삽입해야 합니다.</p>
+</blockquote>
+
+<hr>
+
+<h2 id="a-special-style-for-one-table">
+<a class="anchor" href="#a-special-style-for-one-table" aria-hidden="true"><span class="octicon octicon-link"></span></a>A Special Style for One Table</h2>
+
+<p>특별한 테이블을 위한 특별한 스타일을 정의하기 위해, <strong>id</strong> 속성을 테이블에 추가하십시오:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;table</span> <span class="na">id=</span><span class="s">"t01"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;th&gt;</span>Firstname<span class="nt">&lt;/th&gt;</span>
+    <span class="nt">&lt;th&gt;</span>Lastname<span class="nt">&lt;/th&gt;</span>
+    <span class="nt">&lt;th&gt;</span>Age<span class="nt">&lt;/th&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;</span>Eve<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>Jackson<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>94<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+<span class="nt">&lt;/table&gt;</span>
+</code></pre></div><div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">table</span><span class="nf">#t01</span> <span class="p">{</span>
+  <span class="nl">width</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+  <span class="nl">background-color</span><span class="p">:</span> <span class="m">#f1f1c1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">table</span><span class="nf">#t01</span> <span class="nt">tr</span><span class="nd">:nth-child</span><span class="o">(</span><span class="nt">even</span><span class="o">)</span> <span class="p">{</span>  <span class="c">/* nth-child 이용해서 홀수 tr에 적용 */</span>
+    <span class="nl">background-color</span><span class="p">:</span> <span class="m">#eee</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nt">table</span><span class="nf">#t01</span> <span class="nt">tr</span><span class="nd">:nth-child</span><span class="o">(</span><span class="nt">odd</span><span class="o">)</span> <span class="p">{</span>  <span class="c">/* nth-child 이용해서 짝수 tr에 적용 */</span>
+    <span class="nl">background-color</span><span class="p">:</span> <span class="m">#fff</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nt">table</span><span class="nf">#t01</span> <span class="nt">th</span> <span class="p">{</span>
+    <span class="nl">color</span><span class="p">:</span> <span class="no">white</span><span class="p">;</span>
+    <span class="nl">background-color</span><span class="p">:</span> <span class="no">black</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p>Note:<br>
+<a href="https://www.w3schools.com/cssref/sel_nth-child.asp">nth-child</a> 상세내용</p>
+</blockquote>
+
+<hr>
+
+<h2 id="chapter-summary">
+<a class="anchor" href="#chapter-summary" aria-hidden="true"><span class="octicon octicon-link"></span></a>Chapter Summary</h2>
+
+<ul>
+<li>Use the HTML <strong>&lt;table&gt;</strong> element to define a table</li>
+<li>Use the HTML <strong>&lt;tr&gt;</strong> element to define a table row</li>
+<li>Use the HTML <strong>&lt;td&gt;</strong> element to define a table data</li>
+<li>Use the HTML <strong>&lt;th&gt;</strong> element to define a table heading</li>
+<li>Use the HTML <strong>&lt;caption&gt;</strong> element to define a table caption</li>
+<li>Use the CSS <strong>border</strong> property to define a border</li>
+<li>Use the CSS <strong>border-collapse</strong> property to collapse cell borders</li>
+<li>Use the CSS <strong>padding property</strong> to add padding to cells</li>
+<li>Use the CSS <strong>text-align</strong> property to align cell text</li>
+<li>Use the CSS <strong>border-spacing</strong> property to set the spacing between cells</li>
+<li>Use the <strong>colspan</strong> attribute to make a cell span many columns</li>
+<li>Use the <strong>rowspan</strong> attribute to make a cell span many rows</li>
+<li>Use the <strong>id</strong> attribute to uniquely define one table</li>
+</ul>
+
+<hr>
+
+<h2 id="table-tags">
+<a class="anchor" href="#table-tags" aria-hidden="true"><span class="octicon octicon-link"></span></a>Table Tags</h2>
+
+<table>
+<thead>
+<tr>
+<th>Tags</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&lt;table&gt;</td>
+<td>Defines a cell in a table</td>
+</tr>
+<tr>
+<td>&lt;th&gt;</td>
+<td>Defines a header cell in a table</td>
+</tr>
+<tr>
+<td>&lt;tr&gt;</td>
+<td>Defines a row in a table</td>
+</tr>
+<tr>
+<td>&lt;td&gt;</td>
+<td>Defines a cell in a table</td>
+</tr>
+<tr>
+<td>&lt;caption&gt;</td>
+<td>Defines a table caption</td>
+</tr>
+<tr>
+<td>&lt;colgroup&gt;</td>
+<td>Specifies a group of one or more columns in a table for formatting</td>
+</tr>
+<tr>
+<td>&lt;col&gt;</td>
+<td>Specifies column properties for each column within a &lt;colgroup&gt; element</td>
+</tr>
+<tr>
+<td>&lt;thead&gt;</td>
+<td>Groups the header content in a table</td>
+</tr>
+<tr>
+<td>&lt;tbody&gt;</td>
+<td>Groups the body content in a table</td>
+</tr>
+<tr>
+<td>&lt;tfoot&gt;</td>
+<td>Groups the footer content in a table</td>
+</tr>
+</tbody>
+</table>
+
+<blockquote>
+<p>Note:<br>
+<a href="https://www.w3schools.com/tags/tag_thead.asp">thead, tbody, tfoot</a> 상세내용</p>
+</blockquote>
+
+<h2 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+<p><a href="https://www.w3schools.com/html/html_tables.asp">https://www.w3schools.com/html/html_tables.asp</a></p>
+
+  </div>
+
+<div>
+  <h2 id="defing-an-html-table">Defing an HTML Table</h2>
+
+<p>HTML 테이블은 <code>&lt;table&gt;</code> 태그로 정의됩니다.</p>
+
+<p>각 테이블 행은 <code>&lt;tr&gt;</code> 태그로 정의됩니다.</p>
+
+<p>표 머리글은 <code>&lt;th&gt;</code> 태그로 정의됩니다.</p>
+
+<p>기본적으로 테이블 표제는 굵게 표시되고 중앙에 배치됩니다.</p>
+
+<p>테이블 data/cell 은 <code>&lt;td&gt;</code> 태그로 정의됩니다.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+
+<span class="nt">&lt;table</span> <span class="na">style=</span><span class="s">"width:100%"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;th&gt;</span>Firstname<span class="nt">&lt;/th&gt;</span>
+    <span class="nt">&lt;th&gt;</span>Lastname<span class="nt">&lt;/th&gt;</span>
+    <span class="nt">&lt;th&gt;</span>Age<span class="nt">&lt;/th&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;</span>Jill<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>Smith<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>50<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;</span>Eve<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>Jackson<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>94<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;</span>John<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>Doe<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>80<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+<span class="nt">&lt;/table&gt;</span>
+
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
+<blockquote>
+<p>Note:<br>
+&lt;td&gt; 요소는 표의 데이터 컨테이너입니다.<br>
+여기에는 모든 종류의 HTML 요소가 포함될 수 있습니다. 텍스트, 이미지, 목록, 다른 테이블 등</p>
+</blockquote>
+
+<hr>
+
+<h2 id="html-table-adding-a-border">HTML Table - Adding a Border</h2>
+
+<p>표에 테두리를 지정하지 않으면 테두리없이 테두리가 표시됩니다.</p>
+
+<p>테두리는 CSS 테두리 속성을 사용하여 설정됩니다.</p>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">table</span><span class="o">,</span> <span class="nt">tr</span><span class="o">,</span> <span class="nt">td</span> <span class="p">{</span>
+    <span class="nl">border</span><span class="p">:</span> <span class="m">1px</span> <span class="nb">solid</span> <span class="no">black</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p>표 셀과 표 셀의 테두리를 정의해야 합니다.</p>
+</blockquote>
+
+<hr>
+
+<h2 id="html-table-collapsed-borders">HTML Table - Collapsed Borders</h2>
+
+<p>테두리를 하나의 테두리로 축소하려면 CSS border-collapse 속성을 추가하십시오:</p>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">table</span><span class="o">,</span> <span class="nt">th</span><span class="o">,</span> <span class="nt">td</span> <span class="p">{</span>
+    <span class="nl">border</span><span class="p">:</span> <span class="m">1px</span> <span class="nb">solid</span> <span class="no">black</span><span class="p">;</span>
+    <span class="nl">border-collapse</span><span class="p">:</span> <span class="nb">collapse</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr>
+
+<h2 id="html-table-adding-cell-padding">HTML Table - Adding Cell Padding</h2>
+
+<p>셀 패딩은 셀 내용과 경계 사이의 간격을 지정합니다.</p>
+
+<p>패딩을 지정하지 않으면 테이블 셀이 패딩없이 표시됩니다.</p>
+
+<p>패딩을 설정하려면 CSS <strong>padding</strong> 속성을 사용하십시오.</p>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">th</span><span class="o">,</span> <span class="nt">td</span> <span class="p">{</span>
+    <span class="nl">padding</span><span class="p">:</span> <span class="m">15px</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr>
+
+<h2 id="table-left-align-headings">Table - Left-align Headings</h2>
+
+<p>기본적으로 테이블 표제는 굵게 표시되고 중앙에 배치됩니다.</p>
+
+<p>표 머리글을 왼쪽 정렬하려면 CSS text-align 속성을 사용하십시오.</p>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">th</span> <span class="p">{</span>
+    <span class="nl">text-align</span><span class="p">:</span> <span class="nb">left</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr>
+
+<h2 id="table-adding-border-spacing">Table - Adding Border Spacing</h2>
+
+<p>셀 사이의 간격 조절.</p>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">table</span> <span class="p">{</span>
+  <span class="nl">border-spacing</span><span class="p">:</span> <span class="m">15px</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p>Note: 만일 table 이 border collapsed 를 갖으면, border-spacing 은 효과가 없다.</p>
+</blockquote>
+
+<hr>
+
+<h2 id="table-cells-that-span-many-columns">Table - Cells that Span Many Columns</h2>
+
+<p>셀이 둘 이상의 열에 걸쳐 있도록하려면 <strong>colspan</strong> 속성을 사용하십시오:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;table</span> <span class="na">style=</span><span class="s">"width:100%"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;th&gt;</span>Name<span class="nt">&lt;/th&gt;</span>
+    <span class="nt">&lt;th</span> <span class="na">colspan=</span><span class="s">"2"</span><span class="nt">&gt;</span>Telephone<span class="nt">&lt;/th&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;</span>Bill Gates<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>55577854<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>55577855<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+<span class="nt">&lt;/table&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="table-cells-that-span-many-rows">Table - Cells that Span Many Rows</h2>
+
+<p>셀이 둘 이상의 행에 걸쳐 있도록하려면 <strong>rowspan</strong> 속성을 사용하십시오:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;table</span> <span class="na">style=</span><span class="s">"width:100%"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;th&gt;</span>Name:<span class="nt">&lt;/th&gt;</span>
+    <span class="nt">&lt;td&gt;</span>Bill Gates<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;th</span> <span class="na">rowspan=</span><span class="s">"2"</span><span class="nt">&gt;</span>Telephone:<span class="nt">&lt;/th&gt;</span>
+    <span class="nt">&lt;td&gt;</span>55577854<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;</span>55577855<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+<span class="nt">&lt;/table&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="table-adding-a-caption">Table - Adding a Caption</h2>
+
+<p>태그: <code>&lt;caption&gt;</code> ... <code>&lt;/caption&gt;</code></p>
+
+<p>정의: table 에 제목 표시하기</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;table</span> <span class="na">style=</span><span class="s">"width:100%"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;caption&gt;</span>Monthly savings<span class="nt">&lt;/caption&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;th&gt;</span>Month<span class="nt">&lt;/th&gt;</span>
+    <span class="nt">&lt;th&gt;</span>Savings<span class="nt">&lt;/th&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;</span>January<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>$100<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;</span>February<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>$50<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+<span class="nt">&lt;/table&gt;</span>
+</code></pre></div>
+<blockquote>
+<p>Note: <code>&lt;caption&gt;</code> 태그는 <code>&lt;table&gt;</code> 태그 바로 뒤에 삽입해야 합니다.</p>
+</blockquote>
+
+<hr>
+
+<h2 id="a-special-style-for-one-table">A Special Style for One Table</h2>
+
+<p>특별한 테이블을 위한 특별한 스타일을 정의하기 위해, <strong>id</strong> 속성을 테이블에 추가하십시오:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;table</span> <span class="na">id=</span><span class="s">"t01"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;th&gt;</span>Firstname<span class="nt">&lt;/th&gt;</span>
+    <span class="nt">&lt;th&gt;</span>Lastname<span class="nt">&lt;/th&gt;</span>
+    <span class="nt">&lt;th&gt;</span>Age<span class="nt">&lt;/th&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;</span>Eve<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>Jackson<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>94<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+<span class="nt">&lt;/table&gt;</span>
+</code></pre></div><div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">table</span><span class="nf">#t01</span> <span class="p">{</span>
+  <span class="nl">width</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+  <span class="nl">background-color</span><span class="p">:</span> <span class="m">#f1f1c1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">table</span><span class="nf">#t01</span> <span class="nt">tr</span><span class="nd">:nth-child</span><span class="o">(</span><span class="nt">even</span><span class="o">)</span> <span class="p">{</span>  <span class="c">/* nth-child 이용해서 홀수 tr에 적용 */</span>
+    <span class="nl">background-color</span><span class="p">:</span> <span class="m">#eee</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nt">table</span><span class="nf">#t01</span> <span class="nt">tr</span><span class="nd">:nth-child</span><span class="o">(</span><span class="nt">odd</span><span class="o">)</span> <span class="p">{</span>  <span class="c">/* nth-child 이용해서 짝수 tr에 적용 */</span>
+    <span class="nl">background-color</span><span class="p">:</span> <span class="m">#fff</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nt">table</span><span class="nf">#t01</span> <span class="nt">th</span> <span class="p">{</span>
+    <span class="nl">color</span><span class="p">:</span> <span class="no">white</span><span class="p">;</span>
+    <span class="nl">background-color</span><span class="p">:</span> <span class="no">black</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p>Note:<br>
+<a href="https://www.w3schools.com/cssref/sel_nth-child.asp" rel="nofollow" target="_blank">nth-child</a> 상세내용</p>
+</blockquote>
+
+<hr>
+
+<h2 id="chapter-summary">Chapter Summary</h2>
+
+<ul>
+<li>Use the HTML <strong>&lt;table&gt;</strong> element to define a table</li>
+<li>Use the HTML <strong>&lt;tr&gt;</strong> element to define a table row</li>
+<li>Use the HTML <strong>&lt;td&gt;</strong> element to define a table data</li>
+<li>Use the HTML <strong>&lt;th&gt;</strong> element to define a table heading</li>
+<li>Use the HTML <strong>&lt;caption&gt;</strong> element to define a table caption</li>
+<li>Use the CSS <strong>border</strong> property to define a border</li>
+<li>Use the CSS <strong>border-collapse</strong> property to collapse cell borders</li>
+<li>Use the CSS <strong>padding property</strong> to add padding to cells</li>
+<li>Use the CSS <strong>text-align</strong> property to align cell text</li>
+<li>Use the CSS <strong>border-spacing</strong> property to set the spacing between cells</li>
+<li>Use the <strong>colspan</strong> attribute to make a cell span many columns</li>
+<li>Use the <strong>rowspan</strong> attribute to make a cell span many rows</li>
+<li>Use the <strong>id</strong> attribute to uniquely define one table</li>
+</ul>
+
+<hr>
+
+<h2 id="table-tags">Table Tags</h2>
+
+<table>
+<thead>
+<tr>
+<th>Tags</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&lt;table&gt;</td>
+<td>Defines a cell in a table</td>
+</tr>
+<tr>
+<td>&lt;th&gt;</td>
+<td>Defines a header cell in a table</td>
+</tr>
+<tr>
+<td>&lt;tr&gt;</td>
+<td>Defines a row in a table</td>
+</tr>
+<tr>
+<td>&lt;td&gt;</td>
+<td>Defines a cell in a table</td>
+</tr>
+<tr>
+<td>&lt;caption&gt;</td>
+<td>Defines a table caption</td>
+</tr>
+<tr>
+<td>&lt;colgroup&gt;</td>
+<td>Specifies a group of one or more columns in a table for formatting</td>
+</tr>
+<tr>
+<td>&lt;col&gt;</td>
+<td>Specifies column properties for each column within a &lt;colgroup&gt; element</td>
+</tr>
+<tr>
+<td>&lt;thead&gt;</td>
+<td>Groups the header content in a table</td>
+</tr>
+<tr>
+<td>&lt;tbody&gt;</td>
+<td>Groups the body content in a table</td>
+</tr>
+<tr>
+<td>&lt;tfoot&gt;</td>
+<td>Groups the footer content in a table</td>
+</tr>
+</tbody>
+</table>
+
+<blockquote>
+<p>Note:<br>
+<a href="https://www.w3schools.com/tags/tag_thead.asp" rel="nofollow" target="_blank">thead, tbody, tfoot</a> 상세내용</p>
+</blockquote>
+
+<h2 id="reference">Reference</h2>
+
+<p><a href="https://www.w3schools.com/html/html_tables.asp" rel="nofollow" target="_blank">https://www.w3schools.com/html/html_tables.asp</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Quickstart for Python/WSGI applications | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Quickstart for Python/WSGI applications" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Installing uWSGI with Python support" />
+<meta property="og:description" content="Installing uWSGI with Python support" />
+<link rel="canonical" href="http://localhost:4000/blog/docs/develop/server/WAS/uWSGI/1_quickstart_for_python.html" />
+<meta property="og:url" content="http://localhost:4000/blog/docs/develop/server/WAS/uWSGI/1_quickstart_for_python.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-06T09:31:12+09:00" />
+<script type="application/ld+json">
+{"description":"Installing uWSGI with Python support","headline":"Quickstart for Python/WSGI applications","dateModified":"2019-11-06T09:31:12+09:00","datePublished":"2019-11-06T09:31:12+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/docs/develop/server/WAS/uWSGI/1_quickstart_for_python.html"},"url":"http://localhost:4000/blog/docs/develop/server/WAS/uWSGI/1_quickstart_for_python.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Quickstart for Python/WSGI applications</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#installing-uwsgi-with-python-support">Installing uWSGI with Python support</a></li>
+<li class="toc-entry toc-h2"><a href="#the-first-wsgi-application">The first WSGI application</a></li>
+<li class="toc-entry toc-h2"><a href="#deploy-it-on-http-port-9090">Deploy it on HTTP port 9090</a></li>
+<li class="toc-entry toc-h2"><a href="#adding-concurrency-and-monitoring">Adding concurrency and monitoring</a></li>
+<li class="toc-entry toc-h2"><a href="#putting-behind-a-full-webserver">Putting behind a full webserver</a></li>
+<li class="toc-entry toc-h2"><a href="#automatically-starting-uwsgi-on-boot">Automatically starting uWSGI on boot</a></li>
+<li class="toc-entry toc-h2"><a href="#deploying-django">Deploying Django</a></li>
+<li class="toc-entry toc-h2"><a href="#deploying-flask">Deploying Flask</a></li>
+<li class="toc-entry toc-h2"><a href="#deploying-web2py">Deploying web2py</a></li>
+<li class="toc-entry toc-h2"><a href="#a-note-on-python-threads">A note on Python threads</a></li>
+<li class="toc-entry toc-h2"><a href="#virtualenvs">Virtualenvs</a></li>
+<li class="toc-entry toc-h2"><a href="#security-and-availability">Security and availability</a></li>
+<li class="toc-entry toc-h2"><a href="#offloading">Offloading</a></li>
+<li class="toc-entry toc-h2"><a href="#bonus-multiple-python-versions-for-the-same-uwsgi-binary">Bonus: multiple Python versions for the same uWSGI binary</a></li>
+<li class="toc-entry toc-h2"><a href="#and-now">And now...</a></li>
+<li class="toc-entry toc-h2"><a href="#reference">Reference</a></li>
+</ul><h2 id="installing-uwsgi-with-python-support">
+<a class="anchor" href="#installing-uwsgi-with-python-support" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installing uWSGI with Python support</h2>
+
+<h2 id="the-first-wsgi-application">
+<a class="anchor" href="#the-first-wsgi-application" aria-hidden="true"><span class="octicon octicon-link"></span></a>The first WSGI application</h2>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="c1"># foobar.py
+</span><span class="k">def</span> <span class="nf">application</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+    <span class="n">start_response</span><span class="p">(</span><span class="s">'200 OK'</span><span class="p">,</span> <span class="p">[(</span><span class="s">'Content-Type'</span><span class="p">,</span><span class="s">'text/html'</span><span class="p">)])</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">b</span><span class="s">"Hello World"</span><span class="p">]</span>
+</code></pre></div>
+<h2 id="deploy-it-on-http-port-9090">
+<a class="anchor" href="#deploy-it-on-http-port-9090" aria-hidden="true"><span class="octicon octicon-link"></span></a>Deploy it on HTTP port 9090</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>uwsgi <span class="nt">--http</span> :9090 <span class="nt">--wsgi-file</span> foobar.py
+</code></pre></div>
+<h2 id="adding-concurrency-and-monitoring">
+<a class="anchor" href="#adding-concurrency-and-monitoring" aria-hidden="true"><span class="octicon octicon-link"></span></a>Adding concurrency and monitoring</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>uwsgi <span class="nt">--http</span> :9090 <span class="nt">--wsgi-file</span> foobar.py <span class="nt">--master</span> <span class="nt">--processes</span> 4 <span class="nt">--threads</span> 2
+</code></pre></div><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>uwsgi <span class="nt">--http</span> :9090 <span class="nt">--wsgi-file</span> foobar.py <span class="nt">--master</span> <span class="nt">--processes</span> 4 <span class="nt">--threads</span> 2 <span class="nt">--stats</span> 127.0.0.1:9191
+</code></pre></div>
+<h2 id="putting-behind-a-full-webserver">
+<a class="anchor" href="#putting-behind-a-full-webserver" aria-hidden="true"><span class="octicon octicon-link"></span></a>Putting behind a full webserver</h2>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml">    <span class="s">location / {</span>
+        <span class="s">include uwsgi_params;</span>
+        <span class="s">uwsgi_pass 127.0.0.1:3031;</span>
+    <span class="s">}</span>
+</code></pre></div>
+<p>예:</p>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="s">http {</span>
+    <span class="s">include       mime.types;</span>
+    <span class="s">default_type  application/octet-stream;</span>
+    <span class="s">sendfile        on;</span>
+    <span class="s">keepalive_timeout  65;</span>
+
+    <span class="s">server {</span>
+        <span class="s">listen       80;</span>
+        <span class="s">server_name  localhost;</span>
+
+        <span class="s">location / {</span>
+            <span class="s">root   html;</span>
+            <span class="s">index  index.html index.htm;</span>
+            <span class="s"># 여기에 추가하기</span>
+            <span class="s"># include    uwsgi_params;</span>
+            <span class="s"># uwsgi_pass    127.0.0.1:3031;</span>
+        <span class="s">}</span>
+        <span class="s"># ...</span>
+    <span class="s">}</span>
+
+    <span class="s"># 또 다른 Port 로 지정하려면</span>
+    <span class="s">server {</span>
+        <span class="s">listen       127.0.0.1:9001;</span>
+        <span class="s">server_name  filectl;</span>  <span class="c1"># server_name 충돌 주의</span>
+
+        <span class="c1"># 여기에 추가하기</span>
+        <span class="s">location / {</span>
+            <span class="s">include    uwsgi_params;</span>
+            <span class="s">uwsgi_pass    127.0.0.1:3031;</span>  <span class="c1"># uwsgi 가 받을 port 번호</span>
+        <span class="err">}</span>
+    <span class="err">}</span>
+    <span class="c1"># ...</span>
+<span class="err">}</span>
+</code></pre></div><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>uwsgi <span class="nt">--socket</span> 127.0.0.1:3031 <span class="nt">--wsgi-file</span> foobar.py <span class="nt">--master</span> <span class="nt">--processes</span> 4 <span class="nt">--threads</span> 2 <span class="nt">--stats</span> 127.0.0.1:9191
+</code></pre></div>
+<h2 id="automatically-starting-uwsgi-on-boot">
+<a class="anchor" href="#automatically-starting-uwsgi-on-boot" aria-hidden="true"><span class="octicon octicon-link"></span></a>Automatically starting uWSGI on boot</h2>
+
+<h2 id="deploying-django">
+<a class="anchor" href="#deploying-django" aria-hidden="true"><span class="octicon octicon-link"></span></a>Deploying Django</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>uwsgi <span class="nt">--socket</span> 127.0.0.1:3031 <span class="nt">--chdir</span> /home/foobar/myproject/ <span class="nt">--wsgi-file</span> myproject/wsgi.py <span class="nt">--master</span> <span class="nt">--processes</span> 4 <span class="nt">--threads</span> 2 <span class="nt">--stats</span> 127.0.0.1:9191
+</code></pre></div><div class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="pi">[</span><span class="nv">uwsgi</span><span class="pi">]</span>
+<span class="s">socket = 127.0.0.1:3031</span>
+<span class="s">chdir = /home/foobar/myproject/</span>
+<span class="s">wsgi-file = myproject/wsgi.py</span>
+<span class="s">processes = </span><span class="m">4</span>
+<span class="s">threads = </span><span class="m">2</span>
+<span class="s">stats = 127.0.0.1:9191</span>
+</code></pre></div>
+<p>Just run it:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>uwsgi yourfile.ini
+</code></pre></div>
+<h2 id="deploying-flask">
+<a class="anchor" href="#deploying-flask" aria-hidden="true"><span class="octicon octicon-link"></span></a>Deploying Flask</h2>
+
+<p>pass</p>
+
+<h2 id="deploying-web2py">
+<a class="anchor" href="#deploying-web2py" aria-hidden="true"><span class="octicon octicon-link"></span></a>Deploying web2py</h2>
+
+<p>pass</p>
+
+<h2 id="a-note-on-python-threads">
+<a class="anchor" href="#a-note-on-python-threads" aria-hidden="true"><span class="octicon octicon-link"></span></a>A note on Python threads</h2>
+
+<h2 id="virtualenvs">
+<a class="anchor" href="#virtualenvs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Virtualenvs</h2>
+
+<h2 id="security-and-availability">
+<a class="anchor" href="#security-and-availability" aria-hidden="true"><span class="octicon octicon-link"></span></a>Security and availability</h2>
+
+<h2 id="offloading">
+<a class="anchor" href="#offloading" aria-hidden="true"><span class="octicon octicon-link"></span></a>Offloading</h2>
+
+<h2 id="bonus-multiple-python-versions-for-the-same-uwsgi-binary">
+<a class="anchor" href="#bonus-multiple-python-versions-for-the-same-uwsgi-binary" aria-hidden="true"><span class="octicon octicon-link"></span></a>Bonus: multiple Python versions for the same uWSGI binary</h2>
+
+<h2 id="and-now">
+<a class="anchor" href="#and-now" aria-hidden="true"><span class="octicon octicon-link"></span></a>And now...</h2>
+
+<h2 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+<p><a href="https://uwsgi-docs.readthedocs.io/en/latest/WSGIquickstart.html">https://uwsgi-docs.readthedocs.io/en/latest/WSGIquickstart.html</a></p>
+
+  </div>
+
+<div>
+  <h2 id="installing-uwsgi-with-python-support">Installing uWSGI with Python support</h2>
+
+<h2 id="the-first-wsgi-application">The first WSGI application</h2>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="c1"># foobar.py
+</span><span class="k">def</span> <span class="nf">application</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+    <span class="n">start_response</span><span class="p">(</span><span class="s">'200 OK'</span><span class="p">,</span> <span class="p">[(</span><span class="s">'Content-Type'</span><span class="p">,</span><span class="s">'text/html'</span><span class="p">)])</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">b</span><span class="s">"Hello World"</span><span class="p">]</span>
+</code></pre></div>
+<h2 id="deploy-it-on-http-port-9090">Deploy it on HTTP port 9090</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>uwsgi <span class="nt">--http</span> :9090 <span class="nt">--wsgi-file</span> foobar.py
+</code></pre></div>
+<h2 id="adding-concurrency-and-monitoring">Adding concurrency and monitoring</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>uwsgi <span class="nt">--http</span> :9090 <span class="nt">--wsgi-file</span> foobar.py <span class="nt">--master</span> <span class="nt">--processes</span> 4 <span class="nt">--threads</span> 2
+</code></pre></div><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>uwsgi <span class="nt">--http</span> :9090 <span class="nt">--wsgi-file</span> foobar.py <span class="nt">--master</span> <span class="nt">--processes</span> 4 <span class="nt">--threads</span> 2 <span class="nt">--stats</span> 127.0.0.1:9191
+</code></pre></div>
+<h2 id="putting-behind-a-full-webserver">Putting behind a full webserver</h2>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml">    <span class="s">location / {</span>
+        <span class="s">include uwsgi_params;</span>
+        <span class="s">uwsgi_pass 127.0.0.1:3031;</span>
+    <span class="s">}</span>
+</code></pre></div>
+<p>예:</p>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="s">http {</span>
+    <span class="s">include       mime.types;</span>
+    <span class="s">default_type  application/octet-stream;</span>
+    <span class="s">sendfile        on;</span>
+    <span class="s">keepalive_timeout  65;</span>
+
+    <span class="s">server {</span>
+        <span class="s">listen       80;</span>
+        <span class="s">server_name  localhost;</span>
+
+        <span class="s">location / {</span>
+            <span class="s">root   html;</span>
+            <span class="s">index  index.html index.htm;</span>
+            <span class="s"># 여기에 추가하기</span>
+            <span class="s"># include    uwsgi_params;</span>
+            <span class="s"># uwsgi_pass    127.0.0.1:3031;</span>
+        <span class="s">}</span>
+        <span class="s"># ...</span>
+    <span class="s">}</span>
+
+    <span class="s"># 또 다른 Port 로 지정하려면</span>
+    <span class="s">server {</span>
+        <span class="s">listen       127.0.0.1:9001;</span>
+        <span class="s">server_name  filectl;</span>  <span class="c1"># server_name 충돌 주의</span>
+
+        <span class="c1"># 여기에 추가하기</span>
+        <span class="s">location / {</span>
+            <span class="s">include    uwsgi_params;</span>
+            <span class="s">uwsgi_pass    127.0.0.1:3031;</span>  <span class="c1"># uwsgi 가 받을 port 번호</span>
+        <span class="err">}</span>
+    <span class="err">}</span>
+    <span class="c1"># ...</span>
+<span class="err">}</span>
+</code></pre></div><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>uwsgi <span class="nt">--socket</span> 127.0.0.1:3031 <span class="nt">--wsgi-file</span> foobar.py <span class="nt">--master</span> <span class="nt">--processes</span> 4 <span class="nt">--threads</span> 2 <span class="nt">--stats</span> 127.0.0.1:9191
+</code></pre></div>
+<h2 id="automatically-starting-uwsgi-on-boot">Automatically starting uWSGI on boot</h2>
+
+<h2 id="deploying-django">Deploying Django</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>uwsgi <span class="nt">--socket</span> 127.0.0.1:3031 <span class="nt">--chdir</span> /home/foobar/myproject/ <span class="nt">--wsgi-file</span> myproject/wsgi.py <span class="nt">--master</span> <span class="nt">--processes</span> 4 <span class="nt">--threads</span> 2 <span class="nt">--stats</span> 127.0.0.1:9191
+</code></pre></div><div class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="pi">[</span><span class="nv">uwsgi</span><span class="pi">]</span>
+<span class="s">socket = 127.0.0.1:3031</span>
+<span class="s">chdir = /home/foobar/myproject/</span>
+<span class="s">wsgi-file = myproject/wsgi.py</span>
+<span class="s">processes = </span><span class="m">4</span>
+<span class="s">threads = </span><span class="m">2</span>
+<span class="s">stats = 127.0.0.1:9191</span>
+</code></pre></div>
+<p>Just run it:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>uwsgi yourfile.ini
+</code></pre></div>
+<h2 id="deploying-flask">Deploying Flask</h2>
+
+<p>pass</p>
+
+<h2 id="deploying-web2py">Deploying web2py</h2>
+
+<p>pass</p>
+
+<h2 id="a-note-on-python-threads">A note on Python threads</h2>
+
+<h2 id="virtualenvs">Virtualenvs</h2>
+
+<h2 id="security-and-availability">Security and availability</h2>
+
+<h2 id="offloading">Offloading</h2>
+
+<h2 id="bonus-multiple-python-versions-for-the-same-uwsgi-binary">Bonus: multiple Python versions for the same uWSGI binary</h2>
+
+<h2 id="and-now">And now...</h2>
+
+<h2 id="reference">Reference</h2>
+
+<p><a href="https://uwsgi-docs.readthedocs.io/en/latest/WSGIquickstart.html" rel="nofollow" target="_blank">https://uwsgi-docs.readthedocs.io/en/latest/WSGIquickstart.html</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

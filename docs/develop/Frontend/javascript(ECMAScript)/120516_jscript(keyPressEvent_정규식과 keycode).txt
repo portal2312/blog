@@ -1,0 +1,60 @@
+<정규식을 이용한 keypress Event처리>
+
+        function keyPressEvent(event, obj) {
+            var evt = event || window.event;
+            var mask_Re = null;
+
+            if(evt.keyCode) { code = evt.keyCode; }
+            else if(evt.which) { code = evt.which; }
+
+            if (type == 'ip') { mask_Re = /[0-9\.]/; }
+            else { mask_Re = /[a-fA-F0-9\:]/; }
+
+            var input = String.fromCharCode(code);
+
+            if(input.match(mask_Re) == null) {
+                if (code == 8 ) { return true; }
+                else if (code == 21) { return true; }
+                else {
+                    try { window.event.returnValue = false; }
+                    catch(err) { evt.preventDefault(); }
+                }
+            }
+            else { return true; }
+        };
+
+-------------------------------------------------------------
+<keycode를 이용한 keypress Event처리>
+
+        function keyPressEvent(event, obj) {
+            var evt = event || window.event;
+            var chk_ver = '';
+
+            if(evt.keyCode) {
+                code = evt.keyCode;
+                chk_ver = 'ie';
+            }
+            else if(evt.which) {
+                code = evt.which;
+                chk_ver = 'else';
+            }
+
+            if (type == 'ip') {
+                if (code == 8 ) { return true; }
+                else if (code > 45 && code < 58) { return true; }
+                else if (code == 21 ) { return false; }
+                else {
+                    if(chk_ver == 'ie') { window.event.returnValue = false; }
+                    else if(chk_ver == 'else') { evt.preventDefault(); }
+                }
+            }
+            else {
+                if (code == 8 ) { return true; }
+                else if ( (code > 46 && code < 59) || (code > 96 && code < 103) || (code > 64 && code < 71) ) { return true; }
+                else if (code == 21 ) { return false; }
+                else {
+                    if(chk_ver == 'ie') { window.event.returnValue = false; }
+                    else if(chk_ver == 'else') { evt.preventDefault(); }
+                }
+            }
+        };

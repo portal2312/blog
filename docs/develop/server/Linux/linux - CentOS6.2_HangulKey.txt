@@ -1,0 +1,26 @@
+1. Ibus 설치 (CentOS 6.0 이상) :
+
+#yum install ibus ibus-hangul ibus-anthy
+
+
+
+
+2. 한글키 등록 :
+
+
+setkeycodes 72 122 # 한영키
+
+setkeycodes 71 123 # 한자키
+
+
+
+
+/etc/rc.local 파일 맨 밑에 두줄 추가
+
+
+
+
+3. System -> Preference-> Input method 에서 한글 추가, 한글키 등록
+
+
+

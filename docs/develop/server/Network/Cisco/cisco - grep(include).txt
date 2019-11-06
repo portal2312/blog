@@ -1,0 +1,4 @@
+enable
+Password:
+
+show config | include <str>

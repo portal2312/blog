@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>HTML Styles | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="HTML Styles" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Welcome to my blog." />
+<meta property="og:description" content="Welcome to my blog." />
+<link rel="canonical" href="http://localhost:4000/blog/docs/develop/Frontend/HTML/HTML5/doc/tutorial/09_styles.html" />
+<meta property="og:url" content="http://localhost:4000/blog/docs/develop/Frontend/HTML/HTML5/doc/tutorial/09_styles.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-06T09:31:12+09:00" />
+<script type="application/ld+json">
+{"description":"Welcome to my blog.","headline":"HTML Styles","dateModified":"2019-11-06T09:31:12+09:00","datePublished":"2019-11-06T09:31:12+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/docs/develop/Frontend/HTML/HTML5/doc/tutorial/09_styles.html"},"url":"http://localhost:4000/blog/docs/develop/Frontend/HTML/HTML5/doc/tutorial/09_styles.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/blog/feed.xml" title="Portal2312's blog" /><script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>HTML Styles</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#the-html-style-attribute">The HTML Style Attribute</a></li>
+<li class="toc-entry toc-h2"><a href="#html-background-color">HTML Background Color</a></li>
+<li class="toc-entry toc-h2"><a href="#html-text-color">HTML Text Color</a></li>
+<li class="toc-entry toc-h2"><a href="#html-fonts">HTML Fonts</a></li>
+<li class="toc-entry toc-h2"><a href="#html-text-size">HTML Text Size</a></li>
+<li class="toc-entry toc-h2"><a href="#text-alignment">Text Alignment</a></li>
+<li class="toc-entry toc-h2"><a href="#chapter-summary">Chapter Summary</a></li>
+</ul><hr>
+
+<h2 id="the-html-style-attribute">
+<a class="anchor" href="#the-html-style-attribute" aria-hidden="true"><span class="octicon octicon-link"></span></a>The HTML Style Attribute</h2>
+
+<p>HTML element 의 style 을 설정하기.</p>
+
+<p>syntax:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;tabname</span> <span class="na">style=</span><span class="s">"property:value;"</span><span class="nt">&gt;</span>
+</code></pre></div>
+<p><code>property</code> 는 CSS property 이다. <code>value</code> 는 CSS 값 이다.</p>
+
+<hr>
+
+<h2 id="html-background-color">
+<a class="anchor" href="#html-background-color" aria-hidden="true"><span class="octicon octicon-link"></span></a>HTML Background Color</h2>
+
+<p>배경 색상 정의하기.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;body</span> <span class="na">style=</span><span class="s">"background-color:powderblue;"</span><span class="nt">&gt;</span>
+
+<span class="nt">&lt;h1&gt;</span>This is a heading<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;p&gt;</span>This is a paragraph.<span class="nt">&lt;/p&gt;</span>
+
+<span class="nt">&lt;/body&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="html-text-color">
+<a class="anchor" href="#html-text-color" aria-hidden="true"><span class="octicon octicon-link"></span></a>HTML Text Color</h2>
+
+<p>글자 색상 정의하기.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"color:blue;"</span><span class="nt">&gt;</span>This is a heading<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;p</span> <span class="na">style=</span><span class="s">"color:red;"</span><span class="nt">&gt;</span>This is a paragraph.<span class="nt">&lt;/p&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="html-fonts">
+<a class="anchor" href="#html-fonts" aria-hidden="true"><span class="octicon octicon-link"></span></a>HTML Fonts</h2>
+
+<p>글자 모양을 정의하기.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"font-family:verdana;"</span><span class="nt">&gt;</span>This is a heading<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;p</span> <span class="na">style=</span><span class="s">"font-family:courier;"</span><span class="nt">&gt;</span>This is a paragraph.<span class="nt">&lt;/p&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="html-text-size">
+<a class="anchor" href="#html-text-size" aria-hidden="true"><span class="octicon octicon-link"></span></a>HTML Text Size</h2>
+
+<p>글자 크기 정의하기.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"font-size:300%;"</span><span class="nt">&gt;</span>This is a heading<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;p</span> <span class="na">style=</span><span class="s">"font-size:160%;"</span><span class="nt">&gt;</span>This is a paragraph.<span class="nt">&lt;/p&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="text-alignment">
+<a class="anchor" href="#text-alignment" aria-hidden="true"><span class="octicon octicon-link"></span></a>Text Alignment</h2>
+
+<p>글자 수평 정렬하기.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"text-align:center;"</span><span class="nt">&gt;&lt;/h1&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="chapter-summary">
+<a class="anchor" href="#chapter-summary" aria-hidden="true"><span class="octicon octicon-link"></span></a>Chapter Summary</h2>
+
+<ul>
+<li>Use the <strong>style</strong> attribute for styling HTML elements</li>
+<li>Use <strong>background-color</strong> for background color</li>
+<li>Use <strong>color</strong> for text colors</li>
+<li>Use <strong>font-family</strong> for text fonts</li>
+<li>Use <strong>font-size</strong> for text sizes</li>
+<li>Use <strong>text-align</strong> for text alignment</li>
+</ul>
+
+  </div>
+
+<div>
+  <hr>
+
+<h2 id="the-html-style-attribute">The HTML Style Attribute</h2>
+
+<p>HTML element 의 style 을 설정하기.</p>
+
+<p>syntax:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;tabname</span> <span class="na">style=</span><span class="s">"property:value;"</span><span class="nt">&gt;</span>
+</code></pre></div>
+<p><code>property</code> 는 CSS property 이다. <code>value</code> 는 CSS 값 이다.</p>
+
+<hr>
+
+<h2 id="html-background-color">HTML Background Color</h2>
+
+<p>배경 색상 정의하기.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;body</span> <span class="na">style=</span><span class="s">"background-color:powderblue;"</span><span class="nt">&gt;</span>
+
+<span class="nt">&lt;h1&gt;</span>This is a heading<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;p&gt;</span>This is a paragraph.<span class="nt">&lt;/p&gt;</span>
+
+<span class="nt">&lt;/body&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="html-text-color">HTML Text Color</h2>
+
+<p>글자 색상 정의하기.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"color:blue;"</span><span class="nt">&gt;</span>This is a heading<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;p</span> <span class="na">style=</span><span class="s">"color:red;"</span><span class="nt">&gt;</span>This is a paragraph.<span class="nt">&lt;/p&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="html-fonts">HTML Fonts</h2>
+
+<p>글자 모양을 정의하기.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"font-family:verdana;"</span><span class="nt">&gt;</span>This is a heading<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;p</span> <span class="na">style=</span><span class="s">"font-family:courier;"</span><span class="nt">&gt;</span>This is a paragraph.<span class="nt">&lt;/p&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="html-text-size">HTML Text Size</h2>
+
+<p>글자 크기 정의하기.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"font-size:300%;"</span><span class="nt">&gt;</span>This is a heading<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;p</span> <span class="na">style=</span><span class="s">"font-size:160%;"</span><span class="nt">&gt;</span>This is a paragraph.<span class="nt">&lt;/p&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="text-alignment">Text Alignment</h2>
+
+<p>글자 수평 정렬하기.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"text-align:center;"</span><span class="nt">&gt;&lt;/h1&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="chapter-summary">Chapter Summary</h2>
+
+<ul>
+<li>Use the <strong>style</strong> attribute for styling HTML elements</li>
+<li>Use <strong>background-color</strong> for background color</li>
+<li>Use <strong>color</strong> for text colors</li>
+<li>Use <strong>font-family</strong> for text fonts</li>
+<li>Use <strong>font-size</strong> for text sizes</li>
+<li>Use <strong>text-align</strong> for text alignment</li>
+</ul>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

@@ -1,0 +1,3 @@
+you might need to increase max_locks_per_transaction.Request Method
+
+http://www.postgresql.jp/document/9.1/html/runtime-config-locks.html

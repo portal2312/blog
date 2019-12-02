@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>특성 교차 - 비선형성 인코딩 | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="특성 교차 - 비선형성 인코딩" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="비선형 문제를 해결하려면 특성 교차를 만드세요. 특성 교차는 두 개 이상의 입력 특성을 곱하여 특성 공간에서 비선형성을 인코딩하는 합성 특성입니다. 교차라는 용어는 교차 곱에서 따온 것입니다. x1 과 x2 를 교차하여 x3 이라는 특성 교차를 만들어 보겠습니다." />
+<meta property="og:description" content="비선형 문제를 해결하려면 특성 교차를 만드세요. 특성 교차는 두 개 이상의 입력 특성을 곱하여 특성 공간에서 비선형성을 인코딩하는 합성 특성입니다. 교차라는 용어는 교차 곱에서 따온 것입니다. x1 과 x2 를 교차하여 x3 이라는 특성 교차를 만들어 보겠습니다." />
+<link rel="canonical" href="/blog/docs/develop/A-M/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML%20%EA%B0%9C%EB%85%90/010.%20Feature%20Crosses%20(%ED%8A%B9%EC%84%B1%20%EA%B5%90%EC%B0%A8,%2070%20min)/002.%20%EB%B9%84%EC%84%A0%ED%98%84%EC%84%B1%20%EC%9D%B8%EC%BD%94%EB%94%A9.html" />
+<meta property="og:url" content="/blog/docs/develop/A-M/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML%20%EA%B0%9C%EB%85%90/010.%20Feature%20Crosses%20(%ED%8A%B9%EC%84%B1%20%EA%B5%90%EC%B0%A8,%2070%20min)/002.%20%EB%B9%84%EC%84%A0%ED%98%84%EC%84%B1%20%EC%9D%B8%EC%BD%94%EB%94%A9.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-02T16:38:51+09:00" />
+<script type="application/ld+json">
+{"description":"비선형 문제를 해결하려면 특성 교차를 만드세요. 특성 교차는 두 개 이상의 입력 특성을 곱하여 특성 공간에서 비선형성을 인코딩하는 합성 특성입니다. 교차라는 용어는 교차 곱에서 따온 것입니다. x1 과 x2 를 교차하여 x3 이라는 특성 교차를 만들어 보겠습니다.","headline":"특성 교차 - 비선형성 인코딩","dateModified":"2019-12-02T16:38:51+09:00","datePublished":"2019-12-02T16:38:51+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/docs/develop/A-M/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML%20%EA%B0%9C%EB%85%90/010.%20Feature%20Crosses%20(%ED%8A%B9%EC%84%B1%20%EA%B5%90%EC%B0%A8,%2070%20min)/002.%20%EB%B9%84%EC%84%A0%ED%98%84%EC%84%B1%20%EC%9D%B8%EC%BD%94%EB%94%A9.html"},"url":"/blog/docs/develop/A-M/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML%20%EA%B0%9C%EB%85%90/010.%20Feature%20Crosses%20(%ED%8A%B9%EC%84%B1%20%EA%B5%90%EC%B0%A8,%2070%20min)/002.%20%EB%B9%84%EC%84%A0%ED%98%84%EC%84%B1%20%EC%9D%B8%EC%BD%94%EB%94%A9.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/blog/feed.xml" title="Portal2312's blog" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113063601-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+<script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>특성 교차 - 비선형성 인코딩</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h3"><a href="#part-8ac15ff0d422d9a5">특성 교차의 종류</a></li>
+<li class="toc-entry toc-h2"><a href="#reference">Reference</a></li>
+</ul><p>비선형 문제를 해결하려면 특성 교차를 만드세요.
+특성 교차는 두 개 이상의 입력 특성을 곱하여 특성 공간에서 비선형성을 인코딩하는 합성 특성입니다.
+교차라는 용어는 교차 곱에서 따온 것입니다.
+x1 과 x2 를 교차하여 x3 이라는 특성 교차를 만들어 보겠습니다.</p>
+
+<p>x3 = x1 * x2</p>
+
+<p>새로 만든  특성 교차는 다른 특성과 마찬가지로 취급합니다. 선형 수식은 다음과 같습니다.</p>
+
+<p>y = b + w1x1 + w2x2 + w3x3</p>
+
+<p>선형 알고리즘에서 w1 및 w2 와 마찬가지로 w3 의 가중치를 학습 가능.<br>
+즉, 이 비선형 정보를 인코딩해도 w3 의 값을 결정하기 위해 선형 모델의 학습 방식을 변경하지 않아도 됨.</p>
+
+<h3 id="part-8ac15ff0d422d9a5">
+<a class="anchor" href="#part-8ac15ff0d422d9a5" aria-hidden="true"><span class="octicon octicon-link"></span></a>특성 교차의 종류</h3>
+
+<p>여러 종류의 특성 교차를 만들 수 있다. 예:</p>
+
+<ul>
+<li>[A X B]: 두 특성의 값을 곱하여 구성되는 특성 교차</li>
+<li>[A x B x C x D x E]: 다섯 개의 특성 값을 곱하여 구성되는 특성 교차</li>
+<li>[A x A]: 단일 특성을 제곱하여 구성되는 특성 교차</li>
+</ul>
+
+<p><a href="https://developers.google.com/machine-learning/crash-course/reducing-loss/stochastic-gradient-descent?hl=ko">확률적 경사하강법</a>을 활용하여 선형 모델을 효율적으로 학습 가능.<br>
+결과적으로 예전부터 조정된 선형 모델을 특성 교차로 보완하는 방법으로 모델을 대규모 데이터 세트에 효율적으로 학습시켜 왔습니다.</p>
+
+<h2 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+<p><a href="https://developers.google.com/machine-learning/crash-course/feature-crosses/encoding-nonlinearity?hl=ko">https://developers.google.com/machine-learning/crash-course/feature-crosses/encoding-nonlinearity?hl=ko</a></p>
+
+  </div>
+
+<div>
+  <p>비선형 문제를 해결하려면 특성 교차를 만드세요.
+특성 교차는 두 개 이상의 입력 특성을 곱하여 특성 공간에서 비선형성을 인코딩하는 합성 특성입니다.
+교차라는 용어는 교차 곱에서 따온 것입니다.
+x1 과 x2 를 교차하여 x3 이라는 특성 교차를 만들어 보겠습니다.</p>
+
+<p>x3 = x1 * x2</p>
+
+<p>새로 만든  특성 교차는 다른 특성과 마찬가지로 취급합니다. 선형 수식은 다음과 같습니다.</p>
+
+<p>y = b + w1x1 + w2x2 + w3x3</p>
+
+<p>선형 알고리즘에서 w1 및 w2 와 마찬가지로 w3 의 가중치를 학습 가능.<br>
+즉, 이 비선형 정보를 인코딩해도 w3 의 값을 결정하기 위해 선형 모델의 학습 방식을 변경하지 않아도 됨.</p>
+
+<h3 id="part-8ac15ff0d422d9a5">특성 교차의 종류</h3>
+
+<p>여러 종류의 특성 교차를 만들 수 있다. 예:</p>
+
+<ul>
+<li>[A X B]: 두 특성의 값을 곱하여 구성되는 특성 교차</li>
+<li>[A x B x C x D x E]: 다섯 개의 특성 값을 곱하여 구성되는 특성 교차</li>
+<li>[A x A]: 단일 특성을 제곱하여 구성되는 특성 교차</li>
+</ul>
+
+<p><a href="https://developers.google.com/machine-learning/crash-course/reducing-loss/stochastic-gradient-descent?hl=ko" rel="nofollow" target="_blank">확률적 경사하강법</a>을 활용하여 선형 모델을 효율적으로 학습 가능.<br>
+결과적으로 예전부터 조정된 선형 모델을 특성 교차로 보완하는 방법으로 모델을 대규모 데이터 세트에 효율적으로 학습시켜 왔습니다.</p>
+
+<h2 id="reference">Reference</h2>
+
+<p><a href="https://developers.google.com/machine-learning/crash-course/feature-crosses/encoding-nonlinearity?hl=ko" rel="nofollow" target="_blank">https://developers.google.com/machine-learning/crash-course/feature-crosses/encoding-nonlinearity?hl=ko</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>javascript - static | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="javascript - static" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="static 키워드는 클래스의 정적 메서드를 정의합니다." />
+<meta property="og:description" content="static 키워드는 클래스의 정적 메서드를 정의합니다." />
+<link rel="canonical" href="/blog/docs/develop/A-M/Javascript/reference/Classes/static.html" />
+<meta property="og:url" content="/blog/docs/develop/A-M/Javascript/reference/Classes/static.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-02T16:38:51+09:00" />
+<script type="application/ld+json">
+{"description":"static 키워드는 클래스의 정적 메서드를 정의합니다.","headline":"javascript - static","dateModified":"2019-12-02T16:38:51+09:00","datePublished":"2019-12-02T16:38:51+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/docs/develop/A-M/Javascript/reference/Classes/static.html"},"url":"/blog/docs/develop/A-M/Javascript/reference/Classes/static.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/blog/feed.xml" title="Portal2312's blog" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113063601-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+<script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>javascript - static</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#syntax">Syntax</a></li>
+<li class="toc-entry toc-h2"><a href="#description">Description</a></li>
+<li class="toc-entry toc-h2"><a href="#part-2d29c2e5d3d1a6dd">정적 메서드의 호출</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#part-a169062dde2a6d5e">다른 정적 메서드에서의 호출</a></li>
+<li class="toc-entry toc-h3"><a href="#part-13d67d1153bf04fe">클래스 생성자 및 다른 메서드에서의 호출</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#examples">Examples</a></li>
+<li class="toc-entry toc-h2"><a href="#reference">Reference</a></li>
+</ul><p>static 키워드는 클래스의 정적 메서드를 정의합니다.</p>
+
+<h2 id="syntax">
+<a class="anchor" href="#syntax" aria-hidden="true"><span class="octicon octicon-link"></span></a>Syntax</h2>
+
+<blockquote>
+<p>static methodName() { ... }</p>
+</blockquote>
+
+<hr>
+
+<h2 id="description">
+<a class="anchor" href="#description" aria-hidden="true"><span class="octicon octicon-link"></span></a>Description</h2>
+
+<p>정적 메서드는 클래스의 인스턴스 없이 호출이 가능하며 클래스가 인스턴스화되면 호출할 수 없다.</p>
+
+<p><strong>정적 메서드는 종종 어플리케이션의 유틸리티 함수를 만드는데 사용된다.</strong></p>
+
+<hr>
+
+<h2 id="part-2d29c2e5d3d1a6dd">
+<a class="anchor" href="#part-2d29c2e5d3d1a6dd" aria-hidden="true"><span class="octicon octicon-link"></span></a>정적 메서드의 호출</h2>
+
+<h3 id="part-a169062dde2a6d5e">
+<a class="anchor" href="#part-a169062dde2a6d5e" aria-hidden="true"><span class="octicon octicon-link"></span></a>다른 정적 메서드에서의 호출</h3>
+
+<p>동일한 클래스 내의 다른 정적 메서드 내에서 정적 메서드를 호출하는 경우 키워드 <code>this</code> 를 사용할 수 있다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">class</span> <span class="nx">StaticMethodCall</span> <span class="p">{</span>
+  <span class="kd">static</span> <span class="nx">staticMethod</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="dl">'</span><span class="s1">Static method has been called</span><span class="dl">'</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="kd">static</span> <span class="nx">anotherStaticMethod</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">staticMethod</span><span class="p">()</span> <span class="o">+</span> <span class="dl">'</span><span class="s1"> from another static method</span><span class="dl">'</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="nx">StaticMethodCall</span><span class="p">.</span><span class="nx">staticMethod</span><span class="p">();</span>
+<span class="c1">// 'Static method has been called'</span>
+
+<span class="nx">StaticMethodCall</span><span class="p">.</span><span class="nx">anotherStaticMethod</span><span class="p">();</span>
+<span class="c1">// 'Static method has been called from another static method'</span>
+</code></pre></div>
+<h3 id="part-13d67d1153bf04fe">
+<a class="anchor" href="#part-13d67d1153bf04fe" aria-hidden="true"><span class="octicon octicon-link"></span></a>클래스 생성자 및 다른 메서드에서의 호출</h3>
+
+<p>정적 메서드가 비정적 메서드에서 키워드 <code>this</code> 를 써서는 직접적인 접근을 할 수 없다.</p>
+
+<p>바른 호출 방법은  클래스 명칭을 쓰거나, 즉 <code>CLASSNAME.STATIC_METHOD_NAME()</code> 을 이용하거나 혹은 그 메서드를 생성자의 한 속성으로 부르는 것으로,</p>
+
+<p>즉 <code>constructor</code> : <code>this.constructor.STATIC_METHOD_NAME()</code> 를 이용한다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">class</span> <span class="nx">StaticMethodCall</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">StaticMethodCall</span><span class="p">.</span><span class="nx">staticMethod</span><span class="p">());</span>
+    <span class="c1">// 'static method has been called.'</span>
+
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="kd">constructor</span><span class="p">.</span><span class="nx">staticMethod</span><span class="p">());</span>
+    <span class="c1">// 'static method has been called.'</span>
+  <span class="p">}</span>
+
+  <span class="kd">static</span> <span class="nx">staticMethod</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="dl">'</span><span class="s1">static method has been called.</span><span class="dl">'</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr>
+
+<h2 id="examples">
+<a class="anchor" href="#examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples</h2>
+
+<p>아래 예제는 여러가지 내용을 설명합니다.</p>
+
+<ol>
+<li>어떻게 정적 메서드가 클래스에서 구현되는지</li>
+<li>클래스의 정적 맴버가 서브클래스화 되는 것을 보여줍니다.</li>
+<li>정적 메서드가 어떤 경우에 호출 될 수 있는지와 없는지를 설명합니다.</li>
+</ol>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">class</span> <span class="nx">Triple</span> <span class="p">{</span>
+  <span class="kd">static</span> <span class="nx">triple</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">n</span> <span class="o">=</span> <span class="nx">n</span> <span class="o">||</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">//비트연산이 아니어야 합니다.</span>
+    <span class="k">return</span> <span class="nx">n</span> <span class="o">*</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nx">BiggerTriple</span> <span class="kd">extends</span> <span class="nx">Triple</span> <span class="p">{</span>
+  <span class="kd">static</span> <span class="nx">triple</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">super</span><span class="p">.</span><span class="nx">triple</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="o">*</span> <span class="k">super</span><span class="p">.</span><span class="nx">triple</span><span class="p">(</span><span class="nx">n</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Triple</span><span class="p">.</span><span class="nx">triple</span><span class="p">());</span>        <span class="c1">// 3</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Triple</span><span class="p">.</span><span class="nx">triple</span><span class="p">(</span><span class="mi">6</span><span class="p">));</span>       <span class="c1">// 18</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">BiggerTriple</span><span class="p">.</span><span class="nx">triple</span><span class="p">(</span><span class="mi">3</span><span class="p">));</span> <span class="c1">// 81</span>
+<span class="kd">var</span> <span class="nx">tp</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Triple</span><span class="p">();</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">BiggerTriple</span><span class="p">.</span><span class="nx">triple</span><span class="p">(</span><span class="mi">3</span><span class="p">));</span> <span class="c1">// 81 (부모의 인스턴스에 영향을 받지 않습니다.)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">tp</span><span class="p">.</span><span class="nx">triple</span><span class="p">());</span>            <span class="c1">// 'tp.triple은 함수가 아닙니다.'.</span>
+
+<span class="nx">tp</span><span class="p">.</span><span class="kd">constructor</span><span class="p">.</span><span class="nx">triple</span><span class="p">();</span>  <span class="c1">// 3</span>
+</code></pre></div>
+<hr>
+
+<h2 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+<p><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Classes/static">https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Classes/static</a></p>
+
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/class">class expression</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/class">class declaration</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes">Classes</a></li>
+</ul>
+
+  </div>
+
+<div>
+  <p>static 키워드는 클래스의 정적 메서드를 정의합니다.</p>
+
+<h2 id="syntax">Syntax</h2>
+
+<blockquote>
+<p>static methodName() { ... }</p>
+</blockquote>
+
+<hr>
+
+<h2 id="description">Description</h2>
+
+<p>정적 메서드는 클래스의 인스턴스 없이 호출이 가능하며 클래스가 인스턴스화되면 호출할 수 없다.</p>
+
+<p><strong>정적 메서드는 종종 어플리케이션의 유틸리티 함수를 만드는데 사용된다.</strong></p>
+
+<hr>
+
+<h2 id="part-2d29c2e5d3d1a6dd">정적 메서드의 호출</h2>
+
+<h3 id="part-a169062dde2a6d5e">다른 정적 메서드에서의 호출</h3>
+
+<p>동일한 클래스 내의 다른 정적 메서드 내에서 정적 메서드를 호출하는 경우 키워드 <code>this</code> 를 사용할 수 있다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">class</span> <span class="nx">StaticMethodCall</span> <span class="p">{</span>
+  <span class="kd">static</span> <span class="nx">staticMethod</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="dl">'</span><span class="s1">Static method has been called</span><span class="dl">'</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="kd">static</span> <span class="nx">anotherStaticMethod</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">staticMethod</span><span class="p">()</span> <span class="o">+</span> <span class="dl">'</span><span class="s1"> from another static method</span><span class="dl">'</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="nx">StaticMethodCall</span><span class="p">.</span><span class="nx">staticMethod</span><span class="p">();</span>
+<span class="c1">// 'Static method has been called'</span>
+
+<span class="nx">StaticMethodCall</span><span class="p">.</span><span class="nx">anotherStaticMethod</span><span class="p">();</span>
+<span class="c1">// 'Static method has been called from another static method'</span>
+</code></pre></div>
+<h3 id="part-13d67d1153bf04fe">클래스 생성자 및 다른 메서드에서의 호출</h3>
+
+<p>정적 메서드가 비정적 메서드에서 키워드 <code>this</code> 를 써서는 직접적인 접근을 할 수 없다.</p>
+
+<p>바른 호출 방법은  클래스 명칭을 쓰거나, 즉 <code>CLASSNAME.STATIC_METHOD_NAME()</code> 을 이용하거나 혹은 그 메서드를 생성자의 한 속성으로 부르는 것으로,</p>
+
+<p>즉 <code>constructor</code> : <code>this.constructor.STATIC_METHOD_NAME()</code> 를 이용한다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">class</span> <span class="nx">StaticMethodCall</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">StaticMethodCall</span><span class="p">.</span><span class="nx">staticMethod</span><span class="p">());</span>
+    <span class="c1">// 'static method has been called.'</span>
+
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="kd">constructor</span><span class="p">.</span><span class="nx">staticMethod</span><span class="p">());</span>
+    <span class="c1">// 'static method has been called.'</span>
+  <span class="p">}</span>
+
+  <span class="kd">static</span> <span class="nx">staticMethod</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="dl">'</span><span class="s1">static method has been called.</span><span class="dl">'</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr>
+
+<h2 id="examples">Examples</h2>
+
+<p>아래 예제는 여러가지 내용을 설명합니다.</p>
+
+<ol>
+<li>어떻게 정적 메서드가 클래스에서 구현되는지</li>
+<li>클래스의 정적 맴버가 서브클래스화 되는 것을 보여줍니다.</li>
+<li>정적 메서드가 어떤 경우에 호출 될 수 있는지와 없는지를 설명합니다.</li>
+</ol>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">class</span> <span class="nx">Triple</span> <span class="p">{</span>
+  <span class="kd">static</span> <span class="nx">triple</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">n</span> <span class="o">=</span> <span class="nx">n</span> <span class="o">||</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">//비트연산이 아니어야 합니다.</span>
+    <span class="k">return</span> <span class="nx">n</span> <span class="o">*</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nx">BiggerTriple</span> <span class="kd">extends</span> <span class="nx">Triple</span> <span class="p">{</span>
+  <span class="kd">static</span> <span class="nx">triple</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">super</span><span class="p">.</span><span class="nx">triple</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="o">*</span> <span class="k">super</span><span class="p">.</span><span class="nx">triple</span><span class="p">(</span><span class="nx">n</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Triple</span><span class="p">.</span><span class="nx">triple</span><span class="p">());</span>        <span class="c1">// 3</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Triple</span><span class="p">.</span><span class="nx">triple</span><span class="p">(</span><span class="mi">6</span><span class="p">));</span>       <span class="c1">// 18</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">BiggerTriple</span><span class="p">.</span><span class="nx">triple</span><span class="p">(</span><span class="mi">3</span><span class="p">));</span> <span class="c1">// 81</span>
+<span class="kd">var</span> <span class="nx">tp</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Triple</span><span class="p">();</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">BiggerTriple</span><span class="p">.</span><span class="nx">triple</span><span class="p">(</span><span class="mi">3</span><span class="p">));</span> <span class="c1">// 81 (부모의 인스턴스에 영향을 받지 않습니다.)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">tp</span><span class="p">.</span><span class="nx">triple</span><span class="p">());</span>            <span class="c1">// 'tp.triple은 함수가 아닙니다.'.</span>
+
+<span class="nx">tp</span><span class="p">.</span><span class="kd">constructor</span><span class="p">.</span><span class="nx">triple</span><span class="p">();</span>  <span class="c1">// 3</span>
+</code></pre></div>
+<hr>
+
+<h2 id="reference">Reference</h2>
+
+<p><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Classes/static" rel="nofollow" target="_blank">https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Classes/static</a></p>
+
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/class" rel="nofollow" target="_blank">class expression</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/class" rel="nofollow" target="_blank">class declaration</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes" rel="nofollow" target="_blank">Classes</a></li>
+</ul>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

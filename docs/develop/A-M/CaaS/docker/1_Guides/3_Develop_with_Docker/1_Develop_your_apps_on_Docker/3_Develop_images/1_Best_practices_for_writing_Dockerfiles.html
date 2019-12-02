@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Best practices for writing Dockerfiles | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Best practices for writing Dockerfiles" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Docker 는 지정된 이미지를 작성하는 데 필요한 모든 명령을 순서대로 포함하는 텍스트 파일 인 Dockerfile 에서 지침을 읽어 자동으로 이미지를 작성할 수 있습니다. Dockerfiles 는 특정 형식을 따르고 특정 지침 집합을 사용합니다. Dockerfile Reference 페이지에서 기본 사항을 배울 수 있습니다. Dockerfiles 를 처음 사용하는 경우 시작해야합니다." />
+<meta property="og:description" content="Docker 는 지정된 이미지를 작성하는 데 필요한 모든 명령을 순서대로 포함하는 텍스트 파일 인 Dockerfile 에서 지침을 읽어 자동으로 이미지를 작성할 수 있습니다. Dockerfiles 는 특정 형식을 따르고 특정 지침 집합을 사용합니다. Dockerfile Reference 페이지에서 기본 사항을 배울 수 있습니다. Dockerfiles 를 처음 사용하는 경우 시작해야합니다." />
+<link rel="canonical" href="/blog/docs/develop/A-M/CaaS/docker/1_Guides/3_Develop_with_Docker/1_Develop_your_apps_on_Docker/3_Develop_images/1_Best_practices_for_writing_Dockerfiles.html" />
+<meta property="og:url" content="/blog/docs/develop/A-M/CaaS/docker/1_Guides/3_Develop_with_Docker/1_Develop_your_apps_on_Docker/3_Develop_images/1_Best_practices_for_writing_Dockerfiles.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-02T16:38:51+09:00" />
+<script type="application/ld+json">
+{"description":"Docker 는 지정된 이미지를 작성하는 데 필요한 모든 명령을 순서대로 포함하는 텍스트 파일 인 Dockerfile 에서 지침을 읽어 자동으로 이미지를 작성할 수 있습니다. Dockerfiles 는 특정 형식을 따르고 특정 지침 집합을 사용합니다. Dockerfile Reference 페이지에서 기본 사항을 배울 수 있습니다. Dockerfiles 를 처음 사용하는 경우 시작해야합니다.","headline":"Best practices for writing Dockerfiles","dateModified":"2019-12-02T16:38:51+09:00","datePublished":"2019-12-02T16:38:51+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/docs/develop/A-M/CaaS/docker/1_Guides/3_Develop_with_Docker/1_Develop_your_apps_on_Docker/3_Develop_images/1_Best_practices_for_writing_Dockerfiles.html"},"url":"/blog/docs/develop/A-M/CaaS/docker/1_Guides/3_Develop_with_Docker/1_Develop_your_apps_on_Docker/3_Develop_images/1_Best_practices_for_writing_Dockerfiles.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/blog/feed.xml" title="Portal2312's blog" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113063601-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+<script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Best practices for writing Dockerfiles</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#general-guidelines-and-recommendations">General guidelines and recommendations</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#containers-should-be-ephemeral">Containers should be ephemeral</a></li>
+<li class="toc-entry toc-h3"><a href="#use-a-dockerignore-file">Use a .dockerignore file</a></li>
+<li class="toc-entry toc-h3"><a href="#use-multi-stage-builds">Use multi-stage builds</a></li>
+<li class="toc-entry toc-h3"><a href="#avoid-installing-unnecessary-packages">Avoid installing unnecessary packages</a></li>
+<li class="toc-entry toc-h3"><a href="#each-container-should-have-only-one-concern">Each container should have only one concern</a></li>
+<li class="toc-entry toc-h3"><a href="#minimize-the-number-of-layers">Minimize the number of layers</a></li>
+<li class="toc-entry toc-h3"><a href="#sort-multi-line-arguments">Sort multi-line arguments</a></li>
+<li class="toc-entry toc-h3"><a href="#build-cache">Build cache</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#the-dockerfile-instructions">The Dockerfile instructions</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#from">FROM</a></li>
+<li class="toc-entry toc-h3"><a href="#label">LABEL</a></li>
+<li class="toc-entry toc-h3"><a href="#run">RUN</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#apt-get">APT-GET</a></li>
+<li class="toc-entry toc-h4"><a href="#using-pipes">USING PIPES</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#cmd">CMD</a></li>
+<li class="toc-entry toc-h3"><a href="#expose">EXPOSE</a></li>
+<li class="toc-entry toc-h3"><a href="#env">ENV</a></li>
+<li class="toc-entry toc-h3"><a href="#add-or-copy">ADD or COPY</a></li>
+<li class="toc-entry toc-h3"><a href="#entrypoint">ENTRYPOINT</a></li>
+<li class="toc-entry toc-h3"><a href="#volume">VOLUME</a></li>
+<li class="toc-entry toc-h3"><a href="#user">USER</a></li>
+<li class="toc-entry toc-h3"><a href="#workdir">WORKDIR</a></li>
+<li class="toc-entry toc-h3"><a href="#onbuild">ONBUILD</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#examples-for-official-repositories">Examples for Official Repositories</a></li>
+<li class="toc-entry toc-h2"><a href="#additional-resources">Additional resources:</a></li>
+<li class="toc-entry toc-h2"><a href="#reference">Reference</a></li>
+</ul><p>Docker 는 지정된 이미지를 작성하는 데 필요한 모든 명령을 순서대로 포함하는 텍스트 파일 인 <code>Dockerfile</code> 에서 지침을 읽어 자동으로 이미지를 작성할 수 있습니다.
+<code>Dockerfiles</code> 는 특정 형식을 따르고 특정 지침 집합을 사용합니다.
+<a href="https://docs.docker.com/engine/reference/builder/">Dockerfile Reference</a> 페이지에서 기본 사항을 배울 수 있습니다.
+<code>Dockerfiles</code> 를 처음 사용하는 경우 시작해야합니다.</p>
+
+<p>이 문서는 효율적인 이미지를 만들기 위해 Docker, Inc. 및 Docker 커뮤니티에서 권장하는 모범 사례와 방법을 다룹니다.
+이러한 사례와 권장 사항을 실제로 보려면 buildpack-deps에 대한 Dockerfile을 확인하십시오.</p>
+
+<blockquote>
+<p><strong>Note:</strong> 여기에 언급 된 Dockerfile 명령에 대한 자세한 설명은 <a href="https://docs.docker.com/engine/reference/builder/">Dockerfile Reference</a> 페이지를 방문하십시오.</p>
+</blockquote>
+
+<h2 id="general-guidelines-and-recommendations">
+<a class="anchor" href="#general-guidelines-and-recommendations" aria-hidden="true"><span class="octicon octicon-link"></span></a>General guidelines and recommendations</h2>
+
+<p>일반적인 지침 및 권장사항</p>
+
+<h3 id="containers-should-be-ephemeral">
+<a class="anchor" href="#containers-should-be-ephemeral" aria-hidden="true"><span class="octicon octicon-link"></span></a>Containers should be ephemeral</h3>
+
+<p>Containers 는 일시적이어야 한다.</p>
+
+<p>Dockerfile 이 정의하는 이미지로 생성 된 containers 는 가능한한 임시적인 것이어야 합니다.
+"일시적인 (ephemeral)"이란 말은 정지되고 파괴 될 수 있으며 새로운 설정 및 설치가 절대적으로 최소한의 설정 및 구성으로 이루어져 있음을 의미합니다.
+그런 상태가 없는 방식으로 컨테이너를 운영하는 동기에 대한 느낌을 얻으려면 12 Factor app methodology(요소 앱 방법론)의 <a href="https://12factor.net/processes">Processes</a> 섹션을 살펴 보는 것이 좋습니다.</p>
+
+<h3 id="use-a-dockerignore-file">
+<a class="anchor" href="#use-a-dockerignore-file" aria-hidden="true"><span class="octicon octicon-link"></span></a>Use a .dockerignore file</h3>
+
+<p>.dockerignore 파일 사용하기</p>
+
+<p><code>docker build</code> 명령을 실행할 때 현재 작업 디렉토리를 <em>build context</em> 라고 하고 <code>Dockerfile</code> 이 해당 build context 내에 있어야 합니다.
+기본적으로 현재 디렉토리에 있다고 가정되지만 <code>-f</code> flag를 사용하여 다른 위치를 지정할 수 있습니다.
+<code>Dockerfile</code> 의 실제 위치와 관계없이 현재 디렉토리에있는 파일과 디렉토리의 모든 재귀 content가 build context 로 Docker 데몬으로 전송됩니다.
+실수로 이미지 빌드에 필요하지 않은 파일을 포함하면 <em>build context</em> 가 커지고 이미지 크기가 커집니다.
+그 결과 빌드 시간, 이미지를 가져 와서 push 하는 시간, containers 의 런타임 크기가 증가 할 수 있습니다.
+build context 가 얼마나 큰지 확인하려면 <code>Dockerfile</code> 을 빌드 할 때 다음과 같은 메시지를 찾으십시오.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">Sending build context to Docker daemon  187.8MB
+</code></pre></div>
+<p>소스 저장소를 재구성하지 않고 빌드와 관련이없는 파일을 제외하려면 <code>.dockerignore</code> 파일을 사용하십시오.
+이 파일은 <code>.gitignore</code> 파일과 유사한 제외 패턴을 지원합니다.
+파일을 만드는 방법은 <a href="https://docs.docker.com/engine/reference/builder/#dockerignore-file">.dockerignore file</a> 을 참조하십시오.
+<code>.dockerignore</code> 파일을 사용하는 것 외에도 <a href="https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#use-multi-stage-builds">multi-stage build</a> 에 대한 아래 정보를 확인하십시오.</p>
+
+<h3 id="use-multi-stage-builds">
+<a class="anchor" href="#use-multi-stage-builds" aria-hidden="true"><span class="octicon octicon-link"></span></a>Use multi-stage builds</h3>
+
+<p><em>여러 줄 stage 빌드 사용하기</em></p>
+
+<p>가능하면 언제든지 여러 행의 인수를 영숫자로 정렬하여 변경을 완화하십시오.
+이렇게하면 패키지의 중복을 피하고 목록을 훨씬 쉽게 업데이트 할 수 있습니다.
+또한 PR을 훨씬 쉽게 읽고 검토 할 수 있습니다.
+<code>\</code> 앞에 공백을 추가하면 도움이 됩니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">RUN apt-get update <span class="o">&amp;&amp;</span> apt-get <span class="nb">install</span> <span class="nt">-y</span> <span class="se">\</span>
+  bzr <span class="se">\</span>
+  cvs <span class="se">\</span>
+  git <span class="se">\</span>
+  mercurial <span class="se">\</span>
+  subversion
+</code></pre></div>
+<p>다음은 buildpack-deps 이미지의 예제입니다.</p>
+
+<h3 id="avoid-installing-unnecessary-packages">
+<a class="anchor" href="#avoid-installing-unnecessary-packages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Avoid installing unnecessary packages</h3>
+
+<p><em>불필요한 패키지 설치를 피하기</em></p>
+
+<p>복잡성, 의존성, 파일 크기 및 빌드 시간을 줄이기 위해 여분의 패키지 또는 불필요한 패키지를 설치하는 것이 "좋을 수"있기 때문에 설치하지 않아야합니다.</p>
+
+<p>예를 들어 데이터베이스 이미지에 텍스트 편집기를 포함 할 필요가 없습니다.</p>
+
+<h3 id="each-container-should-have-only-one-concern">
+<a class="anchor" href="#each-container-should-have-only-one-concern" aria-hidden="true"><span class="octicon octicon-link"></span></a>Each container should have only one concern</h3>
+
+<p><em>각 container 에는 하나의 concern 만 갖기</em></p>
+
+<p>응용 프로그램을 여러 container 로 분리하면 확장하고 컨테이너를 다시 사용하는 것이 훨씬 쉬워집니다.
+예를 들어, 웹 응용 프로그램 스택은 분리된 방식으로 웹 응용 프로그램, 데이터베이스 및 메모리 내 캐시를 관리하기 위해 각각 고유한 이미지가 있는 별도의 세 개의 컨테이너로 구성될 수 있습니다.</p>
+
+<p>"container 당 하나의 프로세스"가 있어야 한다는 말을 들었을 것입니다.
+이 진언은 좋은 의도를 가지고 있지만, container 당 하나의 운영 체제 프로세스만 있어야 한다는 것은 사실이 아닙니다.
+container 가 이제 <a href="https://docs.docker.com/engine/reference/run/#/specifying-an-init-process">init 프로세스로 생성</a> 될 수 있다는 사실 외에도 일부 프로그램은 자체적으로 추가 프로세스를 생성 할 수 있습니다.
+예를 들어 Celery는 여러 작업자 프로세스를 생성하거나 Apache가 요청당 프로세스를 생성할 수 있습니다.
+"container 당 하나의 process"는 종종 좋은 규칙이지만, 어렵고 빠른 규칙은 아닙니다.
+containers 를 가능한 깨끗하고 모듈 식으로 유지하려면 최선의 판단을 사용하십시오.</p>
+
+<p>container 가 서로 의존하면 <a href="https://docs.docker.com/engine/userguide/networking/">Docker container networks</a> 를 사용하여 이러한 container 가 통신 할 수 있도록 할 수 있습니다.</p>
+
+<h3 id="minimize-the-number-of-layers">
+<a class="anchor" href="#minimize-the-number-of-layers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Minimize the number of layers</h3>
+
+<p><em>layer 수 최소화하기</em></p>
+
+<p>Docker 17.05 이전에는 Docker 1.10 이전 버전에서 이미지의 레이어 수를 최소화하는 것이 중요했습니다. 다음과 같은 개선 사항으로 인해 이러한 필요성이 완화되었습니다:</p>
+
+<ul>
+<li><p>Docker 1.10 이상에서는 <code>RUN</code>, <code>COPY</code> 및 <code>ADD</code> 명령만 layers 를 만듭니다.
+다른 지침에서는 임시 중간 image 를 만들고 더 이상 직접 빌드 크기를 늘리지 않습니다.</p></li>
+<li><p>Docker 17.05 이상에서는 <a href="https://docs.docker.com/engine/userguide/eng-image/multistage-build/">multi-stage builds</a>에 대한 지원이 추가되어 필요한 아티팩트 만 최종 이미지로 복사 할 수 있습니다.
+따라서 최종 이미지의 크기를 늘리지 않고 중간 빌드 단계에 도구 및 디버그 정보를 포함 할 수 있습니다.</p></li>
+</ul>
+
+<h3 id="sort-multi-line-arguments">
+<a class="anchor" href="#sort-multi-line-arguments" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sort multi-line arguments</h3>
+
+<p><em>여러 줄인 인수 정렬하기</em></p>
+
+<p>가능하면 언제든지 여러 행의 인수를 영숫자로 정렬하여 변경을 완화하십시오.
+이렇게 하면 패키지의 중복을 피하고 목록을 훨씬 쉽게 업데이트 할 수 있습니다.
+또한 PR을 훨씬 쉽게 읽고 검토할 수 있습니다.
+<code>\</code> 앞에 공백을 추가하면 도움이됩니다.
+다음은 buildpack-deps 이미지의 예제입니다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">RUN apt-get update <span class="o">&amp;&amp;</span> apt-get <span class="nb">install</span> <span class="nt">-y</span> <span class="se">\</span>
+  bzr <span class="se">\</span>
+  cvs <span class="se">\</span>
+  git <span class="se">\</span>
+  mercurial <span class="se">\</span>
+  subversion
+</code></pre></div>
+<h3 id="build-cache">
+<a class="anchor" href="#build-cache" aria-hidden="true"><span class="octicon octicon-link"></span></a>Build cache</h3>
+
+<p><em>캐시 빌드하기</em></p>
+
+<p>image 를 작성하는 과정에서 Docker는 지정한 순서대로 <code>Dockerfile</code> 의 각 명령을 실행합니다.
+각 명령을 검사할 때 Docker는 새로운(복제 된) image 를 만드는 대신 cache 에서 기존 image 를 찾아 재사용 할 수 있습니다.
+cache 를 전혀 사용하지 않으려는 경우 <code>docker build</code> 명령에서 <code>--no-cache=true</code> 옵션을 사용할 수 있습니다.</p>
+
+<p>그러나 Docker가 cache 를 사용하게 하려면 일치하는 image 를 찾을 때와 그렇지 않을 때를 이해하는 것이 매우 중요합니다.
+Docker가 따라야 할 기본 규칙은 다음과 같습니다:</p>
+
+<ul>
+<li><p>이미 캐시에 있는 부모 image 로 시작하여 다음 명령은 해당 기본 이미지에서 파생된 모든 하위 이미지와 비교되어 그 중 하나가 완전히 동일한 명령을 사용하여 작성되었는지 확인합니다.
+그렇지 않으면 cache 가 무효화됩니다.</p></li>
+<li><p>대부분의 경우 단순히 <code>Dockerfile</code> 의 명령어를 하위 image 중 하나와 비교하는 것으로 충분합니다.
+그러나 일부 지침에는 조금 더 많은 검토와 설명이 필요합니다.</p></li>
+<li><p><code>ADD</code> 및 <code>COPY</code> 명령의 경우 image 의 파일 내용을 검사하고 각 파일에 대해 체크섬을 계산합니다.
+마지막으로 수정 된 시간과 마지막으로 액세스 한 시간은 이 체크섬에서 고려되지 않습니다.
+캐시 검색 중에 체크섬은 기존 이미지의 체크섬과 비교됩니다.
+내용 및 메타 데이터와 같은 파일에서 내용이 변경되면 cache 가 무효화됩니다.</p></li>
+<li><p><code>ADD</code> 및 <code>COPY</code> 명령을 제외하고 캐시 검사는 container 의 파일을 보고 캐시 일치를 판별하지 않습니다.
+예를 들어, <code>RUN apt-get -y update</code> 명령을 처리할 때 container 에서 업데이트 된 파일은 캐시 적중 여부를 판별하기 위해 검사되지 않습니다.
+이 경우 명령 문자열 자체만 일치를 찾는데 사용됩니다.</p></li>
+</ul>
+
+<p>cache 가 무효화되면 이후의 모든 <code>Dockerfile</code> 명령이 새로운 이미지를 생성하고 cache 는 사용되지 않습니다.</p>
+
+<h2 id="the-dockerfile-instructions">
+<a class="anchor" href="#the-dockerfile-instructions" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Dockerfile instructions</h2>
+
+<p><em>Dockerfile 지침</em></p>
+
+<p>아래에서 <code>Dockerfile</code> 에서 사용할 수 있는 다양한 지침을 작성하는 가장 좋은 방법에 대한 권장 사항을 찾을 수 있습니다.</p>
+
+<h3 id="from">
+<a class="anchor" href="#from" aria-hidden="true"><span class="octicon octicon-link"></span></a>FROM</h3>
+
+<p><a href="https://docs.docker.com/engine/reference/builder/#from">Dockerfile reference for the FROM instruction</a></p>
+
+<p>가능하면 현재 공식 저장소를 이미지의 기초로 사용하십시오.
+<a href="https://hub.docker.com/_/alpine/">Alpine image</a>는 매우 엄격하게 제어되고 전체 배포가 진행되는 동안 최소 (현재 5MB 미만)로 유지되므로 권장합니다.</p>
+
+<h3 id="label">
+<a class="anchor" href="#label" aria-hidden="true"><span class="octicon octicon-link"></span></a>LABEL</h3>
+
+<p><a href="https://docs.docker.com/engine/userguide/labels-custom-metadata/">Understanding object labels</a></p>
+
+<p>image 에 레이블을 추가하여 프로젝트 별 이미지 구성, 라이센스 정보 기록, 자동화 지원 또는 기타 이유로 도움을 받을 수 있습니다.
+각 label에 대해 <code>LABEL</code> 로 시작하고 하나 이상의 key-value 쌍이 있는 행을 추가하십시오.
+다음 예제는 서로 다른 수용 가능한 형식을 보여줍니다.
+설명 주석은 인라인에 포함됩니다.</p>
+
+<blockquote>
+<p><strong>Note:</strong>
+문자열에 공백이 포함되어 있으면 공백을 인용해야 합니다.
+그렇지 않으면 공백을 빠져나오게 처리해야합니다.
+문자열에 내부 인용 문자(")가 포함되어 있으면 이스케이프 문자도 함께 사용하십시오.</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="c1"># Set one or more individual labels</span>
+<span class="s">LABEL com.example.version="0.0.1-beta"</span>
+<span class="s">LABEL vendor="ACME Incorporated"</span>
+<span class="s">LABEL com.example.release-date="2015-02-12"</span>
+<span class="s">LABEL com.example.version.is-production=""</span>
+</code></pre></div>
+<p>이미지는 둘 이상의 라벨을 가질 수 있습니다.
+Docker 1.10 이전에는 여분의 레이어가 생성되는 것을 방지하기 위해 모든 레이블을 단일 LABEL 명령에 결합하는 것이 좋습니다.
+더 이상 필요하지 않지만 레이블 결합은 여전히 ​​지원됩니다.</p>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="c1"># Set multiple labels on one line</span>
+<span class="s">LABEL com.example.version="0.0.1-beta" com.example.release-date="2015-02-12"</span>
+</code></pre></div>
+<p>위의 내용은 다음과 같이 쓰여질 수도 있습니다:</p>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="c1"># Set multiple labels at once, using line-continuation characters to break long lines</span>
+<span class="s">LABEL vendor=ACME\ Incorporated \</span>
+      <span class="s">com.example.is-beta= \</span>
+      <span class="s">com.example.is-production="" \</span>
+      <span class="s">com.example.version="0.0.1-beta" \</span>
+      <span class="s">com.example.release-date="2015-02-12"</span>
+</code></pre></div>
+<p>사용 가능한 레이블 key 및 값에 대한 지침은 객체 레이블 이해를 참조하십시오.
+레이블을 쿼리하는 방법에 대한 자세한 내용은, <a href="https://docs.docker.com/engine/userguide/labels-custom-metadata/#managing-labels-on-objects">객체의 레이블 관리</a>에서 필터링과 관련된 항목을 참조하십시오.
+Dockerfile 참조에서 <a href="https://docs.docker.com/engine/reference/builder/#label">LABEL</a> 을 참조하십시오.</p>
+
+<h3 id="run">
+<a class="anchor" href="#run" aria-hidden="true"><span class="octicon octicon-link"></span></a>RUN</h3>
+
+<p><a href="https://docs.docker.com/engine/reference/builder/#run">Dockerfile reference for the RUN instruction</a></p>
+
+<p>항상 그렇듯이 <code>Dockerfile</code> 을 읽기 쉽고 이해하기 쉽고 유지하기 쉽도록하려면 길고 복잡한 <code>RUN</code> 문을 <code>\</code> 로 구분 된 여러 줄로 나눕니다.</p>
+
+<h4 id="apt-get">
+<a class="anchor" href="#apt-get" aria-hidden="true"><span class="octicon octicon-link"></span></a>APT-GET</h4>
+
+<p>아마 <code>RUN</code> 의 가장 일반적인 유스 케이스는 <code>apt-get</code> 의 응용 프로그램이다.
+<code>RUN apt-get</code> 명령은 패키지를 설치하기 때문에 주의해야 할 몇 가지 문제점이 있습니다.</p>
+
+<p><code>RUN apt-get upgrade</code> 또는 <code>dist-upgrade</code> 를 실행하지 않아야 합니다.
+상위 이미지의 "필수" 패키지 중 많은 부분이 <a href="https://docs.docker.com/engine/reference/run/#security-configuration">unprivileged container</a> 에서 업그레이드되지 않기 때문입니다.
+부모 이미지에 포함된 패키지가 오래 되었다면 관리자에게 문의해야합니다.
+특정 패키지 <code>foo</code> 가 업데이트 되어야 함을 알고 있다면 <code>apt-get install -y foo</code> 를 사용하여 자동으로 업데이트하십시오.</p>
+
+<p>동일한 <code>RUN</code> 문에서 항상 <code>RUN apt-get update</code> 와 <code>apt-get install</code> 을 결합하십시오. 예:</p>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="s">RUN apt-get update &amp;&amp; apt-get install -y \</span>
+    <span class="s">package-bar \</span>
+    <span class="s">package-baz \</span>
+    <span class="s">package-foo</span>
+</code></pre></div>
+<p><code>RUN</code> 문에서 <code>apt-get update</code> 만 사용하면 캐싱 문제가 발생하고 이후 <code>apt-get install</code> 지침이 실패합니다. 예를 들어 Dockerfile이 있다고 가정해 보겠습니다:</p>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml">    <span class="s">FROM ubuntu:14.04</span>
+    <span class="s">RUN apt-get update</span>
+    <span class="s">RUN apt-get install -y curl</span>
+</code></pre></div>
+<p>이미지를 만든 후에는 모든 레이어가 Docker 캐시에 있습니다.
+나중에 패키지를 추가하여 <code>apt-get install</code> 을 수정한다고 가정해보십시오:</p>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml">    <span class="s">FROM ubuntu:14.04</span>
+    <span class="s">RUN apt-get update</span>
+    <span class="s">RUN apt-get install -y curl nginx</span>
+</code></pre></div>
+<p>Docker는 초기 및 수정된 명령어가 동일하다고 판단하고 이전 단계의 캐시를 재사용합니다.
+결과적으로 빌드가 캐시된 버전을 사용하기 때문에 <code>apt-get update</code> 가 실행되지 않습니다.
+<code>apt-get update</code> 가 실행되지 않기 때문에 빌드가 <code>curl</code> 및 <code>nginx</code> 패키지의 구 버전을 가져올 수 있습니다.</p>
+
+<p><code>run apt-get update &amp;&amp; apt-get install -y</code> 를 사용하면 dockerfile 이 코딩이나 수동 개입없이 최신 패키지 버전을 설치할 수 있습니다.
+이 기법을 "cache busting"(캐시 무효화)라고 합니다.
+패키지 버전을 지정하여 cache-busting 을 수행 할 수도 있습니다.
+이를 "version pinning" 이라고 합니다. 예를 들면 다음과 같습니다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">RUN apt-get update <span class="o">&amp;&amp;</span> apt-get <span class="nb">install</span> <span class="nt">-y</span> <span class="se">\</span>
+    package-bar <span class="se">\</span>
+    package-baz <span class="se">\</span>
+    package-foo<span class="o">=</span>1.3.<span class="k">*</span>
+</code></pre></div>
+<p>Version pinning 은 캐시의 내용과 관계없이 빌드가 특정 버전을 검색하도록 합니다.
+이 기술은 또한 필요한 패키지의 예기치 않은 변경으로 인한 실패를 줄일 수 있습니다.</p>
+
+<p>다음은 모든 <code>apt-get</code> 권장 사항을 보여주는 잘 구성된 <code>RUN</code> 명령어입니다.</p>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="s">RUN apt-get update &amp;&amp; apt-get install -y \</span>
+    <span class="s">aufs-tools \</span>
+    <span class="s">automake \</span>
+    <span class="s">build-essential \</span>
+    <span class="s">curl \</span>
+    <span class="s">dpkg-sig \</span>
+    <span class="s">libcap-dev \</span>
+    <span class="s">libsqlite3-dev \</span>
+    <span class="s">mercurial \</span>
+    <span class="s">reprepro \</span>
+    <span class="s">ruby1.9.1 \</span>
+    <span class="s">ruby1.9.1-dev \</span>
+    <span class="s">s3cmd=1.1.* \</span>
+ <span class="s">&amp;&amp; rm -rf /var/lib/apt/lists/*</span>
+</code></pre></div>
+<p><code>s3cmd</code> 지침은 버전 <code>1.1.*</code> 을 지정합니다.
+이전에 image 가 이전 버전을 사용했다면 새로운 버전을 지정하면 <code>apt-get update</code>의 cache bust 가 발생하고 새 버전의 설치가 보장됩니다.
+각 행에 패키지를 나열하면 패키지 중복의 실수를 예방할 수 있습니다.</p>
+
+<p>또한 <code>/var/lib/apt/lists</code> 를 제거하여 apt cache 를 정리하면 apt cache 가 layer 에 저장되지 않으므로 image 크기가 줄어 듭니다.
+<code>RUN</code> 문은 <code>apt-get update</code> 로 시작하기 때문에 패키지 캐시는 <code>apt-get install</code> 하기 전에 항상 새로 고쳐집니다.</p>
+
+<blockquote>
+<p><strong>Note:</strong> Debian 및 Ubuntu 공식 image 는 자동으로 <code>apt-get clean</code> 을 실행하므로 명시 적 호출이 필요하지 않습니다.</p>
+</blockquote>
+
+<h4 id="using-pipes">
+<a class="anchor" href="#using-pipes" aria-hidden="true"><span class="octicon octicon-link"></span></a>USING PIPES</h4>
+
+<p>일부 <code>RUN</code> 명령은 다음 예와 같이 <code>|</code> 를 사용하여 한 명령의 출력을 다른 명령으로 파이프하는 기능에 따라 다릅니다:</p>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="s">RUN wget -O - https://some.site | wc -l &gt; /number</span>
+</code></pre></div>
+<p>Docker는 <code>/bin/sh -c</code> 인터프리터를 사용하여 이러한 명령을 실행합니다.
+이 인터프리터는 파이프에서 마지막 작업의 종료 코드만 평가하여 성공 여부를 판단합니다.
+위의 예제에서 wget 명령이 실패하더라도 wc -l 명령이 성공하는 한이 빌드 단계가 성공하고 새 이미지가 생성됩니다.</p>
+
+<p>파이프의 모든 단계에서 오류로 인해 명령이 실패하게 하려면 예기치 않은 오류로 인해 실수로 빌드가 성공하지 못하게 하려면 <code>set -o pipefail &amp;&amp;</code> 를 추가하십시오. 예:</p>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="s">RUN set -o pipefail &amp;&amp; wget -O - https://some.site | wc -l &gt; /number</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Note:</strong>
+모든 shell 이 <code>-o pipefail</code> 옵션을 지원하는 것은 아닙니다.
+그러한 경우 (Debina 기반 이미지의 기본 shell 인 대시 셸과 같은)에는 <code>RUN</code> 의 <em>exec</em> 형식을 사용하여 <code>pipefail</code> 옵션을 지원하는 셸을 명시적으로 선택하는 것이 좋습니다. 예:</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="s">RUN ["/bin/bash", "-c", "set -o pipefail &amp;&amp; wget -O - https://some.site | wc -l &gt; /number"]</span>
+</code></pre></div>
+<h3 id="cmd">
+<a class="anchor" href="#cmd" aria-hidden="true"><span class="octicon octicon-link"></span></a>CMD</h3>
+
+<p><a href="https://docs.docker.com/engine/reference/builder/#cmd">Dockerfile reference for the CMD instruction</a></p>
+
+<p><code>CMD</code> 명령은 이미지에 포함된 소프트웨어를 인수와 함께 실행하는 데 사용해야 합니다.
+<code>CMD</code> 는 거의 항상 <code>CMD ["executable", "param1", "param2"...]</code> 형식으로 사용해야합니다.
+따라서 이미지가 Apache 및 Rails와 같은 서비스를 위한 것이라면 <code>CMD ["apache2", "- DFOREGROUND"]</code> `와 같은 것을 실행할 것입니다.
+사실, 이 지침의 유형은 모든 서비스-기반 이미지에 권장됩니다.</p>
+
+<p>대부분의 다른 경우 CMD는 bash, python 및 perl과 같은 대화식 shell 을 제공해야합니다.
+예로, <code>CMD ["perl", "-de0"]</code>, <code>CMD ["python"]</code> 또는 <code>CMD ["php", "-a"]</code>.
+이 양식을 사용한다는 것은 <code>docker run -it python</code> 과 같은 것을 실행할 때 쓸모있는 shell 에 떨어질 준비가 되었음을 의미합니다.
+<code>CMD</code> 는 <code>ENTRYPOINT</code> 와 함께 <code>CMD ["param", "param"]</code> 방식으로 거의 사용되지 않아야합니다.
+단, 사용자와 예상 사용자가 <code>ENTRYPOINT</code> 작동 방식에 이미 익숙하지 않은 경우는 예외입니다.</p>
+
+<h3 id="expose">
+<a class="anchor" href="#expose" aria-hidden="true"><span class="octicon octicon-link"></span></a>EXPOSE</h3>
+
+<p><a href="https://docs.docker.com/engine/reference/builder/#expose">Dockerfile reference for the EXPOSE instruction</a></p>
+
+<p><code>EXPOSE</code> 명령은 container 가 연결을 수신 대기하는 Port 를 나타냅니다.
+결과적으로 응용 프로그램에 일반적인 일반 Port 를 사용해야 합니다.
+예를 들어 Apache Web Server 를 포함하는 image 는 <code>EXPOSE 80</code> 을 사용하고 MongoDB 가 포함된 이미지는 <code>EXPOSE 27017</code> 을 사용합니다.</p>
+
+<p>외부 액세스의 경우 사용자는 지정된 Port 를 선택한 Port 에 매핑하는 방법을 나타내는 flag 와 함께 <code>docker run</code> 을 실행할 수 있습니다.
+container 연결을 위해, Docker는 수취인 container 에서 출발지까지의 경로 (즉, <code>MYSQL_PORT_3306_TCP</code>)에 대한 환경 변수를 제공합니다.</p>
+
+<h3 id="env">
+<a class="anchor" href="#env" aria-hidden="true"><span class="octicon octicon-link"></span></a>ENV</h3>
+
+<p><a href="https://docs.docker.com/engine/reference/builder/#env">Dockerfile reference for the ENV instruction</a></p>
+
+<p>새 소프트웨어를 더 쉽게 실행하기 위해 <code>ENV</code> 를 사용하여 컨테이너가 설치하는 소프트웨어의 <code>PATH</code> 환경 변수를 업데이트 할 수 있습니다.
+예를 들어, <code>ENV PATH /usr/local/nginx/bin:$PATH</code> 는 <code>CMD ["nginx"]</code> 가 작동하는 것을 보장합니다.</p>
+
+<p><code>ENV</code> 명령은 Postgres의 <code>PGDATA</code> 와 같이 컨테이너 화하려는 서비스에 필요한 필수 환경 변수를 제공하는 데 유용합니다.</p>
+
+<p>마지막으로, <code>ENV</code> 는 또한 다음 예제와 같이 일반적으로 사용되는 버전 번호를 설정하여 version bumps 을 유지 관리하기가 쉽습니다:</p>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="s">ENV PG_MAJOR </span><span class="m">9.3</span>
+<span class="s">ENV PG_VERSION 9.3.4</span>
+<span class="s">RUN curl -SL http://example.com/postgres-$PG_VERSION.tar.xz | tar -xJC /usr/src/postgress &amp;&amp; …</span>
+<span class="s">ENV PATH /usr/local/postgres-$PG_MAJOR/bin:$PATH</span>
+</code></pre></div>
+<p>프로그램에서 상수 변수를 사용하는 것과 마찬가지로 (하드 코드 값과 반대)이 방법을 사용하면 단일 <code>ENV</code> 명령을 변경하여 컨테이너에서 소프트웨어 버전을 자동으로 dump 시킬 수 있습니다.</p>
+
+<h3 id="add-or-copy">
+<a class="anchor" href="#add-or-copy" aria-hidden="true"><span class="octicon octicon-link"></span></a>ADD or COPY</h3>
+
+<p><a href="https://docs.docker.com/engine/reference/builder/#add">Dockerfile reference for the ADD instruction</a></p>
+
+<p><a href="https://docs.docker.com/engine/reference/builder/#copy">Dockerfile reference for the COPY instruction</a></p>
+
+<p><code>ADD</code> 와 <code>COPY</code> 는 기능적으로 유사하지만, 일반적으로 <code>COPY</code> 가 선호됩니다.
+<code>ADD</code> 보다 투명하기 때문입니다.
+<code>COPY</code> 는 로컬 파일의 기본 복사를 container 로 지원하는 반면, <code>ADD</code>에는 즉시 명확하지 않은 몇 가지 기능(예: 로컬 전용 tar 추출 및 원격 URL 지원)이 있습니다.
+결과적으로, <code>ADD</code> 의 가장 좋은 용도는 <code>ADD rootfs.tar.xz /</code> 와 같이 이미지에 로컬 tar 파일 자동 추출입니다.</p>
+
+<p>context 의 다른 파일을 사용하는 <code>Dockerfile</code> 단계가 여러 개인 경우 한꺼번에 복사하지 말고 개별적으로 <code>COPY</code> 하십시오.
+이렇게하면 필수적으로 필요한 파일이 변경 될 경우 각 단계의 빌드 캐시가 + 효화되어 (단계가 다시 실행되도록)됩니다.</p>
+
+<p>예:</p>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="s">COPY requirements.txt /tmp/</span>
+<span class="s">RUN pip install --requirement /tmp/requirements.txt</span>
+<span class="s">COPY . /tmp/</span>
+</code></pre></div>
+<p><code>RUN</code> 단계에 대한 캐시 무효화가 적습니다. 이전에 <code>COPY . /tmp/</code> 를 입력 한 경우보다.</p>
+
+<p>image 크기가 중요하기 때문에 <code>ADD</code> 를 사용하여 원격 URL에서 패키지를 가져 오지 않는 것이 좋습니다.
+대신 <code>curl</code> 이나 <code>wget</code> 을 사용해야합니다.
+이렇게하면 압축을 푼 후에 더 이상 필요하지 않은 파일을 삭제할 수 있으므로 이미지에 다른 레이어를 추가 할 필요가 없습니다.
+예를 들어, 다음과 같은 일을 <em>피해야 합니다</em>:</p>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="s">ADD http://example.com/big.tar.xz /usr/src/things/</span>
+<span class="s">RUN tar -xJf /usr/src/things/big.tar.xz -C /usr/src/things</span>
+<span class="s">RUN make -C /usr/src/things all</span>
+</code></pre></div>
+<p>대신 다음과 같이하십시오:</p>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="s">RUN mkdir -p /usr/src/things \</span>
+    <span class="s">&amp;&amp; curl -SL http://example.com/big.tar.xz \</span>
+    <span class="s">| tar -xJC /usr/src/things \</span>
+    <span class="s">&amp;&amp; make -C /usr/src/things all</span>
+</code></pre></div>
+<p><code>ADD</code> 의 tar 자동 추출 기능이 필요없는 다른 항목(파일, 디렉토리)의 경우 항상 <code>COPY</code> 를 사용해야합니다.</p>
+
+<h3 id="entrypoint">
+<a class="anchor" href="#entrypoint" aria-hidden="true"><span class="octicon octicon-link"></span></a>ENTRYPOINT</h3>
+
+<p><a href="https://docs.docker.com/engine/reference/builder/#entrypoint">Dockerfile reference for the ENTRYPOINT instruction</a></p>
+
+<p><code>ENTRYPOINT</code> 를 사용하는 가장 좋은 방법은 이미지의 기본 명령을 설정하여 해당 이미지를 해당 명령처럼 실행되도록 허용 한 다음 <code>CMD</code> 를 기본 플래그로 사용하는 것입니다.</p>
+
+<p>명령 줄 도구 <code>s3cmd</code> 의 이미지 예제부터 시작해 보겠습니다:</p>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="s">ENTRYPOINT ["s3cmd"]</span>
+<span class="s">CMD ["--help"]</span>
+</code></pre></div>
+<p>이제 이미지는 다음과 같이 실행되어 명령의 도움말을 표시 할 수 있습니다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker run s3cmd
+</code></pre></div>
+<p>또는 올바른 매개 변수를 사용하여 명령을 실행하십시오:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker run s3cmd <span class="nb">ls </span>s3://mybucket
+</code></pre></div>
+<p>위의 명령에서 볼 수 있듯이 이미지 이름이 바이너리에 대한 참조로 두 배가 될 수 있기 때문에 유용합니다.</p>
+
+<p><code>ENTRYPOINT</code> 명령을 helper 스크립트와 함께 사용하여 위의 명령과 유사한 방식으로 기능을 수행 할 수 있습니다.
+이 경우 도구를 시작하면 둘 이상의 단계가 필요할 수도 있습니다.</p>
+
+<p>예를 들어 Postgres 공식 이미지는 다음 스크립트를 <code>ENTRYPOINT</code> 로 사용합니다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c">#!/bin/bash</span>
+<span class="nb">set</span> <span class="nt">-e</span>
+
+<span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span> <span class="o">=</span> <span class="s1">'postgres'</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+    </span><span class="nb">chown</span> <span class="nt">-R</span> postgres <span class="s2">"</span><span class="nv">$PGDATA</span><span class="s2">"</span>
+
+    <span class="k">if</span> <span class="o">[</span> <span class="nt">-z</span> <span class="s2">"</span><span class="si">$(</span><span class="nb">ls</span> <span class="nt">-A</span> <span class="s2">"</span><span class="nv">$PGDATA</span><span class="s2">"</span><span class="si">)</span><span class="s2">"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+        </span>gosu postgres initdb
+    <span class="k">fi
+
+    </span><span class="nb">exec </span>gosu postgres <span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
+<span class="k">fi
+
+</span><span class="nb">exec</span> <span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Note:</strong>
+이 스크립트는 최종 실행 응용 프로그램이 컨테이너의 PID 1 이 되도록 <code>exec</code> Bash command 을 사용합니다.
+이렇게 하면 응용 프로그램이 컨테이너로 보내지는 모든 유닉스 신호를 수신 할 수 있습니다.
+자세한 내용은 <code>ENTRYPOINT</code> 도움말을 참조하십시오.</p>
+</blockquote>
+
+<p>helper script 는 container 에 복사되고 container 시작시 <code>ENTRYPOINT</code> 를 통해 실행됩니다:</p>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="s">COPY ./docker-entrypoint.sh /</span>
+<span class="s">ENTRYPOINT ["/docker-entrypoint.sh"]</span>
+</code></pre></div>
+<p>이 스크립트는 사용자가 여러 가지 방법으로 Postgres와 상호 작용할 수 있게 합니다.</p>
+
+<p>간단히 Postgres를 시작할 수 있습니다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker run postgres
+</code></pre></div>
+<p>또는 Postgres를 실행하고 매개 변수를 서버에 전달하는 데 사용할 수 있습니다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker run postgres postgres <span class="nt">--help</span>
+</code></pre></div>
+<p>마지막으로 Bash와 같이 완전히 다른 도구를 시작하는 데 사용할 수도 있습니다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker run <span class="nt">--rm</span> <span class="nt">-it</span> postgres bash
+</code></pre></div>
+<h3 id="volume">
+<a class="anchor" href="#volume" aria-hidden="true"><span class="octicon octicon-link"></span></a>VOLUME</h3>
+
+<p><a href="https://docs.docker.com/engine/reference/builder/#volume">Dockerfile reference for the VOLUME instruction</a></p>
+
+<p><code>VOLUME</code> 명령은 데이터베이스 저장소 영역, 구성 저장소 또는 docker container 에서 만든 files/folders 를 노출하는 데 사용해야 합니다.
+가변적이거나 사용자가 사용할 수있는 이미지 부분에 <code>VOLUME</code> 을 사용하는 것이 좋습니다.</p>
+
+<h3 id="user">
+<a class="anchor" href="#user" aria-hidden="true"><span class="octicon octicon-link"></span></a>USER</h3>
+
+<p><a href="https://docs.docker.com/engine/reference/builder/#user">Dockerfile reference for the USER instruction</a></p>
+
+<p>권한없이 서비스를 실행할 수있는 경우 <code>USER</code> 를 사용하여 non-root인 사용자로 변경하십시오.
+<code>Dockerfile</code> 에서 <code>RUN groupadd -r postgres &amp;&amp; useradd --no-log-init -r -g postgres postgres</code> 와 같은 사용자 및 그룹을 작성하는 것으로 시작하십시오.</p>
+
+<blockquote>
+<p><strong>Note:</strong>
+이미지의 사용자 및 그룹은 이미지 재구성에 관계없이 "next" UID/GID 가 할당된다는 점에서 비결정적 UID/GID를 얻습니다.
+따라서 중요한 경우 명시적인 UID/GID 를 지정해야 합니다.</p>
+
+<p><strong>Note:</strong>
+Go archive/tar 패키지에서 부족한 파일을 처리하는 중 해결되지 않은 bug 로 인해 Docker container 내에 충분히 큰 UID를 가진 사용자를 만들려고 하면 container layer 안의 /var/log/faillog 에  NUL (\0) 문자가 가득 차서 디스크가 고갈 될 수 있습니다.
+useradd 에 --no-log-init 플래그를 전달하면이 문제가 해결됩니다.
+Debian/Ubuntu <code>adduser</code> 래퍼는 <code>--no-log-init</code> flag를 지원하지 않으므로 피해야 합니다.</p>
+</blockquote>
+
+<p><code>sudo</code> 를 설치하거나 사용하는 것은 피해야한다.
+왜냐하면 예측할 수없는 TTY와 신호 전달 동작으로 인해 문제가 더 많이 발생할 수 있기 때문이다.
+<code>sudo</code> 와 유사한 기능이 절대적으로 필요한 경우 (예: 데몬을 루트로 초기화했지만 루트가 아닌 데몬으로 실행하는 경우) <a href="https://github.com/tianon/gosu">gosu</a> 를 사용할 수 있습니다.</p>
+
+<p>마지막으로 레이어와 복잡성을 줄이려면 USER를 앞뒤로 자주 전환하지 마십시오.</p>
+
+<h3 id="workdir">
+<a class="anchor" href="#workdir" aria-hidden="true"><span class="octicon octicon-link"></span></a>WORKDIR</h3>
+
+<p><a href="https://docs.docker.com/engine/reference/builder/#workdir">Dockerfile reference for the WORKDIR instruction</a></p>
+
+<p>명확성과 신뢰성을 위해 항상 <code>WORKDIR</code> 에 절대 경로를 사용해야 합니다.
+또한 <code>RUN cd ... &amp;&amp; do-something</code> 과 같이 읽기, 문제 해결 및 유지 관리가 어려운 지침 대신 <code>WORKDIR</code> 을 사용해야 합니다.</p>
+
+<h3 id="onbuild">
+<a class="anchor" href="#onbuild" aria-hidden="true"><span class="octicon octicon-link"></span></a>ONBUILD</h3>
+
+<p><a href="https://docs.docker.com/engine/reference/builder/#onbuild">Dockerfile reference for the ONBUILD instruction</a></p>
+
+<p><code>ONBUILD</code> 명령은 현재 <code>Dockerfile</code> 빌드가 완료된 후에 실행됩니다.
+<code>ONBUILD</code> 는 현재 이미지에서 파생된 모든 자식 이미지에서 실행됩니다.
+<code>ONBUILD</code> 명령을 부모 <code>Dockerfile</code> 이 자식 <code>Dockerfile</code> 에 주는 명령으로 생각하십시오.
+Docker 빌드는 자식 <code>Dockerfile</code> 의 명령 앞에 <code>ONBUILD</code> 명령을 실행합니다.</p>
+
+<p><code>ONBUILD</code> 는 주어진 이미지에서 생성될 이미지에 유용합니다.
+예를 들어, Ruby의 <code>ONBUILD</code> 변형에서 볼 수 있듯이 <code>Dockerfile</code> 내에서 해당 언어로 작성된 임의의 사용자 소프트웨어를 빌드하는 언어 스택 이미지에 <code>ONBUILD</code> 를 사용합니다.
+<code>ONBUILD</code> 에서 빌드된 이미지는 별도의 태그를 가져야합니다 (예: ruby​​:1.9-onbuild 또는 ruby​:2.0-onbuild).</p>
+
+<p><code>ONBUILD</code> 에 <code>ADD</code> 또는 <code>COPY</code> 를 넣을 때 주의하십시오.
+새 빌드의 컨텍스트에 추가되는 리소스가 누락되면 "onbuild"이미지가 파국적으로 실패합니다.
+위에서 권장 한대로 별도의 태그를 추가하면 <code>Dockerfile</code> 작성자가 선택하도록 허용하여 이를 완화 할 수 있습니다.</p>
+
+<h2 id="examples-for-official-repositories">
+<a class="anchor" href="#examples-for-official-repositories" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples for Official Repositories</h2>
+
+<p>이 공식 저장소에는 모범적인 <code>Dockerfile</code>s:</p>
+
+<ul>
+<li><a href="https://hub.docker.com/_/golang/">Go</a></li>
+<li><a href="https://hub.docker.com/_/perl/">Perl</a></li>
+<li><a href="https://hub.docker.com/_/hylang/">Hy</a></li>
+<li><a href="https://hub.docker.com/_/ruby/">Ruby</a></li>
+</ul>
+
+<h2 id="additional-resources">
+<a class="anchor" href="#additional-resources" aria-hidden="true"><span class="octicon octicon-link"></span></a>Additional resources:</h2>
+
+<ul>
+<li><a href="https://docs.docker.com/engine/reference/builder/">Dockerfile Reference</a></li>
+<li><a href="https://docs.docker.com/engine/userguide/eng-image/baseimages/">More about Base Images</a></li>
+<li><a href="https://docs.docker.com/docker-hub/builds/">More about Automated Builds</a></li>
+<li><a href="https://docs.docker.com/docker-hub/official_repos/">Guidelines for Creating Official Repositories</a></li>
+</ul>
+
+<h2 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+<p><a href="https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/">https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/</a></p>
+
+  </div>
+
+<div>
+  <p>Docker 는 지정된 이미지를 작성하는 데 필요한 모든 명령을 순서대로 포함하는 텍스트 파일 인 <code>Dockerfile</code> 에서 지침을 읽어 자동으로 이미지를 작성할 수 있습니다.
+<code>Dockerfiles</code> 는 특정 형식을 따르고 특정 지침 집합을 사용합니다.
+<a href="https://docs.docker.com/engine/reference/builder/" rel="nofollow" target="_blank">Dockerfile Reference</a> 페이지에서 기본 사항을 배울 수 있습니다.
+<code>Dockerfiles</code> 를 처음 사용하는 경우 시작해야합니다.</p>
+
+<p>이 문서는 효율적인 이미지를 만들기 위해 Docker, Inc. 및 Docker 커뮤니티에서 권장하는 모범 사례와 방법을 다룹니다.
+이러한 사례와 권장 사항을 실제로 보려면 buildpack-deps에 대한 Dockerfile을 확인하십시오.</p>
+
+<blockquote>
+<p><strong>Note:</strong> 여기에 언급 된 Dockerfile 명령에 대한 자세한 설명은 <a href="https://docs.docker.com/engine/reference/builder/" rel="nofollow" target="_blank">Dockerfile Reference</a> 페이지를 방문하십시오.</p>
+</blockquote>
+
+<h2 id="general-guidelines-and-recommendations">General guidelines and recommendations</h2>
+
+<p>일반적인 지침 및 권장사항</p>
+
+<h3 id="containers-should-be-ephemeral">Containers should be ephemeral</h3>
+
+<p>Containers 는 일시적이어야 한다.</p>
+
+<p>Dockerfile 이 정의하는 이미지로 생성 된 containers 는 가능한한 임시적인 것이어야 합니다.
+"일시적인 (ephemeral)"이란 말은 정지되고 파괴 될 수 있으며 새로운 설정 및 설치가 절대적으로 최소한의 설정 및 구성으로 이루어져 있음을 의미합니다.
+그런 상태가 없는 방식으로 컨테이너를 운영하는 동기에 대한 느낌을 얻으려면 12 Factor app methodology(요소 앱 방법론)의 <a href="https://12factor.net/processes" rel="nofollow" target="_blank">Processes</a> 섹션을 살펴 보는 것이 좋습니다.</p>
+
+<h3 id="use-a-dockerignore-file">Use a .dockerignore file</h3>
+
+<p>.dockerignore 파일 사용하기</p>
+
+<p><code>docker build</code> 명령을 실행할 때 현재 작업 디렉토리를 <em>build context</em> 라고 하고 <code>Dockerfile</code> 이 해당 build context 내에 있어야 합니다.
+기본적으로 현재 디렉토리에 있다고 가정되지만 <code>-f</code> flag를 사용하여 다른 위치를 지정할 수 있습니다.
+<code>Dockerfile</code> 의 실제 위치와 관계없이 현재 디렉토리에있는 파일과 디렉토리의 모든 재귀 content가 build context 로 Docker 데몬으로 전송됩니다.
+실수로 이미지 빌드에 필요하지 않은 파일을 포함하면 <em>build context</em> 가 커지고 이미지 크기가 커집니다.
+그 결과 빌드 시간, 이미지를 가져 와서 push 하는 시간, containers 의 런타임 크기가 증가 할 수 있습니다.
+build context 가 얼마나 큰지 확인하려면 <code>Dockerfile</code> 을 빌드 할 때 다음과 같은 메시지를 찾으십시오.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">Sending build context to Docker daemon  187.8MB
+</code></pre></div>
+<p>소스 저장소를 재구성하지 않고 빌드와 관련이없는 파일을 제외하려면 <code>.dockerignore</code> 파일을 사용하십시오.
+이 파일은 <code>.gitignore</code> 파일과 유사한 제외 패턴을 지원합니다.
+파일을 만드는 방법은 <a href="https://docs.docker.com/engine/reference/builder/#dockerignore-file" rel="nofollow" target="_blank">.dockerignore file</a> 을 참조하십시오.
+<code>.dockerignore</code> 파일을 사용하는 것 외에도 <a href="https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#use-multi-stage-builds" rel="nofollow" target="_blank">multi-stage build</a> 에 대한 아래 정보를 확인하십시오.</p>
+
+<h3 id="use-multi-stage-builds">Use multi-stage builds</h3>
+
+<p><em>여러 줄 stage 빌드 사용하기</em></p>
+
+<p>가능하면 언제든지 여러 행의 인수를 영숫자로 정렬하여 변경을 완화하십시오.
+이렇게하면 패키지의 중복을 피하고 목록을 훨씬 쉽게 업데이트 할 수 있습니다.
+또한 PR을 훨씬 쉽게 읽고 검토 할 수 있습니다.
+<code>\</code> 앞에 공백을 추가하면 도움이 됩니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">RUN apt-get update <span class="o">&amp;&amp;</span> apt-get <span class="nb">install</span> <span class="nt">-y</span> <span class="se">\</span>
+  bzr <span class="se">\</span>
+  cvs <span class="se">\</span>
+  git <span class="se">\</span>
+  mercurial <span class="se">\</span>
+  subversion
+</code></pre></div>
+<p>다음은 buildpack-deps 이미지의 예제입니다.</p>
+
+<h3 id="avoid-installing-unnecessary-packages">Avoid installing unnecessary packages</h3>
+
+<p><em>불필요한 패키지 설치를 피하기</em></p>
+
+<p>복잡성, 의존성, 파일 크기 및 빌드 시간을 줄이기 위해 여분의 패키지 또는 불필요한 패키지를 설치하는 것이 "좋을 수"있기 때문에 설치하지 않아야합니다.</p>
+
+<p>예를 들어 데이터베이스 이미지에 텍스트 편집기를 포함 할 필요가 없습니다.</p>
+
+<h3 id="each-container-should-have-only-one-concern">Each container should have only one concern</h3>
+
+<p><em>각 container 에는 하나의 concern 만 갖기</em></p>
+
+<p>응용 프로그램을 여러 container 로 분리하면 확장하고 컨테이너를 다시 사용하는 것이 훨씬 쉬워집니다.
+예를 들어, 웹 응용 프로그램 스택은 분리된 방식으로 웹 응용 프로그램, 데이터베이스 및 메모리 내 캐시를 관리하기 위해 각각 고유한 이미지가 있는 별도의 세 개의 컨테이너로 구성될 수 있습니다.</p>
+
+<p>"container 당 하나의 프로세스"가 있어야 한다는 말을 들었을 것입니다.
+이 진언은 좋은 의도를 가지고 있지만, container 당 하나의 운영 체제 프로세스만 있어야 한다는 것은 사실이 아닙니다.
+container 가 이제 <a href="https://docs.docker.com/engine/reference/run/#/specifying-an-init-process" rel="nofollow" target="_blank">init 프로세스로 생성</a> 될 수 있다는 사실 외에도 일부 프로그램은 자체적으로 추가 프로세스를 생성 할 수 있습니다.
+예를 들어 Celery는 여러 작업자 프로세스를 생성하거나 Apache가 요청당 프로세스를 생성할 수 있습니다.
+"container 당 하나의 process"는 종종 좋은 규칙이지만, 어렵고 빠른 규칙은 아닙니다.
+containers 를 가능한 깨끗하고 모듈 식으로 유지하려면 최선의 판단을 사용하십시오.</p>
+
+<p>container 가 서로 의존하면 <a href="https://docs.docker.com/engine/userguide/networking/" rel="nofollow" target="_blank">Docker container networks</a> 를 사용하여 이러한 container 가 통신 할 수 있도록 할 수 있습니다.</p>
+
+<h3 id="minimize-the-number-of-layers">Minimize the number of layers</h3>
+
+<p><em>layer 수 최소화하기</em></p>
+
+<p>Docker 17.05 이전에는 Docker 1.10 이전 버전에서 이미지의 레이어 수를 최소화하는 것이 중요했습니다. 다음과 같은 개선 사항으로 인해 이러한 필요성이 완화되었습니다:</p>
+
+<ul>
+<li><p>Docker 1.10 이상에서는 <code>RUN</code>, <code>COPY</code> 및 <code>ADD</code> 명령만 layers 를 만듭니다.
+다른 지침에서는 임시 중간 image 를 만들고 더 이상 직접 빌드 크기를 늘리지 않습니다.</p></li>
+<li><p>Docker 17.05 이상에서는 <a href="https://docs.docker.com/engine/userguide/eng-image/multistage-build/" rel="nofollow" target="_blank">multi-stage builds</a>에 대한 지원이 추가되어 필요한 아티팩트 만 최종 이미지로 복사 할 수 있습니다.
+따라서 최종 이미지의 크기를 늘리지 않고 중간 빌드 단계에 도구 및 디버그 정보를 포함 할 수 있습니다.</p></li>
+</ul>
+
+<h3 id="sort-multi-line-arguments">Sort multi-line arguments</h3>
+
+<p><em>여러 줄인 인수 정렬하기</em></p>
+
+<p>가능하면 언제든지 여러 행의 인수를 영숫자로 정렬하여 변경을 완화하십시오.
+이렇게 하면 패키지의 중복을 피하고 목록을 훨씬 쉽게 업데이트 할 수 있습니다.
+또한 PR을 훨씬 쉽게 읽고 검토할 수 있습니다.
+<code>\</code> 앞에 공백을 추가하면 도움이됩니다.
+다음은 buildpack-deps 이미지의 예제입니다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">RUN apt-get update <span class="o">&amp;&amp;</span> apt-get <span class="nb">install</span> <span class="nt">-y</span> <span class="se">\</span>
+  bzr <span class="se">\</span>
+  cvs <span class="se">\</span>
+  git <span class="se">\</span>
+  mercurial <span class="se">\</span>
+  subversion
+</code></pre></div>
+<h3 id="build-cache">Build cache</h3>
+
+<p><em>캐시 빌드하기</em></p>
+
+<p>image 를 작성하는 과정에서 Docker는 지정한 순서대로 <code>Dockerfile</code> 의 각 명령을 실행합니다.
+각 명령을 검사할 때 Docker는 새로운(복제 된) image 를 만드는 대신 cache 에서 기존 image 를 찾아 재사용 할 수 있습니다.
+cache 를 전혀 사용하지 않으려는 경우 <code>docker build</code> 명령에서 <code>--no-cache=true</code> 옵션을 사용할 수 있습니다.</p>
+
+<p>그러나 Docker가 cache 를 사용하게 하려면 일치하는 image 를 찾을 때와 그렇지 않을 때를 이해하는 것이 매우 중요합니다.
+Docker가 따라야 할 기본 규칙은 다음과 같습니다:</p>
+
+<ul>
+<li><p>이미 캐시에 있는 부모 image 로 시작하여 다음 명령은 해당 기본 이미지에서 파생된 모든 하위 이미지와 비교되어 그 중 하나가 완전히 동일한 명령을 사용하여 작성되었는지 확인합니다.
+그렇지 않으면 cache 가 무효화됩니다.</p></li>
+<li><p>대부분의 경우 단순히 <code>Dockerfile</code> 의 명령어를 하위 image 중 하나와 비교하는 것으로 충분합니다.
+그러나 일부 지침에는 조금 더 많은 검토와 설명이 필요합니다.</p></li>
+<li><p><code>ADD</code> 및 <code>COPY</code> 명령의 경우 image 의 파일 내용을 검사하고 각 파일에 대해 체크섬을 계산합니다.
+마지막으로 수정 된 시간과 마지막으로 액세스 한 시간은 이 체크섬에서 고려되지 않습니다.
+캐시 검색 중에 체크섬은 기존 이미지의 체크섬과 비교됩니다.
+내용 및 메타 데이터와 같은 파일에서 내용이 변경되면 cache 가 무효화됩니다.</p></li>
+<li><p><code>ADD</code> 및 <code>COPY</code> 명령을 제외하고 캐시 검사는 container 의 파일을 보고 캐시 일치를 판별하지 않습니다.
+예를 들어, <code>RUN apt-get -y update</code> 명령을 처리할 때 container 에서 업데이트 된 파일은 캐시 적중 여부를 판별하기 위해 검사되지 않습니다.
+이 경우 명령 문자열 자체만 일치를 찾는데 사용됩니다.</p></li>
+</ul>
+
+<p>cache 가 무효화되면 이후의 모든 <code>Dockerfile</code> 명령이 새로운 이미지를 생성하고 cache 는 사용되지 않습니다.</p>
+
+<h2 id="the-dockerfile-instructions">The Dockerfile instructions</h2>
+
+<p><em>Dockerfile 지침</em></p>
+
+<p>아래에서 <code>Dockerfile</code> 에서 사용할 수 있는 다양한 지침을 작성하는 가장 좋은 방법에 대한 권장 사항을 찾을 수 있습니다.</p>
+
+<h3 id="from">FROM</h3>
+
+<p><a href="https://docs.docker.com/engine/reference/builder/#from" rel="nofollow" target="_blank">Dockerfile reference for the FROM instruction</a></p>
+
+<p>가능하면 현재 공식 저장소를 이미지의 기초로 사용하십시오.
+<a href="https://hub.docker.com/_/alpine/" rel="nofollow" target="_blank">Alpine image</a>는 매우 엄격하게 제어되고 전체 배포가 진행되는 동안 최소 (현재 5MB 미만)로 유지되므로 권장합니다.</p>
+
+<h3 id="label">LABEL</h3>
+
+<p><a href="https://docs.docker.com/engine/userguide/labels-custom-metadata/" rel="nofollow" target="_blank">Understanding object labels</a></p>
+
+<p>image 에 레이블을 추가하여 프로젝트 별 이미지 구성, 라이센스 정보 기록, 자동화 지원 또는 기타 이유로 도움을 받을 수 있습니다.
+각 label에 대해 <code>LABEL</code> 로 시작하고 하나 이상의 key-value 쌍이 있는 행을 추가하십시오.
+다음 예제는 서로 다른 수용 가능한 형식을 보여줍니다.
+설명 주석은 인라인에 포함됩니다.</p>
+
+<blockquote>
+<p><strong>Note:</strong>
+문자열에 공백이 포함되어 있으면 공백을 인용해야 합니다.
+그렇지 않으면 공백을 빠져나오게 처리해야합니다.
+문자열에 내부 인용 문자(")가 포함되어 있으면 이스케이프 문자도 함께 사용하십시오.</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="c1"># Set one or more individual labels</span>
+<span class="s">LABEL com.example.version="0.0.1-beta"</span>
+<span class="s">LABEL vendor="ACME Incorporated"</span>
+<span class="s">LABEL com.example.release-date="2015-02-12"</span>
+<span class="s">LABEL com.example.version.is-production=""</span>
+</code></pre></div>
+<p>이미지는 둘 이상의 라벨을 가질 수 있습니다.
+Docker 1.10 이전에는 여분의 레이어가 생성되는 것을 방지하기 위해 모든 레이블을 단일 LABEL 명령에 결합하는 것이 좋습니다.
+더 이상 필요하지 않지만 레이블 결합은 여전히 ​​지원됩니다.</p>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="c1"># Set multiple labels on one line</span>
+<span class="s">LABEL com.example.version="0.0.1-beta" com.example.release-date="2015-02-12"</span>
+</code></pre></div>
+<p>위의 내용은 다음과 같이 쓰여질 수도 있습니다:</p>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="c1"># Set multiple labels at once, using line-continuation characters to break long lines</span>
+<span class="s">LABEL vendor=ACME\ Incorporated \</span>
+      <span class="s">com.example.is-beta= \</span>
+      <span class="s">com.example.is-production="" \</span>
+      <span class="s">com.example.version="0.0.1-beta" \</span>
+      <span class="s">com.example.release-date="2015-02-12"</span>
+</code></pre></div>
+<p>사용 가능한 레이블 key 및 값에 대한 지침은 객체 레이블 이해를 참조하십시오.
+레이블을 쿼리하는 방법에 대한 자세한 내용은, <a href="https://docs.docker.com/engine/userguide/labels-custom-metadata/#managing-labels-on-objects" rel="nofollow" target="_blank">객체의 레이블 관리</a>에서 필터링과 관련된 항목을 참조하십시오.
+Dockerfile 참조에서 <a href="https://docs.docker.com/engine/reference/builder/#label" rel="nofollow" target="_blank">LABEL</a> 을 참조하십시오.</p>
+
+<h3 id="run">RUN</h3>
+
+<p><a href="https://docs.docker.com/engine/reference/builder/#run" rel="nofollow" target="_blank">Dockerfile reference for the RUN instruction</a></p>
+
+<p>항상 그렇듯이 <code>Dockerfile</code> 을 읽기 쉽고 이해하기 쉽고 유지하기 쉽도록하려면 길고 복잡한 <code>RUN</code> 문을 <code>\</code> 로 구분 된 여러 줄로 나눕니다.</p>
+
+<h4 id="apt-get">APT-GET</h4>
+
+<p>아마 <code>RUN</code> 의 가장 일반적인 유스 케이스는 <code>apt-get</code> 의 응용 프로그램이다.
+<code>RUN apt-get</code> 명령은 패키지를 설치하기 때문에 주의해야 할 몇 가지 문제점이 있습니다.</p>
+
+<p><code>RUN apt-get upgrade</code> 또는 <code>dist-upgrade</code> 를 실행하지 않아야 합니다.
+상위 이미지의 "필수" 패키지 중 많은 부분이 <a href="https://docs.docker.com/engine/reference/run/#security-configuration" rel="nofollow" target="_blank">unprivileged container</a> 에서 업그레이드되지 않기 때문입니다.
+부모 이미지에 포함된 패키지가 오래 되었다면 관리자에게 문의해야합니다.
+특정 패키지 <code>foo</code> 가 업데이트 되어야 함을 알고 있다면 <code>apt-get install -y foo</code> 를 사용하여 자동으로 업데이트하십시오.</p>
+
+<p>동일한 <code>RUN</code> 문에서 항상 <code>RUN apt-get update</code> 와 <code>apt-get install</code> 을 결합하십시오. 예:</p>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="s">RUN apt-get update &amp;&amp; apt-get install -y \</span>
+    <span class="s">package-bar \</span>
+    <span class="s">package-baz \</span>
+    <span class="s">package-foo</span>
+</code></pre></div>
+<p><code>RUN</code> 문에서 <code>apt-get update</code> 만 사용하면 캐싱 문제가 발생하고 이후 <code>apt-get install</code> 지침이 실패합니다. 예를 들어 Dockerfile이 있다고 가정해 보겠습니다:</p>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml">    <span class="s">FROM ubuntu:14.04</span>
+    <span class="s">RUN apt-get update</span>
+    <span class="s">RUN apt-get install -y curl</span>
+</code></pre></div>
+<p>이미지를 만든 후에는 모든 레이어가 Docker 캐시에 있습니다.
+나중에 패키지를 추가하여 <code>apt-get install</code> 을 수정한다고 가정해보십시오:</p>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml">    <span class="s">FROM ubuntu:14.04</span>
+    <span class="s">RUN apt-get update</span>
+    <span class="s">RUN apt-get install -y curl nginx</span>
+</code></pre></div>
+<p>Docker는 초기 및 수정된 명령어가 동일하다고 판단하고 이전 단계의 캐시를 재사용합니다.
+결과적으로 빌드가 캐시된 버전을 사용하기 때문에 <code>apt-get update</code> 가 실행되지 않습니다.
+<code>apt-get update</code> 가 실행되지 않기 때문에 빌드가 <code>curl</code> 및 <code>nginx</code> 패키지의 구 버전을 가져올 수 있습니다.</p>
+
+<p><code>run apt-get update &amp;&amp; apt-get install -y</code> 를 사용하면 dockerfile 이 코딩이나 수동 개입없이 최신 패키지 버전을 설치할 수 있습니다.
+이 기법을 "cache busting"(캐시 무효화)라고 합니다.
+패키지 버전을 지정하여 cache-busting 을 수행 할 수도 있습니다.
+이를 "version pinning" 이라고 합니다. 예를 들면 다음과 같습니다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">RUN apt-get update <span class="o">&amp;&amp;</span> apt-get <span class="nb">install</span> <span class="nt">-y</span> <span class="se">\</span>
+    package-bar <span class="se">\</span>
+    package-baz <span class="se">\</span>
+    package-foo<span class="o">=</span>1.3.<span class="k">*</span>
+</code></pre></div>
+<p>Version pinning 은 캐시의 내용과 관계없이 빌드가 특정 버전을 검색하도록 합니다.
+이 기술은 또한 필요한 패키지의 예기치 않은 변경으로 인한 실패를 줄일 수 있습니다.</p>
+
+<p>다음은 모든 <code>apt-get</code> 권장 사항을 보여주는 잘 구성된 <code>RUN</code> 명령어입니다.</p>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="s">RUN apt-get update &amp;&amp; apt-get install -y \</span>
+    <span class="s">aufs-tools \</span>
+    <span class="s">automake \</span>
+    <span class="s">build-essential \</span>
+    <span class="s">curl \</span>
+    <span class="s">dpkg-sig \</span>
+    <span class="s">libcap-dev \</span>
+    <span class="s">libsqlite3-dev \</span>
+    <span class="s">mercurial \</span>
+    <span class="s">reprepro \</span>
+    <span class="s">ruby1.9.1 \</span>
+    <span class="s">ruby1.9.1-dev \</span>
+    <span class="s">s3cmd=1.1.* \</span>
+ <span class="s">&amp;&amp; rm -rf /var/lib/apt/lists/*</span>
+</code></pre></div>
+<p><code>s3cmd</code> 지침은 버전 <code>1.1.*</code> 을 지정합니다.
+이전에 image 가 이전 버전을 사용했다면 새로운 버전을 지정하면 <code>apt-get update</code>의 cache bust 가 발생하고 새 버전의 설치가 보장됩니다.
+각 행에 패키지를 나열하면 패키지 중복의 실수를 예방할 수 있습니다.</p>
+
+<p>또한 <code>/var/lib/apt/lists</code> 를 제거하여 apt cache 를 정리하면 apt cache 가 layer 에 저장되지 않으므로 image 크기가 줄어 듭니다.
+<code>RUN</code> 문은 <code>apt-get update</code> 로 시작하기 때문에 패키지 캐시는 <code>apt-get install</code> 하기 전에 항상 새로 고쳐집니다.</p>
+
+<blockquote>
+<p><strong>Note:</strong> Debian 및 Ubuntu 공식 image 는 자동으로 <code>apt-get clean</code> 을 실행하므로 명시 적 호출이 필요하지 않습니다.</p>
+</blockquote>
+
+<h4 id="using-pipes">USING PIPES</h4>
+
+<p>일부 <code>RUN</code> 명령은 다음 예와 같이 <code>|</code> 를 사용하여 한 명령의 출력을 다른 명령으로 파이프하는 기능에 따라 다릅니다:</p>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="s">RUN wget -O - https://some.site | wc -l &gt; /number</span>
+</code></pre></div>
+<p>Docker는 <code>/bin/sh -c</code> 인터프리터를 사용하여 이러한 명령을 실행합니다.
+이 인터프리터는 파이프에서 마지막 작업의 종료 코드만 평가하여 성공 여부를 판단합니다.
+위의 예제에서 wget 명령이 실패하더라도 wc -l 명령이 성공하는 한이 빌드 단계가 성공하고 새 이미지가 생성됩니다.</p>
+
+<p>파이프의 모든 단계에서 오류로 인해 명령이 실패하게 하려면 예기치 않은 오류로 인해 실수로 빌드가 성공하지 못하게 하려면 <code>set -o pipefail &amp;&amp;</code> 를 추가하십시오. 예:</p>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="s">RUN set -o pipefail &amp;&amp; wget -O - https://some.site | wc -l &gt; /number</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Note:</strong>
+모든 shell 이 <code>-o pipefail</code> 옵션을 지원하는 것은 아닙니다.
+그러한 경우 (Debina 기반 이미지의 기본 shell 인 대시 셸과 같은)에는 <code>RUN</code> 의 <em>exec</em> 형식을 사용하여 <code>pipefail</code> 옵션을 지원하는 셸을 명시적으로 선택하는 것이 좋습니다. 예:</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="s">RUN ["/bin/bash", "-c", "set -o pipefail &amp;&amp; wget -O - https://some.site | wc -l &gt; /number"]</span>
+</code></pre></div>
+<h3 id="cmd">CMD</h3>
+
+<p><a href="https://docs.docker.com/engine/reference/builder/#cmd" rel="nofollow" target="_blank">Dockerfile reference for the CMD instruction</a></p>
+
+<p><code>CMD</code> 명령은 이미지에 포함된 소프트웨어를 인수와 함께 실행하는 데 사용해야 합니다.
+<code>CMD</code> 는 거의 항상 <code>CMD ["executable", "param1", "param2"...]</code> 형식으로 사용해야합니다.
+따라서 이미지가 Apache 및 Rails와 같은 서비스를 위한 것이라면 <code>CMD ["apache2", "- DFOREGROUND"]</code> `와 같은 것을 실행할 것입니다.
+사실, 이 지침의 유형은 모든 서비스-기반 이미지에 권장됩니다.</p>
+
+<p>대부분의 다른 경우 CMD는 bash, python 및 perl과 같은 대화식 shell 을 제공해야합니다.
+예로, <code>CMD ["perl", "-de0"]</code>, <code>CMD ["python"]</code> 또는 <code>CMD ["php", "-a"]</code>.
+이 양식을 사용한다는 것은 <code>docker run -it python</code> 과 같은 것을 실행할 때 쓸모있는 shell 에 떨어질 준비가 되었음을 의미합니다.
+<code>CMD</code> 는 <code>ENTRYPOINT</code> 와 함께 <code>CMD ["param", "param"]</code> 방식으로 거의 사용되지 않아야합니다.
+단, 사용자와 예상 사용자가 <code>ENTRYPOINT</code> 작동 방식에 이미 익숙하지 않은 경우는 예외입니다.</p>
+
+<h3 id="expose">EXPOSE</h3>
+
+<p><a href="https://docs.docker.com/engine/reference/builder/#expose" rel="nofollow" target="_blank">Dockerfile reference for the EXPOSE instruction</a></p>
+
+<p><code>EXPOSE</code> 명령은 container 가 연결을 수신 대기하는 Port 를 나타냅니다.
+결과적으로 응용 프로그램에 일반적인 일반 Port 를 사용해야 합니다.
+예를 들어 Apache Web Server 를 포함하는 image 는 <code>EXPOSE 80</code> 을 사용하고 MongoDB 가 포함된 이미지는 <code>EXPOSE 27017</code> 을 사용합니다.</p>
+
+<p>외부 액세스의 경우 사용자는 지정된 Port 를 선택한 Port 에 매핑하는 방법을 나타내는 flag 와 함께 <code>docker run</code> 을 실행할 수 있습니다.
+container 연결을 위해, Docker는 수취인 container 에서 출발지까지의 경로 (즉, <code>MYSQL_PORT_3306_TCP</code>)에 대한 환경 변수를 제공합니다.</p>
+
+<h3 id="env">ENV</h3>
+
+<p><a href="https://docs.docker.com/engine/reference/builder/#env" rel="nofollow" target="_blank">Dockerfile reference for the ENV instruction</a></p>
+
+<p>새 소프트웨어를 더 쉽게 실행하기 위해 <code>ENV</code> 를 사용하여 컨테이너가 설치하는 소프트웨어의 <code>PATH</code> 환경 변수를 업데이트 할 수 있습니다.
+예를 들어, <code>ENV PATH /usr/local/nginx/bin:$PATH</code> 는 <code>CMD ["nginx"]</code> 가 작동하는 것을 보장합니다.</p>
+
+<p><code>ENV</code> 명령은 Postgres의 <code>PGDATA</code> 와 같이 컨테이너 화하려는 서비스에 필요한 필수 환경 변수를 제공하는 데 유용합니다.</p>
+
+<p>마지막으로, <code>ENV</code> 는 또한 다음 예제와 같이 일반적으로 사용되는 버전 번호를 설정하여 version bumps 을 유지 관리하기가 쉽습니다:</p>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="s">ENV PG_MAJOR </span><span class="m">9.3</span>
+<span class="s">ENV PG_VERSION 9.3.4</span>
+<span class="s">RUN curl -SL http://example.com/postgres-$PG_VERSION.tar.xz | tar -xJC /usr/src/postgress &amp;&amp; …</span>
+<span class="s">ENV PATH /usr/local/postgres-$PG_MAJOR/bin:$PATH</span>
+</code></pre></div>
+<p>프로그램에서 상수 변수를 사용하는 것과 마찬가지로 (하드 코드 값과 반대)이 방법을 사용하면 단일 <code>ENV</code> 명령을 변경하여 컨테이너에서 소프트웨어 버전을 자동으로 dump 시킬 수 있습니다.</p>
+
+<h3 id="add-or-copy">ADD or COPY</h3>
+
+<p><a href="https://docs.docker.com/engine/reference/builder/#add" rel="nofollow" target="_blank">Dockerfile reference for the ADD instruction</a></p>
+
+<p><a href="https://docs.docker.com/engine/reference/builder/#copy" rel="nofollow" target="_blank">Dockerfile reference for the COPY instruction</a></p>
+
+<p><code>ADD</code> 와 <code>COPY</code> 는 기능적으로 유사하지만, 일반적으로 <code>COPY</code> 가 선호됩니다.
+<code>ADD</code> 보다 투명하기 때문입니다.
+<code>COPY</code> 는 로컬 파일의 기본 복사를 container 로 지원하는 반면, <code>ADD</code>에는 즉시 명확하지 않은 몇 가지 기능(예: 로컬 전용 tar 추출 및 원격 URL 지원)이 있습니다.
+결과적으로, <code>ADD</code> 의 가장 좋은 용도는 <code>ADD rootfs.tar.xz /</code> 와 같이 이미지에 로컬 tar 파일 자동 추출입니다.</p>
+
+<p>context 의 다른 파일을 사용하는 <code>Dockerfile</code> 단계가 여러 개인 경우 한꺼번에 복사하지 말고 개별적으로 <code>COPY</code> 하십시오.
+이렇게하면 필수적으로 필요한 파일이 변경 될 경우 각 단계의 빌드 캐시가 + 효화되어 (단계가 다시 실행되도록)됩니다.</p>
+
+<p>예:</p>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="s">COPY requirements.txt /tmp/</span>
+<span class="s">RUN pip install --requirement /tmp/requirements.txt</span>
+<span class="s">COPY . /tmp/</span>
+</code></pre></div>
+<p><code>RUN</code> 단계에 대한 캐시 무효화가 적습니다. 이전에 <code>COPY . /tmp/</code> 를 입력 한 경우보다.</p>
+
+<p>image 크기가 중요하기 때문에 <code>ADD</code> 를 사용하여 원격 URL에서 패키지를 가져 오지 않는 것이 좋습니다.
+대신 <code>curl</code> 이나 <code>wget</code> 을 사용해야합니다.
+이렇게하면 압축을 푼 후에 더 이상 필요하지 않은 파일을 삭제할 수 있으므로 이미지에 다른 레이어를 추가 할 필요가 없습니다.
+예를 들어, 다음과 같은 일을 <em>피해야 합니다</em>:</p>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="s">ADD http://example.com/big.tar.xz /usr/src/things/</span>
+<span class="s">RUN tar -xJf /usr/src/things/big.tar.xz -C /usr/src/things</span>
+<span class="s">RUN make -C /usr/src/things all</span>
+</code></pre></div>
+<p>대신 다음과 같이하십시오:</p>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="s">RUN mkdir -p /usr/src/things \</span>
+    <span class="s">&amp;&amp; curl -SL http://example.com/big.tar.xz \</span>
+    <span class="s">| tar -xJC /usr/src/things \</span>
+    <span class="s">&amp;&amp; make -C /usr/src/things all</span>
+</code></pre></div>
+<p><code>ADD</code> 의 tar 자동 추출 기능이 필요없는 다른 항목(파일, 디렉토리)의 경우 항상 <code>COPY</code> 를 사용해야합니다.</p>
+
+<h3 id="entrypoint">ENTRYPOINT</h3>
+
+<p><a href="https://docs.docker.com/engine/reference/builder/#entrypoint" rel="nofollow" target="_blank">Dockerfile reference for the ENTRYPOINT instruction</a></p>
+
+<p><code>ENTRYPOINT</code> 를 사용하는 가장 좋은 방법은 이미지의 기본 명령을 설정하여 해당 이미지를 해당 명령처럼 실행되도록 허용 한 다음 <code>CMD</code> 를 기본 플래그로 사용하는 것입니다.</p>
+
+<p>명령 줄 도구 <code>s3cmd</code> 의 이미지 예제부터 시작해 보겠습니다:</p>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="s">ENTRYPOINT ["s3cmd"]</span>
+<span class="s">CMD ["--help"]</span>
+</code></pre></div>
+<p>이제 이미지는 다음과 같이 실행되어 명령의 도움말을 표시 할 수 있습니다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker run s3cmd
+</code></pre></div>
+<p>또는 올바른 매개 변수를 사용하여 명령을 실행하십시오:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker run s3cmd <span class="nb">ls </span>s3://mybucket
+</code></pre></div>
+<p>위의 명령에서 볼 수 있듯이 이미지 이름이 바이너리에 대한 참조로 두 배가 될 수 있기 때문에 유용합니다.</p>
+
+<p><code>ENTRYPOINT</code> 명령을 helper 스크립트와 함께 사용하여 위의 명령과 유사한 방식으로 기능을 수행 할 수 있습니다.
+이 경우 도구를 시작하면 둘 이상의 단계가 필요할 수도 있습니다.</p>
+
+<p>예를 들어 Postgres 공식 이미지는 다음 스크립트를 <code>ENTRYPOINT</code> 로 사용합니다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c">#!/bin/bash</span>
+<span class="nb">set</span> <span class="nt">-e</span>
+
+<span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span> <span class="o">=</span> <span class="s1">'postgres'</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+    </span><span class="nb">chown</span> <span class="nt">-R</span> postgres <span class="s2">"</span><span class="nv">$PGDATA</span><span class="s2">"</span>
+
+    <span class="k">if</span> <span class="o">[</span> <span class="nt">-z</span> <span class="s2">"</span><span class="si">$(</span><span class="nb">ls</span> <span class="nt">-A</span> <span class="s2">"</span><span class="nv">$PGDATA</span><span class="s2">"</span><span class="si">)</span><span class="s2">"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+        </span>gosu postgres initdb
+    <span class="k">fi
+
+    </span><span class="nb">exec </span>gosu postgres <span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
+<span class="k">fi
+
+</span><span class="nb">exec</span> <span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Note:</strong>
+이 스크립트는 최종 실행 응용 프로그램이 컨테이너의 PID 1 이 되도록 <code>exec</code> Bash command 을 사용합니다.
+이렇게 하면 응용 프로그램이 컨테이너로 보내지는 모든 유닉스 신호를 수신 할 수 있습니다.
+자세한 내용은 <code>ENTRYPOINT</code> 도움말을 참조하십시오.</p>
+</blockquote>
+
+<p>helper script 는 container 에 복사되고 container 시작시 <code>ENTRYPOINT</code> 를 통해 실행됩니다:</p>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="s">COPY ./docker-entrypoint.sh /</span>
+<span class="s">ENTRYPOINT ["/docker-entrypoint.sh"]</span>
+</code></pre></div>
+<p>이 스크립트는 사용자가 여러 가지 방법으로 Postgres와 상호 작용할 수 있게 합니다.</p>
+
+<p>간단히 Postgres를 시작할 수 있습니다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker run postgres
+</code></pre></div>
+<p>또는 Postgres를 실행하고 매개 변수를 서버에 전달하는 데 사용할 수 있습니다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker run postgres postgres <span class="nt">--help</span>
+</code></pre></div>
+<p>마지막으로 Bash와 같이 완전히 다른 도구를 시작하는 데 사용할 수도 있습니다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker run <span class="nt">--rm</span> <span class="nt">-it</span> postgres bash
+</code></pre></div>
+<h3 id="volume">VOLUME</h3>
+
+<p><a href="https://docs.docker.com/engine/reference/builder/#volume" rel="nofollow" target="_blank">Dockerfile reference for the VOLUME instruction</a></p>
+
+<p><code>VOLUME</code> 명령은 데이터베이스 저장소 영역, 구성 저장소 또는 docker container 에서 만든 files/folders 를 노출하는 데 사용해야 합니다.
+가변적이거나 사용자가 사용할 수있는 이미지 부분에 <code>VOLUME</code> 을 사용하는 것이 좋습니다.</p>
+
+<h3 id="user">USER</h3>
+
+<p><a href="https://docs.docker.com/engine/reference/builder/#user" rel="nofollow" target="_blank">Dockerfile reference for the USER instruction</a></p>
+
+<p>권한없이 서비스를 실행할 수있는 경우 <code>USER</code> 를 사용하여 non-root인 사용자로 변경하십시오.
+<code>Dockerfile</code> 에서 <code>RUN groupadd -r postgres &amp;&amp; useradd --no-log-init -r -g postgres postgres</code> 와 같은 사용자 및 그룹을 작성하는 것으로 시작하십시오.</p>
+
+<blockquote>
+<p><strong>Note:</strong>
+이미지의 사용자 및 그룹은 이미지 재구성에 관계없이 "next" UID/GID 가 할당된다는 점에서 비결정적 UID/GID를 얻습니다.
+따라서 중요한 경우 명시적인 UID/GID 를 지정해야 합니다.</p>
+
+<p><strong>Note:</strong>
+Go archive/tar 패키지에서 부족한 파일을 처리하는 중 해결되지 않은 bug 로 인해 Docker container 내에 충분히 큰 UID를 가진 사용자를 만들려고 하면 container layer 안의 /var/log/faillog 에  NUL (\0) 문자가 가득 차서 디스크가 고갈 될 수 있습니다.
+useradd 에 --no-log-init 플래그를 전달하면이 문제가 해결됩니다.
+Debian/Ubuntu <code>adduser</code> 래퍼는 <code>--no-log-init</code> flag를 지원하지 않으므로 피해야 합니다.</p>
+</blockquote>
+
+<p><code>sudo</code> 를 설치하거나 사용하는 것은 피해야한다.
+왜냐하면 예측할 수없는 TTY와 신호 전달 동작으로 인해 문제가 더 많이 발생할 수 있기 때문이다.
+<code>sudo</code> 와 유사한 기능이 절대적으로 필요한 경우 (예: 데몬을 루트로 초기화했지만 루트가 아닌 데몬으로 실행하는 경우) <a href="https://github.com/tianon/gosu" rel="nofollow" target="_blank">gosu</a> 를 사용할 수 있습니다.</p>
+
+<p>마지막으로 레이어와 복잡성을 줄이려면 USER를 앞뒤로 자주 전환하지 마십시오.</p>
+
+<h3 id="workdir">WORKDIR</h3>
+
+<p><a href="https://docs.docker.com/engine/reference/builder/#workdir" rel="nofollow" target="_blank">Dockerfile reference for the WORKDIR instruction</a></p>
+
+<p>명확성과 신뢰성을 위해 항상 <code>WORKDIR</code> 에 절대 경로를 사용해야 합니다.
+또한 <code>RUN cd ... &amp;&amp; do-something</code> 과 같이 읽기, 문제 해결 및 유지 관리가 어려운 지침 대신 <code>WORKDIR</code> 을 사용해야 합니다.</p>
+
+<h3 id="onbuild">ONBUILD</h3>
+
+<p><a href="https://docs.docker.com/engine/reference/builder/#onbuild" rel="nofollow" target="_blank">Dockerfile reference for the ONBUILD instruction</a></p>
+
+<p><code>ONBUILD</code> 명령은 현재 <code>Dockerfile</code> 빌드가 완료된 후에 실행됩니다.
+<code>ONBUILD</code> 는 현재 이미지에서 파생된 모든 자식 이미지에서 실행됩니다.
+<code>ONBUILD</code> 명령을 부모 <code>Dockerfile</code> 이 자식 <code>Dockerfile</code> 에 주는 명령으로 생각하십시오.
+Docker 빌드는 자식 <code>Dockerfile</code> 의 명령 앞에 <code>ONBUILD</code> 명령을 실행합니다.</p>
+
+<p><code>ONBUILD</code> 는 주어진 이미지에서 생성될 이미지에 유용합니다.
+예를 들어, Ruby의 <code>ONBUILD</code> 변형에서 볼 수 있듯이 <code>Dockerfile</code> 내에서 해당 언어로 작성된 임의의 사용자 소프트웨어를 빌드하는 언어 스택 이미지에 <code>ONBUILD</code> 를 사용합니다.
+<code>ONBUILD</code> 에서 빌드된 이미지는 별도의 태그를 가져야합니다 (예: ruby​​:1.9-onbuild 또는 ruby​:2.0-onbuild).</p>
+
+<p><code>ONBUILD</code> 에 <code>ADD</code> 또는 <code>COPY</code> 를 넣을 때 주의하십시오.
+새 빌드의 컨텍스트에 추가되는 리소스가 누락되면 "onbuild"이미지가 파국적으로 실패합니다.
+위에서 권장 한대로 별도의 태그를 추가하면 <code>Dockerfile</code> 작성자가 선택하도록 허용하여 이를 완화 할 수 있습니다.</p>
+
+<h2 id="examples-for-official-repositories">Examples for Official Repositories</h2>
+
+<p>이 공식 저장소에는 모범적인 <code>Dockerfile</code>s:</p>
+
+<ul>
+<li><a href="https://hub.docker.com/_/golang/" rel="nofollow" target="_blank">Go</a></li>
+<li><a href="https://hub.docker.com/_/perl/" rel="nofollow" target="_blank">Perl</a></li>
+<li><a href="https://hub.docker.com/_/hylang/" rel="nofollow" target="_blank">Hy</a></li>
+<li><a href="https://hub.docker.com/_/ruby/" rel="nofollow" target="_blank">Ruby</a></li>
+</ul>
+
+<h2 id="additional-resources">Additional resources:</h2>
+
+<ul>
+<li><a href="https://docs.docker.com/engine/reference/builder/" rel="nofollow" target="_blank">Dockerfile Reference</a></li>
+<li><a href="https://docs.docker.com/engine/userguide/eng-image/baseimages/" rel="nofollow" target="_blank">More about Base Images</a></li>
+<li><a href="https://docs.docker.com/docker-hub/builds/" rel="nofollow" target="_blank">More about Automated Builds</a></li>
+<li><a href="https://docs.docker.com/docker-hub/official_repos/" rel="nofollow" target="_blank">Guidelines for Creating Official Repositories</a></li>
+</ul>
+
+<h2 id="reference">Reference</h2>
+
+<p><a href="https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/" rel="nofollow" target="_blank">https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

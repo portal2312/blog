@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Part 6 - Static files | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Part 6 - Static files" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="웹 응용 프로그램은 서버에서 생성 된 HTML을 제외하고 일반적으로 전체 웹 페이지를" />
+<meta property="og:description" content="웹 응용 프로그램은 서버에서 생성 된 HTML을 제외하고 일반적으로 전체 웹 페이지를" />
+<link rel="canonical" href="/blog/docs/develop/N-Z/Python/lib/django/docs/01_First_Steps/tutorial/part_6_static_files.html" />
+<meta property="og:url" content="/blog/docs/develop/N-Z/Python/lib/django/docs/01_First_Steps/tutorial/part_6_static_files.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-02T16:38:51+09:00" />
+<script type="application/ld+json">
+{"description":"웹 응용 프로그램은 서버에서 생성 된 HTML을 제외하고 일반적으로 전체 웹 페이지를","headline":"Part 6 - Static files","dateModified":"2019-12-02T16:38:51+09:00","datePublished":"2019-12-02T16:38:51+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/docs/develop/N-Z/Python/lib/django/docs/01_First_Steps/tutorial/part_6_static_files.html"},"url":"/blog/docs/develop/N-Z/Python/lib/django/docs/01_First_Steps/tutorial/part_6_static_files.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/blog/feed.xml" title="Portal2312's blog" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113063601-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+<script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Part 6 - Static files</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#customize-your-apps-look-and-feel">Customize your app&#39;s look and feel</a></li>
+<li class="toc-entry toc-h2"><a href="#adding-a-background-image">Adding a background-image</a></li>
+<li class="toc-entry toc-h1"><a href="#reference">Reference</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#url">URL</a></li>
+</ul>
+</li>
+</ul><ul>
+<li>웹 응용 프로그램은 서버에서 생성 된 HTML을 제외하고 일반적으로 전체 웹 페이지를</li>
+</ul>
+
+<p>렌더링하는 데 필요한 추가 파일. (예: img, javaScript, CSS)</p>
+
+<ul>
+<li>작은 프로젝트의 경우, 이것은 큰 문제가 아님.</li>
+</ul>
+
+<p>웹 서버가 찾을 수있는 곳에 보관할 수 있기 때문.</p>
+
+<ul>
+<li>큰 프로젝트, 특히 여러 응용 프로그램으로 구성된 프로젝트에서는</li>
+</ul>
+
+<p>각 응용 프로그램에서 제공하는 여러 static files 세트를 다루기가 까다로워 짐.</p>
+
+<p><strong>django.contrib.staticfiles</strong></p>
+
+<p>Static files을 각 Apps 프로그램(및 지정한 다른 위치)에서 프로덕션 환경에서 쉽게 제공
+할 수 있는 단일 위치로 수집함.</p>
+
+<h2 id="customize-your-apps-look-and-feel">
+<a class="anchor" href="#customize-your-apps-look-and-feel" aria-hidden="true"><span class="octicon octicon-link"></span></a>Customize your app's look and feel</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">mkdir</span> <span class="nt">-p</span> ./mysite/polls/static/polls
+<span class="nv">$ </span><span class="nb">touch</span> ./mysite/polls/static/polls/style.css
+</code></pre></div>
+<p>Django가 templates(polls/templates/)과 마찬가지로 <strong>static files</strong> 을 찾음.</p>
+
+<p>Django의 <a href="https://docs.djangoproject.com/en/1.10/ref/settings/#std:setting-STATICFILES_FINDERS">STATICFILES_STORAGE</a> 설정은 다양한 소스에서 정적 파일을 찾는 방법을
+알고 있는 finters 목록을 포함.</p>
+
+<p>기본값 중 하나는 <strong>AppDirectoriesFinder</strong>,
+방금 생성 한 설문 조사에서 처럼 <strong>INSTALLED_APPS</strong> 각각에서 "static" 하위 Dir 찾음.
+static files에 대해 동일한 Dir 구조 사용.</p>
+
+<p>방금 작성한 <strong>static</strong> Dir에서 <strong>polls</strong> 라는 다른 Dir를 작성하고
+그 안에 style.css라는 파일을 작성. (polls/static/polls/style.css)</p>
+
+<p><strong>AppDirectoriesFinder</strong> static files finder의 작동 방식 때문에
+장고의 static files를 간단히 polls/style.css로 참조 할 수 있음.
+(templates의 경로를 참조하는 방법과 비슷)</p>
+<div class="highlight"><pre><code class="language-" data-lang="">* Static file namespacing
+
+templates 마찬가지로
+static files을 polls/static (다른 polls 서브 Dir를 작성하지 않고)으로
+직접 가져올 수는 있지만 실제로는 좋지 않은 아이디어 임.
+
+Django는 이름이 일치하는 첫 번째 static files을 선택.
+
+다른 응용 프로그램에서 같은 이름의 static files을 가지고 있는 경우
+Django는 그들 사이를 구별 하십시오.
+
+우리는 Django가 올바른 것을 가리킬 수 있어야 하며,
+이것을 보장하는 가장 쉬운 방법은 namespace를 지정.
+
+즉, static files을 Apps 프로그램 자체의 다른 Dir에 넣으면 됨.
+</code></pre></div><div class="highlight"><pre><code class="language-css" data-lang="css"><span class="c">/* ./polls/static/polls/style.css */</span>
+<span class="nt">li</span> <span class="nt">a</span> <span class="p">{</span>
+    <span class="nl">color</span><span class="p">:</span> <span class="no">green</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><div class="highlight"><pre><code class="language-html" data-lang="html"><span class="c">&lt;!--polls/templates/polls/index.html--&gt;</span>
+{% load static %}
+
+<span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">type=</span><span class="s">"text/css"</span> <span class="na">href=</span><span class="s">"{% static 'polls/style.css' %}"</span> <span class="nt">/&gt;</span>
+</code></pre></div>
+<p><strong>{\% static \%}</strong> tamplate tag는 static files의 절대 URL을 생성.</p>
+
+<p>개발하기 위해 반드시 필요.</p>
+
+<p><strong><a href="http://localhost:8000/polls/">http://localhost:8000/polls/</a></strong> reload 그리고 너는 질문 링크가
+초록색 (Django style!) 인 것을 볼 수 있음.
+이는 스타일 시트가 제대로 load 되었음을 의미함.</p>
+
+<hr>
+
+<h2 id="adding-a-background-image">
+<a class="anchor" href="#adding-a-background-image" aria-hidden="true"><span class="octicon octicon-link"></span></a>Adding a background-image</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">mkdir</span> <span class="nt">-p</span> ./polls/static/polls/images
+<span class="nv">$ </span><span class="nb">touch </span>background.gif
+</code></pre></div>
+<p>CSS 수정 (내용 추가)</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>vi ./polls/static/polls/style.css
+</code></pre></div><div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">body</span> <span class="p">{</span>
+    <span class="nl">background</span><span class="p">:</span> <span class="no">white</span> <span class="sx">url("images/bg.png")</span> <span class="nb">no-repeat</span> <span class="nb">right</span> <span class="nb">bottom</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p>Warning:</p>
+
+<p>물론 {\% static \%} template tag는 django가 생성하지 않은 stylesheet와 같은 static files에는 사용할 수 없음.</p>
+
+<p>static files의 경로를 수정하지 않고 STATIC_URL(URL을 생성하기 위해 static template tag에서 사용)을 변경할 수 있기 때문에 항상 상대 경로를 사용하여 static files을 서로 연결해야 함.</p>
+
+<p>이것들은 기본.</p>
+</blockquote>
+
+<p>자세한 내용은</p>
+
+<p>Framework에 포함 된 설정 및 기타 bit에 대한 <a href="https://docs.djangoproject.com/en/1.10/howto/static-files/">Managing static files</a> 및 <a href="https://docs.djangoproject.com/en/1.10/ref/contrib/staticfiles/">staticfiles</a>.</p>
+
+<p><a href="https://docs.djangoproject.com/en/1.10/howto/static-files/deployment/">Deploying static files</a> 실제 서버에서 정적 파일을 사용하는 방법에 대해 설명.</p>
+
+<h1 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h1>
+
+<h2 id="url">
+<a class="anchor" href="#url" aria-hidden="true"><span class="octicon octicon-link"></span></a>URL</h2>
+
+<ul>
+<li><p><a href="https://docs.djangoproject.com/en/1.10/ref/settings/#std:setting-STATICFILES_FINDERS">https://docs.djangoproject.com/en/1.10/ref/settings/#std:setting-STATICFILES_FINDERS</a></p></li>
+<li><p><a href="https://docs.djangoproject.com/en/1.10/howto/static-files/">https://docs.djangoproject.com/en/1.10/howto/static-files/</a></p></li>
+<li><p><a href="https://docs.djangoproject.com/en/1.10/ref/contrib/staticfiles/">https://docs.djangoproject.com/en/1.10/ref/contrib/staticfiles/</a></p></li>
+<li><p><a href="https://docs.djangoproject.com/en/1.10/howto/static-files/deployment/">https://docs.djangoproject.com/en/1.10/howto/static-files/deployment/</a></p></li>
+</ul>
+
+  </div>
+
+<div>
+  <ul>
+<li>웹 응용 프로그램은 서버에서 생성 된 HTML을 제외하고 일반적으로 전체 웹 페이지를</li>
+</ul>
+
+<p>렌더링하는 데 필요한 추가 파일. (예: img, javaScript, CSS)</p>
+
+<ul>
+<li>작은 프로젝트의 경우, 이것은 큰 문제가 아님.</li>
+</ul>
+
+<p>웹 서버가 찾을 수있는 곳에 보관할 수 있기 때문.</p>
+
+<ul>
+<li>큰 프로젝트, 특히 여러 응용 프로그램으로 구성된 프로젝트에서는</li>
+</ul>
+
+<p>각 응용 프로그램에서 제공하는 여러 static files 세트를 다루기가 까다로워 짐.</p>
+
+<p><strong>django.contrib.staticfiles</strong></p>
+
+<p>Static files을 각 Apps 프로그램(및 지정한 다른 위치)에서 프로덕션 환경에서 쉽게 제공
+할 수 있는 단일 위치로 수집함.</p>
+
+<h2 id="customize-your-apps-look-and-feel">Customize your app's look and feel</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">mkdir</span> <span class="nt">-p</span> ./mysite/polls/static/polls
+<span class="nv">$ </span><span class="nb">touch</span> ./mysite/polls/static/polls/style.css
+</code></pre></div>
+<p>Django가 templates(polls/templates/)과 마찬가지로 <strong>static files</strong> 을 찾음.</p>
+
+<p>Django의 <a href="https://docs.djangoproject.com/en/1.10/ref/settings/#std:setting-STATICFILES_FINDERS" rel="nofollow" target="_blank">STATICFILES_STORAGE</a> 설정은 다양한 소스에서 정적 파일을 찾는 방법을
+알고 있는 finters 목록을 포함.</p>
+
+<p>기본값 중 하나는 <strong>AppDirectoriesFinder</strong>,
+방금 생성 한 설문 조사에서 처럼 <strong>INSTALLED_APPS</strong> 각각에서 "static" 하위 Dir 찾음.
+static files에 대해 동일한 Dir 구조 사용.</p>
+
+<p>방금 작성한 <strong>static</strong> Dir에서 <strong>polls</strong> 라는 다른 Dir를 작성하고
+그 안에 style.css라는 파일을 작성. (polls/static/polls/style.css)</p>
+
+<p><strong>AppDirectoriesFinder</strong> static files finder의 작동 방식 때문에
+장고의 static files를 간단히 polls/style.css로 참조 할 수 있음.
+(templates의 경로를 참조하는 방법과 비슷)</p>
+<div class="highlight"><pre><code class="language-" data-lang="">* Static file namespacing
+
+templates 마찬가지로
+static files을 polls/static (다른 polls 서브 Dir를 작성하지 않고)으로
+직접 가져올 수는 있지만 실제로는 좋지 않은 아이디어 임.
+
+Django는 이름이 일치하는 첫 번째 static files을 선택.
+
+다른 응용 프로그램에서 같은 이름의 static files을 가지고 있는 경우
+Django는 그들 사이를 구별 하십시오.
+
+우리는 Django가 올바른 것을 가리킬 수 있어야 하며,
+이것을 보장하는 가장 쉬운 방법은 namespace를 지정.
+
+즉, static files을 Apps 프로그램 자체의 다른 Dir에 넣으면 됨.
+</code></pre></div><div class="highlight"><pre><code class="language-css" data-lang="css"><span class="c">/* ./polls/static/polls/style.css */</span>
+<span class="nt">li</span> <span class="nt">a</span> <span class="p">{</span>
+    <span class="nl">color</span><span class="p">:</span> <span class="no">green</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><div class="highlight"><pre><code class="language-html" data-lang="html"><span class="c">&lt;!--polls/templates/polls/index.html--&gt;</span>
+{% load static %}
+
+<span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">type=</span><span class="s">"text/css"</span> <span class="na">href=</span><span class="s">"{% static 'polls/style.css' %}"</span> <span class="nt">/&gt;</span>
+</code></pre></div>
+<p><strong>{\% static \%}</strong> tamplate tag는 static files의 절대 URL을 생성.</p>
+
+<p>개발하기 위해 반드시 필요.</p>
+
+<p><strong><a href="http://localhost:8000/polls/" rel="nofollow" target="_blank">http://localhost:8000/polls/</a></strong> reload 그리고 너는 질문 링크가
+초록색 (Django style!) 인 것을 볼 수 있음.
+이는 스타일 시트가 제대로 load 되었음을 의미함.</p>
+
+<hr>
+
+<h2 id="adding-a-background-image">Adding a background-image</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">mkdir</span> <span class="nt">-p</span> ./polls/static/polls/images
+<span class="nv">$ </span><span class="nb">touch </span>background.gif
+</code></pre></div>
+<p>CSS 수정 (내용 추가)</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>vi ./polls/static/polls/style.css
+</code></pre></div><div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">body</span> <span class="p">{</span>
+    <span class="nl">background</span><span class="p">:</span> <span class="no">white</span> <span class="sx">url("images/bg.png")</span> <span class="nb">no-repeat</span> <span class="nb">right</span> <span class="nb">bottom</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p>Warning:</p>
+
+<p>물론 {\% static \%} template tag는 django가 생성하지 않은 stylesheet와 같은 static files에는 사용할 수 없음.</p>
+
+<p>static files의 경로를 수정하지 않고 STATIC_URL(URL을 생성하기 위해 static template tag에서 사용)을 변경할 수 있기 때문에 항상 상대 경로를 사용하여 static files을 서로 연결해야 함.</p>
+
+<p>이것들은 기본.</p>
+</blockquote>
+
+<p>자세한 내용은</p>
+
+<p>Framework에 포함 된 설정 및 기타 bit에 대한 <a href="https://docs.djangoproject.com/en/1.10/howto/static-files/" rel="nofollow" target="_blank">Managing static files</a> 및 <a href="https://docs.djangoproject.com/en/1.10/ref/contrib/staticfiles/" rel="nofollow" target="_blank">staticfiles</a>.</p>
+
+<p><a href="https://docs.djangoproject.com/en/1.10/howto/static-files/deployment/" rel="nofollow" target="_blank">Deploying static files</a> 실제 서버에서 정적 파일을 사용하는 방법에 대해 설명.</p>
+
+<h1 id="reference">Reference</h1>
+
+<h2 id="url">URL</h2>
+
+<ul>
+<li><p><a href="https://docs.djangoproject.com/en/1.10/ref/settings/#std:setting-STATICFILES_FINDERS" rel="nofollow" target="_blank">https://docs.djangoproject.com/en/1.10/ref/settings/#std:setting-STATICFILES_FINDERS</a></p></li>
+<li><p><a href="https://docs.djangoproject.com/en/1.10/howto/static-files/" rel="nofollow" target="_blank">https://docs.djangoproject.com/en/1.10/howto/static-files/</a></p></li>
+<li><p><a href="https://docs.djangoproject.com/en/1.10/ref/contrib/staticfiles/" rel="nofollow" target="_blank">https://docs.djangoproject.com/en/1.10/ref/contrib/staticfiles/</a></p></li>
+<li><p><a href="https://docs.djangoproject.com/en/1.10/howto/static-files/deployment/" rel="nofollow" target="_blank">https://docs.djangoproject.com/en/1.10/howto/static-files/deployment/</a></p></li>
+</ul>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

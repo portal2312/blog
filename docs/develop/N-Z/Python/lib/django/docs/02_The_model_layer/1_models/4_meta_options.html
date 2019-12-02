@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Model Meta options | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Model Meta options" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Available Meta options abstract app_label base_manager_name db_table Table names" />
+<meta property="og:description" content="Available Meta options abstract app_label base_manager_name db_table Table names" />
+<link rel="canonical" href="/blog/docs/develop/N-Z/Python/lib/django/docs/02_The_model_layer/1_models/4_meta_options.html" />
+<meta property="og:url" content="/blog/docs/develop/N-Z/Python/lib/django/docs/02_The_model_layer/1_models/4_meta_options.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-02T16:38:51+09:00" />
+<script type="application/ld+json">
+{"description":"Available Meta options abstract app_label base_manager_name db_table Table names","headline":"Model Meta options","dateModified":"2019-12-02T16:38:51+09:00","datePublished":"2019-12-02T16:38:51+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/docs/develop/N-Z/Python/lib/django/docs/02_The_model_layer/1_models/4_meta_options.html"},"url":"/blog/docs/develop/N-Z/Python/lib/django/docs/02_The_model_layer/1_models/4_meta_options.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/blog/feed.xml" title="Portal2312's blog" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113063601-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+<script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Model Meta options</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#available-meta-options">Available Meta options</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#abstract">abstract</a></li>
+<li class="toc-entry toc-h3"><a href="#app_label">app_label</a></li>
+<li class="toc-entry toc-h3"><a href="#base_manager_name">base_manager_name</a></li>
+<li class="toc-entry toc-h3"><a href="#db_table">db_table</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#table-names">Table names</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#db_tablespace">db_tablespace</a></li>
+<li class="toc-entry toc-h3"><a href="#default_manager_name">default_manager_name</a></li>
+<li class="toc-entry toc-h3"><a href="#default_related_name">default_related_name</a></li>
+<li class="toc-entry toc-h3"><a href="#get_latest_by">get_latest_by</a></li>
+<li class="toc-entry toc-h3"><a href="#managed">managed</a></li>
+<li class="toc-entry toc-h3"><a href="#order_with_respect_to">order_with_respect_to</a></li>
+<li class="toc-entry toc-h3"><a href="#ordering">ordering</a></li>
+<li class="toc-entry toc-h3"><a href="#permissions">permissions</a></li>
+<li class="toc-entry toc-h3"><a href="#default_permissions">default_permissions</a></li>
+<li class="toc-entry toc-h3"><a href="#proxy">proxy</a></li>
+<li class="toc-entry toc-h3"><a href="#required_db_features">required_db_features</a></li>
+<li class="toc-entry toc-h3"><a href="#required_db_vendor">required_db_vendor</a></li>
+<li class="toc-entry toc-h3"><a href="#select_on_save">select_on_save</a></li>
+<li class="toc-entry toc-h3"><a href="#indexes">indexes</a></li>
+<li class="toc-entry toc-h3"><a href="#unique_together">unique_together</a></li>
+<li class="toc-entry toc-h3"><a href="#index_together">index_together</a></li>
+<li class="toc-entry toc-h3"><a href="#verbose_name">verbose_name</a></li>
+<li class="toc-entry toc-h3"><a href="#verbose_name_plural">verbose_name_plural</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#read-only-meta-attributes">Read-only Meta attributes</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#label">label</a></li>
+<li class="toc-entry toc-h3"><a href="#label_lower">label_lower</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#reference">Reference</a></li>
+</ul><h2 id="available-meta-options">
+<a class="anchor" href="#available-meta-options" aria-hidden="true"><span class="octicon octicon-link"></span></a>Available Meta options</h2>
+
+<h3 id="abstract">
+<a class="anchor" href="#abstract" aria-hidden="true"><span class="octicon octicon-link"></span></a>abstract</h3>
+
+<h3 id="app_label">
+<a class="anchor" href="#app_label" aria-hidden="true"><span class="octicon octicon-link"></span></a>app_label</h3>
+
+<h3 id="base_manager_name">
+<a class="anchor" href="#base_manager_name" aria-hidden="true"><span class="octicon octicon-link"></span></a>base_manager_name</h3>
+
+<h3 id="db_table">
+<a class="anchor" href="#db_table" aria-hidden="true"><span class="octicon octicon-link"></span></a>db_table</h3>
+
+<h4 id="table-names">
+<a class="anchor" href="#table-names" aria-hidden="true"><span class="octicon octicon-link"></span></a>Table names</h4>
+
+<h3 id="db_tablespace">
+<a class="anchor" href="#db_tablespace" aria-hidden="true"><span class="octicon octicon-link"></span></a>db_tablespace</h3>
+
+<h3 id="default_manager_name">
+<a class="anchor" href="#default_manager_name" aria-hidden="true"><span class="octicon octicon-link"></span></a>default_manager_name</h3>
+
+<h3 id="default_related_name">
+<a class="anchor" href="#default_related_name" aria-hidden="true"><span class="octicon octicon-link"></span></a>default_related_name</h3>
+
+<h3 id="get_latest_by">
+<a class="anchor" href="#get_latest_by" aria-hidden="true"><span class="octicon octicon-link"></span></a>get_latest_by</h3>
+
+<h3 id="managed">
+<a class="anchor" href="#managed" aria-hidden="true"><span class="octicon octicon-link"></span></a>managed</h3>
+
+<h3 id="order_with_respect_to">
+<a class="anchor" href="#order_with_respect_to" aria-hidden="true"><span class="octicon octicon-link"></span></a>order_with_respect_to</h3>
+
+<h3 id="ordering">
+<a class="anchor" href="#ordering" aria-hidden="true"><span class="octicon octicon-link"></span></a>ordering</h3>
+
+<h3 id="permissions">
+<a class="anchor" href="#permissions" aria-hidden="true"><span class="octicon octicon-link"></span></a>permissions</h3>
+
+<h3 id="default_permissions">
+<a class="anchor" href="#default_permissions" aria-hidden="true"><span class="octicon octicon-link"></span></a>default_permissions</h3>
+
+<h3 id="proxy">
+<a class="anchor" href="#proxy" aria-hidden="true"><span class="octicon octicon-link"></span></a>proxy</h3>
+
+<h3 id="required_db_features">
+<a class="anchor" href="#required_db_features" aria-hidden="true"><span class="octicon octicon-link"></span></a>required_db_features</h3>
+
+<h3 id="required_db_vendor">
+<a class="anchor" href="#required_db_vendor" aria-hidden="true"><span class="octicon octicon-link"></span></a>required_db_vendor</h3>
+
+<h3 id="select_on_save">
+<a class="anchor" href="#select_on_save" aria-hidden="true"><span class="octicon octicon-link"></span></a>select_on_save</h3>
+
+<h3 id="indexes">
+<a class="anchor" href="#indexes" aria-hidden="true"><span class="octicon octicon-link"></span></a>indexes</h3>
+
+<h3 id="unique_together">
+<a class="anchor" href="#unique_together" aria-hidden="true"><span class="octicon octicon-link"></span></a>unique_together</h3>
+
+<p>Options.unique_together</p>
+
+<p>함께 취한 필드 이름 집합은 고유해야합니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">unique_together</span> <span class="o">=</span> <span class="p">((</span><span class="s">"driver"</span><span class="p">,</span> <span class="s">"restaurant"</span><span class="p">),)</span>
+</code></pre></div>
+<p>이것은 함께 고려할 때 고유해야하는 튜플의 튜플입니다.</p>
+
+<p>Django 관리자에서 사용되며 데이터베이스 수준에서 적용됩니다.</p>
+
+<p>(즉, 적절한 UNIQUE 문이 CREATE TABLE 문에 포함됨).</p>
+
+<p>편의상 unique_together는 단일 필드 집합을 처리 할 때 단일 튜플이 될 수 있습니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">unique_together</span> <span class="o">=</span> <span class="p">(</span><span class="s">"driver"</span><span class="p">,</span> <span class="s">"restaurant"</span><span class="p">)</span>
+</code></pre></div>
+<p>ManyToManyField는 unique_together에 포함될 수 없습니다.(이것이 의미하는 바는 분명하지 않음)</p>
+
+<p>ManyToManyField와 관련된 고유성의 유효성을 검사해야하는 경우 신호 또는 명시적 모델을 사용해보십시오.</p>
+
+<p>제약 조건을 위반했을 때 모델 유효성 검사 중에 제기된 ValidationError는</p>
+
+<p>unique_together 오류 코드를 가집니다.</p>
+
+<h3 id="index_together">
+<a class="anchor" href="#index_together" aria-hidden="true"><span class="octicon octicon-link"></span></a>index_together</h3>
+
+<h3 id="verbose_name">
+<a class="anchor" href="#verbose_name" aria-hidden="true"><span class="octicon octicon-link"></span></a>verbose_name</h3>
+
+<h3 id="verbose_name_plural">
+<a class="anchor" href="#verbose_name_plural" aria-hidden="true"><span class="octicon octicon-link"></span></a>verbose_name_plural</h3>
+
+<h2 id="read-only-meta-attributes">
+<a class="anchor" href="#read-only-meta-attributes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Read-only Meta attributes</h2>
+
+<h3 id="label">
+<a class="anchor" href="#label" aria-hidden="true"><span class="octicon octicon-link"></span></a>label</h3>
+
+<h3 id="label_lower">
+<a class="anchor" href="#label_lower" aria-hidden="true"><span class="octicon octicon-link"></span></a>label_lower</h3>
+
+<h2 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+<p><a href="https://docs.djangoproject.com/en/1.11/ref/models/options/">https://docs.djangoproject.com/en/1.11/ref/models/options/</a></p>
+
+  </div>
+
+<div>
+  <h2 id="available-meta-options">Available Meta options</h2>
+
+<h3 id="abstract">abstract</h3>
+
+<h3 id="app_label">app_label</h3>
+
+<h3 id="base_manager_name">base_manager_name</h3>
+
+<h3 id="db_table">db_table</h3>
+
+<h4 id="table-names">Table names</h4>
+
+<h3 id="db_tablespace">db_tablespace</h3>
+
+<h3 id="default_manager_name">default_manager_name</h3>
+
+<h3 id="default_related_name">default_related_name</h3>
+
+<h3 id="get_latest_by">get_latest_by</h3>
+
+<h3 id="managed">managed</h3>
+
+<h3 id="order_with_respect_to">order_with_respect_to</h3>
+
+<h3 id="ordering">ordering</h3>
+
+<h3 id="permissions">permissions</h3>
+
+<h3 id="default_permissions">default_permissions</h3>
+
+<h3 id="proxy">proxy</h3>
+
+<h3 id="required_db_features">required_db_features</h3>
+
+<h3 id="required_db_vendor">required_db_vendor</h3>
+
+<h3 id="select_on_save">select_on_save</h3>
+
+<h3 id="indexes">indexes</h3>
+
+<h3 id="unique_together">unique_together</h3>
+
+<p>Options.unique_together</p>
+
+<p>함께 취한 필드 이름 집합은 고유해야합니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">unique_together</span> <span class="o">=</span> <span class="p">((</span><span class="s">"driver"</span><span class="p">,</span> <span class="s">"restaurant"</span><span class="p">),)</span>
+</code></pre></div>
+<p>이것은 함께 고려할 때 고유해야하는 튜플의 튜플입니다.</p>
+
+<p>Django 관리자에서 사용되며 데이터베이스 수준에서 적용됩니다.</p>
+
+<p>(즉, 적절한 UNIQUE 문이 CREATE TABLE 문에 포함됨).</p>
+
+<p>편의상 unique_together는 단일 필드 집합을 처리 할 때 단일 튜플이 될 수 있습니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">unique_together</span> <span class="o">=</span> <span class="p">(</span><span class="s">"driver"</span><span class="p">,</span> <span class="s">"restaurant"</span><span class="p">)</span>
+</code></pre></div>
+<p>ManyToManyField는 unique_together에 포함될 수 없습니다.(이것이 의미하는 바는 분명하지 않음)</p>
+
+<p>ManyToManyField와 관련된 고유성의 유효성을 검사해야하는 경우 신호 또는 명시적 모델을 사용해보십시오.</p>
+
+<p>제약 조건을 위반했을 때 모델 유효성 검사 중에 제기된 ValidationError는</p>
+
+<p>unique_together 오류 코드를 가집니다.</p>
+
+<h3 id="index_together">index_together</h3>
+
+<h3 id="verbose_name">verbose_name</h3>
+
+<h3 id="verbose_name_plural">verbose_name_plural</h3>
+
+<h2 id="read-only-meta-attributes">Read-only Meta attributes</h2>
+
+<h3 id="label">label</h3>
+
+<h3 id="label_lower">label_lower</h3>
+
+<h2 id="reference">Reference</h2>
+
+<p><a href="https://docs.djangoproject.com/en/1.11/ref/models/options/" rel="nofollow" target="_blank">https://docs.djangoproject.com/en/1.11/ref/models/options/</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

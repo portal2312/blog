@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Django - staticfile &amp; Nginx | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Django - staticfile &amp; Nginx" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="settings.py:" />
+<meta property="og:description" content="settings.py:" />
+<link rel="canonical" href="/blog/docs/develop/N-Z/Python/lib/django/EXCEPT/django%20-%20staticfiles%20&%20nginx.html" />
+<meta property="og:url" content="/blog/docs/develop/N-Z/Python/lib/django/EXCEPT/django%20-%20staticfiles%20&%20nginx.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-02T16:38:51+09:00" />
+<script type="application/ld+json">
+{"description":"settings.py:","headline":"Django - staticfile &amp; Nginx","dateModified":"2019-12-02T16:38:51+09:00","datePublished":"2019-12-02T16:38:51+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/docs/develop/N-Z/Python/lib/django/EXCEPT/django%20-%20staticfiles%20&%20nginx.html"},"url":"/blog/docs/develop/N-Z/Python/lib/django/EXCEPT/django%20-%20staticfiles%20&%20nginx.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/blog/feed.xml" title="Portal2312's blog" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113063601-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+<script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Django - staticfile & Nginx</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+</ul><p><code>settings.py</code>:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">STATIC_URL</span> <span class="o">=</span> <span class="s">'/static/'</span>
+<span class="n">STATICFILES_DIRS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASE_DIR</span><span class="p">,</span> <span class="s">'static'</span><span class="p">),</span>
+<span class="p">)</span>
+</code></pre></div>
+<p><code>python manage.py collectstatic</code> 명령어 실행하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>python manage.py collectstatic
+
+You have requested to collect static files at the destination
+location as specified <span class="k">in </span>your settings.
+
+This will overwrite existing files!
+Are you sure you want to <span class="k">do </span>this?
+
+Type <span class="s1">'yes'</span> to <span class="k">continue</span>, or <span class="s1">'no'</span> to cancel: <span class="nb">yes</span>
+</code></pre></div>
+<p>Error 메시지:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">Traceback (most recent call last):
+  File "manage.py", line 15, in &lt;module&gt;
+    execute_from_command_line(sys.argv)
+  File "/home/zen/venvs/enterprise/kt/portscan/lib/python3.7/site-packages/django/core/management/__init__.py", line 381, in execute_from_command_line
+    utility.execute()
+  File "/home/zen/venvs/enterprise/kt/portscan/lib/python3.7/site-packages/django/core/management/__init__.py", line 375, in execute
+    self.fetch_command(subcommand).run_from_argv(self.argv)
+  File "/home/zen/venvs/enterprise/kt/portscan/lib/python3.7/site-packages/django/core/management/base.py", line 316, in run_from_argv
+    self.execute(*args, **cmd_options)
+  File "/home/zen/venvs/enterprise/kt/portscan/lib/python3.7/site-packages/django/core/management/base.py", line 353, in execute
+    output = self.handle(*args, **options)
+  File "/home/zen/venvs/enterprise/kt/portscan/lib/python3.7/site-packages/django/contrib/staticfiles/management/commands/collectstatic.py", line 188, in handle
+    collected = self.collect()
+  File "/home/zen/venvs/enterprise/kt/portscan/lib/python3.7/site-packages/django/contrib/staticfiles/management/commands/collectstatic.py", line 114, in collect
+    handler(path, prefixed_path, storage)
+  File "/home/zen/venvs/enterprise/kt/portscan/lib/python3.7/site-packages/django/contrib/staticfiles/management/commands/collectstatic.py", line 343, in copy_file
+    if not self.delete_file(path, prefixed_path, source_storage):
+  File "/home/zen/venvs/enterprise/kt/portscan/lib/python3.7/site-packages/django/contrib/staticfiles/management/commands/collectstatic.py", line 249, in delete_file
+    if self.storage.exists(prefixed_path):
+  File "/home/zen/venvs/enterprise/kt/portscan/lib/python3.7/site-packages/django/core/files/storage.py", line 308, in exists
+    return os.path.exists(self.path(name))
+  File "/home/zen/venvs/enterprise/kt/portscan/lib/python3.7/site-packages/django/contrib/staticfiles/storage.py", line 43, in path
+    raise ImproperlyConfigured("You're using the staticfiles app "
+django.core.exceptions.ImproperlyConfigured: You're using the staticfiles app without having set the STATIC_ROOT setting to a filesystem path.
+</code></pre></div>
+<p>해결:</p>
+
+<p><code>settings.py</code> 에 <strong>STATIC_ROOT</strong> 추가하기:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">STATIC_ROOT</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASE_DIR</span><span class="p">,</span> <span class="s">'allstaticfiles'</span><span class="p">)</span>
+</code></pre></div>
+<p>이제 다시 명령을 실행하면 모든 정적 파일이 프로젝트 루트의 allstaticfiles 폴더에 수집됩니다.</p>
+
+<p>다시 말하지만, STATIC_ROOT에 정적 파일을 PUT하지 마십시오.</p>
+
+<p>이것이 바로 collectstatic을 실행 한 후에 파일이 자동으로 수집되는 위치입니다.</p>
+
+<p>이제 프로덕션 환경에서 웹 서버가 해당 위치의 정적 파일을 제공하도록 구성 할 수 있습니다.</p>
+
+<p>Nginx:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">location /static/ {
+    root   /my/project/allstaticfiles/;
+}
+</code></pre></div>
+  </div>
+
+<div>
+  <p><code>settings.py</code>:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">STATIC_URL</span> <span class="o">=</span> <span class="s">'/static/'</span>
+<span class="n">STATICFILES_DIRS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASE_DIR</span><span class="p">,</span> <span class="s">'static'</span><span class="p">),</span>
+<span class="p">)</span>
+</code></pre></div>
+<p><code>python manage.py collectstatic</code> 명령어 실행하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>python manage.py collectstatic
+
+You have requested to collect static files at the destination
+location as specified <span class="k">in </span>your settings.
+
+This will overwrite existing files!
+Are you sure you want to <span class="k">do </span>this?
+
+Type <span class="s1">'yes'</span> to <span class="k">continue</span>, or <span class="s1">'no'</span> to cancel: <span class="nb">yes</span>
+</code></pre></div>
+<p>Error 메시지:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">Traceback (most recent call last):
+  File "manage.py", line 15, in &lt;module&gt;
+    execute_from_command_line(sys.argv)
+  File "/home/zen/venvs/enterprise/kt/portscan/lib/python3.7/site-packages/django/core/management/__init__.py", line 381, in execute_from_command_line
+    utility.execute()
+  File "/home/zen/venvs/enterprise/kt/portscan/lib/python3.7/site-packages/django/core/management/__init__.py", line 375, in execute
+    self.fetch_command(subcommand).run_from_argv(self.argv)
+  File "/home/zen/venvs/enterprise/kt/portscan/lib/python3.7/site-packages/django/core/management/base.py", line 316, in run_from_argv
+    self.execute(*args, **cmd_options)
+  File "/home/zen/venvs/enterprise/kt/portscan/lib/python3.7/site-packages/django/core/management/base.py", line 353, in execute
+    output = self.handle(*args, **options)
+  File "/home/zen/venvs/enterprise/kt/portscan/lib/python3.7/site-packages/django/contrib/staticfiles/management/commands/collectstatic.py", line 188, in handle
+    collected = self.collect()
+  File "/home/zen/venvs/enterprise/kt/portscan/lib/python3.7/site-packages/django/contrib/staticfiles/management/commands/collectstatic.py", line 114, in collect
+    handler(path, prefixed_path, storage)
+  File "/home/zen/venvs/enterprise/kt/portscan/lib/python3.7/site-packages/django/contrib/staticfiles/management/commands/collectstatic.py", line 343, in copy_file
+    if not self.delete_file(path, prefixed_path, source_storage):
+  File "/home/zen/venvs/enterprise/kt/portscan/lib/python3.7/site-packages/django/contrib/staticfiles/management/commands/collectstatic.py", line 249, in delete_file
+    if self.storage.exists(prefixed_path):
+  File "/home/zen/venvs/enterprise/kt/portscan/lib/python3.7/site-packages/django/core/files/storage.py", line 308, in exists
+    return os.path.exists(self.path(name))
+  File "/home/zen/venvs/enterprise/kt/portscan/lib/python3.7/site-packages/django/contrib/staticfiles/storage.py", line 43, in path
+    raise ImproperlyConfigured("You're using the staticfiles app "
+django.core.exceptions.ImproperlyConfigured: You're using the staticfiles app without having set the STATIC_ROOT setting to a filesystem path.
+</code></pre></div>
+<p>해결:</p>
+
+<p><code>settings.py</code> 에 <strong>STATIC_ROOT</strong> 추가하기:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">STATIC_ROOT</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASE_DIR</span><span class="p">,</span> <span class="s">'allstaticfiles'</span><span class="p">)</span>
+</code></pre></div>
+<p>이제 다시 명령을 실행하면 모든 정적 파일이 프로젝트 루트의 allstaticfiles 폴더에 수집됩니다.</p>
+
+<p>다시 말하지만, STATIC_ROOT에 정적 파일을 PUT하지 마십시오.</p>
+
+<p>이것이 바로 collectstatic을 실행 한 후에 파일이 자동으로 수집되는 위치입니다.</p>
+
+<p>이제 프로덕션 환경에서 웹 서버가 해당 위치의 정적 파일을 제공하도록 구성 할 수 있습니다.</p>
+
+<p>Nginx:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">location /static/ {
+    root   /my/project/allstaticfiles/;
+}
+</code></pre></div>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

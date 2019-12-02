@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>HTML Entities | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="HTML Entities" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="HTML의 예약 문자는 문자 엔티티로 대체되어야합니다." />
+<meta property="og:description" content="HTML의 예약 문자는 문자 엔티티로 대체되어야합니다." />
+<link rel="canonical" href="/blog/docs/develop/A-M/Frontend/HTML/HTML5/doc/tutorial/28_Entities.html" />
+<meta property="og:url" content="/blog/docs/develop/A-M/Frontend/HTML/HTML5/doc/tutorial/28_Entities.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-02T16:38:51+09:00" />
+<script type="application/ld+json">
+{"description":"HTML의 예약 문자는 문자 엔티티로 대체되어야합니다.","headline":"HTML Entities","dateModified":"2019-12-02T16:38:51+09:00","datePublished":"2019-12-02T16:38:51+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/docs/develop/A-M/Frontend/HTML/HTML5/doc/tutorial/28_Entities.html"},"url":"/blog/docs/develop/A-M/Frontend/HTML/HTML5/doc/tutorial/28_Entities.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/blog/feed.xml" title="Portal2312's blog" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113063601-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+<script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>HTML Entities</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#html-entities">HTML Entities</a></li>
+<li class="toc-entry toc-h2"><a href="#non-breaking-space">Non-breaking Space</a></li>
+<li class="toc-entry toc-h2"><a href="#some-other-useful-html-character-entities">Some Other Useful HTML Character Entities</a></li>
+<li class="toc-entry toc-h2"><a href="#combining-diacritical-marks">Combining Diacritical Marks</a></li>
+<li class="toc-entry toc-h2"><a href="#reference">Reference</a></li>
+</ul><p>HTML의 예약 문자는 문자 엔티티로 대체되어야합니다.</p>
+
+<p>키보드에없는 문자는 엔티티로 바꿀 수 있습니다.</p>
+
+<h2 id="html-entities">
+<a class="anchor" href="#html-entities" aria-hidden="true"><span class="octicon octicon-link"></span></a>HTML Entities</h2>
+
+<p>일부 문자는 HTML로 예약되어 있습니다.</p>
+
+<p>텍스트에서보다 작음 (&lt;) 또는보다 큼 (&gt;) 기호를 사용하면 브라우저가 태그와 혼합 할 수 있습니다.</p>
+
+<p>문자 엔티티는 HTML에 예약 된 문자를 표시하는 데 사용됩니다.</p>
+
+<p>문자 엔티티는 다음과 같습니다.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">&amp;entity_name;
+
+OR
+
+&amp;#entity_number;
+</code></pre></div>
+<blockquote>
+<p>엔티티 이름 사용의 장점 : 엔티티 이름은 기억하기 쉽습니다.</p>
+
+<p>엔티티 이름 사용의 단점 : 브라우저는 모든 엔티티 이름을 지원하지는 않지만 숫자에 대한 지원은 유용합니다.</p>
+</blockquote>
+
+<hr>
+
+<h2 id="non-breaking-space">
+<a class="anchor" href="#non-breaking-space" aria-hidden="true"><span class="octicon octicon-link"></span></a>Non-breaking Space</h2>
+
+<p>HTML에 사용되는 일반적인 문자 엔티티는 비 분리 영역입니다.</p>
+
+<p><code>&amp;nbsp;</code> 비 분리 공간은 새 행으로 분리되지 않는 공간입니다.</p>
+
+<p>비 분리 공간으로 구분 된 두 단어가 서로 붙습니다 (새 줄을 끊지 않음).</p>
+
+<p>단어를 깨뜨리는 것이 방해가 될 때 유용합니다.</p>
+
+<p>non-breaking 공간의 또 다른 일반적인 사용은 브라우저가 HTML 페이지에서 공백을 자르지 못하게하는 것입니다.</p>
+
+<p>텍스트에 10 개의 공백을 쓰면 브라우저에서 9 개의 공백을 제거합니다.</p>
+
+<p>텍스트에 실제 공간을 추가하려면 <code>&amp;nbsp;</code> 문자 엔티티를 사용할 수 있습니다.</p>
+
+<blockquote>
+<p>Non-breaking Hyphen: <code>&amp;#8209;</code></p>
+</blockquote>
+
+<p><a href="https://www.w3schools.com/charsets/ref_utf_punctuation.asp">https://www.w3schools.com/charsets/ref_utf_punctuation.asp</a></p>
+
+<hr>
+
+<h2 id="some-other-useful-html-character-entities">
+<a class="anchor" href="#some-other-useful-html-character-entities" aria-hidden="true"><span class="octicon octicon-link"></span></a>Some Other Useful HTML Character Entities</h2>
+
+<table>
+<thead>
+<tr>
+<th>Result</th>
+<th>Description</th>
+<th>Entity Name</th>
+<th>Entity Number</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>non-breaking</td>
+<td>space</td>
+<td><code>&amp;nbsp;</code></td>
+<td><code>&amp;#160;</code></td>
+<td> </td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>less than</td>
+<td><code>&amp;lt;</code></td>
+<td><code>&amp;#60;</code></td>
+<td>&lt;</td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td>greater than</td>
+<td><code>&amp;gt;</code></td>
+<td><code>&amp;#62;</code></td>
+<td>&gt;</td>
+</tr>
+<tr>
+<td>&amp;</td>
+<td>ampersand</td>
+<td><code>&amp;amp;</code></td>
+<td><code>&amp;#38;</code></td>
+<td>&amp;</td>
+</tr>
+<tr>
+<td>"</td>
+<td>double quotation mark</td>
+<td><code>&amp;quot;</code></td>
+<td><code>&amp;#34;</code></td>
+<td>"</td>
+</tr>
+<tr>
+<td>'</td>
+<td>single quotation mark (apostrophe)</td>
+<td><code>&amp;apos;</code></td>
+<td><code>&amp;#39;</code></td>
+<td>'</td>
+</tr>
+<tr>
+<td>¢</td>
+<td>cent</td>
+<td><code>&amp;cent;</code></td>
+<td><code>&amp;#162;</code></td>
+<td>¢</td>
+</tr>
+<tr>
+<td>£</td>
+<td>pound</td>
+<td><code>&amp;pound;</code></td>
+<td><code>&amp;#163;</code></td>
+<td>£</td>
+</tr>
+<tr>
+<td>¥</td>
+<td>yen</td>
+<td><code>&amp;yen;</code></td>
+<td><code>&amp;#165;</code></td>
+<td>¥</td>
+</tr>
+<tr>
+<td>€</td>
+<td>euro</td>
+<td><code>&amp;euro;</code></td>
+<td><code>&amp;#8364;</code></td>
+<td>€</td>
+</tr>
+<tr>
+<td>©</td>
+<td>copyright</td>
+<td><code>&amp;copy;</code></td>
+<td><code>&amp;#169;</code></td>
+<td>©</td>
+</tr>
+<tr>
+<td>®</td>
+<td>registered trademark</td>
+<td><code>&amp;reg;</code></td>
+<td><code>&amp;#174;</code></td>
+<td>®</td>
+</tr>
+</tbody>
+</table>
+
+<blockquote>
+<p><strong>Note:</strong> Entity Name 은 대소문자 구분합니다.</p>
+</blockquote>
+
+<hr>
+
+<h2 id="combining-diacritical-marks">
+<a class="anchor" href="#combining-diacritical-marks" aria-hidden="true"><span class="octicon octicon-link"></span></a>Combining Diacritical Marks</h2>
+
+<p>Omitting...</p>
+
+<hr>
+
+<h2 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+<p><a href="https://www.w3schools.com/html/html_entities.asp">https://www.w3schools.com/html/html_entities.asp</a></p>
+
+  </div>
+
+<div>
+  <p>HTML의 예약 문자는 문자 엔티티로 대체되어야합니다.</p>
+
+<p>키보드에없는 문자는 엔티티로 바꿀 수 있습니다.</p>
+
+<h2 id="html-entities">HTML Entities</h2>
+
+<p>일부 문자는 HTML로 예약되어 있습니다.</p>
+
+<p>텍스트에서보다 작음 (&lt;) 또는보다 큼 (&gt;) 기호를 사용하면 브라우저가 태그와 혼합 할 수 있습니다.</p>
+
+<p>문자 엔티티는 HTML에 예약 된 문자를 표시하는 데 사용됩니다.</p>
+
+<p>문자 엔티티는 다음과 같습니다.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">&amp;entity_name;
+
+OR
+
+&amp;#entity_number;
+</code></pre></div>
+<blockquote>
+<p>엔티티 이름 사용의 장점 : 엔티티 이름은 기억하기 쉽습니다.</p>
+
+<p>엔티티 이름 사용의 단점 : 브라우저는 모든 엔티티 이름을 지원하지는 않지만 숫자에 대한 지원은 유용합니다.</p>
+</blockquote>
+
+<hr>
+
+<h2 id="non-breaking-space">Non-breaking Space</h2>
+
+<p>HTML에 사용되는 일반적인 문자 엔티티는 비 분리 영역입니다.</p>
+
+<p><code>&amp;nbsp;</code> 비 분리 공간은 새 행으로 분리되지 않는 공간입니다.</p>
+
+<p>비 분리 공간으로 구분 된 두 단어가 서로 붙습니다 (새 줄을 끊지 않음).</p>
+
+<p>단어를 깨뜨리는 것이 방해가 될 때 유용합니다.</p>
+
+<p>non-breaking 공간의 또 다른 일반적인 사용은 브라우저가 HTML 페이지에서 공백을 자르지 못하게하는 것입니다.</p>
+
+<p>텍스트에 10 개의 공백을 쓰면 브라우저에서 9 개의 공백을 제거합니다.</p>
+
+<p>텍스트에 실제 공간을 추가하려면 <code>&amp;nbsp;</code> 문자 엔티티를 사용할 수 있습니다.</p>
+
+<blockquote>
+<p>Non-breaking Hyphen: <code>&amp;#8209;</code></p>
+</blockquote>
+
+<p><a href="https://www.w3schools.com/charsets/ref_utf_punctuation.asp" rel="nofollow" target="_blank">https://www.w3schools.com/charsets/ref_utf_punctuation.asp</a></p>
+
+<hr>
+
+<h2 id="some-other-useful-html-character-entities">Some Other Useful HTML Character Entities</h2>
+
+<table>
+<thead>
+<tr>
+<th>Result</th>
+<th>Description</th>
+<th>Entity Name</th>
+<th>Entity Number</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>non-breaking</td>
+<td>space</td>
+<td><code>&amp;nbsp;</code></td>
+<td><code>&amp;#160;</code></td>
+<td> </td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>less than</td>
+<td><code>&amp;lt;</code></td>
+<td><code>&amp;#60;</code></td>
+<td>&lt;</td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td>greater than</td>
+<td><code>&amp;gt;</code></td>
+<td><code>&amp;#62;</code></td>
+<td>&gt;</td>
+</tr>
+<tr>
+<td>&amp;</td>
+<td>ampersand</td>
+<td><code>&amp;amp;</code></td>
+<td><code>&amp;#38;</code></td>
+<td>&amp;</td>
+</tr>
+<tr>
+<td>"</td>
+<td>double quotation mark</td>
+<td><code>&amp;quot;</code></td>
+<td><code>&amp;#34;</code></td>
+<td>"</td>
+</tr>
+<tr>
+<td>'</td>
+<td>single quotation mark (apostrophe)</td>
+<td><code>&amp;apos;</code></td>
+<td><code>&amp;#39;</code></td>
+<td>'</td>
+</tr>
+<tr>
+<td>¢</td>
+<td>cent</td>
+<td><code>&amp;cent;</code></td>
+<td><code>&amp;#162;</code></td>
+<td>¢</td>
+</tr>
+<tr>
+<td>£</td>
+<td>pound</td>
+<td><code>&amp;pound;</code></td>
+<td><code>&amp;#163;</code></td>
+<td>£</td>
+</tr>
+<tr>
+<td>¥</td>
+<td>yen</td>
+<td><code>&amp;yen;</code></td>
+<td><code>&amp;#165;</code></td>
+<td>¥</td>
+</tr>
+<tr>
+<td>€</td>
+<td>euro</td>
+<td><code>&amp;euro;</code></td>
+<td><code>&amp;#8364;</code></td>
+<td>€</td>
+</tr>
+<tr>
+<td>©</td>
+<td>copyright</td>
+<td><code>&amp;copy;</code></td>
+<td><code>&amp;#169;</code></td>
+<td>©</td>
+</tr>
+<tr>
+<td>®</td>
+<td>registered trademark</td>
+<td><code>&amp;reg;</code></td>
+<td><code>&amp;#174;</code></td>
+<td>®</td>
+</tr>
+</tbody>
+</table>
+
+<blockquote>
+<p><strong>Note:</strong> Entity Name 은 대소문자 구분합니다.</p>
+</blockquote>
+
+<hr>
+
+<h2 id="combining-diacritical-marks">Combining Diacritical Marks</h2>
+
+<p>Omitting...</p>
+
+<hr>
+
+<h2 id="reference">Reference</h2>
+
+<p><a href="https://www.w3schools.com/html/html_entities.asp" rel="nofollow" target="_blank">https://www.w3schools.com/html/html_entities.asp</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

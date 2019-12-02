@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Intro | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Intro" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="What is machine learning?" />
+<meta property="og:description" content="What is machine learning?" />
+<link rel="canonical" href="/blog/docs/develop/A-M/machine-learning/blog/001.intro.html" />
+<meta property="og:url" content="/blog/docs/develop/A-M/machine-learning/blog/001.intro.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-02T16:38:51+09:00" />
+<script type="application/ld+json">
+{"description":"What is machine learning?","headline":"Intro","dateModified":"2019-12-02T16:38:51+09:00","datePublished":"2019-12-02T16:38:51+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/docs/develop/A-M/machine-learning/blog/001.intro.html"},"url":"/blog/docs/develop/A-M/machine-learning/blog/001.intro.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/blog/feed.xml" title="Portal2312's blog" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113063601-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+<script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Intro</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#what-is-machine-learning">What is machine learning?</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#task">Task</a></li>
+<li class="toc-entry toc-h3"><a href="#performance">Performance</a></li>
+<li class="toc-entry toc-h3"><a href="#experience">Experience</a></li>
+<li class="toc-entry toc-h3"><a href="#what-would-be-the-correct-model">What would be the correct model</a></li>
+<li class="toc-entry toc-h3"><a href="#l2-regularization">L2 Regularization (중요)</a></li>
+<li class="toc-entry toc-h3"><a href="#non-parametric-model">Non parametric model</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#suppert-vector-machine-svm">Suppert Vector Machine(SVM)</a></li>
+<li class="toc-entry toc-h4"><a href="#gaussian-process-regression-gpr">Gaussian Process Regression(GPR)</a></li>
+<li class="toc-entry toc-h4"><a href="#dimension-reduction">Dimension Reduction</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#summary">Summary</a></li>
+<li class="toc-entry toc-h2"><a href="#reference">Reference</a></li>
+</ul><h2 id="what-is-machine-learning">
+<a class="anchor" href="#what-is-machine-learning" aria-hidden="true"><span class="octicon octicon-link"></span></a>What is machine learning?</h2>
+
+<ul>
+<li>E(experience): data, 올바른 data를 갖고 tasks 를 설명 (축구: 패스, 슛, 움직임)</li>
+<li>T(tasks): 명확한 목표 (축구: 게임에서 이기기)</li>
+<li>P(performance measure): 효율적인 척도 (축구: 골)</li>
+</ul>
+
+<p>경험을 통해 성능을 향상시킨다.</p>
+
+<h3 id="task">
+<a class="anchor" href="#task" aria-hidden="true"><span class="octicon octicon-link"></span></a>Task</h3>
+
+<p>classification: discrete target values<br>
+손으로 쓴 숫자를 머신이 인식하기 까지</p>
+
+<p>regression: real target values<br>
+연속된 값을 인식하는 것, 회귀 (supervised: classification -&gt; regression)</p>
+
+<p>clustering: no target values<br>
+비연속성의 데이터를 추출하기 (unsupervised)</p>
+
+<h3 id="performance">
+<a class="anchor" href="#performance" aria-hidden="true"><span class="octicon octicon-link"></span></a>Performance</h3>
+
+<p>classification: 0-1 loss function<br>
+올바르게 인식된 경우 1</p>
+
+<p>regression: L2 loss function<br>
+근사치(거리)에 이르는 값인 경우 높은 점수를 주기, 거리를 최소하 하는 것이 목적</p>
+
+<p>clustering: 최적의 중심을 잡고 최적의 거리가 나오도록 하기</p>
+
+<h3 id="experience">
+<a class="anchor" href="#experience" aria-hidden="true"><span class="octicon octicon-link"></span></a>Experience</h3>
+
+<p>data 기준, data 를 기준으로 트레이닝 시키기</p>
+
+<p>classification: labeled data, x1 = 5, x2 = 6</p>
+
+<p>regression: labeled data, (x1,y1) = (1,2) 모델 값을 생성해서 예측</p>
+
+<p>clustering: unlabeled data 데이터만 던지고 알아서 판단</p>
+
+<p>Example:</p>
+
+<p>기준 값을 정하여 거리의 합이 짧아지는 기울기를 계속 변경하면서 구한다.<br>
+단, 기울기만으로는 local minuma problem 발생.</p>
+
+<p>예) (키, 몸무게)</p>
+
+<h3 id="what-would-be-the-correct-model">
+<a class="anchor" href="#what-would-be-the-correct-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>What would be the correct model</h3>
+
+<p>Select a model -&gt; Set a cose function -&gt; Optimization</p>
+
+<p>예) (나이, 운동능력)</p>
+
+<p>overfitting: 예측하려는 모델을 만들기 위한 과정에서의 문제</p>
+
+<h3 id="l2-regularization">
+<a class="anchor" href="#l2-regularization" aria-hidden="true"><span class="octicon octicon-link"></span></a>L2 Regularization (중요)</h3>
+
+<p>데이터를 잘 설명하면서 (평균 기울기로 부터)거리를 적게 하기</p>
+
+<ol>
+<li>현재를 잘 설명</li>
+<li>미래를 잘 설명(너무 복잡한 모델을 피하기)</li>
+</ol>
+
+<p>예) 100 가지 중 80 을 training 하여 모델 설계하고 20을 test로 하여 예측을 해보는데 test error 가 가장 적게 나온 모델구하기</p>
+
+<p><code>trainging set</code>: parameter optimization<br>
+예) 모델을 가지고 기울기 판단하기</p>
+
+<p><code>validation set</code>: avoid overfitting<br>
+예) 100 개중 80개로 모델을 세우기, 단 너무 복잡한 validation set 은 오히려 test set 을 증가 시킬수 있다.</p>
+
+<p><code>test set</code>: measure the performance
+예) 100 개중 아직 못본 20개 에 대해 판단하기, traning set 을 통해 test set 이 적어 지는 순간까지 구하기</p>
+
+<h3 id="non-parametric-model">
+<a class="anchor" href="#non-parametric-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Non parametric model</h3>
+
+<ul>
+<li>모델(parametric model) 없이 알고리즘으로 찾아주는(성능 좋음)</li>
+<li>많은 samples 가 필요.</li>
+<li>사용하는 대표적인 방법
+
+<ul>
+<li>Kernel methods, input space(2차원)의 origin data를 계산식을 통한 feature space(3차원) 에 맵핑하여 구하기(좀 더 정확해 진다)</li>
+<li>Gaussian Process Regression(GPR), regression, 데이터가 많지 않을 때</li>
+<li>Suppert Vector Machine(SVM), classification</li>
+</ul>
+</li>
+</ul>
+
+<h4 id="suppert-vector-machine-svm">
+<a class="anchor" href="#suppert-vector-machine-svm" aria-hidden="true"><span class="octicon octicon-link"></span></a>Suppert Vector Machine(SVM)</h4>
+
+<p>두 개의 class 를 구분하기 위한 좋은 선 찾기</p>
+
+<p>kernel function 을 통해 feature space 에서 maximum margin 을 구해 linear classifiers 하기</p>
+
+<p>예) 사람의 움직임의 신호(전기 동작)을 통해 패턴을 분석하여 사물에게 신호를 보내기</p>
+
+<p>MYO 손목 밴드?</p>
+
+<h4 id="gaussian-process-regression-gpr">
+<a class="anchor" href="#gaussian-process-regression-gpr" aria-hidden="true"><span class="octicon octicon-link"></span></a>Gaussian Process Regression(GPR)</h4>
+
+<p>어떤 실수를 예측하기</p>
+
+<p>관측된 점을 통해 함수를 통해 정규분포를 만들고 점마다 차원을 만들고 가우시안 분포를 생성한다.</p>
+
+<p>입력마다 차원을 추가하여 모델을 생성하고 예측은 준비된 모델과 입력된 값을 join 하여 결과를 나타낸다.</p>
+
+<p>데이터가 많으면 연산이 느려지는 큰 단점이 있다.</p>
+
+<h4 id="dimension-reduction">
+<a class="anchor" href="#dimension-reduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dimension Reduction</h4>
+
+<p>low dim(2D) -&gt; high dim(3D)</p>
+
+<p>original space(high dim) -&gt; feature space(low dim)</p>
+
+<p>차원이 많으면 경험이 많기 필요하다.</p>
+
+<p>PCA(Principal Component Analysis): 다 각도에서 변하는 수치중 큰 값만 찾기</p>
+
+<p>9차원 vactor -&gt; 1 차원 vactor 로 구할 수 있다.</p>
+
+<hr>
+
+<h2 id="summary">
+<a class="anchor" href="#summary" aria-hidden="true"><span class="octicon octicon-link"></span></a>Summary</h2>
+
+<ul>
+<li>Machine Leaning: Tasks 를 Experience 통해 Performance(성능) 향상에 목적.
+
+<ul>
+<li>Tasks:</li>
+<li>Classification: 값이 구분되어 있는 경우</li>
+<li>Regression: 연속된 값을 예측하는 경우</li>
+<li>Clustring: (unsupervised) 목적 값이 없고 데이터 분석으로 하는 경우</li>
+<li>etc</li>
+<li>Performance</li>
+<li>0-1 loss: 목적을 숫자로 나타내기, 실패(=0), 성공(=1)</li>
+<li>L2 loss: 목적의 근사치를 나태내기</li>
+<li>etc</li>
+<li>Experience</li>
+<li>labeled data: (사진, 이름)등, 사용하기 쉽다</li>
+<li>unlabelled data:</li>
+</ul>
+</li>
+<li>Machine Learning Process
+
+<ol>
+<li>Select a parametric(먼저 데이터를 1, 2차 함수 일거다라고 예측) &amp; nonparametric model </li>
+<li>regularization term(parametric model 생성시 너무 복잡해 질 수 있으므로 정규화하기)</li>
+<li>validation error &amp; test set (전체중 모델과 작을 일부를 나눠 테스트를 하는 것)</li>
+</ol>
+</li>
+<li>Nonparametric model
+
+<ul>
+<li>Support Vector Machine</li>
+<li>Gaussian Process Regression</li>
+</ul>
+</li>
+<li>Dimension reduction: PCA</li>
+</ul>
+
+<hr>
+
+<h2 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+<p><a href="https://www.youtube.com/watch?v=j3za7nv7RfI">https://www.youtube.com/watch?v=j3za7nv7RfI</a></p>
+
+  </div>
+
+<div>
+  <h2 id="what-is-machine-learning">What is machine learning?</h2>
+
+<ul>
+<li>E(experience): data, 올바른 data를 갖고 tasks 를 설명 (축구: 패스, 슛, 움직임)</li>
+<li>T(tasks): 명확한 목표 (축구: 게임에서 이기기)</li>
+<li>P(performance measure): 효율적인 척도 (축구: 골)</li>
+</ul>
+
+<p>경험을 통해 성능을 향상시킨다.</p>
+
+<h3 id="task">Task</h3>
+
+<p>classification: discrete target values<br>
+손으로 쓴 숫자를 머신이 인식하기 까지</p>
+
+<p>regression: real target values<br>
+연속된 값을 인식하는 것, 회귀 (supervised: classification -&gt; regression)</p>
+
+<p>clustering: no target values<br>
+비연속성의 데이터를 추출하기 (unsupervised)</p>
+
+<h3 id="performance">Performance</h3>
+
+<p>classification: 0-1 loss function<br>
+올바르게 인식된 경우 1</p>
+
+<p>regression: L2 loss function<br>
+근사치(거리)에 이르는 값인 경우 높은 점수를 주기, 거리를 최소하 하는 것이 목적</p>
+
+<p>clustering: 최적의 중심을 잡고 최적의 거리가 나오도록 하기</p>
+
+<h3 id="experience">Experience</h3>
+
+<p>data 기준, data 를 기준으로 트레이닝 시키기</p>
+
+<p>classification: labeled data, x1 = 5, x2 = 6</p>
+
+<p>regression: labeled data, (x1,y1) = (1,2) 모델 값을 생성해서 예측</p>
+
+<p>clustering: unlabeled data 데이터만 던지고 알아서 판단</p>
+
+<p>Example:</p>
+
+<p>기준 값을 정하여 거리의 합이 짧아지는 기울기를 계속 변경하면서 구한다.<br>
+단, 기울기만으로는 local minuma problem 발생.</p>
+
+<p>예) (키, 몸무게)</p>
+
+<h3 id="what-would-be-the-correct-model">What would be the correct model</h3>
+
+<p>Select a model -&gt; Set a cose function -&gt; Optimization</p>
+
+<p>예) (나이, 운동능력)</p>
+
+<p>overfitting: 예측하려는 모델을 만들기 위한 과정에서의 문제</p>
+
+<h3 id="l2-regularization">L2 Regularization (중요)</h3>
+
+<p>데이터를 잘 설명하면서 (평균 기울기로 부터)거리를 적게 하기</p>
+
+<ol>
+<li>현재를 잘 설명</li>
+<li>미래를 잘 설명(너무 복잡한 모델을 피하기)</li>
+</ol>
+
+<p>예) 100 가지 중 80 을 training 하여 모델 설계하고 20을 test로 하여 예측을 해보는데 test error 가 가장 적게 나온 모델구하기</p>
+
+<p><code>trainging set</code>: parameter optimization<br>
+예) 모델을 가지고 기울기 판단하기</p>
+
+<p><code>validation set</code>: avoid overfitting<br>
+예) 100 개중 80개로 모델을 세우기, 단 너무 복잡한 validation set 은 오히려 test set 을 증가 시킬수 있다.</p>
+
+<p><code>test set</code>: measure the performance
+예) 100 개중 아직 못본 20개 에 대해 판단하기, traning set 을 통해 test set 이 적어 지는 순간까지 구하기</p>
+
+<h3 id="non-parametric-model">Non parametric model</h3>
+
+<ul>
+<li>모델(parametric model) 없이 알고리즘으로 찾아주는(성능 좋음)</li>
+<li>많은 samples 가 필요.</li>
+<li>사용하는 대표적인 방법
+
+<ul>
+<li>Kernel methods, input space(2차원)의 origin data를 계산식을 통한 feature space(3차원) 에 맵핑하여 구하기(좀 더 정확해 진다)</li>
+<li>Gaussian Process Regression(GPR), regression, 데이터가 많지 않을 때</li>
+<li>Suppert Vector Machine(SVM), classification</li>
+</ul>
+</li>
+</ul>
+
+<h4 id="suppert-vector-machine-svm">Suppert Vector Machine(SVM)</h4>
+
+<p>두 개의 class 를 구분하기 위한 좋은 선 찾기</p>
+
+<p>kernel function 을 통해 feature space 에서 maximum margin 을 구해 linear classifiers 하기</p>
+
+<p>예) 사람의 움직임의 신호(전기 동작)을 통해 패턴을 분석하여 사물에게 신호를 보내기</p>
+
+<p>MYO 손목 밴드?</p>
+
+<h4 id="gaussian-process-regression-gpr">Gaussian Process Regression(GPR)</h4>
+
+<p>어떤 실수를 예측하기</p>
+
+<p>관측된 점을 통해 함수를 통해 정규분포를 만들고 점마다 차원을 만들고 가우시안 분포를 생성한다.</p>
+
+<p>입력마다 차원을 추가하여 모델을 생성하고 예측은 준비된 모델과 입력된 값을 join 하여 결과를 나타낸다.</p>
+
+<p>데이터가 많으면 연산이 느려지는 큰 단점이 있다.</p>
+
+<h4 id="dimension-reduction">Dimension Reduction</h4>
+
+<p>low dim(2D) -&gt; high dim(3D)</p>
+
+<p>original space(high dim) -&gt; feature space(low dim)</p>
+
+<p>차원이 많으면 경험이 많기 필요하다.</p>
+
+<p>PCA(Principal Component Analysis): 다 각도에서 변하는 수치중 큰 값만 찾기</p>
+
+<p>9차원 vactor -&gt; 1 차원 vactor 로 구할 수 있다.</p>
+
+<hr>
+
+<h2 id="summary">Summary</h2>
+
+<ul>
+<li>Machine Leaning: Tasks 를 Experience 통해 Performance(성능) 향상에 목적.
+
+<ul>
+<li>Tasks:</li>
+<li>Classification: 값이 구분되어 있는 경우</li>
+<li>Regression: 연속된 값을 예측하는 경우</li>
+<li>Clustring: (unsupervised) 목적 값이 없고 데이터 분석으로 하는 경우</li>
+<li>etc</li>
+<li>Performance</li>
+<li>0-1 loss: 목적을 숫자로 나타내기, 실패(=0), 성공(=1)</li>
+<li>L2 loss: 목적의 근사치를 나태내기</li>
+<li>etc</li>
+<li>Experience</li>
+<li>labeled data: (사진, 이름)등, 사용하기 쉽다</li>
+<li>unlabelled data:</li>
+</ul>
+</li>
+<li>Machine Learning Process
+
+<ol>
+<li>Select a parametric(먼저 데이터를 1, 2차 함수 일거다라고 예측) &amp; nonparametric model </li>
+<li>regularization term(parametric model 생성시 너무 복잡해 질 수 있으므로 정규화하기)</li>
+<li>validation error &amp; test set (전체중 모델과 작을 일부를 나눠 테스트를 하는 것)</li>
+</ol>
+</li>
+<li>Nonparametric model
+
+<ul>
+<li>Support Vector Machine</li>
+<li>Gaussian Process Regression</li>
+</ul>
+</li>
+<li>Dimension reduction: PCA</li>
+</ul>
+
+<hr>
+
+<h2 id="reference">Reference</h2>
+
+<p><a href="https://www.youtube.com/watch?v=j3za7nv7RfI" rel="nofollow" target="_blank">https://www.youtube.com/watch?v=j3za7nv7RfI</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

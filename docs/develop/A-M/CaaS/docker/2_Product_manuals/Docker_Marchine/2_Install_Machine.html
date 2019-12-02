@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Install Docker Machine | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Install Docker Machine" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Install Machine directly" />
+<meta property="og:description" content="Install Machine directly" />
+<link rel="canonical" href="/blog/docs/develop/A-M/CaaS/docker/2_Product_manuals/Docker_Marchine/2_Install_Machine.html" />
+<meta property="og:url" content="/blog/docs/develop/A-M/CaaS/docker/2_Product_manuals/Docker_Marchine/2_Install_Machine.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-02T16:38:51+09:00" />
+<script type="application/ld+json">
+{"description":"Install Machine directly","headline":"Install Docker Machine","dateModified":"2019-12-02T16:38:51+09:00","datePublished":"2019-12-02T16:38:51+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/docs/develop/A-M/CaaS/docker/2_Product_manuals/Docker_Marchine/2_Install_Machine.html"},"url":"/blog/docs/develop/A-M/CaaS/docker/2_Product_manuals/Docker_Marchine/2_Install_Machine.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/blog/feed.xml" title="Portal2312's blog" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113063601-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+<script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Install Docker Machine</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#install-machine-directly">Install Machine directly</a></li>
+<li class="toc-entry toc-h2"><a href="#install-bash-completion-scripts">Install bash completion scripts</a></li>
+<li class="toc-entry toc-h2"><a href="#how-to-uninstall-docker-machine">How to uninstall Docker Machine</a></li>
+</ul><h2 id="install-machine-directly">
+<a class="anchor" href="#install-machine-directly" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install Machine directly</h2>
+
+<ol>
+<li><p>Install Docker</p></li>
+<li>
+<p>Docker Machine 바이너리를 다운로드하여 PATH에 압축을 푸십시오.</p>
+
+<p>macOS:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>curl <span class="nt">-L</span> https://github.com/docker/machine/releases/download/v0.13.0/docker-machine-<span class="sb">`</span><span class="nb">uname</span> <span class="nt">-s</span><span class="sb">`</span>-<span class="sb">`</span><span class="nb">uname</span> <span class="nt">-m</span><span class="sb">`</span> <span class="o">&gt;</span>/usr/local/bin/docker-machine <span class="o">&amp;&amp;</span> <span class="se">\</span>
+<span class="nb">chmod</span> +x /usr/local/bin/docker-machine
+</code></pre></div>
+<p>Linux:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>curl <span class="nt">-L</span> https://github.com/docker/machine/releases/download/v0.13.0/docker-machine-<span class="sb">`</span><span class="nb">uname</span> <span class="nt">-s</span><span class="sb">`</span>-<span class="sb">`</span><span class="nb">uname</span> <span class="nt">-m</span><span class="sb">`</span> <span class="o">&gt;</span>/tmp/docker-machine <span class="o">&amp;&amp;</span>
+<span class="nb">chmod</span> +x /tmp/docker-machine <span class="o">&amp;&amp;</span>
+<span class="nb">sudo cp</span> /tmp/docker-machine /usr/local/bin/docker-machine
+</code></pre></div>
+<p>Windows with Git BASH:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="k">if</span> <span class="o">[[</span> <span class="o">!</span> <span class="nt">-d</span> <span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/bin"</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then </span><span class="nb">mkdir</span> <span class="nt">-p</span> <span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/bin"</span><span class="p">;</span> <span class="k">fi</span> <span class="o">&amp;&amp;</span> <span class="se">\</span>
+curl <span class="nt">-L</span> https://github.com/docker/machine/releases/download/v0.13.0/docker-machine-Windows-x86_64.exe <span class="o">&gt;</span> <span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/bin/docker-machine.exe"</span> <span class="o">&amp;&amp;</span> <span class="se">\</span>
+<span class="nb">chmod</span> +x <span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/bin/docker-machine.exe"</span>
+</code></pre></div>
+<blockquote>
+<p><code>!</code> 위의 명령은 <code>chmod</code> 와 같은 Linux 명령을 지원하는 Git BASH와 같은 터미널 에뮬레이터를 사용하는 경우에만 Windows에서 작동합니다.</p>
+</blockquote>
+</li>
+<li>
+<p>Machine 버전을 표시하여 설치를 확인하십시오.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker-machine version
+<span class="c"># docker-machine version 0.13.0, build 9371605</span>
+</code></pre></div>
+</li>
+</ol>
+
+<p>예:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cat</span> /etc/<span class="k">*</span>rel<span class="k">*</span>
+<span class="c"># DISTRIB_ID=Ubuntu</span>
+<span class="c"># DISTRIB_RELEASE=17.04</span>
+<span class="c"># DISTRIB_CODENAME=zesty</span>
+<span class="c"># DISTRIB_DESCRIPTION="Ubuntu 17.04"</span>
+<span class="c"># NAME="Ubuntu"</span>
+<span class="c"># VERSION="17.04 (Zesty Zapus)"</span>
+<span class="c"># ID=ubuntu</span>
+<span class="c"># ID_LIKE=debian</span>
+<span class="c"># PRETTY_NAME="Ubuntu 17.04"</span>
+<span class="c"># VERSION_ID="17.04"</span>
+<span class="c"># HOME_URL="https://www.ubuntu.com/"</span>
+<span class="c"># SUPPORT_URL="https://help.ubuntu.com/"</span>
+<span class="c"># BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"</span>
+<span class="c"># PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"</span>
+<span class="c"># VERSION_CODENAME=zesty</span>
+<span class="c"># UBUNTU_CODENAME=zesty</span>
+<span class="nv">$ </span>su - docker
+
+<span class="nv">$ </span>curl <span class="nt">-L</span> https://github.com/docker/machine/releases/download/v0.13.0/docker-machine-<span class="sb">`</span><span class="nb">uname</span> <span class="nt">-s</span><span class="sb">`</span>-<span class="sb">`</span><span class="nb">uname</span> <span class="nt">-m</span><span class="sb">`</span> <span class="o">&gt;</span> ~/downloads/docker-machine
+<span class="nv">$ </span><span class="nb">cd </span>downloads/
+<span class="nv">$ </span><span class="nb">chmod</span> +x docker-machine
+<span class="nv">$ </span>which docker
+<span class="c"># /usr/bin/docker</span>
+<span class="nv">$ </span><span class="nb">sudo cp</span> <span class="nt">-rvp</span> docker-machine /usr/bin/docker-machine
+<span class="c"># 'docker-machine' -&gt; '/usr/bin/docker-machine'</span>
+</code></pre></div>
+<hr>
+
+<h2 id="install-bash-completion-scripts">
+<a class="anchor" href="#install-bash-completion-scripts" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install bash completion scripts</h2>
+
+<hr>
+
+<h2 id="how-to-uninstall-docker-machine">
+<a class="anchor" href="#how-to-uninstall-docker-machine" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to uninstall Docker Machine</h2>
+
+<hr>
+
+  </div>
+
+<div>
+  <h2 id="install-machine-directly">Install Machine directly</h2>
+
+<ol>
+<li><p>Install Docker</p></li>
+<li>
+<p>Docker Machine 바이너리를 다운로드하여 PATH에 압축을 푸십시오.</p>
+
+<p>macOS:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>curl <span class="nt">-L</span> https://github.com/docker/machine/releases/download/v0.13.0/docker-machine-<span class="sb">`</span><span class="nb">uname</span> <span class="nt">-s</span><span class="sb">`</span>-<span class="sb">`</span><span class="nb">uname</span> <span class="nt">-m</span><span class="sb">`</span> <span class="o">&gt;</span>/usr/local/bin/docker-machine <span class="o">&amp;&amp;</span> <span class="se">\</span>
+<span class="nb">chmod</span> +x /usr/local/bin/docker-machine
+</code></pre></div>
+<p>Linux:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>curl <span class="nt">-L</span> https://github.com/docker/machine/releases/download/v0.13.0/docker-machine-<span class="sb">`</span><span class="nb">uname</span> <span class="nt">-s</span><span class="sb">`</span>-<span class="sb">`</span><span class="nb">uname</span> <span class="nt">-m</span><span class="sb">`</span> <span class="o">&gt;</span>/tmp/docker-machine <span class="o">&amp;&amp;</span>
+<span class="nb">chmod</span> +x /tmp/docker-machine <span class="o">&amp;&amp;</span>
+<span class="nb">sudo cp</span> /tmp/docker-machine /usr/local/bin/docker-machine
+</code></pre></div>
+<p>Windows with Git BASH:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="k">if</span> <span class="o">[[</span> <span class="o">!</span> <span class="nt">-d</span> <span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/bin"</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then </span><span class="nb">mkdir</span> <span class="nt">-p</span> <span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/bin"</span><span class="p">;</span> <span class="k">fi</span> <span class="o">&amp;&amp;</span> <span class="se">\</span>
+curl <span class="nt">-L</span> https://github.com/docker/machine/releases/download/v0.13.0/docker-machine-Windows-x86_64.exe <span class="o">&gt;</span> <span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/bin/docker-machine.exe"</span> <span class="o">&amp;&amp;</span> <span class="se">\</span>
+<span class="nb">chmod</span> +x <span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/bin/docker-machine.exe"</span>
+</code></pre></div>
+<blockquote>
+<p><code>!</code> 위의 명령은 <code>chmod</code> 와 같은 Linux 명령을 지원하는 Git BASH와 같은 터미널 에뮬레이터를 사용하는 경우에만 Windows에서 작동합니다.</p>
+</blockquote>
+</li>
+<li>
+<p>Machine 버전을 표시하여 설치를 확인하십시오.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker-machine version
+<span class="c"># docker-machine version 0.13.0, build 9371605</span>
+</code></pre></div>
+</li>
+</ol>
+
+<p>예:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cat</span> /etc/<span class="k">*</span>rel<span class="k">*</span>
+<span class="c"># DISTRIB_ID=Ubuntu</span>
+<span class="c"># DISTRIB_RELEASE=17.04</span>
+<span class="c"># DISTRIB_CODENAME=zesty</span>
+<span class="c"># DISTRIB_DESCRIPTION="Ubuntu 17.04"</span>
+<span class="c"># NAME="Ubuntu"</span>
+<span class="c"># VERSION="17.04 (Zesty Zapus)"</span>
+<span class="c"># ID=ubuntu</span>
+<span class="c"># ID_LIKE=debian</span>
+<span class="c"># PRETTY_NAME="Ubuntu 17.04"</span>
+<span class="c"># VERSION_ID="17.04"</span>
+<span class="c"># HOME_URL="https://www.ubuntu.com/"</span>
+<span class="c"># SUPPORT_URL="https://help.ubuntu.com/"</span>
+<span class="c"># BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"</span>
+<span class="c"># PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"</span>
+<span class="c"># VERSION_CODENAME=zesty</span>
+<span class="c"># UBUNTU_CODENAME=zesty</span>
+<span class="nv">$ </span>su - docker
+
+<span class="nv">$ </span>curl <span class="nt">-L</span> https://github.com/docker/machine/releases/download/v0.13.0/docker-machine-<span class="sb">`</span><span class="nb">uname</span> <span class="nt">-s</span><span class="sb">`</span>-<span class="sb">`</span><span class="nb">uname</span> <span class="nt">-m</span><span class="sb">`</span> <span class="o">&gt;</span> ~/downloads/docker-machine
+<span class="nv">$ </span><span class="nb">cd </span>downloads/
+<span class="nv">$ </span><span class="nb">chmod</span> +x docker-machine
+<span class="nv">$ </span>which docker
+<span class="c"># /usr/bin/docker</span>
+<span class="nv">$ </span><span class="nb">sudo cp</span> <span class="nt">-rvp</span> docker-machine /usr/bin/docker-machine
+<span class="c"># 'docker-machine' -&gt; '/usr/bin/docker-machine'</span>
+</code></pre></div>
+<hr>
+
+<h2 id="install-bash-completion-scripts">Install bash completion scripts</h2>
+
+<hr>
+
+<h2 id="how-to-uninstall-docker-machine">How to uninstall Docker Machine</h2>
+
+<hr>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

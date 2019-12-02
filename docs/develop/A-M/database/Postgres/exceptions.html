@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>postgres - exceptions | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="postgres - exceptions" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Failed to start postgres.service: Unit not found." />
+<meta property="og:description" content="Failed to start postgres.service: Unit not found." />
+<link rel="canonical" href="/blog/docs/develop/A-M/database/Postgres/exceptions.html" />
+<meta property="og:url" content="/blog/docs/develop/A-M/database/Postgres/exceptions.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-02T16:38:51+09:00" />
+<script type="application/ld+json">
+{"description":"Failed to start postgres.service: Unit not found.","headline":"postgres - exceptions","dateModified":"2019-12-02T16:38:51+09:00","datePublished":"2019-12-02T16:38:51+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/docs/develop/A-M/database/Postgres/exceptions.html"},"url":"/blog/docs/develop/A-M/database/Postgres/exceptions.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/blog/feed.xml" title="Portal2312's blog" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113063601-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+<script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>postgres - exceptions</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#failed-to-start-postgres-service-unit-not-found">Failed to start postgres.service: Unit not found.</a></li>
+<li class="toc-entry toc-h2"><a href="#failed-to-restart-postgresql-service-unit-postgresql-service-is-masked">Failed to restart postgresql.service: Unit postgresql.service is masked.</a></li>
+<li class="toc-entry toc-h2"><a href="#postgresql-service-control-process-exited-code-exited-status-1">postgresql.service: Control process exited, code=exited status=1</a></li>
+<li class="toc-entry toc-h2"><a href="#sorting">Sorting 안되는 현상</a></li>
+<li class="toc-entry toc-h2"><a href="#update-excute-read-only-transaction">UPDATE excute read-only transaction</a></li>
+<li class="toc-entry toc-h2"><a href="#postgresql-error-msg-cannot-set-transaction-read-write-mode-during-recovery">postgresql error msg: cannot set transaction read-write mode during recovery</a></li>
+<li class="toc-entry toc-h2"><a href="#alter-column-error-column-contains-null-values">alter column ERROR:  column &quot;컬럼명&quot; contains null values</a></li>
+<li class="toc-entry toc-h2"><a href="#you-might-need-to-increase-max_locks_per_transaction-request-method">you might need to increase max_locks_per_transaction.Request Method</a></li>
+<li class="toc-entry toc-h2"><a href="#database-system-was-not-properly-shut-down-automatic-recovery-in-progress-system-is-starting-up">database system was not properly shut down automatic recovery in progress system is starting up</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#postgres-database-info-view">postgres database info view</a></li>
+<li class="toc-entry toc-h3"><a href="#pgdata-global-pg_control">$PGDATA/global/pg_control</a></li>
+</ul>
+</li>
+</ul><h2 id="failed-to-start-postgres-service-unit-not-found">
+<a class="anchor" href="#failed-to-start-postgres-service-unit-not-found" aria-hidden="true"><span class="octicon octicon-link"></span></a>Failed to start postgres.service: Unit not found.</h2>
+
+<p>해결: compile 설치로 systemctl 에 수동으로 등록해줘야 함.</p>
+
+<h2 id="failed-to-restart-postgresql-service-unit-postgresql-service-is-masked">
+<a class="anchor" href="#failed-to-restart-postgresql-service-unit-postgresql-service-is-masked" aria-hidden="true"><span class="octicon octicon-link"></span></a>Failed to restart postgresql.service: Unit postgresql.service is masked.</h2>
+
+<p>해결:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>systemctl unmask postgresql
+</code></pre></div>
+<h2 id="postgresql-service-control-process-exited-code-exited-status-1">
+<a class="anchor" href="#postgresql-service-control-process-exited-code-exited-status-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>postgresql.service: Control process exited, code=exited status=1</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>systemctl start postgresql.service
+<span class="c"># Job for postgresql.service failed because the control process exited with error code.</span>
+<span class="c"># See "systemctl status postgresql.service" and "journalctl -xe" for details.</span>
+
+<span class="nv">$ </span>systemctl status postgresql.service
+<span class="c"># ● postgresql.service - PostgreSQL RDBMS</span>
+<span class="c">#    Loaded: loaded (/lib/systemd/system/postgresql.service; enabled; vendor preset: enabled)</span>
+<span class="c">#    Active: failed (Result: exit-code) since Mon 2017-05-22 17:11:58 KST; 1min 13s ago</span>
+<span class="c">#   Process: 21724 ExecStart=/usr/local/bin/pg_ctl -s -D ${PGDATA} start -w -t 120 (code=exited, status=1/FAILURE)</span>
+<span class="c">#  Main PID: 20316 (code=exited, status=0/SUCCESS)</span>
+
+<span class="c">#  5월 22 17:11:58 mkkimpc systemd[1]: Starting PostgreSQL RDBMS...</span>
+<span class="c">#  5월 22 17:11:58 mkkimpc systemd[1]: postgresql.service: Control process exited, code=exited status=1</span>
+<span class="c">#  5월 22 17:11:58 mkkimpc systemd[1]: Failed to start PostgreSQL RDBMS.</span>
+<span class="c">#  5월 22 17:11:58 mkkimpc systemd[1]: postgresql.service: Unit entered failed state.</span>
+<span class="c">#  5월 22 17:11:58 mkkimpc systemd[1]: postgresql.service: Failed with result 'exit-code'.</span>
+</code></pre></div><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>journalctl <span class="nt">-xe</span>
+
+<span class="nt">--</span> Unit postgresql.service has begun starting up.
+ 5월 22 17:08:44 mkkimpc postgres[21335]: pg_ctl: <span class="s2">"/home/postgres/data"</span> 디렉터리에 액세스할 수 없음: 허가 거부
+ 5월 22 17:08:44 mkkimpc systemd[1]: postgresql.service: Control process exited, <span class="nv">code</span><span class="o">=</span>exited <span class="nv">status</span><span class="o">=</span>1
+ 5월 22 17:08:44 mkkimpc systemd[1]: Failed to start PostgreSQL RDBMS.
+<span class="nt">--</span> Subject: Unit postgresql.service has failed
+<span class="nt">--</span> Defined-By: systemd
+<span class="nt">--</span> Support: http://www.ubuntu.com/support
+<span class="nt">--</span>
+<span class="nt">--</span> Unit postgresql.service has failed.
+<span class="nt">--</span>
+<span class="nt">--</span> The result is failed.
+ 5월 22 17:08:44 mkkimpc systemd[1]: postgresql.service: Unit entered failed state.
+ 5월 22 17:08:44 mkkimpc systemd[1]: postgresql.service: Failed with result <span class="s1">'exit-code'</span><span class="nb">.</span>
+ 5월 22 17:09:20 mkkimpc su[21414]: pam_unix<span class="o">(</span>su:auth<span class="o">)</span>: authentication failure<span class="p">;</span> <span class="nb">logname</span><span class="o">=</span>zen <span class="nv">uid</span><span class="o">=</span>1000 <span class="nv">euid</span><span class="o">=</span>0 <span class="nb">tty</span><span class="o">=</span>/dev/pts/8 <span class="nv">ruser</span><span class="o">=</span>zen <span class="nv">rhost</span><span class="o">=</span>  <span class="nv">user</span><span class="o">=</span>postgres
+ 5월 22 17:09:22 mkkimpc su[21414]: pam_authenticate: Authentication failure
+ 5월 22 17:09:22 mkkimpc su[21414]: FAILED su <span class="k">for </span>postgres by zen
+ 5월 22 17:09:22 mkkimpc su[21414]: - /dev/pts/8 zen:postgres
+ 5월 22 17:09:30 mkkimpc su[21444]: pam_unix<span class="o">(</span>su:auth<span class="o">)</span>: authentication failure<span class="p">;</span> <span class="nb">logname</span><span class="o">=</span>zen <span class="nv">uid</span><span class="o">=</span>1000 <span class="nv">euid</span><span class="o">=</span>0 <span class="nb">tty</span><span class="o">=</span>/dev/pts/8 <span class="nv">ruser</span><span class="o">=</span>zen <span class="nv">rhost</span><span class="o">=</span>  <span class="nv">user</span><span class="o">=</span>root
+ 5월 22 17:09:33 mkkimpc su[21444]: pam_authenticate: Authentication failure
+ 5월 22 17:09:33 mkkimpc su[21444]: FAILED su <span class="k">for </span>root by zen
+ 5월 22 17:09:33 mkkimpc su[21444]: - /dev/pts/8 zen:root
+</code></pre></div>
+<h2 id="sorting">
+<a class="anchor" href="#sorting" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sorting 안되는 현상</h2>
+
+<p>Database Collate 가 en_US.UTF-8 인 경우 한글 정렬이 안되는 현상.</p>
+
+<p>postgres 에서 Databse 보기:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">postgres=# \l
+
+   Name    |  Owner   | Encoding |   Collate   |    Ctype    |   Access privileges
+-----------+----------+----------+-------------+-------------+-----------------------
+ ktmss2    | postgres | UTF8     | ko_KR.UTF8  | ko_KR.UTF8  |
+ postgres  | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
+ template0 | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 | =c/postgres          +
+           |          |          |             |             | postgres=CTc/postgres
+ template1 | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 | postgres=CTc/postgres+
+</code></pre></div>
+<p>일시적인 정렬하는 SELECT 명령어:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">select name from "USER" order by name collate "C";
+</code></pre></div>
+<p>schema 추가하기:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">ALTER TABLE "USER" ALTER COLUMN name TYPE character varying(32) COLLATE postgres;
+
+SELECT name FROM "USER" ORDER BY name ASC;
+</code></pre></div>
+<p>Database 에 적용하기:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">update
+  pg_database set encoding = 6,
+  datcollate = 'ko_KR.UTF8',
+  datctype = 'ko_KR.UTF8'
+where
+  datname = 'ktmss2';
+</code></pre></div>
+<p><a href="https://ansuchan.com/postgresql-korean-order/">https://ansuchan.com/postgresql-korean-order/</a></p>
+
+<p><a href="https://www.postgresql.org/docs/9.3/static/sql-altertable.html">https://www.postgresql.org/docs/9.3/static/sql-altertable.html</a></p>
+
+<p><a href="https://lauris.github.io/database/alter-column-differences-between-mysql-postgresql">https://lauris.github.io/database/alter-column-differences-between-mysql-postgresql</a></p>
+
+<h2 id="update-excute-read-only-transaction">
+<a class="anchor" href="#update-excute-read-only-transaction" aria-hidden="true"><span class="octicon octicon-link"></span></a>UPDATE excute read-only transaction</h2>
+
+<p>web page 에서 error msg 출력됨.</p>
+
+<p>Resolve:</p>
+
+<p>pgpool 사용시 /opt/hts/netcruz/webapps/nom/nom/settings.py DB_PORT: 5432 -&gt; 9999 해결.</p>
+
+<h2 id="postgresql-error-msg-cannot-set-transaction-read-write-mode-during-recovery">
+<a class="anchor" href="#postgresql-error-msg-cannot-set-transaction-read-write-mode-during-recovery" aria-hidden="true"><span class="octicon octicon-link"></span></a>postgresql error msg: cannot set transaction read-write mode during recovery</h2>
+
+<p>현재 nom 단일망 5432 설정, pgpool 9999 또는 pgbounce 6432 설정</p>
+
+<p><code>/home/postgres/data/recovery.conf</code>:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">standby_mode          = 'on'
+primary_conninfo      = 'host=nom-master port=5432 user=postgres'
+trigger_file          = '/var/log/pgpool/trigger/trigger'   &lt;&lt;&lt; 이 파일을 참조 (*단일망 구성해도 반드시 있어야 함)
+</code></pre></div>
+<p>Resolve:</p>
+
+<p>사용하지 않는 pgpool down 후 postgresql restart</p>
+
+<h2 id="alter-column-error-column-contains-null-values">
+<a class="anchor" href="#alter-column-error-column-contains-null-values" aria-hidden="true"><span class="octicon octicon-link"></span></a>alter column ERROR:  column "컬럼명" contains null values</h2>
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">alter</span> <span class="k">table</span> <span class="nv">"USER"</span> <span class="k">alter</span> <span class="k">column</span> <span class="n">lock_time</span> <span class="k">set</span> <span class="k">default</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">alter</span> <span class="k">table</span> <span class="nv">"USER"</span> <span class="k">alter</span> <span class="k">column</span> <span class="n">lock_time</span> <span class="k">set</span> <span class="k">not</span> <span class="k">null</span><span class="p">;</span>
+</code></pre></div>
+<p><code>select userid, lock_time from "USER";</code>:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">userid    | lock_time
+-------------+------------
+masteradmin |
+UserBefore  |
+UserAfter   |
+mkkim1      |
+restUser    | 1467366949
+mkkim2      |
+(6 rows)
+</code></pre></div>
+<p>Resolve:</p>
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">update</span> <span class="nv">"USER"</span> <span class="k">set</span> <span class="n">lock_time</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">where</span> <span class="n">lock_time</span> <span class="k">is</span> <span class="k">null</span><span class="p">;</span>
+<span class="k">alter</span> <span class="k">table</span> <span class="nv">"USER"</span> <span class="k">alter</span> <span class="k">column</span> <span class="n">lock_time</span> <span class="k">set</span> <span class="k">not</span> <span class="k">null</span><span class="p">;</span>
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">userid    | lock_time
+-------------+------------
+mkkim2      |          0
+restUser    | 1467366949
+masteradmin |          0
+UserBefore  |          0
+UserAfter   |          0
+mkkim1      |          0
+(6 rows)
+</code></pre></div>
+<h2 id="you-might-need-to-increase-max_locks_per_transaction-request-method">
+<a class="anchor" href="#you-might-need-to-increase-max_locks_per_transaction-request-method" aria-hidden="true"><span class="octicon octicon-link"></span></a>you might need to increase max_locks_per_transaction.Request Method</h2>
+
+<p>Refer to <a href="http://www.postgresql.jp/document/9.1/html/runtime-config-locks.html">link</a></p>
+
+<h2 id="database-system-was-not-properly-shut-down-automatic-recovery-in-progress-system-is-starting-up">
+<a class="anchor" href="#database-system-was-not-properly-shut-down-automatic-recovery-in-progress-system-is-starting-up" aria-hidden="true"><span class="octicon octicon-link"></span></a>database system was not properly shut down automatic recovery in progress system is starting up</h2>
+
+<h3 id="postgres-database-info-view">
+<a class="anchor" href="#postgres-database-info-view" aria-hidden="true"><span class="octicon octicon-link"></span></a>postgres database info view</h3>
+
+<h3 id="pgdata-global-pg_control">
+<a class="anchor" href="#pgdata-global-pg_control" aria-hidden="true"><span class="octicon octicon-link"></span></a>$PGDATA/global/pg_control</h3>
+
+<ul>
+<li>initdb static info</li>
+<li>postgresql.conf</li>
+<li>write logging and check point static info</li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">su - postgres
+pg_controldata /home/postgres/data
+pg_controldata /home/postgres/data <span class="o">&gt;</span> pg_controldata_old.log
+</code></pre></div>
+<p>Test:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">rm</span> <span class="nt">-rf</span> /home/postgres/data/global/pg_control
+<span class="nb">touch</span> /home/postgres/data/global/pg_control
+<span class="nb">chmod </span>600 /home/postgres/data/global/pg_control
+pg_controldata /home/postgres/data
+</code></pre></div>
+<p>pg_controldata: could not read file "/home/postgres/data/global/pg_control"</p>
+
+<p>pg_resetxlog options:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">
+-l pg_xlog
+
+    000000220000000F0000009F (hex,hex,hex)
+
+    00000022 = 0x22
+    0000000F = 0xf
+    0000009F = 0x9F + 1 == 0xA0
+
+    -l 000000220000000F000000A0
+
+-x pg_clog
+
+    0028 (hex)
+
+    0x2900000 = 0x28 + 1 + '0'*5
+
+    -x 0x2900000
+
+-m MXID,MXID     set next and oldest multitransaction ID
+    ./pg_multixact/offsets
+
+    (file 없는 경우 0x10000 = '0x1' + '0'*4)
+
+    0002
+
+    -m 0x30000,0x20000
+
+-O OFFSET        set next multitransaction offset
+    cd ./pg_multixact/members
+
+    (file 없는 경우 0x10000 = '0x1' + '0'*4)
+
+    0000
+
+    -O 0x00000
+
+-f force update to be done
+
+    -f $PGDATA (=/home/postgres/data)
+</code></pre></div><div class="highlight"><pre><code class="language-bash" data-lang="bash">pg_resetxlog <span class="nt">-l</span> 000000220000000F000000A0 <span class="nt">-x</span> 0x2900000 <span class="nt">-m</span> 0x30000,0x20000 <span class="nt">-O</span> 0x20000 <span class="nt">-f</span> /home/postgres/data
+</code></pre></div>
+<p>pg_resetxlog: pg_control exists but is broken or unknown version; ignoring it
+Transaction log reset</p>
+<div class="highlight"><pre><code class="language-" data-lang="">pg_controldata /home/postgres/data
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">...
+Latest checkpoint's NextXID:          0/1184890880
+Latest checkpoint's NextOID:          10000
+Latest checkpoint's NextMultiXactId:  3
+Latest checkpoint's NextMultiOffset:  1
+Latest checkpoint's oldestXID:        3479858176
+Latest checkpoint's oldestXID's DB:   0
+...
+</code></pre></div><div class="highlight"><pre><code class="language-bash" data-lang="bash">pg_controldata /home/postgres/data <span class="o">&gt;</span> pg_controldata_new.log
+</code></pre></div>
+<p>Start postgres:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">pg_ctl -D /home/postgres/data start
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">cd /home/postgres/data/pg_log
+ls -alhtr | tail -n 5
+</code></pre></div>
+<p><code>vi .log</code>:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">- Success
+
+  1 LOG:  database system was shut down at 2016-10-18 06:11:30 GMT
+  2 LOG:  database system is ready to accept connections
+  3 LOG:  autovacuum launcher started
+
+- Failed
+
+  1 FATAL:  the database system is starting up
+  2 LOG:  database system was shut down at 2016-10-18 06:20:59 GMT
+  3 FATAL:  could not access status of transaction 196608
+  4 DETAIL:  Could not open file "pg_multixact/members/0003": 그런 파일이나 디렉터리가 없습니다.
+  5 LOG:  startup process (PID 15792) exited with exit code 1
+  6 LOG:  aborting startup due to startup process failure
+</code></pre></div>
+<p>Tip:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">pg_ctl -m fast -D /home/postgres/data stop
+ls -alhtr | tail -n 5
+$PGDATA = /home/postgres/data
+/usr/local/pgsql/bin/postgres --single -D /home/postgres/data -P -d 1
+</code></pre></div>
+<p><code>postgres.conf (./data/postgresql.conf)</code>:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">wal_level = hot_standby
+hot_standby = on
+max_wal_senders = 1
+</code></pre></div><div class="highlight"><pre><code class="language-bash" data-lang="bash">su - postgres
+
+pg_controldata /home/postgres/data
+pg_controldata /home/postgres/data <span class="o">&gt;</span> pg_controldata_old.log
+<span class="nb">rm</span> <span class="nt">-rf</span> /home/postgres/data/global/pg_control
+<span class="nb">touch</span> /home/postgres/data/global/pg_control
+<span class="nb">chmod </span>600 /home/postgres/data/global/pg_control
+pg_controldata /home/postgres/data
+pg_resetxlog <span class="nt">-l</span> 000000220000000F000000A0 <span class="nt">-x</span> 0x2900000 <span class="nt">-m</span> 0x30000,0x20000 <span class="nt">-O</span> 0x20000 <span class="nt">-f</span> /home/postgres/data
+
+pg_controldata /home/postgres/data
+pg_controldata /home/postgres/data <span class="o">&gt;</span> pg_controldata_new.log
+pg_ctl <span class="nt">-D</span> /home/postgres/data start
+<span class="nb">cd</span> /home/postgres/data/pg_log
+<span class="nb">ls</span> <span class="nt">-alhtr</span> | <span class="nb">tail</span> <span class="nt">-n</span> 5
+
+vi .log
+</code></pre></div>
+<p><a href="http://blog.163.com/digoal@126/blog/static/16387704020130109400557/">http://blog.163.com/digoal@126/blog/static/16387704020130109400557/</a>
+<a href="https://www.postgresql.org/docs/9.5/static/app-pgresetxlog.html">https://www.postgresql.org/docs/9.5/static/app-pgresetxlog.html</a>
+<a href="http://www.cybertec.at/2014/08/pg_resetxlog-when-hope-depends-on-luck/">http://www.cybertec.at/2014/08/pg_resetxlog-when-hope-depends-on-luck/</a></p>
+
+  </div>
+
+<div>
+  <h2 id="failed-to-start-postgres-service-unit-not-found">Failed to start postgres.service: Unit not found.</h2>
+
+<p>해결: compile 설치로 systemctl 에 수동으로 등록해줘야 함.</p>
+
+<h2 id="failed-to-restart-postgresql-service-unit-postgresql-service-is-masked">Failed to restart postgresql.service: Unit postgresql.service is masked.</h2>
+
+<p>해결:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>systemctl unmask postgresql
+</code></pre></div>
+<h2 id="postgresql-service-control-process-exited-code-exited-status-1">postgresql.service: Control process exited, code=exited status=1</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>systemctl start postgresql.service
+<span class="c"># Job for postgresql.service failed because the control process exited with error code.</span>
+<span class="c"># See "systemctl status postgresql.service" and "journalctl -xe" for details.</span>
+
+<span class="nv">$ </span>systemctl status postgresql.service
+<span class="c"># ● postgresql.service - PostgreSQL RDBMS</span>
+<span class="c">#    Loaded: loaded (/lib/systemd/system/postgresql.service; enabled; vendor preset: enabled)</span>
+<span class="c">#    Active: failed (Result: exit-code) since Mon 2017-05-22 17:11:58 KST; 1min 13s ago</span>
+<span class="c">#   Process: 21724 ExecStart=/usr/local/bin/pg_ctl -s -D ${PGDATA} start -w -t 120 (code=exited, status=1/FAILURE)</span>
+<span class="c">#  Main PID: 20316 (code=exited, status=0/SUCCESS)</span>
+
+<span class="c">#  5월 22 17:11:58 mkkimpc systemd[1]: Starting PostgreSQL RDBMS...</span>
+<span class="c">#  5월 22 17:11:58 mkkimpc systemd[1]: postgresql.service: Control process exited, code=exited status=1</span>
+<span class="c">#  5월 22 17:11:58 mkkimpc systemd[1]: Failed to start PostgreSQL RDBMS.</span>
+<span class="c">#  5월 22 17:11:58 mkkimpc systemd[1]: postgresql.service: Unit entered failed state.</span>
+<span class="c">#  5월 22 17:11:58 mkkimpc systemd[1]: postgresql.service: Failed with result 'exit-code'.</span>
+</code></pre></div><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>journalctl <span class="nt">-xe</span>
+
+<span class="nt">--</span> Unit postgresql.service has begun starting up.
+ 5월 22 17:08:44 mkkimpc postgres[21335]: pg_ctl: <span class="s2">"/home/postgres/data"</span> 디렉터리에 액세스할 수 없음: 허가 거부
+ 5월 22 17:08:44 mkkimpc systemd[1]: postgresql.service: Control process exited, <span class="nv">code</span><span class="o">=</span>exited <span class="nv">status</span><span class="o">=</span>1
+ 5월 22 17:08:44 mkkimpc systemd[1]: Failed to start PostgreSQL RDBMS.
+<span class="nt">--</span> Subject: Unit postgresql.service has failed
+<span class="nt">--</span> Defined-By: systemd
+<span class="nt">--</span> Support: http://www.ubuntu.com/support
+<span class="nt">--</span>
+<span class="nt">--</span> Unit postgresql.service has failed.
+<span class="nt">--</span>
+<span class="nt">--</span> The result is failed.
+ 5월 22 17:08:44 mkkimpc systemd[1]: postgresql.service: Unit entered failed state.
+ 5월 22 17:08:44 mkkimpc systemd[1]: postgresql.service: Failed with result <span class="s1">'exit-code'</span><span class="nb">.</span>
+ 5월 22 17:09:20 mkkimpc su[21414]: pam_unix<span class="o">(</span>su:auth<span class="o">)</span>: authentication failure<span class="p">;</span> <span class="nb">logname</span><span class="o">=</span>zen <span class="nv">uid</span><span class="o">=</span>1000 <span class="nv">euid</span><span class="o">=</span>0 <span class="nb">tty</span><span class="o">=</span>/dev/pts/8 <span class="nv">ruser</span><span class="o">=</span>zen <span class="nv">rhost</span><span class="o">=</span>  <span class="nv">user</span><span class="o">=</span>postgres
+ 5월 22 17:09:22 mkkimpc su[21414]: pam_authenticate: Authentication failure
+ 5월 22 17:09:22 mkkimpc su[21414]: FAILED su <span class="k">for </span>postgres by zen
+ 5월 22 17:09:22 mkkimpc su[21414]: - /dev/pts/8 zen:postgres
+ 5월 22 17:09:30 mkkimpc su[21444]: pam_unix<span class="o">(</span>su:auth<span class="o">)</span>: authentication failure<span class="p">;</span> <span class="nb">logname</span><span class="o">=</span>zen <span class="nv">uid</span><span class="o">=</span>1000 <span class="nv">euid</span><span class="o">=</span>0 <span class="nb">tty</span><span class="o">=</span>/dev/pts/8 <span class="nv">ruser</span><span class="o">=</span>zen <span class="nv">rhost</span><span class="o">=</span>  <span class="nv">user</span><span class="o">=</span>root
+ 5월 22 17:09:33 mkkimpc su[21444]: pam_authenticate: Authentication failure
+ 5월 22 17:09:33 mkkimpc su[21444]: FAILED su <span class="k">for </span>root by zen
+ 5월 22 17:09:33 mkkimpc su[21444]: - /dev/pts/8 zen:root
+</code></pre></div>
+<h2 id="sorting">Sorting 안되는 현상</h2>
+
+<p>Database Collate 가 en_US.UTF-8 인 경우 한글 정렬이 안되는 현상.</p>
+
+<p>postgres 에서 Databse 보기:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">postgres=# \l
+
+   Name    |  Owner   | Encoding |   Collate   |    Ctype    |   Access privileges
+-----------+----------+----------+-------------+-------------+-----------------------
+ ktmss2    | postgres | UTF8     | ko_KR.UTF8  | ko_KR.UTF8  |
+ postgres  | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
+ template0 | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 | =c/postgres          +
+           |          |          |             |             | postgres=CTc/postgres
+ template1 | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 | postgres=CTc/postgres+
+</code></pre></div>
+<p>일시적인 정렬하는 SELECT 명령어:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">select name from "USER" order by name collate "C";
+</code></pre></div>
+<p>schema 추가하기:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">ALTER TABLE "USER" ALTER COLUMN name TYPE character varying(32) COLLATE postgres;
+
+SELECT name FROM "USER" ORDER BY name ASC;
+</code></pre></div>
+<p>Database 에 적용하기:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">update
+  pg_database set encoding = 6,
+  datcollate = 'ko_KR.UTF8',
+  datctype = 'ko_KR.UTF8'
+where
+  datname = 'ktmss2';
+</code></pre></div>
+<p><a href="https://ansuchan.com/postgresql-korean-order/" rel="nofollow" target="_blank">https://ansuchan.com/postgresql-korean-order/</a></p>
+
+<p><a href="https://www.postgresql.org/docs/9.3/static/sql-altertable.html" rel="nofollow" target="_blank">https://www.postgresql.org/docs/9.3/static/sql-altertable.html</a></p>
+
+<p><a href="https://lauris.github.io/database/alter-column-differences-between-mysql-postgresql" rel="nofollow" target="_blank">https://lauris.github.io/database/alter-column-differences-between-mysql-postgresql</a></p>
+
+<h2 id="update-excute-read-only-transaction">UPDATE excute read-only transaction</h2>
+
+<p>web page 에서 error msg 출력됨.</p>
+
+<p>Resolve:</p>
+
+<p>pgpool 사용시 /opt/hts/netcruz/webapps/nom/nom/settings.py DB_PORT: 5432 -&gt; 9999 해결.</p>
+
+<h2 id="postgresql-error-msg-cannot-set-transaction-read-write-mode-during-recovery">postgresql error msg: cannot set transaction read-write mode during recovery</h2>
+
+<p>현재 nom 단일망 5432 설정, pgpool 9999 또는 pgbounce 6432 설정</p>
+
+<p><code>/home/postgres/data/recovery.conf</code>:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">standby_mode          = 'on'
+primary_conninfo      = 'host=nom-master port=5432 user=postgres'
+trigger_file          = '/var/log/pgpool/trigger/trigger'   &lt;&lt;&lt; 이 파일을 참조 (*단일망 구성해도 반드시 있어야 함)
+</code></pre></div>
+<p>Resolve:</p>
+
+<p>사용하지 않는 pgpool down 후 postgresql restart</p>
+
+<h2 id="alter-column-error-column-contains-null-values">alter column ERROR:  column "컬럼명" contains null values</h2>
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">alter</span> <span class="k">table</span> <span class="nv">"USER"</span> <span class="k">alter</span> <span class="k">column</span> <span class="n">lock_time</span> <span class="k">set</span> <span class="k">default</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">alter</span> <span class="k">table</span> <span class="nv">"USER"</span> <span class="k">alter</span> <span class="k">column</span> <span class="n">lock_time</span> <span class="k">set</span> <span class="k">not</span> <span class="k">null</span><span class="p">;</span>
+</code></pre></div>
+<p><code>select userid, lock_time from "USER";</code>:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">userid    | lock_time
+-------------+------------
+masteradmin |
+UserBefore  |
+UserAfter   |
+mkkim1      |
+restUser    | 1467366949
+mkkim2      |
+(6 rows)
+</code></pre></div>
+<p>Resolve:</p>
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">update</span> <span class="nv">"USER"</span> <span class="k">set</span> <span class="n">lock_time</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">where</span> <span class="n">lock_time</span> <span class="k">is</span> <span class="k">null</span><span class="p">;</span>
+<span class="k">alter</span> <span class="k">table</span> <span class="nv">"USER"</span> <span class="k">alter</span> <span class="k">column</span> <span class="n">lock_time</span> <span class="k">set</span> <span class="k">not</span> <span class="k">null</span><span class="p">;</span>
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">userid    | lock_time
+-------------+------------
+mkkim2      |          0
+restUser    | 1467366949
+masteradmin |          0
+UserBefore  |          0
+UserAfter   |          0
+mkkim1      |          0
+(6 rows)
+</code></pre></div>
+<h2 id="you-might-need-to-increase-max_locks_per_transaction-request-method">you might need to increase max_locks_per_transaction.Request Method</h2>
+
+<p>Refer to <a href="http://www.postgresql.jp/document/9.1/html/runtime-config-locks.html" rel="nofollow" target="_blank">link</a></p>
+
+<h2 id="database-system-was-not-properly-shut-down-automatic-recovery-in-progress-system-is-starting-up">database system was not properly shut down automatic recovery in progress system is starting up</h2>
+
+<h3 id="postgres-database-info-view">postgres database info view</h3>
+
+<h3 id="pgdata-global-pg_control">$PGDATA/global/pg_control</h3>
+
+<ul>
+<li>initdb static info</li>
+<li>postgresql.conf</li>
+<li>write logging and check point static info</li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">su - postgres
+pg_controldata /home/postgres/data
+pg_controldata /home/postgres/data <span class="o">&gt;</span> pg_controldata_old.log
+</code></pre></div>
+<p>Test:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">rm</span> <span class="nt">-rf</span> /home/postgres/data/global/pg_control
+<span class="nb">touch</span> /home/postgres/data/global/pg_control
+<span class="nb">chmod </span>600 /home/postgres/data/global/pg_control
+pg_controldata /home/postgres/data
+</code></pre></div>
+<p>pg_controldata: could not read file "/home/postgres/data/global/pg_control"</p>
+
+<p>pg_resetxlog options:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">
+-l pg_xlog
+
+    000000220000000F0000009F (hex,hex,hex)
+
+    00000022 = 0x22
+    0000000F = 0xf
+    0000009F = 0x9F + 1 == 0xA0
+
+    -l 000000220000000F000000A0
+
+-x pg_clog
+
+    0028 (hex)
+
+    0x2900000 = 0x28 + 1 + '0'*5
+
+    -x 0x2900000
+
+-m MXID,MXID     set next and oldest multitransaction ID
+    ./pg_multixact/offsets
+
+    (file 없는 경우 0x10000 = '0x1' + '0'*4)
+
+    0002
+
+    -m 0x30000,0x20000
+
+-O OFFSET        set next multitransaction offset
+    cd ./pg_multixact/members
+
+    (file 없는 경우 0x10000 = '0x1' + '0'*4)
+
+    0000
+
+    -O 0x00000
+
+-f force update to be done
+
+    -f $PGDATA (=/home/postgres/data)
+</code></pre></div><div class="highlight"><pre><code class="language-bash" data-lang="bash">pg_resetxlog <span class="nt">-l</span> 000000220000000F000000A0 <span class="nt">-x</span> 0x2900000 <span class="nt">-m</span> 0x30000,0x20000 <span class="nt">-O</span> 0x20000 <span class="nt">-f</span> /home/postgres/data
+</code></pre></div>
+<p>pg_resetxlog: pg_control exists but is broken or unknown version; ignoring it
+Transaction log reset</p>
+<div class="highlight"><pre><code class="language-" data-lang="">pg_controldata /home/postgres/data
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">...
+Latest checkpoint's NextXID:          0/1184890880
+Latest checkpoint's NextOID:          10000
+Latest checkpoint's NextMultiXactId:  3
+Latest checkpoint's NextMultiOffset:  1
+Latest checkpoint's oldestXID:        3479858176
+Latest checkpoint's oldestXID's DB:   0
+...
+</code></pre></div><div class="highlight"><pre><code class="language-bash" data-lang="bash">pg_controldata /home/postgres/data <span class="o">&gt;</span> pg_controldata_new.log
+</code></pre></div>
+<p>Start postgres:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">pg_ctl -D /home/postgres/data start
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">cd /home/postgres/data/pg_log
+ls -alhtr | tail -n 5
+</code></pre></div>
+<p><code>vi .log</code>:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">- Success
+
+  1 LOG:  database system was shut down at 2016-10-18 06:11:30 GMT
+  2 LOG:  database system is ready to accept connections
+  3 LOG:  autovacuum launcher started
+
+- Failed
+
+  1 FATAL:  the database system is starting up
+  2 LOG:  database system was shut down at 2016-10-18 06:20:59 GMT
+  3 FATAL:  could not access status of transaction 196608
+  4 DETAIL:  Could not open file "pg_multixact/members/0003": 그런 파일이나 디렉터리가 없습니다.
+  5 LOG:  startup process (PID 15792) exited with exit code 1
+  6 LOG:  aborting startup due to startup process failure
+</code></pre></div>
+<p>Tip:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">pg_ctl -m fast -D /home/postgres/data stop
+ls -alhtr | tail -n 5
+$PGDATA = /home/postgres/data
+/usr/local/pgsql/bin/postgres --single -D /home/postgres/data -P -d 1
+</code></pre></div>
+<p><code>postgres.conf (./data/postgresql.conf)</code>:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">wal_level = hot_standby
+hot_standby = on
+max_wal_senders = 1
+</code></pre></div><div class="highlight"><pre><code class="language-bash" data-lang="bash">su - postgres
+
+pg_controldata /home/postgres/data
+pg_controldata /home/postgres/data <span class="o">&gt;</span> pg_controldata_old.log
+<span class="nb">rm</span> <span class="nt">-rf</span> /home/postgres/data/global/pg_control
+<span class="nb">touch</span> /home/postgres/data/global/pg_control
+<span class="nb">chmod </span>600 /home/postgres/data/global/pg_control
+pg_controldata /home/postgres/data
+pg_resetxlog <span class="nt">-l</span> 000000220000000F000000A0 <span class="nt">-x</span> 0x2900000 <span class="nt">-m</span> 0x30000,0x20000 <span class="nt">-O</span> 0x20000 <span class="nt">-f</span> /home/postgres/data
+
+pg_controldata /home/postgres/data
+pg_controldata /home/postgres/data <span class="o">&gt;</span> pg_controldata_new.log
+pg_ctl <span class="nt">-D</span> /home/postgres/data start
+<span class="nb">cd</span> /home/postgres/data/pg_log
+<span class="nb">ls</span> <span class="nt">-alhtr</span> | <span class="nb">tail</span> <span class="nt">-n</span> 5
+
+vi .log
+</code></pre></div>
+<p><a href="http://blog.163.com/digoal@126/blog/static/16387704020130109400557/" rel="nofollow" target="_blank">http://blog.163.com/digoal@126/blog/static/16387704020130109400557/</a>
+<a href="https://www.postgresql.org/docs/9.5/static/app-pgresetxlog.html" rel="nofollow" target="_blank">https://www.postgresql.org/docs/9.5/static/app-pgresetxlog.html</a>
+<a href="http://www.cybertec.at/2014/08/pg_resetxlog-when-hope-depends-on-luck/" rel="nofollow" target="_blank">http://www.cybertec.at/2014/08/pg_resetxlog-when-hope-depends-on-luck/</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

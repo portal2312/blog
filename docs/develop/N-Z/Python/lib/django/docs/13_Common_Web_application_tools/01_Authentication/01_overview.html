@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>User Authentication in Django | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="User Authentication in Django" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Django는 사용자 인증 시스템과 함께 제공됩니다. 사용자 계정, 그룹, 권한 및 쿠키 기반 사용자 세션을 처리합니다. 문서의 이 섹션에서는 프로젝트의 필요에 맞게 기본 구현을 확장 및 사용자 정의하는 방법뿐만 아니라 기본 구현이 어떻게 작동하는지 설명합니다." />
+<meta property="og:description" content="Django는 사용자 인증 시스템과 함께 제공됩니다. 사용자 계정, 그룹, 권한 및 쿠키 기반 사용자 세션을 처리합니다. 문서의 이 섹션에서는 프로젝트의 필요에 맞게 기본 구현을 확장 및 사용자 정의하는 방법뿐만 아니라 기본 구현이 어떻게 작동하는지 설명합니다." />
+<link rel="canonical" href="/blog/docs/develop/N-Z/Python/lib/django/docs/13_Common_Web_application_tools/01_Authentication/01_overview.html" />
+<meta property="og:url" content="/blog/docs/develop/N-Z/Python/lib/django/docs/13_Common_Web_application_tools/01_Authentication/01_overview.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-02T16:38:51+09:00" />
+<script type="application/ld+json">
+{"description":"Django는 사용자 인증 시스템과 함께 제공됩니다. 사용자 계정, 그룹, 권한 및 쿠키 기반 사용자 세션을 처리합니다. 문서의 이 섹션에서는 프로젝트의 필요에 맞게 기본 구현을 확장 및 사용자 정의하는 방법뿐만 아니라 기본 구현이 어떻게 작동하는지 설명합니다.","headline":"User Authentication in Django","dateModified":"2019-12-02T16:38:51+09:00","datePublished":"2019-12-02T16:38:51+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/docs/develop/N-Z/Python/lib/django/docs/13_Common_Web_application_tools/01_Authentication/01_overview.html"},"url":"/blog/docs/develop/N-Z/Python/lib/django/docs/13_Common_Web_application_tools/01_Authentication/01_overview.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/blog/feed.xml" title="Portal2312's blog" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113063601-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+<script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>User Authentication in Django</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#overview">Overview</a></li>
+<li class="toc-entry toc-h2"><a href="#installation">Installation</a></li>
+<li class="toc-entry toc-h2"><a href="#usage">Usage</a></li>
+<li class="toc-entry toc-h2"><a href="#references">References</a></li>
+</ul><p>Django는 사용자 인증 시스템과 함께 제공됩니다.
+사용자 계정, 그룹, 권한 및 쿠키 기반 사용자 세션을 처리합니다.
+문서의 이 섹션에서는 프로젝트의 필요에 맞게 기본 구현을 <a href="https://docs.djangoproject.com/en/2.1/topics/auth/customizing/">확장 및 사용자 정의</a>하는 방법뿐만 아니라 기본 구현이 어떻게 작동하는지 설명합니다.</p>
+
+<h2 id="overview">
+<a class="anchor" href="#overview" aria-hidden="true"><span class="octicon octicon-link"></span></a>Overview</h2>
+
+<p>Django 인증 시스템은 authentication(인증) 과 authorization(권한 부여)을 모두 처리합니다.
+간단히 말해서 authentication은 사용자가 자신이 주장하는 사람임을 확인하고 authorization은 인증된 사용자가 수행할 수 있는 작업을 결정합니다.
+여기서 authentication 용어는 두 작업을 모두 가리키는 데 사용됩니다.</p>
+
+<p>인증 시스템은 다음과 같이 구성되어 있습니다:
+- Users
+- Permission(사용 권한): 사용자가 특정 작업을 수행 할 수 있는지 여부를 지정하는 이진 (예/아니요) 플래그.
+- Groups: 둘 이상의 사용자에게 라벨과 권한을 적용하는 일반적인 방법입니다.
+- 구성 가능한 암호 해시 시스템 사용자 로그인 또는 콘텐츠 제한을위한 양식 및보기 도구
+- 플러그 가능한 백엔드 시스템</p>
+
+<p>Django의 인증 시스템은 매우 일반적인 것을 목표로 하며 웹 인증 시스템에서 흔히 볼 수있는 기능을 제공하지 않습니다.
+다음과 같은 일반적인 문제에 대한 해결책이 타사 패키지에서 구현되었습니다:</p>
+
+<ul>
+<li>암호 강도 검사</li>
+<li>로그인 시도 제한</li>
+<li>제 3 자에 대한 인증 (예: OAuth)</li>
+</ul>
+
+<hr>
+
+<h2 id="installation">
+<a class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>인증 지원은 <strong>django.contrib.auth</strong>에서 <strong>Django contrib</strong> 모듈로 번들로 제공됩니다.</p>
+
+<p>기본적으로 필요한 설정은 <strong>django-admin startproject</strong>에 의해 생성 된 <strong>settings.py</strong>에 이미 포함되어 있습니다.</p>
+
+<p>이 설정은 <strong>INSTALLED_APPS</strong> 설정에 나열된 두 항목으로 구성됩니다:</p>
+
+<ol>
+<li>
+<strong>django.contrib.auth</strong>는 인증 프레임 워크의 핵심과 기본 모델을 포함합니다.</li>
+<li>
+<strong>django.contrib.contenttypes</strong>는 장고 내용 유형 시스템으로, 만든 모델과 관련된 권한을 허용합니다.</li>
+</ol>
+
+<p>그리고 <strong>MIDDLEWARE</strong> 설정안의 항목:</p>
+
+<ol>
+<li>
+<strong>SessionMiddleware</strong>는 여러 요청에서 세션을 관리합니다.</li>
+<li>
+<strong>AuthenticationMiddleware</strong>는 세션을 사용하여 사용자를 요청과 연관시킵니다.</li>
+</ol>
+
+<p>이 설정을 적용한 상태에서 <code>manage.py migrate</code> 명령을 실행하면 설치된 관련 앱에 정의 된 모델에 대한 인증 관련 모델 및 권한에 필요한 데이터베이스 테이블이 생성됩니다.</p>
+
+<p>실습하기:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">'...'</span><span class="p">,</span>
+    <span class="s">'django.contrib.auth'</span><span class="p">,</span>
+    <span class="s">'django.contrib.contenttypes'</span><span class="p">,</span>
+    <span class="s">'...'</span>
+<span class="p">]</span>
+
+<span class="n">MIDDLEWARE</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">'...'</span><span class="p">,</span>
+    <span class="s">'django.contrib.sessions.middleware.SessionMiddleware'</span><span class="p">,</span>
+    <span class="s">'django.contrib.auth.middleware.AuthenticationMiddleware'</span><span class="p">,</span>
+    <span class="s">'...'</span>
+<span class="p">]</span>
+</code></pre></div><div class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="s">$ python manage.py migrate</span>
+
+<span class="na">Operations to perform</span><span class="pi">:</span>
+  <span class="na">Apply all migrations</span><span class="pi">:</span> <span class="s">admin, auth, contenttypes, sessions</span>
+<span class="na">Running migrations</span><span class="pi">:</span>
+  <span class="s">Applying contenttypes.0001_initial... OK</span>
+  <span class="s">Applying auth.0001_initial... OK</span>
+  <span class="s">Applying admin.0001_initial... OK</span>
+  <span class="s">Applying admin.0002_logentry_remove_auto_add... OK</span>
+  <span class="s">Applying admin.0003_logentry_add_action_flag_choices... OK</span>
+  <span class="s">Applying contenttypes.0002_remove_content_type_name... OK</span>
+  <span class="s">Applying auth.0002_alter_permission_name_max_length... OK</span>
+  <span class="s">Applying auth.0003_alter_user_email_max_length... OK</span>
+  <span class="s">Applying auth.0004_alter_user_username_opts... OK</span>
+  <span class="s">Applying auth.0005_alter_user_last_login_null... OK</span>
+  <span class="s">Applying auth.0006_require_contenttypes_0002... OK</span>
+  <span class="s">Applying auth.0007_alter_validators_add_error_messages... OK</span>
+  <span class="s">Applying auth.0008_alter_user_username_max_length... OK</span>
+  <span class="s">Applying auth.0009_alter_user_last_name_max_length... OK</span>
+  <span class="s">Applying sessions.0001_initial... OK</span>
+</code></pre></div>
+<hr>
+
+<h2 id="usage">
+<a class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>Django의 기본 구현 사용</p>
+
+<ul>
+<li>사용자 객체 작업 사용</li>
+<li>권한 및 허가</li>
+<li>웹 요청의 인증</li>
+<li>관리자의 사용자 관리</li>
+</ul>
+
+<p>기본 구현을위한 API 참조</p>
+
+<p>사용자 정의 및 인증</p>
+
+<p>장고의 암호 관리</p>
+
+<hr>
+
+<h2 id="references">
+<a class="anchor" href="#references" aria-hidden="true"><span class="octicon octicon-link"></span></a>References</h2>
+
+<p><a href="https://docs.djangoproject.com/en/2.1/topics/auth/">https://docs.djangoproject.com/en/2.1/topics/auth/</a></p>
+
+  </div>
+
+<div>
+  <p>Django는 사용자 인증 시스템과 함께 제공됩니다.
+사용자 계정, 그룹, 권한 및 쿠키 기반 사용자 세션을 처리합니다.
+문서의 이 섹션에서는 프로젝트의 필요에 맞게 기본 구현을 <a href="https://docs.djangoproject.com/en/2.1/topics/auth/customizing/" rel="nofollow" target="_blank">확장 및 사용자 정의</a>하는 방법뿐만 아니라 기본 구현이 어떻게 작동하는지 설명합니다.</p>
+
+<h2 id="overview">Overview</h2>
+
+<p>Django 인증 시스템은 authentication(인증) 과 authorization(권한 부여)을 모두 처리합니다.
+간단히 말해서 authentication은 사용자가 자신이 주장하는 사람임을 확인하고 authorization은 인증된 사용자가 수행할 수 있는 작업을 결정합니다.
+여기서 authentication 용어는 두 작업을 모두 가리키는 데 사용됩니다.</p>
+
+<p>인증 시스템은 다음과 같이 구성되어 있습니다:
+- Users
+- Permission(사용 권한): 사용자가 특정 작업을 수행 할 수 있는지 여부를 지정하는 이진 (예/아니요) 플래그.
+- Groups: 둘 이상의 사용자에게 라벨과 권한을 적용하는 일반적인 방법입니다.
+- 구성 가능한 암호 해시 시스템 사용자 로그인 또는 콘텐츠 제한을위한 양식 및보기 도구
+- 플러그 가능한 백엔드 시스템</p>
+
+<p>Django의 인증 시스템은 매우 일반적인 것을 목표로 하며 웹 인증 시스템에서 흔히 볼 수있는 기능을 제공하지 않습니다.
+다음과 같은 일반적인 문제에 대한 해결책이 타사 패키지에서 구현되었습니다:</p>
+
+<ul>
+<li>암호 강도 검사</li>
+<li>로그인 시도 제한</li>
+<li>제 3 자에 대한 인증 (예: OAuth)</li>
+</ul>
+
+<hr>
+
+<h2 id="installation">Installation</h2>
+
+<p>인증 지원은 <strong>django.contrib.auth</strong>에서 <strong>Django contrib</strong> 모듈로 번들로 제공됩니다.</p>
+
+<p>기본적으로 필요한 설정은 <strong>django-admin startproject</strong>에 의해 생성 된 <strong>settings.py</strong>에 이미 포함되어 있습니다.</p>
+
+<p>이 설정은 <strong>INSTALLED_APPS</strong> 설정에 나열된 두 항목으로 구성됩니다:</p>
+
+<ol>
+<li>
+<strong>django.contrib.auth</strong>는 인증 프레임 워크의 핵심과 기본 모델을 포함합니다.</li>
+<li>
+<strong>django.contrib.contenttypes</strong>는 장고 내용 유형 시스템으로, 만든 모델과 관련된 권한을 허용합니다.</li>
+</ol>
+
+<p>그리고 <strong>MIDDLEWARE</strong> 설정안의 항목:</p>
+
+<ol>
+<li>
+<strong>SessionMiddleware</strong>는 여러 요청에서 세션을 관리합니다.</li>
+<li>
+<strong>AuthenticationMiddleware</strong>는 세션을 사용하여 사용자를 요청과 연관시킵니다.</li>
+</ol>
+
+<p>이 설정을 적용한 상태에서 <code>manage.py migrate</code> 명령을 실행하면 설치된 관련 앱에 정의 된 모델에 대한 인증 관련 모델 및 권한에 필요한 데이터베이스 테이블이 생성됩니다.</p>
+
+<p>실습하기:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">'...'</span><span class="p">,</span>
+    <span class="s">'django.contrib.auth'</span><span class="p">,</span>
+    <span class="s">'django.contrib.contenttypes'</span><span class="p">,</span>
+    <span class="s">'...'</span>
+<span class="p">]</span>
+
+<span class="n">MIDDLEWARE</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">'...'</span><span class="p">,</span>
+    <span class="s">'django.contrib.sessions.middleware.SessionMiddleware'</span><span class="p">,</span>
+    <span class="s">'django.contrib.auth.middleware.AuthenticationMiddleware'</span><span class="p">,</span>
+    <span class="s">'...'</span>
+<span class="p">]</span>
+</code></pre></div><div class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="s">$ python manage.py migrate</span>
+
+<span class="na">Operations to perform</span><span class="pi">:</span>
+  <span class="na">Apply all migrations</span><span class="pi">:</span> <span class="s">admin, auth, contenttypes, sessions</span>
+<span class="na">Running migrations</span><span class="pi">:</span>
+  <span class="s">Applying contenttypes.0001_initial... OK</span>
+  <span class="s">Applying auth.0001_initial... OK</span>
+  <span class="s">Applying admin.0001_initial... OK</span>
+  <span class="s">Applying admin.0002_logentry_remove_auto_add... OK</span>
+  <span class="s">Applying admin.0003_logentry_add_action_flag_choices... OK</span>
+  <span class="s">Applying contenttypes.0002_remove_content_type_name... OK</span>
+  <span class="s">Applying auth.0002_alter_permission_name_max_length... OK</span>
+  <span class="s">Applying auth.0003_alter_user_email_max_length... OK</span>
+  <span class="s">Applying auth.0004_alter_user_username_opts... OK</span>
+  <span class="s">Applying auth.0005_alter_user_last_login_null... OK</span>
+  <span class="s">Applying auth.0006_require_contenttypes_0002... OK</span>
+  <span class="s">Applying auth.0007_alter_validators_add_error_messages... OK</span>
+  <span class="s">Applying auth.0008_alter_user_username_max_length... OK</span>
+  <span class="s">Applying auth.0009_alter_user_last_name_max_length... OK</span>
+  <span class="s">Applying sessions.0001_initial... OK</span>
+</code></pre></div>
+<hr>
+
+<h2 id="usage">Usage</h2>
+
+<p>Django의 기본 구현 사용</p>
+
+<ul>
+<li>사용자 객체 작업 사용</li>
+<li>권한 및 허가</li>
+<li>웹 요청의 인증</li>
+<li>관리자의 사용자 관리</li>
+</ul>
+
+<p>기본 구현을위한 API 참조</p>
+
+<p>사용자 정의 및 인증</p>
+
+<p>장고의 암호 관리</p>
+
+<hr>
+
+<h2 id="references">References</h2>
+
+<p><a href="https://docs.djangoproject.com/en/2.1/topics/auth/" rel="nofollow" target="_blank">https://docs.djangoproject.com/en/2.1/topics/auth/</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

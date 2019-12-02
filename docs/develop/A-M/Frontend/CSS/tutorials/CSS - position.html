@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>CSS - Position | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="CSS - Position" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="position 속성은 요소에 사용되는 위치 결정 방법의 다음과 같은 유형을 지정합니다:" />
+<meta property="og:description" content="position 속성은 요소에 사용되는 위치 결정 방법의 다음과 같은 유형을 지정합니다:" />
+<link rel="canonical" href="/blog/docs/develop/A-M/Frontend/CSS/tutorials/CSS%20-%20position.html" />
+<meta property="og:url" content="/blog/docs/develop/A-M/Frontend/CSS/tutorials/CSS%20-%20position.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-02T16:38:51+09:00" />
+<script type="application/ld+json">
+{"description":"position 속성은 요소에 사용되는 위치 결정 방법의 다음과 같은 유형을 지정합니다:","headline":"CSS - Position","dateModified":"2019-12-02T16:38:51+09:00","datePublished":"2019-12-02T16:38:51+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/docs/develop/A-M/Frontend/CSS/tutorials/CSS%20-%20position.html"},"url":"/blog/docs/develop/A-M/Frontend/CSS/tutorials/CSS%20-%20position.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/blog/feed.xml" title="Portal2312's blog" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113063601-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+<script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>CSS - Position</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#property">Property</a></li>
+<li class="toc-entry toc-h2"><a href="#position-static">position: static</a></li>
+<li class="toc-entry toc-h2"><a href="#position-relative">position: relative</a></li>
+<li class="toc-entry toc-h2"><a href="#position-fixed">position: fixed</a></li>
+<li class="toc-entry toc-h2"><a href="#position-absolute">position: absolute</a></li>
+<li class="toc-entry toc-h2"><a href="#position-sticky">position: sticky</a></li>
+<li class="toc-entry toc-h2"><a href="#overlapping-elements">Overlapping Elements</a></li>
+<li class="toc-entry toc-h2"><a href="#positioning-text-in-an-image">Positioning Text in an Image</a></li>
+<li class="toc-entry toc-h2"><a href="#references">References</a></li>
+</ul><p><code>position</code> 속성은 요소에 사용되는 위치 결정 방법의 다음과 같은 유형을 지정합니다:</p>
+
+<h2 id="property">
+<a class="anchor" href="#property" aria-hidden="true"><span class="octicon octicon-link"></span></a>Property</h2>
+
+<ul>
+<li>static (정적)</li>
+<li>relative (상대적)</li>
+<li>fixed (고정)</li>
+<li>absolute (절대)</li>
+<li>sticky (달라 붙는, 스티커)</li>
+</ul>
+
+<p>그런 다음 속성 <code>top</code>, <code>bottom</code>, <code>left</code> 및 <code>right</code> 의 값에 의해 배치됩니다.<br>
+그러나 <code>position</code> 속성을 먼저 설정하지 않으면 이러한 속성이 작동하지 않습니다.<br>
+위치 값에 따라 다르게 작동합니다.</p>
+
+<h2 id="position-static">
+<a class="anchor" href="#position-static" aria-hidden="true"><span class="octicon octicon-link"></span></a>position: static</h2>
+
+<p>HTML 요소는 기본적으로 정적 위치에 있습니다.</p>
+
+<p>정적 위치 요소는 top, bottom, left 및 right 속성의 영향을 받지 않습니다.</p>
+
+<p>항상 페이지의 정상적인 흐름에 따라 배치됩니다.</p>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">div</span><span class="nc">.static</span> <span class="p">{</span>
+  <span class="nl">position</span><span class="p">:</span> <span class="nb">static</span><span class="p">;</span>
+  <span class="nl">border</span><span class="p">:</span> <span class="m">3px</span> <span class="nb">solid</span> <span class="m">#73AD21</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="position-relative">
+<a class="anchor" href="#position-relative" aria-hidden="true"><span class="octicon octicon-link"></span></a>position: relative</h2>
+
+<p>정상 위치를 기준으로 배치됩니다.</p>
+
+<p>상대적으로 배치 된 요소의 위쪽, 오른쪽, 아래쪽 및 왼쪽 속성을 설정하면 일반 위치에서 멀어 지도록 조정됩니다.</p>
+
+<p>다른 내용은 요소가 남긴 간격에 맞게 조정되지 않습니다.</p>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">div</span><span class="nc">.relative</span> <span class="p">{</span>
+  <span class="nl">position</span><span class="p">:</span> <span class="nb">relative</span><span class="p">;</span>
+  <span class="nl">left</span><span class="p">:</span> <span class="m">30px</span><span class="p">;</span>
+  <span class="nl">border</span><span class="p">:</span> <span class="m">3px</span> <span class="nb">solid</span> <span class="m">#73AD21</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="position-fixed">
+<a class="anchor" href="#position-fixed" aria-hidden="true"><span class="octicon octicon-link"></span></a>position: fixed</h2>
+
+<p>뷰포트를 기준으로 배치되므로 페이지가 스크롤 되더라도 항상 같은 위치에 유지됩니다.</p>
+
+<p>top, right, bottom 및 left 속성은 요소를 배치하는 데 사용됩니다.</p>
+
+<p>고정 된 요소는 일반적으로 위치했던 페이지에 공백을 남기지 않습니다.</p>
+
+<p>페이지 오른쪽 하단에 고정 요소가 있습니다.</p>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">div</span><span class="nc">.fixed</span> <span class="p">{</span>
+  <span class="nl">position</span><span class="p">:</span> <span class="nb">fixed</span><span class="p">;</span>
+  <span class="nl">bottom</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="nl">right</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="nl">width</span><span class="p">:</span> <span class="m">300px</span><span class="p">;</span>
+  <span class="nl">border</span><span class="p">:</span> <span class="m">3px</span> <span class="nb">solid</span> <span class="m">#73AD21</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="position-absolute">
+<a class="anchor" href="#position-absolute" aria-hidden="true"><span class="octicon octicon-link"></span></a>position: absolute</h2>
+
+<p>(고정 된 것처럼 뷰포트를 기준으로 배치하는 대신) 가장 가까운 배치 된 조상을 기준으로 배치됩니다.</p>
+
+<p>단, 절대 위치 요소에 위치된 조상이 없으면 문서 본문을 사용하고 페이지 스크롤과 함께 이동합니다.</p>
+
+<blockquote>
+<p>Note: "positioned" 요소는 <code>static</code>외의 위치에 있는 입니다.</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">div</span><span class="nc">.relative</span> <span class="p">{</span>
+  <span class="nl">position</span><span class="p">:</span> <span class="nb">relative</span><span class="p">;</span>
+  <span class="nl">width</span><span class="p">:</span> <span class="m">400px</span><span class="p">;</span>
+  <span class="nl">height</span><span class="p">:</span> <span class="m">200px</span><span class="p">;</span>
+  <span class="nl">border</span><span class="p">:</span> <span class="m">3px</span> <span class="nb">solid</span> <span class="m">#73AD21</span><span class="p">;</span>
+<span class="p">}</span> 
+
+<span class="nt">div</span><span class="nc">.absolute</span> <span class="p">{</span>
+  <span class="nl">position</span><span class="p">:</span> <span class="nb">absolute</span><span class="p">;</span>
+  <span class="nl">top</span><span class="p">:</span> <span class="m">80px</span><span class="p">;</span>
+  <span class="nl">right</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="nl">width</span><span class="p">:</span> <span class="m">200px</span><span class="p">;</span>
+  <span class="nl">height</span><span class="p">:</span> <span class="m">100px</span><span class="p">;</span>
+  <span class="nl">border</span><span class="p">:</span> <span class="m">3px</span> <span class="nb">solid</span> <span class="m">#73AD21</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p>Note: 상위 element 안에 하위 element 로 정의시<br>
+정렬(default: left) 기준으로 상위 element border 에서부터 시작하여 표현됩니다.</p>
+</blockquote>
+
+<h2 id="position-sticky">
+<a class="anchor" href="#position-sticky" aria-hidden="true"><span class="octicon octicon-link"></span></a>position: sticky</h2>
+
+<p>사용자의 스크롤 위치를 기준으로 배치됩니다.</p>
+
+<p>스티커 요소는 스크롤 위치에 따라 <code>relative</code> 및 <code>fixed</code> 사이를 전환합니다.</p>
+
+<p>주어진 오프셋 위치가 뷰포트에서 충족 될 때까지 상대적으로 배치 된 다음 위치에 고정됩니다(예: position: fixed).</p>
+
+<blockquote>
+<p>Note: Internet Explorer, Edge 15 및 이전 버전은 고정 위치를 지원하지 않습니다.<br>
+Safari에는 -webkit- 접두사가 필요합니다 (아래 예 참조).<br>
+또한 고정 위치가 작동하려면 <code>top</code>, <code>right</code>, <code>bottom</code> 또는 <code>left</code> 속성중 하나 이상을 지정해야 합니다.</p>
+</blockquote>
+
+<p>스크롤 위치에 도달하면 고정 요소가 페이지 상단(top: 0)에 고정됩니다.</p>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">div</span><span class="nc">.sticky</span> <span class="p">{</span>
+  <span class="nl">position</span><span class="p">:</span> <span class="n">-webkit-sticky</span><span class="p">;</span> <span class="c">/* Safari */</span>
+  <span class="nl">position</span><span class="p">:</span> <span class="n">sticky</span><span class="p">;</span>
+  <span class="nl">top</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="nl">background-color</span><span class="p">:</span> <span class="no">green</span><span class="p">;</span>
+  <span class="nl">border</span><span class="p">:</span> <span class="m">2px</span> <span class="nb">solid</span> <span class="m">#4CAF50</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="overlapping-elements">
+<a class="anchor" href="#overlapping-elements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Overlapping Elements</h2>
+
+<p>요소가 배치되면 다른 요소와 겹칠 수 있습니다.</p>
+
+<p><code>z-index</code> 속성은 요소의 스택 순서를 지정합니다 (요소는 다른 요소의 앞 또는 뒤에 배치되어야 함).</p>
+
+<p>요소는 양수 또는 음수 스택 순서를 가질 수 있습니다.</p>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">img</span> <span class="p">{</span>
+  <span class="nl">position</span><span class="p">:</span> <span class="nb">absolute</span><span class="p">;</span>
+  <span class="nl">left</span><span class="p">:</span> <span class="m">0px</span><span class="p">;</span>
+  <span class="nl">top</span><span class="p">:</span> <span class="m">0px</span><span class="p">;</span>
+  <span class="nl">z-index</span><span class="p">:</span> <span class="m">-1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="positioning-text-in-an-image">
+<a class="anchor" href="#positioning-text-in-an-image" aria-hidden="true"><span class="octicon octicon-link"></span></a>Positioning Text in an Image</h2>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nc">.center</span> <span class="p">{</span>
+  <span class="nl">position</span><span class="p">:</span> <span class="nb">absolute</span><span class="p">;</span>
+  <span class="nl">left</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="nl">top</span><span class="p">:</span> <span class="m">50%</span><span class="p">;</span>
+  <span class="nl">width</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+  <span class="nl">text-align</span><span class="p">:</span> <span class="nb">center</span><span class="p">;</span>
+  <span class="nl">font-size</span><span class="p">:</span> <span class="m">18px</span><span class="p">;</span>
+  <span class="c">/* background-color: red; */</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="references">
+<a class="anchor" href="#references" aria-hidden="true"><span class="octicon octicon-link"></span></a>References</h2>
+
+<p><a href="https://www.w3schools.com/css/css_positioning.asp">https://www.w3schools.com/css/css_positioning.asp</a></p>
+
+  </div>
+
+<div>
+  <p><code>position</code> 속성은 요소에 사용되는 위치 결정 방법의 다음과 같은 유형을 지정합니다:</p>
+
+<h2 id="property">Property</h2>
+
+<ul>
+<li>static (정적)</li>
+<li>relative (상대적)</li>
+<li>fixed (고정)</li>
+<li>absolute (절대)</li>
+<li>sticky (달라 붙는, 스티커)</li>
+</ul>
+
+<p>그런 다음 속성 <code>top</code>, <code>bottom</code>, <code>left</code> 및 <code>right</code> 의 값에 의해 배치됩니다.<br>
+그러나 <code>position</code> 속성을 먼저 설정하지 않으면 이러한 속성이 작동하지 않습니다.<br>
+위치 값에 따라 다르게 작동합니다.</p>
+
+<h2 id="position-static">position: static</h2>
+
+<p>HTML 요소는 기본적으로 정적 위치에 있습니다.</p>
+
+<p>정적 위치 요소는 top, bottom, left 및 right 속성의 영향을 받지 않습니다.</p>
+
+<p>항상 페이지의 정상적인 흐름에 따라 배치됩니다.</p>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">div</span><span class="nc">.static</span> <span class="p">{</span>
+  <span class="nl">position</span><span class="p">:</span> <span class="nb">static</span><span class="p">;</span>
+  <span class="nl">border</span><span class="p">:</span> <span class="m">3px</span> <span class="nb">solid</span> <span class="m">#73AD21</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="position-relative">position: relative</h2>
+
+<p>정상 위치를 기준으로 배치됩니다.</p>
+
+<p>상대적으로 배치 된 요소의 위쪽, 오른쪽, 아래쪽 및 왼쪽 속성을 설정하면 일반 위치에서 멀어 지도록 조정됩니다.</p>
+
+<p>다른 내용은 요소가 남긴 간격에 맞게 조정되지 않습니다.</p>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">div</span><span class="nc">.relative</span> <span class="p">{</span>
+  <span class="nl">position</span><span class="p">:</span> <span class="nb">relative</span><span class="p">;</span>
+  <span class="nl">left</span><span class="p">:</span> <span class="m">30px</span><span class="p">;</span>
+  <span class="nl">border</span><span class="p">:</span> <span class="m">3px</span> <span class="nb">solid</span> <span class="m">#73AD21</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="position-fixed">position: fixed</h2>
+
+<p>뷰포트를 기준으로 배치되므로 페이지가 스크롤 되더라도 항상 같은 위치에 유지됩니다.</p>
+
+<p>top, right, bottom 및 left 속성은 요소를 배치하는 데 사용됩니다.</p>
+
+<p>고정 된 요소는 일반적으로 위치했던 페이지에 공백을 남기지 않습니다.</p>
+
+<p>페이지 오른쪽 하단에 고정 요소가 있습니다.</p>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">div</span><span class="nc">.fixed</span> <span class="p">{</span>
+  <span class="nl">position</span><span class="p">:</span> <span class="nb">fixed</span><span class="p">;</span>
+  <span class="nl">bottom</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="nl">right</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="nl">width</span><span class="p">:</span> <span class="m">300px</span><span class="p">;</span>
+  <span class="nl">border</span><span class="p">:</span> <span class="m">3px</span> <span class="nb">solid</span> <span class="m">#73AD21</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="position-absolute">position: absolute</h2>
+
+<p>(고정 된 것처럼 뷰포트를 기준으로 배치하는 대신) 가장 가까운 배치 된 조상을 기준으로 배치됩니다.</p>
+
+<p>단, 절대 위치 요소에 위치된 조상이 없으면 문서 본문을 사용하고 페이지 스크롤과 함께 이동합니다.</p>
+
+<blockquote>
+<p>Note: "positioned" 요소는 <code>static</code>외의 위치에 있는 입니다.</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">div</span><span class="nc">.relative</span> <span class="p">{</span>
+  <span class="nl">position</span><span class="p">:</span> <span class="nb">relative</span><span class="p">;</span>
+  <span class="nl">width</span><span class="p">:</span> <span class="m">400px</span><span class="p">;</span>
+  <span class="nl">height</span><span class="p">:</span> <span class="m">200px</span><span class="p">;</span>
+  <span class="nl">border</span><span class="p">:</span> <span class="m">3px</span> <span class="nb">solid</span> <span class="m">#73AD21</span><span class="p">;</span>
+<span class="p">}</span> 
+
+<span class="nt">div</span><span class="nc">.absolute</span> <span class="p">{</span>
+  <span class="nl">position</span><span class="p">:</span> <span class="nb">absolute</span><span class="p">;</span>
+  <span class="nl">top</span><span class="p">:</span> <span class="m">80px</span><span class="p">;</span>
+  <span class="nl">right</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="nl">width</span><span class="p">:</span> <span class="m">200px</span><span class="p">;</span>
+  <span class="nl">height</span><span class="p">:</span> <span class="m">100px</span><span class="p">;</span>
+  <span class="nl">border</span><span class="p">:</span> <span class="m">3px</span> <span class="nb">solid</span> <span class="m">#73AD21</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p>Note: 상위 element 안에 하위 element 로 정의시<br>
+정렬(default: left) 기준으로 상위 element border 에서부터 시작하여 표현됩니다.</p>
+</blockquote>
+
+<h2 id="position-sticky">position: sticky</h2>
+
+<p>사용자의 스크롤 위치를 기준으로 배치됩니다.</p>
+
+<p>스티커 요소는 스크롤 위치에 따라 <code>relative</code> 및 <code>fixed</code> 사이를 전환합니다.</p>
+
+<p>주어진 오프셋 위치가 뷰포트에서 충족 될 때까지 상대적으로 배치 된 다음 위치에 고정됩니다(예: position: fixed).</p>
+
+<blockquote>
+<p>Note: Internet Explorer, Edge 15 및 이전 버전은 고정 위치를 지원하지 않습니다.<br>
+Safari에는 -webkit- 접두사가 필요합니다 (아래 예 참조).<br>
+또한 고정 위치가 작동하려면 <code>top</code>, <code>right</code>, <code>bottom</code> 또는 <code>left</code> 속성중 하나 이상을 지정해야 합니다.</p>
+</blockquote>
+
+<p>스크롤 위치에 도달하면 고정 요소가 페이지 상단(top: 0)에 고정됩니다.</p>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">div</span><span class="nc">.sticky</span> <span class="p">{</span>
+  <span class="nl">position</span><span class="p">:</span> <span class="n">-webkit-sticky</span><span class="p">;</span> <span class="c">/* Safari */</span>
+  <span class="nl">position</span><span class="p">:</span> <span class="n">sticky</span><span class="p">;</span>
+  <span class="nl">top</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="nl">background-color</span><span class="p">:</span> <span class="no">green</span><span class="p">;</span>
+  <span class="nl">border</span><span class="p">:</span> <span class="m">2px</span> <span class="nb">solid</span> <span class="m">#4CAF50</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="overlapping-elements">Overlapping Elements</h2>
+
+<p>요소가 배치되면 다른 요소와 겹칠 수 있습니다.</p>
+
+<p><code>z-index</code> 속성은 요소의 스택 순서를 지정합니다 (요소는 다른 요소의 앞 또는 뒤에 배치되어야 함).</p>
+
+<p>요소는 양수 또는 음수 스택 순서를 가질 수 있습니다.</p>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">img</span> <span class="p">{</span>
+  <span class="nl">position</span><span class="p">:</span> <span class="nb">absolute</span><span class="p">;</span>
+  <span class="nl">left</span><span class="p">:</span> <span class="m">0px</span><span class="p">;</span>
+  <span class="nl">top</span><span class="p">:</span> <span class="m">0px</span><span class="p">;</span>
+  <span class="nl">z-index</span><span class="p">:</span> <span class="m">-1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="positioning-text-in-an-image">Positioning Text in an Image</h2>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nc">.center</span> <span class="p">{</span>
+  <span class="nl">position</span><span class="p">:</span> <span class="nb">absolute</span><span class="p">;</span>
+  <span class="nl">left</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="nl">top</span><span class="p">:</span> <span class="m">50%</span><span class="p">;</span>
+  <span class="nl">width</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+  <span class="nl">text-align</span><span class="p">:</span> <span class="nb">center</span><span class="p">;</span>
+  <span class="nl">font-size</span><span class="p">:</span> <span class="m">18px</span><span class="p">;</span>
+  <span class="c">/* background-color: red; */</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="references">References</h2>
+
+<p><a href="https://www.w3schools.com/css/css_positioning.asp" rel="nofollow" target="_blank">https://www.w3schools.com/css/css_positioning.asp</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

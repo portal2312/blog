@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>CentOS-7 - nmcli and network | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="CentOS-7 - nmcli and network" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="작업 전 VMware 의 경우" />
+<meta property="og:description" content="작업 전 VMware 의 경우" />
+<link rel="canonical" href="/blog/docs/develop/N-Z/server/CentOS-7/CentOS-7%20-%20nmcli_and_network.html" />
+<meta property="og:url" content="/blog/docs/develop/N-Z/server/CentOS-7/CentOS-7%20-%20nmcli_and_network.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-02T16:38:51+09:00" />
+<script type="application/ld+json">
+{"description":"작업 전 VMware 의 경우","headline":"CentOS-7 - nmcli and network","dateModified":"2019-12-02T16:38:51+09:00","datePublished":"2019-12-02T16:38:51+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/docs/develop/N-Z/server/CentOS-7/CentOS-7%20-%20nmcli_and_network.html"},"url":"/blog/docs/develop/N-Z/server/CentOS-7/CentOS-7%20-%20nmcli_and_network.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/blog/feed.xml" title="Portal2312's blog" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113063601-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+<script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>CentOS-7 - nmcli and network</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#vmware">작업 전 VMware 의 경우</a></li>
+<li class="toc-entry toc-h2"><a href="#wi-fi">Wi-Fi</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#part-f5a206fb1ee27701">연결을 추가</a></li>
+<li class="toc-entry toc-h3"><a href="#modify">특정 속성 변경 (modify 사용하기)</a></li>
+<li class="toc-entry toc-h3"><a href="#routes-edit">고정 Routes 설정 (edit 사용하기)</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#ifconfig">ifconfig</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#ip-ip">자동IP, 고정IP 비교</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#gnome-xwindow">gnome(xwindow) 에서 설정하기</a></li>
+<li class="toc-entry toc-h2"><a href="#references">References</a></li>
+</ul><h2 id="vmware">
+<a class="anchor" href="#vmware" aria-hidden="true"><span class="octicon octicon-link"></span></a>작업 전 VMware 의 경우</h2>
+
+<p><code>Edit</code>/<code>Virtual Network Editor</code>/<code>Add Network</code>/<code>Bridged</code> 하십시오.</p>
+
+<p>[목차]
+1. nmcli (NETWORKMANAGER COMMAND LINE TOOL)  사용하기    - Centos 7.x
+2. 이전 방법 (ifconfig 사용하기)    - Centos 6.x  또는 7.x
+3. gnome(xwindow ) 에서 설정하기    - Centos 7.x</p>
+
+<p>[내용]
+1. nmcli (NETWORKMANAGER COMMAND LINE TOOL)  사용하기    - Centos 7.x
+- [중요] tab 키 활용, help 명령어 활용
+명령어 입력하면서 [tab] 키를 누르면 사용가능한 목록이 나오므로 명령어 입력전 한번씩 확인하면서 진행하도록 하자.
+- centos 7 부터 명령어 단어가 축약되어 사용가능하다. 하지만 배우는 입장으로써 단어의 의미를 생각하며 full name으로 사용했다.</p>
+
+<p><code>nmcli help</code>:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">Usage: nmcli [OPTIONS] OBJECT { COMMAND | help }
+
+OPTIONS
+  -t[erse]                                   terse output
+  -p[retty]                                  pretty output
+  -m[ode] tabular|multiline                  output mode
+  -f[ields] &lt;field1,field2,...&gt;|all|common   specify fields to output
+  -e[scape] yes|no                           escape columns separators in values
+  -n[ocheck]                                 don't check nmcli and NetworkManager versions
+  -a[sk]                                     ask for missing parameters
+  -w[ait] &lt;seconds&gt;                          set timeout waiting for finishing operations
+  -v[ersion]                                 show program version
+  -h[elp]                                    print this help
+
+OBJECT
+  g[eneral]       NetworkManager's general status and operations
+  (general 명령어는 만 g로 입력 가능, 축약가능한 상태와 명령어에 대한 설명이 보임)
+  n[etworking]    overall networking control
+  r[adio]         NetworkManager radio switches
+  c[onnection]    NetworkManager's connections
+  d[evice]        devices managed by NetworkManager
+</code></pre></div>
+<p>네트워크 상태 확인하기, 확인하는 방법은 다양하다. general show나 status 로 확인:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">nmcli device status
+nmcli device show
+nmcli general 명령어
+</code></pre></div>
+<p>연결중인 네트워크 보기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">nmcli connection show             <span class="c"># nmcli con show)</span>
+nmcli connection show <span class="nt">--active</span>    <span class="c"># nmcli con show -a 로 축약 가능함</span>
+</code></pre></div>
+<p>네트워크 on/off:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">nmcli connection up <span class="nb">id </span>eth명        <span class="c"># up &lt;&gt; down</span>
+nmcli device connection <span class="nb">id </span>eth명    <span class="c"># connection &lt;&gt; disconnection</span>
+</code></pre></div>
+<p>새로운 네트워크 등록하기:</p>
+
+<p>변경 전, 네트워크 장비 상태 확인하기, <code>nmcli device status</code>:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">장치         유형      상태           CONNECTION
+eno16777736  ethernet  연결됨         자동 이더넷
+lo           loopback  관리되지 않음  --
+</code></pre></div>
+<p>ifname 은 실제 사용 가능한 목록을 선택할 것:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">nmcli connection add <span class="nb">type </span>ethernet con-name eth명 ifname eno16777736 ip4 1.1.1.1/24 gw4 1.1.1.254
+</code></pre></div>
+<p>24 는 넷마스크(netmask, Mask, mask)다. 앞에서 부터 24개 비트로 구성된 것을 의미한다.
+즉, 1111 1111.1111 1111.1111 1111.0000 0000 이렇게 표현된다.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">[2진수]           1     1    1    1     1   1   1   1  . 생략
+[10진수]  255 = 128 + 64 + 32 + 16   + 8 + 4 + 2 + 1  . 생략
+</code></pre></div>
+<p>예로 넷마스크 값을 255.255.255.255 로 하고 싶다면 32 로 하면 된다.</p>
+
+<p>등록여부 확인, 그리고 연결, 그리고 연결 확인 (등록만 되고 바로 연결되는 것은 아니다):</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">nmcli connection show
+nmcli connection up eth명
+nmcli device status
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">장치         유형      상태           CONNECTION
+eno16777736  ethernet  연결됨         eth명
+lo           loopback  관리되지 않음  --
+</code></pre></div>
+<p>등록된 eth 삭제하기(id 까지 입력후 [tab]키를 누르면 삭제 가능한 목록들이 자동으로 나온다):</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">nmcli connection delete <span class="nb">id </span>eth명
+</code></pre></div>
+<p>modify 명령어 사용하기 (고정 IP 로 변경):</p>
+
+<p><code>nmcli connection modify help</code>:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">Usage: nmcli connection modify { ARGUMENTS | help }
+
+ARGUMENTS := [id | uuid | path] &lt;ID&gt; ([+|-]&lt;setting&gt;.&lt;property&gt; &lt;value&gt;)+
+
+Modify one or more properties of the connection profile.
+The profile is identified by its name, UUID or D-Bus path.
+For multi-valued properties you can use optional '+' or '-' prefix to the property name.
+The '+' sign allows appending items instead of overwriting the whole value.
+The '-' sign allows removing selected items instead of the whole value.
+
+Examples:  (친절하게 예제도 나옴)
+nmcli con mod home-wifi wifi.ssid rakosnicek
+nmcli con mod em1-1 ipv4.method manual ipv4.addr "192.168.1.2/24, 10.10.1.5/8"
+nmcli con mod em1-1 +ipv4.dns 8.8.4.4
+nmcli con mod em1-1 -ipv4.dns 1
+nmcli con mod em1-1 -ipv6.addr "abbe::cafe/56"
+nmcli con mod bond0 +bond.options mii=500
+
+nmcli con mod bond0 -bond.options downdelay
+</code></pre></div><div class="highlight"><pre><code class="language-bash" data-lang="bash">nmcli connection modify <span class="nb">id </span>eth명 ipv4.addresses <span class="s2">"10.1.1.1/24 10.1.1.254"</span>   <span class="c"># "IP주소/넷마스크 게이트웨이"</span>
+</code></pre></div>
+<p>콤마(',')로 구분하면 my_office 네트워크명안에 사용 가능한 IP 대역을 여러개 등록할 수 있다.</p>
+
+<p>Examples: "10.1.1.1/24 10.1.1.254, 20.2.2.2/24 10.1.1.254"</p>
+
+<p>고정 IP 설정, manual = static 으로 입력해도 된다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">nmcli connection modify <span class="nb">id </span>eth명 ipv4.method manual
+</code></pre></div>
+<p>띄어쓰기는 2개를 추가한다는 것을 의미함, 주의 - 덮어쓰기 된다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">nmcli connection modify <span class="nb">id </span>eth명 ipv4.dns <span class="s2">"1.1.1.1 2.2.2.2"</span>
+</code></pre></div>
+<p>"+" 기존에 추가:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">nmcli connection modify <span class="nb">id </span>eth명 +ipv4.dns <span class="s2">"3.3.3.3"</span>
+</code></pre></div>
+<p>"-" 기존에서 삭제:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">nmcli connection modify <span class="nb">id </span>eth명 <span class="nt">-ipv4</span>.dns <span class="s2">"3.3.3.3"</span>
+</code></pre></div>
+<p>Check:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">nmcli <span class="nt">--pretty</span> connection show <span class="nb">id </span>eth명
+</code></pre></div>
+<p>입력을 하면 바로 config에 바로 기록은 되어 save되지만 up/down 으로 재구동하는 것이 좋다.</p>
+
+<p>나머지는 <code>nmcli connection modify id eth</code>명 입력 후 [tab 키]를 하면 변경가능한 목록들이 나온다, 확인 후 필요한 부분을 직접 입력하면 된다.</p>
+
+<p>또는 <code>nmcli -p connection show id eth명</code> 을 하면 현재 eth명 의 설정 가능한 Value 값을 확인할 수 있다.</p>
+
+<p>Value 은 유추하거나 웹 서핑으로 확인해서 입력한다. 추상적으로 설명하고 있지만 아무것도 몰랐을 때 실무적으로 찾아보는 방법 중 하나를 작성한 것이다.</p>
+
+<p>edit 명령어 사용하기, 다음과 같이 대화 형 편집기를 사용하여 동적 이더넷 연결을 구성하려면 edit 명령어를 사용하면 편집기가 열리는데 그곳에서 수정한다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">nmcli connection edit <span class="nb">id </span>eth명
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">nmcli&gt; help
+
+goto     [&lt;setting&gt; | &lt;prop&gt;]  :: go to a setting or property  (= 속성에 대해 접근하여 상세한 명령어를 실행시킬 수 있음, remove등..)
+remove   &lt;setting&gt;[.&lt;prop&gt;] | &lt;prop&gt; :: remove setting or reset property value
+set      [&lt;setting&gt;.&lt;prop&gt; &lt;value&gt;]  :: set property value
+describe [&lt;setting&gt;.&lt;prop&gt;]          :: describe property         (= 속성에 대한 설명과 속성 값에 대한 사용 예를 보여줌)
+print    [all]                       :: print the connection
+verify   [all]                       :: verify the connection
+save     [persistent|temporary]      :: save the connection
+activate [&lt;ifname&gt;] [/&lt;ap&gt;|&lt;nsp&gt;]    :: activate the connection
+back                                 :: go one level up (back)
+help/?   [&lt;command&gt;]                 :: print this help
+nmcli    &lt;conf-option&gt; &lt;value&gt;       :: nmcli configuration
+quit                                 :: exit nmcli
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">nmcli&gt; describe ipv4.dns
+
+[NM property description]
+List of DNS servers (network byte order). For the 'auto' method, these DNS servers are appended to those (if any) returned by automatic configuration.  DNS servers cannot be used with the 'shared', 'link-local', or 'disabled' methods as there is no upstream network.  In all other methods, these DNS servers are used as the only DNS servers for this connection.
+
+[nmcli specific description]
+Enter a list of IPv4 addresses of DNS servers.
+
+Example: 8.8.8.8, 8.8.4.4
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">nmcli&gt; set ipv4.dns 1.1.1.3
+nmcli&gt; save
+nmcli&gt; goto ipv4.dns     (= ipv4.dns 속성으로 이동)
+nmcli ipv4.dns&gt; help
+
+---[ Property menu ]---
+set      [&lt;value&gt;]               :: set new value
+add      [&lt;value&gt;]               :: add new option to the property
+change                           :: change current value
+remove   [&lt;index&gt; | &lt;option&gt;]    :: delete the value
+describe                         :: describe property
+print    [setting | connection]  :: print property (setting/connection) value(s)
+back                             :: go to upper level
+help/?   [&lt;command&gt;]             :: print this help or command description
+quit                             :: exit nmcli
+</code></pre></div><div class="highlight"><pre><code class="language-bash" data-lang="bash">nmcli ipv4.dns&gt; remove 1.1.1.3  <span class="o">(=</span> 삭제<span class="o">)</span>
+nmcli ipv4.dns&gt; back             <span class="o">(=</span> 이전 속성으로<span class="o">)</span>
+nmcli&gt; save                       <span class="o">(=</span> 저장<span class="o">)</span>
+nmcli&gt; quit
+</code></pre></div>
+<h2 id="wi-fi">
+<a class="anchor" href="#wi-fi" aria-hidden="true"><span class="octicon octicon-link"></span></a>Wi-Fi</h2>
+
+<p>이 내용은 실제 테스트할 수 없어 번역만 하였습니다.</p>
+
+<h3 id="part-f5a206fb1ee27701">
+<a class="anchor" href="#part-f5a206fb1ee27701" aria-hidden="true"><span class="octicon octicon-link"></span></a>연결을 추가</h3>
+
+<p>사용 가능한 Wi-Fi 액세스 포인트를 보기, <code>nmcli dev wifi list</code>:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">  SSID            MODE  CHAN  RATE     SIGNAL  BARS  SECURITY
+  FedoraTest     Infra  11    54 MB/s  98      ▂▄▆█  WPA1
+  Red Hat Guest  Infra  6     54 MB/s  97      ▂▄▆█  WPA2
+  Red Hat        Infra  6     54 MB/s  77      ▂▄▆_  WPA2 802.1X
+* Red Hat        Infra  40    54 MB/s  66      ▂▄▆_  WPA2 802.1X
+  VoIP           Infra  1     54 MB/s  32      ▂▄__  WEP
+  MyCafe         Infra  11    54 MB/s  39      ▂▄__  WPA2
+</code></pre></div>
+<p>고정 IP 구성으로 Wi-Fi 연결 프로파일을 생성하지만, 다음과 같이 수 있도록 자동으로 DNS 주소 할당은, 명령을 실행한다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">nmcli con add con-name MyCafe ifname wlan0 <span class="nb">type </span>wifi ssid MyCafe <span class="se">\i</span>p4 192.168.100.101/24 gw4 192.168.100.1
+</code></pre></div>
+<p>다음과 같이 WPA2 암호를 설정하려면, 예를 들어 "caffeine"에 대한 명령어 실행이다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">nmcli con modify MyCafe wifi-sec.key-mgmt wpa-psk
+nmcli con modify MyCafe wifi-sec.psk caffeine
+</code></pre></div>
+<p>암호 보안에 대한 자세한 내용은 레드햇 엔터프라이즈 리눅스 (7) 보안 설명서를 참조하십시오.
+Wi-Fi 상태 변경하려면 다음과 같은 형식으로 명령을 실행합니다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">nmcli radio wifi <span class="o">[</span>on | off <span class="o">]</span>
+</code></pre></div>
+<h3 id="modify">
+<a class="anchor" href="#modify" aria-hidden="true"><span class="octicon octicon-link"></span></a>특정 속성 변경 (modify 사용하기)</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">nmcli connection show <span class="nb">id</span> <span class="s1">'MyCafe'</span> | <span class="nb">grep </span>mtu
+
+<span class="c"># 802-11-wireless.mtu:                     auto</span>
+</code></pre></div><div class="highlight"><pre><code class="language-bash" data-lang="bash">nmcli connection modify <span class="nb">id</span> <span class="s1">'MyCafe'</span> 802-11-wireless.mtu 1350
+nmcli connection show <span class="nb">id</span> <span class="s1">'MyCafe'</span> | <span class="nb">grep </span>mtu
+
+<span class="c"># 802-11-wireless.mtu:                     1350</span>
+</code></pre></div>
+<h3 id="routes-edit">
+<a class="anchor" href="#routes-edit" aria-hidden="true"><span class="octicon octicon-link"></span></a>고정 Routes 설정 (edit 사용하기)</h3>
+<div class="highlight"><pre><code class="language-" data-lang="">nmcli connection edit id eth명
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">nmcli&gt; set ipv4.routes 192.168.122.0/24 10.10.10.1
+nmcli&gt; save persistent
+
+Saving the connection with 'autoconnect=yes'. That might result in an immediate activation of the connection.
+Do you still want to save? [yes] yes
+Connection 'ens3' (704a5666-8cbd-4d89-b5f9-fa65a3dbc916) successfully saved.
+
+nmcli&gt; quit
+</code></pre></div>
+<p>nmcli 에 대해 <a href="https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Networking_Guide/sec-Using_the_NetworkManager_Command_Line_Tool_nmcli.html">참조한 내용</a>입니다.</p>
+
+<h2 id="ifconfig">
+<a class="anchor" href="#ifconfig" aria-hidden="true"><span class="octicon octicon-link"></span></a>ifconfig</h2>
+
+<p>version: CentOS-6.x or 7.x</p>
+
+<p>현재 IP 확인, 단 ifconfig 는 <code>net-tools.x86_64</code> 모듈을 설치해야 한다:</p>
+
+<p><code>ip addr show</code> or <code>ifconfig</code></p>
+
+<p>현재 라우팅정보 확인, ping 확인:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">netstat -nr
+ping 8.8.8.8   # 외부 IP로 통신가능한지 확인
+</code></pre></div>
+<h3 id="ip-ip">
+<a class="anchor" href="#ip-ip" aria-hidden="true"><span class="octicon octicon-link"></span></a>자동IP, 고정IP 비교</h3>
+
+<p>폴더 경로: /etc/sysconfig/network-scripts/</p>
+
+<p>eth0: 자동 IP, 자동 접속</p>
+
+<p>eth1: 고정 IP, 자동 접속</p>
+
+<p><code>/etc/sysconfig/network-scripts/ifcfg-eth0</code>:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">DEVICE=eth0    (실제 등록된 장네트워크 장비)
+TYPE=Ethernet
+UUID=4b9eefb7-1381-499f-b369-cad66bc60dc0    (고유값)
+ONBOOT=yes
+NM_CONTROLLED=yes
+BOOTPROTO=dhcp    (dhcp = 자동 IP 설정)
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=yes
+IPV6INIT=no
+NAME="System eth0"
+HWADDR=00:0C:29:8E:B3:8F  (실제 등록된 네트워크 장비 MAC)
+PEERDNS=yes
+PEERROUTES=yes
+LAST_CONNECT=1422938134
+</code></pre></div>
+<p><code>/etc/sysconfig/network-scripts/ifcfg-eth1</code>:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">TYPE=Ethernet
+UUID=c34ed8e9-4e12-4f65-8a29-34ca72ad954e
+ONBOOT=yes
+DEFROUTE=yes
+BOOTPROTO=none
+IPV4_FAILURE_FATAL=yes
+IPV6INIT=no
+NAME="System eth1"    (추가된 값)
+IPADDR=***.***.***.57    (추가된 값)
+PREFIX=24    (추가된 값)
+GATEWAY=***.***.***.254    (추가된 값)
+DNS1=***.**.***.1    (추가된 값)
+DNS1=***.**.***.2    (추가된 값)
+</code></pre></div>
+<p>eth0을 자동 -&gt; 고정 으로 변경:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">DEVICE=eth0
+TYPE=Ethernet
+UUID=4b9eefb7-1381-499f-b369-cad66bc60dc0
+ONBOOT=yes
+NM_CONTROLLED=yes
+BOOTPROTO=none
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=yes
+IPV6INIT=no
+NAME="System eth0"
+HWADDR=00:0C:29:8E:B3:8F
+IPADDR=***.***.***.57
+PREFIX=24
+GATEWAY=***.***.***.254
+DNS1=***.**.***.1
+DNS2=***.**.***.2
+LAST_CONNECT=1422943534
+</code></pre></div>
+<p>Restart:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">sudo </span>ifup eth0
+<span class="nb">sudo </span>ifdown eth0
+</code></pre></div>
+<h2 id="gnome-xwindow">
+<a class="anchor" href="#gnome-xwindow" aria-hidden="true"><span class="octicon octicon-link"></span></a>gnome(xwindow) 에서 설정하기</h2>
+
+<p>version: CentOS-7.x</p>
+
+<ol>
+<li>작성
+
+<ul>
+<li>이름: 처음 linux 설치시 보통 eth0 으로 시작한다. add 하는 부분이니까 eth1로 만들자.</li>
+<li>MAC주소: 선택하는 부분이 있는데 기본 설정을 선택.</li>
+<li>자동연결: 선택사항</li>
+</ul>
+</li>
+<li>IPv4 작성
+
+<ul>
+<li>주소 부분에 "자동(DHCP)"를 "수동"으로 변경.</li>
+<li>textbox가 나옴. 원하는 값을 입력.</li>
+<li>DNS, 라우팅 원하는 값을 입력.</li>
+</ul>
+</li>
+<li>변경
+
+<ul>
+<li>터미널(console) 창을 연다.</li>
+<li>ifdown "현재 적용중인 네트워크 명"</li>
+<li>ifup "변경할 네트워크 명"</li>
+<li>(먼저 down 후 up 할 것)</li>
+</ul>
+</li>
+<li>Check
+<code>bash
+sudo ifconfig  (안된 다면)
+sudo ip addr show
+</code>
+</li>
+</ol>
+
+<p>(ifconfig 명령어는 centOS 7 부터 ip 명령어로 변경됨, ifconfig 라이브러리를 설치하면 사용가능함)</p>
+
+<h2 id="references">
+<a class="anchor" href="#references" aria-hidden="true"><span class="octicon octicon-link"></span></a>References</h2>
+
+<p><a href="https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Networking_Guide/part-IP_Networking.html">https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Networking_Guide/part-IP_Networking.html</a></p>
+
+  </div>
+
+<div>
+  <h2 id="vmware">작업 전 VMware 의 경우</h2>
+
+<p><code>Edit</code>/<code>Virtual Network Editor</code>/<code>Add Network</code>/<code>Bridged</code> 하십시오.</p>
+
+<p>[목차]
+1. nmcli (NETWORKMANAGER COMMAND LINE TOOL)  사용하기    - Centos 7.x
+2. 이전 방법 (ifconfig 사용하기)    - Centos 6.x  또는 7.x
+3. gnome(xwindow ) 에서 설정하기    - Centos 7.x</p>
+
+<p>[내용]
+1. nmcli (NETWORKMANAGER COMMAND LINE TOOL)  사용하기    - Centos 7.x
+- [중요] tab 키 활용, help 명령어 활용
+명령어 입력하면서 [tab] 키를 누르면 사용가능한 목록이 나오므로 명령어 입력전 한번씩 확인하면서 진행하도록 하자.
+- centos 7 부터 명령어 단어가 축약되어 사용가능하다. 하지만 배우는 입장으로써 단어의 의미를 생각하며 full name으로 사용했다.</p>
+
+<p><code>nmcli help</code>:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">Usage: nmcli [OPTIONS] OBJECT { COMMAND | help }
+
+OPTIONS
+  -t[erse]                                   terse output
+  -p[retty]                                  pretty output
+  -m[ode] tabular|multiline                  output mode
+  -f[ields] &lt;field1,field2,...&gt;|all|common   specify fields to output
+  -e[scape] yes|no                           escape columns separators in values
+  -n[ocheck]                                 don't check nmcli and NetworkManager versions
+  -a[sk]                                     ask for missing parameters
+  -w[ait] &lt;seconds&gt;                          set timeout waiting for finishing operations
+  -v[ersion]                                 show program version
+  -h[elp]                                    print this help
+
+OBJECT
+  g[eneral]       NetworkManager's general status and operations
+  (general 명령어는 만 g로 입력 가능, 축약가능한 상태와 명령어에 대한 설명이 보임)
+  n[etworking]    overall networking control
+  r[adio]         NetworkManager radio switches
+  c[onnection]    NetworkManager's connections
+  d[evice]        devices managed by NetworkManager
+</code></pre></div>
+<p>네트워크 상태 확인하기, 확인하는 방법은 다양하다. general show나 status 로 확인:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">nmcli device status
+nmcli device show
+nmcli general 명령어
+</code></pre></div>
+<p>연결중인 네트워크 보기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">nmcli connection show             <span class="c"># nmcli con show)</span>
+nmcli connection show <span class="nt">--active</span>    <span class="c"># nmcli con show -a 로 축약 가능함</span>
+</code></pre></div>
+<p>네트워크 on/off:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">nmcli connection up <span class="nb">id </span>eth명        <span class="c"># up &lt;&gt; down</span>
+nmcli device connection <span class="nb">id </span>eth명    <span class="c"># connection &lt;&gt; disconnection</span>
+</code></pre></div>
+<p>새로운 네트워크 등록하기:</p>
+
+<p>변경 전, 네트워크 장비 상태 확인하기, <code>nmcli device status</code>:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">장치         유형      상태           CONNECTION
+eno16777736  ethernet  연결됨         자동 이더넷
+lo           loopback  관리되지 않음  --
+</code></pre></div>
+<p>ifname 은 실제 사용 가능한 목록을 선택할 것:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">nmcli connection add <span class="nb">type </span>ethernet con-name eth명 ifname eno16777736 ip4 1.1.1.1/24 gw4 1.1.1.254
+</code></pre></div>
+<p>24 는 넷마스크(netmask, Mask, mask)다. 앞에서 부터 24개 비트로 구성된 것을 의미한다.
+즉, 1111 1111.1111 1111.1111 1111.0000 0000 이렇게 표현된다.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">[2진수]           1     1    1    1     1   1   1   1  . 생략
+[10진수]  255 = 128 + 64 + 32 + 16   + 8 + 4 + 2 + 1  . 생략
+</code></pre></div>
+<p>예로 넷마스크 값을 255.255.255.255 로 하고 싶다면 32 로 하면 된다.</p>
+
+<p>등록여부 확인, 그리고 연결, 그리고 연결 확인 (등록만 되고 바로 연결되는 것은 아니다):</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">nmcli connection show
+nmcli connection up eth명
+nmcli device status
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">장치         유형      상태           CONNECTION
+eno16777736  ethernet  연결됨         eth명
+lo           loopback  관리되지 않음  --
+</code></pre></div>
+<p>등록된 eth 삭제하기(id 까지 입력후 [tab]키를 누르면 삭제 가능한 목록들이 자동으로 나온다):</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">nmcli connection delete <span class="nb">id </span>eth명
+</code></pre></div>
+<p>modify 명령어 사용하기 (고정 IP 로 변경):</p>
+
+<p><code>nmcli connection modify help</code>:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">Usage: nmcli connection modify { ARGUMENTS | help }
+
+ARGUMENTS := [id | uuid | path] &lt;ID&gt; ([+|-]&lt;setting&gt;.&lt;property&gt; &lt;value&gt;)+
+
+Modify one or more properties of the connection profile.
+The profile is identified by its name, UUID or D-Bus path.
+For multi-valued properties you can use optional '+' or '-' prefix to the property name.
+The '+' sign allows appending items instead of overwriting the whole value.
+The '-' sign allows removing selected items instead of the whole value.
+
+Examples:  (친절하게 예제도 나옴)
+nmcli con mod home-wifi wifi.ssid rakosnicek
+nmcli con mod em1-1 ipv4.method manual ipv4.addr "192.168.1.2/24, 10.10.1.5/8"
+nmcli con mod em1-1 +ipv4.dns 8.8.4.4
+nmcli con mod em1-1 -ipv4.dns 1
+nmcli con mod em1-1 -ipv6.addr "abbe::cafe/56"
+nmcli con mod bond0 +bond.options mii=500
+
+nmcli con mod bond0 -bond.options downdelay
+</code></pre></div><div class="highlight"><pre><code class="language-bash" data-lang="bash">nmcli connection modify <span class="nb">id </span>eth명 ipv4.addresses <span class="s2">"10.1.1.1/24 10.1.1.254"</span>   <span class="c"># "IP주소/넷마스크 게이트웨이"</span>
+</code></pre></div>
+<p>콤마(',')로 구분하면 my_office 네트워크명안에 사용 가능한 IP 대역을 여러개 등록할 수 있다.</p>
+
+<p>Examples: "10.1.1.1/24 10.1.1.254, 20.2.2.2/24 10.1.1.254"</p>
+
+<p>고정 IP 설정, manual = static 으로 입력해도 된다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">nmcli connection modify <span class="nb">id </span>eth명 ipv4.method manual
+</code></pre></div>
+<p>띄어쓰기는 2개를 추가한다는 것을 의미함, 주의 - 덮어쓰기 된다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">nmcli connection modify <span class="nb">id </span>eth명 ipv4.dns <span class="s2">"1.1.1.1 2.2.2.2"</span>
+</code></pre></div>
+<p>"+" 기존에 추가:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">nmcli connection modify <span class="nb">id </span>eth명 +ipv4.dns <span class="s2">"3.3.3.3"</span>
+</code></pre></div>
+<p>"-" 기존에서 삭제:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">nmcli connection modify <span class="nb">id </span>eth명 <span class="nt">-ipv4</span>.dns <span class="s2">"3.3.3.3"</span>
+</code></pre></div>
+<p>Check:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">nmcli <span class="nt">--pretty</span> connection show <span class="nb">id </span>eth명
+</code></pre></div>
+<p>입력을 하면 바로 config에 바로 기록은 되어 save되지만 up/down 으로 재구동하는 것이 좋다.</p>
+
+<p>나머지는 <code>nmcli connection modify id eth</code>명 입력 후 [tab 키]를 하면 변경가능한 목록들이 나온다, 확인 후 필요한 부분을 직접 입력하면 된다.</p>
+
+<p>또는 <code>nmcli -p connection show id eth명</code> 을 하면 현재 eth명 의 설정 가능한 Value 값을 확인할 수 있다.</p>
+
+<p>Value 은 유추하거나 웹 서핑으로 확인해서 입력한다. 추상적으로 설명하고 있지만 아무것도 몰랐을 때 실무적으로 찾아보는 방법 중 하나를 작성한 것이다.</p>
+
+<p>edit 명령어 사용하기, 다음과 같이 대화 형 편집기를 사용하여 동적 이더넷 연결을 구성하려면 edit 명령어를 사용하면 편집기가 열리는데 그곳에서 수정한다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">nmcli connection edit <span class="nb">id </span>eth명
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">nmcli&gt; help
+
+goto     [&lt;setting&gt; | &lt;prop&gt;]  :: go to a setting or property  (= 속성에 대해 접근하여 상세한 명령어를 실행시킬 수 있음, remove등..)
+remove   &lt;setting&gt;[.&lt;prop&gt;] | &lt;prop&gt; :: remove setting or reset property value
+set      [&lt;setting&gt;.&lt;prop&gt; &lt;value&gt;]  :: set property value
+describe [&lt;setting&gt;.&lt;prop&gt;]          :: describe property         (= 속성에 대한 설명과 속성 값에 대한 사용 예를 보여줌)
+print    [all]                       :: print the connection
+verify   [all]                       :: verify the connection
+save     [persistent|temporary]      :: save the connection
+activate [&lt;ifname&gt;] [/&lt;ap&gt;|&lt;nsp&gt;]    :: activate the connection
+back                                 :: go one level up (back)
+help/?   [&lt;command&gt;]                 :: print this help
+nmcli    &lt;conf-option&gt; &lt;value&gt;       :: nmcli configuration
+quit                                 :: exit nmcli
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">nmcli&gt; describe ipv4.dns
+
+[NM property description]
+List of DNS servers (network byte order). For the 'auto' method, these DNS servers are appended to those (if any) returned by automatic configuration.  DNS servers cannot be used with the 'shared', 'link-local', or 'disabled' methods as there is no upstream network.  In all other methods, these DNS servers are used as the only DNS servers for this connection.
+
+[nmcli specific description]
+Enter a list of IPv4 addresses of DNS servers.
+
+Example: 8.8.8.8, 8.8.4.4
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">nmcli&gt; set ipv4.dns 1.1.1.3
+nmcli&gt; save
+nmcli&gt; goto ipv4.dns     (= ipv4.dns 속성으로 이동)
+nmcli ipv4.dns&gt; help
+
+---[ Property menu ]---
+set      [&lt;value&gt;]               :: set new value
+add      [&lt;value&gt;]               :: add new option to the property
+change                           :: change current value
+remove   [&lt;index&gt; | &lt;option&gt;]    :: delete the value
+describe                         :: describe property
+print    [setting | connection]  :: print property (setting/connection) value(s)
+back                             :: go to upper level
+help/?   [&lt;command&gt;]             :: print this help or command description
+quit                             :: exit nmcli
+</code></pre></div><div class="highlight"><pre><code class="language-bash" data-lang="bash">nmcli ipv4.dns&gt; remove 1.1.1.3  <span class="o">(=</span> 삭제<span class="o">)</span>
+nmcli ipv4.dns&gt; back             <span class="o">(=</span> 이전 속성으로<span class="o">)</span>
+nmcli&gt; save                       <span class="o">(=</span> 저장<span class="o">)</span>
+nmcli&gt; quit
+</code></pre></div>
+<h2 id="wi-fi">Wi-Fi</h2>
+
+<p>이 내용은 실제 테스트할 수 없어 번역만 하였습니다.</p>
+
+<h3 id="part-f5a206fb1ee27701">연결을 추가</h3>
+
+<p>사용 가능한 Wi-Fi 액세스 포인트를 보기, <code>nmcli dev wifi list</code>:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">  SSID            MODE  CHAN  RATE     SIGNAL  BARS  SECURITY
+  FedoraTest     Infra  11    54 MB/s  98      ▂▄▆█  WPA1
+  Red Hat Guest  Infra  6     54 MB/s  97      ▂▄▆█  WPA2
+  Red Hat        Infra  6     54 MB/s  77      ▂▄▆_  WPA2 802.1X
+* Red Hat        Infra  40    54 MB/s  66      ▂▄▆_  WPA2 802.1X
+  VoIP           Infra  1     54 MB/s  32      ▂▄__  WEP
+  MyCafe         Infra  11    54 MB/s  39      ▂▄__  WPA2
+</code></pre></div>
+<p>고정 IP 구성으로 Wi-Fi 연결 프로파일을 생성하지만, 다음과 같이 수 있도록 자동으로 DNS 주소 할당은, 명령을 실행한다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">nmcli con add con-name MyCafe ifname wlan0 <span class="nb">type </span>wifi ssid MyCafe <span class="se">\i</span>p4 192.168.100.101/24 gw4 192.168.100.1
+</code></pre></div>
+<p>다음과 같이 WPA2 암호를 설정하려면, 예를 들어 "caffeine"에 대한 명령어 실행이다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">nmcli con modify MyCafe wifi-sec.key-mgmt wpa-psk
+nmcli con modify MyCafe wifi-sec.psk caffeine
+</code></pre></div>
+<p>암호 보안에 대한 자세한 내용은 레드햇 엔터프라이즈 리눅스 (7) 보안 설명서를 참조하십시오.
+Wi-Fi 상태 변경하려면 다음과 같은 형식으로 명령을 실행합니다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">nmcli radio wifi <span class="o">[</span>on | off <span class="o">]</span>
+</code></pre></div>
+<h3 id="modify">특정 속성 변경 (modify 사용하기)</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">nmcli connection show <span class="nb">id</span> <span class="s1">'MyCafe'</span> | <span class="nb">grep </span>mtu
+
+<span class="c"># 802-11-wireless.mtu:                     auto</span>
+</code></pre></div><div class="highlight"><pre><code class="language-bash" data-lang="bash">nmcli connection modify <span class="nb">id</span> <span class="s1">'MyCafe'</span> 802-11-wireless.mtu 1350
+nmcli connection show <span class="nb">id</span> <span class="s1">'MyCafe'</span> | <span class="nb">grep </span>mtu
+
+<span class="c"># 802-11-wireless.mtu:                     1350</span>
+</code></pre></div>
+<h3 id="routes-edit">고정 Routes 설정 (edit 사용하기)</h3>
+<div class="highlight"><pre><code class="language-" data-lang="">nmcli connection edit id eth명
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">nmcli&gt; set ipv4.routes 192.168.122.0/24 10.10.10.1
+nmcli&gt; save persistent
+
+Saving the connection with 'autoconnect=yes'. That might result in an immediate activation of the connection.
+Do you still want to save? [yes] yes
+Connection 'ens3' (704a5666-8cbd-4d89-b5f9-fa65a3dbc916) successfully saved.
+
+nmcli&gt; quit
+</code></pre></div>
+<p>nmcli 에 대해 <a href="https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Networking_Guide/sec-Using_the_NetworkManager_Command_Line_Tool_nmcli.html" rel="nofollow" target="_blank">참조한 내용</a>입니다.</p>
+
+<h2 id="ifconfig">ifconfig</h2>
+
+<p>version: CentOS-6.x or 7.x</p>
+
+<p>현재 IP 확인, 단 ifconfig 는 <code>net-tools.x86_64</code> 모듈을 설치해야 한다:</p>
+
+<p><code>ip addr show</code> or <code>ifconfig</code></p>
+
+<p>현재 라우팅정보 확인, ping 확인:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">netstat -nr
+ping 8.8.8.8   # 외부 IP로 통신가능한지 확인
+</code></pre></div>
+<h3 id="ip-ip">자동IP, 고정IP 비교</h3>
+
+<p>폴더 경로: /etc/sysconfig/network-scripts/</p>
+
+<p>eth0: 자동 IP, 자동 접속</p>
+
+<p>eth1: 고정 IP, 자동 접속</p>
+
+<p><code>/etc/sysconfig/network-scripts/ifcfg-eth0</code>:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">DEVICE=eth0    (실제 등록된 장네트워크 장비)
+TYPE=Ethernet
+UUID=4b9eefb7-1381-499f-b369-cad66bc60dc0    (고유값)
+ONBOOT=yes
+NM_CONTROLLED=yes
+BOOTPROTO=dhcp    (dhcp = 자동 IP 설정)
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=yes
+IPV6INIT=no
+NAME="System eth0"
+HWADDR=00:0C:29:8E:B3:8F  (실제 등록된 네트워크 장비 MAC)
+PEERDNS=yes
+PEERROUTES=yes
+LAST_CONNECT=1422938134
+</code></pre></div>
+<p><code>/etc/sysconfig/network-scripts/ifcfg-eth1</code>:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">TYPE=Ethernet
+UUID=c34ed8e9-4e12-4f65-8a29-34ca72ad954e
+ONBOOT=yes
+DEFROUTE=yes
+BOOTPROTO=none
+IPV4_FAILURE_FATAL=yes
+IPV6INIT=no
+NAME="System eth1"    (추가된 값)
+IPADDR=***.***.***.57    (추가된 값)
+PREFIX=24    (추가된 값)
+GATEWAY=***.***.***.254    (추가된 값)
+DNS1=***.**.***.1    (추가된 값)
+DNS1=***.**.***.2    (추가된 값)
+</code></pre></div>
+<p>eth0을 자동 -&gt; 고정 으로 변경:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">DEVICE=eth0
+TYPE=Ethernet
+UUID=4b9eefb7-1381-499f-b369-cad66bc60dc0
+ONBOOT=yes
+NM_CONTROLLED=yes
+BOOTPROTO=none
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=yes
+IPV6INIT=no
+NAME="System eth0"
+HWADDR=00:0C:29:8E:B3:8F
+IPADDR=***.***.***.57
+PREFIX=24
+GATEWAY=***.***.***.254
+DNS1=***.**.***.1
+DNS2=***.**.***.2
+LAST_CONNECT=1422943534
+</code></pre></div>
+<p>Restart:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">sudo </span>ifup eth0
+<span class="nb">sudo </span>ifdown eth0
+</code></pre></div>
+<h2 id="gnome-xwindow">gnome(xwindow) 에서 설정하기</h2>
+
+<p>version: CentOS-7.x</p>
+
+<ol>
+<li>작성
+
+<ul>
+<li>이름: 처음 linux 설치시 보통 eth0 으로 시작한다. add 하는 부분이니까 eth1로 만들자.</li>
+<li>MAC주소: 선택하는 부분이 있는데 기본 설정을 선택.</li>
+<li>자동연결: 선택사항</li>
+</ul>
+</li>
+<li>IPv4 작성
+
+<ul>
+<li>주소 부분에 "자동(DHCP)"를 "수동"으로 변경.</li>
+<li>textbox가 나옴. 원하는 값을 입력.</li>
+<li>DNS, 라우팅 원하는 값을 입력.</li>
+</ul>
+</li>
+<li>변경
+
+<ul>
+<li>터미널(console) 창을 연다.</li>
+<li>ifdown "현재 적용중인 네트워크 명"</li>
+<li>ifup "변경할 네트워크 명"</li>
+<li>(먼저 down 후 up 할 것)</li>
+</ul>
+</li>
+<li>Check
+<code>bash
+sudo ifconfig  (안된 다면)
+sudo ip addr show
+</code>
+</li>
+</ol>
+
+<p>(ifconfig 명령어는 centOS 7 부터 ip 명령어로 변경됨, ifconfig 라이브러리를 설치하면 사용가능함)</p>
+
+<h2 id="references">References</h2>
+
+<p><a href="https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Networking_Guide/part-IP_Networking.html" rel="nofollow" target="_blank">https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Networking_Guide/part-IP_Networking.html</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

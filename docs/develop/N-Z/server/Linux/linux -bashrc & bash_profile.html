@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>BASH - profile, bashrc | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="BASH - profile, bashrc" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="BASH (Bourne Again Shell)" />
+<meta property="og:description" content="BASH (Bourne Again Shell)" />
+<link rel="canonical" href="/blog/docs/develop/N-Z/server/Linux/linux%20-bashrc%20&%20bash_profile.html" />
+<meta property="og:url" content="/blog/docs/develop/N-Z/server/Linux/linux%20-bashrc%20&%20bash_profile.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-02T16:38:51+09:00" />
+<script type="application/ld+json">
+{"description":"BASH (Bourne Again Shell)","headline":"BASH - profile, bashrc","dateModified":"2019-12-02T16:38:51+09:00","datePublished":"2019-12-02T16:38:51+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/docs/develop/N-Z/server/Linux/linux%20-bashrc%20&%20bash_profile.html"},"url":"/blog/docs/develop/N-Z/server/Linux/linux%20-bashrc%20&%20bash_profile.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/blog/feed.xml" title="Portal2312's blog" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113063601-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+<script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>BASH - profile, bashrc</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#etc-profile">/etc/profile</a></li>
+<li class="toc-entry toc-h2"><a href="#etc-bashrc">/etc/bashrc</a></li>
+<li class="toc-entry toc-h2"><a href="#bash_profile">~/.bash_profile</a></li>
+<li class="toc-entry toc-h2"><a href="#bashrc">~/.bashrc</a></li>
+<li class="toc-entry toc-h2"><a href="#bash_logout">~/.bash_logout</a></li>
+<li class="toc-entry toc-h2"><a href="#bash-commands">BASH Commands</a></li>
+<li class="toc-entry toc-h2"><a href="#part-41eb87a5d9cd01a8">실행 순서</a></li>
+<li class="toc-entry toc-h2"><a href="#example">Example</a></li>
+<li class="toc-entry toc-h1"><a href="#except-list">Except.List</a></li>
+<li class="toc-entry toc-h1"><a href="#reference-url">Reference.URL</a></li>
+</ul><ul>
+<li>BASH (Bourne Again Shell)</li>
+</ul>
+
+<h2 id="etc-profile">
+<a class="anchor" href="#etc-profile" aria-hidden="true"><span class="octicon octicon-link"></span></a>/etc/profile</h2>
+
+<ul>
+<li><p>시스템 전체 기능 및 별칭 환경 항목 등록.</p></li>
+<li><p>'/etc/profile.d/'에 custom.sh 셸 스크립트를 만들어
+환경에 맞게 사용자 지정 변경을 하면 나중에
+업데이트 할 때 병합 할 필요가 없으므로 훨씬 좋습니다.</p></li>
+<li><p>전역 설정.</p></li>
+<li><p>로그인 시 load.</p></li>
+</ul>
+
+<h2 id="etc-bashrc">
+<a class="anchor" href="#etc-bashrc" aria-hidden="true"><span class="octicon octicon-link"></span></a>/etc/bashrc</h2>
+
+<ul>
+<li><p>로그인 설정을 위한 시스템 전체 환경 및 시작 프로그램 함수 및 별칭 등록.</p></li>
+<li><p>'/etc/profile.d/'에 custom.sh 셸 스크립트를 만들어
+환경에 맞게 사용자 지정 변경을 하면 나중에
+업데이트 할 때 병합 할 필요가 없으므로 훨씬 좋습니다.</p></li>
+<li><p>전역 설정.</p></li>
+<li><p>bash shell 사용 load.</p></li>
+</ul>
+
+<h2 id="bash_profile">
+<a class="anchor" href="#bash_profile" aria-hidden="true"><span class="octicon octicon-link"></span></a>~/.bash_profile</h2>
+
+<ul>
+<li><p>각 계정 별 설정 가능. (local-user control)</p></li>
+<li><p>login 시 load.</p></li>
+<li><p>환경 변수와 bash가 수행될 때 실행되는 프로그램을 제어하는 지역적인 시스템 설정과 관련된 파일이다.</p></li>
+<li><p>Login shell 로 사용.</p></li>
+<li><p>Login 한 후에 한번만 실행.</p></li>
+</ul>
+
+<h2 id="bashrc">
+<a class="anchor" href="#bashrc" aria-hidden="true"><span class="octicon octicon-link"></span></a>~/.bashrc</h2>
+
+<ul>
+<li><p>각 계정 별 설정 가능. (local-user control)</p></li>
+<li><p>non-login, bash 실행시 load.</p></li>
+<li><p>별칭(alias), bash가 수행될 때 실행되는 함수를 제어, 지역적인 시스템 설정 관련된 파일.</p></li>
+<li><p>이 파일은 전역적인 설정 파일인 /etc/bashrc이 수행된 다음 바로 수행.</p></li>
+<li><p>사용자의 별칭과 함수, source 정의</p></li>
+</ul>
+
+<h2 id="bash_logout">
+<a class="anchor" href="#bash_logout" aria-hidden="true"><span class="octicon octicon-link"></span></a>~/.bash_logout</h2>
+
+<ul>
+<li><p>각 계정 별 설정 가능. (local-user control)</p></li>
+<li><p>logout 시 직전에 실행.</p></li>
+<li><p>프로그램에 관한 bash의 지역적인 시스템 설정과 관련된 파일.</p></li>
+</ul>
+
+<h2 id="bash-commands">
+<a class="anchor" href="#bash-commands" aria-hidden="true"><span class="octicon octicon-link"></span></a>BASH Commands</h2>
+
+<table>
+<thead>
+<tr>
+<th style="text-align: left">Commands</th>
+<th style="text-align: left">Desc</th>
+<th style="text-align: left">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left">export</td>
+<td style="text-align: left">환경 변수 등록</td>
+<td style="text-align: left">export PYENV_ROOT="/opt/pyenv"</td>
+</tr>
+<tr>
+<td style="text-align: left">source</td>
+<td style="text-align: left">BASH Script File 실행</td>
+<td style="text-align: left">source '/opt/autoenv/activate.sh'</td>
+</tr>
+<tr>
+<td style="text-align: left">echo</td>
+<td style="text-align: left">BASH 메시지 실행</td>
+<td style="text-align: left">echo 'export PYENV_ROOT="/opt/pyenv"' &gt;&gt; .bashrc</td>
+</tr>
+<tr>
+<td style="text-align: left">eval</td>
+<td style="text-align: left">BASH 함수 실행</td>
+<td style="text-align: left">eval "$(pyenv init -)"</td>
+</tr>
+<tr>
+<td style="text-align: left">alias</td>
+<td style="text-align: left">별칭 등록</td>
+<td style="text-align: left">alias cdlogs="cd /opt/hts/logs"</td>
+</tr>
+<tr>
+<td style="text-align: left">bind</td>
+<td style="text-align: left">단축키 등록</td>
+<td style="text-align: left">bind -x '"\C-l": clear;'</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="part-41eb87a5d9cd01a8">
+<a class="anchor" href="#part-41eb87a5d9cd01a8" aria-hidden="true"><span class="octicon octicon-link"></span></a>실행 순서</h2>
+<div class="highlight"><pre><code class="language-" data-lang="">/etc/profile
+/etc/profile.d/a.sh
+/etc/profile.d/b.sh
+.bash_profile
+.bashrc
+/etc/bashrc
+</code></pre></div>
+<h2 id="example">
+<a class="anchor" href="#example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example</h2>
+
+<ul>
+<li>[bind] Ctrl-l: clear
+&gt; bind -x '"\C-l": clear;'k</li>
+</ul>
+
+<pre><code>
+
+echo '/etc/profile'
+echo '' &gt;&gt; /etc/profile
+echo '' &gt;&gt; /etc/profile
+echo '## pyenv' &gt;&gt; /etc/profile
+echo 'export PYENV_ROOT="/opt/pyenv"' &gt;&gt; /etc/profile
+echo 'export PATH="$PYENV_ROOT/bin:$PATH"' &gt;&gt; /etc/profile
+
+echo '/etc/bashrc'
+echo '' &gt;&gt; /etc/bashrc
+echo '## pyenv' &gt;&gt; /etc/bashrc
+echo 'eval "$(pyenv init -)"' &gt;&gt; /etc/bashrc
+echo '## pyenv-virtualenv' &gt;&gt; /etc/bashrc
+echo 'eval "$(pyenv virtualenv-init -)"' &gt;&gt; /etc/bashrc
+
+echo '~/.bashrc'
+echo '' &gt;&gt; ~/.bashrc
+echo '## pyenv' &gt;&gt; ~/.bashrc
+echo 'pyenv virtualenv system' &gt;&gt; ~/.bashrc
+## autoenv 등록 (불편하니 사용하지 말자)
+echo '## autoenv' &gt;&gt; ~/.bashrc
+echo 'source /opt/autoenv/activate.sh' &gt;&gt; ~/.bashrc
+
+
+</code></pre>
+
+<h1 id="except-list">
+<a class="anchor" href="#except-list" aria-hidden="true"><span class="octicon octicon-link"></span></a><em>Except.List</em>
+</h1>
+
+<h1 id="reference-url">
+<a class="anchor" href="#reference-url" aria-hidden="true"><span class="octicon octicon-link"></span></a><em>Reference.URL</em>
+</h1>
+
+<p><a href="http://originalchoi.tistory.com/19">http://originalchoi.tistory.com/19</a></p>
+
+  </div>
+
+<div>
+  <ul>
+<li>BASH (Bourne Again Shell)</li>
+</ul>
+
+<h2 id="etc-profile">/etc/profile</h2>
+
+<ul>
+<li><p>시스템 전체 기능 및 별칭 환경 항목 등록.</p></li>
+<li><p>'/etc/profile.d/'에 custom.sh 셸 스크립트를 만들어
+환경에 맞게 사용자 지정 변경을 하면 나중에
+업데이트 할 때 병합 할 필요가 없으므로 훨씬 좋습니다.</p></li>
+<li><p>전역 설정.</p></li>
+<li><p>로그인 시 load.</p></li>
+</ul>
+
+<h2 id="etc-bashrc">/etc/bashrc</h2>
+
+<ul>
+<li><p>로그인 설정을 위한 시스템 전체 환경 및 시작 프로그램 함수 및 별칭 등록.</p></li>
+<li><p>'/etc/profile.d/'에 custom.sh 셸 스크립트를 만들어
+환경에 맞게 사용자 지정 변경을 하면 나중에
+업데이트 할 때 병합 할 필요가 없으므로 훨씬 좋습니다.</p></li>
+<li><p>전역 설정.</p></li>
+<li><p>bash shell 사용 load.</p></li>
+</ul>
+
+<h2 id="bash_profile">~/.bash_profile</h2>
+
+<ul>
+<li><p>각 계정 별 설정 가능. (local-user control)</p></li>
+<li><p>login 시 load.</p></li>
+<li><p>환경 변수와 bash가 수행될 때 실행되는 프로그램을 제어하는 지역적인 시스템 설정과 관련된 파일이다.</p></li>
+<li><p>Login shell 로 사용.</p></li>
+<li><p>Login 한 후에 한번만 실행.</p></li>
+</ul>
+
+<h2 id="bashrc">~/.bashrc</h2>
+
+<ul>
+<li><p>각 계정 별 설정 가능. (local-user control)</p></li>
+<li><p>non-login, bash 실행시 load.</p></li>
+<li><p>별칭(alias), bash가 수행될 때 실행되는 함수를 제어, 지역적인 시스템 설정 관련된 파일.</p></li>
+<li><p>이 파일은 전역적인 설정 파일인 /etc/bashrc이 수행된 다음 바로 수행.</p></li>
+<li><p>사용자의 별칭과 함수, source 정의</p></li>
+</ul>
+
+<h2 id="bash_logout">~/.bash_logout</h2>
+
+<ul>
+<li><p>각 계정 별 설정 가능. (local-user control)</p></li>
+<li><p>logout 시 직전에 실행.</p></li>
+<li><p>프로그램에 관한 bash의 지역적인 시스템 설정과 관련된 파일.</p></li>
+</ul>
+
+<h2 id="bash-commands">BASH Commands</h2>
+
+<table>
+<thead>
+<tr>
+<th style="text-align: left">Commands</th>
+<th style="text-align: left">Desc</th>
+<th style="text-align: left">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left">export</td>
+<td style="text-align: left">환경 변수 등록</td>
+<td style="text-align: left">export PYENV_ROOT="/opt/pyenv"</td>
+</tr>
+<tr>
+<td style="text-align: left">source</td>
+<td style="text-align: left">BASH Script File 실행</td>
+<td style="text-align: left">source '/opt/autoenv/activate.sh'</td>
+</tr>
+<tr>
+<td style="text-align: left">echo</td>
+<td style="text-align: left">BASH 메시지 실행</td>
+<td style="text-align: left">echo 'export PYENV_ROOT="/opt/pyenv"' &gt;&gt; .bashrc</td>
+</tr>
+<tr>
+<td style="text-align: left">eval</td>
+<td style="text-align: left">BASH 함수 실행</td>
+<td style="text-align: left">eval "$(pyenv init -)"</td>
+</tr>
+<tr>
+<td style="text-align: left">alias</td>
+<td style="text-align: left">별칭 등록</td>
+<td style="text-align: left">alias cdlogs="cd /opt/hts/logs"</td>
+</tr>
+<tr>
+<td style="text-align: left">bind</td>
+<td style="text-align: left">단축키 등록</td>
+<td style="text-align: left">bind -x '"\C-l": clear;'</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="part-41eb87a5d9cd01a8">실행 순서</h2>
+<div class="highlight"><pre><code class="language-" data-lang="">/etc/profile
+/etc/profile.d/a.sh
+/etc/profile.d/b.sh
+.bash_profile
+.bashrc
+/etc/bashrc
+</code></pre></div>
+<h2 id="example">Example</h2>
+
+<ul>
+<li>[bind] Ctrl-l: clear
+&gt; bind -x '"\C-l": clear;'k</li>
+</ul>
+
+<pre><code>
+
+echo '/etc/profile'
+echo '' &gt;&gt; /etc/profile
+echo '' &gt;&gt; /etc/profile
+echo '## pyenv' &gt;&gt; /etc/profile
+echo 'export PYENV_ROOT="/opt/pyenv"' &gt;&gt; /etc/profile
+echo 'export PATH="$PYENV_ROOT/bin:$PATH"' &gt;&gt; /etc/profile
+
+echo '/etc/bashrc'
+echo '' &gt;&gt; /etc/bashrc
+echo '## pyenv' &gt;&gt; /etc/bashrc
+echo 'eval "$(pyenv init -)"' &gt;&gt; /etc/bashrc
+echo '## pyenv-virtualenv' &gt;&gt; /etc/bashrc
+echo 'eval "$(pyenv virtualenv-init -)"' &gt;&gt; /etc/bashrc
+
+echo '~/.bashrc'
+echo '' &gt;&gt; ~/.bashrc
+echo '## pyenv' &gt;&gt; ~/.bashrc
+echo 'pyenv virtualenv system' &gt;&gt; ~/.bashrc
+## autoenv 등록 (불편하니 사용하지 말자)
+echo '## autoenv' &gt;&gt; ~/.bashrc
+echo 'source /opt/autoenv/activate.sh' &gt;&gt; ~/.bashrc
+
+
+</code></pre>
+
+<h1 id="except-list"><em>Except.List</em></h1>
+
+<h1 id="reference-url"><em>Reference.URL</em></h1>
+
+<p><a href="http://originalchoi.tistory.com/19" rel="nofollow" target="_blank">http://originalchoi.tistory.com/19</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

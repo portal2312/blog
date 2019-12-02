@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Embeddings - Categorical Input Data (임베딩 - 범주형 입력 데이터) | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Embeddings - Categorical Input Data (임베딩 - 범주형 입력 데이터)" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="범주형 데이터 - 선택사항이 유한한 집합에 속한 하나 이상의 이산 항목을 표현하는 입력 특성을 가리킵니다. 예를 들어 사용자가 시청한 영화의 집합, 문서에 사용된 단어의 집합, 직업의 집합 등이 있습니다. - 대부분의 요소가 0인 희소 텐서를 통해 가장 효율적으로 표현됩니다. 예를 들어 영화 추천 모델을 개발한다고 하면 아래 그림(표)에서 확인할 수 있는 것처럼 모든 영화에 고유 ID를 부여한 후 사용자가 본 영화의 희소 텐서로 사용자를 나타낼 수 있습니다. 각 행은 사용자의 영화 시청 기록을 포착한 예: | | 0 | 1 | 2 | 3 | ... | 99 | | | A | B | C | D | ... | ZZ | | | v | v | | | ... | | | | | v | v | | ... | v | | ME | | v | | v | ... | v |" />
+<meta property="og:description" content="범주형 데이터 - 선택사항이 유한한 집합에 속한 하나 이상의 이산 항목을 표현하는 입력 특성을 가리킵니다. 예를 들어 사용자가 시청한 영화의 집합, 문서에 사용된 단어의 집합, 직업의 집합 등이 있습니다. - 대부분의 요소가 0인 희소 텐서를 통해 가장 효율적으로 표현됩니다. 예를 들어 영화 추천 모델을 개발한다고 하면 아래 그림(표)에서 확인할 수 있는 것처럼 모든 영화에 고유 ID를 부여한 후 사용자가 본 영화의 희소 텐서로 사용자를 나타낼 수 있습니다. 각 행은 사용자의 영화 시청 기록을 포착한 예: | | 0 | 1 | 2 | 3 | ... | 99 | | | A | B | C | D | ... | ZZ | | | v | v | | | ... | | | | | v | v | | ... | v | | ME | | v | | v | ... | v |" />
+<link rel="canonical" href="/blog/docs/develop/A-M/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML%20%EA%B0%9C%EB%85%90/018.%20Embeddings%20(%EC%9E%84%EB%B2%A0%EB%94%A9,%2080%20min)/002.%20%EB%B2%94%EC%A3%BC%ED%98%95%20%EC%9E%85%EB%A0%A5%20%EB%8D%B0%EC%9D%B4%ED%84%B0.html" />
+<meta property="og:url" content="/blog/docs/develop/A-M/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML%20%EA%B0%9C%EB%85%90/018.%20Embeddings%20(%EC%9E%84%EB%B2%A0%EB%94%A9,%2080%20min)/002.%20%EB%B2%94%EC%A3%BC%ED%98%95%20%EC%9E%85%EB%A0%A5%20%EB%8D%B0%EC%9D%B4%ED%84%B0.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-02T16:38:51+09:00" />
+<script type="application/ld+json">
+{"description":"범주형 데이터 - 선택사항이 유한한 집합에 속한 하나 이상의 이산 항목을 표현하는 입력 특성을 가리킵니다. 예를 들어 사용자가 시청한 영화의 집합, 문서에 사용된 단어의 집합, 직업의 집합 등이 있습니다. - 대부분의 요소가 0인 희소 텐서를 통해 가장 효율적으로 표현됩니다. 예를 들어 영화 추천 모델을 개발한다고 하면 아래 그림(표)에서 확인할 수 있는 것처럼 모든 영화에 고유 ID를 부여한 후 사용자가 본 영화의 희소 텐서로 사용자를 나타낼 수 있습니다. 각 행은 사용자의 영화 시청 기록을 포착한 예: | | 0 | 1 | 2 | 3 | ... | 99 | | | A | B | C | D | ... | ZZ | | | v | v | | | ... | | | | | v | v | | ... | v | | ME | | v | | v | ... | v |","headline":"Embeddings - Categorical Input Data (임베딩 - 범주형 입력 데이터)","dateModified":"2019-12-02T16:38:51+09:00","datePublished":"2019-12-02T16:38:51+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/docs/develop/A-M/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML%20%EA%B0%9C%EB%85%90/018.%20Embeddings%20(%EC%9E%84%EB%B2%A0%EB%94%A9,%2080%20min)/002.%20%EB%B2%94%EC%A3%BC%ED%98%95%20%EC%9E%85%EB%A0%A5%20%EB%8D%B0%EC%9D%B4%ED%84%B0.html"},"url":"/blog/docs/develop/A-M/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML%20%EA%B0%9C%EB%85%90/018.%20Embeddings%20(%EC%9E%84%EB%B2%A0%EB%94%A9,%2080%20min)/002.%20%EB%B2%94%EC%A3%BC%ED%98%95%20%EC%9E%85%EB%A0%A5%20%EB%8D%B0%EC%9D%B4%ED%84%B0.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/blog/feed.xml" title="Portal2312's blog" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113063601-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+<script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Embeddings - Categorical Input Data (임베딩 - 범주형 입력 데이터)</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#part-728709159e8d3960">망 크기</a></li>
+<li class="toc-entry toc-h2"><a href="#part-ebc0209b56480b0f">벡터 간의 의미 있는 관계 부족</a></li>
+<li class="toc-entry toc-h2"><a href="#part-a80a617285a8bf97">솔루션: 임베딩</a></li>
+<li class="toc-entry toc-h2"><a href="#reference">Reference</a></li>
+</ul><p><strong>범주형 데이터</strong>
+- 선택사항이 유한한 집합에 속한 하나 이상의 이산 항목을 표현하는 입력 특성을 가리킵니다.<br>
+  예를 들어 사용자가 시청한 영화의 집합, 문서에 사용된 단어의 집합, 직업의 집합 등이 있습니다.
+- 대부분의 요소가 0인 희소 텐서를 통해 가장 효율적으로 표현됩니다.<br>
+  예를 들어 영화 추천 모델을 개발한다고 하면 아래 그림(표)에서 확인할 수 있는 것처럼 모든 영화에 고유 ID를 부여한 후 사용자가 본 영화의 희소 텐서로 사용자를 나타낼 수 있습니다.</p>
+
+<p>각 행은 사용자의 영화 시청 기록을 포착한 예:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">|    | 0 | 1 | 2 | 3 | ... | 99 |
+|    | A | B | C | D | ... | ZZ |
+|    | v | v |   |   | ... |    |
+|    |   | v | v |   | ... | v  |
+| ME |   | v |   | v | ... | v  |
+</code></pre></div>
+<p>각 사용자는 가능한 모든 영화 중 일부만 시청했을 것이기 때문에 이 행은 희소 텐서로 표현됩니다.<br>
+마지막 행은 영화 아이콘 위에 표시된 어휘 색인을 사용하여 희소 텐서 [1, 3, 99]에 대응합니다.</p>
+
+<p>마찬가지로 단어, 문장, 문서를 희소 백터로 표현할 수 있는데, 이 때는 각 어휘 목록에 속한 단어가 앞에서 살펴본 영화 추천 예제에서의 영화와 비슷한 역할을 하게 됩니다</p>
+
+<p>머신러닝 시스템 내에서 이러한 표현을 사용하려면 의미론적으로 유사한 항목(영화 또는 단어)이 벡터 공간에서 비슷한 거리에 있도록 각 희소 벡터를 숫자 벡터로 표현하는 방법이 필요합니다.<br>
+하지만 단어를 어떻게 숫자 벡터로 표현할 수 있을까요?</p>
+
+<p>가장 간단한 방법은 어휘의 모든 단어에 대해 노드가 있는 거대한 입력 레이어를 정의하거나, 적어도 데이터에 나타나는 각 단어에 대해 노드가 있는 입력 레이어를 정의하는 것입니다.
+데이터에 500,000개의 고유한 단어가 있다면 한 단어는 길이 500,000인 벡터로 표현할 수 있고 각 단어는 이 벡터의 한 슬롯에 할당할 수 있습니다.</p>
+
+<p>'말(horse)'이라는 단어를 색인 1247에 할당한 다음 망(network)에 '말'을 전달하는 경우 1247번째 입력 노드에 1을, 나머지 노드 전체에는 0을 복사할 수 있습니다. 이러한 유형의 표현은 색인 하나에만 0이 아닌 값이 있기 때문에 원-핫 인코딩이라고 부릅니다.</p>
+
+<p>더 일반적으로는 벡터에 더 큰 텍스트 뭉치에 있는 단어의 수가 포함될 수 있습니다.
+이는 'BOW(bag of words)' 표현으로 알려져 있습니다.
+BOW 벡터에서는 500,000개의 노드 중 여러 개의 노드의 값이 0이 아닐 수 있습니다.</p>
+
+<p>하지만 어떤 방식으로든 0이 아닌 값을 결정하더라도 단어당 노드 1개 방식으로는 0이 아닌 값이 상대적으로 거의 없는 매우 큰 벡터인 지극히 희소한 입력 벡터가 발생합니다.
+희소 표현에는 모델의 효과적인 학습을 어렵게 만들 수 있는 몇 가지 문제점이 있습니다.</p>
+
+<h2 id="part-728709159e8d3960">
+<a class="anchor" href="#part-728709159e8d3960" aria-hidden="true"><span class="octicon octicon-link"></span></a>망 크기</h2>
+
+<p>입력 벡터가 거대해지면 신경망에 엄청나게 많은 가중치가 만들어집니다.
+어휘에 M개의 단어가 있고 입력 위에 있는 망의 첫 번째 레이어에 N개의 노드가 있으면 해당 레이어에 대해 MxN개의 가중치를 학습시켜야 합니다.
+가중치의 수가 커지면 다음과 같은 문제가 발생합니다.</p>
+
+<ul>
+<li><p>데이터의 양. 모델의 가중치가 많을수록 효과적인 학습을 위해 더 많은 데이터가 필요합니다.</p></li>
+<li><p>계산량. 가중치가 많을수록 모델을 학습하고 사용하는 데 더 많은 계산이 필요합니다.<br>
+따라서 하드웨어가 이를 지원하지 못할 가능성이 높습니다.</p></li>
+</ul>
+
+<h2 id="part-ebc0209b56480b0f">
+<a class="anchor" href="#part-ebc0209b56480b0f" aria-hidden="true"><span class="octicon octicon-link"></span></a>벡터 간의 의미 있는 관계 부족</h2>
+
+<p>이미지 분류자에 RGB 채널의 픽셀 값을 공급하는 경우, '가까운' 값에 대해 언급할 필요가 있습니다.<br>
+불그스름한 파란색은 의미론적으로든 벡터 간 기하학적 거리로든 순수한 청색에 가깝습니다.<br>
+그러나 '말(horse)'에 대한 색인 1247에 1을 가진 벡터는 '텔레비전'에 대한 색인 238에서 1을 갖는 벡터보다 '영양'에 대한 색인 50,430에서 1을 갖는 벡터에 더 가깝지 않습니다.</p>
+
+<h2 id="part-a80a617285a8bf97">
+<a class="anchor" href="#part-a80a617285a8bf97" aria-hidden="true"><span class="octicon octicon-link"></span></a>솔루션: 임베딩</h2>
+
+<p>이러한 문제에 대한 해결책은 크기가 큰 희소 벡터를 의미론적 관계를 보존하는 저차원 공간으로 변환하는 임베딩을 사용하는 것입니다.<br>
+이 모듈의 다음 섹션에서는 임베딩에 대해 직관적, 개념적, 프로그래밍 방식으로 살펴보겠습니다.</p>
+
+<h2 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+<p><a href="https://developers.google.com/machine-learning/crash-course/embeddings/categorical-input-data">https://developers.google.com/machine-learning/crash-course/embeddings/categorical-input-data</a></p>
+
+  </div>
+
+<div>
+  <p><strong>범주형 데이터</strong>
+- 선택사항이 유한한 집합에 속한 하나 이상의 이산 항목을 표현하는 입력 특성을 가리킵니다.<br>
+  예를 들어 사용자가 시청한 영화의 집합, 문서에 사용된 단어의 집합, 직업의 집합 등이 있습니다.
+- 대부분의 요소가 0인 희소 텐서를 통해 가장 효율적으로 표현됩니다.<br>
+  예를 들어 영화 추천 모델을 개발한다고 하면 아래 그림(표)에서 확인할 수 있는 것처럼 모든 영화에 고유 ID를 부여한 후 사용자가 본 영화의 희소 텐서로 사용자를 나타낼 수 있습니다.</p>
+
+<p>각 행은 사용자의 영화 시청 기록을 포착한 예:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">|    | 0 | 1 | 2 | 3 | ... | 99 |
+|    | A | B | C | D | ... | ZZ |
+|    | v | v |   |   | ... |    |
+|    |   | v | v |   | ... | v  |
+| ME |   | v |   | v | ... | v  |
+</code></pre></div>
+<p>각 사용자는 가능한 모든 영화 중 일부만 시청했을 것이기 때문에 이 행은 희소 텐서로 표현됩니다.<br>
+마지막 행은 영화 아이콘 위에 표시된 어휘 색인을 사용하여 희소 텐서 [1, 3, 99]에 대응합니다.</p>
+
+<p>마찬가지로 단어, 문장, 문서를 희소 백터로 표현할 수 있는데, 이 때는 각 어휘 목록에 속한 단어가 앞에서 살펴본 영화 추천 예제에서의 영화와 비슷한 역할을 하게 됩니다</p>
+
+<p>머신러닝 시스템 내에서 이러한 표현을 사용하려면 의미론적으로 유사한 항목(영화 또는 단어)이 벡터 공간에서 비슷한 거리에 있도록 각 희소 벡터를 숫자 벡터로 표현하는 방법이 필요합니다.<br>
+하지만 단어를 어떻게 숫자 벡터로 표현할 수 있을까요?</p>
+
+<p>가장 간단한 방법은 어휘의 모든 단어에 대해 노드가 있는 거대한 입력 레이어를 정의하거나, 적어도 데이터에 나타나는 각 단어에 대해 노드가 있는 입력 레이어를 정의하는 것입니다.
+데이터에 500,000개의 고유한 단어가 있다면 한 단어는 길이 500,000인 벡터로 표현할 수 있고 각 단어는 이 벡터의 한 슬롯에 할당할 수 있습니다.</p>
+
+<p>'말(horse)'이라는 단어를 색인 1247에 할당한 다음 망(network)에 '말'을 전달하는 경우 1247번째 입력 노드에 1을, 나머지 노드 전체에는 0을 복사할 수 있습니다. 이러한 유형의 표현은 색인 하나에만 0이 아닌 값이 있기 때문에 원-핫 인코딩이라고 부릅니다.</p>
+
+<p>더 일반적으로는 벡터에 더 큰 텍스트 뭉치에 있는 단어의 수가 포함될 수 있습니다.
+이는 'BOW(bag of words)' 표현으로 알려져 있습니다.
+BOW 벡터에서는 500,000개의 노드 중 여러 개의 노드의 값이 0이 아닐 수 있습니다.</p>
+
+<p>하지만 어떤 방식으로든 0이 아닌 값을 결정하더라도 단어당 노드 1개 방식으로는 0이 아닌 값이 상대적으로 거의 없는 매우 큰 벡터인 지극히 희소한 입력 벡터가 발생합니다.
+희소 표현에는 모델의 효과적인 학습을 어렵게 만들 수 있는 몇 가지 문제점이 있습니다.</p>
+
+<h2 id="part-728709159e8d3960">망 크기</h2>
+
+<p>입력 벡터가 거대해지면 신경망에 엄청나게 많은 가중치가 만들어집니다.
+어휘에 M개의 단어가 있고 입력 위에 있는 망의 첫 번째 레이어에 N개의 노드가 있으면 해당 레이어에 대해 MxN개의 가중치를 학습시켜야 합니다.
+가중치의 수가 커지면 다음과 같은 문제가 발생합니다.</p>
+
+<ul>
+<li><p>데이터의 양. 모델의 가중치가 많을수록 효과적인 학습을 위해 더 많은 데이터가 필요합니다.</p></li>
+<li><p>계산량. 가중치가 많을수록 모델을 학습하고 사용하는 데 더 많은 계산이 필요합니다.<br>
+따라서 하드웨어가 이를 지원하지 못할 가능성이 높습니다.</p></li>
+</ul>
+
+<h2 id="part-ebc0209b56480b0f">벡터 간의 의미 있는 관계 부족</h2>
+
+<p>이미지 분류자에 RGB 채널의 픽셀 값을 공급하는 경우, '가까운' 값에 대해 언급할 필요가 있습니다.<br>
+불그스름한 파란색은 의미론적으로든 벡터 간 기하학적 거리로든 순수한 청색에 가깝습니다.<br>
+그러나 '말(horse)'에 대한 색인 1247에 1을 가진 벡터는 '텔레비전'에 대한 색인 238에서 1을 갖는 벡터보다 '영양'에 대한 색인 50,430에서 1을 갖는 벡터에 더 가깝지 않습니다.</p>
+
+<h2 id="part-a80a617285a8bf97">솔루션: 임베딩</h2>
+
+<p>이러한 문제에 대한 해결책은 크기가 큰 희소 벡터를 의미론적 관계를 보존하는 저차원 공간으로 변환하는 임베딩을 사용하는 것입니다.<br>
+이 모듈의 다음 섹션에서는 임베딩에 대해 직관적, 개념적, 프로그래밍 방식으로 살펴보겠습니다.</p>
+
+<h2 id="reference">Reference</h2>
+
+<p><a href="https://developers.google.com/machine-learning/crash-course/embeddings/categorical-input-data" rel="nofollow" target="_blank">https://developers.google.com/machine-learning/crash-course/embeddings/categorical-input-data</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

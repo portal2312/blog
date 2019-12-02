@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>실제 ML 시스템 - 문학 | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="실제 ML 시스템 - 문학" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="이 강의에서는 18세기 문학과 관련된 실제 ML 문제*를 디버그합니다." />
+<meta property="og:description" content="이 강의에서는 18세기 문학과 관련된 실제 ML 문제*를 디버그합니다." />
+<link rel="canonical" href="/blog/docs/develop/A-M/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML_Systems_in_the_Real_World/18%EC%84%B8%EA%B8%B0%20%EB%AC%B8%ED%95%99%20(5%20min).html" />
+<meta property="og:url" content="/blog/docs/develop/A-M/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML_Systems_in_the_Real_World/18%EC%84%B8%EA%B8%B0%20%EB%AC%B8%ED%95%99%20(5%20min).html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-02T16:38:51+09:00" />
+<script type="application/ld+json">
+{"description":"이 강의에서는 18세기 문학과 관련된 실제 ML 문제*를 디버그합니다.","headline":"실제 ML 시스템 - 문학","dateModified":"2019-12-02T16:38:51+09:00","datePublished":"2019-12-02T16:38:51+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/docs/develop/A-M/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML_Systems_in_the_Real_World/18%EC%84%B8%EA%B8%B0%20%EB%AC%B8%ED%95%99%20(5%20min).html"},"url":"/blog/docs/develop/A-M/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML_Systems_in_the_Real_World/18%EC%84%B8%EA%B8%B0%20%EB%AC%B8%ED%95%99%20(5%20min).html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/blog/feed.xml" title="Portal2312's blog" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113063601-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+<script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>실제 ML 시스템 - 문학</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#reference">Reference</a></li>
+</ul><p>이 강의에서는 18세기 문학과 관련된 실제 ML 문제*를 디버그합니다.</p>
+
+<p>학습 목표</p>
+
+<ul>
+<li>실제의 ML 실험적 디자인에서 결함을 파악합니다.</li>
+</ul>
+
+<p>실제 예: 18세기 문학</p>
+
+<p>18세기 문학을 연구하는 교수가 작가들이 사용한 '마음에 대한 은유'만을 토대로 작가의 정치적 소속이 어디인지를 예측하고자 했습니다.</p>
+
+<p>이 교수님은 18세기에 나온 모든 문학작품을 살펴보면서 저자가 '마음은 정원이다', '마음은 빈 서판이다' 등의 표현을 사용할 때마다 이를 기록했습니다. 은유적 표현에서 저자의 정치적 성향이 드러나는지 궁금해했죠.</p>
+
+<p>저희는 우선 학습 및 시험용 데이터를 만들었습니다.
+각 사례는 저자가 사용한 마음에 관한 은유적 표현이었으며, 라벨에는 휘그당, 토리당 등 18세기의 저자의 정치적 성향을 추가했습니다.</p>
+
+<p>실제로 마음에 관한 은유적 표현만으로 저자의 정치적 성향을 예측할 수 있을 것이라 기대했습니다.
+완벽한 성공이었죠.
+그리고 정확성이 사실 의심스러울 정도로 높다는 사실을 깨달았습니다.</p>
+
+<p>저희는 시험을 위한 학습용 및 검증용 세트를 나눌 때 사례를 문장별로 나눴다는 사실에 주목했습니다.</p>
+
+<p>이에 따라, Samuel L. Richardson을 예로 들자면, 이 저자의 문장이 학습 데이터, 검증 데이터, 시험 데이터에 뿔뿔이 흩어지게 된 것입니다.
+이는 저희가 사용한 모델이 Richardson이 사용한 은유뿐만 아니라 그의 언어 사용에서 보이는 특성을 학습하는 능력이 있었음을 의미합니다.
+그러므로 어떤 의미에서는 시험에 적용해야 할 때, Richardson에 관한 추가 지식을 기억하고 있었다고 말할 수 있죠.</p>
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"학습 세트"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"Swift"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Blake"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Defoe"</span><span class="p">],</span><span class="w">
+  </span><span class="nl">"검증 세트"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"Swift"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Blake"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Defoe"</span><span class="p">],</span><span class="w">
+  </span><span class="nl">"테스트 세트"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"Swift"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Blake"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Defoe"</span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>그래서 저희는 다시 실험을 수행했습니다.
+이번에는 사례를 저자별로 나눠 특정 저자는 학습, 시험, 검증 데이터 중 한 곳에만 속하게 되었습니다.</p>
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"학습 세트"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"모든 Swift 사례"</span><span class="p">],</span><span class="w">
+  </span><span class="nl">"검증 세트"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"모든 Blake 사례"</span><span class="p">],</span><span class="w">
+  </span><span class="nl">"테스트 세트"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"모든 Defoe 사례"</span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>이번 실험 결과 시험 데이터에서 좋은 정확성을 얻기가 훨씬 더 힘들었습니다.
+또한 은유 표현과 관련된 데이터만 기반으로 하여 정치적인 성향을 예측하기도 훨씬 어려워졌습니다.
+흥미로운 작업이었고 각각의 관점에서 두 개의 논문을 작성할 수 있었다.</p>
+
+<p>또 학습용 데이터와 시험용 데이터를 어떻게 나눌지 고민하는 것이 얼마나 중요한지도 깨달았습니다.</p>
+
+<p><strong>머신러닝을 다루는 사람은 '음, 데이터를 정규화하면 되지.'라고 생각해버리기 쉽습니다. 하지만 데이터를 잘 나누기 위해서는 이 데이터가 무엇을 뜻하는지 이해해야 합니다.</strong></p>
+
+<h2 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+<p><a href="https://developers.google.com/machine-learning/crash-course/18th-century-literature">https://developers.google.com/machine-learning/crash-course/18th-century-literature</a></p>
+
+  </div>
+
+<div>
+  <p>이 강의에서는 18세기 문학과 관련된 실제 ML 문제*를 디버그합니다.</p>
+
+<p>학습 목표</p>
+
+<ul>
+<li>실제의 ML 실험적 디자인에서 결함을 파악합니다.</li>
+</ul>
+
+<p>실제 예: 18세기 문학</p>
+
+<p>18세기 문학을 연구하는 교수가 작가들이 사용한 '마음에 대한 은유'만을 토대로 작가의 정치적 소속이 어디인지를 예측하고자 했습니다.</p>
+
+<p>이 교수님은 18세기에 나온 모든 문학작품을 살펴보면서 저자가 '마음은 정원이다', '마음은 빈 서판이다' 등의 표현을 사용할 때마다 이를 기록했습니다. 은유적 표현에서 저자의 정치적 성향이 드러나는지 궁금해했죠.</p>
+
+<p>저희는 우선 학습 및 시험용 데이터를 만들었습니다.
+각 사례는 저자가 사용한 마음에 관한 은유적 표현이었으며, 라벨에는 휘그당, 토리당 등 18세기의 저자의 정치적 성향을 추가했습니다.</p>
+
+<p>실제로 마음에 관한 은유적 표현만으로 저자의 정치적 성향을 예측할 수 있을 것이라 기대했습니다.
+완벽한 성공이었죠.
+그리고 정확성이 사실 의심스러울 정도로 높다는 사실을 깨달았습니다.</p>
+
+<p>저희는 시험을 위한 학습용 및 검증용 세트를 나눌 때 사례를 문장별로 나눴다는 사실에 주목했습니다.</p>
+
+<p>이에 따라, Samuel L. Richardson을 예로 들자면, 이 저자의 문장이 학습 데이터, 검증 데이터, 시험 데이터에 뿔뿔이 흩어지게 된 것입니다.
+이는 저희가 사용한 모델이 Richardson이 사용한 은유뿐만 아니라 그의 언어 사용에서 보이는 특성을 학습하는 능력이 있었음을 의미합니다.
+그러므로 어떤 의미에서는 시험에 적용해야 할 때, Richardson에 관한 추가 지식을 기억하고 있었다고 말할 수 있죠.</p>
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"학습 세트"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"Swift"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Blake"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Defoe"</span><span class="p">],</span><span class="w">
+  </span><span class="nl">"검증 세트"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"Swift"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Blake"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Defoe"</span><span class="p">],</span><span class="w">
+  </span><span class="nl">"테스트 세트"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"Swift"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Blake"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Defoe"</span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>그래서 저희는 다시 실험을 수행했습니다.
+이번에는 사례를 저자별로 나눠 특정 저자는 학습, 시험, 검증 데이터 중 한 곳에만 속하게 되었습니다.</p>
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"학습 세트"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"모든 Swift 사례"</span><span class="p">],</span><span class="w">
+  </span><span class="nl">"검증 세트"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"모든 Blake 사례"</span><span class="p">],</span><span class="w">
+  </span><span class="nl">"테스트 세트"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"모든 Defoe 사례"</span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>이번 실험 결과 시험 데이터에서 좋은 정확성을 얻기가 훨씬 더 힘들었습니다.
+또한 은유 표현과 관련된 데이터만 기반으로 하여 정치적인 성향을 예측하기도 훨씬 어려워졌습니다.
+흥미로운 작업이었고 각각의 관점에서 두 개의 논문을 작성할 수 있었다.</p>
+
+<p>또 학습용 데이터와 시험용 데이터를 어떻게 나눌지 고민하는 것이 얼마나 중요한지도 깨달았습니다.</p>
+
+<p><strong>머신러닝을 다루는 사람은 '음, 데이터를 정규화하면 되지.'라고 생각해버리기 쉽습니다. 하지만 데이터를 잘 나누기 위해서는 이 데이터가 무엇을 뜻하는지 이해해야 합니다.</strong></p>
+
+<h2 id="reference">Reference</h2>
+
+<p><a href="https://developers.google.com/machine-learning/crash-course/18th-century-literature" rel="nofollow" target="_blank">https://developers.google.com/machine-learning/crash-course/18th-century-literature</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

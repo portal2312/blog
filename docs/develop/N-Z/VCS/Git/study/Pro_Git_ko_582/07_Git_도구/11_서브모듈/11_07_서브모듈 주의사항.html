@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>서브모듈 주의사항 | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="서브모듈 주의사항" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="전체적으로 서브모듈은 어렵지 않게 사용할 수 있지만, 서브모듈의 코드를 수정하는 경우에는 주의해야 한다." />
+<meta property="og:description" content="전체적으로 서브모듈은 어렵지 않게 사용할 수 있지만, 서브모듈의 코드를 수정하는 경우에는 주의해야 한다." />
+<link rel="canonical" href="/blog/docs/develop/N-Z/VCS/Git/study/Pro_Git_ko_582/07_Git_%EB%8F%84%EA%B5%AC/11_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88/11_07_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88%20%EC%A3%BC%EC%9D%98%EC%82%AC%ED%95%AD.html" />
+<meta property="og:url" content="/blog/docs/develop/N-Z/VCS/Git/study/Pro_Git_ko_582/07_Git_%EB%8F%84%EA%B5%AC/11_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88/11_07_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88%20%EC%A3%BC%EC%9D%98%EC%82%AC%ED%95%AD.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-02T16:38:51+09:00" />
+<script type="application/ld+json">
+{"description":"전체적으로 서브모듈은 어렵지 않게 사용할 수 있지만, 서브모듈의 코드를 수정하는 경우에는 주의해야 한다.","headline":"서브모듈 주의사항","dateModified":"2019-12-02T16:38:51+09:00","datePublished":"2019-12-02T16:38:51+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/docs/develop/N-Z/VCS/Git/study/Pro_Git_ko_582/07_Git_%EB%8F%84%EA%B5%AC/11_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88/11_07_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88%20%EC%A3%BC%EC%9D%98%EC%82%AC%ED%95%AD.html"},"url":"/blog/docs/develop/N-Z/VCS/Git/study/Pro_Git_ko_582/07_Git_%EB%8F%84%EA%B5%AC/11_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88/11_07_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88%20%EC%A3%BC%EC%9D%98%EC%82%AC%ED%95%AD.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/blog/feed.xml" title="Portal2312's blog" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113063601-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+<script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>서브모듈 주의사항</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+</ul><p>전체적으로 서브모듈은 어렵지 않게 사용할 수 있지만, 서브모듈의 코드를 수정하는 경우에는 주의해야 한다.</p>
+
+<p>예를 들어 <strong>Checkout으로 브랜치를 변경하는 경우 서브모듈이 포함된 작업이라면 좀 애매하게 동작할 수 있다.</strong></p>
+
+<p>메인 프로젝트에서 새 브랜치를 생성하고 Checkout 한 후 새로 서브모듈을 추가한다.</p>
+
+<p>이후 다시 이전 브랜치로 Checkout 하면 서브모듈 디렉토리는 추적하지 않는 디렉토리로 남게 된다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">mkdir </span>myproject
+<span class="nv">$ </span><span class="nb">cd </span>myproject/
+<span class="nv">$ </span>git init
+
+myproject/.git/ 안의 빈 깃 저장소를 다시 초기화했습니다
+
+<span class="nv">$ </span><span class="nb">touch </span>README.md
+<span class="nv">$ </span>git add <span class="nb">.</span>
+<span class="nv">$ </span>git commit <span class="nt">-avm</span> <span class="s1">'initial commit'</span>
+
+<span class="nv">$ </span>git branch develop
+<span class="nv">$ </span>git checkout develop
+<span class="o">(</span>develop<span class="o">)</span><span class="nv">$ </span>git submodule add git@gitlab.mk.com:mkkim/myapp.git
+
+<span class="s1">'/home/zen/projects/mkkim/study/myproject/myapp'</span>에 복제합니다...
+remote: Counting objects: 49, <span class="k">done</span><span class="nb">.</span>
+remote: Compressing objects: 100% <span class="o">(</span>31/31<span class="o">)</span>, <span class="k">done</span><span class="nb">.</span>
+remote: Total 49 <span class="o">(</span>delta 17<span class="o">)</span>, reused 29 <span class="o">(</span>delta 8<span class="o">)</span>
+오브젝트를 받는 중: 100% <span class="o">(</span>49/49<span class="o">)</span>, 4.14 KiB | 4.14 MiB/s, 완료.
+델타를 알아내는 중: 100% <span class="o">(</span>17/17<span class="o">)</span>, 완료.
+
+<span class="nv">$ </span>git submodule add git@gitlab.mk.com:mkkim/myapp.git
+
+<span class="s1">'/home/zen/projects/mkkim/study/myproject/myapp'</span>에 복제합니다...
+remote: Counting objects: 49, <span class="k">done</span><span class="nb">.</span>
+remote: Compressing objects: 100% <span class="o">(</span>31/31<span class="o">)</span>, <span class="k">done</span><span class="nb">.</span>
+remote: Total 49 <span class="o">(</span>delta 17<span class="o">)</span>, reused 29 <span class="o">(</span>delta 8<span class="o">)</span>
+오브젝트를 받는 중: 100% <span class="o">(</span>49/49<span class="o">)</span>, 4.14 KiB | 4.14 MiB/s, 완료.
+델타를 알아내는 중: 100% <span class="o">(</span>17/17<span class="o">)</span>, 완료.
+zen@mkkimpc:~/projects/mkkim/study/myproject <span class="o">(</span>develop +<span class="o">)</span><span class="nv">$ </span>git glog <span class="nt">-20</span>
+<span class="k">*</span> 2018-07-23 16:33:04 +0900 <span class="o">(</span>37초 전<span class="o">)</span> 66929f1 mkkim  <span class="o">(</span>HEAD -&gt; develop, master<span class="o">)</span> <span class="nt">--</span> initial commit
+zen@mkkimpc:~/projects/mkkim/study/myproject <span class="o">(</span>develop +<span class="o">)</span><span class="nv">$ </span>git status
+현재 브랜치 develop
+커밋할 변경 사항:
+  <span class="o">(</span>스테이지 해제하려면 <span class="s2">"git reset HEAD &lt;파일&gt;..."</span>을 사용하십시오<span class="o">)</span>
+
+        새 파일:       .gitmodules
+        새 파일:       myapp
+
+커밋할 하위 모듈의 변경 사항:
+
+<span class="k">*</span> myapp 0000000...96a60a1 <span class="o">(</span>3<span class="o">)</span>:
+  <span class="o">&gt;</span> Create Exception.md
+
+<span class="o">(</span>develop +<span class="o">)</span><span class="nv">$ </span>git commit <span class="nt">-avm</span> <span class="s1">'Add submodule/myapp'</span>
+
+<span class="o">[</span>develop ae6a1e8] Add submodule/myapp
+ 2 files changed, 4 insertions<span class="o">(</span>+<span class="o">)</span>
+ create mode 100644 .gitmodules
+ create mode 160000 myapp
+
+<span class="o">(</span>develop<span class="o">)</span><span class="nv">$ </span>git checkout master
+
+warning: unable to <span class="nb">rmdir</span> <span class="s1">'myapp'</span>: 디렉터리가 비어있지 않음
+<span class="s1">'master'</span> 브랜치로 전환합니다
+zen@mkkimpc:~/projects/mkkim/study/myproject <span class="o">(</span>master<span class="o">)</span><span class="nv">$ </span>git status
+현재 브랜치 master
+추적하지 않는 파일:
+  <span class="o">(</span>커밋할 사항에 포함하려면 <span class="s2">"git add &lt;파일&gt;..."</span>을 사용하십시오<span class="o">)</span>
+
+        myapp/
+
+커밋할 사항을 추가하지 않았지만 추적하지 않는 파일이 있습니다 <span class="o">(</span>추적하려면 <span class="s2">"git
+add"</span>를 사용하십시오<span class="o">)</span>
+</code></pre></div>
+<p>물론 추적하지 않는 디렉토리를 지우는 건 쉽다.</p>
+
+<p>이렇게 수동으로 지워야 한다는 게 이상한 것이다.</p>
+
+<p>수동으로 디렉토리를 지우고 다시 서브모듈을 추가했던 브랜치로 Checkout 하면 submodule update --init 명령을 실행해 줘야 서브모듈의 코드가 나타난다(역주 - 이렇게 코드를 가져오고 나면 <strong>Detached HEAD</strong> 가 된다):</p>
+
+<p>untracked 디렉토리 이외에 untracked 파일을 제거하십시오. 추적 할 수없는 디렉토리가 다른 Git 저장소에 의해 관리되는 경우 기본적으로 제거되지 않습니다. 실제로 그런 디렉토리를 제거하려면 -f 옵션을 두 번 사용하십시오.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git clean <span class="nt">-ffdx</span>
+myapp/ 제거
+
+<span class="nv">$ </span>git checkout develop
+<span class="s1">'develop'</span> 브랜치로 전환합니다
+
+<span class="o">(</span>develop<span class="o">)</span><span class="nv">$ </span><span class="nb">ls</span> ./myapp/
+
+<span class="o">(</span>develop<span class="o">)</span><span class="nv">$ </span>git submodule update <span class="nt">--init</span>
+하위 모듈 경로 <span class="s1">'myapp'</span>: <span class="s1">'96a60a1edee87bfe8c0a8f1623139eafaee4b5d8'</span> 체크아웃
+
+<span class="o">(</span>develop<span class="o">)</span><span class="nv">$ </span><span class="nb">ls</span> ./myapp/
+Exception.md  README.md
+
+<span class="o">(</span>develop<span class="o">)</span><span class="nv">$ </span>git submodule foreach <span class="s1">'git status'</span>
+<span class="s1">'myapp'</span> 들어감
+HEAD가 다음 위치에서 분리: 96a60a1
+커밋할 사항 없음, 작업 폴더 깨끗함
+</code></pre></div>
+<p>명령이 어려운 건 아니지만, 다시 봐도 이상하다.</p>
+
+<p><strong>또 하나 주의 깊게 살펴볼 일은 서브디렉토리를 서브모듈로 교체하면서 브랜치간 이동하는 경우이다.</strong></p>
+
+<p>메인 프로젝트에서 관리하던 서브디렉토리를 새 서브모듈로 교체할 때 주의를 기울이지 않으면 Git을 집어던지고 싶게 된다.</p>
+
+<p>서브디렉토리를 서브모듈로 교체하는 상황을 살펴보자.</p>
+
+<p>우선 서브디렉토리를 그냥 지우고 바로 서브모듈을 추가한다면 오류가 나타난다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">(</span>develop<span class="o">)</span><span class="nv">$ </span><span class="nb">rm</span> <span class="nt">-rf</span> myapp
+<span class="o">(</span>develop <span class="k">*</span><span class="o">)</span><span class="nv">$ </span>git submodule add git@gitlab.mk.com:mkkim/myapp.git
+<span class="s1">'myapp'</span>은<span class="o">(</span>는<span class="o">)</span> 이미 인덱스에 있습니다
+</code></pre></div>
+<p>위와 같은 오류를 해결하려면 우선 myapp 디렉토리를 관리대상에서 삭제하고 나서 서브모듈을 추가한다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">(</span>develop<span class="o">)</span><span class="nv">$ </span>git <span class="nb">rm</span> <span class="nt">-r</span> myapp
+<span class="nb">rm</span> <span class="s1">'myapp'</span>
+
+<span class="o">(</span>develop +<span class="o">)</span><span class="nv">$ </span>git submodule add git@gitlab.mk.com:mkkim/myapp.git
+
+<span class="s1">'myapp'</span>에 대한 깃 디렉터리가 로컬에서 리모트가 있는 채로 있습니다:
+  origin        git@gitlab.mk.com:mkkim/myapp.git
+이 로컬 깃 디렉터리를 다음 저장소에서 다시 복제하는 대신 다시 사용하려면,
+  git@gitlab.mk.com:mkkim/myapp.git
+<span class="s1">'--force'</span> 옵션을 사용하십시오. 로컬 깃 디렉터리가 올바른 저장소가 아니거나
+무슨 의미인지 잘 모르겠으면 <span class="s1">'--name'</span> 옵션으로 다른 이름을 선택하십시오.
+
+<span class="o">(</span>develop +<span class="o">)</span><span class="nv">$ </span>git submodule add <span class="nt">--force</span> git@gitlab.mk.com:mkkim/myapp.git
+로컬 깃 디렉터리를 <span class="s1">'myapp'</span> 하위모듈로 다시 활성화합니다.
+</code></pre></div>
+<p>위의 작업을 master가 아닌 어떤 브랜치에서 실행한 상황이다.</p>
+
+<p>만약 다시 master 브랜치로 Checkout 하게 되면 서브모듈이 아니라 서브디렉토리가 존재해야 하는 상황이 되는데, 아래와 같은 오류를 만나게 된다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git checkout master
+error: The following untracked working tree files would be overwritten by checkout:
+  CryptoLibrary/Makefile
+  CryptoLibrary/includes/crypto.h
+  ...
+Please move or remove them before you can switch branches.
+Aborting
+</code></pre></div>
+<p>물론 checkout -f 옵션을 붙여서 강제로 브랜치를 Checkout 할 수 있지만, 서브모듈에서 저장하지 않은 내용을 되돌릴 수 없게 덮어쓰기 때문에 주의 깊게 강제 적용 옵션을 사용해야 한다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git checkout <span class="nt">-f</span> master
+warning: unable to <span class="nb">rmdir </span>CryptoLibrary: Directory not empty
+Switched to branch <span class="s1">'master'</span>
+</code></pre></div>
+<p>후에 다시 서브모듈을 추가했던 브랜치로 Checkout 하면 서브모듈 디렉토리는 비어 있다.</p>
+
+<p>간혹 <code>git submodule update</code> 명령으로 서브모듈을 초기화하더라도 서브모듈 코드가 살아나지 않을 수 있다.</p>
+
+<p><code>git submodule foreach 'git checkout .'</code>명령으로 서브모듈들을 한꺼번에 복구할 수 있다.</p>
+
+<p>그러나 실제 나의 환경에서는 위와 다른 결과를 보였다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">(</span>develop<span class="o">)</span><span class="nv">$ </span>git checkout master
+warning: unable to <span class="nb">rmdir</span> <span class="s1">'myapp'</span>: 디렉터리가 비어있지 않음
+<span class="s1">'master'</span> 브랜치로 전환합니다
+
+<span class="nv">$ </span>git status
+
+현재 브랜치 master
+추적하지 않는 파일:
+  <span class="o">(</span>커밋할 사항에 포함하려면 <span class="s2">"git add &lt;파일&gt;..."</span>을 사용하십시오<span class="o">)</span>
+
+        myapp/
+
+커밋할 사항을 추가하지 않았지만 추적하지 않는 파일이 있습니다 <span class="o">(</span>추적하려면 <span class="s2">"git
+add"</span>를 사용하십시오<span class="o">)</span>
+
+<span class="nv">$ </span><span class="nb">ls</span> ./myapp/
+Exception.md  README.md
+</code></pre></div>
+<p>최신 버전의 Git은 서브모듈의 커밋 데이터도 메인 프로젝트의 <code>.git</code> 디렉토리에서 관리한다.</p>
+
+<p>예전 버전의 Git과 달리 서브모듈이 포함된 디렉토리를 망가뜨렸다 하더라도 기록해 둔 커밋 데이터는 쉽게 찾을 수 있다.</p>
+
+<p>이런 여러 도구와 함께 서브모듈을 사용한다면 간단하고 효율적으로 메인 프로젝트와 하위 프로젝트를 동시에 관리할 수 있다.</p>
+
+  </div>
+
+<div>
+  <p>전체적으로 서브모듈은 어렵지 않게 사용할 수 있지만, 서브모듈의 코드를 수정하는 경우에는 주의해야 한다.</p>
+
+<p>예를 들어 <strong>Checkout으로 브랜치를 변경하는 경우 서브모듈이 포함된 작업이라면 좀 애매하게 동작할 수 있다.</strong></p>
+
+<p>메인 프로젝트에서 새 브랜치를 생성하고 Checkout 한 후 새로 서브모듈을 추가한다.</p>
+
+<p>이후 다시 이전 브랜치로 Checkout 하면 서브모듈 디렉토리는 추적하지 않는 디렉토리로 남게 된다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">mkdir </span>myproject
+<span class="nv">$ </span><span class="nb">cd </span>myproject/
+<span class="nv">$ </span>git init
+
+myproject/.git/ 안의 빈 깃 저장소를 다시 초기화했습니다
+
+<span class="nv">$ </span><span class="nb">touch </span>README.md
+<span class="nv">$ </span>git add <span class="nb">.</span>
+<span class="nv">$ </span>git commit <span class="nt">-avm</span> <span class="s1">'initial commit'</span>
+
+<span class="nv">$ </span>git branch develop
+<span class="nv">$ </span>git checkout develop
+<span class="o">(</span>develop<span class="o">)</span><span class="nv">$ </span>git submodule add git@gitlab.mk.com:mkkim/myapp.git
+
+<span class="s1">'/home/zen/projects/mkkim/study/myproject/myapp'</span>에 복제합니다...
+remote: Counting objects: 49, <span class="k">done</span><span class="nb">.</span>
+remote: Compressing objects: 100% <span class="o">(</span>31/31<span class="o">)</span>, <span class="k">done</span><span class="nb">.</span>
+remote: Total 49 <span class="o">(</span>delta 17<span class="o">)</span>, reused 29 <span class="o">(</span>delta 8<span class="o">)</span>
+오브젝트를 받는 중: 100% <span class="o">(</span>49/49<span class="o">)</span>, 4.14 KiB | 4.14 MiB/s, 완료.
+델타를 알아내는 중: 100% <span class="o">(</span>17/17<span class="o">)</span>, 완료.
+
+<span class="nv">$ </span>git submodule add git@gitlab.mk.com:mkkim/myapp.git
+
+<span class="s1">'/home/zen/projects/mkkim/study/myproject/myapp'</span>에 복제합니다...
+remote: Counting objects: 49, <span class="k">done</span><span class="nb">.</span>
+remote: Compressing objects: 100% <span class="o">(</span>31/31<span class="o">)</span>, <span class="k">done</span><span class="nb">.</span>
+remote: Total 49 <span class="o">(</span>delta 17<span class="o">)</span>, reused 29 <span class="o">(</span>delta 8<span class="o">)</span>
+오브젝트를 받는 중: 100% <span class="o">(</span>49/49<span class="o">)</span>, 4.14 KiB | 4.14 MiB/s, 완료.
+델타를 알아내는 중: 100% <span class="o">(</span>17/17<span class="o">)</span>, 완료.
+zen@mkkimpc:~/projects/mkkim/study/myproject <span class="o">(</span>develop +<span class="o">)</span><span class="nv">$ </span>git glog <span class="nt">-20</span>
+<span class="k">*</span> 2018-07-23 16:33:04 +0900 <span class="o">(</span>37초 전<span class="o">)</span> 66929f1 mkkim  <span class="o">(</span>HEAD -&gt; develop, master<span class="o">)</span> <span class="nt">--</span> initial commit
+zen@mkkimpc:~/projects/mkkim/study/myproject <span class="o">(</span>develop +<span class="o">)</span><span class="nv">$ </span>git status
+현재 브랜치 develop
+커밋할 변경 사항:
+  <span class="o">(</span>스테이지 해제하려면 <span class="s2">"git reset HEAD &lt;파일&gt;..."</span>을 사용하십시오<span class="o">)</span>
+
+        새 파일:       .gitmodules
+        새 파일:       myapp
+
+커밋할 하위 모듈의 변경 사항:
+
+<span class="k">*</span> myapp 0000000...96a60a1 <span class="o">(</span>3<span class="o">)</span>:
+  <span class="o">&gt;</span> Create Exception.md
+
+<span class="o">(</span>develop +<span class="o">)</span><span class="nv">$ </span>git commit <span class="nt">-avm</span> <span class="s1">'Add submodule/myapp'</span>
+
+<span class="o">[</span>develop ae6a1e8] Add submodule/myapp
+ 2 files changed, 4 insertions<span class="o">(</span>+<span class="o">)</span>
+ create mode 100644 .gitmodules
+ create mode 160000 myapp
+
+<span class="o">(</span>develop<span class="o">)</span><span class="nv">$ </span>git checkout master
+
+warning: unable to <span class="nb">rmdir</span> <span class="s1">'myapp'</span>: 디렉터리가 비어있지 않음
+<span class="s1">'master'</span> 브랜치로 전환합니다
+zen@mkkimpc:~/projects/mkkim/study/myproject <span class="o">(</span>master<span class="o">)</span><span class="nv">$ </span>git status
+현재 브랜치 master
+추적하지 않는 파일:
+  <span class="o">(</span>커밋할 사항에 포함하려면 <span class="s2">"git add &lt;파일&gt;..."</span>을 사용하십시오<span class="o">)</span>
+
+        myapp/
+
+커밋할 사항을 추가하지 않았지만 추적하지 않는 파일이 있습니다 <span class="o">(</span>추적하려면 <span class="s2">"git
+add"</span>를 사용하십시오<span class="o">)</span>
+</code></pre></div>
+<p>물론 추적하지 않는 디렉토리를 지우는 건 쉽다.</p>
+
+<p>이렇게 수동으로 지워야 한다는 게 이상한 것이다.</p>
+
+<p>수동으로 디렉토리를 지우고 다시 서브모듈을 추가했던 브랜치로 Checkout 하면 submodule update --init 명령을 실행해 줘야 서브모듈의 코드가 나타난다(역주 - 이렇게 코드를 가져오고 나면 <strong>Detached HEAD</strong> 가 된다):</p>
+
+<p>untracked 디렉토리 이외에 untracked 파일을 제거하십시오. 추적 할 수없는 디렉토리가 다른 Git 저장소에 의해 관리되는 경우 기본적으로 제거되지 않습니다. 실제로 그런 디렉토리를 제거하려면 -f 옵션을 두 번 사용하십시오.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git clean <span class="nt">-ffdx</span>
+myapp/ 제거
+
+<span class="nv">$ </span>git checkout develop
+<span class="s1">'develop'</span> 브랜치로 전환합니다
+
+<span class="o">(</span>develop<span class="o">)</span><span class="nv">$ </span><span class="nb">ls</span> ./myapp/
+
+<span class="o">(</span>develop<span class="o">)</span><span class="nv">$ </span>git submodule update <span class="nt">--init</span>
+하위 모듈 경로 <span class="s1">'myapp'</span>: <span class="s1">'96a60a1edee87bfe8c0a8f1623139eafaee4b5d8'</span> 체크아웃
+
+<span class="o">(</span>develop<span class="o">)</span><span class="nv">$ </span><span class="nb">ls</span> ./myapp/
+Exception.md  README.md
+
+<span class="o">(</span>develop<span class="o">)</span><span class="nv">$ </span>git submodule foreach <span class="s1">'git status'</span>
+<span class="s1">'myapp'</span> 들어감
+HEAD가 다음 위치에서 분리: 96a60a1
+커밋할 사항 없음, 작업 폴더 깨끗함
+</code></pre></div>
+<p>명령이 어려운 건 아니지만, 다시 봐도 이상하다.</p>
+
+<p><strong>또 하나 주의 깊게 살펴볼 일은 서브디렉토리를 서브모듈로 교체하면서 브랜치간 이동하는 경우이다.</strong></p>
+
+<p>메인 프로젝트에서 관리하던 서브디렉토리를 새 서브모듈로 교체할 때 주의를 기울이지 않으면 Git을 집어던지고 싶게 된다.</p>
+
+<p>서브디렉토리를 서브모듈로 교체하는 상황을 살펴보자.</p>
+
+<p>우선 서브디렉토리를 그냥 지우고 바로 서브모듈을 추가한다면 오류가 나타난다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">(</span>develop<span class="o">)</span><span class="nv">$ </span><span class="nb">rm</span> <span class="nt">-rf</span> myapp
+<span class="o">(</span>develop <span class="k">*</span><span class="o">)</span><span class="nv">$ </span>git submodule add git@gitlab.mk.com:mkkim/myapp.git
+<span class="s1">'myapp'</span>은<span class="o">(</span>는<span class="o">)</span> 이미 인덱스에 있습니다
+</code></pre></div>
+<p>위와 같은 오류를 해결하려면 우선 myapp 디렉토리를 관리대상에서 삭제하고 나서 서브모듈을 추가한다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">(</span>develop<span class="o">)</span><span class="nv">$ </span>git <span class="nb">rm</span> <span class="nt">-r</span> myapp
+<span class="nb">rm</span> <span class="s1">'myapp'</span>
+
+<span class="o">(</span>develop +<span class="o">)</span><span class="nv">$ </span>git submodule add git@gitlab.mk.com:mkkim/myapp.git
+
+<span class="s1">'myapp'</span>에 대한 깃 디렉터리가 로컬에서 리모트가 있는 채로 있습니다:
+  origin        git@gitlab.mk.com:mkkim/myapp.git
+이 로컬 깃 디렉터리를 다음 저장소에서 다시 복제하는 대신 다시 사용하려면,
+  git@gitlab.mk.com:mkkim/myapp.git
+<span class="s1">'--force'</span> 옵션을 사용하십시오. 로컬 깃 디렉터리가 올바른 저장소가 아니거나
+무슨 의미인지 잘 모르겠으면 <span class="s1">'--name'</span> 옵션으로 다른 이름을 선택하십시오.
+
+<span class="o">(</span>develop +<span class="o">)</span><span class="nv">$ </span>git submodule add <span class="nt">--force</span> git@gitlab.mk.com:mkkim/myapp.git
+로컬 깃 디렉터리를 <span class="s1">'myapp'</span> 하위모듈로 다시 활성화합니다.
+</code></pre></div>
+<p>위의 작업을 master가 아닌 어떤 브랜치에서 실행한 상황이다.</p>
+
+<p>만약 다시 master 브랜치로 Checkout 하게 되면 서브모듈이 아니라 서브디렉토리가 존재해야 하는 상황이 되는데, 아래와 같은 오류를 만나게 된다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git checkout master
+error: The following untracked working tree files would be overwritten by checkout:
+  CryptoLibrary/Makefile
+  CryptoLibrary/includes/crypto.h
+  ...
+Please move or remove them before you can switch branches.
+Aborting
+</code></pre></div>
+<p>물론 checkout -f 옵션을 붙여서 강제로 브랜치를 Checkout 할 수 있지만, 서브모듈에서 저장하지 않은 내용을 되돌릴 수 없게 덮어쓰기 때문에 주의 깊게 강제 적용 옵션을 사용해야 한다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git checkout <span class="nt">-f</span> master
+warning: unable to <span class="nb">rmdir </span>CryptoLibrary: Directory not empty
+Switched to branch <span class="s1">'master'</span>
+</code></pre></div>
+<p>후에 다시 서브모듈을 추가했던 브랜치로 Checkout 하면 서브모듈 디렉토리는 비어 있다.</p>
+
+<p>간혹 <code>git submodule update</code> 명령으로 서브모듈을 초기화하더라도 서브모듈 코드가 살아나지 않을 수 있다.</p>
+
+<p><code>git submodule foreach 'git checkout .'</code>명령으로 서브모듈들을 한꺼번에 복구할 수 있다.</p>
+
+<p>그러나 실제 나의 환경에서는 위와 다른 결과를 보였다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">(</span>develop<span class="o">)</span><span class="nv">$ </span>git checkout master
+warning: unable to <span class="nb">rmdir</span> <span class="s1">'myapp'</span>: 디렉터리가 비어있지 않음
+<span class="s1">'master'</span> 브랜치로 전환합니다
+
+<span class="nv">$ </span>git status
+
+현재 브랜치 master
+추적하지 않는 파일:
+  <span class="o">(</span>커밋할 사항에 포함하려면 <span class="s2">"git add &lt;파일&gt;..."</span>을 사용하십시오<span class="o">)</span>
+
+        myapp/
+
+커밋할 사항을 추가하지 않았지만 추적하지 않는 파일이 있습니다 <span class="o">(</span>추적하려면 <span class="s2">"git
+add"</span>를 사용하십시오<span class="o">)</span>
+
+<span class="nv">$ </span><span class="nb">ls</span> ./myapp/
+Exception.md  README.md
+</code></pre></div>
+<p>최신 버전의 Git은 서브모듈의 커밋 데이터도 메인 프로젝트의 <code>.git</code> 디렉토리에서 관리한다.</p>
+
+<p>예전 버전의 Git과 달리 서브모듈이 포함된 디렉토리를 망가뜨렸다 하더라도 기록해 둔 커밋 데이터는 쉽게 찾을 수 있다.</p>
+
+<p>이런 여러 도구와 함께 서브모듈을 사용한다면 간단하고 효율적으로 메인 프로젝트와 하위 프로젝트를 동시에 관리할 수 있다.</p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>서브모듈 포함한 프로젝트 Clone | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="서브모듈 포함한 프로젝트 Clone" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="myproject 를 clone 하여 가져오면 myapps 은 빈 디렉토리이다:" />
+<meta property="og:description" content="myproject 를 clone 하여 가져오면 myapps 은 빈 디렉토리이다:" />
+<link rel="canonical" href="/blog/docs/develop/N-Z/VCS/Git/study/Pro_Git_ko_582/07_Git_%EB%8F%84%EA%B5%AC/11_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88/11_02_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88%20%ED%8F%AC%ED%95%9C%ED%95%9C%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20Clone.html" />
+<meta property="og:url" content="/blog/docs/develop/N-Z/VCS/Git/study/Pro_Git_ko_582/07_Git_%EB%8F%84%EA%B5%AC/11_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88/11_02_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88%20%ED%8F%AC%ED%95%9C%ED%95%9C%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20Clone.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-02T16:38:51+09:00" />
+<script type="application/ld+json">
+{"description":"myproject 를 clone 하여 가져오면 myapps 은 빈 디렉토리이다:","headline":"서브모듈 포함한 프로젝트 Clone","dateModified":"2019-12-02T16:38:51+09:00","datePublished":"2019-12-02T16:38:51+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/docs/develop/N-Z/VCS/Git/study/Pro_Git_ko_582/07_Git_%EB%8F%84%EA%B5%AC/11_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88/11_02_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88%20%ED%8F%AC%ED%95%9C%ED%95%9C%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20Clone.html"},"url":"/blog/docs/develop/N-Z/VCS/Git/study/Pro_Git_ko_582/07_Git_%EB%8F%84%EA%B5%AC/11_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88/11_02_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88%20%ED%8F%AC%ED%95%9C%ED%95%9C%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20Clone.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/blog/feed.xml" title="Portal2312's blog" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113063601-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+<script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>서브모듈 포함한 프로젝트 Clone</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#summary">Summary</a></li>
+</ul><p>myproject 를 clone 하여 가져오면 myapps 은 <strong>빈 디렉토리이다</strong>:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git clone https://github.com/projects/myproject
+<span class="nv">$ </span><span class="nb">cd </span>myproject
+<span class="nv">$ </span><span class="nb">cd </span>myapp
+<span class="nv">$ </span><span class="nb">ls</span>
+<span class="err">$</span>
+</code></pre></div>
+<p><code>git submodule init</code> 명령을 실행하면 서브모듈 정보를 기반으로 로컬 환경설정 파일이 준비된다.</p>
+
+<p><code>git submodule update</code> 명령으로 이후 서브모듈의 리모트 저장소에서 데이터를 가져오고 서브모듈을 포함한 프로젝트의 현재 스냅샷에서 Checkout 해야 할 커밋 정보를 가져와서 서브모듈 프로젝트에 대한 Checkout을 한다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd </span>myproject
+<span class="nv">$ </span>git submodule init
+
+Submodule <span class="s1">'myapps'</span> <span class="o">(</span>https://github.com/apps/myapp<span class="o">)</span> registered <span class="k">for </span>path <span class="s1">'myapps'</span>
+
+<span class="nv">$ </span>git submodule update
+
+Cloning into <span class="s1">'myapp'</span>...
+remote: Counting objects: 11, <span class="k">done</span><span class="nb">.</span>
+remote: Compressing objects: 100% <span class="o">(</span>10/10<span class="o">)</span>, <span class="k">done</span><span class="nb">.</span>
+remote: Total 11 <span class="o">(</span>delta 0<span class="o">)</span>, reused 11 <span class="o">(</span>delta 0<span class="o">)</span>
+Unpacking objects: 100% <span class="o">(</span>11/11<span class="o">)</span>, <span class="k">done</span><span class="nb">.</span>
+Checking connectivity... <span class="k">done</span><span class="nb">.</span>
+Submodule path <span class="s1">'myapp'</span>: checked out <span class="s1">'c3f01dc8862123d317dd46284b05b6892c7b29bc'</span>
+
+<span class="nv">$ </span><span class="nb">cd </span>menu_mgmt/
+
+<span class="o">((</span>51eb7a3...<span class="o">))</span><span class="nv">$ </span><span class="nb">ls</span>
+</code></pre></div>
+<p><code>git clone --recurse &lt;project-url&gt;</code> 명령으로 clone 한번에(서브모듈 자동 초기화 + 업데이트):</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git clone <span class="nt">--recurse</span> https://github.com/projects/myproject.git
+<span class="nv">$ </span><span class="nb">cd </span>myproject
+<span class="nv">$ </span><span class="nb">ls
+
+</span>README.md  menu_mgmt
+
+<span class="nv">$ </span><span class="nb">cd </span>menu_mgmt/
+
+<span class="o">((</span>51eb7a3...<span class="o">))</span><span class="nv">$ </span><span class="nb">ls</span>
+</code></pre></div>
+<h2 id="summary">
+<a class="anchor" href="#summary" aria-hidden="true"><span class="octicon octicon-link"></span></a>Summary</h2>
+
+<p>project clone 후 submodule 동기화하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git clone &lt;project-url&gt; &lt;project-name&gt;
+<span class="nv">$ </span><span class="nb">cd</span> &lt;project-name&gt;
+
+<span class="nv">$ </span>git submodule init<span class="p">;</span> git submodule update
+
+or
+
+<span class="nv">$ </span>git submodule update <span class="nt">--init</span>
+</code></pre></div>
+<p>project clone + submodule 동기화하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git clone <span class="nt">--recurse-submodules</span> &lt;project-url&gt; &lt;project-name&gt;
+</code></pre></div>
+  </div>
+
+<div>
+  <p>myproject 를 clone 하여 가져오면 myapps 은 <strong>빈 디렉토리이다</strong>:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git clone https://github.com/projects/myproject
+<span class="nv">$ </span><span class="nb">cd </span>myproject
+<span class="nv">$ </span><span class="nb">cd </span>myapp
+<span class="nv">$ </span><span class="nb">ls</span>
+<span class="err">$</span>
+</code></pre></div>
+<p><code>git submodule init</code> 명령을 실행하면 서브모듈 정보를 기반으로 로컬 환경설정 파일이 준비된다.</p>
+
+<p><code>git submodule update</code> 명령으로 이후 서브모듈의 리모트 저장소에서 데이터를 가져오고 서브모듈을 포함한 프로젝트의 현재 스냅샷에서 Checkout 해야 할 커밋 정보를 가져와서 서브모듈 프로젝트에 대한 Checkout을 한다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd </span>myproject
+<span class="nv">$ </span>git submodule init
+
+Submodule <span class="s1">'myapps'</span> <span class="o">(</span>https://github.com/apps/myapp<span class="o">)</span> registered <span class="k">for </span>path <span class="s1">'myapps'</span>
+
+<span class="nv">$ </span>git submodule update
+
+Cloning into <span class="s1">'myapp'</span>...
+remote: Counting objects: 11, <span class="k">done</span><span class="nb">.</span>
+remote: Compressing objects: 100% <span class="o">(</span>10/10<span class="o">)</span>, <span class="k">done</span><span class="nb">.</span>
+remote: Total 11 <span class="o">(</span>delta 0<span class="o">)</span>, reused 11 <span class="o">(</span>delta 0<span class="o">)</span>
+Unpacking objects: 100% <span class="o">(</span>11/11<span class="o">)</span>, <span class="k">done</span><span class="nb">.</span>
+Checking connectivity... <span class="k">done</span><span class="nb">.</span>
+Submodule path <span class="s1">'myapp'</span>: checked out <span class="s1">'c3f01dc8862123d317dd46284b05b6892c7b29bc'</span>
+
+<span class="nv">$ </span><span class="nb">cd </span>menu_mgmt/
+
+<span class="o">((</span>51eb7a3...<span class="o">))</span><span class="nv">$ </span><span class="nb">ls</span>
+</code></pre></div>
+<p><code>git clone --recurse &lt;project-url&gt;</code> 명령으로 clone 한번에(서브모듈 자동 초기화 + 업데이트):</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git clone <span class="nt">--recurse</span> https://github.com/projects/myproject.git
+<span class="nv">$ </span><span class="nb">cd </span>myproject
+<span class="nv">$ </span><span class="nb">ls
+
+</span>README.md  menu_mgmt
+
+<span class="nv">$ </span><span class="nb">cd </span>menu_mgmt/
+
+<span class="o">((</span>51eb7a3...<span class="o">))</span><span class="nv">$ </span><span class="nb">ls</span>
+</code></pre></div>
+<h2 id="summary">Summary</h2>
+
+<p>project clone 후 submodule 동기화하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git clone &lt;project-url&gt; &lt;project-name&gt;
+<span class="nv">$ </span><span class="nb">cd</span> &lt;project-name&gt;
+
+<span class="nv">$ </span>git submodule init<span class="p">;</span> git submodule update
+
+or
+
+<span class="nv">$ </span>git submodule update <span class="nt">--init</span>
+</code></pre></div>
+<p>project clone + submodule 동기화하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git clone <span class="nt">--recurse-submodules</span> &lt;project-url&gt; &lt;project-name&gt;
+</code></pre></div>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

@@ -1,6 +1,0 @@
-#> vi /etc/login.defs
-
-PASS_MAX_DAYS   99999 - 패스워드 사용 가능 기간(일).
-PASS_MIN_DAYS   0        - 패스워드 변경 최소 기간(일).
-PASS_MIN_LEN    5        - 패스워드 최소 길이
-PASS_WARN_AGE   7      - 패스워드 기간 만료 경고 기간(일).

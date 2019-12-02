@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Accuracy (분류 - 정확성) | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Accuracy (분류 - 정확성)" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="정확성은 분류 모델 평가를 위한 측정항목 중 하나입니다. 비공식적으로 정확성은 모델의 예측이 얼마나 정확한가를 보여줍니다. 공식적으로 정확성의 정의는 다음과 같습니다." />
+<meta property="og:description" content="정확성은 분류 모델 평가를 위한 측정항목 중 하나입니다. 비공식적으로 정확성은 모델의 예측이 얼마나 정확한가를 보여줍니다. 공식적으로 정확성의 정의는 다음과 같습니다." />
+<link rel="canonical" href="/blog/docs/develop/A-M/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML%20%EA%B0%9C%EB%85%90/013.%20Classification%20(%EB%B6%84%EB%A5%98,%2090%20min)/004.%20Accuracy%20(%EC%A0%95%ED%99%95%EC%84%B1).html" />
+<meta property="og:url" content="/blog/docs/develop/A-M/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML%20%EA%B0%9C%EB%85%90/013.%20Classification%20(%EB%B6%84%EB%A5%98,%2090%20min)/004.%20Accuracy%20(%EC%A0%95%ED%99%95%EC%84%B1).html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-02T16:38:51+09:00" />
+<script type="application/ld+json">
+{"description":"정확성은 분류 모델 평가를 위한 측정항목 중 하나입니다. 비공식적으로 정확성은 모델의 예측이 얼마나 정확한가를 보여줍니다. 공식적으로 정확성의 정의는 다음과 같습니다.","headline":"Accuracy (분류 - 정확성)","dateModified":"2019-12-02T16:38:51+09:00","datePublished":"2019-12-02T16:38:51+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/docs/develop/A-M/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML%20%EA%B0%9C%EB%85%90/013.%20Classification%20(%EB%B6%84%EB%A5%98,%2090%20min)/004.%20Accuracy%20(%EC%A0%95%ED%99%95%EC%84%B1).html"},"url":"/blog/docs/develop/A-M/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML%20%EA%B0%9C%EB%85%90/013.%20Classification%20(%EB%B6%84%EB%A5%98,%2090%20min)/004.%20Accuracy%20(%EC%A0%95%ED%99%95%EC%84%B1).html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/blog/feed.xml" title="Portal2312's blog" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113063601-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+<script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Accuracy (분류 - 정확성)</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#reference">Reference</a></li>
+</ul><p>정확성은 분류 모델 평가를 위한 측정항목 중 하나입니다.
+비공식적으로 <strong>정확성</strong>은 모델의 예측이 얼마나 정확한가를 보여줍니다.
+공식적으로 정확성의 정의는 다음과 같습니다.</p>
+
+<p>$$\text{정확성} = \frac{\text{정확한 예측수}}{\text{총 예측수}}$$</p>
+
+<p>이진 분류에서는 다음과 같이 양성과 음성을 기준으로 정확성을 계산할 수도 있습니다.</p>
+
+<p>$$\text{정확성} = \frac{TP+TN}{TP+TN+FP+FN}$$</p>
+
+<ul>
+<li>TP=참 양성(True Positives)</li>
+<li>TN=참 음성(True Negatives)</li>
+<li>FP=허위 양성(False Positives)</li>
+<li>FN=허위 음성(False Negatives)</li>
+</ul>
+
+<p>예:</p>
+
+<p>종양 모델 100개의 정확성을 계산하기:</p>
+
+<ul>
+<li>악성: Positive 클래스</li>
+<li>양성: Nagetive 클래스</li>
+</ul>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TP</td>
+<td>FP</td>
+</tr>
+<tr>
+<td>FN</td>
+<td>TN</td>
+</tr>
+</tbody>
+</table>
+
+<p>참 양성(TP):
+- 실제: 악성
+- ML 모델 예측: 악성
+- 참 양성 결과수: 1</p>
+
+<p>허위 양성(FP):
+- 실제: 양성
+- ML 모델 예측: 악성
+- 허위 양성 결과수: 1</p>
+
+<p>허위 음성(FN):
+- 실제: 악성
+- ML 모델 예측: 양성
+- 허위 음성 결과수: 8</p>
+
+<p>참 음성(TN):
+- 실제: 양성
+- ML 모델 예측: 양성
+- 참 음성 결과수: 90</p>
+
+<p>$$
+\text{정확성} = \frac{TP+TN}{TP+TN+FP+FN} = \frac{1+90}{1+90+1+8} = 0.91
+$$</p>
+
+<p>정확성은 0.91 또는 91%(총 100개의 예제 중 정확한 예측 91개)로 나타납니다.
+이는 종양 분류자가 악성 종양을 제대로 식별했음을 의미합니다.</p>
+
+<p>실제로 양성 예제와 음성 예제를 더 면밀하게 분석하면 모델의 성능을 자세히 파악할 수 있습니다.</p>
+
+<p>종양 예제 100개 중
+- 실제: 양성 91개 (90:1 = 참 음성(TN):허위 양성(FP))
+- 실제: 악성 9개 (1:8 = 참 양성(TP):허위 음성(FN)))</p>
+
+<p>모델은 양성 종양(Negative) 91개 중 90개를 양성으로 정확히 식별합니다. 뛰어난 예측 능력입니다.
+하지만 악성 종양(Positive) 9개 가운데 1개만 악성으로 식별합니다.
+악성 종양 9개 중 8개가 미확진 상태로 남았다는 것은 형편없는 예측 결과입니다.</p>
+
+<p>언뜻 보기에는 91% 정확성이 좋아 보일 수 있지만 이 예제에서 항상 양성으로 예측하는 다른 종양 분류자 모델도 정확히 동일한 정확성(91/100의 정확한 예측)을 달성할 것입니다.</p>
+
+<p>다시 말해 이 모델은 악성 종양과 양성 종양을 구분하는 예측 능력이 0인 모델과 비교해서 전혀 나을 바가 없다는 것입니다.</p>
+
+<p>이와 같이 <a href="https://developers.google.com/machine-learning/crash-course/glossary?hl=ko#class_imbalanced_data_set">클래스 불균형 데이터 세트</a> 를 사용하면 양성 라벨수와 음성 라벨수가 상당히 다르므로 정확성만으로는 모든 것을 평가할 수 없습니다.</p>
+
+<p>다음 섹션에서는 클래스 불균형 문제를 평가하는 더 나은 측정항목인 정밀도와 재현율을 살펴보겠습니다.</p>
+
+<h2 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+<p><a href="https://developers.google.com/machine-learning/crash-course/classification/accuracy?hl=ko">https://developers.google.com/machine-learning/crash-course/classification/accuracy?hl=ko</a></p>
+
+  </div>
+
+<div>
+  <p>정확성은 분류 모델 평가를 위한 측정항목 중 하나입니다.
+비공식적으로 <strong>정확성</strong>은 모델의 예측이 얼마나 정확한가를 보여줍니다.
+공식적으로 정확성의 정의는 다음과 같습니다.</p>
+
+<p>$$\text{정확성} = \frac{\text{정확한 예측수}}{\text{총 예측수}}$$</p>
+
+<p>이진 분류에서는 다음과 같이 양성과 음성을 기준으로 정확성을 계산할 수도 있습니다.</p>
+
+<p>$$\text{정확성} = \frac{TP+TN}{TP+TN+FP+FN}$$</p>
+
+<ul>
+<li>TP=참 양성(True Positives)</li>
+<li>TN=참 음성(True Negatives)</li>
+<li>FP=허위 양성(False Positives)</li>
+<li>FN=허위 음성(False Negatives)</li>
+</ul>
+
+<p>예:</p>
+
+<p>종양 모델 100개의 정확성을 계산하기:</p>
+
+<ul>
+<li>악성: Positive 클래스</li>
+<li>양성: Nagetive 클래스</li>
+</ul>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TP</td>
+<td>FP</td>
+</tr>
+<tr>
+<td>FN</td>
+<td>TN</td>
+</tr>
+</tbody>
+</table>
+
+<p>참 양성(TP):
+- 실제: 악성
+- ML 모델 예측: 악성
+- 참 양성 결과수: 1</p>
+
+<p>허위 양성(FP):
+- 실제: 양성
+- ML 모델 예측: 악성
+- 허위 양성 결과수: 1</p>
+
+<p>허위 음성(FN):
+- 실제: 악성
+- ML 모델 예측: 양성
+- 허위 음성 결과수: 8</p>
+
+<p>참 음성(TN):
+- 실제: 양성
+- ML 모델 예측: 양성
+- 참 음성 결과수: 90</p>
+
+<p>$$
+\text{정확성} = \frac{TP+TN}{TP+TN+FP+FN} = \frac{1+90}{1+90+1+8} = 0.91
+$$</p>
+
+<p>정확성은 0.91 또는 91%(총 100개의 예제 중 정확한 예측 91개)로 나타납니다.
+이는 종양 분류자가 악성 종양을 제대로 식별했음을 의미합니다.</p>
+
+<p>실제로 양성 예제와 음성 예제를 더 면밀하게 분석하면 모델의 성능을 자세히 파악할 수 있습니다.</p>
+
+<p>종양 예제 100개 중
+- 실제: 양성 91개 (90:1 = 참 음성(TN):허위 양성(FP))
+- 실제: 악성 9개 (1:8 = 참 양성(TP):허위 음성(FN)))</p>
+
+<p>모델은 양성 종양(Negative) 91개 중 90개를 양성으로 정확히 식별합니다. 뛰어난 예측 능력입니다.
+하지만 악성 종양(Positive) 9개 가운데 1개만 악성으로 식별합니다.
+악성 종양 9개 중 8개가 미확진 상태로 남았다는 것은 형편없는 예측 결과입니다.</p>
+
+<p>언뜻 보기에는 91% 정확성이 좋아 보일 수 있지만 이 예제에서 항상 양성으로 예측하는 다른 종양 분류자 모델도 정확히 동일한 정확성(91/100의 정확한 예측)을 달성할 것입니다.</p>
+
+<p>다시 말해 이 모델은 악성 종양과 양성 종양을 구분하는 예측 능력이 0인 모델과 비교해서 전혀 나을 바가 없다는 것입니다.</p>
+
+<p>이와 같이 <a href="https://developers.google.com/machine-learning/crash-course/glossary?hl=ko#class_imbalanced_data_set" rel="nofollow" target="_blank">클래스 불균형 데이터 세트</a> 를 사용하면 양성 라벨수와 음성 라벨수가 상당히 다르므로 정확성만으로는 모든 것을 평가할 수 없습니다.</p>
+
+<p>다음 섹션에서는 클래스 불균형 문제를 평가하는 더 나은 측정항목인 정밀도와 재현율을 살펴보겠습니다.</p>
+
+<h2 id="reference">Reference</h2>
+
+<p><a href="https://developers.google.com/machine-learning/crash-course/classification/accuracy?hl=ko" rel="nofollow" target="_blank">https://developers.google.com/machine-learning/crash-course/classification/accuracy?hl=ko</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

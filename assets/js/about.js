@@ -6,8 +6,6 @@ import colors from "../../_data/colors.yml";
  * 1. about.bundle.js = about.js + chart.js + chartjs-plugin-labels
  * 2. vendors~jquery.bundle.js = jquery
  */
-// import Chart from 'chart.js';
-// import 'chartjs-plugin-labels'
 
 import(
   /* webpackChunkName: "jquery" */

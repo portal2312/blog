@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>HTML Head | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="HTML Head" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Welcome to my blog." />
+<meta property="og:description" content="Welcome to my blog." />
+<link rel="canonical" href="/blog/docs/develop/A-M/Frontend/HTML/HTML5/doc/tutorial/24_Head.html" />
+<meta property="og:url" content="/blog/docs/develop/A-M/Frontend/HTML/HTML5/doc/tutorial/24_Head.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-02T16:38:51+09:00" />
+<script type="application/ld+json">
+{"description":"Welcome to my blog.","headline":"HTML Head","dateModified":"2019-12-02T16:38:51+09:00","datePublished":"2019-12-02T16:38:51+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/docs/develop/A-M/Frontend/HTML/HTML5/doc/tutorial/24_Head.html"},"url":"/blog/docs/develop/A-M/Frontend/HTML/HTML5/doc/tutorial/24_Head.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/blog/feed.xml" title="Portal2312's blog" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113063601-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+<script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>HTML Head</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#the-html-head-element">The HTML &lt;head&gt; Element</a></li>
+<li class="toc-entry toc-h2"><a href="#the-html-title-element">The HTML &lt;title&gt; Element</a></li>
+<li class="toc-entry toc-h2"><a href="#the-html-style-element">The HTML &lt;style&gt; Element</a></li>
+<li class="toc-entry toc-h2"><a href="#the-html-link-element">The HTML &lt;link&gt; Element</a></li>
+<li class="toc-entry toc-h2"><a href="#the-html-meta-element">The HTML &lt;meta&gt; Element</a></li>
+<li class="toc-entry toc-h2"><a href="#setting-the-viewport">Setting The Viewport</a></li>
+<li class="toc-entry toc-h2"><a href="#the-html-script-element">The HTML &lt;script&gt; Element</a></li>
+<li class="toc-entry toc-h1"><a href="#the-html-base-element">The HTML &lt;base&gt; Element</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#omitting-html-head-and-body">Omitting &lt;html&gt;, &lt;head&gt; and &lt;body&gt;?</a></li>
+<li class="toc-entry toc-h2"><a href="#reference">Reference</a></li>
+</ul>
+</li>
+</ul><hr>
+
+<h2 id="the-html-head-element">
+<a class="anchor" href="#the-html-head-element" aria-hidden="true"><span class="octicon octicon-link"></span></a>The HTML <code>&lt;head&gt;</code> Element</h2>
+
+<p><code>&lt;head&gt;</code> 요소는 메타 데이터(데이터에 대한 데이터)의 컨테이너이며 <code>&lt;html&gt;</code> 태그와 <code>&lt;body&gt;</code> 태그 사이에 배치됩니다.</p>
+
+<p>HTML 메타 데이터는 HTML 문서에 대한 데이터입니다. 메타 데이터가 표시되지 않습니다.</p>
+
+<p>메타 데이터는 일반적으로 문서 제목, 문자 세트, 스타일, 링크, 스크립트 및 기타 메타 정보를 정의합니다.</p>
+
+<p>다음 태그는 <code>&lt;title&gt;</code>, <code>&lt;style&gt;</code>, <code>&lt;meta&gt;</code>, <code>&lt;link&gt;</code>, <code>&lt;script&gt;</code> 및 <code>&lt;base&gt;</code> 메타 데이터를 설명합니다.</p>
+
+<hr>
+
+<h2 id="the-html-title-element">
+<a class="anchor" href="#the-html-title-element" aria-hidden="true"><span class="octicon octicon-link"></span></a>The HTML <code>&lt;title&gt;</code> Element</h2>
+
+<p>문서의 제목을 정의하며 모든 HTML/XHTML 문서에 필요합니다.</p>
+
+<ul>
+<li>브라우저 탭에 제목을 정의합니다.</li>
+<li>즐겨 찾기에 추가 될 때 페이지의 제목을 제공합니다.</li>
+<li>검색 엔진 결과에 페이지 제목을 표시합니다.</li>
+</ul>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+
+<span class="nt">&lt;head&gt;</span>
+  <span class="nt">&lt;title&gt;</span>Page Title<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+The content of the document......
+<span class="nt">&lt;/body&gt;</span>
+
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="the-html-style-element">
+<a class="anchor" href="#the-html-style-element" aria-hidden="true"><span class="octicon octicon-link"></span></a>The HTML <code>&lt;style&gt;</code> Element</h2>
+
+<p>단일 HTML 페이지의 스타일 정보를 정의하는 데 사용됩니다.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;style&gt;</span>
+  <span class="nt">body</span> <span class="p">{</span><span class="nl">background-color</span><span class="p">:</span> <span class="no">powderblue</span><span class="p">;}</span>
+  <span class="nt">h1</span> <span class="p">{</span><span class="nl">color</span><span class="p">:</span> <span class="no">red</span><span class="p">;}</span>
+  <span class="nt">p</span> <span class="p">{</span><span class="nl">color</span><span class="p">:</span> <span class="no">blue</span><span class="p">;}</span>
+<span class="nt">&lt;/style&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="the-html-link-element">
+<a class="anchor" href="#the-html-link-element" aria-hidden="true"><span class="octicon octicon-link"></span></a>The HTML <code>&lt;link&gt;</code> Element</h2>
+
+<p>외부 스타일 시트에 연결하는 데 사용됩니다.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">href=</span><span class="s">"mystyle.css"</span><span class="nt">&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="the-html-meta-element">
+<a class="anchor" href="#the-html-meta-element" aria-hidden="true"><span class="octicon octicon-link"></span></a>The HTML <code>&lt;meta&gt;</code> Element</h2>
+
+<p>사용되는 문자 집합, 페이지 설명, 키워드, 작성자 및 기타 메타 데이터를 지정하는 데 사용됩니다.</p>
+
+<p>메타 데이터는 브라우저 (내용 표시 방법), 검색 엔진 (키워드) 및 기타 웹 서비스에서 사용됩니다.</p>
+
+<p>사용된 문자 세트를 정의하십시오:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+</code></pre></div>
+<p>웹 페이지에 대한 설명을 정의하기:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"description"</span> <span class="na">content=</span><span class="s">"Free Web tutorials"</span><span class="nt">&gt;</span>
+</code></pre></div>
+<p>검색 엔진에 대한 키워드 정의하기:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"keyword"</span> <span class="na">content=</span><span class="s">"HTML, CSS, XML, Javascript"</span><span class="nt">&gt;</span>
+</code></pre></div>
+<p>페이지 작성자를 정의하십시오:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"author"</span> <span class="na">content=</span><span class="s">"John Doe"</span><span class="nt">&gt;</span>
+</code></pre></div>
+<p>문서를 매 30초마다 새로고침하기:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"refresh"</span> <span class="na">content=</span><span class="s">"30"</span><span class="nt">&gt;</span>
+</code></pre></div>
+<p>예:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"description"</span> <span class="na">content=</span><span class="s">"Free Web tutorials"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"keywords"</span> <span class="na">content=</span><span class="s">"HTML,CSS,XML,JavaScript"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"author"</span> <span class="na">content=</span><span class="s">"John Doe"</span><span class="nt">&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="setting-the-viewport">
+<a class="anchor" href="#setting-the-viewport" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setting The Viewport</h2>
+
+<p>HTML5는 웹 디자이너가 <code>&lt;meta&gt;</code> 태그를 통해 뷰포트를 제어할 수 있게하는 메소드를 도입했습니다.</p>
+
+<p>뷰포트는 웹 페이지의 사용자가 볼 수있는 영역입니다.</p>
+
+<p>그것은 장치에 따라 다르며 휴대 전화의 경우 컴퓨터 화면보다 작습니다.</p>
+
+<p>모든 웹 페이지에 다음과 같은 <code>&lt;meta&gt;</code> 뷰포트 요소를 포함해야합니다.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="na">content=</span><span class="s">"width=device-width, initial-scale=1.0"</span><span class="nt">&gt;</span>
+</code></pre></div>
+<p><code>&lt;meta&gt;</code> <strong>viewport</strong> 요소는 페이지의 크기와 배율을 제어하는 ​​방법에 대한 브라우저 지침을 제공합니다.</p>
+
+<p><strong>width=device-width</strong> 부분은 페이지의 너비를 장치의 화면 너비에 따라 설정합니다 (장치에 따라 다름).</p>
+
+<p><strong>initial-scale=1.0</strong> 부분은 브라우저가 페이지를 처음 불러올 때 초기 zoom 레벨을 설정합니다.</p>
+
+<hr>
+
+<h2 id="the-html-script-element">
+<a class="anchor" href="#the-html-script-element" aria-hidden="true"><span class="octicon octicon-link"></span></a>The HTML <code>&lt;script&gt;</code> Element</h2>
+
+<p><code>&lt;script&gt;</code> element 는 client-side 에 Javascript 들을 정의하는데 사용된다.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script&gt;</span>
+<span class="kd">function</span> <span class="nx">myFunction</span> <span class="p">{</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">demo</span><span class="dl">"</span><span class="p">).</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Hello JavaScript!</span><span class="dl">"</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div>
+<hr>
+
+<h1 id="the-html-base-element">
+<a class="anchor" href="#the-html-base-element" aria-hidden="true"><span class="octicon octicon-link"></span></a>The HTML <code>&lt;base&gt;</code> Element</h1>
+
+<p>페이지 안에 기본 URL 과 기본 target 모든 상대 URLs 을 지정한다.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+  <span class="nt">&lt;title&gt;</span>Page Title<span class="nt">&lt;/title&gt;</span>
+  <span class="nt">&lt;base</span> <span class="na">href=</span><span class="s">"https://www.w3schools.com/images/"</span> <span class="na">target=</span><span class="s">"_blank"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+
+<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"html5.gif"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;p&gt;</span>Since we have specified a base URL, the browser will look for the image "html5.gif" at "https://www.w3schools.com/images/html5.gif"<span class="nt">&lt;/p&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;a</span> <span class="na">href=</span><span class="s">"https://www.w3schools.com"</span><span class="nt">&gt;</span>W3Schools<span class="nt">&lt;/a&gt;&lt;/p&gt;</span>
+<span class="nt">&lt;p&gt;</span>The link above opens in a new window. This is because the base target is set to "_blank".<span class="nt">&lt;/p&gt;</span>
+
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="omitting-html-head-and-body">
+<a class="anchor" href="#omitting-html-head-and-body" aria-hidden="true"><span class="octicon octicon-link"></span></a>Omitting <code>&lt;html&gt;</code>, <code>&lt;head&gt;</code> and <code>&lt;body&gt;</code>?</h2>
+
+<p>HTML5 표준에 따르면 , </p> 및  태그는 생략 할 수 있습니다.
+
+<p>다음 코드는 HTML5로 유효성을 검사합니다:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;title&gt;</span>Page Title<span class="nt">&lt;/title&gt;</span>
+
+<span class="nt">&lt;h1&gt;</span>This is a heading<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;p&gt;</span>This is a paragraph.<span class="nt">&lt;/p&gt;</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Note:</strong>
+W3Schools는 <code>&lt;html&gt;</code> 및 <code>&lt;body&gt;</code> 태그를 생략하지 않는 것이 좋습니다.
+이러한 태그를 생략하면 DOM 또는 XML 소프트웨어가 손상되고 이전 브라우저 (IE9)에서 오류가 발생할 수 있습니다. 그러나 <code>&lt;head&gt;</code> 태그를 생략은 꽤 오랜 시간 동안 일반적인 관행이 되었습니다.</p>
+</blockquote>
+
+<h2 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+<p><a href="https://www.w3schools.com/html/html_head.asp">https://www.w3schools.com/html/html_head.asp</a></p>
+
+  </div>
+
+<div>
+  <hr>
+
+<h2 id="the-html-head-element">The HTML <code>&lt;head&gt;</code> Element</h2>
+
+<p><code>&lt;head&gt;</code> 요소는 메타 데이터(데이터에 대한 데이터)의 컨테이너이며 <code>&lt;html&gt;</code> 태그와 <code>&lt;body&gt;</code> 태그 사이에 배치됩니다.</p>
+
+<p>HTML 메타 데이터는 HTML 문서에 대한 데이터입니다. 메타 데이터가 표시되지 않습니다.</p>
+
+<p>메타 데이터는 일반적으로 문서 제목, 문자 세트, 스타일, 링크, 스크립트 및 기타 메타 정보를 정의합니다.</p>
+
+<p>다음 태그는 <code>&lt;title&gt;</code>, <code>&lt;style&gt;</code>, <code>&lt;meta&gt;</code>, <code>&lt;link&gt;</code>, <code>&lt;script&gt;</code> 및 <code>&lt;base&gt;</code> 메타 데이터를 설명합니다.</p>
+
+<hr>
+
+<h2 id="the-html-title-element">The HTML <code>&lt;title&gt;</code> Element</h2>
+
+<p>문서의 제목을 정의하며 모든 HTML/XHTML 문서에 필요합니다.</p>
+
+<ul>
+<li>브라우저 탭에 제목을 정의합니다.</li>
+<li>즐겨 찾기에 추가 될 때 페이지의 제목을 제공합니다.</li>
+<li>검색 엔진 결과에 페이지 제목을 표시합니다.</li>
+</ul>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+
+<span class="nt">&lt;head&gt;</span>
+  <span class="nt">&lt;title&gt;</span>Page Title<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+The content of the document......
+<span class="nt">&lt;/body&gt;</span>
+
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="the-html-style-element">The HTML <code>&lt;style&gt;</code> Element</h2>
+
+<p>단일 HTML 페이지의 스타일 정보를 정의하는 데 사용됩니다.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;style&gt;</span>
+  <span class="nt">body</span> <span class="p">{</span><span class="nl">background-color</span><span class="p">:</span> <span class="no">powderblue</span><span class="p">;}</span>
+  <span class="nt">h1</span> <span class="p">{</span><span class="nl">color</span><span class="p">:</span> <span class="no">red</span><span class="p">;}</span>
+  <span class="nt">p</span> <span class="p">{</span><span class="nl">color</span><span class="p">:</span> <span class="no">blue</span><span class="p">;}</span>
+<span class="nt">&lt;/style&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="the-html-link-element">The HTML <code>&lt;link&gt;</code> Element</h2>
+
+<p>외부 스타일 시트에 연결하는 데 사용됩니다.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">href=</span><span class="s">"mystyle.css"</span><span class="nt">&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="the-html-meta-element">The HTML <code>&lt;meta&gt;</code> Element</h2>
+
+<p>사용되는 문자 집합, 페이지 설명, 키워드, 작성자 및 기타 메타 데이터를 지정하는 데 사용됩니다.</p>
+
+<p>메타 데이터는 브라우저 (내용 표시 방법), 검색 엔진 (키워드) 및 기타 웹 서비스에서 사용됩니다.</p>
+
+<p>사용된 문자 세트를 정의하십시오:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+</code></pre></div>
+<p>웹 페이지에 대한 설명을 정의하기:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"description"</span> <span class="na">content=</span><span class="s">"Free Web tutorials"</span><span class="nt">&gt;</span>
+</code></pre></div>
+<p>검색 엔진에 대한 키워드 정의하기:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"keyword"</span> <span class="na">content=</span><span class="s">"HTML, CSS, XML, Javascript"</span><span class="nt">&gt;</span>
+</code></pre></div>
+<p>페이지 작성자를 정의하십시오:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"author"</span> <span class="na">content=</span><span class="s">"John Doe"</span><span class="nt">&gt;</span>
+</code></pre></div>
+<p>문서를 매 30초마다 새로고침하기:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"refresh"</span> <span class="na">content=</span><span class="s">"30"</span><span class="nt">&gt;</span>
+</code></pre></div>
+<p>예:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"description"</span> <span class="na">content=</span><span class="s">"Free Web tutorials"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"keywords"</span> <span class="na">content=</span><span class="s">"HTML,CSS,XML,JavaScript"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"author"</span> <span class="na">content=</span><span class="s">"John Doe"</span><span class="nt">&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="setting-the-viewport">Setting The Viewport</h2>
+
+<p>HTML5는 웹 디자이너가 <code>&lt;meta&gt;</code> 태그를 통해 뷰포트를 제어할 수 있게하는 메소드를 도입했습니다.</p>
+
+<p>뷰포트는 웹 페이지의 사용자가 볼 수있는 영역입니다.</p>
+
+<p>그것은 장치에 따라 다르며 휴대 전화의 경우 컴퓨터 화면보다 작습니다.</p>
+
+<p>모든 웹 페이지에 다음과 같은 <code>&lt;meta&gt;</code> 뷰포트 요소를 포함해야합니다.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="na">content=</span><span class="s">"width=device-width, initial-scale=1.0"</span><span class="nt">&gt;</span>
+</code></pre></div>
+<p><code>&lt;meta&gt;</code> <strong>viewport</strong> 요소는 페이지의 크기와 배율을 제어하는 ​​방법에 대한 브라우저 지침을 제공합니다.</p>
+
+<p><strong>width=device-width</strong> 부분은 페이지의 너비를 장치의 화면 너비에 따라 설정합니다 (장치에 따라 다름).</p>
+
+<p><strong>initial-scale=1.0</strong> 부분은 브라우저가 페이지를 처음 불러올 때 초기 zoom 레벨을 설정합니다.</p>
+
+<hr>
+
+<h2 id="the-html-script-element">The HTML <code>&lt;script&gt;</code> Element</h2>
+
+<p><code>&lt;script&gt;</code> element 는 client-side 에 Javascript 들을 정의하는데 사용된다.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script&gt;</span>
+<span class="kd">function</span> <span class="nx">myFunction</span> <span class="p">{</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">demo</span><span class="dl">"</span><span class="p">).</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Hello JavaScript!</span><span class="dl">"</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div>
+<hr>
+
+<h1 id="the-html-base-element">The HTML <code>&lt;base&gt;</code> Element</h1>
+
+<p>페이지 안에 기본 URL 과 기본 target 모든 상대 URLs 을 지정한다.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+  <span class="nt">&lt;title&gt;</span>Page Title<span class="nt">&lt;/title&gt;</span>
+  <span class="nt">&lt;base</span> <span class="na">href=</span><span class="s">"https://www.w3schools.com/images/"</span> <span class="na">target=</span><span class="s">"_blank"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+
+<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"html5.gif"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;p&gt;</span>Since we have specified a base URL, the browser will look for the image "html5.gif" at "https://www.w3schools.com/images/html5.gif"<span class="nt">&lt;/p&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;a</span> <span class="na">href=</span><span class="s">"https://www.w3schools.com"</span><span class="nt">&gt;</span>W3Schools<span class="nt">&lt;/a&gt;&lt;/p&gt;</span>
+<span class="nt">&lt;p&gt;</span>The link above opens in a new window. This is because the base target is set to "_blank".<span class="nt">&lt;/p&gt;</span>
+
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="omitting-html-head-and-body">Omitting <code>&lt;html&gt;</code>, <code>&lt;head&gt;</code> and <code>&lt;body&gt;</code>?</h2>
+
+<p>HTML5 표준에 따르면 , </p> 및  태그는 생략 할 수 있습니다.
+
+<p>다음 코드는 HTML5로 유효성을 검사합니다:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;title&gt;</span>Page Title<span class="nt">&lt;/title&gt;</span>
+
+<span class="nt">&lt;h1&gt;</span>This is a heading<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;p&gt;</span>This is a paragraph.<span class="nt">&lt;/p&gt;</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Note:</strong>
+W3Schools는 <code>&lt;html&gt;</code> 및 <code>&lt;body&gt;</code> 태그를 생략하지 않는 것이 좋습니다.
+이러한 태그를 생략하면 DOM 또는 XML 소프트웨어가 손상되고 이전 브라우저 (IE9)에서 오류가 발생할 수 있습니다. 그러나 <code>&lt;head&gt;</code> 태그를 생략은 꽤 오랜 시간 동안 일반적인 관행이 되었습니다.</p>
+</blockquote>
+
+<h2 id="reference">Reference</h2>
+
+<p><a href="https://www.w3schools.com/html/html_head.asp" rel="nofollow" target="_blank">https://www.w3schools.com/html/html_head.asp</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

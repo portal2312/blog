@@ -1,5 +1,0 @@
-﻿# UPDATE excute read-only transaction
-
-- web page 에서 error msg 출력됨.
-
-- pgpool 사용시 /opt/hts/netcruz/webapps/nom/nom/settings.py DB_PORT: 5432 -> 9999 해결.

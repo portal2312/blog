@@ -11,7 +11,7 @@
 export function addEventNodeClick(className = "tree") {
   const tree = document.getElementsByClassName(className);
 
-  if (tree) {
+  if (tree.length) {
     const nodes = tree[0].getElementsByClassName("node");
 
     for (let i = 0, len = nodes.length; i < len; i += 1) {

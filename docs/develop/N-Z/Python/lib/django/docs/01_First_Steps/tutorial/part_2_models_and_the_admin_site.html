@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Part 2 - Models and the admin site | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Part 2 - Models and the admin site" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Database setup" />
+<meta property="og:description" content="Database setup" />
+<link rel="canonical" href="/blog/docs/develop/N-Z/Python/lib/django/docs/01_First_Steps/tutorial/part_2_models_and_the_admin_site.html" />
+<meta property="og:url" content="/blog/docs/develop/N-Z/Python/lib/django/docs/01_First_Steps/tutorial/part_2_models_and_the_admin_site.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-02T16:38:51+09:00" />
+<script type="application/ld+json">
+{"description":"Database setup","headline":"Part 2 - Models and the admin site","dateModified":"2019-12-02T16:38:51+09:00","datePublished":"2019-12-02T16:38:51+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/docs/develop/N-Z/Python/lib/django/docs/01_First_Steps/tutorial/part_2_models_and_the_admin_site.html"},"url":"/blog/docs/develop/N-Z/Python/lib/django/docs/01_First_Steps/tutorial/part_2_models_and_the_admin_site.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/blog/feed.xml" title="Portal2312's blog" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113063601-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+<script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Part 2 - Models and the admin site</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#database-setup">Database setup</a></li>
+<li class="toc-entry toc-h2"><a href="#creating-models">Creating models</a></li>
+<li class="toc-entry toc-h2"><a href="#activating-models">Activating models</a></li>
+<li class="toc-entry toc-h2"><a href="#playing-with-the-api">Playing with the API</a></li>
+<li class="toc-entry toc-h2"><a href="#intorducing-the-django-admin">Intorducing the Django Admin</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#creating-an-admin-user">Creating an admin user</a></li>
+<li class="toc-entry toc-h3"><a href="#enter-the-admin-site">Enter the admin site</a></li>
+<li class="toc-entry toc-h3"><a href="#make-the-poll-app-modifiable-in-the-admin">Make the poll app modifiable in the admin</a></li>
+<li class="toc-entry toc-h3"><a href="#explore-the-free-admin-functionality">Explore the free admin functionality</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#except-list">Except.List</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#summary">Summary</a></li>
+<li class="toc-entry toc-h2"><a href="#referencs">Referencs</a></li>
+</ul>
+</li>
+</ul><h2 id="database-setup">
+<a class="anchor" href="#database-setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>Database setup</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>vi mysite/settings.py
+</code></pre></div>
+<ul>
+<li><p>Django 설정을 module-level 변수로 나타내는 python 모듈.</p></li>
+<li>
+<p>기본적 구성은 SQLite 사용.</p>
+
+<ul>
+<li>SQLite는 Python에 포함되어 있어 데이터베이스를 지원하기 위해 다른 것을 설치할 필요가 없습니다. 그러나 첫 번째 실제 프로젝트를 시작할 때 PostgreSQL과 같은 확장 성이 뛰어난 데이터베이스를 사용하여 데이터베이스 전환 문제를 피할 수 있습니다.</li>
+</ul>
+</li>
+<li>
+<p>다른 Database 사용시 설정</p>
+
+<ul>
+<li><strong>ENGINE</strong></li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="s1">'ENGINE'</span>: <span class="s1">'django.db.backend.sqlite3'</span>,  <span class="c"># XXX: default</span>
+or
+<span class="s1">'ENGINE'</span>: <span class="s1">'django.db.backends.postgresql'</span>,
+or
+<span class="s1">'ENGINE'</span>: <span class="s1">'django.db.backends.mysql'</span>,
+or
+<span class="s1">'ENGINE'</span>: <span class="s1">'django.db.backends.oracle'</span>,
+</code></pre></div>
+<p><a href="https://docs.djangoproject.com/en/1.10/ref/databases/#third-party-notes">also available</a>
+- <strong>NAME</strong></p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="s1">'NAME'</span>: os.path.join<span class="o">(</span>BASE_DIR, <span class="s1">'db.sqlite3'</span><span class="o">)</span>  <span class="c"># XXX: default</span>
+or
+<span class="s1">'NAME'</span>: <span class="s1">'database_name'</span>
+</code></pre></div>
+</li>
+<li><p>그외 SQLite 외 Database 사용할 경우 접속 정보를 확인해서 추가해야 함.</p></li>
+</ul>
+
+<p>(정보: USER, PASSWORD, HOST)</p>
+<div class="highlight"><pre><code class="language-" data-lang="">* For database other than SQLitqe
+
+- 기본 SQLite 이미 설정되어 있음.
+
+- 다른 Database 하려면 Database 설정이 필요.
+
+  그리고 난 후 mysite/settings.py 설정해야 함.
+</code></pre></div>
+<ul>
+<li><p>mysite/settings.py 의 <strong>TIME_ZONE</strong> 설정.</p></li>
+<li>
+<p><strong>INSTALLED_APPS</strong></p>
+
+<ul>
+<li>활성화할 Django APP 이름 정의.</li>
+<li>Apps: 여러 Projects에서 사용가능, Projects의 다른 사람들이 사용할 수 있도록 패키지하고 배포 가능.</li>
+<li>기본적으로, INSTALLED_APPS 가 포함하는 Apps 목록, Django 함께 사용:</li>
+<li>django.contrib.admin - 관리자 사이트, 간단히 사용가능.</li>
+<li>django.contrib.auth - 인증 시스템</li>
+<li>django.contrib.contecttype - 컨텐츠 유형을 위한 프레임워크.</li>
+<li>django.contrib.session - session</li>
+<li>django.contrib.messages - messaging</li>
+<li>django.contrib.staticfiles - 고정 파일 관리</li>
+<li>applications은 편리한 일반적 경우를 기본적으로 포함하고 있다.</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>python manage.py migrate
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">* For the minimalists
+
+INSTALLED_APPS 목록 간소화
+
+기본적으로 제공, 반드시 필요한 설정이 아님.
+migrate 전에 주석 또는 삭제하면 됨.
+</code></pre></div>
+<ul>
+<li>migrate</li>
+</ul>
+
+<p>INSTALLED_APPS 설정을 보고 mysite/settings.py 파일의 데이터베이스 설정과 앱과 함께 제공되는 데이터베이스 마이그레이션에 따라 필요한 데이터베이스 테이블을 만듬 (나중에 다룰 예정).</p>
+
+<p>적용되는 각 마이그레이션에 대한 메시지가 표시. 원하는 경우 Database에 명령 줄 클라이언트를 실행하고 \ dt (PostgreSQL), SHOW TABLES;를 입력. (MySQL), .schema (SQLite) 또는 SELECT TABLE_NAME FROM USER_TABLES; (오라클) 장고 만든 테이블을 표시.</p>
+
+<hr>
+
+<h2 id="creating-models">
+<a class="anchor" href="#creating-models" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating models</h2>
+
+<p>Database layout 과 metadata 추가.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">* Philosophy (철학)
+
+- DRY (Don't Repeat Yourself) 원리를 따름.
+
+- 목표는 데이터 모델을 한 곳에서 정의하고 자동으로 데이터 모델을 파생시키는 것.
+
+- 예 로, Ruby On Rails와는 달리
+  migration은 models file 에서 완전히 파생되며 본질적으로
+  Django가 Database 스키마를 update하여 현재 models와 일치시킬 수있는 기록임.
+</code></pre></div>
+<p>Table 개념은 간단한 Python class 로 표현.</p>
+
+<p>polls/models.py 파일을 다음과 같이 편집.</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+
+
+<span class="k">class</span> <span class="nc">Question</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">question_text</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+    <span class="n">pub_date</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="s">'data published'</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Choice</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">question</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Question</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span>
+    <span class="n">choice_text</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+    <span class="n">votes</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>각 Model은 django.db.models.Model을 하위 class로 나타내는 class로 표현.</li>
+</ul>
+
+<p>각 Model에는 여러 개의 class 변수 존재, 각 class 변수는 model의 database field를 나타냄.</p>
+
+<ul>
+<li><p>각 Field는 Field class의 instance로 표시 (문자-CharField, 날짜시간-DateTimeField)</p></li>
+<li><p>각 Field instance 명(예: question_text or pub_date)은 입력란의 이름으로 컴퓨터 사용하기 쉬운 형식 되어 있음. Python code에서 이 값을 사용시 Database 의 columns 이름으로 사용.</p></li>
+<li><p>Field에 선택적인 첫 번째 위치 인수를 사용하여 사람이 읽을 수있는 이름을 지정 가능.</p></li>
+</ul>
+
+<p>이것은 장고의 몇 가지 내성적 인 부분에서 사용되며, 문서로도 사용.</p>
+
+<p>이 필드가 제공되지 않으면 Django는 기계가 읽을 수있는 이름을 사용.</p>
+
+<p>이 예에서는 Question.pub_date(= date published)에 사람이 인식 할 수있는 이름만 정의함.</p>
+
+<ul>
+<li>Field class 의 필수 인수: (ex: CharField - max_length)</li>
+</ul>
+
+<p>이것은 DB 스키마뿐만 아니라 유효성 검사에서도 사용.</p>
+
+<ul>
+<li><p>Field의 다양한 선택적 인수 갖기: votes(default=0)</p></li>
+<li><p>ForeignKey: 다 대일, 다 대다, 일대일 등 모든 공통 데이터베이스 관계를 지원.</p></li>
+</ul>
+
+<hr>
+
+<h2 id="activating-models">
+<a class="anchor" href="#activating-models" aria-hidden="true"><span class="octicon octicon-link"></span></a>Activating models</h2>
+
+<p>model code 를 작성함으로 가능한 것:</p>
+
+<ul>
+<li><p>생성 Database schema (CREATE TABLE statements).</p></li>
+<li><p>생성 Table 객체에 액세스하기 위한 Python 데이터베이스 액세스 API.</p></li>
+</ul>
+
+<p>하지만 먼저 Polls apps이 설치되었음을 프로젝트에 알릴 필요가 있음.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">* Philosophy
+
+Django apps 는 '플러그형': 여러 Project에서 앱을 사용할 수 있으며 앱을 배포 할 수 있음.
+앱을 Django 설치에 묶을 필요가 없기 때문.
+</code></pre></div>
+<p>Project에 Apps을 포함하려면 INSTALLED_APPS 설정에 구성 클래스에 대한 참조를 추가해야 함.</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">vi</span> <span class="o">./</span><span class="n">mysite</span><span class="o">/</span><span class="n">settings</span><span class="o">.</span><span class="n">py</span>
+
+<span class="c1"># ...
+</span><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">'polls.apps.PollsConfig'</span><span class="p">,</span>  <span class="c1"># XXX: 추가
+</span>    <span class="s">'django.contrib.admin'</span><span class="p">,</span>
+    <span class="s">'django.contrib.auth'</span><span class="p">,</span>
+    <span class="s">'django.contrib.contenttypes'</span><span class="p">,</span>
+    <span class="s">'django.contrib.sessions'</span><span class="p">,</span>
+    <span class="s">'django.contrib.messages'</span><span class="p">,</span>
+    <span class="s">'django.contrib.staticfiles'</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="c1"># ...
+</span>
+<span class="err">$</span> <span class="n">python</span> <span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">makemigrations</span> <span class="n">polls</span>
+
+<span class="c1"># Migrations for 'polls':
+#   polls/migrations/0001_initial.py:
+#     - Create model Choice
+#     - Create model Question
+#     - Add field question to choice
+</span></code></pre></div>
+<p>makemigrations 시 models 의 변경을 약간 적용.</p>
+
+<p>migrations은 Django가 models (및 데이터베이스 스키마)에 변경 사항을 저장하는 방법.
+이는 디스크에 있는 파일 일뿐.
+원하는 경우 새 모델의 마이그레이션을 읽을 수 있음. (polls/migrations/0001_initial.py)
+Django가 만들 때마다 읽을 필요는 없지만 Django가 어떻게 변경되는지 수동으로 조정하려는 경우에는 인간이 편집 할 수 있도록 설계됨.</p>
+
+<p>migration을 실행하고 데이터베이스 스키마를 자동으로 관리하는 명령이 있습니다.
+migration은 마이그레이션이라고 부르며 잠시 후에 살펴 보겠습니다.
+하지만 먼저 마이그레이션이 실행될 SQL을 살펴 보겠습니다.
+sqlmigrate: migration 이름을 사용하고 SQL을 return 함.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># python manage.py sqlmigrate &lt;apps-name&gt; &lt;migrations-name&gt;</span>
+<span class="nv">$ </span>python manage.py sqlmigrate polls 0001
+</code></pre></div><div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="p">...(</span><span class="err">생략</span><span class="p">)</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="nv">"polls_choice"</span> <span class="p">(</span><span class="nv">"id"</span> <span class="nb">serial</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span> <span class="nv">"choice_text"</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span> <span class="nv">"votes"</span> <span class="nb">integer</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">);</span>
+
+<span class="c1">--</span>
+<span class="c1">-- Create model Question</span>
+<span class="c1">--</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="nv">"polls_question"</span> <span class="p">(</span><span class="nv">"id"</span> <span class="nb">serial</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span> <span class="nv">"question_text"</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span> <span class="nv">"pub_date"</span> <span class="nb">timestamp</span> <span class="k">with</span> <span class="nb">time</span> <span class="k">zone</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">);</span>
+<span class="c1">--</span>
+<span class="c1">-- Add field question to choice</span>
+<span class="c1">--</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="nv">"polls_choice"</span> <span class="k">ADD</span> <span class="k">COLUMN</span> <span class="nv">"question_id"</span> <span class="nb">integer</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">;</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="nv">"polls_choice"</span> <span class="k">ALTER</span> <span class="k">COLUMN</span> <span class="nv">"question_id"</span> <span class="k">DROP</span> <span class="k">DEFAULT</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">INDEX</span> <span class="nv">"polls_choice_7aa0f6ee"</span> <span class="k">ON</span> <span class="nv">"polls_choice"</span> <span class="p">(</span><span class="nv">"question_id"</span><span class="p">);</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="nv">"polls_choice"</span> <span class="k">ADD</span> <span class="k">CONSTRAINT</span> <span class="nv">"polls_choice_question_id_c5b4b260_fk_polls_question_id"</span> <span class="k">FOREIGN</span> <span class="k">KEY</span> <span class="p">(</span><span class="nv">"question_id"</span><span class="p">)</span> <span class="k">REFERENCES</span> <span class="nv">"polls_question"</span> <span class="p">(</span><span class="nv">"id"</span><span class="p">)</span> <span class="k">DEFERRABLE</span> <span class="k">INITIALLY</span> <span class="k">DEFERRED</span><span class="p">;</span>
+<span class="k">COMMIT</span><span class="p">;</span>
+</code></pre></div>
+<p>유의사항:</p>
+
+<ul>
+<li><p>Table name은 Apps name과 models의 소문자 이름을 결합하여 자동 생성됨. (재정의 가능)</p></li>
+<li><p>Primary Key (ID)가 자동으로 추가됨. (무시할 수도 있음)</p></li>
+<li><p>Foreign Key 는 field name 에 _id 를 추가함. (재정의 가능)</p></li>
+<li><p>외래 키 관계는 FOREIGN KEY 제약 조건에 의해 명시적으로 지정됨.
+DEFERRABLE 부품에 대해 걱정하지 마십시오.
+그것은 트랜잭션이 끝날 때까지 PostgreSQL에 외래 키를 적용하지 말라고하는 것입니다.</p></li>
+<li><p>사용중인 데이터베이스에 맞게 조정.
+auto_increment(MySQL),
+serial(PostgreSQL) 또는 integer primary key autoincrement(SQLite)와 같은 데이터베이스
+관련 필드 유형이 자동으로 처리됨.</p></li>
+<li><p>sqlmigrate 명령은 실제로 데이터베이스에서 migrate을 실행하지 않음.
+단지 화면에 출력, Django가 필요하다고 생각하는 것을 볼 수 있음.
+Django가 할 일을 확인 또는 변경을 위해 SQL script가 필요한 DBA가 있는 경우 유용.</p></li>
+</ul>
+
+<p>관심이 있으시면 python manage.py check를 실행할 수도 있음.
+이 작업은 마이그레이션을 수행하거나 데이터베이스를 만지지 않고 프로젝트의 모든 문제를 검사함.</p>
+
+<p>다시 migrate 실행해서 model tables 를 생성.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>python manage.py migrate
+
+<span class="c"># Operations to perform:</span>
+<span class="c">#   Apply all migrations: admin, auth, contenttypes, polls, sessions</span>
+<span class="c"># Running migrations:</span>
+<span class="c">#   Applying polls.0001_initial... OK</span>
+</code></pre></div>
+<p>migrate 명령은 적용되지 않은 모든 마이그레이션을 취합니다 (django_migrations라는 데이터베이스의 특수 테이블을 사용하여 장고가 적용됨). 데이터베이스에 대해 실행합니다. 기본적으로 모델에 대한 변경 사항을 데이터베이스에 스키마와 동기화함. 마이그레이션은 매우 강력하며 데이터베이스 또는 테이블을 삭제하거나 새 테이블을 만들 필요없이 프로젝트를 개발할 때 시간이 지남에 따라 모델을 변경할 수 있음. 데이터 손실없이 데이터베이스 업그레이드를 전문으로합니다.</p>
+
+<p>튜토리얼의 뒷부분에서 좀 더 자세히 다루 겠지만,
+지금은 모델 변경을위한 3단계 가이드를 기억하십시오.</p>
+
+<ul>
+<li><p>models 변경 (models.py 안에)</p></li>
+<li><p>python manage.py makemigrations (변경사항에 대한 migrations 생성)</p></li>
+<li><p>python manage.py migrate (Database 적용)</p></li>
+</ul>
+
+<p>migration을 만들고 적용하는 별도의 명령이있는 이유는 버전 관리 시스템으로 migration을 commit하여 Apps과 함께 제공하기 때문.
+개발자가 쉽게 개발할 수있을뿐 아니라 다른 개발자와 프로덕션에서도 사용할 수 있음.</p>
+
+<p>manage.py 유틸리티가 할 수 있는 일에 대한 자세한 정보는 django-admin 설명서를 읽으십시오.</p>
+
+<hr>
+
+<h2 id="playing-with-the-api">
+<a class="anchor" href="#playing-with-the-api" aria-hidden="true"><span class="octicon octicon-link"></span></a>Playing with the API</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">python manage.py shell
+</code></pre></div>
+<p>왜냐하면 manage.py는 DJANGO_SETTINGS_MODULE 환경 변수를 설정하기 때문,
+Django는 mysite/settings.py 에 대한 Python import 경로를 제공함.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">* Bypassing manage.py
+
+manage.py를 사용하지 않아도 아무런 문제가 없습니다.
+DJANGO_SETTINGS_MODULE 환경 변수를 mysite.settings로 설정하고
+일반 Python shell을 시작한 다음 django 를 설정하십시오.
+
+    import django
+    django.setup()
+
+AttributeError가 발생시 튜토리얼 버전과 일치하지 않는 Django 버전을 사용임.
+
+manage.py 와 동일한 Dir 에서 python 을 실행해야 함.
+또는 import mysite가 작동하도록 디렉토리가 Python 경로에 있는지 확인.
+
+이 모든 것에 대한 더 자세한 정보는 [django-admin documentation] 참조.
+</code></pre></div><div class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">python</span> <span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">shell</span>
+
+<span class="kn">from</span> <span class="nn">polls.models</span> <span class="kn">import</span> <span class="n">Question</span><span class="p">,</span> <span class="n">Choice</span>
+<span class="kn">from</span> <span class="nn">django.utils</span> <span class="kn">import</span> <span class="n">timezone</span>
+
+<span class="n">q</span> <span class="o">=</span> <span class="n">Question</span><span class="p">()</span>
+<span class="n">q</span><span class="o">.</span><span class="n">question_text</span> <span class="o">=</span> <span class="s">'question'</span>
+<span class="n">q</span><span class="o">.</span><span class="n">pub_date</span> <span class="o">=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+<span class="n">q</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+<span class="n">q</span><span class="o">.</span><span class="nb">id</span>
+<span class="n">Question</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="nb">all</span><span class="p">()</span>
+</code></pre></div>
+<p><question: question objects>는 완전히이 객체의 도움이되지 않는 표현.
+polls/models.py 파일에서 Question 모델을 편집하고
+Question and Choice에 __str__() 메소드를 추가하여 수정.</question:></p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">vi</span> <span class="n">polls</span><span class="o">/</span><span class="n">models</span><span class="o">.</span><span class="n">py</span>
+
+<span class="c1"># -*- coding:utf8 -*-
+</span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="c1"># only if you need to support Python2
+# from django.utils.encoding import python_2_unicode_compatible
+</span><span class="kn">from</span> <span class="nn">django.utils</span> <span class="kn">import</span> <span class="n">timezone</span>
+
+
+<span class="c1"># @python_2_unicode_compatible  # only if you need to support Python2
+</span><span class="k">class</span> <span class="nc">Question</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">question_text</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+    <span class="n">pub_date</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="s">'data published'</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">question_text</span>
+
+    <span class="k">def</span> <span class="nf">was_published_recently</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pub_date</span> <span class="o">&gt;=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="c1"># @python_2_unicode_compatible  # only if you need to support Python2
+</span><span class="k">class</span> <span class="nc">Choice</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">question</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Question</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span>
+    <span class="n">choice_text</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+    <span class="n">votes</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">choice_text</span>
+</code></pre></div><div class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">python</span> <span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">shell</span>
+
+
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">polls.models</span> <span class="kn">import</span> <span class="n">Question</span><span class="p">,</span> <span class="n">Choice</span>
+
+<span class="c1"># XXX: __str__
+# Make sure our __str__() addition worked.
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">Question</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="nb">all</span><span class="p">()</span>
+<span class="o">&lt;</span><span class="n">QuerySet</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Question</span><span class="p">:</span> <span class="n">Whats</span> <span class="n">up</span><span class="err">?</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span>
+
+<span class="c1"># Django provides a rich database lookup API that's entirely driven by
+# keyword arguments.
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">Question</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="nb">filter</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">QuerySet</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Question</span><span class="p">:</span> <span class="n">Whats</span> <span class="n">up</span><span class="err">?</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Question</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="nb">filter</span><span class="p">(</span><span class="n">question_text__startswith</span><span class="o">=</span><span class="s">'What'</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">QuerySet</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Question</span><span class="p">:</span> <span class="n">Whats</span> <span class="n">up</span><span class="err">?</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span>
+
+<span class="c1"># Get the question that was published this year.
+</span><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">django.utils</span> <span class="kn">import</span> <span class="n">timezone</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">current_year</span> <span class="o">=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">year</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Question</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pub_date__year</span><span class="o">=</span><span class="n">current_year</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">Question</span><span class="p">:</span> <span class="n">Whats</span> <span class="n">up</span><span class="err">?</span><span class="o">&gt;</span>
+
+<span class="c1"># == Question.objects.get(id=1).
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">Question</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">Question</span><span class="p">:</span> <span class="n">Whats</span> <span class="n">up</span><span class="err">?</span><span class="o">&gt;</span>
+
+<span class="c1"># XXX: was_published_recently
+# Make sure our custom method worked.
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">q</span> <span class="o">=</span> <span class="n">Question</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">q</span><span class="o">.</span><span class="n">was_published_recently</span><span class="p">()</span>
+<span class="bp">True</span>
+
+<span class="c1"># Give the Question a couple of Choices. The create call constructs a new
+# Choice object, does the INSERT statement, adds the choice to the set
+# of available choices and returns the new Choice object. Django creates
+# a set to hold the "other side" of a ForeignKey relation
+# (e.g. a question's choice) which can be accessed via the API.
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">q</span> <span class="o">=</span> <span class="n">Question</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># related - none
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">q</span><span class="o">.</span><span class="n">choice_set</span><span class="o">.</span><span class="nb">all</span><span class="p">()</span>
+<span class="o">&lt;</span><span class="n">QuerySet</span> <span class="p">[]</span><span class="o">&gt;</span>
+
+<span class="c1"># .create()
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">q</span><span class="o">.</span><span class="n">choice_set</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">choice_text</span><span class="o">=</span><span class="s">'Not much'</span><span class="p">,</span> <span class="n">votes</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">Choice</span><span class="p">:</span> <span class="n">Not</span> <span class="n">much</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">q</span><span class="o">.</span><span class="n">choice_set</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">choice_text</span><span class="o">=</span><span class="s">'The sky'</span><span class="p">,</span> <span class="n">votes</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">Choice</span><span class="p">:</span> <span class="n">The</span> <span class="n">sky</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">c</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">choice_set</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">choice_text</span><span class="o">=</span><span class="s">'Just hacking again'</span><span class="p">,</span> <span class="n">votes</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># related
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">c</span><span class="o">.</span><span class="n">question</span>
+<span class="o">&lt;</span><span class="n">Question</span><span class="p">:</span> <span class="n">Whats</span> <span class="n">up</span><span class="err">?</span><span class="o">&gt;</span>
+
+<span class="c1"># related - Question &gt; Choice objects.
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">q</span><span class="o">.</span><span class="n">choice_set</span><span class="o">.</span><span class="nb">all</span><span class="p">()</span>
+<span class="o">&lt;</span><span class="n">QuerySet</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Choice</span><span class="p">:</span> <span class="n">Not</span> <span class="n">much</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Choice</span><span class="p">:</span> <span class="n">The</span> <span class="n">sky</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Choice</span><span class="p">:</span> <span class="n">Just</span> <span class="n">hacking</span> <span class="n">again</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">q</span><span class="o">.</span><span class="n">choice_set</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="mi">3</span>
+
+<span class="c1"># __ (double underscores) 로 테이블 관계를 깊게 읽음
+# .filter( question테이블__pub_date컬럼__year(= datetime__year) )
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">Choice</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="nb">filter</span><span class="p">(</span><span class="n">question__pub_date__year</span><span class="o">=</span><span class="n">current_year</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">QuerySet</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Choice</span><span class="p">:</span> <span class="n">Not</span> <span class="n">much</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Choice</span><span class="p">:</span> <span class="n">The</span> <span class="n">sky</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Choice</span><span class="p">:</span> <span class="n">Just</span> <span class="n">hacking</span> <span class="n">again</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span>
+
+<span class="c1"># .delete() - 선택한 하나를 삭제
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">c</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">choice_set</span><span class="o">.</span><span class="nb">filter</span><span class="p">(</span><span class="n">choice_text__startswith</span><span class="o">=</span><span class="s">'Just hacking'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">c</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+</code></pre></div>
+<p>모델 관계에 대한 자세한 내용은 <a href="https://docs.djangoproject.com/en/1.10/ref/models/relations/">Accessing related objects</a>를 참조.</p>
+
+<p>Underscores 사용하여 API를 통해 필드 조회를 수행하는 방법은 <a href="https://docs.djangoproject.com/en/1.10/topics/db/queries/#field-lookups-intro">Field lookups</a>를 참조.</p>
+
+<p>모든 자세한 내용은 <a href="https://docs.djangoproject.com/en/1.10/topics/db/queries/">Database API reference</a>참조.</p>
+
+<hr>
+
+<h2 id="intorducing-the-django-admin">
+<a class="anchor" href="#intorducing-the-django-admin" aria-hidden="true"><span class="octicon octicon-link"></span></a>Intorducing the Django Admin</h2>
+<div class="highlight"><pre><code class="language-" data-lang="">* Philosophy
+
+관리 사이트를 생성하는 것은 많은 창의성을 필요로하지 않는 지루한 작업.
+
+Django는 모델을 위한 관리 인터페이스 생성을 완전히 자동화함.
+
+Django는 "content publishers"와 "public"사이트 사이에 명확한 구분이 있는
+뉴스 룸 환경에서 작성되었음.
+
+사이트 관리자는 시스템을 사용하여 뉴스 기사, 이벤트, 스포츠 경기 결과 등을
+추가하며 해당 내용은 공개 사이트에 표시.
+
+Django는 사이트 관리자가 컨텐트를 편집 할 수 있는 통합 된 인터페이스를
+만드는 문제를 해결.
+
+관리자는 사이트 방문자가 사용하도록 되어 있지 않음. 사이트 관리자 용도.
+</code></pre></div>
+<h3 id="creating-an-admin-user">
+<a class="anchor" href="#creating-an-admin-user" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating an admin user</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>python manage.py createsuperuser
+
+<span class="c"># Username (leave blank to use 'mky'): mky</span>
+<span class="c"># Email address: portal2312@gmail.com</span>
+<span class="c"># Password:</span>
+<span class="c"># Password (again):</span>
+<span class="c"># Superuser created successfully.</span>
+
+<span class="nv">$ </span>vi ./mysite/settings.py
+
+...
+<span class="nv">ALLOWED_HOSTS</span><span class="o">=[</span><span class="s1">'*'</span><span class="o">]</span>  <span class="c"># XXX: Add '*'</span>
+...
+:wq
+
+<span class="c"># firewalld port 확인할 것</span>
+<span class="c"># firewall-cmd</span>
+<span class="nv">$ </span>python manage.py runserver 0.0.0.0:8000
+
+<span class="c"># Web sites URL GO http://127.0.0.1:8000/admin</span>
+</code></pre></div>
+<p>언어설정가능</p>
+
+<hr>
+
+<h3 id="enter-the-admin-site">
+<a class="anchor" href="#enter-the-admin-site" aria-hidden="true"><span class="octicon octicon-link"></span></a>Enter the admin site</h3>
+
+<ul>
+<li>이미지생략</li>
+</ul>
+
+<p>그룹 및 사용자와 같이 몇 가지 유형의 편집 가능한 콘텐츠가 표시되어야 함.
+이것들은 Django가 제공 한 인증 프레임 워크인 django.contrib.auth에 의해 제공됨.</p>
+
+<hr>
+
+<h3 id="make-the-poll-app-modifiable-in-the-admin">
+<a class="anchor" href="#make-the-poll-app-modifiable-in-the-admin" aria-hidden="true"><span class="octicon octicon-link"></span></a>Make the poll app modifiable in the admin</h3>
+
+<p>admin Page에 Question Table 보이게 추가</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># polls/admin.py
+</span><span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Question</span>
+
+
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Question</span><span class="p">)</span>
+</code></pre></div>
+<hr>
+
+<h3 id="explore-the-free-admin-functionality">
+<a class="anchor" href="#explore-the-free-admin-functionality" aria-hidden="true"><span class="octicon octicon-link"></span></a>Explore the free admin functionality</h3>
+
+<p>재기동 없이 파일 수정만으로 표현</p>
+
+<p>Question &gt; What's up? &gt;</p>
+
+<p>관점:</p>
+
+<ul>
+<li><p>form은 "Question" model로 부터 자동 가져왔음.</p></li>
+<li>
+<p>다른 모델 필드 유형(DateTimeField, CharField) 적당한 해당 HTML 위젯이 입력됨.</p>
+
+<p>각 필드 유형은 장고 관리자에게 자신을 표시하는 방법을 알고 있음.</p>
+</li>
+<li>
+<p>각 DateTimeField는 무료 JavaScript 바로가기를 가져옴.</p>
+
+<p>날짜에는 "오늘"바로 가기와 캘린더 팝업이 표시되며 시간에는</p>
+
+<p>"Now"단축키와 일반적으로 입력 된 시간을 나열하는 편리한 팝업이 표시됨.</p>
+</li>
+</ul>
+
+<p>페이지 하단의 버튼 설명:</p>
+
+<ul>
+<li><p>Save - 변경 사항을 저장, 이 유형의 객체에 대한 변경 목록 페이지로 이동.</p></li>
+<li><p>Save and continue editing - 변경사항을 저장, 이 객체의 관리 페이지를 reload.</p></li>
+<li><p>Save and add another - 변경사항을 저장, 이 유형의 객체에 대해 새로운 빈 양식을 load.</p></li>
+<li>
+<p>Delete - 삭제 확인 페이지를 보여줌.</p>
+
+<ul>
+<li>그림 생략</li>
+</ul>
+</li>
+</ul>
+
+<p>모델 API에 익숙하고 관리 사이트에 익숙해지면이 <a href="https://docs.djangoproject.com/en/1.10/intro/tutorial03/">part 3 of this tutorial</a> 을
+읽고 설문 조사 앱에보기를 추가하는 방법에 대해 알아보기.</p>
+
+<h1 id="except-list">
+<a class="anchor" href="#except-list" aria-hidden="true"><span class="octicon octicon-link"></span></a><em>Except.List</em>
+</h1>
+
+<ul>
+<li>settings.py</li>
+</ul>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">LANGUAGE_CODE</span> <span class="o">=</span> <span class="s">'en-us'</span>  <span class="c1"># XXX: default - 소스 표현, 변경안해도 됨
+</span>
+<span class="n">TIME_ZONE</span> <span class="o">=</span> <span class="s">'Asia/Seoul'</span>  <span class="c1"># XXX:
+</span></code></pre></div>
+<ul>
+<li>python manage.py migrate</li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>python manage.py migrate
+
+...<span class="o">(</span>생략<span class="o">)</span>
+
+File <span class="s2">"/usr/local/lib/pyenv/versions/mky-virenv-3.5.1/lib/python3.5/site-packages/django/db/backends/postgresql/base.py"</span>, line 24, <span class="k">in</span> &lt;module&gt;
+    raise ImproperlyConfigured<span class="o">(</span><span class="s2">"Error loading psycopg2 module: %s"</span> % e<span class="o">)</span>
+django.core.exceptions.ImproperlyConfigured: Error loading psycopg2 module: No module named <span class="s1">'psycopg2'</span>
+
+...<span class="o">(</span>생략<span class="o">)</span>
+
+<span class="c"># XXX: error 메시지의 경로의 파일을 보면</span>
+<span class="nv">$ </span>vi /usr/local/lib/pyenv/versions/mky-virenv-3.5.1/lib/python3.5/site-packages/django/db/backends/postgresql/base.py
+
+<span class="c"># XXX: 문서안에 Requires: URL 이렇게 친절히 있음</span>
+<span class="s1">'''
+Requires psycopg 2: http://initd.org/projects/psycopg2
+'''</span>
+
+<span class="c"># XXX: psycopg2 설치 시작</span>
+<span class="nv">$ </span>pip <span class="nb">install </span>psycopg2
+
+...<span class="o">(</span>생략<span class="o">)</span>
+
+<span class="c"># XXX: pg_config 를 못 찾겠다는 말</span>
+writing dependency_links to pip-egg-info/psycopg2.egg-info/dependency_links.txt
+writing manifest file <span class="s1">'pip-egg-info/psycopg2.egg-info/SOURCES.txt'</span>
+Error: pg_config executable not found.
+
+...<span class="o">(</span>생략<span class="o">)</span>
+
+<span class="c"># XXX: postgres 설치했다면 존재하는 파일</span>
+<span class="nv">$ </span>find /usr/pgsql-9.5/bin <span class="nt">-name</span> <span class="s1">'pg_config'</span>
+
+<span class="c"># XXX: postgres dir 경로를 환경변수 PATH 에 추가</span>
+<span class="nv">$ </span><span class="nb">echo</span> <span class="s1">'## postgres'</span> <span class="o">&gt;&gt;</span> /etc/profile
+<span class="nv">$ </span><span class="nb">echo</span> <span class="s1">'export PATH="/usr/pgsql-9.5/bin:$PATH"'</span> <span class="o">&gt;&gt;</span> /etc/profile
+
+<span class="c"># XXX: psycopg2 설치 시작 재도전</span>
+<span class="nv">$ </span>pip <span class="nb">install </span>psycopg2
+
+<span class="c"># Collecting psycopg2</span>
+<span class="c">#   Using cached psycopg2-2.6.2.tar.gz</span>
+<span class="c"># Installing collected packages: psycopg2</span>
+<span class="c">#   Running setup.py install for psycopg2 ... done</span>
+<span class="c"># Successfully installed psycopg2-2.6.2</span>
+
+<span class="nv">$ </span>python manage.py migrate
+</code></pre></div>
+<h2 id="summary">
+<a class="anchor" href="#summary" aria-hidden="true"><span class="octicon octicon-link"></span></a>Summary</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>python manage.py makemigrations &lt;project&gt;
+<span class="c"># python manage.py makemigrations polls</span>
+
+<span class="nv">$ </span>python manage.py sqlmigrate &lt;project&gt; &lt;sql-number&gt;
+<span class="c"># python manage.py sqlmigrate polls 0001</span>
+
+<span class="nv">$ </span>python manage.py migrate
+</code></pre></div>
+<h2 id="referencs">
+<a class="anchor" href="#referencs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Referencs</h2>
+
+<ul>
+<li>
+<p><a href="http://initd.org/psycopg/">Psycopg</a></p>
+
+<ul>
+<li>Python 프로그래밍 언어 용으로 가장 많이 사용되는 PostgreSQL 어댑터.</li>
+<li>핵심에서 Python DB API 2.0 사양을 완벽하게 구현.</li>
+<li>몇 가지 확장 기능을 통해 PostgreSQL이 제공하는 많은 기능에 액세스 할 수 있음.</li>
+</ul>
+</li>
+<li><p><a href="https://docs.djangoproject.com/en/1.10/ref/databases/#third-party-notes">https://docs.djangoproject.com/en/1.10/ref/databases/#third-party-notes</a></p></li>
+<li><p><a href="https://docs.djangoproject.com/en/1.10/ref/django-admin/">https://docs.djangoproject.com/en/1.10/ref/django-admin/</a></p></li>
+<li><p><a href="https://docs.djangoproject.com/en/1.10/topics/db/queries/#field-lookups-intro">https://docs.djangoproject.com/en/1.10/topics/db/queries/#field-lookups-intro</a></p></li>
+<li><p><a href="https://docs.djangoproject.com/en/1.10/topics/db/queries/">https://docs.djangoproject.com/en/1.10/topics/db/queries/</a></p></li>
+<li><p><a href="https://docs.djangoproject.com/en/1.10/ref/models/relations/">https://docs.djangoproject.com/en/1.10/ref/models/relations/</a></p></li>
+<li><p><a href="https://docs.djangoproject.com/en/1.10/intro/tutorial03/">https://docs.djangoproject.com/en/1.10/intro/tutorial03/</a></p></li>
+</ul>
+
+  </div>
+
+<div>
+  <h2 id="database-setup">Database setup</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>vi mysite/settings.py
+</code></pre></div>
+<ul>
+<li><p>Django 설정을 module-level 변수로 나타내는 python 모듈.</p></li>
+<li>
+<p>기본적 구성은 SQLite 사용.</p>
+
+<ul>
+<li>SQLite는 Python에 포함되어 있어 데이터베이스를 지원하기 위해 다른 것을 설치할 필요가 없습니다. 그러나 첫 번째 실제 프로젝트를 시작할 때 PostgreSQL과 같은 확장 성이 뛰어난 데이터베이스를 사용하여 데이터베이스 전환 문제를 피할 수 있습니다.</li>
+</ul>
+</li>
+<li>
+<p>다른 Database 사용시 설정</p>
+
+<ul>
+<li><strong>ENGINE</strong></li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="s1">'ENGINE'</span>: <span class="s1">'django.db.backend.sqlite3'</span>,  <span class="c"># XXX: default</span>
+or
+<span class="s1">'ENGINE'</span>: <span class="s1">'django.db.backends.postgresql'</span>,
+or
+<span class="s1">'ENGINE'</span>: <span class="s1">'django.db.backends.mysql'</span>,
+or
+<span class="s1">'ENGINE'</span>: <span class="s1">'django.db.backends.oracle'</span>,
+</code></pre></div>
+<p><a href="https://docs.djangoproject.com/en/1.10/ref/databases/#third-party-notes" rel="nofollow" target="_blank">also available</a>
+- <strong>NAME</strong></p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="s1">'NAME'</span>: os.path.join<span class="o">(</span>BASE_DIR, <span class="s1">'db.sqlite3'</span><span class="o">)</span>  <span class="c"># XXX: default</span>
+or
+<span class="s1">'NAME'</span>: <span class="s1">'database_name'</span>
+</code></pre></div>
+</li>
+<li><p>그외 SQLite 외 Database 사용할 경우 접속 정보를 확인해서 추가해야 함.</p></li>
+</ul>
+
+<p>(정보: USER, PASSWORD, HOST)</p>
+<div class="highlight"><pre><code class="language-" data-lang="">* For database other than SQLitqe
+
+- 기본 SQLite 이미 설정되어 있음.
+
+- 다른 Database 하려면 Database 설정이 필요.
+
+  그리고 난 후 mysite/settings.py 설정해야 함.
+</code></pre></div>
+<ul>
+<li><p>mysite/settings.py 의 <strong>TIME_ZONE</strong> 설정.</p></li>
+<li>
+<p><strong>INSTALLED_APPS</strong></p>
+
+<ul>
+<li>활성화할 Django APP 이름 정의.</li>
+<li>Apps: 여러 Projects에서 사용가능, Projects의 다른 사람들이 사용할 수 있도록 패키지하고 배포 가능.</li>
+<li>기본적으로, INSTALLED_APPS 가 포함하는 Apps 목록, Django 함께 사용:</li>
+<li>django.contrib.admin - 관리자 사이트, 간단히 사용가능.</li>
+<li>django.contrib.auth - 인증 시스템</li>
+<li>django.contrib.contecttype - 컨텐츠 유형을 위한 프레임워크.</li>
+<li>django.contrib.session - session</li>
+<li>django.contrib.messages - messaging</li>
+<li>django.contrib.staticfiles - 고정 파일 관리</li>
+<li>applications은 편리한 일반적 경우를 기본적으로 포함하고 있다.</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>python manage.py migrate
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">* For the minimalists
+
+INSTALLED_APPS 목록 간소화
+
+기본적으로 제공, 반드시 필요한 설정이 아님.
+migrate 전에 주석 또는 삭제하면 됨.
+</code></pre></div>
+<ul>
+<li>migrate</li>
+</ul>
+
+<p>INSTALLED_APPS 설정을 보고 mysite/settings.py 파일의 데이터베이스 설정과 앱과 함께 제공되는 데이터베이스 마이그레이션에 따라 필요한 데이터베이스 테이블을 만듬 (나중에 다룰 예정).</p>
+
+<p>적용되는 각 마이그레이션에 대한 메시지가 표시. 원하는 경우 Database에 명령 줄 클라이언트를 실행하고 \ dt (PostgreSQL), SHOW TABLES;를 입력. (MySQL), .schema (SQLite) 또는 SELECT TABLE_NAME FROM USER_TABLES; (오라클) 장고 만든 테이블을 표시.</p>
+
+<hr>
+
+<h2 id="creating-models">Creating models</h2>
+
+<p>Database layout 과 metadata 추가.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">* Philosophy (철학)
+
+- DRY (Don't Repeat Yourself) 원리를 따름.
+
+- 목표는 데이터 모델을 한 곳에서 정의하고 자동으로 데이터 모델을 파생시키는 것.
+
+- 예 로, Ruby On Rails와는 달리
+  migration은 models file 에서 완전히 파생되며 본질적으로
+  Django가 Database 스키마를 update하여 현재 models와 일치시킬 수있는 기록임.
+</code></pre></div>
+<p>Table 개념은 간단한 Python class 로 표현.</p>
+
+<p>polls/models.py 파일을 다음과 같이 편집.</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+
+
+<span class="k">class</span> <span class="nc">Question</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">question_text</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+    <span class="n">pub_date</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="s">'data published'</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Choice</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">question</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Question</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span>
+    <span class="n">choice_text</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+    <span class="n">votes</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>각 Model은 django.db.models.Model을 하위 class로 나타내는 class로 표현.</li>
+</ul>
+
+<p>각 Model에는 여러 개의 class 변수 존재, 각 class 변수는 model의 database field를 나타냄.</p>
+
+<ul>
+<li><p>각 Field는 Field class의 instance로 표시 (문자-CharField, 날짜시간-DateTimeField)</p></li>
+<li><p>각 Field instance 명(예: question_text or pub_date)은 입력란의 이름으로 컴퓨터 사용하기 쉬운 형식 되어 있음. Python code에서 이 값을 사용시 Database 의 columns 이름으로 사용.</p></li>
+<li><p>Field에 선택적인 첫 번째 위치 인수를 사용하여 사람이 읽을 수있는 이름을 지정 가능.</p></li>
+</ul>
+
+<p>이것은 장고의 몇 가지 내성적 인 부분에서 사용되며, 문서로도 사용.</p>
+
+<p>이 필드가 제공되지 않으면 Django는 기계가 읽을 수있는 이름을 사용.</p>
+
+<p>이 예에서는 Question.pub_date(= date published)에 사람이 인식 할 수있는 이름만 정의함.</p>
+
+<ul>
+<li>Field class 의 필수 인수: (ex: CharField - max_length)</li>
+</ul>
+
+<p>이것은 DB 스키마뿐만 아니라 유효성 검사에서도 사용.</p>
+
+<ul>
+<li><p>Field의 다양한 선택적 인수 갖기: votes(default=0)</p></li>
+<li><p>ForeignKey: 다 대일, 다 대다, 일대일 등 모든 공통 데이터베이스 관계를 지원.</p></li>
+</ul>
+
+<hr>
+
+<h2 id="activating-models">Activating models</h2>
+
+<p>model code 를 작성함으로 가능한 것:</p>
+
+<ul>
+<li><p>생성 Database schema (CREATE TABLE statements).</p></li>
+<li><p>생성 Table 객체에 액세스하기 위한 Python 데이터베이스 액세스 API.</p></li>
+</ul>
+
+<p>하지만 먼저 Polls apps이 설치되었음을 프로젝트에 알릴 필요가 있음.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">* Philosophy
+
+Django apps 는 '플러그형': 여러 Project에서 앱을 사용할 수 있으며 앱을 배포 할 수 있음.
+앱을 Django 설치에 묶을 필요가 없기 때문.
+</code></pre></div>
+<p>Project에 Apps을 포함하려면 INSTALLED_APPS 설정에 구성 클래스에 대한 참조를 추가해야 함.</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">vi</span> <span class="o">./</span><span class="n">mysite</span><span class="o">/</span><span class="n">settings</span><span class="o">.</span><span class="n">py</span>
+
+<span class="c1"># ...
+</span><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">'polls.apps.PollsConfig'</span><span class="p">,</span>  <span class="c1"># XXX: 추가
+</span>    <span class="s">'django.contrib.admin'</span><span class="p">,</span>
+    <span class="s">'django.contrib.auth'</span><span class="p">,</span>
+    <span class="s">'django.contrib.contenttypes'</span><span class="p">,</span>
+    <span class="s">'django.contrib.sessions'</span><span class="p">,</span>
+    <span class="s">'django.contrib.messages'</span><span class="p">,</span>
+    <span class="s">'django.contrib.staticfiles'</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="c1"># ...
+</span>
+<span class="err">$</span> <span class="n">python</span> <span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">makemigrations</span> <span class="n">polls</span>
+
+<span class="c1"># Migrations for 'polls':
+#   polls/migrations/0001_initial.py:
+#     - Create model Choice
+#     - Create model Question
+#     - Add field question to choice
+</span></code></pre></div>
+<p>makemigrations 시 models 의 변경을 약간 적용.</p>
+
+<p>migrations은 Django가 models (및 데이터베이스 스키마)에 변경 사항을 저장하는 방법.
+이는 디스크에 있는 파일 일뿐.
+원하는 경우 새 모델의 마이그레이션을 읽을 수 있음. (polls/migrations/0001_initial.py)
+Django가 만들 때마다 읽을 필요는 없지만 Django가 어떻게 변경되는지 수동으로 조정하려는 경우에는 인간이 편집 할 수 있도록 설계됨.</p>
+
+<p>migration을 실행하고 데이터베이스 스키마를 자동으로 관리하는 명령이 있습니다.
+migration은 마이그레이션이라고 부르며 잠시 후에 살펴 보겠습니다.
+하지만 먼저 마이그레이션이 실행될 SQL을 살펴 보겠습니다.
+sqlmigrate: migration 이름을 사용하고 SQL을 return 함.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># python manage.py sqlmigrate &lt;apps-name&gt; &lt;migrations-name&gt;</span>
+<span class="nv">$ </span>python manage.py sqlmigrate polls 0001
+</code></pre></div><div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="p">...(</span><span class="err">생략</span><span class="p">)</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="nv">"polls_choice"</span> <span class="p">(</span><span class="nv">"id"</span> <span class="nb">serial</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span> <span class="nv">"choice_text"</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span> <span class="nv">"votes"</span> <span class="nb">integer</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">);</span>
+
+<span class="c1">--</span>
+<span class="c1">-- Create model Question</span>
+<span class="c1">--</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="nv">"polls_question"</span> <span class="p">(</span><span class="nv">"id"</span> <span class="nb">serial</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span> <span class="nv">"question_text"</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span> <span class="nv">"pub_date"</span> <span class="nb">timestamp</span> <span class="k">with</span> <span class="nb">time</span> <span class="k">zone</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">);</span>
+<span class="c1">--</span>
+<span class="c1">-- Add field question to choice</span>
+<span class="c1">--</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="nv">"polls_choice"</span> <span class="k">ADD</span> <span class="k">COLUMN</span> <span class="nv">"question_id"</span> <span class="nb">integer</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">;</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="nv">"polls_choice"</span> <span class="k">ALTER</span> <span class="k">COLUMN</span> <span class="nv">"question_id"</span> <span class="k">DROP</span> <span class="k">DEFAULT</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">INDEX</span> <span class="nv">"polls_choice_7aa0f6ee"</span> <span class="k">ON</span> <span class="nv">"polls_choice"</span> <span class="p">(</span><span class="nv">"question_id"</span><span class="p">);</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="nv">"polls_choice"</span> <span class="k">ADD</span> <span class="k">CONSTRAINT</span> <span class="nv">"polls_choice_question_id_c5b4b260_fk_polls_question_id"</span> <span class="k">FOREIGN</span> <span class="k">KEY</span> <span class="p">(</span><span class="nv">"question_id"</span><span class="p">)</span> <span class="k">REFERENCES</span> <span class="nv">"polls_question"</span> <span class="p">(</span><span class="nv">"id"</span><span class="p">)</span> <span class="k">DEFERRABLE</span> <span class="k">INITIALLY</span> <span class="k">DEFERRED</span><span class="p">;</span>
+<span class="k">COMMIT</span><span class="p">;</span>
+</code></pre></div>
+<p>유의사항:</p>
+
+<ul>
+<li><p>Table name은 Apps name과 models의 소문자 이름을 결합하여 자동 생성됨. (재정의 가능)</p></li>
+<li><p>Primary Key (ID)가 자동으로 추가됨. (무시할 수도 있음)</p></li>
+<li><p>Foreign Key 는 field name 에 _id 를 추가함. (재정의 가능)</p></li>
+<li><p>외래 키 관계는 FOREIGN KEY 제약 조건에 의해 명시적으로 지정됨.
+DEFERRABLE 부품에 대해 걱정하지 마십시오.
+그것은 트랜잭션이 끝날 때까지 PostgreSQL에 외래 키를 적용하지 말라고하는 것입니다.</p></li>
+<li><p>사용중인 데이터베이스에 맞게 조정.
+auto_increment(MySQL),
+serial(PostgreSQL) 또는 integer primary key autoincrement(SQLite)와 같은 데이터베이스
+관련 필드 유형이 자동으로 처리됨.</p></li>
+<li><p>sqlmigrate 명령은 실제로 데이터베이스에서 migrate을 실행하지 않음.
+단지 화면에 출력, Django가 필요하다고 생각하는 것을 볼 수 있음.
+Django가 할 일을 확인 또는 변경을 위해 SQL script가 필요한 DBA가 있는 경우 유용.</p></li>
+</ul>
+
+<p>관심이 있으시면 python manage.py check를 실행할 수도 있음.
+이 작업은 마이그레이션을 수행하거나 데이터베이스를 만지지 않고 프로젝트의 모든 문제를 검사함.</p>
+
+<p>다시 migrate 실행해서 model tables 를 생성.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>python manage.py migrate
+
+<span class="c"># Operations to perform:</span>
+<span class="c">#   Apply all migrations: admin, auth, contenttypes, polls, sessions</span>
+<span class="c"># Running migrations:</span>
+<span class="c">#   Applying polls.0001_initial... OK</span>
+</code></pre></div>
+<p>migrate 명령은 적용되지 않은 모든 마이그레이션을 취합니다 (django_migrations라는 데이터베이스의 특수 테이블을 사용하여 장고가 적용됨). 데이터베이스에 대해 실행합니다. 기본적으로 모델에 대한 변경 사항을 데이터베이스에 스키마와 동기화함. 마이그레이션은 매우 강력하며 데이터베이스 또는 테이블을 삭제하거나 새 테이블을 만들 필요없이 프로젝트를 개발할 때 시간이 지남에 따라 모델을 변경할 수 있음. 데이터 손실없이 데이터베이스 업그레이드를 전문으로합니다.</p>
+
+<p>튜토리얼의 뒷부분에서 좀 더 자세히 다루 겠지만,
+지금은 모델 변경을위한 3단계 가이드를 기억하십시오.</p>
+
+<ul>
+<li><p>models 변경 (models.py 안에)</p></li>
+<li><p>python manage.py makemigrations (변경사항에 대한 migrations 생성)</p></li>
+<li><p>python manage.py migrate (Database 적용)</p></li>
+</ul>
+
+<p>migration을 만들고 적용하는 별도의 명령이있는 이유는 버전 관리 시스템으로 migration을 commit하여 Apps과 함께 제공하기 때문.
+개발자가 쉽게 개발할 수있을뿐 아니라 다른 개발자와 프로덕션에서도 사용할 수 있음.</p>
+
+<p>manage.py 유틸리티가 할 수 있는 일에 대한 자세한 정보는 django-admin 설명서를 읽으십시오.</p>
+
+<hr>
+
+<h2 id="playing-with-the-api">Playing with the API</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">python manage.py shell
+</code></pre></div>
+<p>왜냐하면 manage.py는 DJANGO_SETTINGS_MODULE 환경 변수를 설정하기 때문,
+Django는 mysite/settings.py 에 대한 Python import 경로를 제공함.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">* Bypassing manage.py
+
+manage.py를 사용하지 않아도 아무런 문제가 없습니다.
+DJANGO_SETTINGS_MODULE 환경 변수를 mysite.settings로 설정하고
+일반 Python shell을 시작한 다음 django 를 설정하십시오.
+
+    import django
+    django.setup()
+
+AttributeError가 발생시 튜토리얼 버전과 일치하지 않는 Django 버전을 사용임.
+
+manage.py 와 동일한 Dir 에서 python 을 실행해야 함.
+또는 import mysite가 작동하도록 디렉토리가 Python 경로에 있는지 확인.
+
+이 모든 것에 대한 더 자세한 정보는 [django-admin documentation] 참조.
+</code></pre></div><div class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">python</span> <span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">shell</span>
+
+<span class="kn">from</span> <span class="nn">polls.models</span> <span class="kn">import</span> <span class="n">Question</span><span class="p">,</span> <span class="n">Choice</span>
+<span class="kn">from</span> <span class="nn">django.utils</span> <span class="kn">import</span> <span class="n">timezone</span>
+
+<span class="n">q</span> <span class="o">=</span> <span class="n">Question</span><span class="p">()</span>
+<span class="n">q</span><span class="o">.</span><span class="n">question_text</span> <span class="o">=</span> <span class="s">'question'</span>
+<span class="n">q</span><span class="o">.</span><span class="n">pub_date</span> <span class="o">=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+<span class="n">q</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+<span class="n">q</span><span class="o">.</span><span class="nb">id</span>
+<span class="n">Question</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="nb">all</span><span class="p">()</span>
+</code></pre></div>
+<p><question: question objects>는 완전히이 객체의 도움이되지 않는 표현.
+polls/models.py 파일에서 Question 모델을 편집하고
+Question and Choice에 __str__() 메소드를 추가하여 수정.</question:></p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">vi</span> <span class="n">polls</span><span class="o">/</span><span class="n">models</span><span class="o">.</span><span class="n">py</span>
+
+<span class="c1"># -*- coding:utf8 -*-
+</span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="c1"># only if you need to support Python2
+# from django.utils.encoding import python_2_unicode_compatible
+</span><span class="kn">from</span> <span class="nn">django.utils</span> <span class="kn">import</span> <span class="n">timezone</span>
+
+
+<span class="c1"># @python_2_unicode_compatible  # only if you need to support Python2
+</span><span class="k">class</span> <span class="nc">Question</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">question_text</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+    <span class="n">pub_date</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="s">'data published'</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">question_text</span>
+
+    <span class="k">def</span> <span class="nf">was_published_recently</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pub_date</span> <span class="o">&gt;=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="c1"># @python_2_unicode_compatible  # only if you need to support Python2
+</span><span class="k">class</span> <span class="nc">Choice</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">question</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Question</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span>
+    <span class="n">choice_text</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+    <span class="n">votes</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">choice_text</span>
+</code></pre></div><div class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">python</span> <span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">shell</span>
+
+
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">polls.models</span> <span class="kn">import</span> <span class="n">Question</span><span class="p">,</span> <span class="n">Choice</span>
+
+<span class="c1"># XXX: __str__
+# Make sure our __str__() addition worked.
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">Question</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="nb">all</span><span class="p">()</span>
+<span class="o">&lt;</span><span class="n">QuerySet</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Question</span><span class="p">:</span> <span class="n">Whats</span> <span class="n">up</span><span class="err">?</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span>
+
+<span class="c1"># Django provides a rich database lookup API that's entirely driven by
+# keyword arguments.
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">Question</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="nb">filter</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">QuerySet</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Question</span><span class="p">:</span> <span class="n">Whats</span> <span class="n">up</span><span class="err">?</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Question</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="nb">filter</span><span class="p">(</span><span class="n">question_text__startswith</span><span class="o">=</span><span class="s">'What'</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">QuerySet</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Question</span><span class="p">:</span> <span class="n">Whats</span> <span class="n">up</span><span class="err">?</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span>
+
+<span class="c1"># Get the question that was published this year.
+</span><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">django.utils</span> <span class="kn">import</span> <span class="n">timezone</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">current_year</span> <span class="o">=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">year</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Question</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pub_date__year</span><span class="o">=</span><span class="n">current_year</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">Question</span><span class="p">:</span> <span class="n">Whats</span> <span class="n">up</span><span class="err">?</span><span class="o">&gt;</span>
+
+<span class="c1"># == Question.objects.get(id=1).
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">Question</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">Question</span><span class="p">:</span> <span class="n">Whats</span> <span class="n">up</span><span class="err">?</span><span class="o">&gt;</span>
+
+<span class="c1"># XXX: was_published_recently
+# Make sure our custom method worked.
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">q</span> <span class="o">=</span> <span class="n">Question</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">q</span><span class="o">.</span><span class="n">was_published_recently</span><span class="p">()</span>
+<span class="bp">True</span>
+
+<span class="c1"># Give the Question a couple of Choices. The create call constructs a new
+# Choice object, does the INSERT statement, adds the choice to the set
+# of available choices and returns the new Choice object. Django creates
+# a set to hold the "other side" of a ForeignKey relation
+# (e.g. a question's choice) which can be accessed via the API.
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">q</span> <span class="o">=</span> <span class="n">Question</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># related - none
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">q</span><span class="o">.</span><span class="n">choice_set</span><span class="o">.</span><span class="nb">all</span><span class="p">()</span>
+<span class="o">&lt;</span><span class="n">QuerySet</span> <span class="p">[]</span><span class="o">&gt;</span>
+
+<span class="c1"># .create()
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">q</span><span class="o">.</span><span class="n">choice_set</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">choice_text</span><span class="o">=</span><span class="s">'Not much'</span><span class="p">,</span> <span class="n">votes</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">Choice</span><span class="p">:</span> <span class="n">Not</span> <span class="n">much</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">q</span><span class="o">.</span><span class="n">choice_set</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">choice_text</span><span class="o">=</span><span class="s">'The sky'</span><span class="p">,</span> <span class="n">votes</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">Choice</span><span class="p">:</span> <span class="n">The</span> <span class="n">sky</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">c</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">choice_set</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">choice_text</span><span class="o">=</span><span class="s">'Just hacking again'</span><span class="p">,</span> <span class="n">votes</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># related
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">c</span><span class="o">.</span><span class="n">question</span>
+<span class="o">&lt;</span><span class="n">Question</span><span class="p">:</span> <span class="n">Whats</span> <span class="n">up</span><span class="err">?</span><span class="o">&gt;</span>
+
+<span class="c1"># related - Question &gt; Choice objects.
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">q</span><span class="o">.</span><span class="n">choice_set</span><span class="o">.</span><span class="nb">all</span><span class="p">()</span>
+<span class="o">&lt;</span><span class="n">QuerySet</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Choice</span><span class="p">:</span> <span class="n">Not</span> <span class="n">much</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Choice</span><span class="p">:</span> <span class="n">The</span> <span class="n">sky</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Choice</span><span class="p">:</span> <span class="n">Just</span> <span class="n">hacking</span> <span class="n">again</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">q</span><span class="o">.</span><span class="n">choice_set</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="mi">3</span>
+
+<span class="c1"># __ (double underscores) 로 테이블 관계를 깊게 읽음
+# .filter( question테이블__pub_date컬럼__year(= datetime__year) )
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">Choice</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="nb">filter</span><span class="p">(</span><span class="n">question__pub_date__year</span><span class="o">=</span><span class="n">current_year</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">QuerySet</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Choice</span><span class="p">:</span> <span class="n">Not</span> <span class="n">much</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Choice</span><span class="p">:</span> <span class="n">The</span> <span class="n">sky</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Choice</span><span class="p">:</span> <span class="n">Just</span> <span class="n">hacking</span> <span class="n">again</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span>
+
+<span class="c1"># .delete() - 선택한 하나를 삭제
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">c</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">choice_set</span><span class="o">.</span><span class="nb">filter</span><span class="p">(</span><span class="n">choice_text__startswith</span><span class="o">=</span><span class="s">'Just hacking'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">c</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+</code></pre></div>
+<p>모델 관계에 대한 자세한 내용은 <a href="https://docs.djangoproject.com/en/1.10/ref/models/relations/" rel="nofollow" target="_blank">Accessing related objects</a>를 참조.</p>
+
+<p>Underscores 사용하여 API를 통해 필드 조회를 수행하는 방법은 <a href="https://docs.djangoproject.com/en/1.10/topics/db/queries/#field-lookups-intro" rel="nofollow" target="_blank">Field lookups</a>를 참조.</p>
+
+<p>모든 자세한 내용은 <a href="https://docs.djangoproject.com/en/1.10/topics/db/queries/" rel="nofollow" target="_blank">Database API reference</a>참조.</p>
+
+<hr>
+
+<h2 id="intorducing-the-django-admin">Intorducing the Django Admin</h2>
+<div class="highlight"><pre><code class="language-" data-lang="">* Philosophy
+
+관리 사이트를 생성하는 것은 많은 창의성을 필요로하지 않는 지루한 작업.
+
+Django는 모델을 위한 관리 인터페이스 생성을 완전히 자동화함.
+
+Django는 "content publishers"와 "public"사이트 사이에 명확한 구분이 있는
+뉴스 룸 환경에서 작성되었음.
+
+사이트 관리자는 시스템을 사용하여 뉴스 기사, 이벤트, 스포츠 경기 결과 등을
+추가하며 해당 내용은 공개 사이트에 표시.
+
+Django는 사이트 관리자가 컨텐트를 편집 할 수 있는 통합 된 인터페이스를
+만드는 문제를 해결.
+
+관리자는 사이트 방문자가 사용하도록 되어 있지 않음. 사이트 관리자 용도.
+</code></pre></div>
+<h3 id="creating-an-admin-user">Creating an admin user</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>python manage.py createsuperuser
+
+<span class="c"># Username (leave blank to use 'mky'): mky</span>
+<span class="c"># Email address: portal2312@gmail.com</span>
+<span class="c"># Password:</span>
+<span class="c"># Password (again):</span>
+<span class="c"># Superuser created successfully.</span>
+
+<span class="nv">$ </span>vi ./mysite/settings.py
+
+...
+<span class="nv">ALLOWED_HOSTS</span><span class="o">=[</span><span class="s1">'*'</span><span class="o">]</span>  <span class="c"># XXX: Add '*'</span>
+...
+:wq
+
+<span class="c"># firewalld port 확인할 것</span>
+<span class="c"># firewall-cmd</span>
+<span class="nv">$ </span>python manage.py runserver 0.0.0.0:8000
+
+<span class="c"># Web sites URL GO http://127.0.0.1:8000/admin</span>
+</code></pre></div>
+<p>언어설정가능</p>
+
+<hr>
+
+<h3 id="enter-the-admin-site">Enter the admin site</h3>
+
+<ul>
+<li>이미지생략</li>
+</ul>
+
+<p>그룹 및 사용자와 같이 몇 가지 유형의 편집 가능한 콘텐츠가 표시되어야 함.
+이것들은 Django가 제공 한 인증 프레임 워크인 django.contrib.auth에 의해 제공됨.</p>
+
+<hr>
+
+<h3 id="make-the-poll-app-modifiable-in-the-admin">Make the poll app modifiable in the admin</h3>
+
+<p>admin Page에 Question Table 보이게 추가</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># polls/admin.py
+</span><span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Question</span>
+
+
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Question</span><span class="p">)</span>
+</code></pre></div>
+<hr>
+
+<h3 id="explore-the-free-admin-functionality">Explore the free admin functionality</h3>
+
+<p>재기동 없이 파일 수정만으로 표현</p>
+
+<p>Question &gt; What's up? &gt;</p>
+
+<p>관점:</p>
+
+<ul>
+<li><p>form은 "Question" model로 부터 자동 가져왔음.</p></li>
+<li>
+<p>다른 모델 필드 유형(DateTimeField, CharField) 적당한 해당 HTML 위젯이 입력됨.</p>
+
+<p>각 필드 유형은 장고 관리자에게 자신을 표시하는 방법을 알고 있음.</p>
+</li>
+<li>
+<p>각 DateTimeField는 무료 JavaScript 바로가기를 가져옴.</p>
+
+<p>날짜에는 "오늘"바로 가기와 캘린더 팝업이 표시되며 시간에는</p>
+
+<p>"Now"단축키와 일반적으로 입력 된 시간을 나열하는 편리한 팝업이 표시됨.</p>
+</li>
+</ul>
+
+<p>페이지 하단의 버튼 설명:</p>
+
+<ul>
+<li><p>Save - 변경 사항을 저장, 이 유형의 객체에 대한 변경 목록 페이지로 이동.</p></li>
+<li><p>Save and continue editing - 변경사항을 저장, 이 객체의 관리 페이지를 reload.</p></li>
+<li><p>Save and add another - 변경사항을 저장, 이 유형의 객체에 대해 새로운 빈 양식을 load.</p></li>
+<li>
+<p>Delete - 삭제 확인 페이지를 보여줌.</p>
+
+<ul>
+<li>그림 생략</li>
+</ul>
+</li>
+</ul>
+
+<p>모델 API에 익숙하고 관리 사이트에 익숙해지면이 <a href="https://docs.djangoproject.com/en/1.10/intro/tutorial03/" rel="nofollow" target="_blank">part 3 of this tutorial</a> 을
+읽고 설문 조사 앱에보기를 추가하는 방법에 대해 알아보기.</p>
+
+<h1 id="except-list"><em>Except.List</em></h1>
+
+<ul>
+<li>settings.py</li>
+</ul>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">LANGUAGE_CODE</span> <span class="o">=</span> <span class="s">'en-us'</span>  <span class="c1"># XXX: default - 소스 표현, 변경안해도 됨
+</span>
+<span class="n">TIME_ZONE</span> <span class="o">=</span> <span class="s">'Asia/Seoul'</span>  <span class="c1"># XXX:
+</span></code></pre></div>
+<ul>
+<li>python manage.py migrate</li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>python manage.py migrate
+
+...<span class="o">(</span>생략<span class="o">)</span>
+
+File <span class="s2">"/usr/local/lib/pyenv/versions/mky-virenv-3.5.1/lib/python3.5/site-packages/django/db/backends/postgresql/base.py"</span>, line 24, <span class="k">in</span> &lt;module&gt;
+    raise ImproperlyConfigured<span class="o">(</span><span class="s2">"Error loading psycopg2 module: %s"</span> % e<span class="o">)</span>
+django.core.exceptions.ImproperlyConfigured: Error loading psycopg2 module: No module named <span class="s1">'psycopg2'</span>
+
+...<span class="o">(</span>생략<span class="o">)</span>
+
+<span class="c"># XXX: error 메시지의 경로의 파일을 보면</span>
+<span class="nv">$ </span>vi /usr/local/lib/pyenv/versions/mky-virenv-3.5.1/lib/python3.5/site-packages/django/db/backends/postgresql/base.py
+
+<span class="c"># XXX: 문서안에 Requires: URL 이렇게 친절히 있음</span>
+<span class="s1">'''
+Requires psycopg 2: http://initd.org/projects/psycopg2
+'''</span>
+
+<span class="c"># XXX: psycopg2 설치 시작</span>
+<span class="nv">$ </span>pip <span class="nb">install </span>psycopg2
+
+...<span class="o">(</span>생략<span class="o">)</span>
+
+<span class="c"># XXX: pg_config 를 못 찾겠다는 말</span>
+writing dependency_links to pip-egg-info/psycopg2.egg-info/dependency_links.txt
+writing manifest file <span class="s1">'pip-egg-info/psycopg2.egg-info/SOURCES.txt'</span>
+Error: pg_config executable not found.
+
+...<span class="o">(</span>생략<span class="o">)</span>
+
+<span class="c"># XXX: postgres 설치했다면 존재하는 파일</span>
+<span class="nv">$ </span>find /usr/pgsql-9.5/bin <span class="nt">-name</span> <span class="s1">'pg_config'</span>
+
+<span class="c"># XXX: postgres dir 경로를 환경변수 PATH 에 추가</span>
+<span class="nv">$ </span><span class="nb">echo</span> <span class="s1">'## postgres'</span> <span class="o">&gt;&gt;</span> /etc/profile
+<span class="nv">$ </span><span class="nb">echo</span> <span class="s1">'export PATH="/usr/pgsql-9.5/bin:$PATH"'</span> <span class="o">&gt;&gt;</span> /etc/profile
+
+<span class="c"># XXX: psycopg2 설치 시작 재도전</span>
+<span class="nv">$ </span>pip <span class="nb">install </span>psycopg2
+
+<span class="c"># Collecting psycopg2</span>
+<span class="c">#   Using cached psycopg2-2.6.2.tar.gz</span>
+<span class="c"># Installing collected packages: psycopg2</span>
+<span class="c">#   Running setup.py install for psycopg2 ... done</span>
+<span class="c"># Successfully installed psycopg2-2.6.2</span>
+
+<span class="nv">$ </span>python manage.py migrate
+</code></pre></div>
+<h2 id="summary">Summary</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>python manage.py makemigrations &lt;project&gt;
+<span class="c"># python manage.py makemigrations polls</span>
+
+<span class="nv">$ </span>python manage.py sqlmigrate &lt;project&gt; &lt;sql-number&gt;
+<span class="c"># python manage.py sqlmigrate polls 0001</span>
+
+<span class="nv">$ </span>python manage.py migrate
+</code></pre></div>
+<h2 id="referencs">Referencs</h2>
+
+<ul>
+<li>
+<p><a href="http://initd.org/psycopg/" rel="nofollow" target="_blank">Psycopg</a></p>
+
+<ul>
+<li>Python 프로그래밍 언어 용으로 가장 많이 사용되는 PostgreSQL 어댑터.</li>
+<li>핵심에서 Python DB API 2.0 사양을 완벽하게 구현.</li>
+<li>몇 가지 확장 기능을 통해 PostgreSQL이 제공하는 많은 기능에 액세스 할 수 있음.</li>
+</ul>
+</li>
+<li><p><a href="https://docs.djangoproject.com/en/1.10/ref/databases/#third-party-notes" rel="nofollow" target="_blank">https://docs.djangoproject.com/en/1.10/ref/databases/#third-party-notes</a></p></li>
+<li><p><a href="https://docs.djangoproject.com/en/1.10/ref/django-admin/" rel="nofollow" target="_blank">https://docs.djangoproject.com/en/1.10/ref/django-admin/</a></p></li>
+<li><p><a href="https://docs.djangoproject.com/en/1.10/topics/db/queries/#field-lookups-intro" rel="nofollow" target="_blank">https://docs.djangoproject.com/en/1.10/topics/db/queries/#field-lookups-intro</a></p></li>
+<li><p><a href="https://docs.djangoproject.com/en/1.10/topics/db/queries/" rel="nofollow" target="_blank">https://docs.djangoproject.com/en/1.10/topics/db/queries/</a></p></li>
+<li><p><a href="https://docs.djangoproject.com/en/1.10/ref/models/relations/" rel="nofollow" target="_blank">https://docs.djangoproject.com/en/1.10/ref/models/relations/</a></p></li>
+<li><p><a href="https://docs.djangoproject.com/en/1.10/intro/tutorial03/" rel="nofollow" target="_blank">https://docs.djangoproject.com/en/1.10/intro/tutorial03/</a></p></li>
+</ul>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

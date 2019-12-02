@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>What&#39;s New in Cmd 6.2 | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="What&#39;s New in Cmd 6.2" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="새로운 기능에 대한 소개" />
+<meta property="og:description" content="새로운 기능에 대한 소개" />
+<link rel="canonical" href="/blog/docs/develop/N-Z/Sencha/cmd/6.x/1_what_is_new_in_cmd_6.html" />
+<meta property="og:url" content="/blog/docs/develop/N-Z/Sencha/cmd/6.x/1_what_is_new_in_cmd_6.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-02T16:38:51+09:00" />
+<script type="application/ld+json">
+{"description":"새로운 기능에 대한 소개","headline":"What&#39;s New in Cmd 6.2","dateModified":"2019-12-02T16:38:51+09:00","datePublished":"2019-12-02T16:38:51+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/docs/develop/N-Z/Sencha/cmd/6.x/1_what_is_new_in_cmd_6.html"},"url":"/blog/docs/develop/N-Z/Sencha/cmd/6.x/1_what_is_new_in_cmd_6.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/blog/feed.xml" title="Portal2312's blog" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113063601-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+<script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>What's New in Cmd 6.2</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#app-init">app init</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#app-install">app install</a></li>
+<li class="toc-entry toc-h3"><a href="#workspace-init">workspace init</a></li>
+<li class="toc-entry toc-h3"><a href="#workspace-install">workspace install</a></li>
+<li class="toc-entry toc-h3"><a href="#workspace-cleanup-command">workspace cleanup command</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#whats-new-in-sencha-cmd-6-1">What&#39;s New in Sencha Cmd 6.1</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#framework-and-workspace-management">Framework and Workspace Management</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#whats-new-in-sencha-cmd-6">What&#39;s New in Sencha Cmd 6</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#new-installers">New Installers</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#non-admin">Non-admin</a></li>
+<li class="toc-entry toc-h3"><a href="#no-ruby-dependency">No Ruby Dependency</a></li>
+<li class="toc-entry toc-h3"><a href="#compass-for-order-frameworks">Compass (for order Frameworks)</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#fashion">Fashion</a></li>
+<li class="toc-entry toc-h2"><a href="#workspace-improvement">Workspace Improvement</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#package-directories">Package Directories</a></li>
+<li class="toc-entry toc-h3"><a href="#workspace-json">workspace.json</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#microloader">Microloader</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#reference">Reference</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#url">URL</a></li>
+</ul>
+</li>
+</ul><p>새로운 기능에 대한 소개</p>
+
+<h2 id="app-init">
+<a class="anchor" href="#app-init" aria-hidden="true"><span class="octicon octicon-link"></span></a>app init</h2>
+
+<p><code>app init</code>은 현재 Dir를 Sencha Cmd application 으로 초기화합니다.</p>
+
+<p>완전히 비어있는 Dir 에서 시작하여 다음 명령 중 하나를 실행하고</p>
+
+<p>완전히 구조화 된 Ext JS/Cmd "hello world" application 으로 끝낼 수 있습니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sencha app init <span class="nt">--ext</span><span class="o">=</span>/path/to/extjs/ MyApp <span class="nt">--modern</span>
+
+<span class="nv">$ </span>sencha app init <span class="nt">--ext</span><span class="o">=</span>/path/to/extjs/ MyApp <span class="nt">--classic</span>
+
+<span class="nv">$ </span>sencha app init <span class="nt">--ext</span><span class="o">=</span>/path/to/extjs/ MyApp <span class="nt">--universal</span>
+</code></pre></div>
+<p><strong>Note:</strong> application은 다음 <code>app build</code> 전까지 완료되지 않을 것입니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sencha app build
+</code></pre></div>
+<h3 id="app-install">
+<a class="anchor" href="#app-install" aria-hidden="true"><span class="octicon octicon-link"></span></a>app install</h3>
+
+<p><code>app install</code>은 불완전한 Sencha Cmd application이 실행 가능한 상태에 있음을 보장함.</p>
+
+<p>예를 들어 아주 간단한 application 폴더를 컴퓨터에 놓고 이 명령을 실행하여 전체 Cmd 인프라를 만들 수 있습니다.</p>
+
+<p>예를 들어, 이 github repo를 보고 이를 적용 할 응용 프로그램의 유형을 볼 수 있습니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sencha app <span class="nb">install</span> <span class="nt">--frameworks</span><span class="o">=</span>/path/to/extjs
+</code></pre></div>
+<p>"frameworks"는 Cmd 6.1에서 소개된 기능. (아래 참조)
+여러 버전의 ExtJS가 포함된 폴더를 가리킬 수 있습니다.
+위의 repo에서 볼 수 있듯이 ExtJS 버전은 workspace.json 내에 있습니다.
+frameworks flag는 사용자가 가리키는 폴더 내에서 가능한 한 필요한 버전과 가장 일치하는
+항목을 찾으려고 시도합니다.</p>
+
+<p><strong>Note:</strong> <code>app build</code> 전까지 완료되지 않을 것입니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sencha app build
+</code></pre></div>
+<h3 id="workspace-init">
+<a class="anchor" href="#workspace-init" aria-hidden="true"><span class="octicon octicon-link"></span></a>workspace init</h3>
+
+<p>현재 Dir가 Sencha Cmd 작업 공간의 일부분인지 확인함.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sencha workspace init
+
+<span class="c"># Sencha Cmd v6.2.1.29</span>
+<span class="c"># [INF] Using existing workspace at /home/mky/myext</span>
+</code></pre></div>
+<h3 id="workspace-install">
+<a class="anchor" href="#workspace-install" aria-hidden="true"><span class="octicon octicon-link"></span></a>workspace install</h3>
+
+<p>불완전한 Sencha Cmd 작업 공간이 실행 ​​가능 상태에 있음을 보장함.</p>
+
+<p>예로, 매우 간단한 작업 공간 Dir를 컴퓨터에 놓고 이 명령을 실행하여 전체 Cmd 인프라를 생성 할 수 있음.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sencha workspace <span class="nb">install</span> <span class="nt">--frameworks</span><span class="o">=</span>/path/to/extjs
+</code></pre></div>
+<p>"frameworks"는 Cmd 6.1에서 소개된 기능. (생략)</p>
+
+<h3 id="workspace-cleanup-command">
+<a class="anchor" href="#workspace-cleanup-command" aria-hidden="true"><span class="octicon octicon-link"></span></a>workspace cleanup command</h3>
+
+<p>작업 영역에 더 이상 존재하지 않는 application을 workspace.json의 app 항목에서 제거.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sencha workspace cleanup
+</code></pre></div>
+<hr>
+
+<h1 id="whats-new-in-sencha-cmd-6-1">
+<a class="anchor" href="#whats-new-in-sencha-cmd-6-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>What's New in Sencha Cmd 6.1</h1>
+
+<h2 id="framework-and-workspace-management">
+<a class="anchor" href="#framework-and-workspace-management" aria-hidden="true"><span class="octicon octicon-link"></span></a>Framework and Workspace Management</h2>
+
+<p>Projects가 하나의 작업 공간에서 여러 application을 작업해야 하는 경우에는
+다른 framework version이 현실화 될 수 있음.</p>
+
+<p>Sencha Cmd 6.1 이전 버전에서는 모든 application을 동시에 업그레이드해야 하는 ExtJS (및 Sencha Touch 추가 버전) version으로 작업 영역을 구성 할 수 있었음. (불편함)</p>
+
+<p>Sencha Cmd 6.1 부터 <code>workspace.json</code> 파일에 여러 framework를 기술 가능.</p>
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="err">#</span><span class="w"> </span><span class="err">workspace.json</span><span class="w">
+
+</span><span class="nl">"frameworks"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"ext62"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ext"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"ext602"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ext-6.0.2"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p><code>frameworks</code> 속성 아래의 각 항목은 현재 작업 공간 내부의 Dir에 해당하며 속성 이름은
+<code>app.json</code> 에서 사용할 framework key 입니다.</p>
+
+<p>app.json의 <code>framework</code> 속성은 다음 항목 중 하나에 매핑됨.</p>
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="err">#</span><span class="w"> </span><span class="err">app.json</span><span class="w">
+
+</span><span class="nl">"framework"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ext62"</span><span class="w">
+</span></code></pre></div>
+<p>workspace에 new framework 추가:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sencha framework add /path/to/ext
+</code></pre></div>
+<p>이 명령은 버전번호(예: ExtJS 6.2.0 == "ext62" or ExtJS 6.0.2 == "ext602")에 따라
+제공된 framework에 적절한 키를 결정함.</p>
+
+<p><code>framework add</code> framework 항목의 모든 측면을 제어할 수 있는 몇 가지 추가 옵션도 제공. 예:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sencha framework add <span class="nt">-key</span> extFiveO <span class="nt">-source</span> /path/to/ext-5.0.0 <span class="nt">-path</span> ext50
+</code></pre></div>
+<p>위와 같이 입력시 <code>workspace.json</code>의 <code>frameworks</code> 에 자동 추가됨:</p>
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="err">#</span><span class="w"> </span><span class="err">workspace.json</span><span class="w">
+
+</span><span class="nl">"frameworks"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"extFive0"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ext50"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>또한 Cmd는 /path/to/ext-5.0.0의 중요한 framework 파일을 작업 영역
+(-source 및 -path 스위치로 지정)의 ext50 하위 폴더에 복사합니다.
+framework keys는 "ext"또는 "touch"로 시작해야 합니다.</p>
+
+<p>framework가 추가 된 후 framework keys를 사용하여 "generate app" 명령을 전환하여
+application을 생성 할 수 있습니다.
+예를 들어 위에 추가 한 "extSixTwo" framework를 사용하여 application을 생성하려면
+다음과 같이 generate app 명령을 호출해야 함:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sencha generate app <span class="nt">-extFiveO</span> AppName path/to/app
+</code></pre></div>
+<p>frameworks 목록 보기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sencha framework list
+</code></pre></div>
+<p>framework 삭제:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sencha framework remove extFive0
+
+<span class="nv">$ </span>sencha framework remove <span class="nt">--force</span> extFive0
+</code></pre></div>
+<p>특정 framework를 사용하여 모든 application을 upgrade 하려면 "framework upgrdae" 명령을 사용.</p>
+
+<p>예를 들어 "ext" 키가 있는 framework를 (경로 /path/to/ext) 최신 framework version으로
+upgrade 하려면 다음 명령을 실행:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sencha framework upgrade ext /path/to/ext
+</code></pre></div>
+<p>이렇게 하면 framework 파일을 upgrade 하고 이를 사용하는 각 application에 대해 "sencha app upgrade"를 트리거함.</p>
+
+<p>"sencha app upgrade /path/to/ext" 명령을 사용하여 단일 application upgrade 할 수 있음.</p>
+
+<p>이미 작업 공간의 일부인 framework로 upgrade 할 수도 있음.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sencha app upgrade ../ext62
+</code></pre></div>
+<p>"workspace upgrade" 전체 작업 영역에 대해 application 및 package 내의 Cmd 관련 파일을
+upgrade하는 방법을 제공.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sencha workspace upgrade
+</code></pre></div>
+<hr>
+
+<h1 id="whats-new-in-sencha-cmd-6">
+<a class="anchor" href="#whats-new-in-sencha-cmd-6" aria-hidden="true"><span class="octicon octicon-link"></span></a>What's New in Sencha Cmd 6</h1>
+
+<h2 id="new-installers">
+<a class="anchor" href="#new-installers" aria-hidden="true"><span class="octicon octicon-link"></span></a>New Installers</h2>
+
+<p>Sencha Cmd 를 실행하는데 필요한 JRE(Java Runtime Environment)을
+포함하도록 설치 프로그램을 변경.</p>
+
+<p>이 설치 프로그램을 사용하면 Java를 별도 다운로드하여 설치할 필요가 없음.</p>
+
+<p>Ruby 종속성 제거, Sencha Cmd는 운영 체제 이상의 전제 조건이 없음을 의미.</p>
+
+<p>우리는 여전히 JRE가 없는 설치 프로그램을 제공할 것.</p>
+
+<h3 id="non-admin">
+<a class="anchor" href="#non-admin" aria-hidden="true"><span class="octicon octicon-link"></span></a>Non-admin</h3>
+
+<p>(Windows, Linux, Mac) non-admin.</p>
+
+<h3 id="no-ruby-dependency">
+<a class="anchor" href="#no-ruby-dependency" aria-hidden="true"><span class="octicon octicon-link"></span></a>No Ruby Dependency</h3>
+
+<p><code>Fashion</code>(아래 참조)이 도입, Ruby 종속성 없음.</p>
+
+<ul>
+<li><p>Live Update.</p></li>
+<li><p>Compass 여전히 사용가능.</p></li>
+</ul>
+
+<h3 id="compass-for-order-frameworks">
+<a class="anchor" href="#compass-for-order-frameworks" aria-hidden="true"><span class="octicon octicon-link"></span></a>Compass (for order Frameworks)</h3>
+
+<p>구형 프레임 워크 (Ext JS 4와 5 또는 Sencha Touch 2)에서 Sencha Cmd 6를 사용한다면,
+Sass 코드를 컴파일하기 위해서는 여전히 Ruby가 필요.
+설치 프로그램은 이러한 framework를 지원하는 Compass(및 Sass)의 필수 버전을 설치하도록 지시받을 수 있습니다.
+이 설정은 기본적으로 비활성화, 설치 프로그램의 다음 대화 상자에서 활성화할 수 있음.</p>
+
+<h2 id="fashion">
+<a class="anchor" href="#fashion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Fashion</h2>
+
+<p>Sench에서 파생 된 Sencha의 새로운 compiler 인 "Fashion"이 포함.</p>
+
+<p>Fashion을 사용하여 ExtJS 6 application 및 테마에 대한 style 규칙(.scss 파일) 작성.</p>
+
+<p>Fashion에서 <code>sencha app watch</code> 사용할 때 <em>*Live Update</em> 를 사용하여 page reload 않고도 application CSS를 동기화 상태로 유지.</p>
+
+<p>자세한 내용은 <a href="http://docs.sencha.com/cmd/guides/fashion.html">Fashion Guide</a> 참조.</p>
+
+<h2 id="workspace-improvement">
+<a class="anchor" href="#workspace-improvement" aria-hidden="true"><span class="octicon octicon-link"></span></a>Workspace Improvement</h2>
+
+<h3 id="package-directories">
+<a class="anchor" href="#package-directories" aria-hidden="true"><span class="octicon octicon-link"></span></a>Package Directories</h3>
+
+<p><a href="http://">code sharing with packages</a>를 용이하게 하기 위해 package의 분할 폴더 위치가 도입.</p>
+
+<p>이렇게 하면 생성 한 패키지를 한 위치로 이동하고 다른 위치로 이동하기 위해 필요한 패키지(download 및 추출 된 패키지)를 사용가능.</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">/</span>                   <span class="c1"># The workspace root folder
+</span>    <span class="n">packages</span><span class="o">/</span>       <span class="c1"># The former location for all packages
+</span>        <span class="n">local</span><span class="o">/</span>      <span class="c1"># New location for generated packages
+</span>        <span class="n">remote</span><span class="o">/</span>     <span class="c1"># New location for downloaded/extracted packages
+</span></code></pre></div>
+<p>이제 <code>workspace.json</code> 에서 패키지 위치를 구성 할 수 있음.</p>
+
+<p>"/packages/remote" Folder는 source control(<code>.gitignore</code>)에서 "ignored"로 구성 될 수 있음.</p>
+
+<p>이는 해당 폴더의 모든 패키지가 패키지 저장소에서 다운로드되어 다시 필요할 수 있기 때문.</p>
+
+<h3 id="workspace-json">
+<a class="anchor" href="#workspace-json" aria-hidden="true"><span class="octicon octicon-link"></span></a>workspace.json</h3>
+
+<p>Sencha Cmd 6 사용하면 <code>workspace.json</code> 파일이 작업 영역 루트 폴더에 추가됨.</p>
+
+<p>이 파일은 향후 tooling에서 유용할 것이므로 source control에서 추적해야 함.</p>
+
+<p>우선, 앞서 언급 한 package 경로를 구성 할 수있게 해줌.</p>
+
+<h2 id="microloader">
+<a class="anchor" href="#microloader" aria-hidden="true"><span class="octicon octicon-link"></span></a>Microloader</h2>
+
+<p>Sencha Cmd 6는 Microloader의 주요 업데이트를 제공.</p>
+
+<p>Microloader는 Sencha Touch에서 처음 소개 한 응용 프로그램 loader이며</p>
+
+<p>이후 Sencha Cmd 5에서 Ext JS 5 응용 프로그램 용으로 업데이트되었음.</p>
+
+<p>Sencha Cmd 6을 사용하면 최신 Microloader를 Ext JS 6 applications에서 사용할 수 있으며 localStorage Caching을 지원.</p>
+
+<p>이는 Sencha Touch의 Microloader가 작동하는 것과 유사하지만 몇 가지 개선 사항이 있습니다.</p>
+
+<ul>
+<li><p>app.json에서 Caching을 비활성화 할 수 있음</p></li>
+<li><p>microloader content만 microloader에 의해 지워질 것</p></li>
+<li><p>App의 현재 version만 local 저장소에 유지</p></li>
+</ul>
+
+<p>참조: <a href="http://docs.sencha.com/cmd/guides/microloader.html">Microloader Guide</a></p>
+
+<h1 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a><em>Reference</em>
+</h1>
+
+<h2 id="url">
+<a class="anchor" href="#url" aria-hidden="true"><span class="octicon octicon-link"></span></a>URL</h2>
+
+<ul>
+<li><p><a href="http://docs.sencha.com/cmd/guides/fashion.html">http://docs.sencha.com/cmd/guides/fashion.html</a></p></li>
+<li><p>http://</p></li>
+<li><p><a href="http://docs.sencha.com/cmd/guides/microloader.html">http://docs.sencha.com/cmd/guides/microloader.html</a></p></li>
+</ul>
+
+  </div>
+
+<div>
+  <p>새로운 기능에 대한 소개</p>
+
+<h2 id="app-init">app init</h2>
+
+<p><code>app init</code>은 현재 Dir를 Sencha Cmd application 으로 초기화합니다.</p>
+
+<p>완전히 비어있는 Dir 에서 시작하여 다음 명령 중 하나를 실행하고</p>
+
+<p>완전히 구조화 된 Ext JS/Cmd "hello world" application 으로 끝낼 수 있습니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sencha app init <span class="nt">--ext</span><span class="o">=</span>/path/to/extjs/ MyApp <span class="nt">--modern</span>
+
+<span class="nv">$ </span>sencha app init <span class="nt">--ext</span><span class="o">=</span>/path/to/extjs/ MyApp <span class="nt">--classic</span>
+
+<span class="nv">$ </span>sencha app init <span class="nt">--ext</span><span class="o">=</span>/path/to/extjs/ MyApp <span class="nt">--universal</span>
+</code></pre></div>
+<p><strong>Note:</strong> application은 다음 <code>app build</code> 전까지 완료되지 않을 것입니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sencha app build
+</code></pre></div>
+<h3 id="app-install">app install</h3>
+
+<p><code>app install</code>은 불완전한 Sencha Cmd application이 실행 가능한 상태에 있음을 보장함.</p>
+
+<p>예를 들어 아주 간단한 application 폴더를 컴퓨터에 놓고 이 명령을 실행하여 전체 Cmd 인프라를 만들 수 있습니다.</p>
+
+<p>예를 들어, 이 github repo를 보고 이를 적용 할 응용 프로그램의 유형을 볼 수 있습니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sencha app <span class="nb">install</span> <span class="nt">--frameworks</span><span class="o">=</span>/path/to/extjs
+</code></pre></div>
+<p>"frameworks"는 Cmd 6.1에서 소개된 기능. (아래 참조)
+여러 버전의 ExtJS가 포함된 폴더를 가리킬 수 있습니다.
+위의 repo에서 볼 수 있듯이 ExtJS 버전은 workspace.json 내에 있습니다.
+frameworks flag는 사용자가 가리키는 폴더 내에서 가능한 한 필요한 버전과 가장 일치하는
+항목을 찾으려고 시도합니다.</p>
+
+<p><strong>Note:</strong> <code>app build</code> 전까지 완료되지 않을 것입니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sencha app build
+</code></pre></div>
+<h3 id="workspace-init">workspace init</h3>
+
+<p>현재 Dir가 Sencha Cmd 작업 공간의 일부분인지 확인함.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sencha workspace init
+
+<span class="c"># Sencha Cmd v6.2.1.29</span>
+<span class="c"># [INF] Using existing workspace at /home/mky/myext</span>
+</code></pre></div>
+<h3 id="workspace-install">workspace install</h3>
+
+<p>불완전한 Sencha Cmd 작업 공간이 실행 ​​가능 상태에 있음을 보장함.</p>
+
+<p>예로, 매우 간단한 작업 공간 Dir를 컴퓨터에 놓고 이 명령을 실행하여 전체 Cmd 인프라를 생성 할 수 있음.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sencha workspace <span class="nb">install</span> <span class="nt">--frameworks</span><span class="o">=</span>/path/to/extjs
+</code></pre></div>
+<p>"frameworks"는 Cmd 6.1에서 소개된 기능. (생략)</p>
+
+<h3 id="workspace-cleanup-command">workspace cleanup command</h3>
+
+<p>작업 영역에 더 이상 존재하지 않는 application을 workspace.json의 app 항목에서 제거.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sencha workspace cleanup
+</code></pre></div>
+<hr>
+
+<h1 id="whats-new-in-sencha-cmd-6-1">What's New in Sencha Cmd 6.1</h1>
+
+<h2 id="framework-and-workspace-management">Framework and Workspace Management</h2>
+
+<p>Projects가 하나의 작업 공간에서 여러 application을 작업해야 하는 경우에는
+다른 framework version이 현실화 될 수 있음.</p>
+
+<p>Sencha Cmd 6.1 이전 버전에서는 모든 application을 동시에 업그레이드해야 하는 ExtJS (및 Sencha Touch 추가 버전) version으로 작업 영역을 구성 할 수 있었음. (불편함)</p>
+
+<p>Sencha Cmd 6.1 부터 <code>workspace.json</code> 파일에 여러 framework를 기술 가능.</p>
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="err">#</span><span class="w"> </span><span class="err">workspace.json</span><span class="w">
+
+</span><span class="nl">"frameworks"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"ext62"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ext"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"ext602"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ext-6.0.2"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p><code>frameworks</code> 속성 아래의 각 항목은 현재 작업 공간 내부의 Dir에 해당하며 속성 이름은
+<code>app.json</code> 에서 사용할 framework key 입니다.</p>
+
+<p>app.json의 <code>framework</code> 속성은 다음 항목 중 하나에 매핑됨.</p>
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="err">#</span><span class="w"> </span><span class="err">app.json</span><span class="w">
+
+</span><span class="nl">"framework"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ext62"</span><span class="w">
+</span></code></pre></div>
+<p>workspace에 new framework 추가:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sencha framework add /path/to/ext
+</code></pre></div>
+<p>이 명령은 버전번호(예: ExtJS 6.2.0 == "ext62" or ExtJS 6.0.2 == "ext602")에 따라
+제공된 framework에 적절한 키를 결정함.</p>
+
+<p><code>framework add</code> framework 항목의 모든 측면을 제어할 수 있는 몇 가지 추가 옵션도 제공. 예:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sencha framework add <span class="nt">-key</span> extFiveO <span class="nt">-source</span> /path/to/ext-5.0.0 <span class="nt">-path</span> ext50
+</code></pre></div>
+<p>위와 같이 입력시 <code>workspace.json</code>의 <code>frameworks</code> 에 자동 추가됨:</p>
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="err">#</span><span class="w"> </span><span class="err">workspace.json</span><span class="w">
+
+</span><span class="nl">"frameworks"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"extFive0"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ext50"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>또한 Cmd는 /path/to/ext-5.0.0의 중요한 framework 파일을 작업 영역
+(-source 및 -path 스위치로 지정)의 ext50 하위 폴더에 복사합니다.
+framework keys는 "ext"또는 "touch"로 시작해야 합니다.</p>
+
+<p>framework가 추가 된 후 framework keys를 사용하여 "generate app" 명령을 전환하여
+application을 생성 할 수 있습니다.
+예를 들어 위에 추가 한 "extSixTwo" framework를 사용하여 application을 생성하려면
+다음과 같이 generate app 명령을 호출해야 함:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sencha generate app <span class="nt">-extFiveO</span> AppName path/to/app
+</code></pre></div>
+<p>frameworks 목록 보기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sencha framework list
+</code></pre></div>
+<p>framework 삭제:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sencha framework remove extFive0
+
+<span class="nv">$ </span>sencha framework remove <span class="nt">--force</span> extFive0
+</code></pre></div>
+<p>특정 framework를 사용하여 모든 application을 upgrade 하려면 "framework upgrdae" 명령을 사용.</p>
+
+<p>예를 들어 "ext" 키가 있는 framework를 (경로 /path/to/ext) 최신 framework version으로
+upgrade 하려면 다음 명령을 실행:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sencha framework upgrade ext /path/to/ext
+</code></pre></div>
+<p>이렇게 하면 framework 파일을 upgrade 하고 이를 사용하는 각 application에 대해 "sencha app upgrade"를 트리거함.</p>
+
+<p>"sencha app upgrade /path/to/ext" 명령을 사용하여 단일 application upgrade 할 수 있음.</p>
+
+<p>이미 작업 공간의 일부인 framework로 upgrade 할 수도 있음.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sencha app upgrade ../ext62
+</code></pre></div>
+<p>"workspace upgrade" 전체 작업 영역에 대해 application 및 package 내의 Cmd 관련 파일을
+upgrade하는 방법을 제공.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sencha workspace upgrade
+</code></pre></div>
+<hr>
+
+<h1 id="whats-new-in-sencha-cmd-6">What's New in Sencha Cmd 6</h1>
+
+<h2 id="new-installers">New Installers</h2>
+
+<p>Sencha Cmd 를 실행하는데 필요한 JRE(Java Runtime Environment)을
+포함하도록 설치 프로그램을 변경.</p>
+
+<p>이 설치 프로그램을 사용하면 Java를 별도 다운로드하여 설치할 필요가 없음.</p>
+
+<p>Ruby 종속성 제거, Sencha Cmd는 운영 체제 이상의 전제 조건이 없음을 의미.</p>
+
+<p>우리는 여전히 JRE가 없는 설치 프로그램을 제공할 것.</p>
+
+<h3 id="non-admin">Non-admin</h3>
+
+<p>(Windows, Linux, Mac) non-admin.</p>
+
+<h3 id="no-ruby-dependency">No Ruby Dependency</h3>
+
+<p><code>Fashion</code>(아래 참조)이 도입, Ruby 종속성 없음.</p>
+
+<ul>
+<li><p>Live Update.</p></li>
+<li><p>Compass 여전히 사용가능.</p></li>
+</ul>
+
+<h3 id="compass-for-order-frameworks">Compass (for order Frameworks)</h3>
+
+<p>구형 프레임 워크 (Ext JS 4와 5 또는 Sencha Touch 2)에서 Sencha Cmd 6를 사용한다면,
+Sass 코드를 컴파일하기 위해서는 여전히 Ruby가 필요.
+설치 프로그램은 이러한 framework를 지원하는 Compass(및 Sass)의 필수 버전을 설치하도록 지시받을 수 있습니다.
+이 설정은 기본적으로 비활성화, 설치 프로그램의 다음 대화 상자에서 활성화할 수 있음.</p>
+
+<h2 id="fashion">Fashion</h2>
+
+<p>Sench에서 파생 된 Sencha의 새로운 compiler 인 "Fashion"이 포함.</p>
+
+<p>Fashion을 사용하여 ExtJS 6 application 및 테마에 대한 style 규칙(.scss 파일) 작성.</p>
+
+<p>Fashion에서 <code>sencha app watch</code> 사용할 때 <em>*Live Update</em> 를 사용하여 page reload 않고도 application CSS를 동기화 상태로 유지.</p>
+
+<p>자세한 내용은 <a href="http://docs.sencha.com/cmd/guides/fashion.html" rel="nofollow" target="_blank">Fashion Guide</a> 참조.</p>
+
+<h2 id="workspace-improvement">Workspace Improvement</h2>
+
+<h3 id="package-directories">Package Directories</h3>
+
+<p><a href="http://" rel="nofollow" target="_blank">code sharing with packages</a>를 용이하게 하기 위해 package의 분할 폴더 위치가 도입.</p>
+
+<p>이렇게 하면 생성 한 패키지를 한 위치로 이동하고 다른 위치로 이동하기 위해 필요한 패키지(download 및 추출 된 패키지)를 사용가능.</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">/</span>                   <span class="c1"># The workspace root folder
+</span>    <span class="n">packages</span><span class="o">/</span>       <span class="c1"># The former location for all packages
+</span>        <span class="n">local</span><span class="o">/</span>      <span class="c1"># New location for generated packages
+</span>        <span class="n">remote</span><span class="o">/</span>     <span class="c1"># New location for downloaded/extracted packages
+</span></code></pre></div>
+<p>이제 <code>workspace.json</code> 에서 패키지 위치를 구성 할 수 있음.</p>
+
+<p>"/packages/remote" Folder는 source control(<code>.gitignore</code>)에서 "ignored"로 구성 될 수 있음.</p>
+
+<p>이는 해당 폴더의 모든 패키지가 패키지 저장소에서 다운로드되어 다시 필요할 수 있기 때문.</p>
+
+<h3 id="workspace-json">workspace.json</h3>
+
+<p>Sencha Cmd 6 사용하면 <code>workspace.json</code> 파일이 작업 영역 루트 폴더에 추가됨.</p>
+
+<p>이 파일은 향후 tooling에서 유용할 것이므로 source control에서 추적해야 함.</p>
+
+<p>우선, 앞서 언급 한 package 경로를 구성 할 수있게 해줌.</p>
+
+<h2 id="microloader">Microloader</h2>
+
+<p>Sencha Cmd 6는 Microloader의 주요 업데이트를 제공.</p>
+
+<p>Microloader는 Sencha Touch에서 처음 소개 한 응용 프로그램 loader이며</p>
+
+<p>이후 Sencha Cmd 5에서 Ext JS 5 응용 프로그램 용으로 업데이트되었음.</p>
+
+<p>Sencha Cmd 6을 사용하면 최신 Microloader를 Ext JS 6 applications에서 사용할 수 있으며 localStorage Caching을 지원.</p>
+
+<p>이는 Sencha Touch의 Microloader가 작동하는 것과 유사하지만 몇 가지 개선 사항이 있습니다.</p>
+
+<ul>
+<li><p>app.json에서 Caching을 비활성화 할 수 있음</p></li>
+<li><p>microloader content만 microloader에 의해 지워질 것</p></li>
+<li><p>App의 현재 version만 local 저장소에 유지</p></li>
+</ul>
+
+<p>참조: <a href="http://docs.sencha.com/cmd/guides/microloader.html" rel="nofollow" target="_blank">Microloader Guide</a></p>
+
+<h1 id="reference"><em>Reference</em></h1>
+
+<h2 id="url">URL</h2>
+
+<ul>
+<li><p><a href="http://docs.sencha.com/cmd/guides/fashion.html" rel="nofollow" target="_blank">http://docs.sencha.com/cmd/guides/fashion.html</a></p></li>
+<li><p>http://</p></li>
+<li><p><a href="http://docs.sencha.com/cmd/guides/microloader.html" rel="nofollow" target="_blank">http://docs.sencha.com/cmd/guides/microloader.html</a></p></li>
+</ul>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

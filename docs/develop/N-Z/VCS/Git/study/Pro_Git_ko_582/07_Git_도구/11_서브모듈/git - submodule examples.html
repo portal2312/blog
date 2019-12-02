@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Git - submodule examples | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Git - submodule examples" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="이 문서는 7.11 Git 도구 - 서브모듈 읽고 참고하여 작성되었습니다." />
+<meta property="og:description" content="이 문서는 7.11 Git 도구 - 서브모듈 읽고 참고하여 작성되었습니다." />
+<link rel="canonical" href="/blog/docs/develop/N-Z/VCS/Git/study/Pro_Git_ko_582/07_Git_%EB%8F%84%EA%B5%AC/11_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88/git%20-%20submodule%20examples.html" />
+<meta property="og:url" content="/blog/docs/develop/N-Z/VCS/Git/study/Pro_Git_ko_582/07_Git_%EB%8F%84%EA%B5%AC/11_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88/git%20-%20submodule%20examples.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-02T16:38:51+09:00" />
+<script type="application/ld+json">
+{"description":"이 문서는 7.11 Git 도구 - 서브모듈 읽고 참고하여 작성되었습니다.","headline":"Git - submodule examples","dateModified":"2019-12-02T16:38:51+09:00","datePublished":"2019-12-02T16:38:51+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/docs/develop/N-Z/VCS/Git/study/Pro_Git_ko_582/07_Git_%EB%8F%84%EA%B5%AC/11_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88/git%20-%20submodule%20examples.html"},"url":"/blog/docs/develop/N-Z/VCS/Git/study/Pro_Git_ko_582/07_Git_%EB%8F%84%EA%B5%AC/11_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88/git%20-%20submodule%20examples.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/blog/feed.xml" title="Portal2312's blog" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113063601-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+<script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Git - submodule examples</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#local-project-app-submodule-remote">Local Project 안에 특정 app 을 submodule 로 대처하고 Remote 저장소에 반영하기</a></li>
+<li class="toc-entry toc-h2"><a href="#local-project-app-remote-project-submodule">Local Project 안의 특정 app 을 Remote 저장소의 Project 를 통해 submodule 로 대처하기</a></li>
+<li class="toc-entry toc-h2"><a href="#remote-local-project-submodule-clone">Remote 저장소 에서 Local Project 와 submodule 과 함께 clone 하기</a></li>
+<li class="toc-entry toc-h2"><a href="#submodule-remote">submodule 수정 후 Remote 저장소에 반영하기</a></li>
+<li class="toc-entry toc-h2"><a href="#remote-local-project-submodule">Remote 저장소를 통해 Local Project 와 submodule 갱신하기</a></li>
+<li class="toc-entry toc-h2"><a href="#local-project-push-submodule-push">Local Project 소스 변경후 push 전 submodule 먼저 push 했는지 확인하기</a></li>
+<li class="toc-entry toc-h2"><a href="#submodule">Submodule 설정</a></li>
+<li class="toc-entry toc-h2"><a href="#local-project-submodule-remote">Local Project 에서 submodule 디렉토리 변경후 Remote 저장소에 갱신하기</a></li>
+<li class="toc-entry toc-h2"><a href="#remote-submodule-local-project">Remote 저장소를 통해 변경된 디렉토리 submodule 내용을 Local Project 에 갱신하기</a></li>
+<li class="toc-entry toc-h2"><a href="#references">References</a></li>
+</ul><p>이 문서는 <a href="https://git-scm.com/book/ko/v2/Git-%EB%8F%84%EA%B5%AC-%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88">7.11 Git 도구 - 서브모듈</a> 읽고 참고하여 작성되었습니다.</p>
+
+<p>예로 <a href="http://10.40.223.88/zenlog/web">zenlog/web</a> 는 현재 문서의 <strong>목차</strong>중 아래 2 가지 방법으로 업데이트 되었습니다.</p>
+
+<ul>
+<li><a href="#local-project-%EC%95%88%EC%97%90-%ED%8A%B9%EC%A0%95-app-%EC%9D%84-submodule-%EB%A1%9C-%EB%8C%80%EC%B2%98%ED%95%98%EA%B3%A0-remote-%EC%A0%80%EC%9E%A5%EC%86%8C%EC%97%90-%EB%B0%98%EC%98%81%ED%95%98%EA%B8%B0">Local Project 안에 특정 app 을 submodule 로 대처하고 Remote 저장소에 반영하기</a></li>
+<li><a href="#local-project-%EC%95%88%EC%9D%98-%ED%8A%B9%EC%A0%95-app-%EC%9D%84-remote-%EC%A0%80%EC%9E%A5%EC%86%8C%EC%9D%98-project-%EB%A5%BC-%ED%86%B5%ED%95%B4-submodule-%EB%A1%9C-%EB%8C%80%EC%B2%98%ED%95%98%EA%B8%B0">Local Project 안의 특정 app 을 Remote 저장소의 Project 를 통해 submodule 로 대처하기</a></li>
+</ul>
+
+<p><strong>목차</strong></p>
+
+<ul>
+<li><a href="#local-project-%EC%95%88%EC%97%90-%ED%8A%B9%EC%A0%95-app-%EC%9D%84-submodule-%EB%A1%9C-%EB%8C%80%EC%B2%98%ED%95%98%EA%B3%A0-remote-%EC%A0%80%EC%9E%A5%EC%86%8C%EC%97%90-%EB%B0%98%EC%98%81%ED%95%98%EA%B8%B0">Local Project 안에 특정 app 을 submodule 로 대처하고 Remote 저장소에 반영하기</a></li>
+<li><a href="#local-project-%EC%95%88%EC%9D%98-%ED%8A%B9%EC%A0%95-app-%EC%9D%84-remote-%EC%A0%80%EC%9E%A5%EC%86%8C%EC%9D%98-project-%EB%A5%BC-%ED%86%B5%ED%95%B4-submodule-%EB%A1%9C-%EB%8C%80%EC%B2%98%ED%95%98%EA%B8%B0">Local Project 안의 특정 app 을 Remote 저장소의 Project 를 통해 submodule 로 대처하기</a></li>
+<li><a href="#remote-%EC%A0%80%EC%9E%A5%EC%86%8C-%EC%97%90%EC%84%9C-local-project-%EC%99%80-submodule-%EA%B3%BC-%ED%95%A8%EA%BB%98-clone-%ED%95%98%EA%B8%B0">Remote 저장소 에서 Local Project 와 submodule 과 함께 clone 하기</a></li>
+<li><a href="#submodule-%EC%88%98%EC%A0%95-%ED%9B%84-remote-%EC%A0%80%EC%9E%A5%EC%86%8C%EC%97%90-%EB%B0%98%EC%98%81%ED%95%98%EA%B8%B0">submodule 수정 후 Remote 저장소에 반영하기</a></li>
+<li><a href="#remote-%EC%A0%80%EC%9E%A5%EC%86%8C%EB%A5%BC-%ED%86%B5%ED%95%B4-local-project-%EC%99%80-submodule-%EA%B0%B1%EC%8B%A0%ED%95%98%EA%B8%B0">Remote 저장소를 통해 Local Project 와 submodule 갱신하기</a></li>
+<li><a href="#local-project-%EC%86%8C%EC%8A%A4-%EB%B3%80%EA%B2%BD%ED%9B%84-push-%EC%A0%84-submodule-%EB%A8%BC%EC%A0%80-push-%ED%96%88%EB%8A%94%EC%A7%80-%ED%99%95%EC%9D%B8%ED%95%98%EA%B8%B0">Local Project 소스 변경후 push 전 submodule 먼저 push 했는지 확인하기</a></li>
+<li><a href="#submodule-%EC%84%A4%EC%A0%95">Submodule 설정</a></li>
+<li><a href="#local-project-%EC%97%90%EC%84%9C-submodule-%EB%94%94%EB%A0%89%ED%86%A0%EB%A6%AC-%EB%B3%80%EA%B2%BD%ED%9B%84-remote-%EC%A0%80%EC%9E%A5%EC%86%8C%EC%97%90-%EA%B0%B1%EC%8B%A0%ED%95%98%EA%B8%B0">Local Project 에서 submodule 디렉토리 변경후 Remote 저장소에 갱신하기</a></li>
+<li><a href="#remote-%EC%A0%80%EC%9E%A5%EC%86%8C%EB%A5%BC-%ED%86%B5%ED%95%B4-%EB%B3%80%EA%B2%BD%EB%90%9C-%EB%94%94%EB%A0%89%ED%86%A0%EB%A6%AC-submodule-%EB%82%B4%EC%9A%A9%EC%9D%84-local-project-%EC%97%90-%EA%B0%B1%EC%8B%A0%ED%95%98%EA%B8%B0">Remote 저장소를 통해 변경된 디렉토리 submodule 내용을 Local Project 에 갱신하기</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+
+<h2 id="local-project-app-submodule-remote">
+<a class="anchor" href="#local-project-app-submodule-remote" aria-hidden="true"><span class="octicon octicon-link"></span></a>Local Project 안에 특정 app 을 submodule 로 대처하고 Remote 저장소에 반영하기</h2>
+
+<p>Local Project 의 "app" 삭제하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git <span class="nb">rm</span> <span class="nt">-r</span> app
+<span class="nb">rm</span> <span class="s1">'app/.gitignore'</span>
+<span class="nb">rm</span> <span class="s1">'app/__init__.py'</span>
+<span class="nb">rm</span> <span class="s1">'app/admin.py'</span>
+<span class="nb">rm</span> <span class="s1">'app/apps.py'</span>
+<span class="nb">rm</span> <span class="s1">'app/menu.py'</span>
+<span class="nb">rm</span> <span class="s1">'app/menu_authorization.py'</span>
+<span class="nb">rm</span> <span class="s1">'app/menu_authorization_map.py'</span>
+<span class="nb">rm</span> <span class="s1">'app/models.py'</span>
+<span class="nb">rm</span> <span class="s1">'app/templates/app/menu.html'</span>
+<span class="nb">rm</span> <span class="s1">'app/tests.py'</span>
+<span class="nb">rm</span> <span class="s1">'app/urls.py'</span>
+<span class="nb">rm</span> <span class="s1">'app/utils.py'</span>
+<span class="nb">rm</span> <span class="s1">'app/views.py'</span>
+
+<span class="nv">$ </span><span class="nb">ls</span> | <span class="nb">grep </span>app
+app
+
+<span class="nv">$ </span><span class="nb">rm</span> <span class="nt">-rf</span> app
+</code></pre></div>
+<p>Local Project 에 submodule "app" 추가하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git submodule add git@10.40.223.88:apps/app.git
+</code></pre></div>
+<p>이미 인덱스에 있다고 하는 경우 <code>--force</code> 옵션을 추가하기:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">$ git submodule add --force git@10.40.223.88:apps/app.git
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">$ ls app/
+</code></pre></div>
+<p>Remote 저장소에 Project 반영하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git commit <span class="nt">-am</span> <span class="s1">'Added "app" module'</span>
+<span class="nv">$ </span>git push &lt;origin-url&gt; &lt;branch-name&gt;
+</code></pre></div>
+<hr>
+
+<h2 id="local-project-app-remote-project-submodule">
+<a class="anchor" href="#local-project-app-remote-project-submodule" aria-hidden="true"><span class="octicon octicon-link"></span></a>Local Project 안의 특정 app 을 Remote 저장소의 Project 를 통해 submodule 로 대처하기</h2>
+
+<p>Remote 저장소를 통해 Project 최신화하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git pull origin master
+
+<span class="nv">$ </span>git status
+현재 브랜치 master
+커밋하도록 정하지 않은 변경 사항:
+  <span class="o">(</span>무엇을 커밋할지 바꾸려면 <span class="s2">"git add &lt;파일&gt;..."</span>을 사용하십시오<span class="o">)</span>
+  <span class="o">(</span>작업 폴더의 변경 사항을 버리려면 <span class="s2">"git checkout -- &lt;파일&gt;..."</span>을 사용하십시오<span class="o">)</span>
+  <span class="o">(</span>하위 모듈의 추적되지 않는 파일이나 수정된 내용을 커밋하거나 버리십시오<span class="o">)</span>
+
+        수정함:        app <span class="o">(</span>수정한 내용, 추적하지 않은 내용<span class="o">)</span>
+
+커밋할 변경 사항을 추가하지 않았습니다 <span class="o">(</span><span class="s2">"git add"</span> 및/또는 <span class="s2">"git commit -a"</span>를
+사용하십시오<span class="o">)</span>
+</code></pre></div>
+<p>submodule 경로를 보면 파일이 없다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">ls</span> &lt;submodule-path&gt;
+__pycache__
+</code></pre></div>
+<p>Project 의 모든 submodule 가져오기 시도시 Error 발생하는 경우 submodule 경로를 삭제하기:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">$ git submodule update --init --force --remote --checkout
+
+'menu_mgmt' 경로에 대해 'menu_mgmt' (git@10.40.223.88:apps/menu_mgmt.git) 하위 모듈 등록
+fatal: 대상 경로가('/home/zen/projects/zenlog/web/menu_mgmt') 이미 있고 빈 디렉터리가 아닙니다.
+fatal: 'git@10.40.223.88:apps/menu_mgmt.git'에서 하위 모듈 경로 '/home/zen/projects/zenlog/web/menu_mgmt'에 복제하는데 실패했습니다
+'menu_mgmt' 복제하는데 실패했습니다. 재시도 예정
+fatal: 대상 경로가('/home/zen/projects/zenlog/web/menu_mgmt') 이미 있고 빈 디렉터리가 아닙니다.
+fatal: 'git@10.40.223.88:apps/menu_mgmt.git'에서 하위 모듈 경로 '/home/zen/projects/zenlog/web/menu_mgmt'에 복제하는데 실패했습니다
+두번째 'menu_mgmt' 복제하는데 실패했습니다. 중지합니다
+
+$ rm -rf &lt;submodule-path&gt;
+</code></pre></div>
+<p>다시 Project 의 모든 submodule 가져오기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git submodule update <span class="nt">--init</span> <span class="nt">--force</span> <span class="nt">--remote</span> <span class="nt">--checkout</span>
+하위 모듈 경로 <span class="s1">'app'</span>: <span class="s1">'be71d2052023efac9478065ec95d790cbdcfd2cb'</span> 체크아웃
+</code></pre></div>
+<p>Project 의 모든 submodule 의 branch 를 checkout 하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git submodule foreach <span class="s1">'git checkout master'</span>
+<span class="s1">'app'</span> 들어감
+<span class="s1">'master'</span> 브랜치로 전환합니다
+브랜치가 <span class="s1">'origin/master'</span>에 맞게 업데이트된 상태입니다.
+
+<span class="nv">$ </span>git status
+현재 브랜치 master
+커밋할 사항 없음, 작업 폴더 깨끗함
+</code></pre></div>
+<blockquote>
+<p>Warning</p>
+
+<p><code>git submodule foreach 'git checkout master'</code> 시 Project 의 모든 submodule 을 <code>master</code> 로 변경한다.</p>
+
+<p>Project 의 <code>.gitmodules</code> 참조하여 각 submodule 디렉터리마다 <code>git checkout &lt;branch-name&gt;</code> 하는 것이 더 좋다.</p>
+
+<p>submodule 마다 참조할 branch 가 없다면 기본 값은 <code>master</code> 이다.
+<code>git checkout -</code> 시 <code>master</code> branch 로 변경 가능하다.</p>
+</blockquote>
+
+<hr>
+
+<h2 id="remote-local-project-submodule-clone">
+<a class="anchor" href="#remote-local-project-submodule-clone" aria-hidden="true"><span class="octicon octicon-link"></span></a>Remote 저장소 에서 Local Project 와 submodule 과 함께 clone 하기</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git clone <span class="nt">--recurse-submodules</span> &lt;project-url&gt; &lt;project-path&gt;
+<span class="nv">$ </span><span class="nb">cd</span> &lt;project-path&gt;
+</code></pre></div>
+<p>submodule 마다 checkout 하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git submodule foreach <span class="s1">'git checkout master'</span>
+</code></pre></div>
+<hr>
+
+<h2 id="submodule-remote">
+<a class="anchor" href="#submodule-remote" aria-hidden="true"><span class="octicon octicon-link"></span></a>submodule 수정 후 Remote 저장소에 반영하기</h2>
+
+<p>Local 의 Project 안에 특정 submodule 수정 후 submodule 의 Remote 저장소에 반영하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd</span> &lt;project-path&gt;
+<span class="nv">$ </span><span class="nb">cd</span> &lt;submodule-path&gt;
+<span class="nv">$ </span>vi README.md
+<span class="nv">$ </span>git commit <span class="nt">-avm</span> <span class="s1">'Update README.md'</span>
+<span class="nv">$ </span>git push &lt;submodule.remote.name&gt; &lt;submodule.branch&gt;
+</code></pre></div>
+<p>Local 의 Project 에서 status 로 submodule 변경사항 확인하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd</span> ..
+<span class="nv">$ </span>git status submodulesummary 3
+
+현재 브랜치 master
+브랜치가 <span class="s1">'origin/master'</span>에 맞게 업데이트된 상태입니다.
+
+커밋하도록 정하지 않은 변경 사항:
+  <span class="o">(</span>무엇을 커밋할지 바꾸려면 <span class="s2">"git add &lt;파일&gt;..."</span>을 사용하십시오<span class="o">)</span>
+  <span class="o">(</span>작업 폴더의 변경 사항을 버리려면 <span class="s2">"git checkout -- &lt;파일&gt;..."</span>을 사용하십시오<span class="o">)</span>
+
+        수정함:        myapp <span class="o">(</span>새 커밋<span class="o">)</span>
+
+변경되었지만 업데이트하지 않은 하위 모듈:
+
+<span class="k">*</span> myapp ba00b74...5312776 <span class="o">(</span>1<span class="o">)</span>:
+  <span class="o">&gt;</span> Update README.md
+
+커밋할 변경 사항을 추가하지 않았습니다 <span class="o">(</span><span class="s2">"git add"</span> 및/또는 <span class="s2">"git commit -a"</span>를
+사용하십시오<span class="o">)</span>
+</code></pre></div>
+<p>status 로 submodule 변경사항 확인 설정하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git config status.submodulesummary 3
+</code></pre></div>
+<p>반드시 Local 의 Project 에도 반영 후 Project 의 Remote 저장소에 반영하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">pwd</span>
+&lt;project-path&gt;
+
+<span class="nv">$ </span>git add &lt;submodule-path&gt;
+<span class="nv">$ </span>git commit <span class="nt">-vm</span> <span class="s1">'Update submodule'</span>
+<span class="nv">$ </span>git push &lt;project.remote.name&gt; &lt;project.branch&gt;
+</code></pre></div>
+<hr>
+
+<h2 id="remote-local-project-submodule">
+<a class="anchor" href="#remote-local-project-submodule" aria-hidden="true"><span class="octicon octicon-link"></span></a>Remote 저장소를 통해 Local Project 와 submodule 갱신하기</h2>
+
+<p>Project 갱신하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd</span> &lt;project-path&gt;
+<span class="nv">$ </span>git pull origin master
+</code></pre></div>
+<p>Project 안의 submodule 갱신하기(<code>&lt;submodule-path&gt;</code> 없다면 모든 submodule 실행):</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">pwd</span>
+&lt;project-path&gt;
+
+<span class="nv">$ </span>git submodule update <span class="nt">--remote</span> <span class="nt">--merge</span>
+
+or
+
+<span class="nv">$ </span>git submodule update <span class="nt">--remote</span> <span class="nt">--rebase</span>
+</code></pre></div>
+<p>Project 안의 submodule 마다 갱신하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git submodule update <span class="nt">--remote</span> <span class="nt">--merge</span> &lt;submodule-path&gt;
+
+or
+
+<span class="nv">$ </span>git submodule update <span class="nt">--remote</span> <span class="nt">--rebase</span> &lt;submodule-path&gt;
+</code></pre></div>
+<p>만약 detached head 상태인 경우 아래와 같이 일반적인 방법으로도 가능하다.</p>
+
+<p>Project 안의 submodule 의 개별로 <code>master</code> branch 를 Remote 저장소로 갱신하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd</span> &lt;submodule-path&gt;
+<span class="nv">$ </span>git checkout master
+<span class="nv">$ </span>git fetch
+<span class="nv">$ </span>git merge origin/master
+</code></pre></div>
+<hr>
+
+<h2 id="local-project-push-submodule-push">
+<a class="anchor" href="#local-project-push-submodule-push" aria-hidden="true"><span class="octicon octicon-link"></span></a>Local Project 소스 변경후 push 전 submodule 먼저 push 했는지 확인하기</h2>
+
+<p>Local Project 변경 되면서 submodule 도 함께 변경 되었다면 우선 적으로 할 일 있다.</p>
+
+<p>반드시 먼저 submodule 변경사항을 해당 submodule 의 Remote 저장소에 push 한 후, 다음으로 Local Project 를 push 한다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd</span> &lt;project-path&gt;
+<span class="nv">$ </span>vi README.md
+<span class="nv">$ </span>git commit <span class="nt">-avm</span> <span class="s1">'Update Project README.md'</span>
+<span class="nv">$ </span><span class="nb">cd</span> &lt;submodule-path&gt;
+<span class="nv">$ </span>vi README.md
+<span class="nv">$ </span>git commit <span class="nt">-avm</span> <span class="s1">'Update Submodule README.md'</span>
+<span class="nv">$ </span><span class="nb">cd</span> ..
+<span class="nv">$ </span>git push <span class="nt">--recurse-submodules</span><span class="o">=</span>check
+다음 하위 모듈 경로에 리모트 어디에도 없는
+변경 사항이 있습니다:
+  myapp
+
+리모트에 푸시하려면
+
+        git push <span class="nt">--recurse-submodules</span><span class="o">=</span>on-demand
+
+또는 해당 경로로 cd한 다음
+
+        git push
+
+명령을 시도해 보십시오
+
+fatal: 중지함.
+fatal: The remote end hung up unexpectedly
+</code></pre></div>
+<p>해결하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd</span> &lt;submodule-path&gt;
+<span class="nv">$ </span>git push
+<span class="nv">$ </span><span class="nb">cd</span> ..
+<span class="nv">$ </span>git push origin master
+</code></pre></div>
+<p>또는:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git push <span class="nt">--recurse-submodules</span><span class="o">=</span>on-demand
+</code></pre></div>
+<p>설정하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git config push.recurseSubmodules check
+
+or
+
+<span class="nv">$ </span>git config push.recurseSubmodules on-demand
+</code></pre></div>
+<hr>
+
+<h2 id="submodule">
+<a class="anchor" href="#submodule" aria-hidden="true"><span class="octicon octicon-link"></span></a>Submodule 설정</h2>
+
+<p>submodule 의 default branch 지정하기(기본은 <code>master</code>):</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git config <span class="nt">-f</span> .gitmodules submodule.&lt;name&gt;.branch &lt;branch&gt;
+</code></pre></div>
+<blockquote>
+<p>$ git config -f .gitmodules submodule.app.branch master</p>
+</blockquote>
+
+<p><code>git status</code> 에서 submodule 의 최근 commit 기준으로 3개를 간략하게 보기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git config status.submodulesummary 3
+</code></pre></div>
+<p><code>git diff</code> 에서 submodule 이력 보기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git config diff.submodule log
+</code></pre></div>
+<p><code>git push</code> 에서 Project 변경 내용중 submodule 변경하고 push 했는지 확인하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git config push.recurseSubmodules check
+</code></pre></div>
+<p><code>git config alias</code> 응용하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git config alias.sdiff <span class="s1">'!'</span><span class="s2">"git diff &amp;&amp; git submodule foreach 'git diff'"</span>
+<span class="nv">$ </span>git config alias.spush <span class="s1">'push --recurse-submodules=on-demand'</span>
+<span class="nv">$ </span>git config alias.supdate <span class="s1">'submodule update --remote --merge'</span>
+</code></pre></div>
+<hr>
+
+<h2 id="local-project-submodule-remote">
+<a class="anchor" href="#local-project-submodule-remote" aria-hidden="true"><span class="octicon octicon-link"></span></a>Local Project 에서 submodule 디렉토리 변경후 Remote 저장소에 갱신하기</h2>
+
+<p><code>git status</code> 상으로 <code>rm</code>은 삭제후 추가, <code>git rm</code> 은 변경으로 인식된다. <code>git rm</code>을 이용하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git <span class="nb">rm</span> <span class="nt">-r</span> &lt;submodule-path&gt;
+<span class="nv">$ </span><span class="nb">mkdir </span>apps
+<span class="nv">$ </span>git submodule add &lt;submodule-url&gt;
+<span class="nv">$ </span>git add <span class="nb">.</span>
+<span class="nv">$ </span>git status
+현재 브랜치 master
+브랜치가 <span class="s1">'origin/master'</span>에 맞게 업데이트된 상태입니다.
+
+커밋할 변경 사항:
+  <span class="o">(</span>스테이지 해제하려면 <span class="s2">"git reset HEAD &lt;파일&gt;..."</span>을 사용하십시오<span class="o">)</span>
+
+        수정함:        .gitmodules
+        이름 바꿈:     menu_mgmt -&gt; apps/menu_mgmt
+
+fatal: 깃 저장소가 아닙니다: <span class="s1">'menu_mgmt/.git'</span>
+커밋할 하위 모듈의 변경 사항:
+
+<span class="k">*</span> apps/menu_mgmt 0000000...be71d20 <span class="o">(</span>7<span class="o">)</span>:
+  <span class="o">&gt;</span> Update Source files
+
+<span class="k">*</span> menu_mgmt be71d20...0000000:
+</code></pre></div>
+<p>submodule-path 의 기본 branch 설정하기:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">$ git config -f .gitmodules submodule."&lt;submodule-path&gt;".branch master
+</code></pre></div>
+<p>의존성 문제는 직접 해결해야 한다. 그리고 Remote 저장소에 반영하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git commit <span class="nt">-vm</span> <span class="s1">'Move submodule'</span>
+<span class="nv">$ </span>git push &lt;remote-name&gt; &lt;branch-name&gt;
+</code></pre></div>
+<hr>
+
+<h2 id="remote-submodule-local-project">
+<a class="anchor" href="#remote-submodule-local-project" aria-hidden="true"><span class="octicon octicon-link"></span></a>Remote 저장소를 통해 변경된 디렉토리 submodule 내용을 Local Project 에 갱신하기</h2>
+
+<p>Remote 저장소를 통해 Local Project 갱신하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd</span> &lt;project-path&gt;
+<span class="nv">$ </span>git pull origin master
+<span class="nv">$ </span>git status
+현재 브랜치 master
+브랜치가 <span class="s1">'origin/master'</span>보다 1개 커밋만큼 앞에 있습니다.
+  <span class="o">(</span>로컬에 있는 커밋을 제출하려면 <span class="s2">"git push"</span>를 사용하십시오<span class="o">)</span>
+
+추적하지 않는 파일:
+  <span class="o">(</span>커밋할 사항에 포함하려면 <span class="s2">"git add &lt;파일&gt;..."</span>을 사용하십시오<span class="o">)</span>
+
+        menu_mgmt/
+
+커밋할 사항을 추가하지 않았지만 추적하지 않는 파일이 있습니다 <span class="o">(</span>추적하려면 <span class="s2">"git
+add"</span>를 사용하십시오<span class="o">)</span>
+</code></pre></div>
+<p>더 이상 추적하지 않는 이전 경로의 submodule-path 를 삭제하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">rm</span> <span class="nt">-rf</span> &lt;submodule-path&gt;
+</code></pre></div>
+<p>모든 submodule 가져온 후 각각 checkout branch <code>master</code> 하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git submodule update <span class="nt">--remote</span> <span class="nt">--checkout</span>
+<span class="nv">$ </span>git submodule foreach <span class="s1">'git checkout master'</span>
+<span class="nv">$ </span>git status
+현재 브랜치 master
+브랜치가 <span class="s1">'origin/master'</span>에 맞게 업데이트된 상태입니다.
+
+커밋할 사항 없음, 작업 폴더 깨끗함
+</code></pre></div>
+<h2 id="references">
+<a class="anchor" href="#references" aria-hidden="true"><span class="octicon octicon-link"></span></a>References</h2>
+
+<p><a href="https://git-scm.com/book/ko/v2/Git-%EB%8F%84%EA%B5%AC-%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88">7.11 Git 도구 - 서브모듈</a></p>
+
+  </div>
+
+<div>
+  <p>이 문서는 <a href="https://git-scm.com/book/ko/v2/Git-%EB%8F%84%EA%B5%AC-%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88" rel="nofollow" target="_blank">7.11 Git 도구 - 서브모듈</a> 읽고 참고하여 작성되었습니다.</p>
+
+<p>예로 <a href="http://10.40.223.88/zenlog/web" rel="nofollow" target="_blank">zenlog/web</a> 는 현재 문서의 <strong>목차</strong>중 아래 2 가지 방법으로 업데이트 되었습니다.</p>
+
+<ul>
+<li><a href="#local-project-%EC%95%88%EC%97%90-%ED%8A%B9%EC%A0%95-app-%EC%9D%84-submodule-%EB%A1%9C-%EB%8C%80%EC%B2%98%ED%95%98%EA%B3%A0-remote-%EC%A0%80%EC%9E%A5%EC%86%8C%EC%97%90-%EB%B0%98%EC%98%81%ED%95%98%EA%B8%B0">Local Project 안에 특정 app 을 submodule 로 대처하고 Remote 저장소에 반영하기</a></li>
+<li><a href="#local-project-%EC%95%88%EC%9D%98-%ED%8A%B9%EC%A0%95-app-%EC%9D%84-remote-%EC%A0%80%EC%9E%A5%EC%86%8C%EC%9D%98-project-%EB%A5%BC-%ED%86%B5%ED%95%B4-submodule-%EB%A1%9C-%EB%8C%80%EC%B2%98%ED%95%98%EA%B8%B0">Local Project 안의 특정 app 을 Remote 저장소의 Project 를 통해 submodule 로 대처하기</a></li>
+</ul>
+
+<p><strong>목차</strong></p>
+
+<ul>
+<li><a href="#local-project-%EC%95%88%EC%97%90-%ED%8A%B9%EC%A0%95-app-%EC%9D%84-submodule-%EB%A1%9C-%EB%8C%80%EC%B2%98%ED%95%98%EA%B3%A0-remote-%EC%A0%80%EC%9E%A5%EC%86%8C%EC%97%90-%EB%B0%98%EC%98%81%ED%95%98%EA%B8%B0">Local Project 안에 특정 app 을 submodule 로 대처하고 Remote 저장소에 반영하기</a></li>
+<li><a href="#local-project-%EC%95%88%EC%9D%98-%ED%8A%B9%EC%A0%95-app-%EC%9D%84-remote-%EC%A0%80%EC%9E%A5%EC%86%8C%EC%9D%98-project-%EB%A5%BC-%ED%86%B5%ED%95%B4-submodule-%EB%A1%9C-%EB%8C%80%EC%B2%98%ED%95%98%EA%B8%B0">Local Project 안의 특정 app 을 Remote 저장소의 Project 를 통해 submodule 로 대처하기</a></li>
+<li><a href="#remote-%EC%A0%80%EC%9E%A5%EC%86%8C-%EC%97%90%EC%84%9C-local-project-%EC%99%80-submodule-%EA%B3%BC-%ED%95%A8%EA%BB%98-clone-%ED%95%98%EA%B8%B0">Remote 저장소 에서 Local Project 와 submodule 과 함께 clone 하기</a></li>
+<li><a href="#submodule-%EC%88%98%EC%A0%95-%ED%9B%84-remote-%EC%A0%80%EC%9E%A5%EC%86%8C%EC%97%90-%EB%B0%98%EC%98%81%ED%95%98%EA%B8%B0">submodule 수정 후 Remote 저장소에 반영하기</a></li>
+<li><a href="#remote-%EC%A0%80%EC%9E%A5%EC%86%8C%EB%A5%BC-%ED%86%B5%ED%95%B4-local-project-%EC%99%80-submodule-%EA%B0%B1%EC%8B%A0%ED%95%98%EA%B8%B0">Remote 저장소를 통해 Local Project 와 submodule 갱신하기</a></li>
+<li><a href="#local-project-%EC%86%8C%EC%8A%A4-%EB%B3%80%EA%B2%BD%ED%9B%84-push-%EC%A0%84-submodule-%EB%A8%BC%EC%A0%80-push-%ED%96%88%EB%8A%94%EC%A7%80-%ED%99%95%EC%9D%B8%ED%95%98%EA%B8%B0">Local Project 소스 변경후 push 전 submodule 먼저 push 했는지 확인하기</a></li>
+<li><a href="#submodule-%EC%84%A4%EC%A0%95">Submodule 설정</a></li>
+<li><a href="#local-project-%EC%97%90%EC%84%9C-submodule-%EB%94%94%EB%A0%89%ED%86%A0%EB%A6%AC-%EB%B3%80%EA%B2%BD%ED%9B%84-remote-%EC%A0%80%EC%9E%A5%EC%86%8C%EC%97%90-%EA%B0%B1%EC%8B%A0%ED%95%98%EA%B8%B0">Local Project 에서 submodule 디렉토리 변경후 Remote 저장소에 갱신하기</a></li>
+<li><a href="#remote-%EC%A0%80%EC%9E%A5%EC%86%8C%EB%A5%BC-%ED%86%B5%ED%95%B4-%EB%B3%80%EA%B2%BD%EB%90%9C-%EB%94%94%EB%A0%89%ED%86%A0%EB%A6%AC-submodule-%EB%82%B4%EC%9A%A9%EC%9D%84-local-project-%EC%97%90-%EA%B0%B1%EC%8B%A0%ED%95%98%EA%B8%B0">Remote 저장소를 통해 변경된 디렉토리 submodule 내용을 Local Project 에 갱신하기</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+
+<h2 id="local-project-app-submodule-remote">Local Project 안에 특정 app 을 submodule 로 대처하고 Remote 저장소에 반영하기</h2>
+
+<p>Local Project 의 "app" 삭제하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git <span class="nb">rm</span> <span class="nt">-r</span> app
+<span class="nb">rm</span> <span class="s1">'app/.gitignore'</span>
+<span class="nb">rm</span> <span class="s1">'app/__init__.py'</span>
+<span class="nb">rm</span> <span class="s1">'app/admin.py'</span>
+<span class="nb">rm</span> <span class="s1">'app/apps.py'</span>
+<span class="nb">rm</span> <span class="s1">'app/menu.py'</span>
+<span class="nb">rm</span> <span class="s1">'app/menu_authorization.py'</span>
+<span class="nb">rm</span> <span class="s1">'app/menu_authorization_map.py'</span>
+<span class="nb">rm</span> <span class="s1">'app/models.py'</span>
+<span class="nb">rm</span> <span class="s1">'app/templates/app/menu.html'</span>
+<span class="nb">rm</span> <span class="s1">'app/tests.py'</span>
+<span class="nb">rm</span> <span class="s1">'app/urls.py'</span>
+<span class="nb">rm</span> <span class="s1">'app/utils.py'</span>
+<span class="nb">rm</span> <span class="s1">'app/views.py'</span>
+
+<span class="nv">$ </span><span class="nb">ls</span> | <span class="nb">grep </span>app
+app
+
+<span class="nv">$ </span><span class="nb">rm</span> <span class="nt">-rf</span> app
+</code></pre></div>
+<p>Local Project 에 submodule "app" 추가하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git submodule add git@10.40.223.88:apps/app.git
+</code></pre></div>
+<p>이미 인덱스에 있다고 하는 경우 <code>--force</code> 옵션을 추가하기:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">$ git submodule add --force git@10.40.223.88:apps/app.git
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">$ ls app/
+</code></pre></div>
+<p>Remote 저장소에 Project 반영하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git commit <span class="nt">-am</span> <span class="s1">'Added "app" module'</span>
+<span class="nv">$ </span>git push &lt;origin-url&gt; &lt;branch-name&gt;
+</code></pre></div>
+<hr>
+
+<h2 id="local-project-app-remote-project-submodule">Local Project 안의 특정 app 을 Remote 저장소의 Project 를 통해 submodule 로 대처하기</h2>
+
+<p>Remote 저장소를 통해 Project 최신화하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git pull origin master
+
+<span class="nv">$ </span>git status
+현재 브랜치 master
+커밋하도록 정하지 않은 변경 사항:
+  <span class="o">(</span>무엇을 커밋할지 바꾸려면 <span class="s2">"git add &lt;파일&gt;..."</span>을 사용하십시오<span class="o">)</span>
+  <span class="o">(</span>작업 폴더의 변경 사항을 버리려면 <span class="s2">"git checkout -- &lt;파일&gt;..."</span>을 사용하십시오<span class="o">)</span>
+  <span class="o">(</span>하위 모듈의 추적되지 않는 파일이나 수정된 내용을 커밋하거나 버리십시오<span class="o">)</span>
+
+        수정함:        app <span class="o">(</span>수정한 내용, 추적하지 않은 내용<span class="o">)</span>
+
+커밋할 변경 사항을 추가하지 않았습니다 <span class="o">(</span><span class="s2">"git add"</span> 및/또는 <span class="s2">"git commit -a"</span>를
+사용하십시오<span class="o">)</span>
+</code></pre></div>
+<p>submodule 경로를 보면 파일이 없다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">ls</span> &lt;submodule-path&gt;
+__pycache__
+</code></pre></div>
+<p>Project 의 모든 submodule 가져오기 시도시 Error 발생하는 경우 submodule 경로를 삭제하기:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">$ git submodule update --init --force --remote --checkout
+
+'menu_mgmt' 경로에 대해 'menu_mgmt' (git@10.40.223.88:apps/menu_mgmt.git) 하위 모듈 등록
+fatal: 대상 경로가('/home/zen/projects/zenlog/web/menu_mgmt') 이미 있고 빈 디렉터리가 아닙니다.
+fatal: 'git@10.40.223.88:apps/menu_mgmt.git'에서 하위 모듈 경로 '/home/zen/projects/zenlog/web/menu_mgmt'에 복제하는데 실패했습니다
+'menu_mgmt' 복제하는데 실패했습니다. 재시도 예정
+fatal: 대상 경로가('/home/zen/projects/zenlog/web/menu_mgmt') 이미 있고 빈 디렉터리가 아닙니다.
+fatal: 'git@10.40.223.88:apps/menu_mgmt.git'에서 하위 모듈 경로 '/home/zen/projects/zenlog/web/menu_mgmt'에 복제하는데 실패했습니다
+두번째 'menu_mgmt' 복제하는데 실패했습니다. 중지합니다
+
+$ rm -rf &lt;submodule-path&gt;
+</code></pre></div>
+<p>다시 Project 의 모든 submodule 가져오기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git submodule update <span class="nt">--init</span> <span class="nt">--force</span> <span class="nt">--remote</span> <span class="nt">--checkout</span>
+하위 모듈 경로 <span class="s1">'app'</span>: <span class="s1">'be71d2052023efac9478065ec95d790cbdcfd2cb'</span> 체크아웃
+</code></pre></div>
+<p>Project 의 모든 submodule 의 branch 를 checkout 하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git submodule foreach <span class="s1">'git checkout master'</span>
+<span class="s1">'app'</span> 들어감
+<span class="s1">'master'</span> 브랜치로 전환합니다
+브랜치가 <span class="s1">'origin/master'</span>에 맞게 업데이트된 상태입니다.
+
+<span class="nv">$ </span>git status
+현재 브랜치 master
+커밋할 사항 없음, 작업 폴더 깨끗함
+</code></pre></div>
+<blockquote>
+<p>Warning</p>
+
+<p><code>git submodule foreach 'git checkout master'</code> 시 Project 의 모든 submodule 을 <code>master</code> 로 변경한다.</p>
+
+<p>Project 의 <code>.gitmodules</code> 참조하여 각 submodule 디렉터리마다 <code>git checkout &lt;branch-name&gt;</code> 하는 것이 더 좋다.</p>
+
+<p>submodule 마다 참조할 branch 가 없다면 기본 값은 <code>master</code> 이다.
+<code>git checkout -</code> 시 <code>master</code> branch 로 변경 가능하다.</p>
+</blockquote>
+
+<hr>
+
+<h2 id="remote-local-project-submodule-clone">Remote 저장소 에서 Local Project 와 submodule 과 함께 clone 하기</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git clone <span class="nt">--recurse-submodules</span> &lt;project-url&gt; &lt;project-path&gt;
+<span class="nv">$ </span><span class="nb">cd</span> &lt;project-path&gt;
+</code></pre></div>
+<p>submodule 마다 checkout 하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git submodule foreach <span class="s1">'git checkout master'</span>
+</code></pre></div>
+<hr>
+
+<h2 id="submodule-remote">submodule 수정 후 Remote 저장소에 반영하기</h2>
+
+<p>Local 의 Project 안에 특정 submodule 수정 후 submodule 의 Remote 저장소에 반영하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd</span> &lt;project-path&gt;
+<span class="nv">$ </span><span class="nb">cd</span> &lt;submodule-path&gt;
+<span class="nv">$ </span>vi README.md
+<span class="nv">$ </span>git commit <span class="nt">-avm</span> <span class="s1">'Update README.md'</span>
+<span class="nv">$ </span>git push &lt;submodule.remote.name&gt; &lt;submodule.branch&gt;
+</code></pre></div>
+<p>Local 의 Project 에서 status 로 submodule 변경사항 확인하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd</span> ..
+<span class="nv">$ </span>git status submodulesummary 3
+
+현재 브랜치 master
+브랜치가 <span class="s1">'origin/master'</span>에 맞게 업데이트된 상태입니다.
+
+커밋하도록 정하지 않은 변경 사항:
+  <span class="o">(</span>무엇을 커밋할지 바꾸려면 <span class="s2">"git add &lt;파일&gt;..."</span>을 사용하십시오<span class="o">)</span>
+  <span class="o">(</span>작업 폴더의 변경 사항을 버리려면 <span class="s2">"git checkout -- &lt;파일&gt;..."</span>을 사용하십시오<span class="o">)</span>
+
+        수정함:        myapp <span class="o">(</span>새 커밋<span class="o">)</span>
+
+변경되었지만 업데이트하지 않은 하위 모듈:
+
+<span class="k">*</span> myapp ba00b74...5312776 <span class="o">(</span>1<span class="o">)</span>:
+  <span class="o">&gt;</span> Update README.md
+
+커밋할 변경 사항을 추가하지 않았습니다 <span class="o">(</span><span class="s2">"git add"</span> 및/또는 <span class="s2">"git commit -a"</span>를
+사용하십시오<span class="o">)</span>
+</code></pre></div>
+<p>status 로 submodule 변경사항 확인 설정하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git config status.submodulesummary 3
+</code></pre></div>
+<p>반드시 Local 의 Project 에도 반영 후 Project 의 Remote 저장소에 반영하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">pwd</span>
+&lt;project-path&gt;
+
+<span class="nv">$ </span>git add &lt;submodule-path&gt;
+<span class="nv">$ </span>git commit <span class="nt">-vm</span> <span class="s1">'Update submodule'</span>
+<span class="nv">$ </span>git push &lt;project.remote.name&gt; &lt;project.branch&gt;
+</code></pre></div>
+<hr>
+
+<h2 id="remote-local-project-submodule">Remote 저장소를 통해 Local Project 와 submodule 갱신하기</h2>
+
+<p>Project 갱신하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd</span> &lt;project-path&gt;
+<span class="nv">$ </span>git pull origin master
+</code></pre></div>
+<p>Project 안의 submodule 갱신하기(<code>&lt;submodule-path&gt;</code> 없다면 모든 submodule 실행):</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">pwd</span>
+&lt;project-path&gt;
+
+<span class="nv">$ </span>git submodule update <span class="nt">--remote</span> <span class="nt">--merge</span>
+
+or
+
+<span class="nv">$ </span>git submodule update <span class="nt">--remote</span> <span class="nt">--rebase</span>
+</code></pre></div>
+<p>Project 안의 submodule 마다 갱신하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git submodule update <span class="nt">--remote</span> <span class="nt">--merge</span> &lt;submodule-path&gt;
+
+or
+
+<span class="nv">$ </span>git submodule update <span class="nt">--remote</span> <span class="nt">--rebase</span> &lt;submodule-path&gt;
+</code></pre></div>
+<p>만약 detached head 상태인 경우 아래와 같이 일반적인 방법으로도 가능하다.</p>
+
+<p>Project 안의 submodule 의 개별로 <code>master</code> branch 를 Remote 저장소로 갱신하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd</span> &lt;submodule-path&gt;
+<span class="nv">$ </span>git checkout master
+<span class="nv">$ </span>git fetch
+<span class="nv">$ </span>git merge origin/master
+</code></pre></div>
+<hr>
+
+<h2 id="local-project-push-submodule-push">Local Project 소스 변경후 push 전 submodule 먼저 push 했는지 확인하기</h2>
+
+<p>Local Project 변경 되면서 submodule 도 함께 변경 되었다면 우선 적으로 할 일 있다.</p>
+
+<p>반드시 먼저 submodule 변경사항을 해당 submodule 의 Remote 저장소에 push 한 후, 다음으로 Local Project 를 push 한다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd</span> &lt;project-path&gt;
+<span class="nv">$ </span>vi README.md
+<span class="nv">$ </span>git commit <span class="nt">-avm</span> <span class="s1">'Update Project README.md'</span>
+<span class="nv">$ </span><span class="nb">cd</span> &lt;submodule-path&gt;
+<span class="nv">$ </span>vi README.md
+<span class="nv">$ </span>git commit <span class="nt">-avm</span> <span class="s1">'Update Submodule README.md'</span>
+<span class="nv">$ </span><span class="nb">cd</span> ..
+<span class="nv">$ </span>git push <span class="nt">--recurse-submodules</span><span class="o">=</span>check
+다음 하위 모듈 경로에 리모트 어디에도 없는
+변경 사항이 있습니다:
+  myapp
+
+리모트에 푸시하려면
+
+        git push <span class="nt">--recurse-submodules</span><span class="o">=</span>on-demand
+
+또는 해당 경로로 cd한 다음
+
+        git push
+
+명령을 시도해 보십시오
+
+fatal: 중지함.
+fatal: The remote end hung up unexpectedly
+</code></pre></div>
+<p>해결하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd</span> &lt;submodule-path&gt;
+<span class="nv">$ </span>git push
+<span class="nv">$ </span><span class="nb">cd</span> ..
+<span class="nv">$ </span>git push origin master
+</code></pre></div>
+<p>또는:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git push <span class="nt">--recurse-submodules</span><span class="o">=</span>on-demand
+</code></pre></div>
+<p>설정하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git config push.recurseSubmodules check
+
+or
+
+<span class="nv">$ </span>git config push.recurseSubmodules on-demand
+</code></pre></div>
+<hr>
+
+<h2 id="submodule">Submodule 설정</h2>
+
+<p>submodule 의 default branch 지정하기(기본은 <code>master</code>):</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git config <span class="nt">-f</span> .gitmodules submodule.&lt;name&gt;.branch &lt;branch&gt;
+</code></pre></div>
+<blockquote>
+<p>$ git config -f .gitmodules submodule.app.branch master</p>
+</blockquote>
+
+<p><code>git status</code> 에서 submodule 의 최근 commit 기준으로 3개를 간략하게 보기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git config status.submodulesummary 3
+</code></pre></div>
+<p><code>git diff</code> 에서 submodule 이력 보기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git config diff.submodule log
+</code></pre></div>
+<p><code>git push</code> 에서 Project 변경 내용중 submodule 변경하고 push 했는지 확인하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git config push.recurseSubmodules check
+</code></pre></div>
+<p><code>git config alias</code> 응용하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git config alias.sdiff <span class="s1">'!'</span><span class="s2">"git diff &amp;&amp; git submodule foreach 'git diff'"</span>
+<span class="nv">$ </span>git config alias.spush <span class="s1">'push --recurse-submodules=on-demand'</span>
+<span class="nv">$ </span>git config alias.supdate <span class="s1">'submodule update --remote --merge'</span>
+</code></pre></div>
+<hr>
+
+<h2 id="local-project-submodule-remote">Local Project 에서 submodule 디렉토리 변경후 Remote 저장소에 갱신하기</h2>
+
+<p><code>git status</code> 상으로 <code>rm</code>은 삭제후 추가, <code>git rm</code> 은 변경으로 인식된다. <code>git rm</code>을 이용하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git <span class="nb">rm</span> <span class="nt">-r</span> &lt;submodule-path&gt;
+<span class="nv">$ </span><span class="nb">mkdir </span>apps
+<span class="nv">$ </span>git submodule add &lt;submodule-url&gt;
+<span class="nv">$ </span>git add <span class="nb">.</span>
+<span class="nv">$ </span>git status
+현재 브랜치 master
+브랜치가 <span class="s1">'origin/master'</span>에 맞게 업데이트된 상태입니다.
+
+커밋할 변경 사항:
+  <span class="o">(</span>스테이지 해제하려면 <span class="s2">"git reset HEAD &lt;파일&gt;..."</span>을 사용하십시오<span class="o">)</span>
+
+        수정함:        .gitmodules
+        이름 바꿈:     menu_mgmt -&gt; apps/menu_mgmt
+
+fatal: 깃 저장소가 아닙니다: <span class="s1">'menu_mgmt/.git'</span>
+커밋할 하위 모듈의 변경 사항:
+
+<span class="k">*</span> apps/menu_mgmt 0000000...be71d20 <span class="o">(</span>7<span class="o">)</span>:
+  <span class="o">&gt;</span> Update Source files
+
+<span class="k">*</span> menu_mgmt be71d20...0000000:
+</code></pre></div>
+<p>submodule-path 의 기본 branch 설정하기:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">$ git config -f .gitmodules submodule."&lt;submodule-path&gt;".branch master
+</code></pre></div>
+<p>의존성 문제는 직접 해결해야 한다. 그리고 Remote 저장소에 반영하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git commit <span class="nt">-vm</span> <span class="s1">'Move submodule'</span>
+<span class="nv">$ </span>git push &lt;remote-name&gt; &lt;branch-name&gt;
+</code></pre></div>
+<hr>
+
+<h2 id="remote-submodule-local-project">Remote 저장소를 통해 변경된 디렉토리 submodule 내용을 Local Project 에 갱신하기</h2>
+
+<p>Remote 저장소를 통해 Local Project 갱신하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd</span> &lt;project-path&gt;
+<span class="nv">$ </span>git pull origin master
+<span class="nv">$ </span>git status
+현재 브랜치 master
+브랜치가 <span class="s1">'origin/master'</span>보다 1개 커밋만큼 앞에 있습니다.
+  <span class="o">(</span>로컬에 있는 커밋을 제출하려면 <span class="s2">"git push"</span>를 사용하십시오<span class="o">)</span>
+
+추적하지 않는 파일:
+  <span class="o">(</span>커밋할 사항에 포함하려면 <span class="s2">"git add &lt;파일&gt;..."</span>을 사용하십시오<span class="o">)</span>
+
+        menu_mgmt/
+
+커밋할 사항을 추가하지 않았지만 추적하지 않는 파일이 있습니다 <span class="o">(</span>추적하려면 <span class="s2">"git
+add"</span>를 사용하십시오<span class="o">)</span>
+</code></pre></div>
+<p>더 이상 추적하지 않는 이전 경로의 submodule-path 를 삭제하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">rm</span> <span class="nt">-rf</span> &lt;submodule-path&gt;
+</code></pre></div>
+<p>모든 submodule 가져온 후 각각 checkout branch <code>master</code> 하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git submodule update <span class="nt">--remote</span> <span class="nt">--checkout</span>
+<span class="nv">$ </span>git submodule foreach <span class="s1">'git checkout master'</span>
+<span class="nv">$ </span>git status
+현재 브랜치 master
+브랜치가 <span class="s1">'origin/master'</span>에 맞게 업데이트된 상태입니다.
+
+커밋할 사항 없음, 작업 폴더 깨끗함
+</code></pre></div>
+<h2 id="references">References</h2>
+
+<p><a href="https://git-scm.com/book/ko/v2/Git-%EB%8F%84%EA%B5%AC-%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88" rel="nofollow" target="_blank">7.11 Git 도구 - 서브모듈</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

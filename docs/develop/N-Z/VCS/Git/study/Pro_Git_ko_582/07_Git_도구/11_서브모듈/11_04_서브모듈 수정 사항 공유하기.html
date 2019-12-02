@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>서브모듈 수정 사항 공유하기 | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="서브모듈 수정 사항 공유하기" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Remote myapp(b785fe9):" />
+<meta property="og:description" content="Remote myapp(b785fe9):" />
+<link rel="canonical" href="/blog/docs/develop/N-Z/VCS/Git/study/Pro_Git_ko_582/07_Git_%EB%8F%84%EA%B5%AC/11_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88/11_04_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88%20%EC%88%98%EC%A0%95%20%EC%82%AC%ED%95%AD%20%EA%B3%B5%EC%9C%A0%ED%95%98%EA%B8%B0.html" />
+<meta property="og:url" content="/blog/docs/develop/N-Z/VCS/Git/study/Pro_Git_ko_582/07_Git_%EB%8F%84%EA%B5%AC/11_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88/11_04_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88%20%EC%88%98%EC%A0%95%20%EC%82%AC%ED%95%AD%20%EA%B3%B5%EC%9C%A0%ED%95%98%EA%B8%B0.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-02T16:38:51+09:00" />
+<script type="application/ld+json">
+{"description":"Remote myapp(b785fe9):","headline":"서브모듈 수정 사항 공유하기","dateModified":"2019-12-02T16:38:51+09:00","datePublished":"2019-12-02T16:38:51+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/docs/develop/N-Z/VCS/Git/study/Pro_Git_ko_582/07_Git_%EB%8F%84%EA%B5%AC/11_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88/11_04_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88%20%EC%88%98%EC%A0%95%20%EC%82%AC%ED%95%AD%20%EA%B3%B5%EC%9C%A0%ED%95%98%EA%B8%B0.html"},"url":"/blog/docs/develop/N-Z/VCS/Git/study/Pro_Git_ko_582/07_Git_%EB%8F%84%EA%B5%AC/11_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88/11_04_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88%20%EC%88%98%EC%A0%95%20%EC%82%AC%ED%95%AD%20%EA%B3%B5%EC%9C%A0%ED%95%98%EA%B8%B0.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/blog/feed.xml" title="Portal2312's blog" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113063601-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+<script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>서브모듈 수정 사항 공유하기</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#summary">Summary</a></li>
+</ul><p>Remote <code>myapp</code>(<code>b785fe9</code>):</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="k">*</span> 2018-07-23 13:27:07 +0900 <span class="o">(</span>2시간 전<span class="o">)</span> b785fe9 mkkim  <span class="o">(</span>HEAD -&gt; stable, origin/stable<span class="o">)</span> <span class="nt">--</span> Create ./log/180722.log
+</code></pre></div>
+<p>Local <code>myproject</code> - <code>myapp</code>(<code>b785fe9</code>-6eb9948):</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="k">*</span> 2018-07-23 14:59:11 +0900 <span class="o">(</span>41초 전<span class="o">)</span> 6eb9948 mkkim  <span class="o">(</span>HEAD -&gt; stable<span class="o">)</span> <span class="nt">--</span> Update README.md
+<span class="k">*</span> 2018-07-23 13:27:07 +0900 <span class="o">(</span>2시간 전<span class="o">)</span> b785fe9 mkkim  <span class="o">(</span>origin/stable<span class="o">)</span> <span class="nt">--</span> Create ./log/180722.log
+</code></pre></div>
+<p>현재 서브모듈은 변경된 내용을 포함하고 있다.</p>
+
+<p>이 중 일부는 서브모듈 자체를 업데이트하여 Upstream 저장소에서 가져온 것이고 일부는 로컬에서 직접 수정한 내용이다.</p>
+
+<p>로컬에서 수정한 것은 아직 공유하지 않았으므로 아무도 사용할 수 없는 코드이다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd </span>myproject
+<span class="nv">$ </span>git diff
+
+Submodule myapp b8d6bc7..6eb9948:
+  <span class="o">&gt;</span> Update README.md
+  <span class="o">&gt;</span> Create ./log/180722.log
+</code></pre></div>
+<p>서브모듈의 변경사항을 Push 하지 않은 채로 메인 프로젝트에서 커밋을 Push 하면 안 된다.</p>
+
+<p>변경 사항을 Checkout 한 다른 사람은 서브모듈이 의존하는 코드를 어디서도 가져올 수 없는 상황이 돼 곤란해진다.</p>
+
+<p>서브모듈의 변경사항은 우리의 로컬에만 있다.</p>
+
+<p>이런 불상사가 발생하지 않도록 하려면 메인 프로젝트를 Push 하기 전에 서브모듈을 모두 Push 했는지 검사하도록 Git에게 물어보면 된다.</p>
+
+<p><code>git push</code> 명령에 <code>--recurse-submodules=</code> 옵션을 주고 이 옵션의 값으로 <code>check</code>나 <code>on-demand</code>를 설정한다.</p>
+
+<p><code>--check</code> 는 간단히 서브모듈의 로컬 커밋이 Push 되지 않은 상태라면 현재의 Push 명령도 실패하도록 하는 옵션이다.</p>
+
+<p>그런데 Local <code>myproject</code> 변경 내용 없는 경우:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git push <span class="nt">--recurse-submodules</span><span class="o">=</span>check
+Everything up-to-date
+</code></pre></div>
+<p>먼저 Local <code>myproject</code> 에서 수정된 내용이 있어야 한다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd </span>myproject
+<span class="nv">$ </span>vi README.md
+<span class="nv">$ </span>git commit <span class="nt">-avm</span> <span class="s1">'Update README.md'</span>
+
+<span class="k">*</span> 2018-07-23 15:03:08 +0900 <span class="o">(</span>2초 전<span class="o">)</span> 3b043d4 mkkim  <span class="o">(</span>HEAD -&gt; master<span class="o">)</span> <span class="nt">--</span> Update README.md/#4
+<span class="k">*</span> 2018-07-23 14:46:04 +0900 <span class="o">(</span>17분 전<span class="o">)</span> 28aa91e mkkim  <span class="o">(</span>origin/master, origin/HEAD<span class="o">)</span> <span class="nt">--</span> Update README.md/#3
+
+<span class="nv">$ </span>git push <span class="nt">--recurse-submodules</span><span class="o">=</span>check
+
+다음 하위 모듈 경로에 리모트 어디에도 없는
+변경 사항이 있습니다:
+  myapp
+
+리모트에 푸시하려면
+
+        git push <span class="nt">--recurse-submodules</span><span class="o">=</span>on-demand
+
+또는 해당 경로로 cd한 다음
+
+        git push
+
+명령을 시도해 보십시오
+
+fatal: 중지함.
+fatal: The remote end hung up unexpectedly
+</code></pre></div>
+<p>가장 단순한 해결 방법은 각 서브모듈 디렉토리로 가서 직접 일일이 Push를 해서 외부로 공유하고 나서 메인 프로젝트를 Push 하는 것이다.</p>
+
+<p>이 옵션이 항상 적용되도록 하고 싶으면 <code>git config push.recurseSubmodules check</code> 명령으로 설정한다.</p>
+
+<p>옵션으로 설정할 수 있는 다른 값으로 <code>on-demand</code> 값이 있는데, 이 값으로 설정하면 Git이 Push를 대신 시도한다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd </span>myproject
+<span class="nv">$ </span>git config push.recurseSubmodules check
+</code></pre></div>
+<p>위에서 보듯이 Git이 메인 프로젝트를 Push 하기 전에 DbConnector 모듈로 들어가서 Push를 한다. 모종의 이유로 서브모듈 Push에 실패한다면 메인 프로젝트의 Push 또한 실패하게 된다. git config push.recurseSubmodules on-demand 명령으로 설정할 수 있다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git push <span class="nt">--recurse-submodules</span><span class="o">=</span>on-demand
+</code></pre></div>
+<p>실패시:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">Pushing submodule <span class="s1">'myapp'</span>
+Username <span class="k">for</span> <span class="s1">'http://0.0.0.0'</span>: mkkim
+Password <span class="k">for</span> <span class="s1">'http://mkkim@0.0.0.0'</span>:
+warning: http://0.0.0.0/mkkim/myapp.git/<span class="o">(</span>으<span class="o">)</span>로 리다이렉트
+Everything up-to-date
+다음 하위 모듈 경로에 리모트 어디에도 없는
+변경 사항이 있습니다:
+  myapp
+
+리모트에 푸시하려면
+
+        git push <span class="nt">--recurse-submodules</span><span class="o">=</span>on-demand
+
+또는 해당 경로로 cd한 다음
+
+        git push
+
+명령을 시도해 보십시오
+
+fatal: 중지함.
+fatal: The remote end hung up unexpectedly
+
+<span class="nv">$ </span><span class="nb">cd </span>myapp
+<span class="o">(</span>stable<span class="o">)</span><span class="nv">$ </span>git push
+<span class="o">(</span>stable<span class="o">)</span><span class="nv">$ </span><span class="nb">cd</span> ..
+<span class="nv">$ </span>git push <span class="nt">--recurse-submodules</span><span class="o">=</span>on-demand
+</code></pre></div>
+<p>위에서 보듯이 Git이 메인 프로젝트를 Push 하기 전에 myapp 모듈로 들어가서 Push를 한다.</p>
+
+<p>모종의 이유로 서브모듈 Push에 실패한다면 메인 프로젝트의 Push 또한 실패하게 된다.</p>
+
+<p><code>git config push.recurseSubmodules on-demand</code> 명령으로 설정할 수 있다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd </span>myproject
+<span class="nv">$ </span>git config push.recurseSubmodules on-demand
+</code></pre></div>
+<h2 id="summary">
+<a class="anchor" href="#summary" aria-hidden="true"><span class="octicon octicon-link"></span></a>Summary</h2>
+
+<p>project push 전 submodule 변경사항 확인하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git push <span class="nt">--recurse-submodules</span><span class="o">=</span>check  <span class="c"># 확인</span>
+
+<span class="nv">$ </span>git push <span class="nt">--recurse-submodules</span><span class="o">=</span>on-demand  <span class="c"># 확인 후 문제 없으면 commit</span>
+</code></pre></div>
+<p>설정하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git config push.recurseSubmodules check
+
+<span class="nv">$ </span>git config push.recurseSubmodules on-demand
+</code></pre></div>
+  </div>
+
+<div>
+  <p>Remote <code>myapp</code>(<code>b785fe9</code>):</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="k">*</span> 2018-07-23 13:27:07 +0900 <span class="o">(</span>2시간 전<span class="o">)</span> b785fe9 mkkim  <span class="o">(</span>HEAD -&gt; stable, origin/stable<span class="o">)</span> <span class="nt">--</span> Create ./log/180722.log
+</code></pre></div>
+<p>Local <code>myproject</code> - <code>myapp</code>(<code>b785fe9</code>-6eb9948):</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="k">*</span> 2018-07-23 14:59:11 +0900 <span class="o">(</span>41초 전<span class="o">)</span> 6eb9948 mkkim  <span class="o">(</span>HEAD -&gt; stable<span class="o">)</span> <span class="nt">--</span> Update README.md
+<span class="k">*</span> 2018-07-23 13:27:07 +0900 <span class="o">(</span>2시간 전<span class="o">)</span> b785fe9 mkkim  <span class="o">(</span>origin/stable<span class="o">)</span> <span class="nt">--</span> Create ./log/180722.log
+</code></pre></div>
+<p>현재 서브모듈은 변경된 내용을 포함하고 있다.</p>
+
+<p>이 중 일부는 서브모듈 자체를 업데이트하여 Upstream 저장소에서 가져온 것이고 일부는 로컬에서 직접 수정한 내용이다.</p>
+
+<p>로컬에서 수정한 것은 아직 공유하지 않았으므로 아무도 사용할 수 없는 코드이다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd </span>myproject
+<span class="nv">$ </span>git diff
+
+Submodule myapp b8d6bc7..6eb9948:
+  <span class="o">&gt;</span> Update README.md
+  <span class="o">&gt;</span> Create ./log/180722.log
+</code></pre></div>
+<p>서브모듈의 변경사항을 Push 하지 않은 채로 메인 프로젝트에서 커밋을 Push 하면 안 된다.</p>
+
+<p>변경 사항을 Checkout 한 다른 사람은 서브모듈이 의존하는 코드를 어디서도 가져올 수 없는 상황이 돼 곤란해진다.</p>
+
+<p>서브모듈의 변경사항은 우리의 로컬에만 있다.</p>
+
+<p>이런 불상사가 발생하지 않도록 하려면 메인 프로젝트를 Push 하기 전에 서브모듈을 모두 Push 했는지 검사하도록 Git에게 물어보면 된다.</p>
+
+<p><code>git push</code> 명령에 <code>--recurse-submodules=</code> 옵션을 주고 이 옵션의 값으로 <code>check</code>나 <code>on-demand</code>를 설정한다.</p>
+
+<p><code>--check</code> 는 간단히 서브모듈의 로컬 커밋이 Push 되지 않은 상태라면 현재의 Push 명령도 실패하도록 하는 옵션이다.</p>
+
+<p>그런데 Local <code>myproject</code> 변경 내용 없는 경우:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git push <span class="nt">--recurse-submodules</span><span class="o">=</span>check
+Everything up-to-date
+</code></pre></div>
+<p>먼저 Local <code>myproject</code> 에서 수정된 내용이 있어야 한다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd </span>myproject
+<span class="nv">$ </span>vi README.md
+<span class="nv">$ </span>git commit <span class="nt">-avm</span> <span class="s1">'Update README.md'</span>
+
+<span class="k">*</span> 2018-07-23 15:03:08 +0900 <span class="o">(</span>2초 전<span class="o">)</span> 3b043d4 mkkim  <span class="o">(</span>HEAD -&gt; master<span class="o">)</span> <span class="nt">--</span> Update README.md/#4
+<span class="k">*</span> 2018-07-23 14:46:04 +0900 <span class="o">(</span>17분 전<span class="o">)</span> 28aa91e mkkim  <span class="o">(</span>origin/master, origin/HEAD<span class="o">)</span> <span class="nt">--</span> Update README.md/#3
+
+<span class="nv">$ </span>git push <span class="nt">--recurse-submodules</span><span class="o">=</span>check
+
+다음 하위 모듈 경로에 리모트 어디에도 없는
+변경 사항이 있습니다:
+  myapp
+
+리모트에 푸시하려면
+
+        git push <span class="nt">--recurse-submodules</span><span class="o">=</span>on-demand
+
+또는 해당 경로로 cd한 다음
+
+        git push
+
+명령을 시도해 보십시오
+
+fatal: 중지함.
+fatal: The remote end hung up unexpectedly
+</code></pre></div>
+<p>가장 단순한 해결 방법은 각 서브모듈 디렉토리로 가서 직접 일일이 Push를 해서 외부로 공유하고 나서 메인 프로젝트를 Push 하는 것이다.</p>
+
+<p>이 옵션이 항상 적용되도록 하고 싶으면 <code>git config push.recurseSubmodules check</code> 명령으로 설정한다.</p>
+
+<p>옵션으로 설정할 수 있는 다른 값으로 <code>on-demand</code> 값이 있는데, 이 값으로 설정하면 Git이 Push를 대신 시도한다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd </span>myproject
+<span class="nv">$ </span>git config push.recurseSubmodules check
+</code></pre></div>
+<p>위에서 보듯이 Git이 메인 프로젝트를 Push 하기 전에 DbConnector 모듈로 들어가서 Push를 한다. 모종의 이유로 서브모듈 Push에 실패한다면 메인 프로젝트의 Push 또한 실패하게 된다. git config push.recurseSubmodules on-demand 명령으로 설정할 수 있다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git push <span class="nt">--recurse-submodules</span><span class="o">=</span>on-demand
+</code></pre></div>
+<p>실패시:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">Pushing submodule <span class="s1">'myapp'</span>
+Username <span class="k">for</span> <span class="s1">'http://0.0.0.0'</span>: mkkim
+Password <span class="k">for</span> <span class="s1">'http://mkkim@0.0.0.0'</span>:
+warning: http://0.0.0.0/mkkim/myapp.git/<span class="o">(</span>으<span class="o">)</span>로 리다이렉트
+Everything up-to-date
+다음 하위 모듈 경로에 리모트 어디에도 없는
+변경 사항이 있습니다:
+  myapp
+
+리모트에 푸시하려면
+
+        git push <span class="nt">--recurse-submodules</span><span class="o">=</span>on-demand
+
+또는 해당 경로로 cd한 다음
+
+        git push
+
+명령을 시도해 보십시오
+
+fatal: 중지함.
+fatal: The remote end hung up unexpectedly
+
+<span class="nv">$ </span><span class="nb">cd </span>myapp
+<span class="o">(</span>stable<span class="o">)</span><span class="nv">$ </span>git push
+<span class="o">(</span>stable<span class="o">)</span><span class="nv">$ </span><span class="nb">cd</span> ..
+<span class="nv">$ </span>git push <span class="nt">--recurse-submodules</span><span class="o">=</span>on-demand
+</code></pre></div>
+<p>위에서 보듯이 Git이 메인 프로젝트를 Push 하기 전에 myapp 모듈로 들어가서 Push를 한다.</p>
+
+<p>모종의 이유로 서브모듈 Push에 실패한다면 메인 프로젝트의 Push 또한 실패하게 된다.</p>
+
+<p><code>git config push.recurseSubmodules on-demand</code> 명령으로 설정할 수 있다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd </span>myproject
+<span class="nv">$ </span>git config push.recurseSubmodules on-demand
+</code></pre></div>
+<h2 id="summary">Summary</h2>
+
+<p>project push 전 submodule 변경사항 확인하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git push <span class="nt">--recurse-submodules</span><span class="o">=</span>check  <span class="c"># 확인</span>
+
+<span class="nv">$ </span>git push <span class="nt">--recurse-submodules</span><span class="o">=</span>on-demand  <span class="c"># 확인 후 문제 없으면 commit</span>
+</code></pre></div>
+<p>설정하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git config push.recurseSubmodules check
+
+<span class="nv">$ </span>git config push.recurseSubmodules on-demand
+</code></pre></div>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

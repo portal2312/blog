@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>curl - Linux | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="curl - Linux" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="CLI 용 Data Transfer Tool." />
+<meta property="og:description" content="CLI 용 Data Transfer Tool." />
+<link rel="canonical" href="/blog/docs/develop/N-Z/server/Linux/linux%20-%20curl.html" />
+<meta property="og:url" content="/blog/docs/develop/N-Z/server/Linux/linux%20-%20curl.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-02T16:38:51+09:00" />
+<script type="application/ld+json">
+{"description":"CLI 용 Data Transfer Tool.","headline":"curl - Linux","dateModified":"2019-12-02T16:38:51+09:00","datePublished":"2019-12-02T16:38:51+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/docs/develop/N-Z/server/Linux/linux%20-%20curl.html"},"url":"/blog/docs/develop/N-Z/server/Linux/linux%20-%20curl.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/blog/feed.xml" title="Portal2312's blog" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113063601-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+<script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>curl - Linux</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#usage">Usage</a></li>
+<li class="toc-entry toc-h2"><a href="#examples">Examples (자주 사용되는)</a></li>
+<li class="toc-entry toc-h1"><a href="#reference-url">Reference.URL</a></li>
+</ul><p>CLI 용 Data Transfer Tool.</p>
+
+<ul>
+<li><p>Download/Upload 모두 가능.</p></li>
+<li><p>HTTP/HTTPS/FTP/LDAP/SCP/TELNET/SMTP/POP3 등 주요한 프로토콜을 지원.</p></li>
+<li><p>여러 플랫폼과 OS에서 유용하게 사용.</p></li>
+<li><p>libcurl 이라는 C 기반의 library 가 제공되므로 C/C++ 프로그램 개발시 위의 protocol 과 연계가 필요하다면 libcurl 을 사용하여 손쉽게 연계.</p></li>
+<li><p>libcurl은 PHP, ruby, PERL 및 여러 언어에 바인딩되어 있으므로 사용하는 언어나 개발환경에 맞게 libcurl 을 사용.</p></li>
+</ul>
+
+<h2 id="usage">
+<a class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+<div class="highlight"><pre><code class="language-" data-lang="">curl [options] &lt;url&gt;
+</code></pre></div>
+<ul>
+<li>주요 Options (http/https 관련)</li>
+</ul>
+
+<table>
+<thead>
+<tr>
+<th style="text-align: left">short</th>
+<th style="text-align: left">long</th>
+<th style="text-align: left">explan</th>
+<th style="text-align: left">description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left">-v</td>
+<td style="text-align: left">--verbose</td>
+<td style="text-align: left">동작하면서 자세한 옵션을 출력한다.</td>
+<td style="text-align: left"></td>
+</tr>
+<tr>
+<td style="text-align: left">-s</td>
+<td style="text-align: left">--silent</td>
+<td style="text-align: left">정숙 모드. 진행 내역이나 메시지등을 출력하지 않는다. -o 옵션으로 remote data 도 /dev/null 로 보내면 결과물도 출력되지 않는다</td>
+<td style="text-align: left">HTTP response code 만 가져오거나 할 경우 유리</td>
+</tr>
+<tr>
+<td style="text-align: left">-S</td>
+<td style="text-align: left">--show-error</td>
+<td style="text-align: left">Show error.</td>
+<td style="text-align: left"></td>
+</tr>
+<tr>
+<td style="text-align: left">-o</td>
+<td style="text-align: left">--output FILE</td>
+<td style="text-align: left">curl 은 remote 에서 받아온 데이타를 기본적으로는 콘솔에 출력한다. -o 옵션 뒤에 FILE 을 적어주면 해당 FILE 로 저장한다. (download 시 유용)</td>
+<td style="text-align: left"></td>
+</tr>
+<tr>
+<td style="text-align: left">-O</td>
+<td style="text-align: left">--remote-name</td>
+<td style="text-align: left">file 저장시 remote 의 file 이름으로 저장한다. -o 옵션보다 편리하다.</td>
+<td style="text-align: left"></td>
+</tr>
+<tr>
+<td style="text-align: left">-l</td>
+<td style="text-align: left">--head</td>
+<td style="text-align: left">HTTP header 만 보여주고 content 는 표시하지 않는다</td>
+<td style="text-align: left"></td>
+</tr>
+<tr>
+<td style="text-align: left">-L</td>
+<td style="text-align: left">--location</td>
+<td style="text-align: left">서버에서 HTTP 301 이나 HTTP 302 응답이 왔을 경우 redirection URL 로 따라간다. --max-redirs 뒤에 숫자로 redirection 을 몇 번 따라갈지 지정할 수 있다. 기본 값은 50이다</td>
+<td style="text-align: left">curl -v daum.net 을 실행하면 결과값으로 다음과 같이 HTTP 302 가 리턴된다. &lt; HTTP/1.1 302 Object Moved &lt; Location: <a href="http://www.daum.net/">http://www.daum.net/</a> -L 옵션을 추가하면 <a href="http://www.daum.net">www.daum.net</a> 으로 재접속하여 결과를 받아오게 된다.</td>
+</tr>
+<tr>
+<td style="text-align: left">-k</td>
+<td style="text-align: left">--insecure</td>
+<td style="text-align: left">https 사이트를 SSL certificate 검증없이 연결한다.</td>
+<td style="text-align: left">wget 의 --no-check-certificate 과 비슷한 역할 수행</td>
+</tr>
+<tr>
+<td style="text-align: left">-J</td>
+<td style="text-align: left">--remote-header-name</td>
+<td style="text-align: left">어떤 웹서비스는 파일 다운로드시 Content-Disposition Header 를 파싱해야 정확한 파일이름을 알 수 있을 경우가 있다. -J 옵션을 주면 헤더에 있는 파일 이름으로 저장한다.</td>
+<td style="text-align: left">curl 7.20 이상부터 추가된 옵션</td>
+</tr>
+<tr>
+<td style="text-align: left">-D</td>
+<td style="text-align: left">--dump-header <file></file>
+</td>
+<td style="text-align: left"><file> 에 HTTP header 를 기록한다.</file></td>
+<td style="text-align: left"></td>
+</tr>
+<tr>
+<td style="text-align: left">-d</td>
+<td style="text-align: left">--data</td>
+<td style="text-align: left">HTTP Post data</td>
+<td style="text-align: left">FORM 을 POST 하는 HTTP나 JSON 으로 데이타를 주고받는 REST 기반의 웹서비스 디버깅시 유용한 옵션이다</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="examples">
+<a class="anchor" href="#examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples (자주 사용되는)</h2>
+
+<ul>
+<li><p>다른 이름으로 저장
+<code>
+curl -o filename &lt;URL&gt;
+</code></p></li>
+<li><p>저장
+<code>
+curl -O &lt;URL&gt;
+</code></p></li>
+<li><p>동시 저장
+<code>
+curl -O &lt;URL&gt; -O &lt;URL&gt;
+</code></p></li>
+</ul>
+
+<h1 id="reference-url">
+<a class="anchor" href="#reference-url" aria-hidden="true"><span class="octicon octicon-link"></span></a><em>Reference.URL</em>
+</h1>
+
+<p><a href="https://www.lesstif.com/pages/viewpage.action?pageId=14745703">https://www.lesstif.com/pages/viewpage.action?pageId=14745703</a></p>
+
+  </div>
+
+<div>
+  <p>CLI 용 Data Transfer Tool.</p>
+
+<ul>
+<li><p>Download/Upload 모두 가능.</p></li>
+<li><p>HTTP/HTTPS/FTP/LDAP/SCP/TELNET/SMTP/POP3 등 주요한 프로토콜을 지원.</p></li>
+<li><p>여러 플랫폼과 OS에서 유용하게 사용.</p></li>
+<li><p>libcurl 이라는 C 기반의 library 가 제공되므로 C/C++ 프로그램 개발시 위의 protocol 과 연계가 필요하다면 libcurl 을 사용하여 손쉽게 연계.</p></li>
+<li><p>libcurl은 PHP, ruby, PERL 및 여러 언어에 바인딩되어 있으므로 사용하는 언어나 개발환경에 맞게 libcurl 을 사용.</p></li>
+</ul>
+
+<h2 id="usage">Usage</h2>
+<div class="highlight"><pre><code class="language-" data-lang="">curl [options] &lt;url&gt;
+</code></pre></div>
+<ul>
+<li>주요 Options (http/https 관련)</li>
+</ul>
+
+<table>
+<thead>
+<tr>
+<th style="text-align: left">short</th>
+<th style="text-align: left">long</th>
+<th style="text-align: left">explan</th>
+<th style="text-align: left">description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left">-v</td>
+<td style="text-align: left">--verbose</td>
+<td style="text-align: left">동작하면서 자세한 옵션을 출력한다.</td>
+<td style="text-align: left"></td>
+</tr>
+<tr>
+<td style="text-align: left">-s</td>
+<td style="text-align: left">--silent</td>
+<td style="text-align: left">정숙 모드. 진행 내역이나 메시지등을 출력하지 않는다. -o 옵션으로 remote data 도 /dev/null 로 보내면 결과물도 출력되지 않는다</td>
+<td style="text-align: left">HTTP response code 만 가져오거나 할 경우 유리</td>
+</tr>
+<tr>
+<td style="text-align: left">-S</td>
+<td style="text-align: left">--show-error</td>
+<td style="text-align: left">Show error.</td>
+<td style="text-align: left"></td>
+</tr>
+<tr>
+<td style="text-align: left">-o</td>
+<td style="text-align: left">--output FILE</td>
+<td style="text-align: left">curl 은 remote 에서 받아온 데이타를 기본적으로는 콘솔에 출력한다. -o 옵션 뒤에 FILE 을 적어주면 해당 FILE 로 저장한다. (download 시 유용)</td>
+<td style="text-align: left"></td>
+</tr>
+<tr>
+<td style="text-align: left">-O</td>
+<td style="text-align: left">--remote-name</td>
+<td style="text-align: left">file 저장시 remote 의 file 이름으로 저장한다. -o 옵션보다 편리하다.</td>
+<td style="text-align: left"></td>
+</tr>
+<tr>
+<td style="text-align: left">-l</td>
+<td style="text-align: left">--head</td>
+<td style="text-align: left">HTTP header 만 보여주고 content 는 표시하지 않는다</td>
+<td style="text-align: left"></td>
+</tr>
+<tr>
+<td style="text-align: left">-L</td>
+<td style="text-align: left">--location</td>
+<td style="text-align: left">서버에서 HTTP 301 이나 HTTP 302 응답이 왔을 경우 redirection URL 로 따라간다. --max-redirs 뒤에 숫자로 redirection 을 몇 번 따라갈지 지정할 수 있다. 기본 값은 50이다</td>
+<td style="text-align: left">curl -v daum.net 을 실행하면 결과값으로 다음과 같이 HTTP 302 가 리턴된다. &lt; HTTP/1.1 302 Object Moved &lt; Location: <a href="http://www.daum.net/" rel="nofollow" target="_blank">http://www.daum.net/</a> -L 옵션을 추가하면 <a href="http://www.daum.net" rel="nofollow" target="_blank">www.daum.net</a> 으로 재접속하여 결과를 받아오게 된다.</td>
+</tr>
+<tr>
+<td style="text-align: left">-k</td>
+<td style="text-align: left">--insecure</td>
+<td style="text-align: left">https 사이트를 SSL certificate 검증없이 연결한다.</td>
+<td style="text-align: left">wget 의 --no-check-certificate 과 비슷한 역할 수행</td>
+</tr>
+<tr>
+<td style="text-align: left">-J</td>
+<td style="text-align: left">--remote-header-name</td>
+<td style="text-align: left">어떤 웹서비스는 파일 다운로드시 Content-Disposition Header 를 파싱해야 정확한 파일이름을 알 수 있을 경우가 있다. -J 옵션을 주면 헤더에 있는 파일 이름으로 저장한다.</td>
+<td style="text-align: left">curl 7.20 이상부터 추가된 옵션</td>
+</tr>
+<tr>
+<td style="text-align: left">-D</td>
+<td style="text-align: left">--dump-header <file></file>
+</td>
+<td style="text-align: left"><file> 에 HTTP header 를 기록한다.</file></td>
+<td style="text-align: left"></td>
+</tr>
+<tr>
+<td style="text-align: left">-d</td>
+<td style="text-align: left">--data</td>
+<td style="text-align: left">HTTP Post data</td>
+<td style="text-align: left">FORM 을 POST 하는 HTTP나 JSON 으로 데이타를 주고받는 REST 기반의 웹서비스 디버깅시 유용한 옵션이다</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="examples">Examples (자주 사용되는)</h2>
+
+<ul>
+<li><p>다른 이름으로 저장
+<code>
+curl -o filename &lt;URL&gt;
+</code></p></li>
+<li><p>저장
+<code>
+curl -O &lt;URL&gt;
+</code></p></li>
+<li><p>동시 저장
+<code>
+curl -O &lt;URL&gt; -O &lt;URL&gt;
+</code></p></li>
+</ul>
+
+<h1 id="reference-url"><em>Reference.URL</em></h1>
+
+<p><a href="https://www.lesstif.com/pages/viewpage.action?pageId=14745703" rel="nofollow" target="_blank">https://www.lesstif.com/pages/viewpage.action?pageId=14745703</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

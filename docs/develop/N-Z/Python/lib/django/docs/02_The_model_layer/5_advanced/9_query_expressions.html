@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Query Expressions | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Query Expressions" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Supported arithmetic" />
+<meta property="og:description" content="Supported arithmetic" />
+<link rel="canonical" href="/blog/docs/develop/N-Z/Python/lib/django/docs/02_The_model_layer/5_advanced/9_query_expressions.html" />
+<meta property="og:url" content="/blog/docs/develop/N-Z/Python/lib/django/docs/02_The_model_layer/5_advanced/9_query_expressions.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-02T16:38:51+09:00" />
+<script type="application/ld+json">
+{"description":"Supported arithmetic","headline":"Query Expressions","dateModified":"2019-12-02T16:38:51+09:00","datePublished":"2019-12-02T16:38:51+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/docs/develop/N-Z/Python/lib/django/docs/02_The_model_layer/5_advanced/9_query_expressions.html"},"url":"/blog/docs/develop/N-Z/Python/lib/django/docs/02_The_model_layer/5_advanced/9_query_expressions.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/blog/feed.xml" title="Portal2312's blog" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113063601-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+<script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Query Expressions</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#supported-arithmetic">Supported arithmetic</a></li>
+<li class="toc-entry toc-h2"><a href="#some-examples">Some examples</a></li>
+<li class="toc-entry toc-h2"><a href="#built-in-expressions">Built-in Expressions</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#f-expressions">F() expressions</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#avoiding-race-conditions-using-f">Avoiding race conditions using F()</a></li>
+<li class="toc-entry toc-h4"><a href="#f-assignments-persist-after-model-save">F() assignments persist after Model.save()</a></li>
+<li class="toc-entry toc-h4"><a href="#using-f-in-filters">Using F() in filters</a></li>
+<li class="toc-entry toc-h4"><a href="#using-f-with-annotations">Using F() with annotations</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#func-expressions">Func() expressions</a></li>
+<li class="toc-entry toc-h3"><a href="#aggregate-expressions">Aggregate() expressions</a></li>
+<li class="toc-entry toc-h3"><a href="#creating-your-own-aggregate-functions">Creating your own Aggregate Functions</a></li>
+<li class="toc-entry toc-h3"><a href="#value-expressions">Value() expressions</a></li>
+<li class="toc-entry toc-h3"><a href="#expressionwrapper-expressions">ExpressionWrapper() expressions</a></li>
+<li class="toc-entry toc-h3"><a href="#conditional-expressions">Conditional expressions</a></li>
+<li class="toc-entry toc-h3"><a href="#subquery-expressions">Subquery() expressions</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#referencing-columns-from-the-outer-queryset">Referencing columns from the outer queryset</a></li>
+<li class="toc-entry toc-h4"><a href="#limiting-a-subquery-to-a-single-column">Limiting a subquery to a single column</a></li>
+<li class="toc-entry toc-h4"><a href="#limiting-the-subquery-to-a-single-row">Limiting the subquery to a single row</a></li>
+<li class="toc-entry toc-h4"><a href="#exists-subqueries">Exists() subqueries</a></li>
+<li class="toc-entry toc-h4"><a href="#filtering-on-a-subquery-expression">Filtering on a Subquery expression</a></li>
+<li class="toc-entry toc-h4"><a href="#using-aggregates-within-a-subquery-expression">Using aggregates within a Subquery expression</a></li>
+<li class="toc-entry toc-h4"><a href="#raw-sql-expressions">Raw SQL expressions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#technical-information">Technical Information</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#expression-api">Expression API</a></li>
+<li class="toc-entry toc-h3"><a href="#writing-your-own-query-expressions">Writing your own Query Expressions</a></li>
+<li class="toc-entry toc-h3"><a href="#adding-support-in-third-party-database-backends">Adding support in third-party database backends</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#refernece">Refernece</a></li>
+</ul><h2 id="supported-arithmetic">
+<a class="anchor" href="#supported-arithmetic" aria-hidden="true"><span class="octicon octicon-link"></span></a>Supported arithmetic</h2>
+
+<hr>
+
+<h2 id="some-examples">
+<a class="anchor" href="#some-examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Some examples</h2>
+
+<hr>
+
+<h2 id="built-in-expressions">
+<a class="anchor" href="#built-in-expressions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Built-in Expressions</h2>
+
+<hr>
+
+<h3 id="f-expressions">
+<a class="anchor" href="#f-expressions" aria-hidden="true"><span class="octicon octicon-link"></span></a>F() expressions</h3>
+
+<p>(작성기준: django-en-1.11)</p>
+
+<p>class F[source]</p>
+
+<p>F() 객체는 모델 필드 또는 주석 된 열의 값을 나타냅니다. 실제로 데이터베이스에서 파이썬 메모리로 가져 오지 않고도 모델 필드 값을 참조하고 이를 사용하여 데이터베이스 작업을 수행 할 수 있습니다.</p>
+
+<p>대신 Django는 F() 객체를 사용하여 데이터베이스 수준에서 필요한 작업을 설명하는 SQL 표현식을 생성.</p>
+
+<p>예:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="c1"># Tintin filed a news story!
+</span><span class="n">reporter</span> <span class="o">=</span> <span class="n">Reporters</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'Tintin'</span><span class="p">)</span>
+<span class="n">reporter</span><span class="o">.</span><span class="n">stories_filed</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="n">reporter</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</code></pre></div>
+<p>여기서 우리는 reporter.stories_filed 의 값을 데이터베이스에서 메모리로 가져 와서 친숙한 파이썬 연산자를 사용하여 조작 한 다음 객체를 다시 데이터베이스에 저장했습니다.</p>
+
+<p>그러나 대신 우리는 다음과 같이 할 수 있습니다:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="kn">from</span> <span class="nn">django.db.models</span> <span class="kn">import</span> <span class="n">F</span>
+
+<span class="n">reporter</span> <span class="o">=</span> <span class="n">Reporters</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'Tintin'</span><span class="p">)</span>
+<span class="n">reporter</span><span class="o">.</span><span class="n">stories_filed</span> <span class="o">=</span> <span class="n">F</span><span class="p">(</span><span class="s">'stories_filed'</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">reporter</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</code></pre></div>
+<p><strong>reporter.stories_filed = F('stories_filed') + 1</strong> 는 사실 파이썬이 값을 인스턴스 속성에 할당 한 것처럼 보입니다. 실제로는 데이터베이스에서 연산을 설명하는 SQL 구문입니다.</p>
+
+<p>장고는 F ()의 인스턴스를 만나면 표준 파이썬 연산자를 오버라이드하여 캡슐화 된 SQL 표현식을 생성합니다. 이 경우 reporter.stories_filed가 나타내는 데이터베이스 필드를 증가 시키도록 데이터베이스에 지시합니다.</p>
+
+<p>eporter.stories_filed에 어떤 값이 있었는지에 관계없이 파이썬은 그것에 대해 결코 알지 못합니다 - 그것은 데이터베이스에 의해 전적으로 처리됩니다. 모든 파이썬은 Django의 F () 클래스를 통해 필드를 참조하고 작업을 설명하는 SQL 구문을 작성합니다.</p>
+
+<p>이 방법으로 저장된 새 값에 액세스하려면 객체를 다시 로드해야함:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">reporter</span> <span class="o">=</span> <span class="n">Reporters</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="n">reporter</span><span class="o">.</span><span class="n">pk</span><span class="p">)</span>
+<span class="c1"># Or, more succinctly:
+</span><span class="n">reporter</span><span class="o">.</span><span class="n">refresh_from_db</span><span class="p">()</span>
+</code></pre></div>
+<p>위와 같이 단일 인스턴스에 대한 작업 에서뿐만 아니라 F()는 update()를 사용하여 객체 인스턴스의 QuerySet에 사용할 수 있습니다. 이것은 위의 get()과 save()를 사용했던 두 개의 쿼리를 하나의 쿼리로 줄입니다:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">reporter</span> <span class="o">=</span> <span class="n">Reporters</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="nb">filter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'Tintin'</span><span class="p">)</span>
+<span class="n">reporter</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">stories_filed</span><span class="o">=</span><span class="n">F</span><span class="p">(</span><span class="s">'stories_filed'</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+<p>또한 update ()를 사용하여 여러 객체의 필드 값을 증가시킬 수 있습니다. 데이터베이스에서 파이썬으로 모든 것을 가져 와서 루핑하고, 각각의 필드 값을 증가시키고, 각각을 데이터베이스에 다시 저장하는 것보다 훨씬 빠를 수 있습니다:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">Reporter</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="nb">all</span><span class="p">()</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">stories_filed</span><span class="o">=</span><span class="n">F</span><span class="p">(</span><span class="s">'stories_filed'</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+<p>(장점) 따라서 F()는 다음과 같은 방법으로 성능 이점을 제공 할 수 있습니다:</p>
+
+<ul>
+<li><p>Python이 아닌 데이터베이스를 사용하여 작업 수행.</p></li>
+<li><p>일부 작업에 필요한 쿼리 수 감소.</p></li>
+</ul>
+
+<h4 id="avoiding-race-conditions-using-f">
+<a class="anchor" href="#avoiding-race-conditions-using-f" aria-hidden="true"><span class="octicon octicon-link"></span></a>Avoiding race conditions using F()</h4>
+
+<p>F()의 또 다른 유용한 이점은 파이썬이 아닌 데이터베이스가 필드 값을 업데이트하면 경쟁 조건을 피할 수 있다는 것입니다.</p>
+
+<p>위의 첫 번째 예제에서 두 파이썬 스레드가 코드를 실행하면 한 스레드가 다른 스레드가 데이터베이스에서 값을 검색 한 후에 필드 값을 검색, 증가 및 저장할 수 있습니다. 두 번째 스레드가 저장하는 값은 원래 값을 기반으로합니다. 첫 번째 스레드의 작업이 손실됩니다.</p>
+
+<p>데이터베이스에서 필드를 업데이트해야하는 경우 프로세스가보다 강력 해집니다: 인스턴스가 검색 될 때 그 값을 기반으로하는 것이 아니라 save () 또는 update ()가 실행될 때 데이터베이스의 필드 값을 기반으로 필드를 업데이트합니다.</p>
+
+<hr>
+
+<h4 id="f-assignments-persist-after-model-save">
+<a class="anchor" href="#f-assignments-persist-after-model-save" aria-hidden="true"><span class="octicon octicon-link"></span></a>F() assignments persist after Model.save()</h4>
+
+<p>모델 필드에 할당 된 F () 객체는 모델 인스턴스를 저장 한 후에도 유지되며 각 save()에 적용됩니다:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">reporter</span> <span class="o">=</span> <span class="n">Reporters</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'Tintin'</span><span class="p">)</span>
+<span class="n">reporter</span><span class="o">.</span><span class="n">stories_filed</span> <span class="o">=</span> <span class="n">F</span><span class="p">(</span><span class="s">'stories_filed'</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">reporter</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+<span class="n">reporter</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Tintin Jr.'</span>
+<span class="n">reporter</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</code></pre></div>
+<p>stories_filed는이 경우에 두 번 업데이트됩니다. 처음에 1이면 최종 값은 3이됩니다.</p>
+
+<hr>
+
+<h4 id="using-f-in-filters">
+<a class="anchor" href="#using-f-in-filters" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using F() in filters</h4>
+
+<p>F ()는 QuerySet 필터에서 매우 유용합니다. QuerySet 필터를 사용하면 Python 값이 아닌 필드 값을 기준으로 객체 집합을 필터링 할 수 있습니다.</p>
+
+<p>이것은 쿼리에서 F() 표현식을 사용할 때 문서화됩니다. <a href="https://docs.djangoproject.com/en/1.11/topics/db/queries/#using-f-expressions-in-filters">using F() expressions in queries</a></p>
+
+<hr>
+
+<h4 id="using-f-with-annotations">
+<a class="anchor" href="#using-f-with-annotations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using F() with annotations</h4>
+
+<p>F ()는 다양한 필드를 산술로 결합하여 모델에 동적 필드를 만드는 데 사용할 수 있습니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">company</span> <span class="o">=</span> <span class="n">Company</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
+    <span class="n">chairs_needed</span><span class="o">=</span><span class="n">F</span><span class="p">(</span><span class="s">'num_employees'</span><span class="p">)</span> <span class="o">-</span> <span class="n">F</span><span class="p">(</span><span class="s">'num_chairs'</span><span class="p">))</span>
+</code></pre></div>
+<p>만약 당신이 결합하고있는 필드가 다른 타입이라면 장고에게 어떤 종류의 필드가 반환 될지를 알려줘야합니다. F ()는 output_field를 직접 지원하지 않으므로 ExpressionWrapper로 표현식을 래핑해야합니다:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="kn">from</span> <span class="nn">django.db.models</span> <span class="kn">import</span> <span class="n">DateTimeField</span><span class="p">,</span> <span class="n">ExpressionWrapper</span><span class="p">,</span> <span class="n">F</span>
+
+<span class="n">Ticket</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
+    <span class="n">expires</span><span class="o">=</span><span class="n">ExpressionWrapper</span><span class="p">(</span>
+        <span class="n">F</span><span class="p">(</span><span class="s">'active_at'</span><span class="p">)</span> <span class="o">+</span> <span class="n">F</span><span class="p">(</span><span class="s">'duration'</span><span class="p">),</span> <span class="n">output_field</span><span class="o">=</span><span class="n">DateTimeField</span><span class="p">()))</span>
+</code></pre></div>
+<p>ForeignKey와 같은 관계형 필드를 참조 할 때 F ()는 모델 인스턴스가 아닌 기본 키 값을 반환합니다:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="o">&gt;&gt;</span> <span class="n">car</span> <span class="o">=</span> <span class="n">Company</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">built_by</span><span class="o">=</span><span class="n">F</span><span class="p">(</span><span class="s">'manufacturer'</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+<span class="o">&gt;&gt;</span> <span class="n">car</span><span class="o">.</span><span class="n">manufacturer</span>
+<span class="o">&lt;</span><span class="n">Manufacturer</span><span class="p">:</span> <span class="n">Toyota</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;</span> <span class="n">car</span><span class="o">.</span><span class="n">built_by</span>
+<span class="mi">3</span>
+</code></pre></div>
+<hr>
+
+<h3 id="func-expressions">
+<a class="anchor" href="#func-expressions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Func() expressions</h3>
+
+<h3 id="aggregate-expressions">
+<a class="anchor" href="#aggregate-expressions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Aggregate() expressions</h3>
+
+<h3 id="creating-your-own-aggregate-functions">
+<a class="anchor" href="#creating-your-own-aggregate-functions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating your own Aggregate Functions</h3>
+
+<h3 id="value-expressions">
+<a class="anchor" href="#value-expressions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Value() expressions</h3>
+
+<h3 id="expressionwrapper-expressions">
+<a class="anchor" href="#expressionwrapper-expressions" aria-hidden="true"><span class="octicon octicon-link"></span></a>ExpressionWrapper() expressions</h3>
+
+<h3 id="conditional-expressions">
+<a class="anchor" href="#conditional-expressions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conditional expressions</h3>
+
+<hr>
+
+<h3 id="subquery-expressions">
+<a class="anchor" href="#subquery-expressions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Subquery() expressions</h3>
+
+<h4 id="referencing-columns-from-the-outer-queryset">
+<a class="anchor" href="#referencing-columns-from-the-outer-queryset" aria-hidden="true"><span class="octicon octicon-link"></span></a>Referencing columns from the outer queryset</h4>
+
+<h4 id="limiting-a-subquery-to-a-single-column">
+<a class="anchor" href="#limiting-a-subquery-to-a-single-column" aria-hidden="true"><span class="octicon octicon-link"></span></a>Limiting a subquery to a single column</h4>
+
+<h4 id="limiting-the-subquery-to-a-single-row">
+<a class="anchor" href="#limiting-the-subquery-to-a-single-row" aria-hidden="true"><span class="octicon octicon-link"></span></a>Limiting the subquery to a single row</h4>
+
+<h4 id="exists-subqueries">
+<a class="anchor" href="#exists-subqueries" aria-hidden="true"><span class="octicon octicon-link"></span></a>Exists() subqueries</h4>
+
+<h4 id="filtering-on-a-subquery-expression">
+<a class="anchor" href="#filtering-on-a-subquery-expression" aria-hidden="true"><span class="octicon octicon-link"></span></a>Filtering on a Subquery expression</h4>
+
+<h4 id="using-aggregates-within-a-subquery-expression">
+<a class="anchor" href="#using-aggregates-within-a-subquery-expression" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using aggregates within a Subquery expression</h4>
+
+<h4 id="raw-sql-expressions">
+<a class="anchor" href="#raw-sql-expressions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Raw SQL expressions</h4>
+
+<hr>
+
+<h2 id="technical-information">
+<a class="anchor" href="#technical-information" aria-hidden="true"><span class="octicon octicon-link"></span></a>Technical Information</h2>
+
+<h3 id="expression-api">
+<a class="anchor" href="#expression-api" aria-hidden="true"><span class="octicon octicon-link"></span></a>Expression API</h3>
+
+<h3 id="writing-your-own-query-expressions">
+<a class="anchor" href="#writing-your-own-query-expressions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Writing your own Query Expressions</h3>
+
+<h3 id="adding-support-in-third-party-database-backends">
+<a class="anchor" href="#adding-support-in-third-party-database-backends" aria-hidden="true"><span class="octicon octicon-link"></span></a>Adding support in third-party database backends</h3>
+
+<hr>
+
+<h2 id="refernece">
+<a class="anchor" href="#refernece" aria-hidden="true"><span class="octicon octicon-link"></span></a><em>Refernece</em>
+</h2>
+
+<p><a href="https://docs.djangoproject.com/en/1.11/ref/models/expressions/">https://docs.djangoproject.com/en/1.11/ref/models/expressions/</a></p>
+
+<p><a href="https://docs.djangoproject.com/en/1.11/topics/db/queries/#using-f-expressions-in-filters">https://docs.djangoproject.com/en/1.11/topics/db/queries/#using-f-expressions-in-filters</a></p>
+
+  </div>
+
+<div>
+  <h2 id="supported-arithmetic">Supported arithmetic</h2>
+
+<hr>
+
+<h2 id="some-examples">Some examples</h2>
+
+<hr>
+
+<h2 id="built-in-expressions">Built-in Expressions</h2>
+
+<hr>
+
+<h3 id="f-expressions">F() expressions</h3>
+
+<p>(작성기준: django-en-1.11)</p>
+
+<p>class F[source]</p>
+
+<p>F() 객체는 모델 필드 또는 주석 된 열의 값을 나타냅니다. 실제로 데이터베이스에서 파이썬 메모리로 가져 오지 않고도 모델 필드 값을 참조하고 이를 사용하여 데이터베이스 작업을 수행 할 수 있습니다.</p>
+
+<p>대신 Django는 F() 객체를 사용하여 데이터베이스 수준에서 필요한 작업을 설명하는 SQL 표현식을 생성.</p>
+
+<p>예:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="c1"># Tintin filed a news story!
+</span><span class="n">reporter</span> <span class="o">=</span> <span class="n">Reporters</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'Tintin'</span><span class="p">)</span>
+<span class="n">reporter</span><span class="o">.</span><span class="n">stories_filed</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="n">reporter</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</code></pre></div>
+<p>여기서 우리는 reporter.stories_filed 의 값을 데이터베이스에서 메모리로 가져 와서 친숙한 파이썬 연산자를 사용하여 조작 한 다음 객체를 다시 데이터베이스에 저장했습니다.</p>
+
+<p>그러나 대신 우리는 다음과 같이 할 수 있습니다:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="kn">from</span> <span class="nn">django.db.models</span> <span class="kn">import</span> <span class="n">F</span>
+
+<span class="n">reporter</span> <span class="o">=</span> <span class="n">Reporters</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'Tintin'</span><span class="p">)</span>
+<span class="n">reporter</span><span class="o">.</span><span class="n">stories_filed</span> <span class="o">=</span> <span class="n">F</span><span class="p">(</span><span class="s">'stories_filed'</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">reporter</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</code></pre></div>
+<p><strong>reporter.stories_filed = F('stories_filed') + 1</strong> 는 사실 파이썬이 값을 인스턴스 속성에 할당 한 것처럼 보입니다. 실제로는 데이터베이스에서 연산을 설명하는 SQL 구문입니다.</p>
+
+<p>장고는 F ()의 인스턴스를 만나면 표준 파이썬 연산자를 오버라이드하여 캡슐화 된 SQL 표현식을 생성합니다. 이 경우 reporter.stories_filed가 나타내는 데이터베이스 필드를 증가 시키도록 데이터베이스에 지시합니다.</p>
+
+<p>eporter.stories_filed에 어떤 값이 있었는지에 관계없이 파이썬은 그것에 대해 결코 알지 못합니다 - 그것은 데이터베이스에 의해 전적으로 처리됩니다. 모든 파이썬은 Django의 F () 클래스를 통해 필드를 참조하고 작업을 설명하는 SQL 구문을 작성합니다.</p>
+
+<p>이 방법으로 저장된 새 값에 액세스하려면 객체를 다시 로드해야함:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">reporter</span> <span class="o">=</span> <span class="n">Reporters</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="n">reporter</span><span class="o">.</span><span class="n">pk</span><span class="p">)</span>
+<span class="c1"># Or, more succinctly:
+</span><span class="n">reporter</span><span class="o">.</span><span class="n">refresh_from_db</span><span class="p">()</span>
+</code></pre></div>
+<p>위와 같이 단일 인스턴스에 대한 작업 에서뿐만 아니라 F()는 update()를 사용하여 객체 인스턴스의 QuerySet에 사용할 수 있습니다. 이것은 위의 get()과 save()를 사용했던 두 개의 쿼리를 하나의 쿼리로 줄입니다:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">reporter</span> <span class="o">=</span> <span class="n">Reporters</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="nb">filter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'Tintin'</span><span class="p">)</span>
+<span class="n">reporter</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">stories_filed</span><span class="o">=</span><span class="n">F</span><span class="p">(</span><span class="s">'stories_filed'</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+<p>또한 update ()를 사용하여 여러 객체의 필드 값을 증가시킬 수 있습니다. 데이터베이스에서 파이썬으로 모든 것을 가져 와서 루핑하고, 각각의 필드 값을 증가시키고, 각각을 데이터베이스에 다시 저장하는 것보다 훨씬 빠를 수 있습니다:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">Reporter</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="nb">all</span><span class="p">()</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">stories_filed</span><span class="o">=</span><span class="n">F</span><span class="p">(</span><span class="s">'stories_filed'</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+<p>(장점) 따라서 F()는 다음과 같은 방법으로 성능 이점을 제공 할 수 있습니다:</p>
+
+<ul>
+<li><p>Python이 아닌 데이터베이스를 사용하여 작업 수행.</p></li>
+<li><p>일부 작업에 필요한 쿼리 수 감소.</p></li>
+</ul>
+
+<h4 id="avoiding-race-conditions-using-f">Avoiding race conditions using F()</h4>
+
+<p>F()의 또 다른 유용한 이점은 파이썬이 아닌 데이터베이스가 필드 값을 업데이트하면 경쟁 조건을 피할 수 있다는 것입니다.</p>
+
+<p>위의 첫 번째 예제에서 두 파이썬 스레드가 코드를 실행하면 한 스레드가 다른 스레드가 데이터베이스에서 값을 검색 한 후에 필드 값을 검색, 증가 및 저장할 수 있습니다. 두 번째 스레드가 저장하는 값은 원래 값을 기반으로합니다. 첫 번째 스레드의 작업이 손실됩니다.</p>
+
+<p>데이터베이스에서 필드를 업데이트해야하는 경우 프로세스가보다 강력 해집니다: 인스턴스가 검색 될 때 그 값을 기반으로하는 것이 아니라 save () 또는 update ()가 실행될 때 데이터베이스의 필드 값을 기반으로 필드를 업데이트합니다.</p>
+
+<hr>
+
+<h4 id="f-assignments-persist-after-model-save">F() assignments persist after Model.save()</h4>
+
+<p>모델 필드에 할당 된 F () 객체는 모델 인스턴스를 저장 한 후에도 유지되며 각 save()에 적용됩니다:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">reporter</span> <span class="o">=</span> <span class="n">Reporters</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'Tintin'</span><span class="p">)</span>
+<span class="n">reporter</span><span class="o">.</span><span class="n">stories_filed</span> <span class="o">=</span> <span class="n">F</span><span class="p">(</span><span class="s">'stories_filed'</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">reporter</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+<span class="n">reporter</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Tintin Jr.'</span>
+<span class="n">reporter</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</code></pre></div>
+<p>stories_filed는이 경우에 두 번 업데이트됩니다. 처음에 1이면 최종 값은 3이됩니다.</p>
+
+<hr>
+
+<h4 id="using-f-in-filters">Using F() in filters</h4>
+
+<p>F ()는 QuerySet 필터에서 매우 유용합니다. QuerySet 필터를 사용하면 Python 값이 아닌 필드 값을 기준으로 객체 집합을 필터링 할 수 있습니다.</p>
+
+<p>이것은 쿼리에서 F() 표현식을 사용할 때 문서화됩니다. <a href="https://docs.djangoproject.com/en/1.11/topics/db/queries/#using-f-expressions-in-filters" rel="nofollow" target="_blank">using F() expressions in queries</a></p>
+
+<hr>
+
+<h4 id="using-f-with-annotations">Using F() with annotations</h4>
+
+<p>F ()는 다양한 필드를 산술로 결합하여 모델에 동적 필드를 만드는 데 사용할 수 있습니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">company</span> <span class="o">=</span> <span class="n">Company</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
+    <span class="n">chairs_needed</span><span class="o">=</span><span class="n">F</span><span class="p">(</span><span class="s">'num_employees'</span><span class="p">)</span> <span class="o">-</span> <span class="n">F</span><span class="p">(</span><span class="s">'num_chairs'</span><span class="p">))</span>
+</code></pre></div>
+<p>만약 당신이 결합하고있는 필드가 다른 타입이라면 장고에게 어떤 종류의 필드가 반환 될지를 알려줘야합니다. F ()는 output_field를 직접 지원하지 않으므로 ExpressionWrapper로 표현식을 래핑해야합니다:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="kn">from</span> <span class="nn">django.db.models</span> <span class="kn">import</span> <span class="n">DateTimeField</span><span class="p">,</span> <span class="n">ExpressionWrapper</span><span class="p">,</span> <span class="n">F</span>
+
+<span class="n">Ticket</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
+    <span class="n">expires</span><span class="o">=</span><span class="n">ExpressionWrapper</span><span class="p">(</span>
+        <span class="n">F</span><span class="p">(</span><span class="s">'active_at'</span><span class="p">)</span> <span class="o">+</span> <span class="n">F</span><span class="p">(</span><span class="s">'duration'</span><span class="p">),</span> <span class="n">output_field</span><span class="o">=</span><span class="n">DateTimeField</span><span class="p">()))</span>
+</code></pre></div>
+<p>ForeignKey와 같은 관계형 필드를 참조 할 때 F ()는 모델 인스턴스가 아닌 기본 키 값을 반환합니다:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="o">&gt;&gt;</span> <span class="n">car</span> <span class="o">=</span> <span class="n">Company</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">built_by</span><span class="o">=</span><span class="n">F</span><span class="p">(</span><span class="s">'manufacturer'</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+<span class="o">&gt;&gt;</span> <span class="n">car</span><span class="o">.</span><span class="n">manufacturer</span>
+<span class="o">&lt;</span><span class="n">Manufacturer</span><span class="p">:</span> <span class="n">Toyota</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;</span> <span class="n">car</span><span class="o">.</span><span class="n">built_by</span>
+<span class="mi">3</span>
+</code></pre></div>
+<hr>
+
+<h3 id="func-expressions">Func() expressions</h3>
+
+<h3 id="aggregate-expressions">Aggregate() expressions</h3>
+
+<h3 id="creating-your-own-aggregate-functions">Creating your own Aggregate Functions</h3>
+
+<h3 id="value-expressions">Value() expressions</h3>
+
+<h3 id="expressionwrapper-expressions">ExpressionWrapper() expressions</h3>
+
+<h3 id="conditional-expressions">Conditional expressions</h3>
+
+<hr>
+
+<h3 id="subquery-expressions">Subquery() expressions</h3>
+
+<h4 id="referencing-columns-from-the-outer-queryset">Referencing columns from the outer queryset</h4>
+
+<h4 id="limiting-a-subquery-to-a-single-column">Limiting a subquery to a single column</h4>
+
+<h4 id="limiting-the-subquery-to-a-single-row">Limiting the subquery to a single row</h4>
+
+<h4 id="exists-subqueries">Exists() subqueries</h4>
+
+<h4 id="filtering-on-a-subquery-expression">Filtering on a Subquery expression</h4>
+
+<h4 id="using-aggregates-within-a-subquery-expression">Using aggregates within a Subquery expression</h4>
+
+<h4 id="raw-sql-expressions">Raw SQL expressions</h4>
+
+<hr>
+
+<h2 id="technical-information">Technical Information</h2>
+
+<h3 id="expression-api">Expression API</h3>
+
+<h3 id="writing-your-own-query-expressions">Writing your own Query Expressions</h3>
+
+<h3 id="adding-support-in-third-party-database-backends">Adding support in third-party database backends</h3>
+
+<hr>
+
+<h2 id="refernece"><em>Refernece</em></h2>
+
+<p><a href="https://docs.djangoproject.com/en/1.11/ref/models/expressions/" rel="nofollow" target="_blank">https://docs.djangoproject.com/en/1.11/ref/models/expressions/</a></p>
+
+<p><a href="https://docs.djangoproject.com/en/1.11/topics/db/queries/#using-f-expressions-in-filters" rel="nofollow" target="_blank">https://docs.djangoproject.com/en/1.11/topics/db/queries/#using-f-expressions-in-filters</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

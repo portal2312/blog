@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Control flow and error handling(제어 흐름과 에러 처리) | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Control flow and error handling(제어 흐름과 에러 처리)" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="자세한 내용 Javascript reference" />
+<meta property="og:description" content="자세한 내용 Javascript reference" />
+<link rel="canonical" href="/blog/docs/develop/A-M/Javascript/tutorials/guide/03_control_flow_and_error_handling.html" />
+<meta property="og:url" content="/blog/docs/develop/A-M/Javascript/tutorials/guide/03_control_flow_and_error_handling.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-02T16:38:51+09:00" />
+<script type="application/ld+json">
+{"description":"자세한 내용 Javascript reference","headline":"Control flow and error handling(제어 흐름과 에러 처리)","dateModified":"2019-12-02T16:38:51+09:00","datePublished":"2019-12-02T16:38:51+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/docs/develop/A-M/Javascript/tutorials/guide/03_control_flow_and_error_handling.html"},"url":"/blog/docs/develop/A-M/Javascript/tutorials/guide/03_control_flow_and_error_handling.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/blog/feed.xml" title="Portal2312's blog" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113063601-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+<script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Control flow and error handling(제어 흐름과 에러 처리)</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#block-statement">Block statement</a></li>
+<li class="toc-entry toc-h2"><a href="#conditional-statements">Conditional statements(조건문)</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#if-else">if...else</a></li>
+<li class="toc-entry toc-h3"><a href="#switch">switch</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#part-ac1ca5bac1552090">예외처리문</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#throw">throw</a></li>
+<li class="toc-entry toc-h3"><a href="#try-catch">try...catch</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#catch">catch</a></li>
+<li class="toc-entry toc-h4"><a href="#fianlly">fianlly</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#error">Error 객체를 도구화 하기</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#promises">Promises</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#xhr">XHR 를 통해 이미지 불러오기</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#reference">Reference</a></li>
+</ul><p>자세한 내용 <a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Statements">Javascript reference</a></p>
+
+<p>JavaScript 표현식도 문법입니다. 표현식에 대한 자세한 내용은 <a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/Expressions_and_Operators">Expressions and operators</a>를 참조하세요.</p>
+
+<h2 id="block-statement">
+<a class="anchor" href="#block-statement" aria-hidden="true"><span class="octicon octicon-link"></span></a>Block statement</h2>
+
+<p><strong>중요:</strong> ECMAScript 6 이전의 JavaScript는 블록 범위를 가지고 있지 않습니다.
+Block 내에서 선언한 변수는 블록을 넘어 변수가 위치한 함수 혹은 스크립트에 영향을 끼치게 됩니다.즉, block 문은 변수의 범위를 정의하지 않습니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span> <span class="c1">// outputs 2</span>
+</code></pre></div>
+<p>ECMAScript 6부터, let 변수 선언으로 변수의 블록 범위를 제한할 수 있습니다. 자세한 내용은 <a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Statements/let">let</a> 참조 페이지를 참조하세요.</p>
+
+<hr>
+
+<h2 id="conditional-statements">
+<a class="anchor" href="#conditional-statements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conditional statements(조건문)</h2>
+
+<h3 id="if-else">
+<a class="anchor" href="#if-else" aria-hidden="true"><span class="octicon octicon-link"></span></a>if...else</h3>
+
+<h3 id="switch">
+<a class="anchor" href="#switch" aria-hidden="true"><span class="octicon octicon-link"></span></a>switch</h3>
+
+<hr>
+
+<h2 id="part-ac1ca5bac1552090">
+<a class="anchor" href="#part-ac1ca5bac1552090" aria-hidden="true"><span class="octicon octicon-link"></span></a>예외처리문</h2>
+
+<p>대부분 자바스크립트안에서 사용될 수 있습니다. 그럼에도 불구하고, 반드시 사용되는 객체들이 같은 것으로 만들어 지지는 않습니다. 이것들은 에러같은 숫자들이나 문자열들을 사용하는데 흔한 일이지만 특히 이런 목적으로 만들어진 예외 유형중 하나를 사용하는데 더 효과적입니다:</p>
+
+<ul>
+<li><p>ECMAScript exceptions</p></li>
+<li><p>DOMException and DOMError</p></li>
+</ul>
+
+<h3 id="throw">
+<a class="anchor" href="#throw" aria-hidden="true"><span class="octicon octicon-link"></span></a>throw</h3>
+
+<p>예외를 사용할 때 throw 문을 사용합니다. 여러분이 예외를 사용할 때, 사용되는 값을 포함하는 표현을 명시해야합니다:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="k">throw</span> <span class="nx">expression</span><span class="p">;</span>
+
+<span class="k">throw</span> <span class="dl">"</span><span class="s2">Error2</span><span class="dl">"</span><span class="p">;</span>   <span class="c1">// String type</span>
+<span class="k">throw</span> <span class="mi">42</span><span class="p">;</span>         <span class="c1">// Number type</span>
+<span class="k">throw</span> <span class="kc">true</span><span class="p">;</span>       <span class="c1">// Boolean type</span>
+<span class="k">throw</span> <span class="p">{</span><span class="na">toString</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="dl">"</span><span class="s2">I'm an object!</span><span class="dl">"</span><span class="p">;</span> <span class="p">}</span> <span class="p">};</span>
+</code></pre></div>
+<blockquote>
+<p>Note: 여러분은  예외를 사용할때 객체를 명시할 수 있습니다. 그리고나서  catch 문안에서 객체의 특성들을 참조 할 수 있습니다. 다음 예시는 myUserException of type UserException객체를 만듭니다 그리고 throw문에서 사용합니다.</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// Create an object type UserException</span>
+<span class="kd">function</span> <span class="nx">UserException</span> <span class="p">(</span><span class="nx">message</span><span class="p">){</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">message</span><span class="o">=</span><span class="nx">message</span><span class="p">;</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="o">=</span><span class="dl">"</span><span class="s2">UserException</span><span class="dl">"</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// Make the exception convert to a pretty string when used as a string</span>
+<span class="c1">// (e.g. by the error console)</span>
+<span class="nx">UserException</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">toString</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">: "</span><span class="dl">'</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">message</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">"</span><span class="dl">'</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// Create an instance of the object type and throw it</span>
+<span class="k">throw</span> <span class="k">new</span> <span class="nx">UserException</span><span class="p">(</span><span class="dl">"</span><span class="s2">Value too high</span><span class="dl">"</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="try-catch">
+<a class="anchor" href="#try-catch" aria-hidden="true"><span class="octicon octicon-link"></span></a>try...catch</h3>
+
+<p><code>finally</code> 블록은 <code>try</code> 블록과 <code>catch</code> 블록의 시행이 끝나고 <code>try...catch</code> 문법 다음의 문장이 시행 되기 전에 시행됩니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">getMonthName</span> <span class="p">(</span><span class="nx">mo</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">mo</span> <span class="o">=</span> <span class="nx">mo</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="c1">// Adjust month number for array index (1=Jan, 12=Dec)</span>
+  <span class="kd">var</span> <span class="nx">months</span> <span class="o">=</span> <span class="p">[</span><span class="dl">"</span><span class="s2">Jan</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">Feb</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">Mar</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">Apr</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">May</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">Jun</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">Jul</span><span class="dl">"</span><span class="p">,</span>
+                <span class="dl">"</span><span class="s2">Aug</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">Sep</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">Oct</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">Nov</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">Dec</span><span class="dl">"</span><span class="p">];</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">months</span><span class="p">[</span><span class="nx">mo</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">months</span><span class="p">[</span><span class="nx">mo</span><span class="p">];</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">throw</span> <span class="dl">"</span><span class="s2">InvalidMonthNo</span><span class="dl">"</span><span class="p">;</span> <span class="c1">//throw keyword is used here</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">try</span> <span class="p">{</span> <span class="c1">// statements to try</span>
+  <span class="nx">monthName</span> <span class="o">=</span> <span class="nx">getMonthName</span><span class="p">(</span><span class="nx">myMonth</span><span class="p">);</span> <span class="c1">// function could throw exception</span>
+<span class="p">}</span>
+<span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">monthName</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">unknown</span><span class="dl">"</span><span class="p">;</span>
+  <span class="nx">logMyErrors</span><span class="p">(</span><span class="nx">e</span><span class="p">);</span> <span class="c1">// pass exception object to error handler</span>
+<span class="p">}</span>
+</code></pre></div>
+<h4 id="catch">
+<a class="anchor" href="#catch" aria-hidden="true"><span class="octicon octicon-link"></span></a>catch</h4>
+
+<h4 id="fianlly">
+<a class="anchor" href="#fianlly" aria-hidden="true"><span class="octicon octicon-link"></span></a>fianlly</h4>
+
+<p>finally 블록은 예외가 발생하든 안하든 수행됩니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">f</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="k">throw</span> <span class="dl">"</span><span class="s2">bogus</span><span class="dl">"</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="k">return</span> <span class="kc">true</span><span class="p">;</span> <span class="c1">// this return statement is suspended</span>
+                 <span class="c1">// until finally block has completed</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span> <span class="c1">// not reachable</span>
+  <span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+    <span class="k">return</span> <span class="kc">false</span><span class="p">;</span> <span class="c1">// overwrites the previous "return"</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span> <span class="c1">// not reachable</span>
+  <span class="p">}</span>
+  <span class="c1">// "return false" is executed now</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span> <span class="c1">// not reachable</span>
+<span class="p">}</span>
+<span class="nx">f</span><span class="p">();</span> <span class="c1">// alerts 0, 1, 3; returns false</span>
+</code></pre></div>
+<p>finally 블록에 의한 반환값 덮어쓰기는 예외가 발생하거나 다시 예외가 발생했을때 또한 적용됩니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">f</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="k">throw</span> <span class="dl">"</span><span class="s2">bogus</span><span class="dl">"</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">caught inner "bogus"</span><span class="dl">'</span><span class="p">);</span>
+    <span class="k">throw</span> <span class="nx">e</span><span class="p">;</span> <span class="c1">// this throw statement is suspended until</span>
+             <span class="c1">// finally block has completed</span>
+  <span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="kc">false</span><span class="p">;</span> <span class="c1">// overwrites the previous "throw"</span>
+  <span class="p">}</span>
+  <span class="c1">// "return false" is executed now</span>
+<span class="p">}</span>
+
+<span class="k">try</span> <span class="p">{</span>
+  <span class="nx">f</span><span class="p">();</span>
+<span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// this is never reached because the throw inside</span>
+  <span class="c1">// the catch is overwritten</span>
+  <span class="c1">// by the return in finally</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">caught outer "bogus"</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// OUTPUT</span>
+<span class="c1">// caught inner "bogus"</span>
+</code></pre></div>
+<h3 id="error">
+<a class="anchor" href="#error" aria-hidden="true"><span class="octicon octicon-link"></span></a>Error 객체를 도구화 하기</h3>
+
+<p>오류의 종류에 따라, 더 정제된 메세지를 얻기 위하여 'name'속성과 'message'속성을 사용할수도 있습니다. 'name'속성은 오류의 일반 클래스(e.g., 'DOMException' 또는 'Error')를 제공하고, 'message' 속성이 error 객체를 문자열로 바꿀수 있는 것 보다 더 간결한 메세지를 제공합니다.</p>
+
+<p>만약 이 속성들에 대하여 이득을 얻기 위해(여러분의 catch 블록이 시스템의 예외와 여러분의 예외를 구분하지 않을 때와 같은 것) 여러분만의 예외를 발생시킨다면, 여러분은 Error 생성자를 사용할 수 있습니다. 예를 들어:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">doSomethingErrorProne</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">ourCodeMakesAMistake</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">throw</span> <span class="p">(</span><span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="dl">'</span><span class="s1">The message</span><span class="dl">'</span><span class="p">));</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">doSomethingToGetAJavascriptError</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">....</span>
+<span class="k">try</span> <span class="p">{</span>
+  <span class="nx">doSomethingErrorProne</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// logs 'Error'</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">message</span><span class="p">);</span> <span class="c1">// logs 'The message' or a JavaScript error message)</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr>
+
+<h2 id="promises">
+<a class="anchor" href="#promises" aria-hidden="true"><span class="octicon octicon-link"></span></a>Promises</h2>
+
+<p>ECMAScript 6를 시작하면서, 자바스크립트는 지연된 흐름과 비동기식의 연산을 제어할 수 있게 하는 [Promise] 객체에 대한 지원을 얻게 되었습니다.</p>
+
+<p>Promise 는 다음의 상태중 하나입니다:</p>
+
+<ul>
+<li>pending: 초기상태, fulfilled 되거나 rejected 되지 않음.</li>
+<li>fulfilled: 연산 수행 성공.</li>
+<li>rejected: 연산 수행 실패.</li>
+<li>settled: Promise 가 fulfilled 이거나 rejected 이지만 pending 은 아님.</li>
+</ul>
+
+<p><img src="../../img/promises.png" alt="promises"></p>
+
+<h3 id="xhr">
+<a class="anchor" href="#xhr" aria-hidden="true"><span class="octicon octicon-link"></span></a>XHR 를 통해 이미지 불러오기</h3>
+
+<p>이미지를 불러오기 위해 <code>Promise</code> 와 <a href="https://developer.mozilla.org/ko/docs/XMLHttpRequest">XMLHttpRequest</a> 를 사용한 간단한 예제는 MDN GitHub  promise-test repository 에 있습니다. 이 예제 가 동작하는 것을 보실 수 있습니다. 각 단계는 설명되어있고 Promise 와 XHR 구조를 친밀하게 이해할수 있게 합니다.
+여기 Promise 흐름을 보여줘서 아이디어를 얻을 수 있는 설명되지 않은 버전이 있습니다:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">imgLoad</span><span class="p">(</span><span class="nx">url</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+    <span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="dl">'</span><span class="s1">GET</span><span class="dl">'</span><span class="p">,</span> <span class="nx">url</span><span class="p">);</span>
+    <span class="nx">request</span><span class="p">.</span><span class="nx">responseType</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">blob</span><span class="dl">'</span><span class="p">;</span>
+    <span class="nx">request</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">status</span> <span class="o">===</span> <span class="mi">200</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">resolve</span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">response</span><span class="p">);</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">reject</span><span class="p">(</span><span class="nb">Error</span><span class="p">(</span><span class="dl">'</span><span class="s1">Image didn</span><span class="se">\'</span><span class="s1">t load successfully; error code:</span><span class="dl">'</span>
+                     <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">statusText</span><span class="p">));</span>
+      <span class="p">}</span>
+    <span class="p">};</span>
+    <span class="nx">request</span><span class="p">.</span><span class="nx">onerror</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">reject</span><span class="p">(</span><span class="nb">Error</span><span class="p">(</span><span class="dl">'</span><span class="s1">There was a network error.</span><span class="dl">'</span><span class="p">));</span>
+    <span class="p">};</span>
+    <span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">();</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr>
+
+<h2 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+<p><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/Control_flow_and_error_handling">https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/Control_flow_and_error_handling</a></p>
+
+  </div>
+
+<div>
+  <p>자세한 내용 <a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Statements" rel="nofollow" target="_blank">Javascript reference</a></p>
+
+<p>JavaScript 표현식도 문법입니다. 표현식에 대한 자세한 내용은 <a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/Expressions_and_Operators" rel="nofollow" target="_blank">Expressions and operators</a>를 참조하세요.</p>
+
+<h2 id="block-statement">Block statement</h2>
+
+<p><strong>중요:</strong> ECMAScript 6 이전의 JavaScript는 블록 범위를 가지고 있지 않습니다.
+Block 내에서 선언한 변수는 블록을 넘어 변수가 위치한 함수 혹은 스크립트에 영향을 끼치게 됩니다.즉, block 문은 변수의 범위를 정의하지 않습니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span> <span class="c1">// outputs 2</span>
+</code></pre></div>
+<p>ECMAScript 6부터, let 변수 선언으로 변수의 블록 범위를 제한할 수 있습니다. 자세한 내용은 <a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Statements/let" rel="nofollow" target="_blank">let</a> 참조 페이지를 참조하세요.</p>
+
+<hr>
+
+<h2 id="conditional-statements">Conditional statements(조건문)</h2>
+
+<h3 id="if-else">if...else</h3>
+
+<h3 id="switch">switch</h3>
+
+<hr>
+
+<h2 id="part-ac1ca5bac1552090">예외처리문</h2>
+
+<p>대부분 자바스크립트안에서 사용될 수 있습니다. 그럼에도 불구하고, 반드시 사용되는 객체들이 같은 것으로 만들어 지지는 않습니다. 이것들은 에러같은 숫자들이나 문자열들을 사용하는데 흔한 일이지만 특히 이런 목적으로 만들어진 예외 유형중 하나를 사용하는데 더 효과적입니다:</p>
+
+<ul>
+<li><p>ECMAScript exceptions</p></li>
+<li><p>DOMException and DOMError</p></li>
+</ul>
+
+<h3 id="throw">throw</h3>
+
+<p>예외를 사용할 때 throw 문을 사용합니다. 여러분이 예외를 사용할 때, 사용되는 값을 포함하는 표현을 명시해야합니다:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="k">throw</span> <span class="nx">expression</span><span class="p">;</span>
+
+<span class="k">throw</span> <span class="dl">"</span><span class="s2">Error2</span><span class="dl">"</span><span class="p">;</span>   <span class="c1">// String type</span>
+<span class="k">throw</span> <span class="mi">42</span><span class="p">;</span>         <span class="c1">// Number type</span>
+<span class="k">throw</span> <span class="kc">true</span><span class="p">;</span>       <span class="c1">// Boolean type</span>
+<span class="k">throw</span> <span class="p">{</span><span class="na">toString</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="dl">"</span><span class="s2">I'm an object!</span><span class="dl">"</span><span class="p">;</span> <span class="p">}</span> <span class="p">};</span>
+</code></pre></div>
+<blockquote>
+<p>Note: 여러분은  예외를 사용할때 객체를 명시할 수 있습니다. 그리고나서  catch 문안에서 객체의 특성들을 참조 할 수 있습니다. 다음 예시는 myUserException of type UserException객체를 만듭니다 그리고 throw문에서 사용합니다.</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// Create an object type UserException</span>
+<span class="kd">function</span> <span class="nx">UserException</span> <span class="p">(</span><span class="nx">message</span><span class="p">){</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">message</span><span class="o">=</span><span class="nx">message</span><span class="p">;</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="o">=</span><span class="dl">"</span><span class="s2">UserException</span><span class="dl">"</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// Make the exception convert to a pretty string when used as a string</span>
+<span class="c1">// (e.g. by the error console)</span>
+<span class="nx">UserException</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">toString</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">: "</span><span class="dl">'</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">message</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">"</span><span class="dl">'</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// Create an instance of the object type and throw it</span>
+<span class="k">throw</span> <span class="k">new</span> <span class="nx">UserException</span><span class="p">(</span><span class="dl">"</span><span class="s2">Value too high</span><span class="dl">"</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="try-catch">try...catch</h3>
+
+<p><code>finally</code> 블록은 <code>try</code> 블록과 <code>catch</code> 블록의 시행이 끝나고 <code>try...catch</code> 문법 다음의 문장이 시행 되기 전에 시행됩니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">getMonthName</span> <span class="p">(</span><span class="nx">mo</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">mo</span> <span class="o">=</span> <span class="nx">mo</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="c1">// Adjust month number for array index (1=Jan, 12=Dec)</span>
+  <span class="kd">var</span> <span class="nx">months</span> <span class="o">=</span> <span class="p">[</span><span class="dl">"</span><span class="s2">Jan</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">Feb</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">Mar</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">Apr</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">May</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">Jun</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">Jul</span><span class="dl">"</span><span class="p">,</span>
+                <span class="dl">"</span><span class="s2">Aug</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">Sep</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">Oct</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">Nov</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">Dec</span><span class="dl">"</span><span class="p">];</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">months</span><span class="p">[</span><span class="nx">mo</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">months</span><span class="p">[</span><span class="nx">mo</span><span class="p">];</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">throw</span> <span class="dl">"</span><span class="s2">InvalidMonthNo</span><span class="dl">"</span><span class="p">;</span> <span class="c1">//throw keyword is used here</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">try</span> <span class="p">{</span> <span class="c1">// statements to try</span>
+  <span class="nx">monthName</span> <span class="o">=</span> <span class="nx">getMonthName</span><span class="p">(</span><span class="nx">myMonth</span><span class="p">);</span> <span class="c1">// function could throw exception</span>
+<span class="p">}</span>
+<span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">monthName</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">unknown</span><span class="dl">"</span><span class="p">;</span>
+  <span class="nx">logMyErrors</span><span class="p">(</span><span class="nx">e</span><span class="p">);</span> <span class="c1">// pass exception object to error handler</span>
+<span class="p">}</span>
+</code></pre></div>
+<h4 id="catch">catch</h4>
+
+<h4 id="fianlly">fianlly</h4>
+
+<p>finally 블록은 예외가 발생하든 안하든 수행됩니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">f</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="k">throw</span> <span class="dl">"</span><span class="s2">bogus</span><span class="dl">"</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="k">return</span> <span class="kc">true</span><span class="p">;</span> <span class="c1">// this return statement is suspended</span>
+                 <span class="c1">// until finally block has completed</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span> <span class="c1">// not reachable</span>
+  <span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+    <span class="k">return</span> <span class="kc">false</span><span class="p">;</span> <span class="c1">// overwrites the previous "return"</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span> <span class="c1">// not reachable</span>
+  <span class="p">}</span>
+  <span class="c1">// "return false" is executed now</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span> <span class="c1">// not reachable</span>
+<span class="p">}</span>
+<span class="nx">f</span><span class="p">();</span> <span class="c1">// alerts 0, 1, 3; returns false</span>
+</code></pre></div>
+<p>finally 블록에 의한 반환값 덮어쓰기는 예외가 발생하거나 다시 예외가 발생했을때 또한 적용됩니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">f</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="k">throw</span> <span class="dl">"</span><span class="s2">bogus</span><span class="dl">"</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">caught inner "bogus"</span><span class="dl">'</span><span class="p">);</span>
+    <span class="k">throw</span> <span class="nx">e</span><span class="p">;</span> <span class="c1">// this throw statement is suspended until</span>
+             <span class="c1">// finally block has completed</span>
+  <span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="kc">false</span><span class="p">;</span> <span class="c1">// overwrites the previous "throw"</span>
+  <span class="p">}</span>
+  <span class="c1">// "return false" is executed now</span>
+<span class="p">}</span>
+
+<span class="k">try</span> <span class="p">{</span>
+  <span class="nx">f</span><span class="p">();</span>
+<span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// this is never reached because the throw inside</span>
+  <span class="c1">// the catch is overwritten</span>
+  <span class="c1">// by the return in finally</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">caught outer "bogus"</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// OUTPUT</span>
+<span class="c1">// caught inner "bogus"</span>
+</code></pre></div>
+<h3 id="error">Error 객체를 도구화 하기</h3>
+
+<p>오류의 종류에 따라, 더 정제된 메세지를 얻기 위하여 'name'속성과 'message'속성을 사용할수도 있습니다. 'name'속성은 오류의 일반 클래스(e.g., 'DOMException' 또는 'Error')를 제공하고, 'message' 속성이 error 객체를 문자열로 바꿀수 있는 것 보다 더 간결한 메세지를 제공합니다.</p>
+
+<p>만약 이 속성들에 대하여 이득을 얻기 위해(여러분의 catch 블록이 시스템의 예외와 여러분의 예외를 구분하지 않을 때와 같은 것) 여러분만의 예외를 발생시킨다면, 여러분은 Error 생성자를 사용할 수 있습니다. 예를 들어:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">doSomethingErrorProne</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">ourCodeMakesAMistake</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">throw</span> <span class="p">(</span><span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="dl">'</span><span class="s1">The message</span><span class="dl">'</span><span class="p">));</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">doSomethingToGetAJavascriptError</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">....</span>
+<span class="k">try</span> <span class="p">{</span>
+  <span class="nx">doSomethingErrorProne</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// logs 'Error'</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">message</span><span class="p">);</span> <span class="c1">// logs 'The message' or a JavaScript error message)</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr>
+
+<h2 id="promises">Promises</h2>
+
+<p>ECMAScript 6를 시작하면서, 자바스크립트는 지연된 흐름과 비동기식의 연산을 제어할 수 있게 하는 [Promise] 객체에 대한 지원을 얻게 되었습니다.</p>
+
+<p>Promise 는 다음의 상태중 하나입니다:</p>
+
+<ul>
+<li>pending: 초기상태, fulfilled 되거나 rejected 되지 않음.</li>
+<li>fulfilled: 연산 수행 성공.</li>
+<li>rejected: 연산 수행 실패.</li>
+<li>settled: Promise 가 fulfilled 이거나 rejected 이지만 pending 은 아님.</li>
+</ul>
+
+<p><img src="../../img/promises.png" alt="promises"></p>
+
+<h3 id="xhr">XHR 를 통해 이미지 불러오기</h3>
+
+<p>이미지를 불러오기 위해 <code>Promise</code> 와 <a href="https://developer.mozilla.org/ko/docs/XMLHttpRequest" rel="nofollow" target="_blank">XMLHttpRequest</a> 를 사용한 간단한 예제는 MDN GitHub  promise-test repository 에 있습니다. 이 예제 가 동작하는 것을 보실 수 있습니다. 각 단계는 설명되어있고 Promise 와 XHR 구조를 친밀하게 이해할수 있게 합니다.
+여기 Promise 흐름을 보여줘서 아이디어를 얻을 수 있는 설명되지 않은 버전이 있습니다:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">imgLoad</span><span class="p">(</span><span class="nx">url</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+    <span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="dl">'</span><span class="s1">GET</span><span class="dl">'</span><span class="p">,</span> <span class="nx">url</span><span class="p">);</span>
+    <span class="nx">request</span><span class="p">.</span><span class="nx">responseType</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">blob</span><span class="dl">'</span><span class="p">;</span>
+    <span class="nx">request</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">status</span> <span class="o">===</span> <span class="mi">200</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">resolve</span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">response</span><span class="p">);</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">reject</span><span class="p">(</span><span class="nb">Error</span><span class="p">(</span><span class="dl">'</span><span class="s1">Image didn</span><span class="se">\'</span><span class="s1">t load successfully; error code:</span><span class="dl">'</span>
+                     <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">statusText</span><span class="p">));</span>
+      <span class="p">}</span>
+    <span class="p">};</span>
+    <span class="nx">request</span><span class="p">.</span><span class="nx">onerror</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">reject</span><span class="p">(</span><span class="nb">Error</span><span class="p">(</span><span class="dl">'</span><span class="s1">There was a network error.</span><span class="dl">'</span><span class="p">));</span>
+    <span class="p">};</span>
+    <span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">();</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr>
+
+<h2 id="reference">Reference</h2>
+
+<p><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/Control_flow_and_error_handling" rel="nofollow" target="_blank">https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/Control_flow_and_error_handling</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

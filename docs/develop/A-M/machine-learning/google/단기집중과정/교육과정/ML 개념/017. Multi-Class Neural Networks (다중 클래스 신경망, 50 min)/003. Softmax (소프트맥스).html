@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Multi-Class Neural Networks - Softmax (다중 클래스 신경망 - 소프트맥스) | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Multi-Class Neural Networks - Softmax (다중 클래스 신경망 - 소프트맥스)" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="로지스틱 회귀는 0과 1.0 사이의 소수를 생성합니다." />
+<meta property="og:description" content="로지스틱 회귀는 0과 1.0 사이의 소수를 생성합니다." />
+<link rel="canonical" href="/blog/docs/develop/A-M/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML%20%EA%B0%9C%EB%85%90/017.%20Multi-Class%20Neural%20Networks%20(%EB%8B%A4%EC%A4%91%20%ED%81%B4%EB%9E%98%EC%8A%A4%20%EC%8B%A0%EA%B2%BD%EB%A7%9D,%2050%20min)/003.%20Softmax%20(%EC%86%8C%ED%94%84%ED%8A%B8%EB%A7%A5%EC%8A%A4).html" />
+<meta property="og:url" content="/blog/docs/develop/A-M/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML%20%EA%B0%9C%EB%85%90/017.%20Multi-Class%20Neural%20Networks%20(%EB%8B%A4%EC%A4%91%20%ED%81%B4%EB%9E%98%EC%8A%A4%20%EC%8B%A0%EA%B2%BD%EB%A7%9D,%2050%20min)/003.%20Softmax%20(%EC%86%8C%ED%94%84%ED%8A%B8%EB%A7%A5%EC%8A%A4).html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-02T16:38:51+09:00" />
+<script type="application/ld+json">
+{"description":"로지스틱 회귀는 0과 1.0 사이의 소수를 생성합니다.","headline":"Multi-Class Neural Networks - Softmax (다중 클래스 신경망 - 소프트맥스)","dateModified":"2019-12-02T16:38:51+09:00","datePublished":"2019-12-02T16:38:51+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/docs/develop/A-M/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML%20%EA%B0%9C%EB%85%90/017.%20Multi-Class%20Neural%20Networks%20(%EB%8B%A4%EC%A4%91%20%ED%81%B4%EB%9E%98%EC%8A%A4%20%EC%8B%A0%EA%B2%BD%EB%A7%9D,%2050%20min)/003.%20Softmax%20(%EC%86%8C%ED%94%84%ED%8A%B8%EB%A7%A5%EC%8A%A4).html"},"url":"/blog/docs/develop/A-M/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML%20%EA%B0%9C%EB%85%90/017.%20Multi-Class%20Neural%20Networks%20(%EB%8B%A4%EC%A4%91%20%ED%81%B4%EB%9E%98%EC%8A%A4%20%EC%8B%A0%EA%B2%BD%EB%A7%9D,%2050%20min)/003.%20Softmax%20(%EC%86%8C%ED%94%84%ED%8A%B8%EB%A7%A5%EC%8A%A4).html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/blog/feed.xml" title="Portal2312's blog" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113063601-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+<script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Multi-Class Neural Networks - Softmax (다중 클래스 신경망 - 소프트맥스)</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#part-3a7a603a87012faa">소프트맥스 옵션</a></li>
+<li class="toc-entry toc-h2"><a href="#1">라벨 1개 대 라벨 여러 개</a></li>
+<li class="toc-entry toc-h2"><a href="#reference">Reference</a></li>
+</ul><p>로지스틱 회귀는 0과 1.0 사이의 소수를 생성합니다.</p>
+
+<p>예를 들어 이메일 분류자의 로지스틱 회귀 출력이 0.8이면 이메일이 스팸일 확률이 80%이고 스팸이 아닐 확률이 20%임을 나타냅니다.<br>
+분명히 이메일이 스팸일 확률과 스팸이 아닐 확률의 합은 1.0입니다.</p>
+
+<p>소프트맥스는 이 아이디어를 다중 클래스 문제에 적용합니다.</p>
+
+<p>즉 소프트맥스가 다중 클래스 문제의 각 클래스에 소수 확률을 할당합니다.<br>
+소수 확률의 합은 1.0이 되어야 합니다.<br>
+이 제약조건을 추가하면 제약조건을 추가하지 않은 경우보다 더 빠르게 수렴을 학습할 수 있습니다.</p>
+
+<p>예를 들어 그림 1에 표시된 이미지 분석의 경우 이미지가 특정 클래스에 속할 확률은 다음과 같습니다:</p>
+
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Probability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>apple</td>
+<td>0.001</td>
+</tr>
+<tr>
+<td>bear</td>
+<td>0.04</td>
+</tr>
+<tr>
+<td>candy</td>
+<td>0.008</td>
+</tr>
+<tr>
+<td>dog</td>
+<td>0.95</td>
+</tr>
+<tr>
+<td>egg</td>
+<td>0.001</td>
+</tr>
+</tbody>
+</table>
+
+<p>소프트맥스는 출력 레이어 바로 앞의 신경망 레이어를 통해 구현됩니다.
+소프트맥스 레이어의 노드 수는 출력 레이어와 같아야 합니다.</p>
+
+<p><img src="SoftmaxLayer.svg" alt="SoftmaxLayer.svg"></p>
+
+<blockquote>
+<p>소프트 맥스 방정식:</p>
+
+<p>$$p(y = j|\textbf{x})  = \frac{e^{(\textbf{w}<em>j^{T}\textbf{x} + b_j)}}{\sum</em>{k\in K} {e^{(\textbf{w}_k^{T}\textbf{x} + b_k)}} }$$</p>
+
+<p>이 수식은 기본적으로 로지스틱 회귀 수식을 다중 클래스로 확장합니다. </p>
+</blockquote>
+
+<h2 id="part-3a7a603a87012faa">
+<a class="anchor" href="#part-3a7a603a87012faa" aria-hidden="true"><span class="octicon octicon-link"></span></a>소프트맥스 옵션</h2>
+
+<p>다음과 같은 변형된 소프트맥스가 있습니다.</p>
+
+<ul>
+<li>전체 소프트맥스
+
+<ul>
+<li>지금까지 설명한 소프트맥스.</li>
+<li>즉 모든 가능한 클래스의 확률을 계산하는 소프트맥스.</li>
+</ul>
+</li>
+<li>후보 샘플링
+
+<ul>
+<li>소프트맥스가 양성 라벨의 확률은 모두 계산하지만 음성 라벨의 경우 무작위 샘플의 확률만 계산합니다.</li>
+<li>예를 들어 입력 이미지가 비글인지, 블러드하운드인지 확인하는 경우 개가 아닌 예의 확률은 제공할 필요가 없습니다.</li>
+</ul>
+</li>
+</ul>
+
+<p>전체 소프트맥스는 클래스 수가 적으면 매우 적은 비용이 들지만 클래스 수가 증가하면 엄청나게 많은 비용이 듭니다. 클래스 수가 많은 문제에서 후보 샘플링을 사용하면 효율성이 향상됩니다.</p>
+
+<h2 id="1">
+<a class="anchor" href="#1" aria-hidden="true"><span class="octicon octicon-link"></span></a>라벨 1개 대 라벨 여러 개</h2>
+
+<p>소프트맥스에서는 각 예가 정확히 한 클래스의 멤버라고 가정합니다.
+하지만 동시에 여러 클래스의 멤버인 예도 있습니다. 이러한 예의 경우</p>
+
+<ul>
+<li>소프트맥스를 사용할 수 없습니다.</li>
+<li>로지스틱 회귀를 여러 개 사용해야 합니다.</li>
+</ul>
+
+<p>정확히 하나의 항목(과일 한 개)이 포함된 이미지를 예로 들어보겠습니다.
+소프트맥스는 해당 항목이 배, 오렌지, 사과 또는 다른 과일일 확률을 확인할 수 있습니다.</p>
+
+<p>모든 종류의 항목(여러 종류의 과일 접시)이 포함된 이미지 예의 경우, 대신 로지스틱 회귀를 여러 개 사용해야 합니다.</p>
+
+<blockquote>
+<p>주요 용어:
+- <a href="https://developers.google.com/machine-learning/crash-course/glossary#candidate_sampling">후보 샘플링</a>:
+학습 도중 소프트맥스등을 사용하여 모든 긍정 라벨에 대한 확률을 계산하는 최적화입니다.
+부정 라벨의 경우 무작위 샘플에 대해서만 계산합니다. 예를 들어 라벨이 beagle 및 dog인 예가 있으면 후보 샘플링에서 beagle 및 dog 클래스 출력에 대해 예측되는 확률과 해당 손실 항을 계산하고 나머지 클래스(cat, lollipop, fence)의 무작위 부분집합에 대해서도 계산합니다. 이 방식이 성립하는 이유는 포지티브 클래스가 항상 적절한 긍정 강화를 받는 한 네거티브 클래스는 빈도가 적은 부정 강화로부터 학습할 수 있기 때문이며, 이는 실제로 경험적으로 관찰되는 사실입니다. 후보 샘플링의 장점은 모든 부정에 대한 예측을 일일이 계산하지 않으므로 연산 효율이 높다는 것입니다.</p>
+
+<ul>
+<li><p><a href="https://developers.google.com/machine-learning/crash-course/glossary#logistic_regression">로지스틱 회귀</a>:</p></li>
+<li><p><a href="https://developers.google.com/machine-learning/crash-course/glossary#multi-class">다중 클래스</a>:</p></li>
+<li><p><a href="https://developers.google.com/machine-learning/crash-course/glossary#Softmax">소프트맥스</a>:
+다중 클래스 분류 모델에서 가능한 각 클래스의 확률을 구하는 함수입니다.
+확률의 합은 정확히 1.0 입니다. 예를 들어 소프트맥스는 특정 이미지가 강아지일 확률을 0.9로, 고양이일 확률을 0.08로, 말일 확률을 0.02로 판단할 수 있습니다.
+전체 소프트맥스라고도 합니다. <a href="https://developers.google.com/machine-learning/crash-course/glossary#candidate_sampling">후보 샘플링</a>과 대비되는 개념입니다.</p></li>
+</ul>
+</blockquote>
+
+<h2 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+<p><a href="https://developers.google.com/machine-learning/crash-course/multi-class-neural-networks/softmax">https://developers.google.com/machine-learning/crash-course/multi-class-neural-networks/softmax</a></p>
+
+  </div>
+
+<div>
+  <p>로지스틱 회귀는 0과 1.0 사이의 소수를 생성합니다.</p>
+
+<p>예를 들어 이메일 분류자의 로지스틱 회귀 출력이 0.8이면 이메일이 스팸일 확률이 80%이고 스팸이 아닐 확률이 20%임을 나타냅니다.<br>
+분명히 이메일이 스팸일 확률과 스팸이 아닐 확률의 합은 1.0입니다.</p>
+
+<p>소프트맥스는 이 아이디어를 다중 클래스 문제에 적용합니다.</p>
+
+<p>즉 소프트맥스가 다중 클래스 문제의 각 클래스에 소수 확률을 할당합니다.<br>
+소수 확률의 합은 1.0이 되어야 합니다.<br>
+이 제약조건을 추가하면 제약조건을 추가하지 않은 경우보다 더 빠르게 수렴을 학습할 수 있습니다.</p>
+
+<p>예를 들어 그림 1에 표시된 이미지 분석의 경우 이미지가 특정 클래스에 속할 확률은 다음과 같습니다:</p>
+
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Probability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>apple</td>
+<td>0.001</td>
+</tr>
+<tr>
+<td>bear</td>
+<td>0.04</td>
+</tr>
+<tr>
+<td>candy</td>
+<td>0.008</td>
+</tr>
+<tr>
+<td>dog</td>
+<td>0.95</td>
+</tr>
+<tr>
+<td>egg</td>
+<td>0.001</td>
+</tr>
+</tbody>
+</table>
+
+<p>소프트맥스는 출력 레이어 바로 앞의 신경망 레이어를 통해 구현됩니다.
+소프트맥스 레이어의 노드 수는 출력 레이어와 같아야 합니다.</p>
+
+<p><img src="SoftmaxLayer.svg" alt="SoftmaxLayer.svg"></p>
+
+<blockquote>
+<p>소프트 맥스 방정식:</p>
+
+<p>$$p(y = j|\textbf{x})  = \frac{e^{(\textbf{w}<em>j^{T}\textbf{x} + b_j)}}{\sum</em>{k\in K} {e^{(\textbf{w}_k^{T}\textbf{x} + b_k)}} }$$</p>
+
+<p>이 수식은 기본적으로 로지스틱 회귀 수식을 다중 클래스로 확장합니다. </p>
+</blockquote>
+
+<h2 id="part-3a7a603a87012faa">소프트맥스 옵션</h2>
+
+<p>다음과 같은 변형된 소프트맥스가 있습니다.</p>
+
+<ul>
+<li>전체 소프트맥스
+
+<ul>
+<li>지금까지 설명한 소프트맥스.</li>
+<li>즉 모든 가능한 클래스의 확률을 계산하는 소프트맥스.</li>
+</ul>
+</li>
+<li>후보 샘플링
+
+<ul>
+<li>소프트맥스가 양성 라벨의 확률은 모두 계산하지만 음성 라벨의 경우 무작위 샘플의 확률만 계산합니다.</li>
+<li>예를 들어 입력 이미지가 비글인지, 블러드하운드인지 확인하는 경우 개가 아닌 예의 확률은 제공할 필요가 없습니다.</li>
+</ul>
+</li>
+</ul>
+
+<p>전체 소프트맥스는 클래스 수가 적으면 매우 적은 비용이 들지만 클래스 수가 증가하면 엄청나게 많은 비용이 듭니다. 클래스 수가 많은 문제에서 후보 샘플링을 사용하면 효율성이 향상됩니다.</p>
+
+<h2 id="1">라벨 1개 대 라벨 여러 개</h2>
+
+<p>소프트맥스에서는 각 예가 정확히 한 클래스의 멤버라고 가정합니다.
+하지만 동시에 여러 클래스의 멤버인 예도 있습니다. 이러한 예의 경우</p>
+
+<ul>
+<li>소프트맥스를 사용할 수 없습니다.</li>
+<li>로지스틱 회귀를 여러 개 사용해야 합니다.</li>
+</ul>
+
+<p>정확히 하나의 항목(과일 한 개)이 포함된 이미지를 예로 들어보겠습니다.
+소프트맥스는 해당 항목이 배, 오렌지, 사과 또는 다른 과일일 확률을 확인할 수 있습니다.</p>
+
+<p>모든 종류의 항목(여러 종류의 과일 접시)이 포함된 이미지 예의 경우, 대신 로지스틱 회귀를 여러 개 사용해야 합니다.</p>
+
+<blockquote>
+<p>주요 용어:
+- <a href="https://developers.google.com/machine-learning/crash-course/glossary#candidate_sampling" rel="nofollow" target="_blank">후보 샘플링</a>:
+학습 도중 소프트맥스등을 사용하여 모든 긍정 라벨에 대한 확률을 계산하는 최적화입니다.
+부정 라벨의 경우 무작위 샘플에 대해서만 계산합니다. 예를 들어 라벨이 beagle 및 dog인 예가 있으면 후보 샘플링에서 beagle 및 dog 클래스 출력에 대해 예측되는 확률과 해당 손실 항을 계산하고 나머지 클래스(cat, lollipop, fence)의 무작위 부분집합에 대해서도 계산합니다. 이 방식이 성립하는 이유는 포지티브 클래스가 항상 적절한 긍정 강화를 받는 한 네거티브 클래스는 빈도가 적은 부정 강화로부터 학습할 수 있기 때문이며, 이는 실제로 경험적으로 관찰되는 사실입니다. 후보 샘플링의 장점은 모든 부정에 대한 예측을 일일이 계산하지 않으므로 연산 효율이 높다는 것입니다.</p>
+
+<ul>
+<li><p><a href="https://developers.google.com/machine-learning/crash-course/glossary#logistic_regression" rel="nofollow" target="_blank">로지스틱 회귀</a>:</p></li>
+<li><p><a href="https://developers.google.com/machine-learning/crash-course/glossary#multi-class" rel="nofollow" target="_blank">다중 클래스</a>:</p></li>
+<li><p><a href="https://developers.google.com/machine-learning/crash-course/glossary#Softmax" rel="nofollow" target="_blank">소프트맥스</a>:
+다중 클래스 분류 모델에서 가능한 각 클래스의 확률을 구하는 함수입니다.
+확률의 합은 정확히 1.0 입니다. 예를 들어 소프트맥스는 특정 이미지가 강아지일 확률을 0.9로, 고양이일 확률을 0.08로, 말일 확률을 0.02로 판단할 수 있습니다.
+전체 소프트맥스라고도 합니다. <a href="https://developers.google.com/machine-learning/crash-course/glossary#candidate_sampling" rel="nofollow" target="_blank">후보 샘플링</a>과 대비되는 개념입니다.</p></li>
+</ul>
+</blockquote>
+
+<h2 id="reference">Reference</h2>
+
+<p><a href="https://developers.google.com/machine-learning/crash-course/multi-class-neural-networks/softmax" rel="nofollow" target="_blank">https://developers.google.com/machine-learning/crash-course/multi-class-neural-networks/softmax</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

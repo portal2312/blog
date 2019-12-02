@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Writing your first patch for Django | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Writing your first patch for Django" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Introduction" />
+<meta property="og:description" content="Introduction" />
+<link rel="canonical" href="/blog/docs/develop/N-Z/Python/lib/django/docs/01_First_Steps/advanced_tutorials/writing_your_first_patch_for_django.html" />
+<meta property="og:url" content="/blog/docs/develop/N-Z/Python/lib/django/docs/01_First_Steps/advanced_tutorials/writing_your_first_patch_for_django.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-02T16:38:51+09:00" />
+<script type="application/ld+json">
+{"description":"Introduction","headline":"Writing your first patch for Django","dateModified":"2019-12-02T16:38:51+09:00","datePublished":"2019-12-02T16:38:51+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/docs/develop/N-Z/Python/lib/django/docs/01_First_Steps/advanced_tutorials/writing_your_first_patch_for_django.html"},"url":"/blog/docs/develop/N-Z/Python/lib/django/docs/01_First_Steps/advanced_tutorials/writing_your_first_patch_for_django.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/blog/feed.xml" title="Portal2312's blog" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113063601-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+<script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Writing your first patch for Django</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#introduction">Introduction</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#who-s-this-tutorial-for">Who’s this tutorial for?</a></li>
+<li class="toc-entry toc-h3"><a href="#what-does-this-tutorial-cover">What does this tutorial cover?</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#code-of-conduct">Code of Conduct</a></li>
+<li class="toc-entry toc-h2"><a href="#installing-git">Installing Git</a></li>
+<li class="toc-entry toc-h2"><a href="#getting-a-copy-of-django-s-development-version">Getting a copy of Django’s development version</a></li>
+<li class="toc-entry toc-h2"><a href="#rolling-back-to-a-previous-revision-of-django">Rolling back to a previous revision of Django</a></li>
+<li class="toc-entry toc-h2"><a href="#running-django-s-test-suite-for-the-first-time">Running Django’s test suite for the first time</a></li>
+<li class="toc-entry toc-h2"><a href="#creating-a-branch-for-your-patch">Creating a branch for your patch</a></li>
+<li class="toc-entry toc-h2"><a href="#writing-some-tests-for-your-ticket">Writing some tests for your ticket</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#writing-some-tests-for-ticket-24788">Writing some tests for ticket #24788</a></li>
+<li class="toc-entry toc-h3"><a href="#running-your-new-test">Running your new test</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#writing-the-code-for-your-ticket">Writing the code for your ticket</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#writing-the-code-for-ticket-24788">Writing the code for ticket #24788</a></li>
+<li class="toc-entry toc-h3"><a href="#verifying-your-test-now-passes">Verifying your test now passes</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#running-django-s-test-suite-for-the-second-time">Running Django’s test suite for the second time</a></li>
+<li class="toc-entry toc-h2"><a href="#writing-documentation">Writing Documentation</a></li>
+<li class="toc-entry toc-h2"><a href="#previewing-your-changes">Previewing your changes</a></li>
+<li class="toc-entry toc-h2"><a href="#committing-the-changes-in-the-patch">Committing the changes in the patch</a></li>
+<li class="toc-entry toc-h2"><a href="#pushing-the-commit-and-making-a-pull-request">Pushing the commit and making a pull request</a></li>
+<li class="toc-entry toc-h2"><a href="#next-steps">Next steps</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#more-information-for-new-contributors">More information for new contributors</a></li>
+<li class="toc-entry toc-h3"><a href="#finding-your-first-real-ticket">Finding your first real ticket</a></li>
+<li class="toc-entry toc-h3"><a href="#what-s-next-after-creating-a-pull-request">What’s next after creating a pull request?</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#reference">Reference</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#url">URL</a></li>
+</ul>
+</li>
+</ul><h2 id="introduction">
+<a class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h2>
+
+<p>...</p>
+
+<h3 id="who-s-this-tutorial-for">
+<a class="anchor" href="#who-s-this-tutorial-for" aria-hidden="true"><span class="octicon octicon-link"></span></a>Who’s this tutorial for?</h3>
+<div class="highlight"><pre><code class="language-" data-lang="">* See also
+...
+</code></pre></div>
+<p>생략</p>
+<div class="highlight"><pre><code class="language-" data-lang="">* Where to get help
+...
+</code></pre></div>
+<h3 id="what-does-this-tutorial-cover">
+<a class="anchor" href="#what-does-this-tutorial-cover" aria-hidden="true"><span class="octicon octicon-link"></span></a>What does this tutorial cover?</h3>
+
+<p>처음으로 장고에 대한 패치를 제공 할 것입니다.
+이 자습서가 끝나면 관련 도구와 프로세스에 대해 기본적으로 이해해야합니다.
+구체적으로 다음 내용을 다룹니다.</p>
+
+<ul>
+<li><p>Git 설치</p></li>
+<li><p>Django의 개발사본 download</p></li>
+<li><p>Django test suite 실행</p></li>
+<li><p>패치 테스트 작성</p></li>
+<li><p>패치 코드 작성</p></li>
+<li><p>패치 테스트</p></li>
+<li><p>pull 요청 제출하기</p></li>
+<li><p>더 많은 정보를 볼 수 있는 곳</p></li>
+</ul>
+
+<p>...</p>
+<div class="highlight"><pre><code class="language-" data-lang="">* Python 3 required
+...생략
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">* For Windows users
+...생략
+</code></pre></div>
+<hr>
+
+<h2 id="code-of-conduct">
+<a class="anchor" href="#code-of-conduct" aria-hidden="true"><span class="octicon octicon-link"></span></a>Code of Conduct</h2>
+
+<p>...</p>
+
+<hr>
+
+<h2 id="installing-git">
+<a class="anchor" href="#installing-git" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installing Git</h2>
+
+<p>...</p>
+<div class="highlight"><pre><code class="language-" data-lang="">* For Windows users
+...
+</code></pre></div>
+<p>...</p>
+
+<hr>
+
+<h2 id="getting-a-copy-of-django-s-development-version">
+<a class="anchor" href="#getting-a-copy-of-django-s-development-version" aria-hidden="true"><span class="octicon octicon-link"></span></a>Getting a copy of Django’s development version</h2>
+
+<hr>
+
+<h2 id="rolling-back-to-a-previous-revision-of-django">
+<a class="anchor" href="#rolling-back-to-a-previous-revision-of-django" aria-hidden="true"><span class="octicon octicon-link"></span></a>Rolling back to a previous revision of Django</h2>
+
+<hr>
+
+<h2 id="running-django-s-test-suite-for-the-first-time">
+<a class="anchor" href="#running-django-s-test-suite-for-the-first-time" aria-hidden="true"><span class="octicon octicon-link"></span></a>Running Django’s test suite for the first time</h2>
+
+<hr>
+
+<h2 id="creating-a-branch-for-your-patch">
+<a class="anchor" href="#creating-a-branch-for-your-patch" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating a branch for your patch</h2>
+
+<hr>
+
+<h2 id="writing-some-tests-for-your-ticket">
+<a class="anchor" href="#writing-some-tests-for-your-ticket" aria-hidden="true"><span class="octicon octicon-link"></span></a>Writing some tests for your ticket</h2>
+
+<hr>
+
+<h3 id="writing-some-tests-for-ticket-24788">
+<a class="anchor" href="#writing-some-tests-for-ticket-24788" aria-hidden="true"><span class="octicon octicon-link"></span></a>Writing some tests for ticket #24788</h3>
+
+<h3 id="running-your-new-test">
+<a class="anchor" href="#running-your-new-test" aria-hidden="true"><span class="octicon octicon-link"></span></a>Running your new test</h3>
+
+<hr>
+
+<h2 id="writing-the-code-for-your-ticket">
+<a class="anchor" href="#writing-the-code-for-your-ticket" aria-hidden="true"><span class="octicon octicon-link"></span></a>Writing the code for your ticket</h2>
+
+<h3 id="writing-the-code-for-ticket-24788">
+<a class="anchor" href="#writing-the-code-for-ticket-24788" aria-hidden="true"><span class="octicon octicon-link"></span></a>Writing the code for ticket #24788</h3>
+
+<h3 id="verifying-your-test-now-passes">
+<a class="anchor" href="#verifying-your-test-now-passes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Verifying your test now passes</h3>
+
+<hr>
+
+<h2 id="running-django-s-test-suite-for-the-second-time">
+<a class="anchor" href="#running-django-s-test-suite-for-the-second-time" aria-hidden="true"><span class="octicon octicon-link"></span></a>Running Django’s test suite for the second time</h2>
+
+<h2 id="writing-documentation">
+<a class="anchor" href="#writing-documentation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Writing Documentation</h2>
+
+<h2 id="previewing-your-changes">
+<a class="anchor" href="#previewing-your-changes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Previewing your changes</h2>
+
+<h2 id="committing-the-changes-in-the-patch">
+<a class="anchor" href="#committing-the-changes-in-the-patch" aria-hidden="true"><span class="octicon octicon-link"></span></a>Committing the changes in the patch</h2>
+
+<h2 id="pushing-the-commit-and-making-a-pull-request">
+<a class="anchor" href="#pushing-the-commit-and-making-a-pull-request" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pushing the commit and making a pull request</h2>
+
+<hr>
+
+<h2 id="next-steps">
+<a class="anchor" href="#next-steps" aria-hidden="true"><span class="octicon octicon-link"></span></a>Next steps</h2>
+
+<h3 id="more-information-for-new-contributors">
+<a class="anchor" href="#more-information-for-new-contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>More information for new contributors</h3>
+
+<h3 id="finding-your-first-real-ticket">
+<a class="anchor" href="#finding-your-first-real-ticket" aria-hidden="true"><span class="octicon octicon-link"></span></a>Finding your first real ticket</h3>
+
+<h3 id="what-s-next-after-creating-a-pull-request">
+<a class="anchor" href="#what-s-next-after-creating-a-pull-request" aria-hidden="true"><span class="octicon octicon-link"></span></a>What’s next after creating a pull request?</h3>
+
+<h1 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a><em>Reference</em>
+</h1>
+
+<h2 id="url">
+<a class="anchor" href="#url" aria-hidden="true"><span class="octicon octicon-link"></span></a>URL</h2>
+
+  </div>
+
+<div>
+  <h2 id="introduction">Introduction</h2>
+
+<p>...</p>
+
+<h3 id="who-s-this-tutorial-for">Who’s this tutorial for?</h3>
+<div class="highlight"><pre><code class="language-" data-lang="">* See also
+...
+</code></pre></div>
+<p>생략</p>
+<div class="highlight"><pre><code class="language-" data-lang="">* Where to get help
+...
+</code></pre></div>
+<h3 id="what-does-this-tutorial-cover">What does this tutorial cover?</h3>
+
+<p>처음으로 장고에 대한 패치를 제공 할 것입니다.
+이 자습서가 끝나면 관련 도구와 프로세스에 대해 기본적으로 이해해야합니다.
+구체적으로 다음 내용을 다룹니다.</p>
+
+<ul>
+<li><p>Git 설치</p></li>
+<li><p>Django의 개발사본 download</p></li>
+<li><p>Django test suite 실행</p></li>
+<li><p>패치 테스트 작성</p></li>
+<li><p>패치 코드 작성</p></li>
+<li><p>패치 테스트</p></li>
+<li><p>pull 요청 제출하기</p></li>
+<li><p>더 많은 정보를 볼 수 있는 곳</p></li>
+</ul>
+
+<p>...</p>
+<div class="highlight"><pre><code class="language-" data-lang="">* Python 3 required
+...생략
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">* For Windows users
+...생략
+</code></pre></div>
+<hr>
+
+<h2 id="code-of-conduct">Code of Conduct</h2>
+
+<p>...</p>
+
+<hr>
+
+<h2 id="installing-git">Installing Git</h2>
+
+<p>...</p>
+<div class="highlight"><pre><code class="language-" data-lang="">* For Windows users
+...
+</code></pre></div>
+<p>...</p>
+
+<hr>
+
+<h2 id="getting-a-copy-of-django-s-development-version">Getting a copy of Django’s development version</h2>
+
+<hr>
+
+<h2 id="rolling-back-to-a-previous-revision-of-django">Rolling back to a previous revision of Django</h2>
+
+<hr>
+
+<h2 id="running-django-s-test-suite-for-the-first-time">Running Django’s test suite for the first time</h2>
+
+<hr>
+
+<h2 id="creating-a-branch-for-your-patch">Creating a branch for your patch</h2>
+
+<hr>
+
+<h2 id="writing-some-tests-for-your-ticket">Writing some tests for your ticket</h2>
+
+<hr>
+
+<h3 id="writing-some-tests-for-ticket-24788">Writing some tests for ticket #24788</h3>
+
+<h3 id="running-your-new-test">Running your new test</h3>
+
+<hr>
+
+<h2 id="writing-the-code-for-your-ticket">Writing the code for your ticket</h2>
+
+<h3 id="writing-the-code-for-ticket-24788">Writing the code for ticket #24788</h3>
+
+<h3 id="verifying-your-test-now-passes">Verifying your test now passes</h3>
+
+<hr>
+
+<h2 id="running-django-s-test-suite-for-the-second-time">Running Django’s test suite for the second time</h2>
+
+<h2 id="writing-documentation">Writing Documentation</h2>
+
+<h2 id="previewing-your-changes">Previewing your changes</h2>
+
+<h2 id="committing-the-changes-in-the-patch">Committing the changes in the patch</h2>
+
+<h2 id="pushing-the-commit-and-making-a-pull-request">Pushing the commit and making a pull request</h2>
+
+<hr>
+
+<h2 id="next-steps">Next steps</h2>
+
+<h3 id="more-information-for-new-contributors">More information for new contributors</h3>
+
+<h3 id="finding-your-first-real-ticket">Finding your first real ticket</h3>
+
+<h3 id="what-s-next-after-creating-a-pull-request">What’s next after creating a pull request?</h3>
+
+<h1 id="reference"><em>Reference</em></h1>
+
+<h2 id="url">URL</h2>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

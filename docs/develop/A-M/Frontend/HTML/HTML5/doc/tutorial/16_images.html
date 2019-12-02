@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>HTML Images | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="HTML Images" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Images Syntax" />
+<meta property="og:description" content="Images Syntax" />
+<link rel="canonical" href="/blog/docs/develop/A-M/Frontend/HTML/HTML5/doc/tutorial/16_images.html" />
+<meta property="og:url" content="/blog/docs/develop/A-M/Frontend/HTML/HTML5/doc/tutorial/16_images.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-02T16:38:51+09:00" />
+<script type="application/ld+json">
+{"description":"Images Syntax","headline":"HTML Images","dateModified":"2019-12-02T16:38:51+09:00","datePublished":"2019-12-02T16:38:51+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/docs/develop/A-M/Frontend/HTML/HTML5/doc/tutorial/16_images.html"},"url":"/blog/docs/develop/A-M/Frontend/HTML/HTML5/doc/tutorial/16_images.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/blog/feed.xml" title="Portal2312's blog" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113063601-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+<script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>HTML Images</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#images-syntax">Images Syntax</a></li>
+<li class="toc-entry toc-h2"><a href="#the-alt-attribute">The alt Attribute</a></li>
+<li class="toc-entry toc-h2"><a href="#image-size-width-and-height">Image Size - Width and Height</a></li>
+<li class="toc-entry toc-h2"><a href="#width-and-height-or-style">Width and Height, or Style?</a></li>
+<li class="toc-entry toc-h2"><a href="#images-in-another-folder">Images in Another Folder</a></li>
+<li class="toc-entry toc-h2"><a href="#images-on-another-server">Images on Another Server</a></li>
+<li class="toc-entry toc-h2"><a href="#animated-images">Animated Images</a></li>
+<li class="toc-entry toc-h2"><a href="#using-an-image-as-a-link">Using an Image as a Link</a></li>
+<li class="toc-entry toc-h2"><a href="#image-floating">Image Floating</a></li>
+<li class="toc-entry toc-h2"><a href="#image-maps">Image Maps</a></li>
+<li class="toc-entry toc-h2"><a href="#background-image">Background Image</a></li>
+<li class="toc-entry toc-h2"><a href="#the-picture-element">The &lt;picture&gt; Element</a></li>
+<li class="toc-entry toc-h2"><a href="#html-screen-reader">HTML Screen Reader</a></li>
+<li class="toc-entry toc-h2"><a href="#chapter-summary">Chapter Summary</a></li>
+<li class="toc-entry toc-h2"><a href="#image-tags">Image Tags</a></li>
+<li class="toc-entry toc-h2"><a href="#reference">Reference</a></li>
+</ul><h2 id="images-syntax">
+<a class="anchor" href="#images-syntax" aria-hidden="true"><span class="octicon octicon-link"></span></a>Images Syntax</h2>
+
+<p>tag: <code>&lt;img&gt;</code></p>
+
+<p><code>&lt;img&gt;</code> 태그는 비어 있으며 속성만 포함하고 닫는 태그가 없습니다.</p>
+
+<p>src 속성은 이미지의 URL(웹 주소)을 지정합니다:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"url"</span><span class="nt">&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="the-alt-attribute">
+<a class="anchor" href="#the-alt-attribute" aria-hidden="true"><span class="octicon octicon-link"></span></a>The alt Attribute</h2>
+
+<p>alt 속성은 이미지에 대한 대체 텍스트를 제공합니다.</p>
+
+<p>사용자가 어떤 이유로 든 볼 수없는 경우 (연결 속도가 느리거나 src 속성에 오류가 있거나 사용자가 화면 판독기를 사용하기 때문) 브라우저가 이미지를 찾을 수 없으면 alt 속성의 값이 표시됩니다.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"img_chania.jpg"</span> <span class="na">alt=</span><span class="s">"Flowers in Chania"</span><span class="nt">&gt;</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Note:</strong> alt 속성은 필수입니다. 웹 페이지가 없으면 웹 페이지가 올바르게 검증되지 않습니다.</p>
+</blockquote>
+
+<hr>
+
+<h2 id="image-size-width-and-height">
+<a class="anchor" href="#image-size-width-and-height" aria-hidden="true"><span class="octicon octicon-link"></span></a>Image Size - Width and Height</h2>
+
+<p><strong>style</strong> 속성을 사용하여 이미지의 너비와 높이를 지정할 수 있습니다.</p>
+
+<p>값은 픽셀 단위로 지정됩니다 (값 뒤에 px 사용).</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"html5.gif"</span> <span class="na">alt=</span><span class="s">"HTML5 Icon"</span> <span class="na">style=</span><span class="s">"width:128px;height:128px;"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"html5.gif"</span> <span class="na">alt=</span><span class="s">"HTML5 Icon"</span> <span class="na">width=</span><span class="s">"128"</span> <span class="na">height=</span><span class="s">"128"</span><span class="nt">&gt;</span>
+</code></pre></div>
+<blockquote>
+<p>Note:<br>
+항상 이미지의 너비와 높이를 지정하기.<br>
+너비와 높이를 지정하지 않으면 이미지가 로드되는 동안 페이지가 깜박입니다.</p>
+</blockquote>
+
+<hr>
+
+<h2 id="width-and-height-or-style">
+<a class="anchor" href="#width-and-height-or-style" aria-hidden="true"><span class="octicon octicon-link"></span></a>Width and Height, or Style?</h2>
+
+<p>width, height 및 style 속성은 HTML5에서 유효합니다.</p>
+
+<p>그러나 <strong>style</strong> 속성을 사용하는 것이 좋습니다.</p>
+
+<p>내부 또는 외부 스타일 시트가 이미지의 원래 크기를 변경하는 것을 방지합니다:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;style&gt;</span>
+<span class="nt">img</span> <span class="p">{</span>
+    <span class="nl">width</span><span class="p">:</span><span class="m">100%</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+
+<span class="nt">&lt;p&gt;</span>Using the style attribute:<span class="nt">&lt;/p&gt;</span>
+<span class="c">&lt;!-- 이미지가 정사각형으로 표현됨--&gt;</span>
+<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"html5.gif"</span> <span class="na">alt=</span><span class="s">"HTML5 Icon"</span> <span class="na">style=</span><span class="s">"width:128px;height:128px;"</span><span class="nt">&gt;</span>
+
+<span class="nt">&lt;p&gt;</span>Using the width and height attributes:<span class="nt">&lt;/p&gt;</span>
+<span class="c">&lt;!-- 이미지가 가로가 늘어져 표현됨 --&gt;</span>
+<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"html5.gif"</span> <span class="na">alt=</span><span class="s">"HTML5 Icon"</span> <span class="na">width=</span><span class="s">"128"</span> <span class="na">height=</span><span class="s">"128"</span><span class="nt">&gt;</span>
+
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="images-in-another-folder">
+<a class="anchor" href="#images-in-another-folder" aria-hidden="true"><span class="octicon octicon-link"></span></a>Images in Another Folder</h2>
+
+<p>지정하지 않으면 브라우저는 웹 페이지와 동일한 폴더에서 이미지를 찾으려고합니다.</p>
+
+<p>그러나 이미지를 하위 폴더에 저장하는 것이 일반적입니다.</p>
+
+<p>그런 다음 src 속성에 폴더 이름을 포함시켜야합니다:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/images/html5.gif"</span> <span class="na">alt=</span><span class="s">"HTML5 Icon"</span> <span class="na">style=</span><span class="s">"width:128px;height:128px;"</span><span class="nt">&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="images-on-another-server">
+<a class="anchor" href="#images-on-another-server" aria-hidden="true"><span class="octicon octicon-link"></span></a>Images on Another Server</h2>
+
+<p>일부 웹 사이트는 이미지를 이미지 서버에 저장합니다.</p>
+
+<p>사실, 세계의 모든 웹 주소에서 이미지에 액세스 할 수 있습니다:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"https://www.w3schools.com/images/w3schools_green.jpg"</span> <span class="na">alt=</span><span class="s">"W3Schools.com"</span><span class="nt">&gt;</span>
+</code></pre></div>
+<blockquote>
+<p>Note: HTML File Paths</p>
+</blockquote>
+
+<hr>
+
+<h2 id="animated-images">
+<a class="anchor" href="#animated-images" aria-hidden="true"><span class="octicon octicon-link"></span></a>Animated Images</h2>
+
+<p>GIF 표준은 움직이는 이미지 허용한다:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/images/xxx.gif"</span> <span class="na">alt=</span><span class="s">"test"</span> <span class="na">style=</span><span class="s">"width:60px;height:60px;"</span><span class="nt">&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="using-an-image-as-a-link">
+<a class="anchor" href="#using-an-image-as-a-link" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using an Image as a Link</h2>
+
+<p>이미지를 링크로 사용하려면 <code>&lt;a&gt;</code> 태그 안에 <code>&lt;img&gt;</code> 태그를 중첩하면됩니다.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"default.asp"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"smiley.gif"</span> <span class="na">alt=</span><span class="s">"smiley"</span> <span class="na">style=</span><span class="s">"width:42px;height:42px;border:0;"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/a&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="image-floating">
+<a class="anchor" href="#image-floating" aria-hidden="true"><span class="octicon octicon-link"></span></a>Image Floating</h2>
+
+<p>CSS <strong>float</strong> 속성을 사용하여 이미지가 텍스트의 오른쪽이나 왼쪽으로 떠있게 됩니다:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;p&gt;</span>
+  <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"smiley.gif"</span> <span class="na">alt=</span><span class="s">"Smiley"</span> <span class="na">style=</span><span class="s">"float:right;width:60px;height:60px;"</span><span class="nt">&gt;</span>
+  The image will float to the right of the text.
+<span class="nt">&lt;/p&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="image-maps">
+<a class="anchor" href="#image-maps" aria-hidden="true"><span class="octicon octicon-link"></span></a>Image Maps</h2>
+
+<p>태그: <code>&lt;map&gt;</code></p>
+
+<p>정의:</p>
+
+<ul>
+<li><p>image-map 은 click 가능한 영역이있는 이미지입니다.</p></li>
+<li><p><strong>name</strong> 속성은 <code>&lt;img&gt;</code> 의 <strong>usemap</strong> 속성과 연관되며 <code>&lt;img&gt;</code>와 <code>&lt;map&gt;</code> 사이의 관계를 만듭니다.</p></li>
+<li><p>image-map 에서 click 가능한 영역을 정의하는 여러 <code>&lt;area&gt;</code> 태그를 포함합니다.</p></li>
+</ul>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"planets.gif"</span> <span class="na">alt=</span><span class="s">"Planets"</span> <span class="na">usemap=</span><span class="s">"#planetmap"</span> <span class="na">style=</span><span class="s">"width:145px;height:126px;"</span><span class="nt">&gt;</span>
+
+<span class="nt">&lt;map</span> <span class="na">name=</span><span class="s">"planetmap"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;area</span> <span class="na">shape=</span><span class="s">"rect"</span> <span class="na">coords=</span><span class="s">"0,0,82,126"</span> <span class="na">alt=</span><span class="s">"Sun"</span> <span class="na">href=</span><span class="s">"sun.htm"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;area</span> <span class="na">shape=</span><span class="s">"circle"</span> <span class="na">coords=</span><span class="s">"90,58,3"</span> <span class="na">alt=</span><span class="s">"Mercury"</span> <span class="na">href=</span><span class="s">"mercur.htm"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;area</span> <span class="na">shape=</span><span class="s">"circle"</span> <span class="na">coords=</span><span class="s">"124,58,8"</span> <span class="na">alt=</span><span class="s">"Venus"</span> <span class="na">href=</span><span class="s">"venus.htm"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/map&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="background-image">
+<a class="anchor" href="#background-image" aria-hidden="true"><span class="octicon octicon-link"></span></a>Background Image</h2>
+
+<p>HTML 요소에 배경 이미지를 추가하려면 CSS 속성 <strong>background-image</strong> 를 사용합니다.</p>
+
+<p>웹 페이지에 배경 이미지를 추가하려면 <code>&lt;body&gt;</code> 요소에 <strong>background-image</strong> 속성을 지정하십시오:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;body</span> <span class="na">style=</span><span class="s">"background-image:url('clouds.jpg')"</span><span class="nt">&gt;</span>
+
+<span class="nt">&lt;h2&gt;</span>Background Image<span class="nt">&lt;/h2&gt;</span>
+
+<span class="nt">&lt;/body&gt;</span>
+</code></pre></div>
+<p>단락에 배경 이미지를 추가하려면 P 요소에 background-image 속성을 지정합니다:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;body&gt;</span>
+
+<span class="nt">&lt;p</span> <span class="na">style=</span><span class="s">"background-image:url('clouds.jpg')"</span><span class="nt">&gt;</span>
+...
+<span class="nt">&lt;/p&gt;</span>
+
+<span class="nt">&lt;/body&gt;</span>
+</code></pre></div>
+<p>자세한 내용은 <a href="https://www.w3schools.com/css/css_background.asp">CSS Background Tutorial</a> 에 참조하기.</p>
+
+<hr>
+
+<h2 id="the-picture-element">
+<a class="anchor" href="#the-picture-element" aria-hidden="true"><span class="octicon octicon-link"></span></a>The <code>&lt;picture&gt;</code> Element</h2>
+
+<p>HTML5는 이미지 리소스를 지정할 때 유연성을 더하기 위해 <code>&lt;picture&gt;</code> 요소를 도입했습니다.</p>
+
+<p><code>&lt;picture&gt;</code> 요소는 서로 다른 이미지 소스를 참조하는 여러 <code>&lt;source&gt;</code> 요소를 포함합니다.</p>
+
+<p>이렇게하면 브라우저가 현재보기 및 / 또는 장치에 가장 잘 맞는 이미지를 선택할 수 있습니다.</p>
+
+<p>각 <code>&lt;source&gt;</code> 요소에는 이미지가 가장 적합한시기를 설명하는 속성이 있습니다.</p>
+
+<p>브라우저는 속성 값이 일치하는 첫 번째 <code>&lt;source&gt;</code> 요소를 사용하고 다음 <code>&lt;source&gt;</code> 요소는 무시합니다.</p>
+
+<p>브라우저 창 (viewport)이 650px 이상인 경우 하나의 그림을 표시하고 그렇지 않은 경우 465px 보다 큰 이미지를 표시합니다:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;picture&gt;</span>
+<span class="nt">&lt;source</span> <span class="na">media=</span><span class="s">"(min-width: 650px)"</span> <span class="na">srcset=</span><span class="s">"img_pink_flowers.jpg"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;source</span> <span class="na">media=</span><span class="s">"(min-width: 465px)"</span> <span class="na">srcset=</span><span class="s">"img_white_flower.jpg"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"img_orange_flowers.jpg"</span> <span class="na">alt=</span><span class="s">"Flowers"</span> <span class="na">style=</span><span class="s">"width:auto;"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/picture&gt;</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Note:</strong> 항상 <code>&lt;img&gt;</code> 요소를 <code>&lt;picture&gt;</code> 요소의 마지막 자식 요소로 지정하십시오. <code>&lt;img&gt;</code> 요소는 <code>&lt;picture&gt;</code> 요소를 지원하지 않는 브라우저 또는 <code>&lt;source&gt;</code> 태그가 일치하지 않는 브라우저에서 사용됩니다.</p>
+</blockquote>
+
+<hr>
+
+<h2 id="html-screen-reader">
+<a class="anchor" href="#html-screen-reader" aria-hidden="true"><span class="octicon octicon-link"></span></a>HTML Screen Reader</h2>
+
+<p>화면 판독기는 HTML 코드를 읽고 텍스트를 변환하며 사용자가 내용을 "들을"수있는 소프트웨어 프로그램입니다. 스크린 리더는 시각 장애인, 시각 장애인 또는 학습 장애인에게 유용합니다.</p>
+
+<hr>
+
+<h2 id="chapter-summary">
+<a class="anchor" href="#chapter-summary" aria-hidden="true"><span class="octicon octicon-link"></span></a>Chapter Summary</h2>
+
+<ul>
+<li>Use the HTML <strong>&lt;img&gt;</strong> element to define an image</li>
+<li>Use the HTML <strong>src</strong> attribute to define the URL of the image</li>
+<li>Use the HTML <strong>alt</strong> attribute to define an alternate text for an image, if it cannot be displayed</li>
+<li>Use the HTML <strong>width</strong> and <strong>height</strong> attributes to define the size of the image</li>
+<li>Use the CSS <strong>width</strong> and <strong>height</strong> properties to define the size of the image (alternatively)</li>
+<li>Use the CSS float property to let the image float</li>
+<li>Use the HTML <strong>&lt;map&gt;</strong> element to define an image-map</li>
+<li>Use the HTML <strong>&lt;area&gt;</strong> element to define the clickable areas in the image-map</li>
+<li>Use the HTML &lt;img&gt;'s element <strong>usemap</strong> attribute to point to an image-map</li>
+</ul>
+
+<blockquote>
+<p>Note: 이미지로드에는 시간이 걸립니다. 큰 이미지는 페이지 속도를 늦출 수 있습니다. 이미지를 신중하게 사용하십시오.</p>
+</blockquote>
+
+<hr>
+
+<h2 id="image-tags">
+<a class="anchor" href="#image-tags" aria-hidden="true"><span class="octicon octicon-link"></span></a>Image Tags</h2>
+
+<table>
+<thead>
+<tr>
+<th>Tag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;img&gt;</code></td>
+<td>Defines an image</td>
+</tr>
+<tr>
+<td><code>&lt;map&gt;</code></td>
+<td>Defines an image-map</td>
+</tr>
+<tr>
+<td><code>&lt;area&gt;</code></td>
+<td>Defines a clickable area inside an image-map</td>
+</tr>
+<tr>
+<td><code>&lt;picture&gt;</code></td>
+<td>Defines a container for multiple image resources</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+<p><a href="https://www.w3schools.com/html/html_images.asp">https://www.w3schools.com/html/html_images.asp</a></p>
+
+  </div>
+
+<div>
+  <h2 id="images-syntax">Images Syntax</h2>
+
+<p>tag: <code>&lt;img&gt;</code></p>
+
+<p><code>&lt;img&gt;</code> 태그는 비어 있으며 속성만 포함하고 닫는 태그가 없습니다.</p>
+
+<p>src 속성은 이미지의 URL(웹 주소)을 지정합니다:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"url"</span><span class="nt">&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="the-alt-attribute">The alt Attribute</h2>
+
+<p>alt 속성은 이미지에 대한 대체 텍스트를 제공합니다.</p>
+
+<p>사용자가 어떤 이유로 든 볼 수없는 경우 (연결 속도가 느리거나 src 속성에 오류가 있거나 사용자가 화면 판독기를 사용하기 때문) 브라우저가 이미지를 찾을 수 없으면 alt 속성의 값이 표시됩니다.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"img_chania.jpg"</span> <span class="na">alt=</span><span class="s">"Flowers in Chania"</span><span class="nt">&gt;</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Note:</strong> alt 속성은 필수입니다. 웹 페이지가 없으면 웹 페이지가 올바르게 검증되지 않습니다.</p>
+</blockquote>
+
+<hr>
+
+<h2 id="image-size-width-and-height">Image Size - Width and Height</h2>
+
+<p><strong>style</strong> 속성을 사용하여 이미지의 너비와 높이를 지정할 수 있습니다.</p>
+
+<p>값은 픽셀 단위로 지정됩니다 (값 뒤에 px 사용).</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"html5.gif"</span> <span class="na">alt=</span><span class="s">"HTML5 Icon"</span> <span class="na">style=</span><span class="s">"width:128px;height:128px;"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"html5.gif"</span> <span class="na">alt=</span><span class="s">"HTML5 Icon"</span> <span class="na">width=</span><span class="s">"128"</span> <span class="na">height=</span><span class="s">"128"</span><span class="nt">&gt;</span>
+</code></pre></div>
+<blockquote>
+<p>Note:<br>
+항상 이미지의 너비와 높이를 지정하기.<br>
+너비와 높이를 지정하지 않으면 이미지가 로드되는 동안 페이지가 깜박입니다.</p>
+</blockquote>
+
+<hr>
+
+<h2 id="width-and-height-or-style">Width and Height, or Style?</h2>
+
+<p>width, height 및 style 속성은 HTML5에서 유효합니다.</p>
+
+<p>그러나 <strong>style</strong> 속성을 사용하는 것이 좋습니다.</p>
+
+<p>내부 또는 외부 스타일 시트가 이미지의 원래 크기를 변경하는 것을 방지합니다:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;style&gt;</span>
+<span class="nt">img</span> <span class="p">{</span>
+    <span class="nl">width</span><span class="p">:</span><span class="m">100%</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+
+<span class="nt">&lt;p&gt;</span>Using the style attribute:<span class="nt">&lt;/p&gt;</span>
+<span class="c">&lt;!-- 이미지가 정사각형으로 표현됨--&gt;</span>
+<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"html5.gif"</span> <span class="na">alt=</span><span class="s">"HTML5 Icon"</span> <span class="na">style=</span><span class="s">"width:128px;height:128px;"</span><span class="nt">&gt;</span>
+
+<span class="nt">&lt;p&gt;</span>Using the width and height attributes:<span class="nt">&lt;/p&gt;</span>
+<span class="c">&lt;!-- 이미지가 가로가 늘어져 표현됨 --&gt;</span>
+<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"html5.gif"</span> <span class="na">alt=</span><span class="s">"HTML5 Icon"</span> <span class="na">width=</span><span class="s">"128"</span> <span class="na">height=</span><span class="s">"128"</span><span class="nt">&gt;</span>
+
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="images-in-another-folder">Images in Another Folder</h2>
+
+<p>지정하지 않으면 브라우저는 웹 페이지와 동일한 폴더에서 이미지를 찾으려고합니다.</p>
+
+<p>그러나 이미지를 하위 폴더에 저장하는 것이 일반적입니다.</p>
+
+<p>그런 다음 src 속성에 폴더 이름을 포함시켜야합니다:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/images/html5.gif"</span> <span class="na">alt=</span><span class="s">"HTML5 Icon"</span> <span class="na">style=</span><span class="s">"width:128px;height:128px;"</span><span class="nt">&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="images-on-another-server">Images on Another Server</h2>
+
+<p>일부 웹 사이트는 이미지를 이미지 서버에 저장합니다.</p>
+
+<p>사실, 세계의 모든 웹 주소에서 이미지에 액세스 할 수 있습니다:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"https://www.w3schools.com/images/w3schools_green.jpg"</span> <span class="na">alt=</span><span class="s">"W3Schools.com"</span><span class="nt">&gt;</span>
+</code></pre></div>
+<blockquote>
+<p>Note: HTML File Paths</p>
+</blockquote>
+
+<hr>
+
+<h2 id="animated-images">Animated Images</h2>
+
+<p>GIF 표준은 움직이는 이미지 허용한다:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/images/xxx.gif"</span> <span class="na">alt=</span><span class="s">"test"</span> <span class="na">style=</span><span class="s">"width:60px;height:60px;"</span><span class="nt">&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="using-an-image-as-a-link">Using an Image as a Link</h2>
+
+<p>이미지를 링크로 사용하려면 <code>&lt;a&gt;</code> 태그 안에 <code>&lt;img&gt;</code> 태그를 중첩하면됩니다.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"default.asp"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"smiley.gif"</span> <span class="na">alt=</span><span class="s">"smiley"</span> <span class="na">style=</span><span class="s">"width:42px;height:42px;border:0;"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/a&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="image-floating">Image Floating</h2>
+
+<p>CSS <strong>float</strong> 속성을 사용하여 이미지가 텍스트의 오른쪽이나 왼쪽으로 떠있게 됩니다:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;p&gt;</span>
+  <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"smiley.gif"</span> <span class="na">alt=</span><span class="s">"Smiley"</span> <span class="na">style=</span><span class="s">"float:right;width:60px;height:60px;"</span><span class="nt">&gt;</span>
+  The image will float to the right of the text.
+<span class="nt">&lt;/p&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="image-maps">Image Maps</h2>
+
+<p>태그: <code>&lt;map&gt;</code></p>
+
+<p>정의:</p>
+
+<ul>
+<li><p>image-map 은 click 가능한 영역이있는 이미지입니다.</p></li>
+<li><p><strong>name</strong> 속성은 <code>&lt;img&gt;</code> 의 <strong>usemap</strong> 속성과 연관되며 <code>&lt;img&gt;</code>와 <code>&lt;map&gt;</code> 사이의 관계를 만듭니다.</p></li>
+<li><p>image-map 에서 click 가능한 영역을 정의하는 여러 <code>&lt;area&gt;</code> 태그를 포함합니다.</p></li>
+</ul>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"planets.gif"</span> <span class="na">alt=</span><span class="s">"Planets"</span> <span class="na">usemap=</span><span class="s">"#planetmap"</span> <span class="na">style=</span><span class="s">"width:145px;height:126px;"</span><span class="nt">&gt;</span>
+
+<span class="nt">&lt;map</span> <span class="na">name=</span><span class="s">"planetmap"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;area</span> <span class="na">shape=</span><span class="s">"rect"</span> <span class="na">coords=</span><span class="s">"0,0,82,126"</span> <span class="na">alt=</span><span class="s">"Sun"</span> <span class="na">href=</span><span class="s">"sun.htm"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;area</span> <span class="na">shape=</span><span class="s">"circle"</span> <span class="na">coords=</span><span class="s">"90,58,3"</span> <span class="na">alt=</span><span class="s">"Mercury"</span> <span class="na">href=</span><span class="s">"mercur.htm"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;area</span> <span class="na">shape=</span><span class="s">"circle"</span> <span class="na">coords=</span><span class="s">"124,58,8"</span> <span class="na">alt=</span><span class="s">"Venus"</span> <span class="na">href=</span><span class="s">"venus.htm"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/map&gt;</span>
+</code></pre></div>
+<hr>
+
+<h2 id="background-image">Background Image</h2>
+
+<p>HTML 요소에 배경 이미지를 추가하려면 CSS 속성 <strong>background-image</strong> 를 사용합니다.</p>
+
+<p>웹 페이지에 배경 이미지를 추가하려면 <code>&lt;body&gt;</code> 요소에 <strong>background-image</strong> 속성을 지정하십시오:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;body</span> <span class="na">style=</span><span class="s">"background-image:url('clouds.jpg')"</span><span class="nt">&gt;</span>
+
+<span class="nt">&lt;h2&gt;</span>Background Image<span class="nt">&lt;/h2&gt;</span>
+
+<span class="nt">&lt;/body&gt;</span>
+</code></pre></div>
+<p>단락에 배경 이미지를 추가하려면 P 요소에 background-image 속성을 지정합니다:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;body&gt;</span>
+
+<span class="nt">&lt;p</span> <span class="na">style=</span><span class="s">"background-image:url('clouds.jpg')"</span><span class="nt">&gt;</span>
+...
+<span class="nt">&lt;/p&gt;</span>
+
+<span class="nt">&lt;/body&gt;</span>
+</code></pre></div>
+<p>자세한 내용은 <a href="https://www.w3schools.com/css/css_background.asp" rel="nofollow" target="_blank">CSS Background Tutorial</a> 에 참조하기.</p>
+
+<hr>
+
+<h2 id="the-picture-element">The <code>&lt;picture&gt;</code> Element</h2>
+
+<p>HTML5는 이미지 리소스를 지정할 때 유연성을 더하기 위해 <code>&lt;picture&gt;</code> 요소를 도입했습니다.</p>
+
+<p><code>&lt;picture&gt;</code> 요소는 서로 다른 이미지 소스를 참조하는 여러 <code>&lt;source&gt;</code> 요소를 포함합니다.</p>
+
+<p>이렇게하면 브라우저가 현재보기 및 / 또는 장치에 가장 잘 맞는 이미지를 선택할 수 있습니다.</p>
+
+<p>각 <code>&lt;source&gt;</code> 요소에는 이미지가 가장 적합한시기를 설명하는 속성이 있습니다.</p>
+
+<p>브라우저는 속성 값이 일치하는 첫 번째 <code>&lt;source&gt;</code> 요소를 사용하고 다음 <code>&lt;source&gt;</code> 요소는 무시합니다.</p>
+
+<p>브라우저 창 (viewport)이 650px 이상인 경우 하나의 그림을 표시하고 그렇지 않은 경우 465px 보다 큰 이미지를 표시합니다:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;picture&gt;</span>
+<span class="nt">&lt;source</span> <span class="na">media=</span><span class="s">"(min-width: 650px)"</span> <span class="na">srcset=</span><span class="s">"img_pink_flowers.jpg"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;source</span> <span class="na">media=</span><span class="s">"(min-width: 465px)"</span> <span class="na">srcset=</span><span class="s">"img_white_flower.jpg"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"img_orange_flowers.jpg"</span> <span class="na">alt=</span><span class="s">"Flowers"</span> <span class="na">style=</span><span class="s">"width:auto;"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/picture&gt;</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Note:</strong> 항상 <code>&lt;img&gt;</code> 요소를 <code>&lt;picture&gt;</code> 요소의 마지막 자식 요소로 지정하십시오. <code>&lt;img&gt;</code> 요소는 <code>&lt;picture&gt;</code> 요소를 지원하지 않는 브라우저 또는 <code>&lt;source&gt;</code> 태그가 일치하지 않는 브라우저에서 사용됩니다.</p>
+</blockquote>
+
+<hr>
+
+<h2 id="html-screen-reader">HTML Screen Reader</h2>
+
+<p>화면 판독기는 HTML 코드를 읽고 텍스트를 변환하며 사용자가 내용을 "들을"수있는 소프트웨어 프로그램입니다. 스크린 리더는 시각 장애인, 시각 장애인 또는 학습 장애인에게 유용합니다.</p>
+
+<hr>
+
+<h2 id="chapter-summary">Chapter Summary</h2>
+
+<ul>
+<li>Use the HTML <strong>&lt;img&gt;</strong> element to define an image</li>
+<li>Use the HTML <strong>src</strong> attribute to define the URL of the image</li>
+<li>Use the HTML <strong>alt</strong> attribute to define an alternate text for an image, if it cannot be displayed</li>
+<li>Use the HTML <strong>width</strong> and <strong>height</strong> attributes to define the size of the image</li>
+<li>Use the CSS <strong>width</strong> and <strong>height</strong> properties to define the size of the image (alternatively)</li>
+<li>Use the CSS float property to let the image float</li>
+<li>Use the HTML <strong>&lt;map&gt;</strong> element to define an image-map</li>
+<li>Use the HTML <strong>&lt;area&gt;</strong> element to define the clickable areas in the image-map</li>
+<li>Use the HTML &lt;img&gt;'s element <strong>usemap</strong> attribute to point to an image-map</li>
+</ul>
+
+<blockquote>
+<p>Note: 이미지로드에는 시간이 걸립니다. 큰 이미지는 페이지 속도를 늦출 수 있습니다. 이미지를 신중하게 사용하십시오.</p>
+</blockquote>
+
+<hr>
+
+<h2 id="image-tags">Image Tags</h2>
+
+<table>
+<thead>
+<tr>
+<th>Tag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;img&gt;</code></td>
+<td>Defines an image</td>
+</tr>
+<tr>
+<td><code>&lt;map&gt;</code></td>
+<td>Defines an image-map</td>
+</tr>
+<tr>
+<td><code>&lt;area&gt;</code></td>
+<td>Defines a clickable area inside an image-map</td>
+</tr>
+<tr>
+<td><code>&lt;picture&gt;</code></td>
+<td>Defines a container for multiple image resources</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="reference">Reference</h2>
+
+<p><a href="https://www.w3schools.com/html/html_images.asp" rel="nofollow" target="_blank">https://www.w3schools.com/html/html_images.asp</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

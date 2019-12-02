@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>True vs False, Positive vs Negative (분류 - 참 대 허위, 양성 대 음성) | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="True vs False, Positive vs Negative (분류 - 참 대 허위, 양성 대 음성)" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="예:" />
+<meta property="og:description" content="예:" />
+<link rel="canonical" href="/blog/docs/develop/A-M/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML%20%EA%B0%9C%EB%85%90/013.%20Classification%20(%EB%B6%84%EB%A5%98,%2090%20min)/003.%20%EC%B0%B8%EA%B3%BC%20%EA%B1%B0%EC%A7%93,%20%EC%96%91%EC%84%B1%EA%B3%BC%20%EC%9D%8C%EC%84%B1.html" />
+<meta property="og:url" content="/blog/docs/develop/A-M/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML%20%EA%B0%9C%EB%85%90/013.%20Classification%20(%EB%B6%84%EB%A5%98,%2090%20min)/003.%20%EC%B0%B8%EA%B3%BC%20%EA%B1%B0%EC%A7%93,%20%EC%96%91%EC%84%B1%EA%B3%BC%20%EC%9D%8C%EC%84%B1.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-02T16:38:51+09:00" />
+<script type="application/ld+json">
+{"description":"예:","headline":"True vs False, Positive vs Negative (분류 - 참 대 허위, 양성 대 음성)","dateModified":"2019-12-02T16:38:51+09:00","datePublished":"2019-12-02T16:38:51+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/docs/develop/A-M/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML%20%EA%B0%9C%EB%85%90/013.%20Classification%20(%EB%B6%84%EB%A5%98,%2090%20min)/003.%20%EC%B0%B8%EA%B3%BC%20%EA%B1%B0%EC%A7%93,%20%EC%96%91%EC%84%B1%EA%B3%BC%20%EC%9D%8C%EC%84%B1.html"},"url":"/blog/docs/develop/A-M/machine-learning/google/%EB%8B%A8%EA%B8%B0%EC%A7%91%EC%A4%91%EA%B3%BC%EC%A0%95/%EA%B5%90%EC%9C%A1%EA%B3%BC%EC%A0%95/ML%20%EA%B0%9C%EB%85%90/013.%20Classification%20(%EB%B6%84%EB%A5%98,%2090%20min)/003.%20%EC%B0%B8%EA%B3%BC%20%EA%B1%B0%EC%A7%93,%20%EC%96%91%EC%84%B1%EA%B3%BC%20%EC%9D%8C%EC%84%B1.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/blog/feed.xml" title="Portal2312's blog" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113063601-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+<script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>True vs False, Positive vs Negative (분류 - 참 대 허위, 양성 대 음성)</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#reference">Reference</a></li>
+</ul><p>예:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">이솝 우화: 양치기 소년(요약본)
+
+양치기 소년이 마을의 양떼를 돌보던 중 심심해졌습니다.
+소년은 늑대가 보이지 않았지만 재미로 "늑대다!"라고 외쳤습니다.
+마을 사람들은 양떼를 지키려고 뛰어왔지만 소년이 장난친 것을 알고는 몹시 화가 났습니다.
+
+[이전 단락을 N번 반복합니다.]
+
+어느 날 밤 양치기 소년은 양떼를 향해 다가오는 진짜 늑대를 보고 "늑대다!"라고 외칩니다.
+하지만 마을 사람들은 소년이 다시 거짓말을 한다고 생각해서 집에서 나오지 않습니다.
+배고픈 늑대는 양들을 다 잡아먹습니다. 마을은 가난해지고 혼란은 계속됩니다.
+</code></pre></div>
+<p>정의:</p>
+
+<ul>
+<li>"늑대다"는 <strong>Positive 클래스</strong>입니다.</li>
+<li>"늑대가 없다"는 <strong>Negative 클래스</strong>입니다.</li>
+</ul>
+
+<p>'늑대 예측' 모델에서 발생할 수 있는 4가지 결과를 요약시 2x2 <a href="https://developers.google.com/machine-learning/crash-course/glossary?hl=ko#confusion_matrix">혼동행렬</a>을 사용해 나타수 있음:</p>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TP</td>
+<td>FP</td>
+</tr>
+<tr>
+<td>FN</td>
+<td>TN</td>
+</tr>
+</tbody>
+</table>
+
+<p>참양성(TP):
+- 현실: 늑대의 위협이 있었습니다.
+- 양치기의 외침: "늑대다."
+- 결과: 양치기는 영웅입니다.</p>
+
+<p>허위 양성(FP):
+- 현실: 늑대의 위협이 없었습니다.
+- 양치기의 외침: "늑대다."
+- 결과: 마을 사람들은 양치기가 잠을 깨워서 화가 났습니다.</p>
+
+<p>허위 음성(FN):
+- 현실: 늑대의 위협이 있었습니다.
+- 양치기의 외침: "늑대가 없다."
+- 결과: 늑대가 양들을 모두 잡아먹었습니다.</p>
+
+<p>참 음성(TN):
+- 현실: 늑대의 위협이 없었습니다.
+- 양치기의 외침: "늑대가 없다."
+- 결과: 모두가 괜찮습니다.</p>
+
+<p>참양성(TP): 모델에서 <strong>Positive 클래스</strong>를 정확하게 평가하는 결과입니다.
+참음성(TN): 모델에서 <strong>Negative 클래스</strong>를 정확하게 평가하는 결과입니다.</p>
+
+<p>거짓양성(FP): 모델에서 <strong>Positive 클래스</strong>를 잘못 예측한 결과입니다.
+거짓음성(FN): 모델에서 <strong>Negative 클래스</strong>를 잘못 예측한 결과입니다.</p>
+
+<p>다음 섹션에서는 이 4개의 결과에서 파생된 측정항목을 사용하여 분류 모델을 평가하는 방법을 살펴보겠습니다. </p>
+
+<h2 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+<p><a href="https://developers.google.com/machine-learning/crash-course/classification/true-false-positive-negative?hl=ko">https://developers.google.com/machine-learning/crash-course/classification/true-false-positive-negative?hl=ko</a></p>
+
+  </div>
+
+<div>
+  <p>예:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">이솝 우화: 양치기 소년(요약본)
+
+양치기 소년이 마을의 양떼를 돌보던 중 심심해졌습니다.
+소년은 늑대가 보이지 않았지만 재미로 "늑대다!"라고 외쳤습니다.
+마을 사람들은 양떼를 지키려고 뛰어왔지만 소년이 장난친 것을 알고는 몹시 화가 났습니다.
+
+[이전 단락을 N번 반복합니다.]
+
+어느 날 밤 양치기 소년은 양떼를 향해 다가오는 진짜 늑대를 보고 "늑대다!"라고 외칩니다.
+하지만 마을 사람들은 소년이 다시 거짓말을 한다고 생각해서 집에서 나오지 않습니다.
+배고픈 늑대는 양들을 다 잡아먹습니다. 마을은 가난해지고 혼란은 계속됩니다.
+</code></pre></div>
+<p>정의:</p>
+
+<ul>
+<li>"늑대다"는 <strong>Positive 클래스</strong>입니다.</li>
+<li>"늑대가 없다"는 <strong>Negative 클래스</strong>입니다.</li>
+</ul>
+
+<p>'늑대 예측' 모델에서 발생할 수 있는 4가지 결과를 요약시 2x2 <a href="https://developers.google.com/machine-learning/crash-course/glossary?hl=ko#confusion_matrix" rel="nofollow" target="_blank">혼동행렬</a>을 사용해 나타수 있음:</p>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TP</td>
+<td>FP</td>
+</tr>
+<tr>
+<td>FN</td>
+<td>TN</td>
+</tr>
+</tbody>
+</table>
+
+<p>참양성(TP):
+- 현실: 늑대의 위협이 있었습니다.
+- 양치기의 외침: "늑대다."
+- 결과: 양치기는 영웅입니다.</p>
+
+<p>허위 양성(FP):
+- 현실: 늑대의 위협이 없었습니다.
+- 양치기의 외침: "늑대다."
+- 결과: 마을 사람들은 양치기가 잠을 깨워서 화가 났습니다.</p>
+
+<p>허위 음성(FN):
+- 현실: 늑대의 위협이 있었습니다.
+- 양치기의 외침: "늑대가 없다."
+- 결과: 늑대가 양들을 모두 잡아먹었습니다.</p>
+
+<p>참 음성(TN):
+- 현실: 늑대의 위협이 없었습니다.
+- 양치기의 외침: "늑대가 없다."
+- 결과: 모두가 괜찮습니다.</p>
+
+<p>참양성(TP): 모델에서 <strong>Positive 클래스</strong>를 정확하게 평가하는 결과입니다.
+참음성(TN): 모델에서 <strong>Negative 클래스</strong>를 정확하게 평가하는 결과입니다.</p>
+
+<p>거짓양성(FP): 모델에서 <strong>Positive 클래스</strong>를 잘못 예측한 결과입니다.
+거짓음성(FN): 모델에서 <strong>Negative 클래스</strong>를 잘못 예측한 결과입니다.</p>
+
+<p>다음 섹션에서는 이 4개의 결과에서 파생된 측정항목을 사용하여 분류 모델을 평가하는 방법을 살펴보겠습니다. </p>
+
+<h2 id="reference">Reference</h2>
+
+<p><a href="https://developers.google.com/machine-learning/crash-course/classification/true-false-positive-negative?hl=ko" rel="nofollow" target="_blank">https://developers.google.com/machine-learning/crash-course/classification/true-false-positive-negative?hl=ko</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

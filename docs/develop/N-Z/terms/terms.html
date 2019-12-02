@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Terms (용어) | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Terms (용어)" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Coding" />
+<meta property="og:description" content="Coding" />
+<link rel="canonical" href="/blog/docs/develop/N-Z/terms/terms.html" />
+<meta property="og:url" content="/blog/docs/develop/N-Z/terms/terms.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-02T16:38:51+09:00" />
+<script type="application/ld+json">
+{"description":"Coding","headline":"Terms (용어)","dateModified":"2019-12-02T16:38:51+09:00","datePublished":"2019-12-02T16:38:51+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/docs/develop/N-Z/terms/terms.html"},"url":"/blog/docs/develop/N-Z/terms/terms.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/blog/feed.xml" title="Portal2312's blog" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113063601-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+<script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Terms (용어)</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#coding">Coding</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#inhredents-overloading-overriding">Inhredents, Overloading, Overriding</a></li>
+<li class="toc-entry toc-h3"><a href="#tdd-test-driven-development">TDD (Test Driven Development)</a></li>
+<li class="toc-entry toc-h3"><a href="#annotate-comments">annotate / comments (주석)</a></li>
+<li class="toc-entry toc-h3"><a href="#lint">lint</a></li>
+<li class="toc-entry toc-h3"><a href="#ide-integrated-development-environment">IDE (Integrated Development Environment)</a></li>
+<li class="toc-entry toc-h3"><a href="#part-4f0de79f362bf49e">일급 객체</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#network">Network</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#parser">Parser (파서)</a></li>
+<li class="toc-entry toc-h3"><a href="#dns-domain-name-service">DNS(Domain Name Service)</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#security">Security</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#access-control">Access Control (접근 제어)</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#protocol">Protocol</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#xmpp-extensible-messaging-and-presence-protocol">XMPP (eXtensible Messaging and Presence Protocol)</a></li>
+<li class="toc-entry toc-h3"><a href="#irc-internet-relay-chat">IRC (Internet Relay Chat)</a></li>
+<li class="toc-entry toc-h3"><a href="#dhcp-dynamic-host-configuration-protocol">DHCP(Dynamic Host Configuration Protocol) = 동적 호스트 설정 통신 규약</a></li>
+<li class="toc-entry toc-h3"><a href="#vrrp-virtual-router-redundancy-protocol">VRRP (Virtual Router Redundancy Protocol)</a></li>
+<li class="toc-entry toc-h3"><a href="#ocsp-online-certificate-status-protocol">OCSP (Online Certificate Status Protocol)</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#etc">ETC</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#olly-dbg">Olly DBg</a></li>
+<li class="toc-entry toc-h3"><a href="#ip-tv-stb">IP-TV STB (셋톱박스)</a></li>
+<li class="toc-entry toc-h3"><a href="#malicious">Malicious (악성코드)</a></li>
+<li class="toc-entry toc-h3"><a href="#ems-electronic-manufacturing-service">EMS (electronic manufacturing service)</a></li>
+<li class="toc-entry toc-h3"><a href="#rst-restructuredtext">.RST 확장자 (.reStructuredText)</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#i-o">I/O</a></li>
+<li class="toc-entry toc-h2"><a href="#tty">tty</a></li>
+<li class="toc-entry toc-h2"><a href="#selinux">SELINUX</a></li>
+<li class="toc-entry toc-h2"><a href="#stdin-stdout-stderr">STDIN, STDOUT, STDERR</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#part-65438e0a709">배경</a></li>
+</ul>
+</li>
+</ul><h2 id="coding">
+<a class="anchor" href="#coding" aria-hidden="true"><span class="octicon octicon-link"></span></a>Coding</h2>
+
+<h3 id="inhredents-overloading-overriding">
+<a class="anchor" href="#inhredents-overloading-overriding" aria-hidden="true"><span class="octicon octicon-link"></span></a>Inhredents, Overloading, Overriding</h3>
+
+<p>생략</p>
+
+<h3 id="tdd-test-driven-development">
+<a class="anchor" href="#tdd-test-driven-development" aria-hidden="true"><span class="octicon octicon-link"></span></a>TDD (Test Driven Development)</h3>
+
+<p>테스트 주도 개발</p>
+
+<h3 id="annotate-comments">
+<a class="anchor" href="#annotate-comments" aria-hidden="true"><span class="octicon octicon-link"></span></a>annotate / comments (주석)</h3>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># XXX 설명(내용의 불분명, 설명 등)
+# FIXME 수정할 부분의 메모
+# TODO 진행사항에 대한 메모
+</span></code></pre></div>
+<h3 id="lint">
+<a class="anchor" href="#lint" aria-hidden="true"><span class="octicon octicon-link"></span></a>lint</h3>
+
+<ul>
+<li><p>컴퓨터 프로그래밍에서 의심스럽거나,
+에러를 발생하기 쉬운 코드에 표시(flag)를 달아 놓는 것을 말한다.</p></li>
+<li><p>원래는 C 언어에서 사용하던 용어였으나 지금은 다른 언어에서도 일반적으로 사용된다.</p></li>
+</ul>
+
+<h3 id="ide-integrated-development-environment">
+<a class="anchor" href="#ide-integrated-development-environment" aria-hidden="true"><span class="octicon octicon-link"></span></a>IDE (Integrated Development Environment)</h3>
+
+<ul>
+<li><p>통합 개발 환경</p></li>
+<li><p>코딩, 디버그, 컴파일, 배포 등 프로그램 개발에 관련된 모든 작업을 하나의 프로그램 안에서 처리하는 환경을 제공하는 소프트웨어</p></li>
+</ul>
+
+<h3 id="part-4f0de79f362bf49e">
+<a class="anchor" href="#part-4f0de79f362bf49e" aria-hidden="true"><span class="octicon octicon-link"></span></a>일급 객체</h3>
+
+<ul>
+<li>일반적으로 다른 객체들에 적용 가능한 연산을 모두 지원하는 객체.</li>
+</ul>
+
+<hr>
+
+<h2 id="network">
+<a class="anchor" href="#network" aria-hidden="true"><span class="octicon octicon-link"></span></a>Network</h2>
+
+<h3 id="parser">
+<a class="anchor" href="#parser" aria-hidden="true"><span class="octicon octicon-link"></span></a>Parser (파서)</h3>
+
+<p>컴파일러의 일부로서, 원시 프로그램의 명령문이나 온라인 명령문, 마크업 태그 등을</p>
+
+<p>입력으로 받아들여서 다른 프로그램(컴파일러 내의 다른 요소들)에 의해 처리될 수 있도록</p>
+
+<p>여러 부분(예를 들어 명사, 동사 그리고 그것들의 속성이나 옵션 등)으로 나눈다.</p>
+
+<p>파서는 필요한 모든 입력이 제공되었는지를 점검하기도 한다.</p>
+
+<h3 id="dns-domain-name-service">
+<a class="anchor" href="#dns-domain-name-service" aria-hidden="true"><span class="octicon octicon-link"></span></a>DNS(Domain Name Service)</h3>
+
+<p>숫자로 되어 있는 웹페이지의 주소와 문자화 되어 있는 주소를 연결해 주는 서버.
+문자로 웹 페이지의 주소를 칠 경우, 해당 문자의 웹 페이지 숫자 주소를 기억하여,
+그 주소로 연결해 주는 역할을 합니다.</p>
+
+<hr>
+
+<h2 id="security">
+<a class="anchor" href="#security" aria-hidden="true"><span class="octicon octicon-link"></span></a>Security</h2>
+
+<h3 id="access-control">
+<a class="anchor" href="#access-control" aria-hidden="true"><span class="octicon octicon-link"></span></a>Access Control (접근 제어)</h3>
+
+<ul>
+<li>Reference.URL</li>
+</ul>
+
+<p><a href="https://en.wikipedia.org/wiki/Secure_Shell">https://en.wikipedia.org/wiki/Secure_Shell</a></p>
+
+<p><a href="http://www.ktword.co.kr/abbr_view.php?m_temp1=2250">http://www.ktword.co.kr/abbr_view.php?m_temp1=2250</a></p>
+
+<p><a href="https://ko.wikipedia.org/wiki/%EC%A0%91%EA%B7%BC_%EC%A0%9C%EC%96%B4">https://ko.wikipedia.org/wiki/%EC%A0%91%EA%B7%BC_%EC%A0%9C%EC%96%B4</a></p>
+
+<p><a href="https://en.wikipedia.org/wiki/Access_control">https://en.wikipedia.org/wiki/Access_control</a></p>
+
+<hr>
+
+<h2 id="protocol">
+<a class="anchor" href="#protocol" aria-hidden="true"><span class="octicon octicon-link"></span></a>Protocol</h2>
+
+<h3 id="xmpp-extensible-messaging-and-presence-protocol">
+<a class="anchor" href="#xmpp-extensible-messaging-and-presence-protocol" aria-hidden="true"><span class="octicon octicon-link"></span></a>XMPP (eXtensible Messaging and Presence Protocol)</h3>
+
+<p>XML 기반한 메시지 지향 미들웨어용 통신 프로토콜.</p>
+
+<p>XMLPP:</p>
+
+<p>RFC3920, RFC3921 등 IETF(Internet Engineering Task Force)에서 제정한 국제 표준 프로토콜로 인스턴트메신저(Instant Messenger)를 위한 프로토콜로 잘 알려져 있다. 국내에서는 몇년 전 구글(google.com)이 XMPP를 채택, googletalk 이라는 인스턴트메신저 서비스를 시작하면서 널리 알려지는 계기가 되었다. XMPP 규격은 2004년 봄에 표준으로 제정되었지만, 사실은 Jabber라는 이름으로 1998년부터 연구가 시작되었고 이 연구의 결과가 표준화라는 결과를 맞이하게 된 것이다.</p>
+
+<p>규격:</p>
+
+<p>이 표준은 인터넷상의 두 지점간의 통신 규격에 관한 것이다. 두 지점은 이메일주소와 같은 방식으로 표현되며 이들 지점간 확장가능한 메시지(message) 그리고 프레즌스(presence)를 거의 실시간(near-realtime)으로 전달해주는 규격이다. 이 규격에 의하면 인터넷상의 지점은 DNS(Domain Name Service) 서비스에 의해 명명될 수 있는 위치들간의 통신으로 예를 들어 yourhost.com 이라는 주소도 하나의 지점이며 <a href="mailto:yourid@yourhost.com">yourid@yourhost.com</a> 또한 하나의 주소이다. 결국 DNS에 의해 표현될 수 있는 주소 공간은 새로이 등록되는 도메인 이름에 의해서 계속해서 증가하므로 이론상 무한대의 사용자가 서로 통신이 가능하게 되는 규격인 셈이다.</p>
+
+<p>강력한 Presence 기반 응용이 가능:</p>
+
+<p>프레즌스(Presence)는 XMPP의 가장 중요한 요소중의 하나이다. DNS에 의해 확장되는 거대한 XMPP 공간에서 각 지점의 상태들을 프레즌스라고 하고 각 지점의 상태가 변경될 경우 이 상태 변경은 즉각 이에 관심있어 하는 지점으로 브로드캐스팅된다. 다른 지점의 상태변경에 관심있는 지점이 되기 위해서는 프레즌스를 구독(subscribe)하는 과정이 필요하다.</p>
+
+<p>Reference.URL: <a href="http://www.xmpp.co.kr/node/1">http://www.xmpp.co.kr/node/1</a></p>
+
+<h3 id="irc-internet-relay-chat">
+<a class="anchor" href="#irc-internet-relay-chat" aria-hidden="true"><span class="octicon octicon-link"></span></a>IRC (Internet Relay Chat)</h3>
+
+<p>실시간 채팅 프로토콜</p>
+
+<h3 id="dhcp-dynamic-host-configuration-protocol">
+<a class="anchor" href="#dhcp-dynamic-host-configuration-protocol" aria-hidden="true"><span class="octicon octicon-link"></span></a>DHCP(Dynamic Host Configuration Protocol) = 동적 호스트 설정 통신 규약</h3>
+
+<p>서버가 클라이언트에게 클라이언트의 요청이 있을 시, "동적"으로 IP의 정보를 제공한다는 의미.</p>
+
+<p>윈도 NT를 기본으로 하는 근거리망(LAN)에 접속하는 컴퓨터에 IP 주소를 할당하는 Microsoft 사의 기  술.</p>
+
+<p>DHCP 기능을 내장한 네트워크 서버장비(DHCP 서버)는 클라이언트(컴퓨터 등)의 요청이 있을 시,</p>
+
+<p>IP 주소를 자동으로 할당해 주는 기능.</p>
+
+<h3 id="vrrp-virtual-router-redundancy-protocol">
+<a class="anchor" href="#vrrp-virtual-router-redundancy-protocol" aria-hidden="true"><span class="octicon octicon-link"></span></a>VRRP (Virtual Router Redundancy Protocol)</h3>
+
+<p>VRRP는 근거리통신망 상에서 정적(靜的)으로 설정된 기본 라우터를 사용할 때,</p>
+
+<p>하나 이상의 백업 라우터를 가질 수 있는 방법을 제공하는 인터넷 프로토콜이다.</p>
+
+<p>비록 다른 대안들이 있더라도, 가장 일반적인 배치는 근거리통신망 상의 호스트 그룹으로부터 전달되는</p>
+
+<p>패킷들을 하나의 라우터가 서비스하도록 설정하는 것이다.</p>
+
+<p>그러나, 만약 그 라우터가 고장이 나면, 다른 라우터를 백업으로 사용할 수 있는 방법이 없다.</p>
+
+<p>VRRP를 사용하면, 하나의 가상 IP 주소가 기본으로 설정된다.</p>
+
+<p>가상의 IP 주소는 하나는 마스터 라우터로, 다른 것은 백업들로 지정되는 라우터들 간에 공유된다.</p>
+
+<p>마스터에 문제가 발생하는 경우, 가상 IP 주소는 백업 라우터의 IP 주소로 사상된다</p>
+
+<p>(이 백업 라우터가 마스터 라우터가 된다).</p>
+
+<p>VRRP는 또한 부하조절에도 사용될 수 있다. VRRP는 IPv4와 IPv6 둘 모두에 적용된다.</p>
+
+<h3 id="ocsp-online-certificate-status-protocol">
+<a class="anchor" href="#ocsp-online-certificate-status-protocol" aria-hidden="true"><span class="octicon octicon-link"></span></a>OCSP (Online Certificate Status Protocol)</h3>
+
+<p>온라인 인증서 상태 프로토콜.</p>
+
+<p>줄여서 OCSP는 X.509를 이용한 전자 서명 인증서의 폐지 상태를 파악하는 데 사용되는 인터넷 프로토콜.</p>
+
+<hr>
+
+<h2 id="etc">
+<a class="anchor" href="#etc" aria-hidden="true"><span class="octicon octicon-link"></span></a>ETC</h2>
+
+<h3 id="olly-dbg">
+<a class="anchor" href="#olly-dbg" aria-hidden="true"><span class="octicon octicon-link"></span></a>Olly DBg</h3>
+
+<ul>
+<li>.exe 실핼파일 작동시 디버그 결과 보여줌 으로 실행 순서로 추적하여 예로 CD-key를 읽는 부분을 넘겨서 cheak으로 할 수 있게 한다.</li>
+</ul>
+
+<h3 id="ip-tv-stb">
+<a class="anchor" href="#ip-tv-stb" aria-hidden="true"><span class="octicon octicon-link"></span></a>IP-TV STB (셋톱박스)</h3>
+
+<ul>
+<li>공유기?</li>
+</ul>
+
+<h3 id="malicious">
+<a class="anchor" href="#malicious" aria-hidden="true"><span class="octicon octicon-link"></span></a>Malicious (악성코드)</h3>
+
+<h3 id="ems-electronic-manufacturing-service">
+<a class="anchor" href="#ems-electronic-manufacturing-service" aria-hidden="true"><span class="octicon octicon-link"></span></a>EMS (electronic manufacturing service)</h3>
+
+<p>전자분야의 신제품 개발 속도가 빨라지면서 설비투자에 대한 위험을 줄일 목적으로</p>
+
+<p>생산을 위탁받아 전문적으로 제조 및 서비스를 전담하는 생산전담회사를 말한다.</p>
+
+<h3 id="rst-restructuredtext">
+<a class="anchor" href="#rst-restructuredtext" aria-hidden="true"><span class="octicon octicon-link"></span></a>.RST 확장자 (.reStructuredText)</h3>
+
+<p>reStructuredText는 markup 언어의 한 종류로 파씽시스템도 포함한다.</p>
+
+<p>reST의 문법은 그 자체로도 내용파악과 사용하기가 쉽다는 장점을 가진다. 특히 파이썬과 같은 인라인(in-liine) 프로그램의 문서화에 유용하며 실제로 파이썬에서 제공하는 문서(<a href="https://docs.python.org/3/)%EA%B0%80">https://docs.python.org/3/)가</a> reST를 사용하는 Sphinx를 이용하여 작성되었다. reST가 지향하는 목표는 다음과 같다. 덧붙여 reST문서의 확장자는 '.rst' 이다.</p>
+
+<h2 id="i-o">
+<a class="anchor" href="#i-o" aria-hidden="true"><span class="octicon octicon-link"></span></a>I/O</h2>
+
+<p>disk I/O (Input/Output): 입출력</p>
+
+<h2 id="tty">
+<a class="anchor" href="#tty" aria-hidden="true"><span class="octicon octicon-link"></span></a>tty</h2>
+
+<p>터미널 입출력 환경을 뜻한다.</p>
+
+<h2 id="selinux">
+<a class="anchor" href="#selinux" aria-hidden="true"><span class="octicon octicon-link"></span></a>SELINUX</h2>
+
+<p>보안 강화 리눅스(Security-Enhanced Linux, 간단히 SELinux)는 미국 국방부 스타일의 강제 접근 제어(MAC)를 포함한 접근 제어 보안 정책을 지원하는 매커니즘을 제공하는 리눅스 커널 보안 모듈이다. 다양한 리눅스 배포판에 추가할 수 있는 커널 수정 및 사용자 공간 도구들의 모임이다. 보안 강화 리눅스는 보안 결정 진행을 보안 정책과는 별개로 함과 동시에 보안 정책의 영향을 받는 소프트웨어의 양을 간소화하는 것을 시도하는 구조를 이룬다.[1][2] 보안 강화 리눅스의 기반이 되는 주요 개념들은 미국 국가안보국의 일부 초기 프로젝트들로 거슬러 올라간다.</p>
+
+<p>SELinux는 매우 정밀한 상세 설정을 포함하여 어떠한 활동을 시스템이 개별 사용자, 프로세스, 데몬에 허용할 것인지를 잠재적으로 제어할 수 있다. 일반적으로 사용자 프로세스는 주로 SELinux에 제한되지 않는 영역에서 실행되지만 고전적인 리눅스 접근 권한에 제한을 받는다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>setenforce 1
+<span class="nv">$ </span>getenforce
+</code></pre></div>
+<h2 id="stdin-stdout-stderr">
+<a class="anchor" href="#stdin-stdout-stderr" aria-hidden="true"><span class="octicon octicon-link"></span></a>STDIN, STDOUT, STDERR</h2>
+
+<p>표준 스트림:</p>
+
+<p>특정한 프로그래밍 언어 인터페이스뿐 아니라 유닉스 및 유닉스 계열 운영 체제(어느 정도까지는 윈도에도 해당함)에서 컴퓨터 프로그램과 그 환경(일반적으로 단말기) 사이에 미리 연결된 입출력 통로를 가리킨다.</p>
+
+<p>일반적으로 유닉스에서 동작하는 프로그램은 실행 시 세 개의 스트림이 자동으로 열린다. 이를 표준 스트림이라고 부른다. 하나는 입력을 위한 스트림(Standard input, STDIN, 0), 하나는 출력을 위한 스트림(Standard Output, STDOUT, 1), 하나는 오류 메시지를 출력하기 위한 스트림(Standard Error, STDERR, 2)이며, 이 세 개의 표준 스트림은 사용자의 터미널에 부착된다.</p>
+
+<ul>
+<li>표준입력(STDIN, Standard input)</li>
+<li>표준출력(STDOUT, Standard output)</li>
+<li>표준오류(STDERR, Standard error)</li>
+</ul>
+
+<h3 id="part-65438e0a709">
+<a class="anchor" href="#part-65438e0a709" aria-hidden="true"><span class="octicon octicon-link"></span></a>배경</h3>
+
+<p>유닉스 이전의 대부분의 운영 체제에서, 프로그램은 명시적으로 적절한 입력 장치와 출력 장치에 연결해줄 필요가 있었다. 이 작업은 각 OS 마다 처리 방식이 달랐기 때문에 매우 방대한 작업이었다. 수많은 시스템에서 환경 설정을 제어하거나, 파일 테이블에 접근하거나, 필요한 데이터 셋을 결정하기 위해 펀치 카드 리더기나 자기 테이프 드라이브, 라인 프린터, 카드 펀치, 대화식 터미널을 적절하게 제어할 필요가 있었다.</p>
+
+<p>이런 상황에서, 유닉스의 획기적인 발전 중 하나는 장치의 추상화였다. 프로그램은 더 이상 어떤 장치와 연결되는지 알 필요가 없었다. 유닉스는 기존의 복잡성을 데이터 스트림이라는 개념으로 해소 시켰다. 데이터 스트림은 순차적인 데이터 바이트들을 파일의 끝(EOF)까지 읽는다. 이런 방식으로, 프로그램은 쓸 데이터가 얼만큼 남았는지, 혹은 어떤 식으로 묶여있는지 알 필요 없이 필요한 데이터를 쓸 수 있었다.</p>
+
+<p>또 다른 유닉스의 획기적인 발전은, 자동으로 연결되는 입출력 장치였다. 프로그래머나 프로그램에서 입출력을 사용해야 할 때, 입출력 장치를 연결하기 위한 그 어떤 추가 작업도 필요하지 않게 되었다. 이전의 운영 체제들에서 입출력 장치를 연결하기 위해 복잡한 작업 제어 언어가 필요하거나, 그와 동일한 역할을 하는 프로그램이 필요했던 것과는 대조적이다.</p>
+
+<p>유닉스에서 표준 스트림이 지원된 이후로, 유닉스 C 실행 환경에서도 이를 잘 지원해야 할 의무가 생겼다. 그 결과로, 대부분의 C 실행 환경에서 (이후의 C의 파생 언어들을 포함하여) 운영 체제와 상관없이 동일한 기능을 제공하게 되었다.</p>
+
+<p><a href="https://ko.wikipedia.org/wiki/%ED%91%9C%EC%A4%80_%EC%8A%A4%ED%8A%B8%EB%A6%BC">https://ko.wikipedia.org/wiki/표준_스트림</a></p>
+
+  </div>
+
+<div>
+  <h2 id="coding">Coding</h2>
+
+<h3 id="inhredents-overloading-overriding">Inhredents, Overloading, Overriding</h3>
+
+<p>생략</p>
+
+<h3 id="tdd-test-driven-development">TDD (Test Driven Development)</h3>
+
+<p>테스트 주도 개발</p>
+
+<h3 id="annotate-comments">annotate / comments (주석)</h3>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># XXX 설명(내용의 불분명, 설명 등)
+# FIXME 수정할 부분의 메모
+# TODO 진행사항에 대한 메모
+</span></code></pre></div>
+<h3 id="lint">lint</h3>
+
+<ul>
+<li><p>컴퓨터 프로그래밍에서 의심스럽거나,
+에러를 발생하기 쉬운 코드에 표시(flag)를 달아 놓는 것을 말한다.</p></li>
+<li><p>원래는 C 언어에서 사용하던 용어였으나 지금은 다른 언어에서도 일반적으로 사용된다.</p></li>
+</ul>
+
+<h3 id="ide-integrated-development-environment">IDE (Integrated Development Environment)</h3>
+
+<ul>
+<li><p>통합 개발 환경</p></li>
+<li><p>코딩, 디버그, 컴파일, 배포 등 프로그램 개발에 관련된 모든 작업을 하나의 프로그램 안에서 처리하는 환경을 제공하는 소프트웨어</p></li>
+</ul>
+
+<h3 id="part-4f0de79f362bf49e">일급 객체</h3>
+
+<ul>
+<li>일반적으로 다른 객체들에 적용 가능한 연산을 모두 지원하는 객체.</li>
+</ul>
+
+<hr>
+
+<h2 id="network">Network</h2>
+
+<h3 id="parser">Parser (파서)</h3>
+
+<p>컴파일러의 일부로서, 원시 프로그램의 명령문이나 온라인 명령문, 마크업 태그 등을</p>
+
+<p>입력으로 받아들여서 다른 프로그램(컴파일러 내의 다른 요소들)에 의해 처리될 수 있도록</p>
+
+<p>여러 부분(예를 들어 명사, 동사 그리고 그것들의 속성이나 옵션 등)으로 나눈다.</p>
+
+<p>파서는 필요한 모든 입력이 제공되었는지를 점검하기도 한다.</p>
+
+<h3 id="dns-domain-name-service">DNS(Domain Name Service)</h3>
+
+<p>숫자로 되어 있는 웹페이지의 주소와 문자화 되어 있는 주소를 연결해 주는 서버.
+문자로 웹 페이지의 주소를 칠 경우, 해당 문자의 웹 페이지 숫자 주소를 기억하여,
+그 주소로 연결해 주는 역할을 합니다.</p>
+
+<hr>
+
+<h2 id="security">Security</h2>
+
+<h3 id="access-control">Access Control (접근 제어)</h3>
+
+<ul>
+<li>Reference.URL</li>
+</ul>
+
+<p><a href="https://en.wikipedia.org/wiki/Secure_Shell" rel="nofollow" target="_blank">https://en.wikipedia.org/wiki/Secure_Shell</a></p>
+
+<p><a href="http://www.ktword.co.kr/abbr_view.php?m_temp1=2250" rel="nofollow" target="_blank">http://www.ktword.co.kr/abbr_view.php?m_temp1=2250</a></p>
+
+<p><a href="https://ko.wikipedia.org/wiki/%EC%A0%91%EA%B7%BC_%EC%A0%9C%EC%96%B4" rel="nofollow" target="_blank">https://ko.wikipedia.org/wiki/%EC%A0%91%EA%B7%BC_%EC%A0%9C%EC%96%B4</a></p>
+
+<p><a href="https://en.wikipedia.org/wiki/Access_control" rel="nofollow" target="_blank">https://en.wikipedia.org/wiki/Access_control</a></p>
+
+<hr>
+
+<h2 id="protocol">Protocol</h2>
+
+<h3 id="xmpp-extensible-messaging-and-presence-protocol">XMPP (eXtensible Messaging and Presence Protocol)</h3>
+
+<p>XML 기반한 메시지 지향 미들웨어용 통신 프로토콜.</p>
+
+<p>XMLPP:</p>
+
+<p>RFC3920, RFC3921 등 IETF(Internet Engineering Task Force)에서 제정한 국제 표준 프로토콜로 인스턴트메신저(Instant Messenger)를 위한 프로토콜로 잘 알려져 있다. 국내에서는 몇년 전 구글(google.com)이 XMPP를 채택, googletalk 이라는 인스턴트메신저 서비스를 시작하면서 널리 알려지는 계기가 되었다. XMPP 규격은 2004년 봄에 표준으로 제정되었지만, 사실은 Jabber라는 이름으로 1998년부터 연구가 시작되었고 이 연구의 결과가 표준화라는 결과를 맞이하게 된 것이다.</p>
+
+<p>규격:</p>
+
+<p>이 표준은 인터넷상의 두 지점간의 통신 규격에 관한 것이다. 두 지점은 이메일주소와 같은 방식으로 표현되며 이들 지점간 확장가능한 메시지(message) 그리고 프레즌스(presence)를 거의 실시간(near-realtime)으로 전달해주는 규격이다. 이 규격에 의하면 인터넷상의 지점은 DNS(Domain Name Service) 서비스에 의해 명명될 수 있는 위치들간의 통신으로 예를 들어 yourhost.com 이라는 주소도 하나의 지점이며 <a href="mailto:yourid@yourhost.com">yourid@yourhost.com</a> 또한 하나의 주소이다. 결국 DNS에 의해 표현될 수 있는 주소 공간은 새로이 등록되는 도메인 이름에 의해서 계속해서 증가하므로 이론상 무한대의 사용자가 서로 통신이 가능하게 되는 규격인 셈이다.</p>
+
+<p>강력한 Presence 기반 응용이 가능:</p>
+
+<p>프레즌스(Presence)는 XMPP의 가장 중요한 요소중의 하나이다. DNS에 의해 확장되는 거대한 XMPP 공간에서 각 지점의 상태들을 프레즌스라고 하고 각 지점의 상태가 변경될 경우 이 상태 변경은 즉각 이에 관심있어 하는 지점으로 브로드캐스팅된다. 다른 지점의 상태변경에 관심있는 지점이 되기 위해서는 프레즌스를 구독(subscribe)하는 과정이 필요하다.</p>
+
+<p>Reference.URL: <a href="http://www.xmpp.co.kr/node/1" rel="nofollow" target="_blank">http://www.xmpp.co.kr/node/1</a></p>
+
+<h3 id="irc-internet-relay-chat">IRC (Internet Relay Chat)</h3>
+
+<p>실시간 채팅 프로토콜</p>
+
+<h3 id="dhcp-dynamic-host-configuration-protocol">DHCP(Dynamic Host Configuration Protocol) = 동적 호스트 설정 통신 규약</h3>
+
+<p>서버가 클라이언트에게 클라이언트의 요청이 있을 시, "동적"으로 IP의 정보를 제공한다는 의미.</p>
+
+<p>윈도 NT를 기본으로 하는 근거리망(LAN)에 접속하는 컴퓨터에 IP 주소를 할당하는 Microsoft 사의 기  술.</p>
+
+<p>DHCP 기능을 내장한 네트워크 서버장비(DHCP 서버)는 클라이언트(컴퓨터 등)의 요청이 있을 시,</p>
+
+<p>IP 주소를 자동으로 할당해 주는 기능.</p>
+
+<h3 id="vrrp-virtual-router-redundancy-protocol">VRRP (Virtual Router Redundancy Protocol)</h3>
+
+<p>VRRP는 근거리통신망 상에서 정적(靜的)으로 설정된 기본 라우터를 사용할 때,</p>
+
+<p>하나 이상의 백업 라우터를 가질 수 있는 방법을 제공하는 인터넷 프로토콜이다.</p>
+
+<p>비록 다른 대안들이 있더라도, 가장 일반적인 배치는 근거리통신망 상의 호스트 그룹으로부터 전달되는</p>
+
+<p>패킷들을 하나의 라우터가 서비스하도록 설정하는 것이다.</p>
+
+<p>그러나, 만약 그 라우터가 고장이 나면, 다른 라우터를 백업으로 사용할 수 있는 방법이 없다.</p>
+
+<p>VRRP를 사용하면, 하나의 가상 IP 주소가 기본으로 설정된다.</p>
+
+<p>가상의 IP 주소는 하나는 마스터 라우터로, 다른 것은 백업들로 지정되는 라우터들 간에 공유된다.</p>
+
+<p>마스터에 문제가 발생하는 경우, 가상 IP 주소는 백업 라우터의 IP 주소로 사상된다</p>
+
+<p>(이 백업 라우터가 마스터 라우터가 된다).</p>
+
+<p>VRRP는 또한 부하조절에도 사용될 수 있다. VRRP는 IPv4와 IPv6 둘 모두에 적용된다.</p>
+
+<h3 id="ocsp-online-certificate-status-protocol">OCSP (Online Certificate Status Protocol)</h3>
+
+<p>온라인 인증서 상태 프로토콜.</p>
+
+<p>줄여서 OCSP는 X.509를 이용한 전자 서명 인증서의 폐지 상태를 파악하는 데 사용되는 인터넷 프로토콜.</p>
+
+<hr>
+
+<h2 id="etc">ETC</h2>
+
+<h3 id="olly-dbg">Olly DBg</h3>
+
+<ul>
+<li>.exe 실핼파일 작동시 디버그 결과 보여줌 으로 실행 순서로 추적하여 예로 CD-key를 읽는 부분을 넘겨서 cheak으로 할 수 있게 한다.</li>
+</ul>
+
+<h3 id="ip-tv-stb">IP-TV STB (셋톱박스)</h3>
+
+<ul>
+<li>공유기?</li>
+</ul>
+
+<h3 id="malicious">Malicious (악성코드)</h3>
+
+<h3 id="ems-electronic-manufacturing-service">EMS (electronic manufacturing service)</h3>
+
+<p>전자분야의 신제품 개발 속도가 빨라지면서 설비투자에 대한 위험을 줄일 목적으로</p>
+
+<p>생산을 위탁받아 전문적으로 제조 및 서비스를 전담하는 생산전담회사를 말한다.</p>
+
+<h3 id="rst-restructuredtext">.RST 확장자 (.reStructuredText)</h3>
+
+<p>reStructuredText는 markup 언어의 한 종류로 파씽시스템도 포함한다.</p>
+
+<p>reST의 문법은 그 자체로도 내용파악과 사용하기가 쉽다는 장점을 가진다. 특히 파이썬과 같은 인라인(in-liine) 프로그램의 문서화에 유용하며 실제로 파이썬에서 제공하는 문서(<a href="https://docs.python.org/3/)%EA%B0%80" rel="nofollow" target="_blank">https://docs.python.org/3/)가</a> reST를 사용하는 Sphinx를 이용하여 작성되었다. reST가 지향하는 목표는 다음과 같다. 덧붙여 reST문서의 확장자는 '.rst' 이다.</p>
+
+<h2 id="i-o">I/O</h2>
+
+<p>disk I/O (Input/Output): 입출력</p>
+
+<h2 id="tty">tty</h2>
+
+<p>터미널 입출력 환경을 뜻한다.</p>
+
+<h2 id="selinux">SELINUX</h2>
+
+<p>보안 강화 리눅스(Security-Enhanced Linux, 간단히 SELinux)는 미국 국방부 스타일의 강제 접근 제어(MAC)를 포함한 접근 제어 보안 정책을 지원하는 매커니즘을 제공하는 리눅스 커널 보안 모듈이다. 다양한 리눅스 배포판에 추가할 수 있는 커널 수정 및 사용자 공간 도구들의 모임이다. 보안 강화 리눅스는 보안 결정 진행을 보안 정책과는 별개로 함과 동시에 보안 정책의 영향을 받는 소프트웨어의 양을 간소화하는 것을 시도하는 구조를 이룬다.[1][2] 보안 강화 리눅스의 기반이 되는 주요 개념들은 미국 국가안보국의 일부 초기 프로젝트들로 거슬러 올라간다.</p>
+
+<p>SELinux는 매우 정밀한 상세 설정을 포함하여 어떠한 활동을 시스템이 개별 사용자, 프로세스, 데몬에 허용할 것인지를 잠재적으로 제어할 수 있다. 일반적으로 사용자 프로세스는 주로 SELinux에 제한되지 않는 영역에서 실행되지만 고전적인 리눅스 접근 권한에 제한을 받는다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>setenforce 1
+<span class="nv">$ </span>getenforce
+</code></pre></div>
+<h2 id="stdin-stdout-stderr">STDIN, STDOUT, STDERR</h2>
+
+<p>표준 스트림:</p>
+
+<p>특정한 프로그래밍 언어 인터페이스뿐 아니라 유닉스 및 유닉스 계열 운영 체제(어느 정도까지는 윈도에도 해당함)에서 컴퓨터 프로그램과 그 환경(일반적으로 단말기) 사이에 미리 연결된 입출력 통로를 가리킨다.</p>
+
+<p>일반적으로 유닉스에서 동작하는 프로그램은 실행 시 세 개의 스트림이 자동으로 열린다. 이를 표준 스트림이라고 부른다. 하나는 입력을 위한 스트림(Standard input, STDIN, 0), 하나는 출력을 위한 스트림(Standard Output, STDOUT, 1), 하나는 오류 메시지를 출력하기 위한 스트림(Standard Error, STDERR, 2)이며, 이 세 개의 표준 스트림은 사용자의 터미널에 부착된다.</p>
+
+<ul>
+<li>표준입력(STDIN, Standard input)</li>
+<li>표준출력(STDOUT, Standard output)</li>
+<li>표준오류(STDERR, Standard error)</li>
+</ul>
+
+<h3 id="part-65438e0a709">배경</h3>
+
+<p>유닉스 이전의 대부분의 운영 체제에서, 프로그램은 명시적으로 적절한 입력 장치와 출력 장치에 연결해줄 필요가 있었다. 이 작업은 각 OS 마다 처리 방식이 달랐기 때문에 매우 방대한 작업이었다. 수많은 시스템에서 환경 설정을 제어하거나, 파일 테이블에 접근하거나, 필요한 데이터 셋을 결정하기 위해 펀치 카드 리더기나 자기 테이프 드라이브, 라인 프린터, 카드 펀치, 대화식 터미널을 적절하게 제어할 필요가 있었다.</p>
+
+<p>이런 상황에서, 유닉스의 획기적인 발전 중 하나는 장치의 추상화였다. 프로그램은 더 이상 어떤 장치와 연결되는지 알 필요가 없었다. 유닉스는 기존의 복잡성을 데이터 스트림이라는 개념으로 해소 시켰다. 데이터 스트림은 순차적인 데이터 바이트들을 파일의 끝(EOF)까지 읽는다. 이런 방식으로, 프로그램은 쓸 데이터가 얼만큼 남았는지, 혹은 어떤 식으로 묶여있는지 알 필요 없이 필요한 데이터를 쓸 수 있었다.</p>
+
+<p>또 다른 유닉스의 획기적인 발전은, 자동으로 연결되는 입출력 장치였다. 프로그래머나 프로그램에서 입출력을 사용해야 할 때, 입출력 장치를 연결하기 위한 그 어떤 추가 작업도 필요하지 않게 되었다. 이전의 운영 체제들에서 입출력 장치를 연결하기 위해 복잡한 작업 제어 언어가 필요하거나, 그와 동일한 역할을 하는 프로그램이 필요했던 것과는 대조적이다.</p>
+
+<p>유닉스에서 표준 스트림이 지원된 이후로, 유닉스 C 실행 환경에서도 이를 잘 지원해야 할 의무가 생겼다. 그 결과로, 대부분의 C 실행 환경에서 (이후의 C의 파생 언어들을 포함하여) 운영 체제와 상관없이 동일한 기능을 제공하게 되었다.</p>
+
+<p><a href="https://ko.wikipedia.org/wiki/%ED%91%9C%EC%A4%80_%EC%8A%A4%ED%8A%B8%EB%A6%BC" rel="nofollow" target="_blank">https://ko.wikipedia.org/wiki/표준_스트림</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

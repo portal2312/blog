@@ -3,76 +3,78 @@ export class Card {
 }
 
 export class SliderCard {
-  constructor(elementId, data) {
-    this.slider = document.getElementById(elementId);
-    this.data = data;
+  constructor() {
+    this.className = "card-slider";
+    this.directions = ["right", "left"];
 
-    if (this.slider) {
-      this.row = this.slider.firstElementChild;
-      this.column = this.row ? this.row.firstElementChild : undefined;
-      this.right = undefined;
-      this.left = undefined;
+    const sliders = document.getElementsByClassName(this.className);
 
-      ["right", "left"].forEach(direction => {
-        const [element] = this.slider.getElementsByClassName(
-          `card-slider-btn-${direction}`
+    for (let i = 0, len = sliders.length; i < len; i += 1) {
+      const slider = sliders[i];
+      slider.row = slider.firstElementChild;
+      const column = slider.row.firstElementChild;
+      slider.row.column = column;
+
+      this.directions.forEach(direction => {
+        const [element] = slider.getElementsByClassName(
+          `${this.className}-btn-${direction}`
         );
 
         if (element) {
-          this[direction] = element;
-          this[direction].addEventListener("click", e => {
-            this.scrollTo(direction, e);
+          slider[direction] = element;
+
+          element.addEventListener("click", e => {
+            this.scrollTo(element, direction, e, slider);
           });
+
+          if (direction === "left") {
+            if (column.scrollLeft === 0) {
+              element.classList.add(`${this.className}-hidden`);
+            } else {
+              element.classList.remove(`${this.className}-hidden`);
+            }
+          } else if (direction === "right") {
+            if (column.scrollWidth - column.scrollLeft === column.clientWidth) {
+              element.classList.add(`${this.className}-hidden`);
+            } else {
+              element.classList.remove(`${this.className}-hidden`);
+            }
+          }
         }
       });
-
-      this.activeButton();
     }
   }
 
-  scrollTo(direction, event) {
-    const { column, data } = this;
+  scrollTo(element, direction, event, slider) {
+    const { column } = slider.row;
+    let left = column.scrollLeft;
 
-    if (column && column.childElementCount > 0) {
-      const leftIncrement =
-        (column.scrollWidth - column.clientWidth) /
-        parseInt(data.length / 2, 10);
-      let left = column.scrollLeft;
-
+    if (column && column.childElementCount) {
       switch (direction) {
         case "left":
-          left -= leftIncrement;
+          left -= column.offsetWidth;
           break;
         case "right":
-          left += leftIncrement;
+          left += column.offsetWidth;
           break;
         default:
           left = 0;
           break;
       }
-
-      column.scrollTo({ left, top: 0, behavior: "smooth" });
-
-      setTimeout(this.activeButton, 500, this);
-    }
-  }
-
-  activeButton(me) {
-    const { column, left, right } = me || this;
-    if (left) {
-      if (column.scrollLeft > 0) {
-        left.classList.remove("card-slider-hidden");
-      } else {
-        left.classList.add("card-slider-hidden");
-      }
     }
 
-    if (right) {
-      if (column.scrollWidth - column.scrollLeft === column.clientWidth) {
-        right.classList.add("card-slider-hidden");
-      } else {
-        right.classList.remove("card-slider-hidden");
-      }
+    if (left <= 0) {
+      slider.left.classList.add(`${this.className}-hidden`);
+    } else {
+      slider.left.classList.remove(`${this.className}-hidden`);
     }
+
+    if (left + column.offsetWidth >= column.scrollWidth) {
+      slider.right.classList.add(`${this.className}-hidden`);
+    } else {
+      slider.right.classList.remove(`${this.className}-hidden`);
+    }
+
+    column.scrollTo({ left, top: 0, behavior: "smooth" });
   }
 }

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Customizing authentication in Django | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Customizing authentication in Django" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Django와 함께 제공되는 인증은 대부분의 일반적인 경우에 충분하지만 기본 설정으로 충족되지 않아도 됩니다. 프로젝트에서 인증을 사용자 정의하려면 제공된 시스템의 어떤 지점을 확장 또는 교체 할 수 있는지 이해해야 합니다. 이 문서는 인증 시스템을 사용자 정의하는 방법에 대한 세부 사항을 제공합니다." />
+<meta property="og:description" content="Django와 함께 제공되는 인증은 대부분의 일반적인 경우에 충분하지만 기본 설정으로 충족되지 않아도 됩니다. 프로젝트에서 인증을 사용자 정의하려면 제공된 시스템의 어떤 지점을 확장 또는 교체 할 수 있는지 이해해야 합니다. 이 문서는 인증 시스템을 사용자 정의하는 방법에 대한 세부 사항을 제공합니다." />
+<link rel="canonical" href="/blog/docs/develop/N-Z/Python/lib/django/docs/13_Common_Web_application_tools/01_Authentication/04_Customizing_authentication.html" />
+<meta property="og:url" content="/blog/docs/develop/N-Z/Python/lib/django/docs/13_Common_Web_application_tools/01_Authentication/04_Customizing_authentication.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-02T16:38:51+09:00" />
+<script type="application/ld+json">
+{"description":"Django와 함께 제공되는 인증은 대부분의 일반적인 경우에 충분하지만 기본 설정으로 충족되지 않아도 됩니다. 프로젝트에서 인증을 사용자 정의하려면 제공된 시스템의 어떤 지점을 확장 또는 교체 할 수 있는지 이해해야 합니다. 이 문서는 인증 시스템을 사용자 정의하는 방법에 대한 세부 사항을 제공합니다.","headline":"Customizing authentication in Django","dateModified":"2019-12-02T16:38:51+09:00","datePublished":"2019-12-02T16:38:51+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/docs/develop/N-Z/Python/lib/django/docs/13_Common_Web_application_tools/01_Authentication/04_Customizing_authentication.html"},"url":"/blog/docs/develop/N-Z/Python/lib/django/docs/13_Common_Web_application_tools/01_Authentication/04_Customizing_authentication.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/blog/feed.xml" title="Portal2312's blog" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113063601-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+<script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Customizing authentication in Django</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#other-authentication-sources">Other authentication sources</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#specifying-authentication-backends">Specifying authentication backends</a></li>
+<li class="toc-entry toc-h3"><a href="#writing-an-authentication-backend">Writing an authentication backend</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#custom-permissions">Custom permissions</a></li>
+<li class="toc-entry toc-h2"><a href="#extending-the-existing-user-model">Extending the existing User model</a></li>
+<li class="toc-entry toc-h2"><a href="#references">References</a></li>
+</ul><p>Django와 함께 제공되는 인증은 대부분의 일반적인 경우에 충분하지만 기본 설정으로 충족되지 않아도 됩니다. 프로젝트에서 인증을 사용자 정의하려면 제공된 시스템의 어떤 지점을 확장 또는 교체 할 수 있는지 이해해야 합니다. 이 문서는 인증 시스템을 사용자 정의하는 방법에 대한 세부 사항을 제공합니다.</p>
+
+<p>Authentication backends는 사용자 모델과 함께 저장된 사용자 이름과 비밀번호가 장고의 기본값과 다른 서비스에 대해 인증되어야 할 때 확장 가능한 시스템을 제공합니다.</p>
+
+<p>Django의 인증 시스템을 통해 확인할 수 있는 사용자 정의 권한을 모델에 부여 할 수 있습니다.</p>
+
+<p>기본 사용자 모델을 확장하거나 완전히 사용자 지정된 모델을 대체 할 수 있습니다.</p>
+
+<h2 id="other-authentication-sources">
+<a class="anchor" href="#other-authentication-sources" aria-hidden="true"><span class="octicon octicon-link"></span></a>Other authentication sources</h2>
+
+<p>다른 인증 소스 (사용자 이름과 비밀번호 또는 인증 메소드의 또 다른 소스)에 연결해야 할 필요가있을 수 있습니다.</p>
+
+<p>예를 들어, 회사에는 이미 모든 직원에 대한 사용자 이름과 암호를 저장하는 LDAP 설정이있을 수 있습니다.
+사용자가 LDAP 및 Django 기반 응용 프로그램에서 별도의 계정을 가지고 있다면 네트워크 관리자와 사용자 모두에게 번거로운 작업이 될 수 있습니다.</p>
+
+<p>따라서 이런 상황을 처리하기 위해 Django 인증 시스템을 사용하면 다른 인증 소스를 연결할 수 있습니다. Django의 기본 데이터베이스 기반 구성표를 무시하거나 다른 시스템과 함께 기본 시스템을 사용할 수 있습니다.</p>
+
+<p>Django에 포함 된 인증 백엔드에 대한 정보는 <a href="https://docs.djangoproject.com/en/2.1/ref/contrib/auth/#authentication-backends-reference">authentication backend reference</a>를 참조하십시오.</p>
+
+<h3 id="specifying-authentication-backends">
+<a class="anchor" href="#specifying-authentication-backends" aria-hidden="true"><span class="octicon octicon-link"></span></a>Specifying authentication backends</h3>
+
+<p><em>인증 백앤드 지정하기</em></p>
+
+<p>배후에서 장고는 인증을 위해 검사하는 "authentication backends" 목록을 유지합니다.
+누군가가 <strong>django.contrib.auth.authenticate()</strong> 를 호출 할 때 - 사용자 로그인 방법에 설명 된대로 - django는 모든 인증 백엔드에서 인증을 시도합니다.
+첫 번째 인증 방법이 실패하면 Django는 모든 백엔드가 시도 될 때까지 두 번째 인증 방법을 시도합니다.
+사용할 인증 백엔드 목록은 <strong>AUTHENTICATION_BACKENDS</strong> 설정에 지정됩니다.
+이것은 인증 방법을 알고있는 Python 클래스를 가리키는 Python 경로 이름 목록이어야합니다.
+이 클래스는 파이썬 경로의 어느 곳에 나있을 수 있습니다.
+기본적으로 <strong>AUTHENTICATION_BACKENDS</strong> 는 다음과 같이 설정됩니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="p">[</span><span class="s">'django.contrib.auth.backends.ModelBackend'</span><span class="p">]</span>
+</code></pre></div>
+<p>이것은 Django 사용자 데이터베이스를 검사하고 내장 된 권한을 쿼리하는 기본 인증 백엔드입니다.
+속도 제한 메커니즘을 통한 무차별 공격에 대한 보호 기능을 제공하지 않습니다.
+사용자 지정 인증 백엔드에서 자체 속도 제한 메커니즘을 구현하거나 대부분의 웹 서버에서 제공하는 메커니즘을 사용할 수 있습니다.</p>
+
+<p><strong>AUTHENTICATION_BACKENDS</strong>의 순서는 중요합니다.
+따라서 여러 개의 백엔드에서 동일한 사용자 이름과 비밀번호가 유효한 경우 Django는 첫 번째 긍정적 인 일치에서 처리를 중단합니다.</p>
+
+<p>백엔드에서 <strong>PermissionDenied</strong> 예외가 발생하면 인증이 즉시 실패합니다.
+Django는 뒤 따르는 백엔드를 확인하지 않습니다.</p>
+
+<blockquote>
+<p>Note</p>
+
+<p>사용자가 인증을 하면 Django는 백엔드를 사용하여 사용자의 세션에서 사용자를 인증하고 현재 인증 된 사용자에 대한 액세스가 필요할 때마다 해당 백엔드를 해당 세션 기간 동안 다시 사용합니다.
+이는 인증 소스가 세션별로 캐시된다는 것을 의미하므로 <strong>AUTHENTICATION_BACKENDS</strong>를 변경하면 사용자가 다른 방법으로 재인증하도록해야하는 경우 세션 데이터를 지워야합니다.
+간단한 방법은 단순히 <code>Session.objects.all().delete()</code> 를 실행하는 것입니다.</p>
+</blockquote>
+
+<hr>
+
+<h3 id="writing-an-authentication-backend">
+<a class="anchor" href="#writing-an-authentication-backend" aria-hidden="true"><span class="octicon octicon-link"></span></a>Writing an authentication backend</h3>
+
+<p>인증 백엔드는 get_user (user_id) 및 authenticate (request, ** credentials)의 두 가지 필수 메소드와 선택적 권한 관련 인증 메소드 세트를 구현하는 클래스입니다. get_user 메소드는 user_id를 취합니다 - 사용자 이름, 데이터베이스 ID 등이 될 수 있지만 사용자 객체의 기본 키가되어야합니다 - 그리고 사용자 객체를 반환합니다. authenticate 메소드는 요청 인수와 자격증 명을 키워드 인수로 사용합니다. 대부분의 시간은 다음과 같습니다.</p>
+
+<p>Handling authorization in custom backends
+Authorization for anonymous users
+Authorization for inactive users
+Handling object permissions</p>
+
+<hr>
+
+<h2 id="custom-permissions">
+<a class="anchor" href="#custom-permissions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Custom permissions</h2>
+
+<hr>
+
+<h2 id="extending-the-existing-user-model">
+<a class="anchor" href="#extending-the-existing-user-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Extending the existing User model</h2>
+
+<p>사용자 모델을 대체하지 않고 기본 <a href="https://docs.djangoproject.com/en/2.1/ref/contrib/auth/#django.contrib.auth.models.User">User</a> model을 확장하는 데는 두 가지 방법이 있습니다.</p>
+
+<p>필요한 변경 사항이 순수한 동작이며 데이터베이스에 저장된 내용을 변경할 필요가 없는 경우 User를 기반으로 <a href="https://docs.djangoproject.com/en/2.1/topics/db/models/#proxy-models">proxy model</a>을 만들 수 있습니다. 따라서 기본 주문, 사용자 지정 관리자 또는 사용자 지정 모델 방법을 비롯한 프록시 모델에서 제공하는 기능을 사용할 수 있습니다.</p>
+
+<p>User와 관련된 정보를 저장하려는 경우 <strong>OneToOneField</strong>를 사용하여 추가 정보 필드가 포함 된 모델을 만들 수 있습니다. 이 일대일 모델은 종종 사이트 사용자에 대한 비인증 관련 정보를 저장할 수 있으므로 Profile model이라고도 합니다.</p>
+
+<p>예를 들어 Employee 모델을 만들 수 있습니다:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span>
+
+<span class="k">class</span> <span class="nc">Employee</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">OneToOneField</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span>
+    <span class="n">department</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</code></pre></div>
+<p>기존 Employee Fred Smith가 User와 Employee 모델을 모두 가지고 있다고 가정하면 Django의 표준 관련 모델 규칙을 사용하여 관련 정보에 액세스 할 수 있습니다:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">u</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">'fsmith'</span><span class="p">)</span>
+<span class="n">freds_department</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">employee</span><span class="o">.</span><span class="n">department</span>
+</code></pre></div>
+<p>프로필의 필드를 관리자의 사용자 페이지에 추가하려면 <a href="%EC%9D%B4%20%EC%98%88%EC%97%90%EC%84%9C%EB%8A%94%20%5BStackedInline%5D%EC%9D%84%20%EC%82%AC%EC%9A%A9%ED%95%A9%EB%8B%88%EB%8B%A4">InlineModelAdmin</a>을 앱의 admin.py에서 정의하고 이를 <a href="https://docs.djangoproject.com/en/2.1/ref/contrib/auth/#django.contrib.auth.models.User">User</a> 클래스에 등록된 [UserAdmin] 클래스에 추가하십시오:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.admin</span> <span class="kn">import</span> <span class="n">UserAdmin</span> <span class="k">as</span> <span class="n">BaseUserAdmin</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span>
+
+<span class="kn">from</span> <span class="nn">my_user_profile_app.models</span> <span class="kn">import</span> <span class="n">Employee</span>
+
+<span class="c1"># Define an inline admin descriptor for Employee model
+# which acts a bit like a singleton
+</span><span class="k">class</span> <span class="nc">EmployeeInline</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">StackedInline</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Employee</span>
+    <span class="n">can_delete</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">verbose_name_plural</span> <span class="o">=</span> <span class="s">'employee'</span>
+
+<span class="c1"># Define a new User admin
+</span><span class="k">class</span> <span class="nc">UserAdmin</span><span class="p">(</span><span class="n">BaseUserAdmin</span><span class="p">):</span>
+    <span class="n">inlines</span> <span class="o">=</span> <span class="p">(</span><span class="n">EmployeeInline</span><span class="p">,)</span>
+
+<span class="c1"># Re-register UserAdmin
+</span><span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">unregister</span><span class="p">(</span><span class="n">User</span><span class="p">)</span>
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">UserAdmin</span><span class="p">)</span>
+</code></pre></div>
+<p>이 프로파일 모델은 어떤 방식으로도 특별하지 않습니다.
+단지 사용자 모델과 일대일로 연결되는 Django 모델 일뿐입니다.
+따라서 사용자 생성시 자동 생성되지 않지만 [django.db.models.signals.post_save]를 사용하여 관련 모델을 적절히 작성하거나 업데이트 할 수 있습니다.</p>
+
+<p>관련 모델을 사용하면 추가 쿼리 또는 조인을 통해 관련 데이터를 검색 할 수 있습니다.
+필요에 따라 관련 필드가 포함 된 사용자 정의 사용자 모델이 더 나은 옵션 일 수 있지만 프로젝트 앱의 기본 사용자 모델과의 기존 관계로 인해 추가 데이터베이스로드가 정당화 될 수 있습니다.</p>
+
+<hr>
+
+<p>Substituting a custom User model
+Using a custom user model when starting a project
+Changing to a custom user model mid-project
+Reusable apps and AUTH_USER_MODEL
+Referencing the User model
+Specifying a custom user model
+Writing a manager for a custom user model
+Extending Django’s default User
+Custom users and the built-in auth forms
+Custom users and django.contrib.admin
+Custom users and permissions
+Custom users and proxy models
+A full example</p>
+
+<h2 id="references">
+<a class="anchor" href="#references" aria-hidden="true"><span class="octicon octicon-link"></span></a>References</h2>
+
+<p><a href="https://docs.djangoproject.com/en/2.1/topics/auth/customizing/">https://docs.djangoproject.com/en/2.1/topics/auth/customizing/</a></p>
+
+  </div>
+
+<div>
+  <p>Django와 함께 제공되는 인증은 대부분의 일반적인 경우에 충분하지만 기본 설정으로 충족되지 않아도 됩니다. 프로젝트에서 인증을 사용자 정의하려면 제공된 시스템의 어떤 지점을 확장 또는 교체 할 수 있는지 이해해야 합니다. 이 문서는 인증 시스템을 사용자 정의하는 방법에 대한 세부 사항을 제공합니다.</p>
+
+<p>Authentication backends는 사용자 모델과 함께 저장된 사용자 이름과 비밀번호가 장고의 기본값과 다른 서비스에 대해 인증되어야 할 때 확장 가능한 시스템을 제공합니다.</p>
+
+<p>Django의 인증 시스템을 통해 확인할 수 있는 사용자 정의 권한을 모델에 부여 할 수 있습니다.</p>
+
+<p>기본 사용자 모델을 확장하거나 완전히 사용자 지정된 모델을 대체 할 수 있습니다.</p>
+
+<h2 id="other-authentication-sources">Other authentication sources</h2>
+
+<p>다른 인증 소스 (사용자 이름과 비밀번호 또는 인증 메소드의 또 다른 소스)에 연결해야 할 필요가있을 수 있습니다.</p>
+
+<p>예를 들어, 회사에는 이미 모든 직원에 대한 사용자 이름과 암호를 저장하는 LDAP 설정이있을 수 있습니다.
+사용자가 LDAP 및 Django 기반 응용 프로그램에서 별도의 계정을 가지고 있다면 네트워크 관리자와 사용자 모두에게 번거로운 작업이 될 수 있습니다.</p>
+
+<p>따라서 이런 상황을 처리하기 위해 Django 인증 시스템을 사용하면 다른 인증 소스를 연결할 수 있습니다. Django의 기본 데이터베이스 기반 구성표를 무시하거나 다른 시스템과 함께 기본 시스템을 사용할 수 있습니다.</p>
+
+<p>Django에 포함 된 인증 백엔드에 대한 정보는 <a href="https://docs.djangoproject.com/en/2.1/ref/contrib/auth/#authentication-backends-reference" rel="nofollow" target="_blank">authentication backend reference</a>를 참조하십시오.</p>
+
+<h3 id="specifying-authentication-backends">Specifying authentication backends</h3>
+
+<p><em>인증 백앤드 지정하기</em></p>
+
+<p>배후에서 장고는 인증을 위해 검사하는 "authentication backends" 목록을 유지합니다.
+누군가가 <strong>django.contrib.auth.authenticate()</strong> 를 호출 할 때 - 사용자 로그인 방법에 설명 된대로 - django는 모든 인증 백엔드에서 인증을 시도합니다.
+첫 번째 인증 방법이 실패하면 Django는 모든 백엔드가 시도 될 때까지 두 번째 인증 방법을 시도합니다.
+사용할 인증 백엔드 목록은 <strong>AUTHENTICATION_BACKENDS</strong> 설정에 지정됩니다.
+이것은 인증 방법을 알고있는 Python 클래스를 가리키는 Python 경로 이름 목록이어야합니다.
+이 클래스는 파이썬 경로의 어느 곳에 나있을 수 있습니다.
+기본적으로 <strong>AUTHENTICATION_BACKENDS</strong> 는 다음과 같이 설정됩니다.</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="p">[</span><span class="s">'django.contrib.auth.backends.ModelBackend'</span><span class="p">]</span>
+</code></pre></div>
+<p>이것은 Django 사용자 데이터베이스를 검사하고 내장 된 권한을 쿼리하는 기본 인증 백엔드입니다.
+속도 제한 메커니즘을 통한 무차별 공격에 대한 보호 기능을 제공하지 않습니다.
+사용자 지정 인증 백엔드에서 자체 속도 제한 메커니즘을 구현하거나 대부분의 웹 서버에서 제공하는 메커니즘을 사용할 수 있습니다.</p>
+
+<p><strong>AUTHENTICATION_BACKENDS</strong>의 순서는 중요합니다.
+따라서 여러 개의 백엔드에서 동일한 사용자 이름과 비밀번호가 유효한 경우 Django는 첫 번째 긍정적 인 일치에서 처리를 중단합니다.</p>
+
+<p>백엔드에서 <strong>PermissionDenied</strong> 예외가 발생하면 인증이 즉시 실패합니다.
+Django는 뒤 따르는 백엔드를 확인하지 않습니다.</p>
+
+<blockquote>
+<p>Note</p>
+
+<p>사용자가 인증을 하면 Django는 백엔드를 사용하여 사용자의 세션에서 사용자를 인증하고 현재 인증 된 사용자에 대한 액세스가 필요할 때마다 해당 백엔드를 해당 세션 기간 동안 다시 사용합니다.
+이는 인증 소스가 세션별로 캐시된다는 것을 의미하므로 <strong>AUTHENTICATION_BACKENDS</strong>를 변경하면 사용자가 다른 방법으로 재인증하도록해야하는 경우 세션 데이터를 지워야합니다.
+간단한 방법은 단순히 <code>Session.objects.all().delete()</code> 를 실행하는 것입니다.</p>
+</blockquote>
+
+<hr>
+
+<h3 id="writing-an-authentication-backend">Writing an authentication backend</h3>
+
+<p>인증 백엔드는 get_user (user_id) 및 authenticate (request, ** credentials)의 두 가지 필수 메소드와 선택적 권한 관련 인증 메소드 세트를 구현하는 클래스입니다. get_user 메소드는 user_id를 취합니다 - 사용자 이름, 데이터베이스 ID 등이 될 수 있지만 사용자 객체의 기본 키가되어야합니다 - 그리고 사용자 객체를 반환합니다. authenticate 메소드는 요청 인수와 자격증 명을 키워드 인수로 사용합니다. 대부분의 시간은 다음과 같습니다.</p>
+
+<p>Handling authorization in custom backends
+Authorization for anonymous users
+Authorization for inactive users
+Handling object permissions</p>
+
+<hr>
+
+<h2 id="custom-permissions">Custom permissions</h2>
+
+<hr>
+
+<h2 id="extending-the-existing-user-model">Extending the existing User model</h2>
+
+<p>사용자 모델을 대체하지 않고 기본 <a href="https://docs.djangoproject.com/en/2.1/ref/contrib/auth/#django.contrib.auth.models.User" rel="nofollow" target="_blank">User</a> model을 확장하는 데는 두 가지 방법이 있습니다.</p>
+
+<p>필요한 변경 사항이 순수한 동작이며 데이터베이스에 저장된 내용을 변경할 필요가 없는 경우 User를 기반으로 <a href="https://docs.djangoproject.com/en/2.1/topics/db/models/#proxy-models" rel="nofollow" target="_blank">proxy model</a>을 만들 수 있습니다. 따라서 기본 주문, 사용자 지정 관리자 또는 사용자 지정 모델 방법을 비롯한 프록시 모델에서 제공하는 기능을 사용할 수 있습니다.</p>
+
+<p>User와 관련된 정보를 저장하려는 경우 <strong>OneToOneField</strong>를 사용하여 추가 정보 필드가 포함 된 모델을 만들 수 있습니다. 이 일대일 모델은 종종 사이트 사용자에 대한 비인증 관련 정보를 저장할 수 있으므로 Profile model이라고도 합니다.</p>
+
+<p>예를 들어 Employee 모델을 만들 수 있습니다:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span>
+
+<span class="k">class</span> <span class="nc">Employee</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">OneToOneField</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span>
+    <span class="n">department</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</code></pre></div>
+<p>기존 Employee Fred Smith가 User와 Employee 모델을 모두 가지고 있다고 가정하면 Django의 표준 관련 모델 규칙을 사용하여 관련 정보에 액세스 할 수 있습니다:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="n">u</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">'fsmith'</span><span class="p">)</span>
+<span class="n">freds_department</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">employee</span><span class="o">.</span><span class="n">department</span>
+</code></pre></div>
+<p>프로필의 필드를 관리자의 사용자 페이지에 추가하려면 <a href="%EC%9D%B4%20%EC%98%88%EC%97%90%EC%84%9C%EB%8A%94%20%5BStackedInline%5D%EC%9D%84%20%EC%82%AC%EC%9A%A9%ED%95%A9%EB%8B%88%EB%8B%A4">InlineModelAdmin</a>을 앱의 admin.py에서 정의하고 이를 <a href="https://docs.djangoproject.com/en/2.1/ref/contrib/auth/#django.contrib.auth.models.User" rel="nofollow" target="_blank">User</a> 클래스에 등록된 [UserAdmin] 클래스에 추가하십시오:</p>
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.admin</span> <span class="kn">import</span> <span class="n">UserAdmin</span> <span class="k">as</span> <span class="n">BaseUserAdmin</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span>
+
+<span class="kn">from</span> <span class="nn">my_user_profile_app.models</span> <span class="kn">import</span> <span class="n">Employee</span>
+
+<span class="c1"># Define an inline admin descriptor for Employee model
+# which acts a bit like a singleton
+</span><span class="k">class</span> <span class="nc">EmployeeInline</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">StackedInline</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Employee</span>
+    <span class="n">can_delete</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">verbose_name_plural</span> <span class="o">=</span> <span class="s">'employee'</span>
+
+<span class="c1"># Define a new User admin
+</span><span class="k">class</span> <span class="nc">UserAdmin</span><span class="p">(</span><span class="n">BaseUserAdmin</span><span class="p">):</span>
+    <span class="n">inlines</span> <span class="o">=</span> <span class="p">(</span><span class="n">EmployeeInline</span><span class="p">,)</span>
+
+<span class="c1"># Re-register UserAdmin
+</span><span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">unregister</span><span class="p">(</span><span class="n">User</span><span class="p">)</span>
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">UserAdmin</span><span class="p">)</span>
+</code></pre></div>
+<p>이 프로파일 모델은 어떤 방식으로도 특별하지 않습니다.
+단지 사용자 모델과 일대일로 연결되는 Django 모델 일뿐입니다.
+따라서 사용자 생성시 자동 생성되지 않지만 [django.db.models.signals.post_save]를 사용하여 관련 모델을 적절히 작성하거나 업데이트 할 수 있습니다.</p>
+
+<p>관련 모델을 사용하면 추가 쿼리 또는 조인을 통해 관련 데이터를 검색 할 수 있습니다.
+필요에 따라 관련 필드가 포함 된 사용자 정의 사용자 모델이 더 나은 옵션 일 수 있지만 프로젝트 앱의 기본 사용자 모델과의 기존 관계로 인해 추가 데이터베이스로드가 정당화 될 수 있습니다.</p>
+
+<hr>
+
+<p>Substituting a custom User model
+Using a custom user model when starting a project
+Changing to a custom user model mid-project
+Reusable apps and AUTH_USER_MODEL
+Referencing the User model
+Specifying a custom user model
+Writing a manager for a custom user model
+Extending Django’s default User
+Custom users and the built-in auth forms
+Custom users and django.contrib.admin
+Custom users and permissions
+Custom users and proxy models
+A full example</p>
+
+<h2 id="references">References</h2>
+
+<p><a href="https://docs.djangoproject.com/en/2.1/topics/auth/customizing/" rel="nofollow" target="_blank">https://docs.djangoproject.com/en/2.1/topics/auth/customizing/</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

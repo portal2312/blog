@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Linux - pacman | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Linux - pacman" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Settings" />
+<meta property="og:description" content="Settings" />
+<link rel="canonical" href="/blog/docs/develop/N-Z/server/Linux/linux%20-%20pacman.html" />
+<meta property="og:url" content="/blog/docs/develop/N-Z/server/Linux/linux%20-%20pacman.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-02T16:38:51+09:00" />
+<script type="application/ld+json">
+{"description":"Settings","headline":"Linux - pacman","dateModified":"2019-12-02T16:38:51+09:00","datePublished":"2019-12-02T16:38:51+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/docs/develop/N-Z/server/Linux/linux%20-%20pacman.html"},"url":"/blog/docs/develop/N-Z/server/Linux/linux%20-%20pacman.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/blog/feed.xml" title="Portal2312's blog" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113063601-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+<script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Linux - pacman</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#settings">Settings</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#mirrorlist">mirrorlist 추가</a></li>
+<li class="toc-entry toc-h3"><a href="#pacman-conf">pacman.conf</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#options">Options</a></li>
+<li class="toc-entry toc-h2"><a href="#upgrading-packages">Upgrading packages</a></li>
+<li class="toc-entry toc-h1"><a href="#reference">Reference</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#url">URL</a></li>
+</ul>
+</li>
+</ul><h2 id="settings">
+<a class="anchor" href="#settings" aria-hidden="true"><span class="octicon octicon-link"></span></a>Settings</h2>
+
+<h3 id="mirrorlist">
+<a class="anchor" href="#mirrorlist" aria-hidden="true"><span class="octicon octicon-link"></span></a>mirrorlist 추가</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">vi /etc/pacman.d/mirrorlist
+</code></pre></div>
+<p>상단에 추가</p>
+<div class="highlight"><pre><code class="language-vim" data-lang="vim">## South Korea
+
+Server <span class="p">=</span> http<span class="p">:</span><span class="sr">//</span>ftp<span class="p">.</span>kaist<span class="p">.</span>ac<span class="p">.</span>kr<span class="sr">/ArchLinux/</span>$repo<span class="sr">/$os/</span>$arch
+Server <span class="p">=</span> http<span class="p">:</span><span class="sr">//</span>mirror<span class="p">.</span>premi<span class="p">.</span><span class="k">st</span><span class="sr">/archlinux/</span>$repo<span class="sr">/$os/</span>$arch
+</code></pre></div>
+<h3 id="pacman-conf">
+<a class="anchor" href="#pacman-conf" aria-hidden="true"><span class="octicon octicon-link"></span></a>pacman.conf</h3>
+
+<p>사용할 옵션에 대해 주석 해제</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">vi /etc/pacman.conf
+</code></pre></div><div class="highlight"><pre><code class="language-vim" data-lang="vim">Color
+TotalDownload
+</code></pre></div>
+<h2 id="options">
+<a class="anchor" href="#options" aria-hidden="true"><span class="octicon octicon-link"></span></a>Options</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># get - package list in remote repository</span>
+pacman <span class="nt">-Sy</span>
+
+<span class="c"># get - package list in remote repository</span>
+<span class="c"># refresh - system all package</span>
+<span class="c"># 설치된 패키지 업그레이드</span>
+pacman <span class="nt">-Syu</span>
+
+
+<span class="c"># search</span>
+pacman <span class="nt">-Ss</span> &lt;charactor&gt;  <span class="c"># package in remote repository</span>
+pacman <span class="nt">-Q</span> &lt;문자열&gt;  <span class="c"># installed package</span>
+
+
+<span class="c"># install</span>
+pacman <span class="nt">-S</span> &lt;package-name&gt;  <span class="c"># package</span>
+pacman <span class="nt">-U</span> &lt;package-name&gt;  <span class="c"># install/refresh - files package</span>
+
+
+<span class="c"># delete</span>
+pacman <span class="nt">-Scc</span>  <span class="c"># cache</span>
+pacman <span class="nt">-R</span> &lt;package-name&gt;  <span class="c"># package</span>
+
+
+<span class="c"># view</span>
+pacman <span class="nt">-Si</span> &lt;package-name&gt;  <span class="c"># package info in remote repository</span>
+pacman <span class="nt">-Ql</span> &lt;package-name&gt;  <span class="c"># files in installed package</span>
+pacman <span class="nt">-Qo</span> &lt;file-name&gt;  <span class="c"># 지정된 파일이 포함된 package 출력</span>
+</code></pre></div>
+<h2 id="upgrading-packages">
+<a class="anchor" href="#upgrading-packages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Upgrading packages</h2>
+<div class="highlight"><pre><code class="language-" data-lang="">경고:
+
+사용자는 시스템 유지 보수 #시스템 업그레이드 절의 지침에 따라 시스템을 정기적으로
+업그레이드해야하며 맹목적으로 다음 명령을 실행하지 않아야 합니다.
+
+아치는 전체 시스템 업그레이드만 지원합니다.
+시스템 유지 보수 #부분 업그레이드는 지원되지 않으며 패키지 설치는 #세부 사항을 참조.
+</code></pre></div>
+<p>pacman은 단지 하나의 명령으로 시스템의 모든 패키지를 업데이트 할 수 있습니다. 이것은 시스템이 얼마나 최신인지에 따라 꽤 오래 걸릴 수 있습니다. 다음 명령은 리포지토리 데이터베이스를 동기화하고 구성된 리포지토리에없는 "로컬"패키지를 제외한 시스템 패키지를 업데이트합니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">pacman <span class="nt">-Syu</span>
+</code></pre></div>
+<h1 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a><em>Reference</em>
+</h1>
+
+<h2 id="url">
+<a class="anchor" href="#url" aria-hidden="true"><span class="octicon octicon-link"></span></a>URL</h2>
+
+<ul>
+<li><p><a href="https://wiki.archlinux.org/index.php/pacman">https://wiki.archlinux.org/index.php/pacman</a></p></li>
+<li><p><a href="https://www.archlinux.org/pacman/pacman.conf.5.html">https://www.archlinux.org/pacman/pacman.conf.5.html</a></p></li>
+</ul>
+
+  </div>
+
+<div>
+  <h2 id="settings">Settings</h2>
+
+<h3 id="mirrorlist">mirrorlist 추가</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">vi /etc/pacman.d/mirrorlist
+</code></pre></div>
+<p>상단에 추가</p>
+<div class="highlight"><pre><code class="language-vim" data-lang="vim">## South Korea
+
+Server <span class="p">=</span> http<span class="p">:</span><span class="sr">//</span>ftp<span class="p">.</span>kaist<span class="p">.</span>ac<span class="p">.</span>kr<span class="sr">/ArchLinux/</span>$repo<span class="sr">/$os/</span>$arch
+Server <span class="p">=</span> http<span class="p">:</span><span class="sr">//</span>mirror<span class="p">.</span>premi<span class="p">.</span><span class="k">st</span><span class="sr">/archlinux/</span>$repo<span class="sr">/$os/</span>$arch
+</code></pre></div>
+<h3 id="pacman-conf">pacman.conf</h3>
+
+<p>사용할 옵션에 대해 주석 해제</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">vi /etc/pacman.conf
+</code></pre></div><div class="highlight"><pre><code class="language-vim" data-lang="vim">Color
+TotalDownload
+</code></pre></div>
+<h2 id="options">Options</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># get - package list in remote repository</span>
+pacman <span class="nt">-Sy</span>
+
+<span class="c"># get - package list in remote repository</span>
+<span class="c"># refresh - system all package</span>
+<span class="c"># 설치된 패키지 업그레이드</span>
+pacman <span class="nt">-Syu</span>
+
+
+<span class="c"># search</span>
+pacman <span class="nt">-Ss</span> &lt;charactor&gt;  <span class="c"># package in remote repository</span>
+pacman <span class="nt">-Q</span> &lt;문자열&gt;  <span class="c"># installed package</span>
+
+
+<span class="c"># install</span>
+pacman <span class="nt">-S</span> &lt;package-name&gt;  <span class="c"># package</span>
+pacman <span class="nt">-U</span> &lt;package-name&gt;  <span class="c"># install/refresh - files package</span>
+
+
+<span class="c"># delete</span>
+pacman <span class="nt">-Scc</span>  <span class="c"># cache</span>
+pacman <span class="nt">-R</span> &lt;package-name&gt;  <span class="c"># package</span>
+
+
+<span class="c"># view</span>
+pacman <span class="nt">-Si</span> &lt;package-name&gt;  <span class="c"># package info in remote repository</span>
+pacman <span class="nt">-Ql</span> &lt;package-name&gt;  <span class="c"># files in installed package</span>
+pacman <span class="nt">-Qo</span> &lt;file-name&gt;  <span class="c"># 지정된 파일이 포함된 package 출력</span>
+</code></pre></div>
+<h2 id="upgrading-packages">Upgrading packages</h2>
+<div class="highlight"><pre><code class="language-" data-lang="">경고:
+
+사용자는 시스템 유지 보수 #시스템 업그레이드 절의 지침에 따라 시스템을 정기적으로
+업그레이드해야하며 맹목적으로 다음 명령을 실행하지 않아야 합니다.
+
+아치는 전체 시스템 업그레이드만 지원합니다.
+시스템 유지 보수 #부분 업그레이드는 지원되지 않으며 패키지 설치는 #세부 사항을 참조.
+</code></pre></div>
+<p>pacman은 단지 하나의 명령으로 시스템의 모든 패키지를 업데이트 할 수 있습니다. 이것은 시스템이 얼마나 최신인지에 따라 꽤 오래 걸릴 수 있습니다. 다음 명령은 리포지토리 데이터베이스를 동기화하고 구성된 리포지토리에없는 "로컬"패키지를 제외한 시스템 패키지를 업데이트합니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">pacman <span class="nt">-Syu</span>
+</code></pre></div>
+<h1 id="reference"><em>Reference</em></h1>
+
+<h2 id="url">URL</h2>
+
+<ul>
+<li><p><a href="https://wiki.archlinux.org/index.php/pacman" rel="nofollow" target="_blank">https://wiki.archlinux.org/index.php/pacman</a></p></li>
+<li><p><a href="https://www.archlinux.org/pacman/pacman.conf.5.html" rel="nofollow" target="_blank">https://www.archlinux.org/pacman/pacman.conf.5.html</a></p></li>
+</ul>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Part 5 - Stack | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Part 5 - Stack" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Prerequisites" />
+<meta property="og:description" content="Prerequisites" />
+<link rel="canonical" href="/blog/docs/develop/A-M/CaaS/docker/1_Guides/2_Get_started/1_Get_started_with_Docker/Part_5_Stack.html" />
+<meta property="og:url" content="/blog/docs/develop/A-M/CaaS/docker/1_Guides/2_Get_started/1_Get_started_with_Docker/Part_5_Stack.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-02T16:38:51+09:00" />
+<script type="application/ld+json">
+{"description":"Prerequisites","headline":"Part 5 - Stack","dateModified":"2019-12-02T16:38:51+09:00","datePublished":"2019-12-02T16:38:51+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/docs/develop/A-M/CaaS/docker/1_Guides/2_Get_started/1_Get_started_with_Docker/Part_5_Stack.html"},"url":"/blog/docs/develop/A-M/CaaS/docker/1_Guides/2_Get_started/1_Get_started_with_Docker/Part_5_Stack.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/blog/feed.xml" title="Portal2312's blog" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113063601-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+<script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Part 5 - Stack</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#prerequisites">Prerequisites</a></li>
+<li class="toc-entry toc-h2"><a href="#introduction">Introduction</a></li>
+<li class="toc-entry toc-h2"><a href="#add-a-new-service-and-redeploy">Add a new service and redeploy</a></li>
+<li class="toc-entry toc-h2"><a href="#persist-the-data">Persist the data</a></li>
+<li class="toc-entry toc-h2"><a href="#reference">Reference</a></li>
+</ul><h2 id="prerequisites">
+<a class="anchor" href="#prerequisites" aria-hidden="true"><span class="octicon octicon-link"></span></a>Prerequisites</h2>
+
+<p>생략</p>
+
+<h2 id="introduction">
+<a class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h2>
+
+<p>part 4 부에서는 Docker를 실행하는 시스템 클러스터인 swarm을 설정하고 컨테이너를 여러 컴퓨터에서 동시에 실행하여 응용 프로그램을 배포하는 방법을 배웠습니다.</p>
+
+<p>part 5 부에서는 분산 응용 프로그램 계층 구조의 최상위인 <strong>stack</strong> 에 도달하게 됩니다.
+stack 은 종속성을 공유하는 상호 연관된 서비스의 그룹이며 함께 조정 및 조정될 수 있습니다.
+단일 stack 은 전체 응용 프로그램의 기능을 정의하고 조정할 수 있습니다 (매우 복잡한 응용 프로그램이 여러 스택을 사용할 수도 있음).</p>
+
+<p>좋은 소식은, Compose 파일을 작성하고 docker stack 배치를 사용한 part 3 이후부터 stack 을 사용하여 기술적으로 작업 한 것입니다.
+그러나 이는 단일 호스트에서 실행되는 단일 서비스 스택이었습니다. 이는 일반적으로 프로덕션 환경에서 발생하지 않습니다.
+여기서는 배운 것을 받아들이고 여러 서비스를 서로 관련 시키며 여러 시스템에서 실행합니다.</p>
+
+<h2 id="add-a-new-service-and-redeploy">
+<a class="anchor" href="#add-a-new-service-and-redeploy" aria-hidden="true"><span class="octicon octicon-link"></span></a>Add a new service and redeploy</h2>
+
+<p><code>docker-compose.yml</code> 파일에 서비스를 추가하는 것은 쉽습니다.
+먼저, 우리의 swarm 이 container 를 어떻게 스케쥴 하는지를 볼 수 있는 무료 시각화 서비스를 추가합시다.</p>
+
+<ol>
+<li>편집기에서 docker-compose.yml을 열고 그 내용을 다음으로 대체하십시오.
+username/repo:tag 를 이미지 세부 정보로 바꾸십시오.</li>
+</ol>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="na">version</span><span class="pi">:</span> <span class="s2">"</span><span class="s">3"</span>
+<span class="na">services</span><span class="pi">:</span>
+  <span class="na">web</span><span class="pi">:</span>
+    <span class="c1"># replace username/repo:tag with your name and image details</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">username/repo:tag</span>
+    <span class="na">deploy</span><span class="pi">:</span>
+      <span class="na">replicas</span><span class="pi">:</span> <span class="m">5</span>
+      <span class="na">restart_policy</span><span class="pi">:</span>
+        <span class="na">condition</span><span class="pi">:</span> <span class="s">on-failure</span>
+      <span class="na">resources</span><span class="pi">:</span>
+        <span class="na">limits</span><span class="pi">:</span>
+          <span class="na">cpus</span><span class="pi">:</span> <span class="s2">"</span><span class="s">0.1"</span>
+          <span class="na">memory</span><span class="pi">:</span> <span class="s">50M</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">80:80"</span>
+    <span class="na">networks</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">webnet</span>
+  <span class="na">visualizer</span><span class="pi">:</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">dockersamples/visualizer:stable</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">8080:8080"</span>
+    <span class="na">volumes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">/var/run/docker.sock:/var/run/docker.sock"</span>
+    <span class="na">deploy</span><span class="pi">:</span>
+      <span class="na">placement</span><span class="pi">:</span>
+        <span class="na">constraints</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">node.role == manager</span><span class="pi">]</span>
+    <span class="na">networks</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">webnet</span>
+<span class="na">networks</span><span class="pi">:</span>
+  <span class="na">webnet</span><span class="pi">:</span>
+</code></pre></div>
+<p>오직 새로운 것은 swarm 에 대한 service 에 <code>web</code>, <code>visualizer</code> 이름으로 된 peer 입니다.
+당신은 새로운 두가지의 것이 보일것입니다: <code>volumns</code> key, Visualizer가 Docker 용 호스트 소켓 파일에 액세스 할 수 있게 합니다.
+그리고 <code>placement</code> key, 이 서비스 만 실행되도록 보장하는 swarm manger - worker 가 절대 아니 였던.
+Docker가 만든 오픈 소스 프로젝트를 기반으로 작성된이 container 는 다이어그램의 swarm 에서 실행되는 Docker 서비스를 표시하기 때문입니다.</p>
+
+<p>우리는 잠시 배치 제약과 볼륨에 대해 더 이야기 할 것입니다.</p>
+
+<ol>
+<li>shell 이 <code>myvm1</code> 과 통신하도록 구성되었는지 확인하십시오 (전체 예제는 <a href="https://docs.docker.com/get-started/part4/#configure-a-docker-machine-shell-to-the-swarm-manager">here</a>에 있습니다).</li>
+</ol>
+<div class="highlight"><pre><code class="language-" data-lang="">- `docker-machine ls` 를 실행하여 기계를 나열하고 다음에 별표가 표시된대로 `myvm1` 에 연결되어 있는지 확인하십시오.
+
+- 필요한 경우, `docker-machine env myvm1` 을 다시 실행 한 다음 주어진 명령을 실행하여 shell 을 구성하십시오.
+
+**Mac or Linux** 명령어는 다음과 같습니다:
+
+```bash
+eval $(docker-machine env myvm1)
+```
+
+**Windows** 명령어:
+```bash
+&amp; "C:\Program Files\Docker\Docker\Resources\bin\docker-machine.exe" env myvm1 | Invoke-Expression
+```
+</code></pre></div>
+<ol>
+<li>
+<p>manager 에게 <code>docker stack deploy</code> 명령을 다시 실행하면 업데이트해야 하는 서비스가 업데이트됩니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker stack deploy <span class="nt">-c</span> docker-compose.yml getstartedlab
+Updating service getstartedlab_web <span class="o">(</span><span class="nb">id</span>: angi1bf5e4to03qu9f93trnxm<span class="o">)</span>
+Creating service getstartedlab_visualizer <span class="o">(</span><span class="nb">id</span>: l9mnwkeq2jiononb5ihz9u7a4<span class="o">)</span>
+</code></pre></div>
+</li>
+<li><p>시각화 프로그램을 살펴보기.</p></li>
+</ol>
+
+<p>Compose 파일에서 visualizer가 포트 8080에서 실행되는 것을 보았습니다.
+<code>docker-machine ls</code> 를 실행하여 노드 중 하나의 IP 주소를 가져옵니다.
+포트 8080의 IP 주소로 가면 Visualizer가 실행되는 것을 볼 수 있습니다:</p>
+
+<p><code>image</code></p>
+
+<p>visualizer 의 단일 복사본은 예상대로 관리자가 실행 중이며 웹 인스턴스 5 개는 swarm 전체에 분산되어 있습니다.
+<code>docker stack ps &lt;stack&gt;</code>을 실행하여이 시각화를 확인할 수 있습니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker stack ps getstartedlab
+</code></pre></div>
+<p>visualizer 는 stack 에 포함 된 모든 앱에서 실행할 수있는 독립 실행형 서비스입니다.
+그것은 다른 것에 의존하지 않습니다.
+이제 종속성이있는 서비스를 만들어 보겠습니다: 방문자 카운터를 제공 할 Redis 서비스.</p>
+
+<h2 id="persist-the-data">
+<a class="anchor" href="#persist-the-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Persist the data</h2>
+
+<p>app 데이터를 저장하기 위한 Redis DB를 추가하기 위해 동일한 워크플로를 한 번 더 살펴 보겠습니다.</p>
+
+<ol>
+<li>
+<p>이 새로운 <code>docker-compose.yml</code> 파일을 저장하기, 마지막으로 Redis 서비스가 추가됩니다. username / repo : 태그를 이미지 세부 정보로 바꾸십시오.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">version: <span class="s2">"3"</span>
+services:
+  web:
+    <span class="c"># replace username/repo:tag with your name and image details</span>
+    image: username/repo:tag
+    deploy:
+      replicas: 5
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: <span class="s2">"0.1"</span>
+          memory: 50M
+    ports:
+      - <span class="s2">"80:80"</span>
+    networks:
+      - webnet
+  visualizer:
+    image: dockersamples/visualizer:stable
+    ports:
+      - <span class="s2">"8080:8080"</span>
+    volumes:
+      - <span class="s2">"/var/run/docker.sock:/var/run/docker.sock"</span>
+    deploy:
+      placement:
+        constraints: <span class="o">[</span>node.role <span class="o">==</span> manager]
+    networks:
+      - webnet
+  redis:
+    image: redis
+    ports:
+      - <span class="s2">"6379:6379"</span>
+    volumes:
+      - /home/docker/data:/data
+    deploy:
+      placement:
+        constraints: <span class="o">[</span>node.role <span class="o">==</span> manager]
+    <span class="nb">command</span>: redis-server <span class="nt">--appendonly</span> <span class="nb">yes
+    </span>networks:
+      - webnet
+networks:
+  webnet:
+</code></pre></div>
+<p>Redis는 Docker 라이브러리에 공식 <code>image</code>가 있으며, 단지 <code>redis</code> 라는 짧은 이미지 이름이 부여되어 있으므로 여기에 사용자 <code>username/repo</code> 표기법이 없습니다.
+  Redis 포트 6379는 container 에서 호스트로 노출되도록 Redis에 의해 사전 구성되어 있습니다.
+  여기에서 Compose 파일에는 호스트에서 전세계로 노출되므로 실제로 호스트의 IP 주소를 입력 할 수 있습니다.
+  노드를 Redis Desktop Manager로 가져 와서 Redis 인스턴스를 관리하십시오.</p>
+
+<p>가장 중요한 점은 이 stack 의 배포간에 데이터가 유지되도록하는 redis 사양의 몇 가지 사항이 있습니다.</p>
+</li>
+</ol>
+<div class="highlight"><pre><code class="language-" data-lang="">  - `redis` 는 항상 관리자에서 실행되므로 항상 동일한 파일 시스템을 사용합니다.
+  - `redis` 는 호스트의 파일 시스템에 있는 임의의 디렉토리에 Redis가 데이터를 저장하는 컨테이너 내부의 `/data` 로 액세스합니다.
+  &lt;br&gt;&lt;br&gt;
+
+  함께, Redis 데이터를 위한 호스트의 물리적 파일 시스템에 "source of turth" 를 만듭니다.
+  이 기능이 없으면 Redis는 container 파일 시스템 내부에 `/data` 에 데이터를 저장합니다.
+  이 데이터는 해당 container 가 재배포된 경우 지워집니다.
+
+  이 "source of turth" 에는 두 가지 구성 요소가 있습니다:
+
+  - Redis 서비스에 배치 한 배치 제약 조건. 항상 동일한 호스트를 사용합니다.
+  - container 가 `./data` (호스트)를 `/data` (Redis 컨테이너 내부)로 액세스 할 수있게 만든 볼륨.
+  container 가 오고가는 동안 지정된 호스트의 ./data에 저장된 파일은 지속되어 연속성을 유지합니다.
+  &lt;br&gt;&lt;br&gt;
+
+  새 Redis-using 스택을 배포 할 준비가되었습니다.
+</code></pre></div>
+<ol>
+<li>
+<p>manager 에 <code>./data</code> 디렉토리를 만듭니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker-machine ssh myvm1 <span class="s2">"mkdir ./data"</span>
+</code></pre></div>
+</li>
+<li><p>shell 이 myvm1과 통신하도록 구성되었는지 확인하십시오 (전체 예제는 <a href="https://docs.docker.com/get-started/part4/#configure-a-docker-machine-shell-to-the-swarm-manager">here</a>에 있습니다).</p></li>
+<li>
+<p><code>docker stack deploy</code> 한번 더 실행합니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker stack deploy <span class="nt">-c</span> docker-compose.yml getstartedlab
+</code></pre></div>
+</li>
+<li>
+<p>세가지 서비스가 예상한데로 동작중하는지 <code>docker service ls</code> 실행하여 확인합니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># docker-machine ssh myvm1 "docker service ls"</span>
+<span class="nv">$ </span>docker service <span class="nb">ls
+
+</span>ID                  NAME                       MODE                REPLICAS            IMAGE                             PORTS
+06dwvuhbvmf1        getstartedlab_redis        replicated          1/1                 redis:latest                      <span class="k">*</span>:6379-&gt;6379/tcp
+bw5y72be4be1        getstartedlab_visualizer   replicated          1/1                 dockersamples/visualizer:stable   <span class="k">*</span>:8080-&gt;8080/tcp
+yu6yfbuy8cy7        getstartedlab_web          replicated          5/5                 portal2312/get-started:part2      <span class="k">*</span>:80-&gt;80/tcp
+</code></pre></div>
+</li>
+<li><p>node 중 하나에서 웹 페이지 (예: <a href="http://192.168.99.101)%EB%A5%BC">http://192.168.99.101)를</a> 확인하면 방문자 카운터의 결과가 표시됩니다. 방문자 카운터는 현재 라이브 상태이며 Redis에 대한 정보를 저장합니다.</p></li>
+</ol>
+
+<p><code>그림(생략)</code></p>
+
+<p>또한 노드의 IP 주소에서 포트 8080의 visualizer 를 확인하면 <code>web</code> 및 <code>visualizer</code> 서비스와 함께 실행되는 <code>redis</code> 서비스가 표시됩니다.</p>
+
+<p><code>그림(생략)</code></p>
+
+<h2 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+<p><a href="https://docs.docker.com/get-started/part5/#add-a-new-service-and-redeploy">https://docs.docker.com/get-started/part5/#add-a-new-service-and-redeploy</a></p>
+
+  </div>
+
+<div>
+  <h2 id="prerequisites">Prerequisites</h2>
+
+<p>생략</p>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>part 4 부에서는 Docker를 실행하는 시스템 클러스터인 swarm을 설정하고 컨테이너를 여러 컴퓨터에서 동시에 실행하여 응용 프로그램을 배포하는 방법을 배웠습니다.</p>
+
+<p>part 5 부에서는 분산 응용 프로그램 계층 구조의 최상위인 <strong>stack</strong> 에 도달하게 됩니다.
+stack 은 종속성을 공유하는 상호 연관된 서비스의 그룹이며 함께 조정 및 조정될 수 있습니다.
+단일 stack 은 전체 응용 프로그램의 기능을 정의하고 조정할 수 있습니다 (매우 복잡한 응용 프로그램이 여러 스택을 사용할 수도 있음).</p>
+
+<p>좋은 소식은, Compose 파일을 작성하고 docker stack 배치를 사용한 part 3 이후부터 stack 을 사용하여 기술적으로 작업 한 것입니다.
+그러나 이는 단일 호스트에서 실행되는 단일 서비스 스택이었습니다. 이는 일반적으로 프로덕션 환경에서 발생하지 않습니다.
+여기서는 배운 것을 받아들이고 여러 서비스를 서로 관련 시키며 여러 시스템에서 실행합니다.</p>
+
+<h2 id="add-a-new-service-and-redeploy">Add a new service and redeploy</h2>
+
+<p><code>docker-compose.yml</code> 파일에 서비스를 추가하는 것은 쉽습니다.
+먼저, 우리의 swarm 이 container 를 어떻게 스케쥴 하는지를 볼 수 있는 무료 시각화 서비스를 추가합시다.</p>
+
+<ol>
+<li>편집기에서 docker-compose.yml을 열고 그 내용을 다음으로 대체하십시오.
+username/repo:tag 를 이미지 세부 정보로 바꾸십시오.</li>
+</ol>
+<div class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="na">version</span><span class="pi">:</span> <span class="s2">"</span><span class="s">3"</span>
+<span class="na">services</span><span class="pi">:</span>
+  <span class="na">web</span><span class="pi">:</span>
+    <span class="c1"># replace username/repo:tag with your name and image details</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">username/repo:tag</span>
+    <span class="na">deploy</span><span class="pi">:</span>
+      <span class="na">replicas</span><span class="pi">:</span> <span class="m">5</span>
+      <span class="na">restart_policy</span><span class="pi">:</span>
+        <span class="na">condition</span><span class="pi">:</span> <span class="s">on-failure</span>
+      <span class="na">resources</span><span class="pi">:</span>
+        <span class="na">limits</span><span class="pi">:</span>
+          <span class="na">cpus</span><span class="pi">:</span> <span class="s2">"</span><span class="s">0.1"</span>
+          <span class="na">memory</span><span class="pi">:</span> <span class="s">50M</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">80:80"</span>
+    <span class="na">networks</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">webnet</span>
+  <span class="na">visualizer</span><span class="pi">:</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">dockersamples/visualizer:stable</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">8080:8080"</span>
+    <span class="na">volumes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">/var/run/docker.sock:/var/run/docker.sock"</span>
+    <span class="na">deploy</span><span class="pi">:</span>
+      <span class="na">placement</span><span class="pi">:</span>
+        <span class="na">constraints</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">node.role == manager</span><span class="pi">]</span>
+    <span class="na">networks</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">webnet</span>
+<span class="na">networks</span><span class="pi">:</span>
+  <span class="na">webnet</span><span class="pi">:</span>
+</code></pre></div>
+<p>오직 새로운 것은 swarm 에 대한 service 에 <code>web</code>, <code>visualizer</code> 이름으로 된 peer 입니다.
+당신은 새로운 두가지의 것이 보일것입니다: <code>volumns</code> key, Visualizer가 Docker 용 호스트 소켓 파일에 액세스 할 수 있게 합니다.
+그리고 <code>placement</code> key, 이 서비스 만 실행되도록 보장하는 swarm manger - worker 가 절대 아니 였던.
+Docker가 만든 오픈 소스 프로젝트를 기반으로 작성된이 container 는 다이어그램의 swarm 에서 실행되는 Docker 서비스를 표시하기 때문입니다.</p>
+
+<p>우리는 잠시 배치 제약과 볼륨에 대해 더 이야기 할 것입니다.</p>
+
+<ol>
+<li>shell 이 <code>myvm1</code> 과 통신하도록 구성되었는지 확인하십시오 (전체 예제는 <a href="https://docs.docker.com/get-started/part4/#configure-a-docker-machine-shell-to-the-swarm-manager" rel="nofollow" target="_blank">here</a>에 있습니다).</li>
+</ol>
+<div class="highlight"><pre><code class="language-" data-lang="">- `docker-machine ls` 를 실행하여 기계를 나열하고 다음에 별표가 표시된대로 `myvm1` 에 연결되어 있는지 확인하십시오.
+
+- 필요한 경우, `docker-machine env myvm1` 을 다시 실행 한 다음 주어진 명령을 실행하여 shell 을 구성하십시오.
+
+**Mac or Linux** 명령어는 다음과 같습니다:
+
+```bash
+eval $(docker-machine env myvm1)
+```
+
+**Windows** 명령어:
+```bash
+&amp; "C:\Program Files\Docker\Docker\Resources\bin\docker-machine.exe" env myvm1 | Invoke-Expression
+```
+</code></pre></div>
+<ol>
+<li>
+<p>manager 에게 <code>docker stack deploy</code> 명령을 다시 실행하면 업데이트해야 하는 서비스가 업데이트됩니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker stack deploy <span class="nt">-c</span> docker-compose.yml getstartedlab
+Updating service getstartedlab_web <span class="o">(</span><span class="nb">id</span>: angi1bf5e4to03qu9f93trnxm<span class="o">)</span>
+Creating service getstartedlab_visualizer <span class="o">(</span><span class="nb">id</span>: l9mnwkeq2jiononb5ihz9u7a4<span class="o">)</span>
+</code></pre></div>
+</li>
+<li><p>시각화 프로그램을 살펴보기.</p></li>
+</ol>
+
+<p>Compose 파일에서 visualizer가 포트 8080에서 실행되는 것을 보았습니다.
+<code>docker-machine ls</code> 를 실행하여 노드 중 하나의 IP 주소를 가져옵니다.
+포트 8080의 IP 주소로 가면 Visualizer가 실행되는 것을 볼 수 있습니다:</p>
+
+<p><code>image</code></p>
+
+<p>visualizer 의 단일 복사본은 예상대로 관리자가 실행 중이며 웹 인스턴스 5 개는 swarm 전체에 분산되어 있습니다.
+<code>docker stack ps &lt;stack&gt;</code>을 실행하여이 시각화를 확인할 수 있습니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker stack ps getstartedlab
+</code></pre></div>
+<p>visualizer 는 stack 에 포함 된 모든 앱에서 실행할 수있는 독립 실행형 서비스입니다.
+그것은 다른 것에 의존하지 않습니다.
+이제 종속성이있는 서비스를 만들어 보겠습니다: 방문자 카운터를 제공 할 Redis 서비스.</p>
+
+<h2 id="persist-the-data">Persist the data</h2>
+
+<p>app 데이터를 저장하기 위한 Redis DB를 추가하기 위해 동일한 워크플로를 한 번 더 살펴 보겠습니다.</p>
+
+<ol>
+<li>
+<p>이 새로운 <code>docker-compose.yml</code> 파일을 저장하기, 마지막으로 Redis 서비스가 추가됩니다. username / repo : 태그를 이미지 세부 정보로 바꾸십시오.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">version: <span class="s2">"3"</span>
+services:
+  web:
+    <span class="c"># replace username/repo:tag with your name and image details</span>
+    image: username/repo:tag
+    deploy:
+      replicas: 5
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: <span class="s2">"0.1"</span>
+          memory: 50M
+    ports:
+      - <span class="s2">"80:80"</span>
+    networks:
+      - webnet
+  visualizer:
+    image: dockersamples/visualizer:stable
+    ports:
+      - <span class="s2">"8080:8080"</span>
+    volumes:
+      - <span class="s2">"/var/run/docker.sock:/var/run/docker.sock"</span>
+    deploy:
+      placement:
+        constraints: <span class="o">[</span>node.role <span class="o">==</span> manager]
+    networks:
+      - webnet
+  redis:
+    image: redis
+    ports:
+      - <span class="s2">"6379:6379"</span>
+    volumes:
+      - /home/docker/data:/data
+    deploy:
+      placement:
+        constraints: <span class="o">[</span>node.role <span class="o">==</span> manager]
+    <span class="nb">command</span>: redis-server <span class="nt">--appendonly</span> <span class="nb">yes
+    </span>networks:
+      - webnet
+networks:
+  webnet:
+</code></pre></div>
+<p>Redis는 Docker 라이브러리에 공식 <code>image</code>가 있으며, 단지 <code>redis</code> 라는 짧은 이미지 이름이 부여되어 있으므로 여기에 사용자 <code>username/repo</code> 표기법이 없습니다.
+  Redis 포트 6379는 container 에서 호스트로 노출되도록 Redis에 의해 사전 구성되어 있습니다.
+  여기에서 Compose 파일에는 호스트에서 전세계로 노출되므로 실제로 호스트의 IP 주소를 입력 할 수 있습니다.
+  노드를 Redis Desktop Manager로 가져 와서 Redis 인스턴스를 관리하십시오.</p>
+
+<p>가장 중요한 점은 이 stack 의 배포간에 데이터가 유지되도록하는 redis 사양의 몇 가지 사항이 있습니다.</p>
+</li>
+</ol>
+<div class="highlight"><pre><code class="language-" data-lang="">  - `redis` 는 항상 관리자에서 실행되므로 항상 동일한 파일 시스템을 사용합니다.
+  - `redis` 는 호스트의 파일 시스템에 있는 임의의 디렉토리에 Redis가 데이터를 저장하는 컨테이너 내부의 `/data` 로 액세스합니다.
+  &lt;br&gt;&lt;br&gt;
+
+  함께, Redis 데이터를 위한 호스트의 물리적 파일 시스템에 "source of turth" 를 만듭니다.
+  이 기능이 없으면 Redis는 container 파일 시스템 내부에 `/data` 에 데이터를 저장합니다.
+  이 데이터는 해당 container 가 재배포된 경우 지워집니다.
+
+  이 "source of turth" 에는 두 가지 구성 요소가 있습니다:
+
+  - Redis 서비스에 배치 한 배치 제약 조건. 항상 동일한 호스트를 사용합니다.
+  - container 가 `./data` (호스트)를 `/data` (Redis 컨테이너 내부)로 액세스 할 수있게 만든 볼륨.
+  container 가 오고가는 동안 지정된 호스트의 ./data에 저장된 파일은 지속되어 연속성을 유지합니다.
+  &lt;br&gt;&lt;br&gt;
+
+  새 Redis-using 스택을 배포 할 준비가되었습니다.
+</code></pre></div>
+<ol>
+<li>
+<p>manager 에 <code>./data</code> 디렉토리를 만듭니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker-machine ssh myvm1 <span class="s2">"mkdir ./data"</span>
+</code></pre></div>
+</li>
+<li><p>shell 이 myvm1과 통신하도록 구성되었는지 확인하십시오 (전체 예제는 <a href="https://docs.docker.com/get-started/part4/#configure-a-docker-machine-shell-to-the-swarm-manager" rel="nofollow" target="_blank">here</a>에 있습니다).</p></li>
+<li>
+<p><code>docker stack deploy</code> 한번 더 실행합니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>docker stack deploy <span class="nt">-c</span> docker-compose.yml getstartedlab
+</code></pre></div>
+</li>
+<li>
+<p>세가지 서비스가 예상한데로 동작중하는지 <code>docker service ls</code> 실행하여 확인합니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># docker-machine ssh myvm1 "docker service ls"</span>
+<span class="nv">$ </span>docker service <span class="nb">ls
+
+</span>ID                  NAME                       MODE                REPLICAS            IMAGE                             PORTS
+06dwvuhbvmf1        getstartedlab_redis        replicated          1/1                 redis:latest                      <span class="k">*</span>:6379-&gt;6379/tcp
+bw5y72be4be1        getstartedlab_visualizer   replicated          1/1                 dockersamples/visualizer:stable   <span class="k">*</span>:8080-&gt;8080/tcp
+yu6yfbuy8cy7        getstartedlab_web          replicated          5/5                 portal2312/get-started:part2      <span class="k">*</span>:80-&gt;80/tcp
+</code></pre></div>
+</li>
+<li><p>node 중 하나에서 웹 페이지 (예: <a href="http://192.168.99.101)%EB%A5%BC" rel="nofollow" target="_blank">http://192.168.99.101)를</a> 확인하면 방문자 카운터의 결과가 표시됩니다. 방문자 카운터는 현재 라이브 상태이며 Redis에 대한 정보를 저장합니다.</p></li>
+</ol>
+
+<p><code>그림(생략)</code></p>
+
+<p>또한 노드의 IP 주소에서 포트 8080의 visualizer 를 확인하면 <code>web</code> 및 <code>visualizer</code> 서비스와 함께 실행되는 <code>redis</code> 서비스가 표시됩니다.</p>
+
+<p><code>그림(생략)</code></p>
+
+<h2 id="reference">Reference</h2>
+
+<p><a href="https://docs.docker.com/get-started/part5/#add-a-new-service-and-redeploy" rel="nofollow" target="_blank">https://docs.docker.com/get-started/part5/#add-a-new-service-and-redeploy</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

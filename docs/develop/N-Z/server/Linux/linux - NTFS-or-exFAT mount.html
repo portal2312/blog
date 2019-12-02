@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>linux - NTFS/exFAT mount | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="linux - NTFS/exFAT mount" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="외부장치 연결시 마운트 해줘야 인식함 (USB장치, 시디 등)" />
+<meta property="og:description" content="외부장치 연결시 마운트 해줘야 인식함 (USB장치, 시디 등)" />
+<link rel="canonical" href="/blog/docs/develop/N-Z/server/Linux/linux%20-%20NTFS-or-exFAT%20mount.html" />
+<meta property="og:url" content="/blog/docs/develop/N-Z/server/Linux/linux%20-%20NTFS-or-exFAT%20mount.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-02T16:38:51+09:00" />
+<script type="application/ld+json">
+{"description":"외부장치 연결시 마운트 해줘야 인식함 (USB장치, 시디 등)","headline":"linux - NTFS/exFAT mount","dateModified":"2019-12-02T16:38:51+09:00","datePublished":"2019-12-02T16:38:51+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/docs/develop/N-Z/server/Linux/linux%20-%20NTFS-or-exFAT%20mount.html"},"url":"/blog/docs/develop/N-Z/server/Linux/linux%20-%20NTFS-or-exFAT%20mount.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/blog/feed.xml" title="Portal2312's blog" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113063601-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+<script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>linux - NTFS/exFAT mount</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h3"><a href="#cd-rom">CD-ROM</a></li>
+<li class="toc-entry toc-h3"><a href="#usb">USB</a></li>
+<li class="toc-entry toc-h3"><a href="#part-3787672a820b837">플로피</a></li>
+<li class="toc-entry toc-h3"><a href="#msdos">MSDOS</a></li>
+<li class="toc-entry toc-h3"><a href="#windows">Windows</a></li>
+<li class="toc-entry toc-h3"><a href="#linux">Linux</a></li>
+<li class="toc-entry toc-h3"><a href="#linux-os-ntfs-mount">Linux-OS 따라 NTFS mount는 문제 발생할 수 있다. (하단 참고)</a></li>
+<li class="toc-entry toc-h2"><a href="#unmount">unmount</a></li>
+<li class="toc-entry toc-h2"><a href="#ntfs-linux-mount">NTFS을 Linux로 mount</a></li>
+<li class="toc-entry toc-h1"><a href="#reference">Reference</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#url">URL</a></li>
+</ul>
+</li>
+</ul><p>외부장치 연결시 마운트 해줘야 인식함 (USB장치, 시디 등)</p>
+
+<p>(USB는 fat32 또는 ntfs 포맷이므로 꽂으면 윈도우 인식, 리눅스는 인식하려면 마운트해야함)</p>
+
+<p><code>mount</code> 상태 보기</p>
+
+<h3 id="cd-rom">
+<a class="anchor" href="#cd-rom" aria-hidden="true"><span class="octicon octicon-link"></span></a>CD-ROM</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mount <span class="nt">-t</span> iso9660 /dev/cdrom /mnt/cdrom
+</code></pre></div>
+<p>/mnt/cdrom 에서 CD-ROM 내용을 읽기가능</p>
+
+<h3 id="usb">
+<a class="anchor" href="#usb" aria-hidden="true"><span class="octicon octicon-link"></span></a>USB</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>fdisk <span class="nt">-l</span>  <span class="c"># 먼저 마운트할 USB 위치를 파악 (보통 /dev/sdb1 로 포워딩됨)</span>
+
+<span class="c"># XXX: USB가 fat32 포맷일 때</span>
+<span class="nv">$ </span>mount <span class="nt">-t</span> vfat /dev/sdb1 /mnt/usb
+
+<span class="c"># XXX: USB가 NTFS 포맷일 때</span>
+<span class="nv">$ </span>mount <span class="nt">-t</span> ntfs /dev/sdb1 /mnt/usb
+</code></pre></div>
+<h3 id="part-3787672a820b837">
+<a class="anchor" href="#part-3787672a820b837" aria-hidden="true"><span class="octicon octicon-link"></span></a>플로피</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mount /dev/fd0 /mnt/floppy
+</code></pre></div>
+<h3 id="msdos">
+<a class="anchor" href="#msdos" aria-hidden="true"><span class="octicon octicon-link"></span></a>MSDOS</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mount <span class="nt">-t</span> msdos /dev/sda1 / mnt/msdos
+</code></pre></div>
+<h3 id="windows">
+<a class="anchor" href="#windows" aria-hidden="true"><span class="octicon octicon-link"></span></a>Windows</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mount <span class="nt">-t</span> vfat /dev/sda1 /mnt/window  <span class="c"># XXX: Fat32</span>
+<span class="nv">$ </span>mount <span class="nt">-t</span> ntfs /dev/sda1 /mnt/window  <span class="c"># XXX: NTFS</span>
+</code></pre></div>
+<h3 id="linux">
+<a class="anchor" href="#linux" aria-hidden="true"><span class="octicon octicon-link"></span></a>Linux</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mount <span class="nt">-t</span> ext4 /dev/sda1 /mnt/linux
+</code></pre></div>
+<p>★ mount -a -t</p>
+
+<h3 id="linux-os-ntfs-mount">
+<a class="anchor" href="#linux-os-ntfs-mount" aria-hidden="true"><span class="octicon octicon-link"></span></a>Linux-OS 따라 NTFS mount는 문제 발생할 수 있다. (하단 참고)</h3>
+
+<h2 id="unmount">
+<a class="anchor" href="#unmount" aria-hidden="true"><span class="octicon octicon-link"></span></a>unmount</h2>
+
+<p>mount 한 디렉토리안에서 언마운트하면 안됨</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>unmount /dev/cdrom  <span class="c"># XXX: CD-ROM</span>
+</code></pre></div>
+<h2 id="ntfs-linux-mount">
+<a class="anchor" href="#ntfs-linux-mount" aria-hidden="true"><span class="octicon octicon-link"></span></a>NTFS을 Linux로 mount</h2>
+
+<p>CentOS 가 NTFS 에 파일쓰기가 문제가 있었는데 ntfs-3g 가 해결책을 제시했다.</p>
+
+<p>본 글을 해외 ntfs-3g 포럼을 참고해서 작성했음을 미리 밝힌다.</p>
+
+<ol>
+<li>밑에 3번 설치를 위해 yum-priorities 을 먼저 설치</li>
+</ol>
+
+<p>[root@localhost ~]# yum install yum-priorities -y</p>
+
+<ol>
+<li>priorities.conf 수정</li>
+</ol>
+
+<p>[root@localhost ~]# vi /etc/yum/pluginconf.d/priorities.conf
+[main]
+enabled = 1
+check_obsoletes = 1
+priority=2</p>
+
+<ol>
+<li>rpmforge 설치
+[root@localhost ~]# rpm -ivh [설치경로]</li>
+</ol>
+
+<p>설치경로 찾기</p>
+
+<p>– <a href="http://apt.sw.be/redhat/el5/en/i386/dag/RPMS/">http://apt.sw.be/redhat/el5/en/i386/dag/RPMS/</a> 접속</p>
+
+<p>– rpmforge 로 시작하는것중 가장 최근것의 파일명을 복사해서 앞의 주소와 붙인다.</p>
+
+<p>=&gt; <a href="http://apt.sw.be/redhat/el5/en/i386/dag/RPMS/rpmforge-release-0.5.1-1.el5.rf.i386.rpm">http://apt.sw.be/redhat/el5/en/i386/dag/RPMS/rpmforge-release-0.5.1-1.el5.rf.i386.rpm</a></p>
+
+<p>– 이 최종경로를 복사해서 위의 [설치경로] 에 붙여넣고 실행</p>
+
+<ol>
+<li>설치된 rpm 으로 패키지 업데이트</li>
+</ol>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>su -
+<span class="nv">$ </span>yum check-update
+</code></pre></div>
+<ol>
+<li>“fuse”, “fuse-ntfs-3g”, “dkms”, “dkms-fuse” 설치</li>
+</ol>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>yum <span class="nb">install </span>fuse fuse-ntfs-3g dkms dkms-fuse <span class="nt">-y</span>
+</code></pre></div>
+<ol>
+<li>마운트용 디렉토리 생성</li>
+</ol>
+
+<p>[root@localhost ~]# mkdir /mnt/window</p>
+
+<ol>
+<li>fdisk -l 로 마운트할 파티션정보 찾기</li>
+</ol>
+
+<p>[root@localhost ~]# fdisk -l</p>
+
+<p>=&gt; HPFS/NTFS 으로 표시되는 /dev/sda[넘버] 를 찾는다.</p>
+
+<ol>
+<li><p>ntfs-3g 타입으로 마운트 실행
+[root@localhost ~]# mount -t ntfs-3g /dev/sda1 /mnt/window</p></li>
+<li><p>마운트한 파티션 사용</p></li>
+</ol>
+
+<p>[root@localhost ~]# cd /mnt/window</p>
+
+<p>[root@localhost window]# ls -al</p>
+
+<p>[root@localhost window]# echo “Hello NTFS~!! Write Test” &gt; test.txt
+test.txt 가 만들어졌다면 성공.</p>
+
+<p>&lt; 부팅시 자동으로 마운트 &gt;
+[root@localhost ~]# vi /etc/fstab</p>
+
+<p>하단에 다음 형식에 따라 마운트 정보 추가</p>
+
+<p>[디바이스] [마운트위치] [마운트타입] [옵션] [dump유무0,1] [fsck체크유무0,1]</p>
+
+<p>/dev/sda5 /mnt/window fat32 defaults 0 0</p>
+
+<blockquote>
+<p>rw, nouser, auto, exec,suid 속성을 모두 가지는 속성으로, 가장 일반적인 시스템에서 사용되는 속성이다</p>
+</blockquote>
+
+<p>/dev/cdrom /mnt/cdrom iso9660 noauto,ro 0 0</p>
+
+<blockquote>
+<p>noauto 이므로 부팅시에 자동으로 마운트 되지 않는다.</p>
+</blockquote>
+
+<p>/dev/hda5 /home/win vfat user,rw,noexec,iocharset=cp949 0 0</p>
+
+<p>noauto option이 없으므로 부팅시 자동마운트됨
+user (일반사용자 계정으로도 mount 가능; nouser=root만 허용)
+rw (읽기 쓰기 허용 ; ro=읽기전용)
+noexec (실행허용안함; exec=실행허용)
+iocharset=cp949 (한글 파일명을 사용하기 위해 지정)
+마지막 0 0 는 dump와 fsck 사용 옵션. (dump, fsck 하지 않음)</p>
+
+<p>&lt; fstab 설정실패시 복구하기 &gt;
+fstab 수정을 잘못 하여 부팅 할때 부팅이 안되고
+(Repair filesystem) # 화면이 나옵니다.
+이상태에서는 수정은 안되고 읽기 모드 밖에 안됩니다.</p>
+
+<p>이상태에서 수정을 하기 위해선 아래와 같은 명령어를 쳐줍니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mount <span class="nt">-o</span> remount,rw /
+</code></pre></div>
+<p>이제 수정이 됨.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">vi /etc/fstab  <span class="c"># 으로 들어가 백업파일을 덮어쓰던가 잘못된 부분을 수정</span>
+</code></pre></div>
+<p>저장후 재부팅.</p>
+
+<h1 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a><em>Reference</em>
+</h1>
+
+<h2 id="url">
+<a class="anchor" href="#url" aria-hidden="true"><span class="octicon octicon-link"></span></a>URL</h2>
+
+<p><a href="https://ebonny.wordpress.com/2010/10/29/ntfs-%EB%A7%88%EC%9A%B4%ED%8A%B8%ED%95%98%EA%B8%B0/">https://ebonny.wordpress.com/2010/10/29/ntfs-%EB%A7%88%EC%9A%B4%ED%8A%B8%ED%95%98%EA%B8%B0/</a></p>
+
+  </div>
+
+<div>
+  <p>외부장치 연결시 마운트 해줘야 인식함 (USB장치, 시디 등)</p>
+
+<p>(USB는 fat32 또는 ntfs 포맷이므로 꽂으면 윈도우 인식, 리눅스는 인식하려면 마운트해야함)</p>
+
+<p><code>mount</code> 상태 보기</p>
+
+<h3 id="cd-rom">CD-ROM</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mount <span class="nt">-t</span> iso9660 /dev/cdrom /mnt/cdrom
+</code></pre></div>
+<p>/mnt/cdrom 에서 CD-ROM 내용을 읽기가능</p>
+
+<h3 id="usb">USB</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>fdisk <span class="nt">-l</span>  <span class="c"># 먼저 마운트할 USB 위치를 파악 (보통 /dev/sdb1 로 포워딩됨)</span>
+
+<span class="c"># XXX: USB가 fat32 포맷일 때</span>
+<span class="nv">$ </span>mount <span class="nt">-t</span> vfat /dev/sdb1 /mnt/usb
+
+<span class="c"># XXX: USB가 NTFS 포맷일 때</span>
+<span class="nv">$ </span>mount <span class="nt">-t</span> ntfs /dev/sdb1 /mnt/usb
+</code></pre></div>
+<h3 id="part-3787672a820b837">플로피</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mount /dev/fd0 /mnt/floppy
+</code></pre></div>
+<h3 id="msdos">MSDOS</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mount <span class="nt">-t</span> msdos /dev/sda1 / mnt/msdos
+</code></pre></div>
+<h3 id="windows">Windows</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mount <span class="nt">-t</span> vfat /dev/sda1 /mnt/window  <span class="c"># XXX: Fat32</span>
+<span class="nv">$ </span>mount <span class="nt">-t</span> ntfs /dev/sda1 /mnt/window  <span class="c"># XXX: NTFS</span>
+</code></pre></div>
+<h3 id="linux">Linux</h3>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mount <span class="nt">-t</span> ext4 /dev/sda1 /mnt/linux
+</code></pre></div>
+<p>★ mount -a -t</p>
+
+<h3 id="linux-os-ntfs-mount">Linux-OS 따라 NTFS mount는 문제 발생할 수 있다. (하단 참고)</h3>
+
+<h2 id="unmount">unmount</h2>
+
+<p>mount 한 디렉토리안에서 언마운트하면 안됨</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>unmount /dev/cdrom  <span class="c"># XXX: CD-ROM</span>
+</code></pre></div>
+<h2 id="ntfs-linux-mount">NTFS을 Linux로 mount</h2>
+
+<p>CentOS 가 NTFS 에 파일쓰기가 문제가 있었는데 ntfs-3g 가 해결책을 제시했다.</p>
+
+<p>본 글을 해외 ntfs-3g 포럼을 참고해서 작성했음을 미리 밝힌다.</p>
+
+<ol>
+<li>밑에 3번 설치를 위해 yum-priorities 을 먼저 설치</li>
+</ol>
+
+<p>[root@localhost ~]# yum install yum-priorities -y</p>
+
+<ol>
+<li>priorities.conf 수정</li>
+</ol>
+
+<p>[root@localhost ~]# vi /etc/yum/pluginconf.d/priorities.conf
+[main]
+enabled = 1
+check_obsoletes = 1
+priority=2</p>
+
+<ol>
+<li>rpmforge 설치
+[root@localhost ~]# rpm -ivh [설치경로]</li>
+</ol>
+
+<p>설치경로 찾기</p>
+
+<p>– <a href="http://apt.sw.be/redhat/el5/en/i386/dag/RPMS/" rel="nofollow" target="_blank">http://apt.sw.be/redhat/el5/en/i386/dag/RPMS/</a> 접속</p>
+
+<p>– rpmforge 로 시작하는것중 가장 최근것의 파일명을 복사해서 앞의 주소와 붙인다.</p>
+
+<p>=&gt; <a href="http://apt.sw.be/redhat/el5/en/i386/dag/RPMS/rpmforge-release-0.5.1-1.el5.rf.i386.rpm" rel="nofollow" target="_blank">http://apt.sw.be/redhat/el5/en/i386/dag/RPMS/rpmforge-release-0.5.1-1.el5.rf.i386.rpm</a></p>
+
+<p>– 이 최종경로를 복사해서 위의 [설치경로] 에 붙여넣고 실행</p>
+
+<ol>
+<li>설치된 rpm 으로 패키지 업데이트</li>
+</ol>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>su -
+<span class="nv">$ </span>yum check-update
+</code></pre></div>
+<ol>
+<li>“fuse”, “fuse-ntfs-3g”, “dkms”, “dkms-fuse” 설치</li>
+</ol>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>yum <span class="nb">install </span>fuse fuse-ntfs-3g dkms dkms-fuse <span class="nt">-y</span>
+</code></pre></div>
+<ol>
+<li>마운트용 디렉토리 생성</li>
+</ol>
+
+<p>[root@localhost ~]# mkdir /mnt/window</p>
+
+<ol>
+<li>fdisk -l 로 마운트할 파티션정보 찾기</li>
+</ol>
+
+<p>[root@localhost ~]# fdisk -l</p>
+
+<p>=&gt; HPFS/NTFS 으로 표시되는 /dev/sda[넘버] 를 찾는다.</p>
+
+<ol>
+<li><p>ntfs-3g 타입으로 마운트 실행
+[root@localhost ~]# mount -t ntfs-3g /dev/sda1 /mnt/window</p></li>
+<li><p>마운트한 파티션 사용</p></li>
+</ol>
+
+<p>[root@localhost ~]# cd /mnt/window</p>
+
+<p>[root@localhost window]# ls -al</p>
+
+<p>[root@localhost window]# echo “Hello NTFS~!! Write Test” &gt; test.txt
+test.txt 가 만들어졌다면 성공.</p>
+
+<p>&lt; 부팅시 자동으로 마운트 &gt;
+[root@localhost ~]# vi /etc/fstab</p>
+
+<p>하단에 다음 형식에 따라 마운트 정보 추가</p>
+
+<p>[디바이스] [마운트위치] [마운트타입] [옵션] [dump유무0,1] [fsck체크유무0,1]</p>
+
+<p>/dev/sda5 /mnt/window fat32 defaults 0 0</p>
+
+<blockquote>
+<p>rw, nouser, auto, exec,suid 속성을 모두 가지는 속성으로, 가장 일반적인 시스템에서 사용되는 속성이다</p>
+</blockquote>
+
+<p>/dev/cdrom /mnt/cdrom iso9660 noauto,ro 0 0</p>
+
+<blockquote>
+<p>noauto 이므로 부팅시에 자동으로 마운트 되지 않는다.</p>
+</blockquote>
+
+<p>/dev/hda5 /home/win vfat user,rw,noexec,iocharset=cp949 0 0</p>
+
+<p>noauto option이 없으므로 부팅시 자동마운트됨
+user (일반사용자 계정으로도 mount 가능; nouser=root만 허용)
+rw (읽기 쓰기 허용 ; ro=읽기전용)
+noexec (실행허용안함; exec=실행허용)
+iocharset=cp949 (한글 파일명을 사용하기 위해 지정)
+마지막 0 0 는 dump와 fsck 사용 옵션. (dump, fsck 하지 않음)</p>
+
+<p>&lt; fstab 설정실패시 복구하기 &gt;
+fstab 수정을 잘못 하여 부팅 할때 부팅이 안되고
+(Repair filesystem) # 화면이 나옵니다.
+이상태에서는 수정은 안되고 읽기 모드 밖에 안됩니다.</p>
+
+<p>이상태에서 수정을 하기 위해선 아래와 같은 명령어를 쳐줍니다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mount <span class="nt">-o</span> remount,rw /
+</code></pre></div>
+<p>이제 수정이 됨.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">vi /etc/fstab  <span class="c"># 으로 들어가 백업파일을 덮어쓰던가 잘못된 부분을 수정</span>
+</code></pre></div>
+<p>저장후 재부팅.</p>
+
+<h1 id="reference"><em>Reference</em></h1>
+
+<h2 id="url">URL</h2>
+
+<p><a href="https://ebonny.wordpress.com/2010/10/29/ntfs-%EB%A7%88%EC%9A%B4%ED%8A%B8%ED%95%98%EA%B8%B0/" rel="nofollow" target="_blank">https://ebonny.wordpress.com/2010/10/29/ntfs-%EB%A7%88%EC%9A%B4%ED%8A%B8%ED%95%98%EA%B8%B0/</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Expressions and operators(표현과 연산자) | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Expressions and operators(표현과 연산자)" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="이 장에서는 자바스크립트의 표현과 대입 연산자, 비교 연산자, 산술 연산자, 비트단위 연산자, 논리 연산자, 문자열 연산자, 삼항 연산자 등 여러가지를 포함한 연산자에 대하여 설명합니다." />
+<meta property="og:description" content="이 장에서는 자바스크립트의 표현과 대입 연산자, 비교 연산자, 산술 연산자, 비트단위 연산자, 논리 연산자, 문자열 연산자, 삼항 연산자 등 여러가지를 포함한 연산자에 대하여 설명합니다." />
+<link rel="canonical" href="/blog/docs/develop/A-M/Javascript/tutorials/guide/06_expressions_and_operators.html" />
+<meta property="og:url" content="/blog/docs/develop/A-M/Javascript/tutorials/guide/06_expressions_and_operators.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-02T16:38:51+09:00" />
+<script type="application/ld+json">
+{"description":"이 장에서는 자바스크립트의 표현과 대입 연산자, 비교 연산자, 산술 연산자, 비트단위 연산자, 논리 연산자, 문자열 연산자, 삼항 연산자 등 여러가지를 포함한 연산자에 대하여 설명합니다.","headline":"Expressions and operators(표현과 연산자)","dateModified":"2019-12-02T16:38:51+09:00","datePublished":"2019-12-02T16:38:51+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/docs/develop/A-M/Javascript/tutorials/guide/06_expressions_and_operators.html"},"url":"/blog/docs/develop/A-M/Javascript/tutorials/guide/06_expressions_and_operators.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/blog/feed.xml" title="Portal2312's blog" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113063601-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+<script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>Expressions and operators(표현과 연산자)</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#opterators">Opterators(연산자)</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#part-7752df27e3bbba16">대입 연산자</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#part-31417a0c6c8536ab">구조 해제</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#part-24b48caa06660607">비교 연산자</a></li>
+<li class="toc-entry toc-h3"><a href="#part-4a049305870e7c22">산술 연산자</a></li>
+<li class="toc-entry toc-h3"><a href="#part-8532d5afe5f740f1">비트단위 연산자</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#part-d5fe37771de3895a">비트단위 논리 연산자</a></li>
+<li class="toc-entry toc-h4"><a href="#shift">비트단위 shift 연산자</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#part-2e4245fdd930b9f9">논리 연산자</a></li>
+<li class="toc-entry toc-h3"><a href="#part-f89cea1896138550">문자열 연산자</a></li>
+<li class="toc-entry toc-h3"><a href="#part-2f28235d873a6b4c">조건(삼항) 연산자</a></li>
+<li class="toc-entry toc-h3"><a href="#part-fd09e72554a81676">콤마 연산자</a></li>
+<li class="toc-entry toc-h3"><a href="#part-6be054bbefca60bd">단항 연산자</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#delete">delete</a>
+<ul>
+<li class="toc-entry toc-h5"><a href="#part-8b55a60dde25dd0c">배열의 원소 삭제하기</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h4"><a href="#typeof">typeof</a></li>
+<li class="toc-entry toc-h4"><a href="#void">void</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#part-966608e43a8b9b0f">관계 연산자</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#in">in</a></li>
+<li class="toc-entry toc-h4"><a href="#instanceof">instanceof</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#part-9d9a00b5ffde6ff2">연산자 우선순위</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#part-6543b4f1248">표현</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#part-3787592f44b4e82">일차식</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#this">this</a></li>
+<li class="toc-entry toc-h4"><a href="#part-9451a357de6578b0">그룹연산자</a></li>
+<li class="toc-entry toc-h4"><a href="#comprehensions">Comprehensions</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#part-37875b620744471">좌변식</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#new">new</a></li>
+<li class="toc-entry toc-h4"><a href="#super">super</a></li>
+<li class="toc-entry toc-h4"><a href="#spread-operator">전개연산자(확산연산자, Spread operator)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#reference">Reference</a></li>
+</ul><p>이 장에서는 자바스크립트의 표현과 대입 연산자, 비교 연산자, 산술 연산자, 비트단위 연산자, 논리 연산자, 문자열 연산자, 삼항 연산자 등 여러가지를 포함한 연산자에 대하여 설명합니다.</p>
+
+<h2 id="opterators">
+<a class="anchor" href="#opterators" aria-hidden="true"><span class="octicon octicon-link"></span></a>Opterators(연산자)</h2>
+
+<ul>
+<li>대입 연산자</li>
+<li>비교 연산자</li>
+<li>산술 연산자</li>
+<li>비트단위 연산자</li>
+<li>논리 연산자</li>
+<li>문자열 연산자</li>
+<li>조건 (삼항) 연산자</li>
+<li>콤마 연산자</li>
+<li>단항 연산자</li>
+<li>관계 연산자</li>
+</ul>
+
+<h3 id="part-7752df27e3bbba16">
+<a class="anchor" href="#part-7752df27e3bbba16" aria-hidden="true"><span class="octicon octicon-link"></span></a>대입 연산자</h3>
+
+<p>대입 연산자 는 오른쪽 피연산자의 값을 왼쪽 피연산자에 대입합니다. 기본적인 대입 연산자는 오른쪽의 피연산자 값을 왼쪽 피연산자 값에 대입하는 등호(=) 입니다.</p>
+
+<h4 id="part-31417a0c6c8536ab">
+<a class="anchor" href="#part-31417a0c6c8536ab" aria-hidden="true"><span class="octicon octicon-link"></span></a>구조 해제</h4>
+
+<p>복잡한 대입 연산에서, <a href="ihttps://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment">구조 해제 대입</a> 문법은 배열의 구조나 객체를 반영하여, 배열이나 객체에서 데이터를 추출할 수 있게 해주는 자바스크립트 표현입니다.</p>
+
+<blockquote>
+<p>Note: 구조 해제 대입</p>
+
+<p>비구조화 할당(destructuring assignment) 구문은 배열의 값이나 객체의 속성을 별개의 변수로 추출할 수 있게 하는 자바스크립트 식(expression)입니다.</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="p">[</span><span class="dl">"</span><span class="s2">one</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">two</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">three</span><span class="dl">"</span><span class="p">];</span>
+
+<span class="c1">// without destructuring</span>
+<span class="kd">var</span> <span class="nx">one</span>   <span class="o">=</span> <span class="nx">foo</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="kd">var</span> <span class="nx">two</span>   <span class="o">=</span> <span class="nx">foo</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<span class="kd">var</span> <span class="nx">three</span> <span class="o">=</span> <span class="nx">foo</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+
+<span class="c1">// with destructuring</span>
+<span class="kd">var</span> <span class="p">[</span><span class="nx">one</span><span class="p">,</span> <span class="nx">two</span><span class="p">,</span> <span class="nx">three</span><span class="p">]</span> <span class="o">=</span> <span class="nx">foo</span><span class="p">;</span>
+</code></pre></div>
+<h3 id="part-24b48caa06660607">
+<a class="anchor" href="#part-24b48caa06660607" aria-hidden="true"><span class="octicon octicon-link"></span></a>비교 연산자</h3>
+
+<h3 id="part-4a049305870e7c22">
+<a class="anchor" href="#part-4a049305870e7c22" aria-hidden="true"><span class="octicon octicon-link"></span></a>산술 연산자</h3>
+
+<h3 id="part-8532d5afe5f740f1">
+<a class="anchor" href="#part-8532d5afe5f740f1" aria-hidden="true"><span class="octicon octicon-link"></span></a>비트단위 연산자</h3>
+
+<h4 id="part-d5fe37771de3895a">
+<a class="anchor" href="#part-d5fe37771de3895a" aria-hidden="true"><span class="octicon octicon-link"></span></a>비트단위 논리 연산자</h4>
+
+<h4 id="shift">
+<a class="anchor" href="#shift" aria-hidden="true"><span class="octicon octicon-link"></span></a>비트단위 shift 연산자</h4>
+
+<h3 id="part-2e4245fdd930b9f9">
+<a class="anchor" href="#part-2e4245fdd930b9f9" aria-hidden="true"><span class="octicon octicon-link"></span></a>논리 연산자</h3>
+
+<h3 id="part-f89cea1896138550">
+<a class="anchor" href="#part-f89cea1896138550" aria-hidden="true"><span class="octicon octicon-link"></span></a>문자열 연산자</h3>
+
+<h3 id="part-2f28235d873a6b4c">
+<a class="anchor" href="#part-2f28235d873a6b4c" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/Conditional_Operator">조건(삼항) 연산자</a>
+</h3>
+
+<blockquote>
+<p>조건 ? 값1 : 값2</p>
+</blockquote>
+
+<h3 id="part-fd09e72554a81676">
+<a class="anchor" href="#part-fd09e72554a81676" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/Comma_Operator">콤마 연산자</a>
+</h3>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">9</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="nx">j</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">,</span> <span class="nx">j</span><span class="o">--</span><span class="p">)</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">a[</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">i</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">][</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">j</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">]= </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">a</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="nx">j</span><span class="p">]);</span>
+</code></pre></div>
+<h3 id="part-6be054bbefca60bd">
+<a class="anchor" href="#part-6be054bbefca60bd" aria-hidden="true"><span class="octicon octicon-link"></span></a>단항 연산자</h3>
+
+<p>단항 연산자는 오직 하나의 피연산자를 가지고 연산을합니다.</p>
+
+<h4 id="delete">
+<a class="anchor" href="#delete" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>delete</code>
+</h4>
+
+<p>delete연산자는 객체, 객체의 속성 또는 배열의 특정한 위치에 있는 객체를 삭제합니다. 문법은 다음과 같습니다:</p>
+
+<h5 id="part-8b55a60dde25dd0c">
+<a class="anchor" href="#part-8b55a60dde25dd0c" aria-hidden="true"><span class="octicon octicon-link"></span></a>배열의 원소 삭제하기</h5>
+
+<p>배열의 원소를 삭제할때, 배열의 길이에는 영향을 주지 못합니다. 예를 들어, 만약  a[3], a[4]를 삭제 했다면 a[4] 와 a[3]는 undefined(정의되지 않음)상태로 되어 있습니다.</p>
+
+<p>delete 연산자가 배열의 한 원소를 삭제하였을때, 그 원소는 배열에 존재하지 않습니다. 다음의 예제에서, trees[3]는  delete 연산자에 의해 제거되었습니다.그러나, trees[3] 는 아직도 다룰수 있고 undefined(정의 되지 않음) 을 반환합니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">trees</span> <span class="o">=</span> <span class="p">[</span><span class="dl">"</span><span class="s2">redwood</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">bay</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">cedar</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">oak</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">maple</span><span class="dl">"</span><span class="p">];</span>
+<span class="k">delete</span> <span class="nx">trees</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+<span class="k">if</span> <span class="p">(</span><span class="mi">3</span> <span class="k">in</span> <span class="nx">trees</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// this does not get executed</span>
+<span class="p">}</span>
+
+<span class="nx">trees</span>  <span class="c1">// ["redwood", "bay", "cedar", empty, "maple"]</span>
+</code></pre></div>
+<p>만약 배열의 원소가 존재하지만 <code>undefined</code> (정의 되지 않음)값을 가지고 싶으면, delete 연산자 대신 <code>undefined</code> 키워드를  사용하세요. 다음의 예제에서, trees[3] 은  undefined값을 대입받습니다,그러나 배열의 원소는 아직도 존재합니다:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">trees</span> <span class="o">=</span> <span class="p">[</span><span class="dl">"</span><span class="s2">redwood</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">bay</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">cedar</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">oak</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">maple</span><span class="dl">"</span><span class="p">];</span>
+<span class="nx">trees</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="kc">undefined</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="mi">3</span> <span class="k">in</span> <span class="nx">trees</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// this gets executed</span>
+<span class="p">}</span>
+
+<span class="nx">trees</span>  <span class="c1">// ["redwood", "bay", "cedar", undefined, "maple"]</span>
+</code></pre></div>
+<h4 id="typeof">
+<a class="anchor" href="#typeof" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/typeof">typeof</a>
+</h4>
+
+<p><code>typeof</code> 연산자 피연산자(operand)의 타입을 나타내는 문자열을 반환합니다. 괄호 표현은 선택사항입니다.</p>
+
+<h4 id="void">
+<a class="anchor" href="#void" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/void">void</a>
+</h4>
+
+<blockquote>
+<p>void (expression)</p>
+
+<p>void expression</p>
+</blockquote>
+
+<p><code>void</code> 연산자는 값을 반환하지 않고 평가되도록 명시합니다.</p>
+
+<p><em>expression</em>는 자바스크립트의 평가될 표현입니다.</p>
+
+<p><strong>괄호로 둘러싸는것은 선택사항이지만, 좋은 사용방법입니다.</strong></p>
+
+<p><code>void</code> 연산자를 표현을 하이퍼링크에서 명시할때 사용할 수 있습니다.</p>
+
+<p>구문은 실행이 되나, 현재의 문서에는 로드되지 않습니다.</p>
+
+<p>다음의 코드는 사용자가 클릭을 하였을때 아무 일도 안하는 하이퍼링크를 생성합니다.</p>
+
+<p>사용자가 클릭을 했을때, <code>void(0)</code>는 자바스크립트에서 아무런 영향을 줄 수 없는 <strong>undefined</strong>으로 평가됩니다.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"javascript:void(0)"</span><span class="nt">&gt;</span>Click here to do nothing<span class="nt">&lt;/a&gt;</span>
+</code></pre></div>
+<p>다음의 코드는 사용자가 클릭을 하였을때, 폼을 제출하는 하이퍼링크를 생성합니다.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"javascript:void(document.form.submit())"</span><span class="nt">&gt;</span>
+Click here to submit<span class="nt">&lt;/a&gt;</span>
+</code></pre></div>
+<h3 id="part-966608e43a8b9b0f">
+<a class="anchor" href="#part-966608e43a8b9b0f" aria-hidden="true"><span class="octicon octicon-link"></span></a>관계 연산자</h3>
+
+<p>관계 연산자는 피연산자들을 비교하고 ,비교의 참 여부에 기반하여 부울 값을 반환합니다.</p>
+
+<h4 id="in">
+<a class="anchor" href="#in" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>in</code>
+</h4>
+
+<p>in 연산자는 객체에 특정한 속성이 있는경우 true를 반환합니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// Arrays</span>
+<span class="kd">var</span> <span class="nx">trees</span> <span class="o">=</span> <span class="p">[</span><span class="dl">"</span><span class="s2">redwood</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">bay</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">cedar</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">oak</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">maple</span><span class="dl">"</span><span class="p">];</span>
+<span class="mi">0</span> <span class="k">in</span> <span class="nx">trees</span><span class="p">;</span>        <span class="c1">// returns true</span>
+<span class="mi">3</span> <span class="k">in</span> <span class="nx">trees</span><span class="p">;</span>        <span class="c1">// returns true</span>
+<span class="mi">6</span> <span class="k">in</span> <span class="nx">trees</span><span class="p">;</span>        <span class="c1">// returns false</span>
+<span class="dl">"</span><span class="s2">bay</span><span class="dl">"</span> <span class="k">in</span> <span class="nx">trees</span><span class="p">;</span>    <span class="c1">// returns false (you must specify the index number,</span>
+                   <span class="c1">// not the value at that index)</span>
+<span class="dl">"</span><span class="s2">length</span><span class="dl">"</span> <span class="k">in</span> <span class="nx">trees</span><span class="p">;</span> <span class="c1">// returns true (length is an Array property)</span>
+
+<span class="c1">// built-in objects</span>
+<span class="dl">"</span><span class="s2">PI</span><span class="dl">"</span> <span class="k">in</span> <span class="nb">Math</span><span class="p">;</span>          <span class="c1">// returns true</span>
+<span class="kd">var</span> <span class="nx">myString</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">String</span><span class="p">(</span><span class="dl">"</span><span class="s2">coral</span><span class="dl">"</span><span class="p">);</span>
+<span class="dl">"</span><span class="s2">length</span><span class="dl">"</span> <span class="k">in</span> <span class="nx">myString</span><span class="p">;</span>  <span class="c1">// returns true</span>
+
+<span class="c1">// Custom objects</span>
+<span class="kd">var</span> <span class="nx">mycar</span> <span class="o">=</span> <span class="p">{</span> <span class="na">make</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Honda</span><span class="dl">"</span><span class="p">,</span> <span class="na">model</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Accord</span><span class="dl">"</span><span class="p">,</span> <span class="na">year</span><span class="p">:</span> <span class="mi">1998</span> <span class="p">};</span>
+<span class="dl">"</span><span class="s2">make</span><span class="dl">"</span> <span class="k">in</span> <span class="nx">mycar</span><span class="p">;</span>  <span class="c1">// returns true</span>
+<span class="dl">"</span><span class="s2">model</span><span class="dl">"</span> <span class="k">in</span> <span class="nx">mycar</span><span class="p">;</span> <span class="c1">// returns true</span>
+</code></pre></div>
+<h4 id="instanceof">
+<a class="anchor" href="#instanceof" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>instanceof</code>
+</h4>
+
+<p><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/instanceof">instanceof 연산자</a>는 명시된 객체가 명시된 객체형인 경우 true를 반환합니다. 구문은 다음과 같습니다:</p>
+
+<blockquote>
+<p>objectName instanceof objectType</p>
+</blockquote>
+
+<p>objectName은 objectType 과 비교할 객체의 이름이고, objectType 은 Date 또는 Array과 같은 객체형 입니다.</p>
+
+<p><strong><code>instanceof</code> 연산자를 동작시간에 객체의 형태를 확인할 필요가 있을때 사용하세요.</strong></p>
+
+<p>예를 들어, 예외가 발생하였을때, 던저진 예외의 형태에 따라 예외를 처리하는 코드로 나뉘게 할 수 있습니다.</p>
+
+<p>예를 들어, 다음의 코드는 instanceof 연산자를 theDay 객체가 Date 형의 객체인지 알아내는 코드입니다.
+theDay 객체는 Date형의 객체이기 때문에, if 구문 안의 명령문은 시행이 됩니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">theDay</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="mi">1995</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">17</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">theDay</span> <span class="k">instanceof</span> <span class="nb">Date</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// statements to execute</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="part-9d9a00b5ffde6ff2">
+<a class="anchor" href="#part-9d9a00b5ffde6ff2" aria-hidden="true"><span class="octicon octicon-link"></span></a>연산자 우선순위</h3>
+
+<hr>
+
+<h2 id="part-6543b4f1248">
+<a class="anchor" href="#part-6543b4f1248" aria-hidden="true"><span class="octicon octicon-link"></span></a>표현</h2>
+
+<p>코드 값으로 확인된 표현은 그 어떤 타당한 단위입니다.</p>
+
+<p>개념적으로, 2가지의 유형이 있습니다.
+- 변수에 값을 할당시키는 것
+- 두번째는 단순히 값을 갖는것</p>
+
+<h3 id="part-3787592f44b4e82">
+<a class="anchor" href="#part-3787592f44b4e82" aria-hidden="true"><span class="octicon octicon-link"></span></a>일차식</h3>
+
+<p>자바스크립트안에서 기본핵심어와 일반적표현입니다.</p>
+
+<h4 id="this">
+<a class="anchor" href="#this" aria-hidden="true"><span class="octicon octicon-link"></span></a>this</h4>
+
+<p>현재 객체를 참조하는 데 this 키워드를 사용합니다.  일반적으로, this는 함수에서 호출하는 객체를 참조합니다. 점(.)이나 괄호([])로 접근할 수 있습니다.</p>
+
+<h4 id="part-9451a357de6578b0">
+<a class="anchor" href="#part-9451a357de6578b0" aria-hidden="true"><span class="octicon octicon-link"></span></a>그룹연산자</h4>
+
+<p>그룹연산자 ()는 표현식 평가의 우선순위를 조절합니다.</p>
+
+<h4 id="comprehensions">
+<a class="anchor" href="#comprehensions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Comprehensions</h4>
+
+<p>Comprehensions는 많은 프로그래밍 언어에서 존재하고 기존의 배열을 바탕으로하여 빨리 모을 수 있게 한다. (미지원)</p>
+
+<p><code>[for (x of y) x]</code>: 배열 comprehensions.</p>
+
+<p><code>(for (x of y) y)</code>: 생성기(Generator) comprehensions.</p>
+
+<h3 id="part-37875b620744471">
+<a class="anchor" href="#part-37875b620744471" aria-hidden="true"><span class="octicon octicon-link"></span></a>좌변식</h3>
+
+<h4 id="new">
+<a class="anchor" href="#new" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>new</code>
+</h4>
+
+<p>사용자 정의 객체 형식 또는 한 내장된 객체 형식의 인스턴스를 만드는 데는 <a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/new">new 연산자</a>를 사용할 수 있습니다. new는 아래와 같이 사용할 수 있습니다:</p>
+
+<h4 id="super">
+<a class="anchor" href="#super" aria-hidden="true"><span class="octicon octicon-link"></span></a>super</h4>
+
+<p><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/super">super</a> 키워드는 개체의 부모에 함수를 호출하는 데 사용됩니다.</p>
+
+<p>예를 들어 이것은 부모생성자를 부르는 <a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Classes">Classes</a>와 함께 유용합니다.</p>
+
+<h4 id="spread-operator">
+<a class="anchor" href="#spread-operator" aria-hidden="true"><span class="octicon octicon-link"></span></a>전개연산자(확산연산자, Spread operator)</h4>
+
+<p>[전개연산자]는 다중인수(함수호출)또는 다중요소(문자배열)들이 예상되는 곳에서 확장될 수 있는 표현을 하게합니다.</p>
+
+<p>Example: 오늘 만약 당신이 배열은 가지고있고  기존의 것과 함께 새로운 배열을 만들고싶다면, 배열 문자열 구문은 더이상 충분하지않고 너는 다시 명령 코드로 되돌아가야합니다. 푸시, 스플라이스, concat 등의 확산 구문을 결합하는 것은 더욱 간결하게 됩니다:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">parts</span> <span class="o">=</span> <span class="p">[</span><span class="dl">'</span><span class="s1">shoulder</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">knees</span><span class="dl">'</span><span class="p">];</span>
+<span class="kd">var</span> <span class="nx">lyrics</span> <span class="o">=</span> <span class="p">[</span><span class="dl">'</span><span class="s1">head</span><span class="dl">'</span><span class="p">,</span> <span class="p">...</span><span class="nx">parts</span><span class="p">,</span> <span class="dl">'</span><span class="s1">and</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">toes</span><span class="dl">'</span><span class="p">];</span>
+</code></pre></div>
+<p>마찬가지로, 확산연산자는 함수 호출과 일합니다:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">f</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">z</span><span class="p">)</span> <span class="p">{</span> <span class="p">}</span>
+<span class="kd">var</span> <span class="nx">args</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">];</span>
+<span class="nx">f</span><span class="p">(...</span><span class="nx">args</span><span class="p">);</span>
+</code></pre></div>
+<hr>
+
+<h2 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+<p><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/Expressions_and_Operators">https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/Expressions_and_Operators</a></p>
+
+  </div>
+
+<div>
+  <p>이 장에서는 자바스크립트의 표현과 대입 연산자, 비교 연산자, 산술 연산자, 비트단위 연산자, 논리 연산자, 문자열 연산자, 삼항 연산자 등 여러가지를 포함한 연산자에 대하여 설명합니다.</p>
+
+<h2 id="opterators">Opterators(연산자)</h2>
+
+<ul>
+<li>대입 연산자</li>
+<li>비교 연산자</li>
+<li>산술 연산자</li>
+<li>비트단위 연산자</li>
+<li>논리 연산자</li>
+<li>문자열 연산자</li>
+<li>조건 (삼항) 연산자</li>
+<li>콤마 연산자</li>
+<li>단항 연산자</li>
+<li>관계 연산자</li>
+</ul>
+
+<h3 id="part-7752df27e3bbba16">대입 연산자</h3>
+
+<p>대입 연산자 는 오른쪽 피연산자의 값을 왼쪽 피연산자에 대입합니다. 기본적인 대입 연산자는 오른쪽의 피연산자 값을 왼쪽 피연산자 값에 대입하는 등호(=) 입니다.</p>
+
+<h4 id="part-31417a0c6c8536ab">구조 해제</h4>
+
+<p>복잡한 대입 연산에서, <a href="ihttps://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment">구조 해제 대입</a> 문법은 배열의 구조나 객체를 반영하여, 배열이나 객체에서 데이터를 추출할 수 있게 해주는 자바스크립트 표현입니다.</p>
+
+<blockquote>
+<p>Note: 구조 해제 대입</p>
+
+<p>비구조화 할당(destructuring assignment) 구문은 배열의 값이나 객체의 속성을 별개의 변수로 추출할 수 있게 하는 자바스크립트 식(expression)입니다.</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="p">[</span><span class="dl">"</span><span class="s2">one</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">two</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">three</span><span class="dl">"</span><span class="p">];</span>
+
+<span class="c1">// without destructuring</span>
+<span class="kd">var</span> <span class="nx">one</span>   <span class="o">=</span> <span class="nx">foo</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="kd">var</span> <span class="nx">two</span>   <span class="o">=</span> <span class="nx">foo</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<span class="kd">var</span> <span class="nx">three</span> <span class="o">=</span> <span class="nx">foo</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+
+<span class="c1">// with destructuring</span>
+<span class="kd">var</span> <span class="p">[</span><span class="nx">one</span><span class="p">,</span> <span class="nx">two</span><span class="p">,</span> <span class="nx">three</span><span class="p">]</span> <span class="o">=</span> <span class="nx">foo</span><span class="p">;</span>
+</code></pre></div>
+<h3 id="part-24b48caa06660607">비교 연산자</h3>
+
+<h3 id="part-4a049305870e7c22">산술 연산자</h3>
+
+<h3 id="part-8532d5afe5f740f1">비트단위 연산자</h3>
+
+<h4 id="part-d5fe37771de3895a">비트단위 논리 연산자</h4>
+
+<h4 id="shift">비트단위 shift 연산자</h4>
+
+<h3 id="part-2e4245fdd930b9f9">논리 연산자</h3>
+
+<h3 id="part-f89cea1896138550">문자열 연산자</h3>
+
+<h3 id="part-2f28235d873a6b4c"><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/Conditional_Operator" rel="nofollow" target="_blank">조건(삼항) 연산자</a></h3>
+
+<blockquote>
+<p>조건 ? 값1 : 값2</p>
+</blockquote>
+
+<h3 id="part-fd09e72554a81676"><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/Comma_Operator" rel="nofollow" target="_blank">콤마 연산자</a></h3>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">9</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="nx">j</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">,</span> <span class="nx">j</span><span class="o">--</span><span class="p">)</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">a[</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">i</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">][</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">j</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">]= </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">a</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="nx">j</span><span class="p">]);</span>
+</code></pre></div>
+<h3 id="part-6be054bbefca60bd">단항 연산자</h3>
+
+<p>단항 연산자는 오직 하나의 피연산자를 가지고 연산을합니다.</p>
+
+<h4 id="delete"><code>delete</code></h4>
+
+<p>delete연산자는 객체, 객체의 속성 또는 배열의 특정한 위치에 있는 객체를 삭제합니다. 문법은 다음과 같습니다:</p>
+
+<h5 id="part-8b55a60dde25dd0c">배열의 원소 삭제하기</h5>
+
+<p>배열의 원소를 삭제할때, 배열의 길이에는 영향을 주지 못합니다. 예를 들어, 만약  a[3], a[4]를 삭제 했다면 a[4] 와 a[3]는 undefined(정의되지 않음)상태로 되어 있습니다.</p>
+
+<p>delete 연산자가 배열의 한 원소를 삭제하였을때, 그 원소는 배열에 존재하지 않습니다. 다음의 예제에서, trees[3]는  delete 연산자에 의해 제거되었습니다.그러나, trees[3] 는 아직도 다룰수 있고 undefined(정의 되지 않음) 을 반환합니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">trees</span> <span class="o">=</span> <span class="p">[</span><span class="dl">"</span><span class="s2">redwood</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">bay</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">cedar</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">oak</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">maple</span><span class="dl">"</span><span class="p">];</span>
+<span class="k">delete</span> <span class="nx">trees</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+<span class="k">if</span> <span class="p">(</span><span class="mi">3</span> <span class="k">in</span> <span class="nx">trees</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// this does not get executed</span>
+<span class="p">}</span>
+
+<span class="nx">trees</span>  <span class="c1">// ["redwood", "bay", "cedar", empty, "maple"]</span>
+</code></pre></div>
+<p>만약 배열의 원소가 존재하지만 <code>undefined</code> (정의 되지 않음)값을 가지고 싶으면, delete 연산자 대신 <code>undefined</code> 키워드를  사용하세요. 다음의 예제에서, trees[3] 은  undefined값을 대입받습니다,그러나 배열의 원소는 아직도 존재합니다:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">trees</span> <span class="o">=</span> <span class="p">[</span><span class="dl">"</span><span class="s2">redwood</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">bay</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">cedar</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">oak</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">maple</span><span class="dl">"</span><span class="p">];</span>
+<span class="nx">trees</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="kc">undefined</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="mi">3</span> <span class="k">in</span> <span class="nx">trees</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// this gets executed</span>
+<span class="p">}</span>
+
+<span class="nx">trees</span>  <span class="c1">// ["redwood", "bay", "cedar", undefined, "maple"]</span>
+</code></pre></div>
+<h4 id="typeof"><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/typeof" rel="nofollow" target="_blank">typeof</a></h4>
+
+<p><code>typeof</code> 연산자 피연산자(operand)의 타입을 나타내는 문자열을 반환합니다. 괄호 표현은 선택사항입니다.</p>
+
+<h4 id="void"><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/void" rel="nofollow" target="_blank">void</a></h4>
+
+<blockquote>
+<p>void (expression)</p>
+
+<p>void expression</p>
+</blockquote>
+
+<p><code>void</code> 연산자는 값을 반환하지 않고 평가되도록 명시합니다.</p>
+
+<p><em>expression</em>는 자바스크립트의 평가될 표현입니다.</p>
+
+<p><strong>괄호로 둘러싸는것은 선택사항이지만, 좋은 사용방법입니다.</strong></p>
+
+<p><code>void</code> 연산자를 표현을 하이퍼링크에서 명시할때 사용할 수 있습니다.</p>
+
+<p>구문은 실행이 되나, 현재의 문서에는 로드되지 않습니다.</p>
+
+<p>다음의 코드는 사용자가 클릭을 하였을때 아무 일도 안하는 하이퍼링크를 생성합니다.</p>
+
+<p>사용자가 클릭을 했을때, <code>void(0)</code>는 자바스크립트에서 아무런 영향을 줄 수 없는 <strong>undefined</strong>으로 평가됩니다.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"javascript:void(0)"</span><span class="nt">&gt;</span>Click here to do nothing<span class="nt">&lt;/a&gt;</span>
+</code></pre></div>
+<p>다음의 코드는 사용자가 클릭을 하였을때, 폼을 제출하는 하이퍼링크를 생성합니다.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"javascript:void(document.form.submit())"</span><span class="nt">&gt;</span>
+Click here to submit<span class="nt">&lt;/a&gt;</span>
+</code></pre></div>
+<h3 id="part-966608e43a8b9b0f">관계 연산자</h3>
+
+<p>관계 연산자는 피연산자들을 비교하고 ,비교의 참 여부에 기반하여 부울 값을 반환합니다.</p>
+
+<h4 id="in"><code>in</code></h4>
+
+<p>in 연산자는 객체에 특정한 속성이 있는경우 true를 반환합니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// Arrays</span>
+<span class="kd">var</span> <span class="nx">trees</span> <span class="o">=</span> <span class="p">[</span><span class="dl">"</span><span class="s2">redwood</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">bay</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">cedar</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">oak</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">maple</span><span class="dl">"</span><span class="p">];</span>
+<span class="mi">0</span> <span class="k">in</span> <span class="nx">trees</span><span class="p">;</span>        <span class="c1">// returns true</span>
+<span class="mi">3</span> <span class="k">in</span> <span class="nx">trees</span><span class="p">;</span>        <span class="c1">// returns true</span>
+<span class="mi">6</span> <span class="k">in</span> <span class="nx">trees</span><span class="p">;</span>        <span class="c1">// returns false</span>
+<span class="dl">"</span><span class="s2">bay</span><span class="dl">"</span> <span class="k">in</span> <span class="nx">trees</span><span class="p">;</span>    <span class="c1">// returns false (you must specify the index number,</span>
+                   <span class="c1">// not the value at that index)</span>
+<span class="dl">"</span><span class="s2">length</span><span class="dl">"</span> <span class="k">in</span> <span class="nx">trees</span><span class="p">;</span> <span class="c1">// returns true (length is an Array property)</span>
+
+<span class="c1">// built-in objects</span>
+<span class="dl">"</span><span class="s2">PI</span><span class="dl">"</span> <span class="k">in</span> <span class="nb">Math</span><span class="p">;</span>          <span class="c1">// returns true</span>
+<span class="kd">var</span> <span class="nx">myString</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">String</span><span class="p">(</span><span class="dl">"</span><span class="s2">coral</span><span class="dl">"</span><span class="p">);</span>
+<span class="dl">"</span><span class="s2">length</span><span class="dl">"</span> <span class="k">in</span> <span class="nx">myString</span><span class="p">;</span>  <span class="c1">// returns true</span>
+
+<span class="c1">// Custom objects</span>
+<span class="kd">var</span> <span class="nx">mycar</span> <span class="o">=</span> <span class="p">{</span> <span class="na">make</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Honda</span><span class="dl">"</span><span class="p">,</span> <span class="na">model</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Accord</span><span class="dl">"</span><span class="p">,</span> <span class="na">year</span><span class="p">:</span> <span class="mi">1998</span> <span class="p">};</span>
+<span class="dl">"</span><span class="s2">make</span><span class="dl">"</span> <span class="k">in</span> <span class="nx">mycar</span><span class="p">;</span>  <span class="c1">// returns true</span>
+<span class="dl">"</span><span class="s2">model</span><span class="dl">"</span> <span class="k">in</span> <span class="nx">mycar</span><span class="p">;</span> <span class="c1">// returns true</span>
+</code></pre></div>
+<h4 id="instanceof"><code>instanceof</code></h4>
+
+<p><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/instanceof" rel="nofollow" target="_blank">instanceof 연산자</a>는 명시된 객체가 명시된 객체형인 경우 true를 반환합니다. 구문은 다음과 같습니다:</p>
+
+<blockquote>
+<p>objectName instanceof objectType</p>
+</blockquote>
+
+<p>objectName은 objectType 과 비교할 객체의 이름이고, objectType 은 Date 또는 Array과 같은 객체형 입니다.</p>
+
+<p><strong><code>instanceof</code> 연산자를 동작시간에 객체의 형태를 확인할 필요가 있을때 사용하세요.</strong></p>
+
+<p>예를 들어, 예외가 발생하였을때, 던저진 예외의 형태에 따라 예외를 처리하는 코드로 나뉘게 할 수 있습니다.</p>
+
+<p>예를 들어, 다음의 코드는 instanceof 연산자를 theDay 객체가 Date 형의 객체인지 알아내는 코드입니다.
+theDay 객체는 Date형의 객체이기 때문에, if 구문 안의 명령문은 시행이 됩니다.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">theDay</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="mi">1995</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">17</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">theDay</span> <span class="k">instanceof</span> <span class="nb">Date</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// statements to execute</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="part-9d9a00b5ffde6ff2">연산자 우선순위</h3>
+
+<hr>
+
+<h2 id="part-6543b4f1248">표현</h2>
+
+<p>코드 값으로 확인된 표현은 그 어떤 타당한 단위입니다.</p>
+
+<p>개념적으로, 2가지의 유형이 있습니다.
+- 변수에 값을 할당시키는 것
+- 두번째는 단순히 값을 갖는것</p>
+
+<h3 id="part-3787592f44b4e82">일차식</h3>
+
+<p>자바스크립트안에서 기본핵심어와 일반적표현입니다.</p>
+
+<h4 id="this">this</h4>
+
+<p>현재 객체를 참조하는 데 this 키워드를 사용합니다.  일반적으로, this는 함수에서 호출하는 객체를 참조합니다. 점(.)이나 괄호([])로 접근할 수 있습니다.</p>
+
+<h4 id="part-9451a357de6578b0">그룹연산자</h4>
+
+<p>그룹연산자 ()는 표현식 평가의 우선순위를 조절합니다.</p>
+
+<h4 id="comprehensions">Comprehensions</h4>
+
+<p>Comprehensions는 많은 프로그래밍 언어에서 존재하고 기존의 배열을 바탕으로하여 빨리 모을 수 있게 한다. (미지원)</p>
+
+<p><code>[for (x of y) x]</code>: 배열 comprehensions.</p>
+
+<p><code>(for (x of y) y)</code>: 생성기(Generator) comprehensions.</p>
+
+<h3 id="part-37875b620744471">좌변식</h3>
+
+<h4 id="new"><code>new</code></h4>
+
+<p>사용자 정의 객체 형식 또는 한 내장된 객체 형식의 인스턴스를 만드는 데는 <a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/new" rel="nofollow" target="_blank">new 연산자</a>를 사용할 수 있습니다. new는 아래와 같이 사용할 수 있습니다:</p>
+
+<h4 id="super">super</h4>
+
+<p><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/super" rel="nofollow" target="_blank">super</a> 키워드는 개체의 부모에 함수를 호출하는 데 사용됩니다.</p>
+
+<p>예를 들어 이것은 부모생성자를 부르는 <a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Classes" rel="nofollow" target="_blank">Classes</a>와 함께 유용합니다.</p>
+
+<h4 id="spread-operator">전개연산자(확산연산자, Spread operator)</h4>
+
+<p>[전개연산자]는 다중인수(함수호출)또는 다중요소(문자배열)들이 예상되는 곳에서 확장될 수 있는 표현을 하게합니다.</p>
+
+<p>Example: 오늘 만약 당신이 배열은 가지고있고  기존의 것과 함께 새로운 배열을 만들고싶다면, 배열 문자열 구문은 더이상 충분하지않고 너는 다시 명령 코드로 되돌아가야합니다. 푸시, 스플라이스, concat 등의 확산 구문을 결합하는 것은 더욱 간결하게 됩니다:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">parts</span> <span class="o">=</span> <span class="p">[</span><span class="dl">'</span><span class="s1">shoulder</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">knees</span><span class="dl">'</span><span class="p">];</span>
+<span class="kd">var</span> <span class="nx">lyrics</span> <span class="o">=</span> <span class="p">[</span><span class="dl">'</span><span class="s1">head</span><span class="dl">'</span><span class="p">,</span> <span class="p">...</span><span class="nx">parts</span><span class="p">,</span> <span class="dl">'</span><span class="s1">and</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">toes</span><span class="dl">'</span><span class="p">];</span>
+</code></pre></div>
+<p>마찬가지로, 확산연산자는 함수 호출과 일합니다:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">f</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">z</span><span class="p">)</span> <span class="p">{</span> <span class="p">}</span>
+<span class="kd">var</span> <span class="nx">args</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">];</span>
+<span class="nx">f</span><span class="p">(...</span><span class="nx">args</span><span class="p">);</span>
+</code></pre></div>
+<hr>
+
+<h2 id="reference">Reference</h2>
+
+<p><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/Expressions_and_Operators" rel="nofollow" target="_blank">https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/Expressions_and_Operators</a></p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

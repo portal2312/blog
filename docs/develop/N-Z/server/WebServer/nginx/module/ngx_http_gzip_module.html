@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>ngx_http_gzip_module | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="ngx_http_gzip_module" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="&quot;gzip&quot;메소드를 사용하여 응답을 압축하는 필터입니다." />
+<meta property="og:description" content="&quot;gzip&quot;메소드를 사용하여 응답을 압축하는 필터입니다." />
+<link rel="canonical" href="/blog/docs/develop/N-Z/server/WebServer/nginx/module/ngx_http_gzip_module.html" />
+<meta property="og:url" content="/blog/docs/develop/N-Z/server/WebServer/nginx/module/ngx_http_gzip_module.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-02T16:38:51+09:00" />
+<script type="application/ld+json">
+{"description":"&quot;gzip&quot;메소드를 사용하여 응답을 압축하는 필터입니다.","headline":"ngx_http_gzip_module","dateModified":"2019-12-02T16:38:51+09:00","datePublished":"2019-12-02T16:38:51+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/docs/develop/N-Z/server/WebServer/nginx/module/ngx_http_gzip_module.html"},"url":"/blog/docs/develop/N-Z/server/WebServer/nginx/module/ngx_http_gzip_module.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/blog/feed.xml" title="Portal2312's blog" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113063601-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+<script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>ngx_http_gzip_module</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#example-configuration">Example Configuration</a></li>
+<li class="toc-entry toc-h2"><a href="#directives">Directives (지시문)</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#gzip">gzip</a></li>
+<li class="toc-entry toc-h3"><a href="#gzip_buffers">gzip_buffers</a></li>
+<li class="toc-entry toc-h3"><a href="#gzip_comp_level">gzip_comp_level</a></li>
+<li class="toc-entry toc-h3"><a href="#gzip_disable">gzip_disable</a></li>
+<li class="toc-entry toc-h3"><a href="#gzip_min_length">gzip_min_length</a></li>
+<li class="toc-entry toc-h3"><a href="#gzip_http_version">gzip_http_version</a></li>
+<li class="toc-entry toc-h3"><a href="#gzip_proxied">gzip_proxied</a></li>
+<li class="toc-entry toc-h3"><a href="#gzip_types">gzip_types</a></li>
+<li class="toc-entry toc-h3"><a href="#gzip_vary">gzip_vary</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#embedded-variables">Embedded Variables</a></li>
+</ul><p>"gzip"메소드를 사용하여 응답을 압축하는 필터입니다.</p>
+
+<p>이는 종종 전송 된 데이터의 크기를 절반 이상 줄이는데 도움이 됩니다.</p>
+
+<h2 id="example-configuration">
+<a class="anchor" href="#example-configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example Configuration</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">gzip            </span>on<span class="p">;</span>
+gzip_min_length 1000<span class="p">;</span>
+gzip_proxied    expired no-cache no-store private auth<span class="p">;</span>
+gzip_types      text/plain application/xml<span class="p">;</span>
+</code></pre></div>
+<p>$gzip_ratio 변수는 달성 된 압축 비율을 기록하는 데 사용할 수 있습니다.</p>
+
+<h2 id="directives">
+<a class="anchor" href="#directives" aria-hidden="true"><span class="octicon octicon-link"></span></a>Directives (지시문)</h2>
+
+<h3 id="gzip">
+<a class="anchor" href="#gzip" aria-hidden="true"><span class="octicon octicon-link"></span></a>gzip</h3>
+<div class="highlight"><pre><code class="language-" data-lang="">Syntax: gzip on | off;
+Default: gzip off;
+Context: http, server, location, if in location
+</code></pre></div>
+<p>응답의 gzipping을 활성화 또는 비활성화합니다.</p>
+
+<h3 id="gzip_buffers">
+<a class="anchor" href="#gzip_buffers" aria-hidden="true"><span class="octicon octicon-link"></span></a>gzip_buffers</h3>
+<div class="highlight"><pre><code class="language-" data-lang="">Syntax: gzip_buffers number size;
+Default: gzip_buffers 32 4k|16 8k;
+Context: http, server, location
+</code></pre></div>
+<p>응답을 압축하는 데 사용되는 버퍼의 <em>수</em> 와 <em>크기</em> 를 설정합니다.</p>
+
+<p>기본적으로 버퍼 크기는 하나의 메모리 페이지와 동일합니다.</p>
+
+<p>이것은 플랫폼에 따라 4K 또는 8K입니다.</p>
+
+<ul>
+<li>버전 0.7.28 이전까지 4 개의 4K 또는 8K 버퍼가 기본적으로 사용되었습니다.</li>
+</ul>
+
+<h3 id="gzip_comp_level">
+<a class="anchor" href="#gzip_comp_level" aria-hidden="true"><span class="octicon octicon-link"></span></a>gzip_comp_level</h3>
+<div class="highlight"><pre><code class="language-" data-lang="">Syntax: gzip_comp_level level;
+Default: gzip_comp_level 1;
+Context: http, server, location
+</code></pre></div>
+<p>응답의 gzip 압축 수준을 설정합니다. 사용할 수있는 값의 범위는 1에서 9 사이입니다.</p>
+
+<h3 id="gzip_disable">
+<a class="anchor" href="#gzip_disable" aria-hidden="true"><span class="octicon octicon-link"></span></a>gzip_disable</h3>
+<div class="highlight"><pre><code class="language-" data-lang="">Syntax: gzip_disable regex ...;
+Default: —
+Context: http, server, location
+This directive appeared in version 0.6.23.
+</code></pre></div>
+<p>지정된 정규 표현식 중 하나와 일치하는 "User-Agent"헤더 필드가있는 요청에 대한 응답의 gzipping을 비활성화합니다.</p>
+
+<p>특수 마스크 "msie6"(0.7.12)은 정규식 "MSIE [4-6] ."에 해당하지만 더 빠르게 작동합니다.</p>
+
+<p>버전 0.8.11부터 "MSIE 6.0; ... SV1 "은이 마스크에서 제외됩니다.</p>
+
+<h3 id="gzip_min_length">
+<a class="anchor" href="#gzip_min_length" aria-hidden="true"><span class="octicon octicon-link"></span></a>gzip_min_length</h3>
+<div class="highlight"><pre><code class="language-" data-lang="">Syntax: gzip_min_length length;
+Default: gzip_min_length 20;
+Context: http, server, location
+</code></pre></div>
+<p>gzip으로 처리할 응답의 최소 길이를 설정합니다.</p>
+
+<p>길이는 "Content-Length"응답 헤더 필드에서만 결정됩니다.</p>
+
+<h3 id="gzip_http_version">
+<a class="anchor" href="#gzip_http_version" aria-hidden="true"><span class="octicon octicon-link"></span></a>gzip_http_version</h3>
+<div class="highlight"><pre><code class="language-" data-lang="">Syntax: gzip_http_version 1.0 | 1.1;
+Default: gzip_http_version 1.1;
+Context: http, server, location
+</code></pre></div>
+<p>응답 압축에 필요한 요청의 최소 HTTP 버전을 설정합니다.</p>
+
+<h3 id="gzip_proxied">
+<a class="anchor" href="#gzip_proxied" aria-hidden="true"><span class="octicon octicon-link"></span></a>gzip_proxied</h3>
+<div class="highlight"><pre><code class="language-" data-lang="">Syntax: gzip_proxied off | expired | no-cache | no-store | private | no_last_modified | no_etag | auth | any ...;
+Default: gzip_proxied off;
+Context: http, server, location
+</code></pre></div>
+<p>요청 및 응답에 따라 프록시 요청에 대한 응답의 gzipping을 활성화하거나 비활성화합니다. 요청이 프록시된다는 사실은 "Via"요청 헤더 필드의 존재에 의해 결정됩니다. 이 지시문은 여러 매개 변수를 허용합니다.</p>
+
+<p>작성중...</p>
+
+<h3 id="gzip_types">
+<a class="anchor" href="#gzip_types" aria-hidden="true"><span class="octicon octicon-link"></span></a>gzip_types</h3>
+<div class="highlight"><pre><code class="language-" data-lang="">Syntax: gzip_types mime-type ...;
+Default: gzip_types text/html;
+Context:http, server, location
+</code></pre></div>
+<p>"text/html"외에도 지정된 MIME 유형에 대한 응답의 gzipping을 가능하게합니다.</p>
+
+<p>특수 값 "*"은 모든 MIME 유형 (0.8.29)과 일치합니다.</p>
+
+<p>"text/html"유형의 응답은 항상 압축됩니다.</p>
+
+<h3 id="gzip_vary">
+<a class="anchor" href="#gzip_vary" aria-hidden="true"><span class="octicon octicon-link"></span></a>gzip_vary</h3>
+<div class="highlight"><pre><code class="language-" data-lang="">Syntax: gzip_vary on | off;
+Default: gzip_vary off;
+Context: http, server, location
+</code></pre></div>
+<p>directive gzip, gzip_static 또는 gunzip이 활성화 된 경우 "Vary : Accept-Encoding"응답 헤더 필드 삽입을 활성화하거나 비활성화합니다.</p>
+
+<h2 id="embedded-variables">
+<a class="anchor" href="#embedded-variables" aria-hidden="true"><span class="octicon octicon-link"></span></a>Embedded Variables</h2>
+
+<p>$gzip_ratio</p>
+
+<p>달성 된 압축 비율은 원본 및 압축 된 응답 크기 간의 비율로 계산됩니다.</p>
+
+  </div>
+
+<div>
+  <p>"gzip"메소드를 사용하여 응답을 압축하는 필터입니다.</p>
+
+<p>이는 종종 전송 된 데이터의 크기를 절반 이상 줄이는데 도움이 됩니다.</p>
+
+<h2 id="example-configuration">Example Configuration</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">gzip            </span>on<span class="p">;</span>
+gzip_min_length 1000<span class="p">;</span>
+gzip_proxied    expired no-cache no-store private auth<span class="p">;</span>
+gzip_types      text/plain application/xml<span class="p">;</span>
+</code></pre></div>
+<p>$gzip_ratio 변수는 달성 된 압축 비율을 기록하는 데 사용할 수 있습니다.</p>
+
+<h2 id="directives">Directives (지시문)</h2>
+
+<h3 id="gzip">gzip</h3>
+<div class="highlight"><pre><code class="language-" data-lang="">Syntax: gzip on | off;
+Default: gzip off;
+Context: http, server, location, if in location
+</code></pre></div>
+<p>응답의 gzipping을 활성화 또는 비활성화합니다.</p>
+
+<h3 id="gzip_buffers">gzip_buffers</h3>
+<div class="highlight"><pre><code class="language-" data-lang="">Syntax: gzip_buffers number size;
+Default: gzip_buffers 32 4k|16 8k;
+Context: http, server, location
+</code></pre></div>
+<p>응답을 압축하는 데 사용되는 버퍼의 <em>수</em> 와 <em>크기</em> 를 설정합니다.</p>
+
+<p>기본적으로 버퍼 크기는 하나의 메모리 페이지와 동일합니다.</p>
+
+<p>이것은 플랫폼에 따라 4K 또는 8K입니다.</p>
+
+<ul>
+<li>버전 0.7.28 이전까지 4 개의 4K 또는 8K 버퍼가 기본적으로 사용되었습니다.</li>
+</ul>
+
+<h3 id="gzip_comp_level">gzip_comp_level</h3>
+<div class="highlight"><pre><code class="language-" data-lang="">Syntax: gzip_comp_level level;
+Default: gzip_comp_level 1;
+Context: http, server, location
+</code></pre></div>
+<p>응답의 gzip 압축 수준을 설정합니다. 사용할 수있는 값의 범위는 1에서 9 사이입니다.</p>
+
+<h3 id="gzip_disable">gzip_disable</h3>
+<div class="highlight"><pre><code class="language-" data-lang="">Syntax: gzip_disable regex ...;
+Default: —
+Context: http, server, location
+This directive appeared in version 0.6.23.
+</code></pre></div>
+<p>지정된 정규 표현식 중 하나와 일치하는 "User-Agent"헤더 필드가있는 요청에 대한 응답의 gzipping을 비활성화합니다.</p>
+
+<p>특수 마스크 "msie6"(0.7.12)은 정규식 "MSIE [4-6] ."에 해당하지만 더 빠르게 작동합니다.</p>
+
+<p>버전 0.8.11부터 "MSIE 6.0; ... SV1 "은이 마스크에서 제외됩니다.</p>
+
+<h3 id="gzip_min_length">gzip_min_length</h3>
+<div class="highlight"><pre><code class="language-" data-lang="">Syntax: gzip_min_length length;
+Default: gzip_min_length 20;
+Context: http, server, location
+</code></pre></div>
+<p>gzip으로 처리할 응답의 최소 길이를 설정합니다.</p>
+
+<p>길이는 "Content-Length"응답 헤더 필드에서만 결정됩니다.</p>
+
+<h3 id="gzip_http_version">gzip_http_version</h3>
+<div class="highlight"><pre><code class="language-" data-lang="">Syntax: gzip_http_version 1.0 | 1.1;
+Default: gzip_http_version 1.1;
+Context: http, server, location
+</code></pre></div>
+<p>응답 압축에 필요한 요청의 최소 HTTP 버전을 설정합니다.</p>
+
+<h3 id="gzip_proxied">gzip_proxied</h3>
+<div class="highlight"><pre><code class="language-" data-lang="">Syntax: gzip_proxied off | expired | no-cache | no-store | private | no_last_modified | no_etag | auth | any ...;
+Default: gzip_proxied off;
+Context: http, server, location
+</code></pre></div>
+<p>요청 및 응답에 따라 프록시 요청에 대한 응답의 gzipping을 활성화하거나 비활성화합니다. 요청이 프록시된다는 사실은 "Via"요청 헤더 필드의 존재에 의해 결정됩니다. 이 지시문은 여러 매개 변수를 허용합니다.</p>
+
+<p>작성중...</p>
+
+<h3 id="gzip_types">gzip_types</h3>
+<div class="highlight"><pre><code class="language-" data-lang="">Syntax: gzip_types mime-type ...;
+Default: gzip_types text/html;
+Context:http, server, location
+</code></pre></div>
+<p>"text/html"외에도 지정된 MIME 유형에 대한 응답의 gzipping을 가능하게합니다.</p>
+
+<p>특수 값 "*"은 모든 MIME 유형 (0.8.29)과 일치합니다.</p>
+
+<p>"text/html"유형의 응답은 항상 압축됩니다.</p>
+
+<h3 id="gzip_vary">gzip_vary</h3>
+<div class="highlight"><pre><code class="language-" data-lang="">Syntax: gzip_vary on | off;
+Default: gzip_vary off;
+Context: http, server, location
+</code></pre></div>
+<p>directive gzip, gzip_static 또는 gunzip이 활성화 된 경우 "Vary : Accept-Encoding"응답 헤더 필드 삽입을 활성화하거나 비활성화합니다.</p>
+
+<h2 id="embedded-variables">Embedded Variables</h2>
+
+<p>$gzip_ratio</p>
+
+<p>달성 된 압축 비율은 원본 및 압축 된 응답 크기 간의 비율로 계산됩니다.</p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

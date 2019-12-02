@@ -10,10 +10,10 @@ $device: 700px;
 
 // The FontAwesome use for icons.
 @import
-  "../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome",
-  "../../node_modules/@fortawesome/fontawesome-free/scss/brands", // add solid icons
-  "../../node_modules/@fortawesome/fontawesome-free/scss/solid", // add regular icons
-  "../../node_modules/@fortawesome/fontawesome-free/scss/regular"
+  "../../_sass/vendor/fontawesome/fontawesome",
+  "../../_sass/vendor/fontawesome/brands", // add solid icons
+  "../../_sass/vendor/fontawesome/solid", // add regular icons
+  "../../_sass/vendor/fontawesome/regular"
 ;
 
 // Start Globals variables.

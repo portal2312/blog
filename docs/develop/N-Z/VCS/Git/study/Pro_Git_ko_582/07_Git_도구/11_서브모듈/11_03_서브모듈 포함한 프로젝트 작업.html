@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>서브모듈 포함한 프로젝트 작업 | Portal2312&#39;s blog</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="서브모듈 포함한 프로젝트 작업" />
+<meta name="author" content="mkkim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="서브모듈 업데이트하기" />
+<meta property="og:description" content="서브모듈 업데이트하기" />
+<link rel="canonical" href="/blog/docs/develop/N-Z/VCS/Git/study/Pro_Git_ko_582/07_Git_%EB%8F%84%EA%B5%AC/11_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88/11_03_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88%20%ED%8F%AC%ED%95%A8%ED%95%9C%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%EC%9E%91%EC%97%85.html" />
+<meta property="og:url" content="/blog/docs/develop/N-Z/VCS/Git/study/Pro_Git_ko_582/07_Git_%EB%8F%84%EA%B5%AC/11_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88/11_03_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88%20%ED%8F%AC%ED%95%A8%ED%95%9C%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%EC%9E%91%EC%97%85.html" />
+<meta property="og:site_name" content="Portal2312&#39;s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-02T16:38:51+09:00" />
+<script type="application/ld+json">
+{"description":"서브모듈 업데이트하기","headline":"서브모듈 포함한 프로젝트 작업","dateModified":"2019-12-02T16:38:51+09:00","datePublished":"2019-12-02T16:38:51+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/docs/develop/N-Z/VCS/Git/study/Pro_Git_ko_582/07_Git_%EB%8F%84%EA%B5%AC/11_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88/11_03_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88%20%ED%8F%AC%ED%95%A8%ED%95%9C%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%EC%9E%91%EC%97%85.html"},"url":"/blog/docs/develop/N-Z/VCS/Git/study/Pro_Git_ko_582/07_Git_%EB%8F%84%EA%B5%AC/11_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88/11_03_%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88%20%ED%8F%AC%ED%95%A8%ED%95%9C%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%EC%9E%91%EC%97%85.html","author":{"@type":"Person","name":"mkkim"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href='/blog/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/blog/feed.xml" title="Portal2312's blog" /><script>
+if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113063601-1', 'auto');
+  ga('send', 'pageview');
+}
+</script>
+  
+<script src='/blog/dist/js/common.bundle.js'></script>
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/blog/">Portal2312&#39;s blog</a>
+    <nav class="site-nav">
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+    </label>
+
+    <div class="trigger"><a class="page-link" href="/blog/about.html">
+            About
+          </a><a class="page-link" href="/blog/posts.html">
+            Posts
+          </a><a class="page-link" href="/blog/history.html">
+            History
+          </a><a class="page-link" href="/blog/docs/index.html">
+            Docs
+          </a></div>
+  </nav>
+  </div>
+  <div class="scroll-indicator-container">
+  <div class="scroll-indicator-bar" id="scrollIndicatorBar"></div>
+</div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1>서브모듈 포함한 프로젝트 작업</h1>
+
+  <div>
+    <h2>Table of contents</h2>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#part-9209e90205f9d8ab">서브모듈 업데이트하기</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#fetch">자동으로 서브모듈 프로젝트를 Fetch 하고 업데이트하기</a></li>
+<li class="toc-entry toc-h3"><a href="#part-e90292be0b6a49ea">서브모듈 관리하기</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#summary">Summary</a></li>
+</ul><h2 id="part-9209e90205f9d8ab">
+<a class="anchor" href="#part-9209e90205f9d8ab" aria-hidden="true"><span class="octicon octicon-link"></span></a>서브모듈 업데이트하기</h2>
+
+<p>가장 단순한 서브모듈 사용 방법은 하위 프로젝트를 수정하지 않고 참조만 하면서 최신 버전으로 업데이트하는 것이다.</p>
+
+<p>서브모듈 프로젝트를 최신으로 업데이트 하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd </span>myproject
+<span class="nv">$ </span><span class="nb">cd </span>myapp
+<span class="nv">$ </span>git fetch
+<span class="nv">$ </span>git merge origin/master
+</code></pre></div>
+<p><code>git diff --submodule</code> 업데이트된 서브모듈과 각 서브모듈에 추가된 커밋 보기:</p>
+
+<p>(매번 <code>--submodule</code> 옵션을 쓰고 싶지 않다면 <code>diff.submodule</code> 의 값을 <code>log</code> 로 설정)</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd </span>myproject
+<span class="nv">$ </span>git diff
+
+<span class="c"># diff --git a/.gitmodules b/.gitmodules</span>
+<span class="c"># index b08b932..ea05fd7 100644</span>
+<span class="c"># --- a/.gitmodules</span>
+<span class="c"># +++ b/.gitmodules</span>
+<span class="c"># @@ -4,3 +4,4 @@</span>
+<span class="c">#  [submodule "myapp"]</span>
+<span class="c">#         path = myapp</span>
+<span class="c">#         url = http://0.0.0.0/mkkim/myapp</span>
+<span class="c"># +       branch = stable</span>
+diff <span class="nt">--git</span> a/myapp b/myapp
+index ae07c16..9134a91 160000
+<span class="nt">---</span> a/myapp
++++ b/myapp
+@@ <span class="nt">-1</span> +1 @@
+<span class="nt">-Subproject</span> commit ae07c166978bb396539b9eb437fd8c13220c5336
++Subproject commit 9134a91e934480e419920be692ee6384d45c7b83
+
+<span class="nv">$ </span>git config <span class="nt">--global</span> diff.submodule log
+<span class="nv">$ </span>git diff
+
+<span class="c"># diff --git a/.gitmodules b/.gitmodules</span>
+<span class="c"># index b08b932..ea05fd7 100644</span>
+<span class="c"># --- a/.gitmodules</span>
+<span class="c"># +++ b/.gitmodules</span>
+<span class="c"># @@ -4,3 +4,4 @@</span>
+<span class="c">#  [submodule "myapp"]</span>
+<span class="c">#         path = myapp</span>
+<span class="c">#         url = http://0.0.0.0/mkkim/myapp</span>
+<span class="c"># +       branch = stable</span>
+Submodule myapp ae07c16..9134a91:
+  <span class="o">&gt;</span> Update ./log
+  <span class="o">&gt;</span> Create introduction.md
+  <span class="o">&gt;</span> Create branch/stable
+  <span class="o">&gt;</span> Create Exception.md
+  <span class="o">&gt;</span> Update README.md
+</code></pre></div>
+<p>여기서 커밋하면 서브모듈(myapp)은 업데이트된 내용으로 메인 프로젝트(myproject)에 적용된다.</p>
+
+<p>다른 사람들이 업데이트하면 적용된다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd </span>myproject
+<span class="nv">$ </span>git commit <span class="nt">-amv</span> <span class="s1">'Update myapp'</span>
+<span class="nv">$ </span>git push
+</code></pre></div>
+<h4 id="fetch">
+<a class="anchor" href="#fetch" aria-hidden="true"><span class="octicon octicon-link"></span></a>자동으로 서브모듈 프로젝트를 Fetch 하고 업데이트하기</h4>
+
+<p><code>git submodule update --remote &lt;submodule-name&gt;</code>:</p>
+
+<p>submodule-name 입력 안할 시에는 모든 submodule 을 업데이트 한다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd </span>myproject
+<span class="nv">$ </span>git submodule update <span class="nt">--remote</span> myapp
+
+warning: http://0.0.0.0/mkkim/myapp.git/<span class="o">(</span>으<span class="o">)</span>로 리다이렉트
+remote: Counting objects: 5, <span class="k">done</span><span class="nb">.</span>
+remote: Compressing objects: 100% <span class="o">(</span>3/3<span class="o">)</span>, <span class="k">done</span><span class="nb">.</span>
+remote: Total 5 <span class="o">(</span>delta 0<span class="o">)</span>, reused 0 <span class="o">(</span>delta 0<span class="o">)</span>
+오브젝트 묶음 푸는 중: 100% <span class="o">(</span>5/5<span class="o">)</span>, 완료.
+http://0.0.0.0/mkkim/myapp URL에서
+   ae07c16..96a60a1  master     -&gt; origin/master
+하위 모듈 경로 <span class="s1">'myapp'</span>: <span class="s1">'96a60a1edee87bfe8c0a8f1623139eafaee4b5d8'</span> 체크아웃
+</code></pre></div>
+<p>default branch: <code>master</code></p>
+
+<p>default branch 변경하기(<code>master</code> -&gt; <code>stable</code>):</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git config <span class="nt">-f</span> .gitmodules submodule.myapp.branch stable
+</code></pre></div>
+<ul>
+<li><p><code>git config</code> 명령에 <code>-f .gitmodules</code> 옵션을 포함하지 않으면 이 설정은 공유하지 않고 사용자에게만 적용된다. <strong>다른 사람과 공유하는 저장소라면 같은 브랜치를 추적하도록 설정하는 것이 더 낫다.</strong></p></li>
+<li><p><code>.gitmodules</code> 설정됨:
+<code>bash
+[submodule "myapp"]
+path = myapp
+url = http://0.0.0.0/mkkim/myapp
+branch = stable
+</code></p></li>
+<li><p>이 파일을 공유하는 모두에게 <code>stable</code> 브랜치가 적용됨</p></li>
+<li><p><code>.git/config</code> 개인 설정 파일 설정하기.</p></li>
+</ul>
+
+<p>default branch 변경 후 :</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git submodule update <span class="nt">--remote</span> myapp
+
+warning: http://0.0.0.0/mkkim/myapp.git/<span class="o">(</span>으<span class="o">)</span>로 리다이렉트
+remote: Counting objects: 2, <span class="k">done</span><span class="nb">.</span>
+remote: Compressing objects: 100% <span class="o">(</span>2/2<span class="o">)</span>, <span class="k">done</span><span class="nb">.</span>
+remote: Total 2 <span class="o">(</span>delta 1<span class="o">)</span>, reused 0 <span class="o">(</span>delta 0<span class="o">)</span>
+오브젝트 묶음 푸는 중: 100% <span class="o">(</span>2/2<span class="o">)</span>, 완료.
+http://0.0.0.0/mkkim/myapp URL에서
+   061ad52..a3bd063  stable     -&gt; origin/stable
+하위 모듈 경로 <span class="s1">'myapp'</span>: <span class="s1">'a3bd063407cbf9a9f51fb412ae337a7edbefc6a8'</span> 체크아웃
+</code></pre></div>
+<p>설정 파일에 <code>status.submodulesummary</code> 항목을 설정하면 서브모듈의 변경 사항을 간단히 보여준다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git config status.submodulesummary 1
+
+<span class="nv">$ </span>git status
+
+<span class="c"># 현재 브랜치 master</span>
+<span class="c"># 브랜치가 'origin/master'에 맞게 업데이트된 상태입니다.</span>
+<span class="c">#</span>
+<span class="c"># 커밋하도록 정하지 않은 변경 사항:</span>
+<span class="c">#   (무엇을 커밋할지 바꾸려면 "git add &lt;파일&gt;..."을 사용하십시오)</span>
+<span class="c">#   (작업 폴더의 변경 사항을 버리려면 "git checkout -- &lt;파일&gt;..."을 사용하십시오)</span>
+<span class="c">#</span>
+<span class="c">#         수정함:        .gitmodules</span>
+<span class="c">#         수정함:        myapp (새 커밋)</span>
+
+변경되었지만 업데이트하지 않은 하위 모듈:
+
+<span class="k">*</span> myapp ae07c16...9134a91 <span class="o">(</span>5<span class="o">)</span>:
+  <span class="o">&gt;</span> Update ./log
+
+커밋할 변경 사항을 추가하지 않았습니다 <span class="o">(</span><span class="s2">"git add"</span> 및/또는 <span class="s2">"git commit -a"</span>를
+사용하십시오<span class="o">)</span>
+</code></pre></div>
+<p><code>git log -p --submodule</code> 로그에서 위와 같이 살펴보려면 보기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git log <span class="nt">-p</span> <span class="nt">--submodule</span>
+
+commit be02c787e0e0bc04ac311f60e9f6d03d5c4c17db <span class="o">(</span>HEAD -&gt; master, origin/master, origin/HEAD<span class="o">)</span>
+Author: mkkim &lt;mkkim@zensystems.co.kr&gt;
+Date:   Wed Jul 18 18:45:18 2018 +0900
+
+    added myapp
+
+diff <span class="nt">--git</span> a/.gitmodules b/.gitmodules
+index dedf31f..b08b932 100644
+<span class="nt">---</span> a/.gitmodules
++++ b/.gitmodules
+@@ <span class="nt">-1</span>,3 +1,6 @@
+ <span class="o">[</span>submodule <span class="s2">"menu_mgmt"</span><span class="o">]</span>
+        path <span class="o">=</span> menu_mgmt
+        url <span class="o">=</span> http://10.40.223.88/apps/menu_mgmt
++[submodule <span class="s2">"myapp"</span><span class="o">]</span>
++       path <span class="o">=</span> myapp
++       url <span class="o">=</span> http://0.0.0.0/mkkim/myapp
+Submodule myapp 0000000...ae07c16 <span class="o">(</span>new submodule<span class="o">)</span>
+
+commit d139b31cb9ade42a61844227a103cb2012d8a3f0
+Author: mkkim &lt;mkkim@zensystems.co.kr&gt;
+Date:   Wed Jul 18 18:03:24 2018 +0900
+
+    added menu_mgmt module
+
+diff <span class="nt">--git</span> a/.gitmodules b/.gitmodules
+new file mode 100644
+index 0000000..dedf31f
+<span class="nt">---</span> /dev/null
++++ b/.gitmodules
+@@ <span class="nt">-0</span>,0 +1,3 @@
++[submodule <span class="s2">"menu_mgmt"</span><span class="o">]</span>
++       path <span class="o">=</span> menu_mgmt
++       url <span class="o">=</span> http://10.40.223.88/apps/menu_mgmt
+Submodule menu_mgmt 0000000...51eb7a3 <span class="o">(</span>new submodule<span class="o">)</span>
+:
+</code></pre></div>
+<h3 id="part-e90292be0b6a49ea">
+<a class="anchor" href="#part-e90292be0b6a49ea" aria-hidden="true"><span class="octicon octicon-link"></span></a>서브모듈 관리하기</h3>
+
+<p>서브모듈을 수정하고 그 내용을 담은 커밋을 유지한 채로 메인프로젝트와 서브모듈을 함께 관리하는 방법을 살펴본다.</p>
+
+<p><code>git submodule update</code>:</p>
+
+<p>Git은 서브모듈의 변경 사항을 업데이트한다.</p>
+
+<p>하지만, 서브모듈 로컬 저장소는 “Detached HEAD” 상태로 남는다.</p>
+
+<p>이 말은 변경 내용을 추적하는 로컬 브랜치(예를 들자면 ‘`master’'같은)가 없다는 것이다.</p>
+
+<p>변경 내용을 추적하는 브랜치 없이 서브모듈에서 수정 작업을 하게 되면 이후에 git submodule update 명령을 실행했을 때 수정한 내용을 잃어버릴 수 있다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd </span>myproject
+<span class="nv">$ </span><span class="nb">cd </span>myapp
+
+<span class="k">*</span> 2018-07-19 09:20:36 +0900 <span class="o">(</span>33시간 전<span class="o">)</span> 8941947 mkkim  <span class="o">(</span>HEAD -&gt; master, origin/master, origin/HEAD<span class="o">)</span> <span class="nt">--</span> Update myapp
+<span class="k">*</span> 2018-07-18 18:45:18 +0900 <span class="o">(</span>2일 전<span class="o">)</span> be02c78 mkkim  <span class="nt">--</span> added myapp
+<span class="k">*</span> 2018-07-18 18:03:24 +0900 <span class="o">(</span>2일 전<span class="o">)</span> d139b31 mkkim  <span class="nt">--</span> added menu_mgmt module
+<span class="k">*</span> 2018-07-18 17:57:55 +0900 <span class="o">(</span>2일 전<span class="o">)</span> 7776ccc mkkim  <span class="nt">--</span> initial commit
+
+<span class="nv">$ </span><span class="nb">cd</span> ..
+<span class="nv">$ </span>git submodule update
+하위 모듈 경로 <span class="s1">'myapp'</span>: <span class="s1">'96a60a1edee87bfe8c0a8f1623139eafaee4b5d8'</span> 체크아웃
+
+<span class="nv">$ </span><span class="nb">cd </span>myapp
+
+<span class="k">*</span> 2018-07-20 10:18:26 +0900 <span class="o">(</span>8시간 전<span class="o">)</span> 9134a91 mkkim  <span class="o">(</span>origin/stable, stable<span class="o">)</span> <span class="nt">--</span> Update ./log
+<span class="k">*</span> 2018-07-19 10:23:57 +0900 <span class="o">(</span>32시간 전<span class="o">)</span> a3bd063 mkkim  <span class="nt">--</span> Create introduction.md
+<span class="k">*</span> 2018-07-19 09:36:31 +0900 <span class="o">(</span>33시간 전<span class="o">)</span> 061ad52 mkkim  <span class="nt">--</span> Create branch/stable
+<span class="k">*</span> 2018-07-19 09:12:34 +0900 <span class="o">(</span>33시간 전<span class="o">)</span> 96a60a1 mkkim  <span class="o">(</span>HEAD, origin/master, origin/HEAD, master<span class="o">)</span> <span class="nt">--</span> Create Exception.md
+<span class="k">*</span> 2018-07-19 09:12:22 +0900 <span class="o">(</span>33시간 전<span class="o">)</span> cfb129f mkkim  <span class="nt">--</span> Update README.md
+<span class="k">*</span> 2018-07-18 18:37:33 +0900 <span class="o">(</span>2일 전<span class="o">)</span> ae07c16 mkkim  <span class="nt">--</span> initial commit
+</code></pre></div>
+<p>서브모듈 안에서 수정사항을 추적하려면 다른 작업이 좀 더 필요하다.</p>
+
+<p>서브모듈이 브랜치를 추적하게 하려면 할 일이 두 가지다.</p>
+
+<p>우선 각 서브모듈 디렉토리로 가서 추적할 브랜치를 Checkout 하고 일을 시작해야 한다.</p>
+
+<p>이후 서브모듈을 수정한 다음에 <code>git submodule update --remote</code> 명령을 실행해 Upstream 에서 새로운 커밋을 가져온다.</p>
+
+<p>이 커밋을 <code>--merge</code> 하거나 <code>--rebase</code> 하는 것은 선택할 수 있다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd </span>myproject
+<span class="nv">$ </span><span class="nb">cd </span>myapp
+<span class="o">(</span>master<span class="o">)</span><span class="nv">$ </span>git checkout stable
+<span class="o">(</span>stable<span class="o">)</span><span class="err">$</span>
+</code></pre></div>
+<p>Remote Server <code>myapp</code> 수정하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">(</span>stable<span class="o">)</span><span class="nv">$ </span><span class="nb">touch</span> ./log/180723.log
+<span class="o">(</span>stable<span class="o">)</span><span class="nv">$ </span>git add <span class="nb">.</span>
+<span class="o">(</span>stable +<span class="o">)</span><span class="nv">$ </span>git commit <span class="nt">-vm</span> <span class="s1">'Create log/*.log'</span>
+<span class="o">(</span>stable<span class="o">)</span><span class="nv">$ </span>git push origin stable
+</code></pre></div>
+<p>Local <code>myproject</code> 의 <code>myapp</code> <code>--merge</code> 하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd </span>myproject
+<span class="nv">$ </span><span class="nb">cd </span>myapp
+<span class="o">(</span>stable<span class="o">)</span><span class="nv">$ </span>vi README.md
+<span class="o">(</span>stable <span class="k">*</span><span class="o">)</span><span class="nv">$ </span>git commit <span class="nt">-avm</span> <span class="s1">'Update README.md'</span>
+<span class="o">(</span>stable<span class="o">)</span><span class="nv">$ </span><span class="nb">cd</span> ..
+<span class="nv">$ </span>git submodule update <span class="nt">--remote</span> <span class="nt">--merge</span> myapp
+
+warning: http://0.0.0.0/mkkim/myapp.git/<span class="o">(</span>으<span class="o">)</span>로 리다이렉트
+remote: Counting objects: 3, <span class="k">done</span><span class="nb">.</span>
+remote: Compressing objects: 100% <span class="o">(</span>3/3<span class="o">)</span>, <span class="k">done</span><span class="nb">.</span>
+remote: Total 3 <span class="o">(</span>delta 1<span class="o">)</span>, reused 0 <span class="o">(</span>delta 0<span class="o">)</span>
+오브젝트 묶음 푸는 중: 100% <span class="o">(</span>3/3<span class="o">)</span>, 완료.
+http://0.0.0.0/mkkim/myapp URL에서
+   336b1f8..ad66c1b  stable     -&gt; origin/stable
+Merge made by the <span class="s1">'recursive'</span> strategy.
+ log/180723.log | 0
+ 1 file changed, 0 insertions<span class="o">(</span>+<span class="o">)</span>, 0 deletions<span class="o">(</span>-<span class="o">)</span>
+ create mode 100644 log/180723.log
+하위 모듈 경로 <span class="s1">'myapp'</span>: <span class="s1">'ad66c1b1d24c3cf8c2f3ab06fbf48ff8997f364c'</span>에서 병합
+zen@mkkimpc:~/projects/mkkim/study/mygit2 <span class="o">(</span>master <span class="k">*</span><span class="o">)</span><span class="nv">$ </span><span class="nb">ls
+</span>README.md  menu_mgmt  myapp
+
+<span class="k">*</span>   2018-07-23 12:12:23 +0900 <span class="o">(</span>14초 전<span class="o">)</span> c455786 mkkim  <span class="o">(</span>HEAD -&gt; stable<span class="o">)</span> <span class="nt">--</span> Merge commit <span class="s1">'ad66c1b1d24c3cf8c2f3ab06fbf48ff8997f364c'</span> into stable
+|<span class="se">\</span>
+| <span class="k">*</span> 2018-07-23 11:18:07 +0900 <span class="o">(</span>55분 전<span class="o">)</span> ad66c1b mkkim  <span class="o">(</span>origin/stable<span class="o">)</span> <span class="nt">--</span> Create log/<span class="k">*</span>.log
+<span class="k">*</span> | 2018-07-23 11:17:20 +0900 <span class="o">(</span>55분 전<span class="o">)</span> 5a8880b mkkim  <span class="nt">--</span> Update README.md
+|/
+<span class="k">*</span> 2018-07-23 11:10:37 +0900 <span class="o">(</span>62분 전<span class="o">)</span> 336b1f8 mkkim  <span class="nt">--</span> Update README.md
+<span class="k">*</span> 2018-07-20 18:43:09 +0900 <span class="o">(</span>3일 전<span class="o">)</span> f587e1e mkkim  <span class="nt">--</span> Update README.md
+</code></pre></div>
+<p>myapp 디렉토리로 들어가면 새로 수정한 내용이 로컬 브랜치 stable 에 이미 Merge 된 것을 확인할 수 있다.</p>
+
+<p>이제 다른 사람이 myapp 라이브러리를 수정해서 Upstream 저장소에 Push 한 상태에서 우리가 myapp 라이브러리를 수정하면 무슨 일이 일어나는지 살펴보자.</p>
+
+<p>Remote Server <code>myapp</code> 수정하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">(</span>stable<span class="o">)</span><span class="nv">$ </span>vi Exception.md
+<span class="o">(</span>stable <span class="k">*</span><span class="o">)</span><span class="nv">$ </span>git commit <span class="nt">-avm</span> <span class="s1">'Update Exception.md'</span>
+<span class="o">(</span>stable<span class="o">)</span><span class="nv">$ </span>git push origin stable
+</code></pre></div>
+<p>Local <code>myproject</code> 의 <code>myapp</code> <code>--rebase</code> 하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">(</span>stable<span class="o">)</span><span class="nv">$ </span><span class="nb">cd</span> ..
+<span class="nv">$ </span>git submodule update <span class="nt">--remote</span> <span class="nt">--rebase</span> myapp
+
+warning: http://0.0.0.0/mkkim/myapp.git/<span class="o">(</span>으<span class="o">)</span>로 리다이렉트
+remote: Counting objects: 3, <span class="k">done</span><span class="nb">.</span>
+remote: Compressing objects: 100% <span class="o">(</span>2/2<span class="o">)</span>, <span class="k">done</span><span class="nb">.</span>
+remote: Total 3 <span class="o">(</span>delta 1<span class="o">)</span>, reused 0 <span class="o">(</span>delta 0<span class="o">)</span>
+오브젝트 묶음 푸는 중: 100% <span class="o">(</span>3/3<span class="o">)</span>, 완료.
+http://0.0.0.0/mkkim/myapp URL에서
+   ad66c1b..10b1952  stable     -&gt; origin/stable
+작업 사항을 다시 넣기 위해 먼저 헤드를 뒤로 돌립니다...
+적용하는 중: Update README.md
+하위 모듈 경로 <span class="s1">'myapp'</span>: <span class="s1">'10b195248d24cc2a929d4c84410e88c0dc9aa274'</span><span class="o">(</span>으<span class="o">)</span>로 리베이스
+
+<span class="k">*</span> 2018-07-23 12:28:25 +0900 <span class="o">(</span>19초 전<span class="o">)</span> 9c5c2ba mkkim  <span class="o">(</span>HEAD -&gt; stable<span class="o">)</span> <span class="nt">--</span> Update README.md
+<span class="k">*</span> 2018-07-23 12:22:09 +0900 <span class="o">(</span>7분 전<span class="o">)</span> 10b1952 mkkim  <span class="o">(</span>origin/stable<span class="o">)</span> <span class="nt">--</span> Update Exception.md
+<span class="k">*</span> 2018-07-23 11:18:07 +0900 <span class="o">(</span>71분 전<span class="o">)</span> ad66c1b mkkim  <span class="nt">--</span> Create log/<span class="k">*</span>.log
+<span class="k">*</span> 2018-07-23 11:10:37 +0900 <span class="o">(</span>78분 전<span class="o">)</span> 336b1f8 mkkim  <span class="nt">--</span> Update README.md
+<span class="k">*</span> 2018-07-20 18:43:09 +0900 <span class="o">(</span>3일 전<span class="o">)</span> f587e1e mkkim  <span class="nt">--</span> Update README.md
+<span class="k">*</span> 2018-07-20 10:18:26 +0900 <span class="o">(</span>3일 전<span class="o">)</span> 9134a91 mkkim  <span class="nt">--</span> Update ./log
+<span class="k">*</span> 2018-07-19 10:23:57 +0900 <span class="o">(</span>4일 전<span class="o">)</span> a3bd063 mkkim  <span class="nt">--</span> Create introduction.md
+<span class="k">*</span> 2018-07-19 09:36:31 +0900 <span class="o">(</span>4일 전<span class="o">)</span> 061ad52 mkkim  <span class="nt">--</span> Create branch/stable
+<span class="k">*</span> 2018-07-19 09:12:34 +0900 <span class="o">(</span>4일 전<span class="o">)</span> 96a60a1 mkkim  <span class="o">(</span>origin/master, origin/HEAD, master<span class="o">)</span> <span class="nt">--</span> Create Exception.md
+<span class="k">*</span> 2018-07-19 09:12:22 +0900 <span class="o">(</span>4일 전<span class="o">)</span> cfb129f mkkim  <span class="nt">--</span> Update README.md
+<span class="k">*</span> 2018-07-18 18:37:33 +0900 <span class="o">(</span>5일 전<span class="o">)</span> ae07c16 mkkim  <span class="nt">--</span> initial commit
+</code></pre></div>
+<p><code>--rebase</code> 옵션이나 <code>--merge</code> 옵션을 지정하지 않으면 Git은 로컬 변경사항을 무시하고 서버로부터 받은 해당 서브모듈의 버전으로 Reset을 하고 <strong>Detached HEAD</strong> 상태로 만든다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">(</span>stable<span class="o">)</span><span class="nv">$ </span><span class="nb">cd</span> ..
+<span class="nv">$ </span>git submodule update <span class="nt">--remote</span>
+
+warning: http://10.40.223.88/apps/menu_mgmt.git/<span class="o">(</span>으<span class="o">)</span>로 리다이렉트
+warning: http://0.0.0.0/mkkim/myapp.git/<span class="o">(</span>으<span class="o">)</span>로 리다이렉트
+하위 모듈 경로 <span class="s1">'myapp'</span>: <span class="s1">'10b195248d24cc2a929d4c84410e88c0dc9aa274'</span> 체크아웃
+
+<span class="nv">$ </span><span class="nb">cd </span>myapp
+<span class="o">((</span>10b1952...<span class="o">))</span><span class="nv">$ </span>git glog <span class="nt">-20</span>
+
+<span class="k">*</span> 2018-07-23 12:28:25 +0900 <span class="o">(</span>9분 전<span class="o">)</span> 9c5c2ba mkkim  <span class="o">(</span>stable<span class="o">)</span> <span class="nt">--</span> Update README.md
+<span class="k">*</span> 2018-07-23 12:22:09 +0900 <span class="o">(</span>16분 전<span class="o">)</span> 10b1952 mkkim  <span class="o">(</span>HEAD, origin/stable<span class="o">)</span> <span class="nt">--</span> Update Exception.md
+<span class="k">*</span> 2018-07-23 11:18:07 +0900 <span class="o">(</span>80분 전<span class="o">)</span> ad66c1b mkkim  <span class="nt">--</span> Create log/<span class="k">*</span>.log
+<span class="k">*</span> 2018-07-23 11:10:37 +0900 <span class="o">(</span>87분 전<span class="o">)</span> 336b1f8 mkkim  <span class="nt">--</span> Update README.md
+<span class="k">*</span> 2018-07-20 18:43:09 +0900 <span class="o">(</span>3일 전<span class="o">)</span> f587e1e mkkim  <span class="nt">--</span> Update README.md
+<span class="k">*</span> 2018-07-20 10:18:26 +0900 <span class="o">(</span>3일 전<span class="o">)</span> 9134a91 mkkim  <span class="nt">--</span> Update ./log
+<span class="k">*</span> 2018-07-19 10:23:57 +0900 <span class="o">(</span>4일 전<span class="o">)</span> a3bd063 mkkim  <span class="nt">--</span> Create introduction.md
+<span class="k">*</span> 2018-07-19 09:36:31 +0900 <span class="o">(</span>4일 전<span class="o">)</span> 061ad52 mkkim  <span class="nt">--</span> Create branch/stable
+<span class="k">*</span> 2018-07-19 09:12:34 +0900 <span class="o">(</span>4일 전<span class="o">)</span> 96a60a1 mkkim  <span class="o">(</span>origin/master, origin/HEAD, master<span class="o">)</span> <span class="nt">--</span> Create Exception.md
+<span class="k">*</span> 2018-07-19 09:12:22 +0900 <span class="o">(</span>4일 전<span class="o">)</span> cfb129f mkkim  <span class="nt">--</span> Update README.md
+<span class="k">*</span> 2018-07-18 18:37:33 +0900 <span class="o">(</span>5일 전<span class="o">)</span> ae07c16 mkkim  <span class="nt">--</span> initial commit
+</code></pre></div>
+<p>일이 이렇게 되더라도 문제가 안 된다.</p>
+
+<p>Reset이 된 서브모듈 디렉토리로 가서 작업하던 브랜치를 Checkout 하고 직접 origin/stable (아니면 원하는 어떠한 리모트 브랜치든)을 Merge 하거나 Rebase 하면 된다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="k">*</span> 2018-07-23 13:27:07 +0900 <span class="o">(</span>86분 전<span class="o">)</span> b785fe9 mkkim  <span class="o">(</span>HEAD, origin/stable<span class="o">)</span> <span class="nt">--</span> Create ./log/180722.log
+<span class="k">*</span> 2018-07-23 13:09:58 +0900 <span class="o">(</span>2시간 전<span class="o">)</span> b8d6bc7 mkkim  <span class="o">(</span>stable<span class="o">)</span> <span class="nt">--</span> Update README.md
+<span class="k">*</span> ...
+
+<span class="o">((</span>10b1952...<span class="o">))</span><span class="nv">$ </span>git checkout stable
+
+<span class="k">*</span> 2018-07-23 13:27:07 +0900 <span class="o">(</span>87분 전<span class="o">)</span> b785fe9 mkkim  <span class="o">(</span>origin/stable<span class="o">)</span> <span class="nt">--</span> Create ./log/180722.log
+<span class="k">*</span> 2018-07-23 13:09:58 +0900 <span class="o">(</span>2시간 전<span class="o">)</span> b8d6bc7 mkkim  <span class="o">(</span>HEAD -&gt; stable<span class="o">)</span> <span class="nt">--</span> Update README.md
+<span class="k">*</span> ...
+
+<span class="o">(</span>stable<span class="o">)</span><span class="nv">$ </span>git merge origin/stable
+
+<span class="k">*</span> 2018-07-23 13:27:07 +0900 <span class="o">(</span>88분 전<span class="o">)</span> b785fe9 mkkim  <span class="o">(</span>HEAD -&gt; stable, origin/stable<span class="o">)</span> <span class="nt">--</span> Create ./log/180722.log
+<span class="k">*</span> 2018-07-23 13:09:58 +0900 <span class="o">(</span>2시간 전<span class="o">)</span> b8d6bc7 mkkim  <span class="nt">--</span> Update README.md
+<span class="k">*</span> ...
+</code></pre></div>
+<p>Local 서브모듈 저장소 update 시</p>
+
+<ul>
+<li><p>서브모듈에 커밋하지 않은 변경 사항이 있는 채로 변경 사항을 가져오지만, 서브모듈의 저장하지 않은 작업을 덮어쓰지 않는다.</p></li>
+<li><p>Upstream 저장소의 변경 사항과 충돌시 Local 서브모듈 디렉토리로 가서 충돌을 해결하면 된다.</p></li>
+</ul>
+
+<h2 id="summary">
+<a class="anchor" href="#summary" aria-hidden="true"><span class="octicon octicon-link"></span></a>Summary</h2>
+
+<p>submodule 업데이트 수동:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd </span>myproject
+<span class="nv">$ </span><span class="nb">cd</span> &lt;submodule-name&gt;
+<span class="nv">$ </span>git fetch
+<span class="nv">$ </span>git merge origin/master
+</code></pre></div>
+<p>submodule 업데이트 자동:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd </span>myproject
+<span class="nv">$ </span>git submodule update <span class="nt">--remote</span> &lt;submodule-name&gt;  <span class="c"># Detached HEAD 상태(수동 병합하기)</span>
+<span class="nv">$ </span>git submodule update <span class="nt">--remote</span> <span class="nt">--merge</span> &lt;submodule-name&gt;
+<span class="nv">$ </span>git submodule update <span class="nt">--remote</span> <span class="nt">--rebase</span> &lt;submodule-name&gt;
+</code></pre></div>
+<p>submodule 이력 보기 설정하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git config diff.submodule log
+<span class="nv">$ </span>git config status.submodulesummary 5
+</code></pre></div>
+<p>submodule default branch 설정하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git config <span class="nt">-f</span> .gitmodules submodule.myapp.branch &lt;branch-name&gt;
+</code></pre></div>
+  </div>
+
+<div>
+  <h2 id="part-9209e90205f9d8ab">서브모듈 업데이트하기</h2>
+
+<p>가장 단순한 서브모듈 사용 방법은 하위 프로젝트를 수정하지 않고 참조만 하면서 최신 버전으로 업데이트하는 것이다.</p>
+
+<p>서브모듈 프로젝트를 최신으로 업데이트 하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd </span>myproject
+<span class="nv">$ </span><span class="nb">cd </span>myapp
+<span class="nv">$ </span>git fetch
+<span class="nv">$ </span>git merge origin/master
+</code></pre></div>
+<p><code>git diff --submodule</code> 업데이트된 서브모듈과 각 서브모듈에 추가된 커밋 보기:</p>
+
+<p>(매번 <code>--submodule</code> 옵션을 쓰고 싶지 않다면 <code>diff.submodule</code> 의 값을 <code>log</code> 로 설정)</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd </span>myproject
+<span class="nv">$ </span>git diff
+
+<span class="c"># diff --git a/.gitmodules b/.gitmodules</span>
+<span class="c"># index b08b932..ea05fd7 100644</span>
+<span class="c"># --- a/.gitmodules</span>
+<span class="c"># +++ b/.gitmodules</span>
+<span class="c"># @@ -4,3 +4,4 @@</span>
+<span class="c">#  [submodule "myapp"]</span>
+<span class="c">#         path = myapp</span>
+<span class="c">#         url = http://0.0.0.0/mkkim/myapp</span>
+<span class="c"># +       branch = stable</span>
+diff <span class="nt">--git</span> a/myapp b/myapp
+index ae07c16..9134a91 160000
+<span class="nt">---</span> a/myapp
++++ b/myapp
+@@ <span class="nt">-1</span> +1 @@
+<span class="nt">-Subproject</span> commit ae07c166978bb396539b9eb437fd8c13220c5336
++Subproject commit 9134a91e934480e419920be692ee6384d45c7b83
+
+<span class="nv">$ </span>git config <span class="nt">--global</span> diff.submodule log
+<span class="nv">$ </span>git diff
+
+<span class="c"># diff --git a/.gitmodules b/.gitmodules</span>
+<span class="c"># index b08b932..ea05fd7 100644</span>
+<span class="c"># --- a/.gitmodules</span>
+<span class="c"># +++ b/.gitmodules</span>
+<span class="c"># @@ -4,3 +4,4 @@</span>
+<span class="c">#  [submodule "myapp"]</span>
+<span class="c">#         path = myapp</span>
+<span class="c">#         url = http://0.0.0.0/mkkim/myapp</span>
+<span class="c"># +       branch = stable</span>
+Submodule myapp ae07c16..9134a91:
+  <span class="o">&gt;</span> Update ./log
+  <span class="o">&gt;</span> Create introduction.md
+  <span class="o">&gt;</span> Create branch/stable
+  <span class="o">&gt;</span> Create Exception.md
+  <span class="o">&gt;</span> Update README.md
+</code></pre></div>
+<p>여기서 커밋하면 서브모듈(myapp)은 업데이트된 내용으로 메인 프로젝트(myproject)에 적용된다.</p>
+
+<p>다른 사람들이 업데이트하면 적용된다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd </span>myproject
+<span class="nv">$ </span>git commit <span class="nt">-amv</span> <span class="s1">'Update myapp'</span>
+<span class="nv">$ </span>git push
+</code></pre></div>
+<h4 id="fetch">자동으로 서브모듈 프로젝트를 Fetch 하고 업데이트하기</h4>
+
+<p><code>git submodule update --remote &lt;submodule-name&gt;</code>:</p>
+
+<p>submodule-name 입력 안할 시에는 모든 submodule 을 업데이트 한다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd </span>myproject
+<span class="nv">$ </span>git submodule update <span class="nt">--remote</span> myapp
+
+warning: http://0.0.0.0/mkkim/myapp.git/<span class="o">(</span>으<span class="o">)</span>로 리다이렉트
+remote: Counting objects: 5, <span class="k">done</span><span class="nb">.</span>
+remote: Compressing objects: 100% <span class="o">(</span>3/3<span class="o">)</span>, <span class="k">done</span><span class="nb">.</span>
+remote: Total 5 <span class="o">(</span>delta 0<span class="o">)</span>, reused 0 <span class="o">(</span>delta 0<span class="o">)</span>
+오브젝트 묶음 푸는 중: 100% <span class="o">(</span>5/5<span class="o">)</span>, 완료.
+http://0.0.0.0/mkkim/myapp URL에서
+   ae07c16..96a60a1  master     -&gt; origin/master
+하위 모듈 경로 <span class="s1">'myapp'</span>: <span class="s1">'96a60a1edee87bfe8c0a8f1623139eafaee4b5d8'</span> 체크아웃
+</code></pre></div>
+<p>default branch: <code>master</code></p>
+
+<p>default branch 변경하기(<code>master</code> -&gt; <code>stable</code>):</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git config <span class="nt">-f</span> .gitmodules submodule.myapp.branch stable
+</code></pre></div>
+<ul>
+<li><p><code>git config</code> 명령에 <code>-f .gitmodules</code> 옵션을 포함하지 않으면 이 설정은 공유하지 않고 사용자에게만 적용된다. <strong>다른 사람과 공유하는 저장소라면 같은 브랜치를 추적하도록 설정하는 것이 더 낫다.</strong></p></li>
+<li><p><code>.gitmodules</code> 설정됨:
+<code>bash
+[submodule "myapp"]
+path = myapp
+url = http://0.0.0.0/mkkim/myapp
+branch = stable
+</code></p></li>
+<li><p>이 파일을 공유하는 모두에게 <code>stable</code> 브랜치가 적용됨</p></li>
+<li><p><code>.git/config</code> 개인 설정 파일 설정하기.</p></li>
+</ul>
+
+<p>default branch 변경 후 :</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git submodule update <span class="nt">--remote</span> myapp
+
+warning: http://0.0.0.0/mkkim/myapp.git/<span class="o">(</span>으<span class="o">)</span>로 리다이렉트
+remote: Counting objects: 2, <span class="k">done</span><span class="nb">.</span>
+remote: Compressing objects: 100% <span class="o">(</span>2/2<span class="o">)</span>, <span class="k">done</span><span class="nb">.</span>
+remote: Total 2 <span class="o">(</span>delta 1<span class="o">)</span>, reused 0 <span class="o">(</span>delta 0<span class="o">)</span>
+오브젝트 묶음 푸는 중: 100% <span class="o">(</span>2/2<span class="o">)</span>, 완료.
+http://0.0.0.0/mkkim/myapp URL에서
+   061ad52..a3bd063  stable     -&gt; origin/stable
+하위 모듈 경로 <span class="s1">'myapp'</span>: <span class="s1">'a3bd063407cbf9a9f51fb412ae337a7edbefc6a8'</span> 체크아웃
+</code></pre></div>
+<p>설정 파일에 <code>status.submodulesummary</code> 항목을 설정하면 서브모듈의 변경 사항을 간단히 보여준다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git config status.submodulesummary 1
+
+<span class="nv">$ </span>git status
+
+<span class="c"># 현재 브랜치 master</span>
+<span class="c"># 브랜치가 'origin/master'에 맞게 업데이트된 상태입니다.</span>
+<span class="c">#</span>
+<span class="c"># 커밋하도록 정하지 않은 변경 사항:</span>
+<span class="c">#   (무엇을 커밋할지 바꾸려면 "git add &lt;파일&gt;..."을 사용하십시오)</span>
+<span class="c">#   (작업 폴더의 변경 사항을 버리려면 "git checkout -- &lt;파일&gt;..."을 사용하십시오)</span>
+<span class="c">#</span>
+<span class="c">#         수정함:        .gitmodules</span>
+<span class="c">#         수정함:        myapp (새 커밋)</span>
+
+변경되었지만 업데이트하지 않은 하위 모듈:
+
+<span class="k">*</span> myapp ae07c16...9134a91 <span class="o">(</span>5<span class="o">)</span>:
+  <span class="o">&gt;</span> Update ./log
+
+커밋할 변경 사항을 추가하지 않았습니다 <span class="o">(</span><span class="s2">"git add"</span> 및/또는 <span class="s2">"git commit -a"</span>를
+사용하십시오<span class="o">)</span>
+</code></pre></div>
+<p><code>git log -p --submodule</code> 로그에서 위와 같이 살펴보려면 보기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git log <span class="nt">-p</span> <span class="nt">--submodule</span>
+
+commit be02c787e0e0bc04ac311f60e9f6d03d5c4c17db <span class="o">(</span>HEAD -&gt; master, origin/master, origin/HEAD<span class="o">)</span>
+Author: mkkim &lt;mkkim@zensystems.co.kr&gt;
+Date:   Wed Jul 18 18:45:18 2018 +0900
+
+    added myapp
+
+diff <span class="nt">--git</span> a/.gitmodules b/.gitmodules
+index dedf31f..b08b932 100644
+<span class="nt">---</span> a/.gitmodules
++++ b/.gitmodules
+@@ <span class="nt">-1</span>,3 +1,6 @@
+ <span class="o">[</span>submodule <span class="s2">"menu_mgmt"</span><span class="o">]</span>
+        path <span class="o">=</span> menu_mgmt
+        url <span class="o">=</span> http://10.40.223.88/apps/menu_mgmt
++[submodule <span class="s2">"myapp"</span><span class="o">]</span>
++       path <span class="o">=</span> myapp
++       url <span class="o">=</span> http://0.0.0.0/mkkim/myapp
+Submodule myapp 0000000...ae07c16 <span class="o">(</span>new submodule<span class="o">)</span>
+
+commit d139b31cb9ade42a61844227a103cb2012d8a3f0
+Author: mkkim &lt;mkkim@zensystems.co.kr&gt;
+Date:   Wed Jul 18 18:03:24 2018 +0900
+
+    added menu_mgmt module
+
+diff <span class="nt">--git</span> a/.gitmodules b/.gitmodules
+new file mode 100644
+index 0000000..dedf31f
+<span class="nt">---</span> /dev/null
++++ b/.gitmodules
+@@ <span class="nt">-0</span>,0 +1,3 @@
++[submodule <span class="s2">"menu_mgmt"</span><span class="o">]</span>
++       path <span class="o">=</span> menu_mgmt
++       url <span class="o">=</span> http://10.40.223.88/apps/menu_mgmt
+Submodule menu_mgmt 0000000...51eb7a3 <span class="o">(</span>new submodule<span class="o">)</span>
+:
+</code></pre></div>
+<h3 id="part-e90292be0b6a49ea">서브모듈 관리하기</h3>
+
+<p>서브모듈을 수정하고 그 내용을 담은 커밋을 유지한 채로 메인프로젝트와 서브모듈을 함께 관리하는 방법을 살펴본다.</p>
+
+<p><code>git submodule update</code>:</p>
+
+<p>Git은 서브모듈의 변경 사항을 업데이트한다.</p>
+
+<p>하지만, 서브모듈 로컬 저장소는 “Detached HEAD” 상태로 남는다.</p>
+
+<p>이 말은 변경 내용을 추적하는 로컬 브랜치(예를 들자면 ‘`master’'같은)가 없다는 것이다.</p>
+
+<p>변경 내용을 추적하는 브랜치 없이 서브모듈에서 수정 작업을 하게 되면 이후에 git submodule update 명령을 실행했을 때 수정한 내용을 잃어버릴 수 있다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd </span>myproject
+<span class="nv">$ </span><span class="nb">cd </span>myapp
+
+<span class="k">*</span> 2018-07-19 09:20:36 +0900 <span class="o">(</span>33시간 전<span class="o">)</span> 8941947 mkkim  <span class="o">(</span>HEAD -&gt; master, origin/master, origin/HEAD<span class="o">)</span> <span class="nt">--</span> Update myapp
+<span class="k">*</span> 2018-07-18 18:45:18 +0900 <span class="o">(</span>2일 전<span class="o">)</span> be02c78 mkkim  <span class="nt">--</span> added myapp
+<span class="k">*</span> 2018-07-18 18:03:24 +0900 <span class="o">(</span>2일 전<span class="o">)</span> d139b31 mkkim  <span class="nt">--</span> added menu_mgmt module
+<span class="k">*</span> 2018-07-18 17:57:55 +0900 <span class="o">(</span>2일 전<span class="o">)</span> 7776ccc mkkim  <span class="nt">--</span> initial commit
+
+<span class="nv">$ </span><span class="nb">cd</span> ..
+<span class="nv">$ </span>git submodule update
+하위 모듈 경로 <span class="s1">'myapp'</span>: <span class="s1">'96a60a1edee87bfe8c0a8f1623139eafaee4b5d8'</span> 체크아웃
+
+<span class="nv">$ </span><span class="nb">cd </span>myapp
+
+<span class="k">*</span> 2018-07-20 10:18:26 +0900 <span class="o">(</span>8시간 전<span class="o">)</span> 9134a91 mkkim  <span class="o">(</span>origin/stable, stable<span class="o">)</span> <span class="nt">--</span> Update ./log
+<span class="k">*</span> 2018-07-19 10:23:57 +0900 <span class="o">(</span>32시간 전<span class="o">)</span> a3bd063 mkkim  <span class="nt">--</span> Create introduction.md
+<span class="k">*</span> 2018-07-19 09:36:31 +0900 <span class="o">(</span>33시간 전<span class="o">)</span> 061ad52 mkkim  <span class="nt">--</span> Create branch/stable
+<span class="k">*</span> 2018-07-19 09:12:34 +0900 <span class="o">(</span>33시간 전<span class="o">)</span> 96a60a1 mkkim  <span class="o">(</span>HEAD, origin/master, origin/HEAD, master<span class="o">)</span> <span class="nt">--</span> Create Exception.md
+<span class="k">*</span> 2018-07-19 09:12:22 +0900 <span class="o">(</span>33시간 전<span class="o">)</span> cfb129f mkkim  <span class="nt">--</span> Update README.md
+<span class="k">*</span> 2018-07-18 18:37:33 +0900 <span class="o">(</span>2일 전<span class="o">)</span> ae07c16 mkkim  <span class="nt">--</span> initial commit
+</code></pre></div>
+<p>서브모듈 안에서 수정사항을 추적하려면 다른 작업이 좀 더 필요하다.</p>
+
+<p>서브모듈이 브랜치를 추적하게 하려면 할 일이 두 가지다.</p>
+
+<p>우선 각 서브모듈 디렉토리로 가서 추적할 브랜치를 Checkout 하고 일을 시작해야 한다.</p>
+
+<p>이후 서브모듈을 수정한 다음에 <code>git submodule update --remote</code> 명령을 실행해 Upstream 에서 새로운 커밋을 가져온다.</p>
+
+<p>이 커밋을 <code>--merge</code> 하거나 <code>--rebase</code> 하는 것은 선택할 수 있다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd </span>myproject
+<span class="nv">$ </span><span class="nb">cd </span>myapp
+<span class="o">(</span>master<span class="o">)</span><span class="nv">$ </span>git checkout stable
+<span class="o">(</span>stable<span class="o">)</span><span class="err">$</span>
+</code></pre></div>
+<p>Remote Server <code>myapp</code> 수정하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">(</span>stable<span class="o">)</span><span class="nv">$ </span><span class="nb">touch</span> ./log/180723.log
+<span class="o">(</span>stable<span class="o">)</span><span class="nv">$ </span>git add <span class="nb">.</span>
+<span class="o">(</span>stable +<span class="o">)</span><span class="nv">$ </span>git commit <span class="nt">-vm</span> <span class="s1">'Create log/*.log'</span>
+<span class="o">(</span>stable<span class="o">)</span><span class="nv">$ </span>git push origin stable
+</code></pre></div>
+<p>Local <code>myproject</code> 의 <code>myapp</code> <code>--merge</code> 하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd </span>myproject
+<span class="nv">$ </span><span class="nb">cd </span>myapp
+<span class="o">(</span>stable<span class="o">)</span><span class="nv">$ </span>vi README.md
+<span class="o">(</span>stable <span class="k">*</span><span class="o">)</span><span class="nv">$ </span>git commit <span class="nt">-avm</span> <span class="s1">'Update README.md'</span>
+<span class="o">(</span>stable<span class="o">)</span><span class="nv">$ </span><span class="nb">cd</span> ..
+<span class="nv">$ </span>git submodule update <span class="nt">--remote</span> <span class="nt">--merge</span> myapp
+
+warning: http://0.0.0.0/mkkim/myapp.git/<span class="o">(</span>으<span class="o">)</span>로 리다이렉트
+remote: Counting objects: 3, <span class="k">done</span><span class="nb">.</span>
+remote: Compressing objects: 100% <span class="o">(</span>3/3<span class="o">)</span>, <span class="k">done</span><span class="nb">.</span>
+remote: Total 3 <span class="o">(</span>delta 1<span class="o">)</span>, reused 0 <span class="o">(</span>delta 0<span class="o">)</span>
+오브젝트 묶음 푸는 중: 100% <span class="o">(</span>3/3<span class="o">)</span>, 완료.
+http://0.0.0.0/mkkim/myapp URL에서
+   336b1f8..ad66c1b  stable     -&gt; origin/stable
+Merge made by the <span class="s1">'recursive'</span> strategy.
+ log/180723.log | 0
+ 1 file changed, 0 insertions<span class="o">(</span>+<span class="o">)</span>, 0 deletions<span class="o">(</span>-<span class="o">)</span>
+ create mode 100644 log/180723.log
+하위 모듈 경로 <span class="s1">'myapp'</span>: <span class="s1">'ad66c1b1d24c3cf8c2f3ab06fbf48ff8997f364c'</span>에서 병합
+zen@mkkimpc:~/projects/mkkim/study/mygit2 <span class="o">(</span>master <span class="k">*</span><span class="o">)</span><span class="nv">$ </span><span class="nb">ls
+</span>README.md  menu_mgmt  myapp
+
+<span class="k">*</span>   2018-07-23 12:12:23 +0900 <span class="o">(</span>14초 전<span class="o">)</span> c455786 mkkim  <span class="o">(</span>HEAD -&gt; stable<span class="o">)</span> <span class="nt">--</span> Merge commit <span class="s1">'ad66c1b1d24c3cf8c2f3ab06fbf48ff8997f364c'</span> into stable
+|<span class="se">\</span>
+| <span class="k">*</span> 2018-07-23 11:18:07 +0900 <span class="o">(</span>55분 전<span class="o">)</span> ad66c1b mkkim  <span class="o">(</span>origin/stable<span class="o">)</span> <span class="nt">--</span> Create log/<span class="k">*</span>.log
+<span class="k">*</span> | 2018-07-23 11:17:20 +0900 <span class="o">(</span>55분 전<span class="o">)</span> 5a8880b mkkim  <span class="nt">--</span> Update README.md
+|/
+<span class="k">*</span> 2018-07-23 11:10:37 +0900 <span class="o">(</span>62분 전<span class="o">)</span> 336b1f8 mkkim  <span class="nt">--</span> Update README.md
+<span class="k">*</span> 2018-07-20 18:43:09 +0900 <span class="o">(</span>3일 전<span class="o">)</span> f587e1e mkkim  <span class="nt">--</span> Update README.md
+</code></pre></div>
+<p>myapp 디렉토리로 들어가면 새로 수정한 내용이 로컬 브랜치 stable 에 이미 Merge 된 것을 확인할 수 있다.</p>
+
+<p>이제 다른 사람이 myapp 라이브러리를 수정해서 Upstream 저장소에 Push 한 상태에서 우리가 myapp 라이브러리를 수정하면 무슨 일이 일어나는지 살펴보자.</p>
+
+<p>Remote Server <code>myapp</code> 수정하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">(</span>stable<span class="o">)</span><span class="nv">$ </span>vi Exception.md
+<span class="o">(</span>stable <span class="k">*</span><span class="o">)</span><span class="nv">$ </span>git commit <span class="nt">-avm</span> <span class="s1">'Update Exception.md'</span>
+<span class="o">(</span>stable<span class="o">)</span><span class="nv">$ </span>git push origin stable
+</code></pre></div>
+<p>Local <code>myproject</code> 의 <code>myapp</code> <code>--rebase</code> 하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">(</span>stable<span class="o">)</span><span class="nv">$ </span><span class="nb">cd</span> ..
+<span class="nv">$ </span>git submodule update <span class="nt">--remote</span> <span class="nt">--rebase</span> myapp
+
+warning: http://0.0.0.0/mkkim/myapp.git/<span class="o">(</span>으<span class="o">)</span>로 리다이렉트
+remote: Counting objects: 3, <span class="k">done</span><span class="nb">.</span>
+remote: Compressing objects: 100% <span class="o">(</span>2/2<span class="o">)</span>, <span class="k">done</span><span class="nb">.</span>
+remote: Total 3 <span class="o">(</span>delta 1<span class="o">)</span>, reused 0 <span class="o">(</span>delta 0<span class="o">)</span>
+오브젝트 묶음 푸는 중: 100% <span class="o">(</span>3/3<span class="o">)</span>, 완료.
+http://0.0.0.0/mkkim/myapp URL에서
+   ad66c1b..10b1952  stable     -&gt; origin/stable
+작업 사항을 다시 넣기 위해 먼저 헤드를 뒤로 돌립니다...
+적용하는 중: Update README.md
+하위 모듈 경로 <span class="s1">'myapp'</span>: <span class="s1">'10b195248d24cc2a929d4c84410e88c0dc9aa274'</span><span class="o">(</span>으<span class="o">)</span>로 리베이스
+
+<span class="k">*</span> 2018-07-23 12:28:25 +0900 <span class="o">(</span>19초 전<span class="o">)</span> 9c5c2ba mkkim  <span class="o">(</span>HEAD -&gt; stable<span class="o">)</span> <span class="nt">--</span> Update README.md
+<span class="k">*</span> 2018-07-23 12:22:09 +0900 <span class="o">(</span>7분 전<span class="o">)</span> 10b1952 mkkim  <span class="o">(</span>origin/stable<span class="o">)</span> <span class="nt">--</span> Update Exception.md
+<span class="k">*</span> 2018-07-23 11:18:07 +0900 <span class="o">(</span>71분 전<span class="o">)</span> ad66c1b mkkim  <span class="nt">--</span> Create log/<span class="k">*</span>.log
+<span class="k">*</span> 2018-07-23 11:10:37 +0900 <span class="o">(</span>78분 전<span class="o">)</span> 336b1f8 mkkim  <span class="nt">--</span> Update README.md
+<span class="k">*</span> 2018-07-20 18:43:09 +0900 <span class="o">(</span>3일 전<span class="o">)</span> f587e1e mkkim  <span class="nt">--</span> Update README.md
+<span class="k">*</span> 2018-07-20 10:18:26 +0900 <span class="o">(</span>3일 전<span class="o">)</span> 9134a91 mkkim  <span class="nt">--</span> Update ./log
+<span class="k">*</span> 2018-07-19 10:23:57 +0900 <span class="o">(</span>4일 전<span class="o">)</span> a3bd063 mkkim  <span class="nt">--</span> Create introduction.md
+<span class="k">*</span> 2018-07-19 09:36:31 +0900 <span class="o">(</span>4일 전<span class="o">)</span> 061ad52 mkkim  <span class="nt">--</span> Create branch/stable
+<span class="k">*</span> 2018-07-19 09:12:34 +0900 <span class="o">(</span>4일 전<span class="o">)</span> 96a60a1 mkkim  <span class="o">(</span>origin/master, origin/HEAD, master<span class="o">)</span> <span class="nt">--</span> Create Exception.md
+<span class="k">*</span> 2018-07-19 09:12:22 +0900 <span class="o">(</span>4일 전<span class="o">)</span> cfb129f mkkim  <span class="nt">--</span> Update README.md
+<span class="k">*</span> 2018-07-18 18:37:33 +0900 <span class="o">(</span>5일 전<span class="o">)</span> ae07c16 mkkim  <span class="nt">--</span> initial commit
+</code></pre></div>
+<p><code>--rebase</code> 옵션이나 <code>--merge</code> 옵션을 지정하지 않으면 Git은 로컬 변경사항을 무시하고 서버로부터 받은 해당 서브모듈의 버전으로 Reset을 하고 <strong>Detached HEAD</strong> 상태로 만든다.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">(</span>stable<span class="o">)</span><span class="nv">$ </span><span class="nb">cd</span> ..
+<span class="nv">$ </span>git submodule update <span class="nt">--remote</span>
+
+warning: http://10.40.223.88/apps/menu_mgmt.git/<span class="o">(</span>으<span class="o">)</span>로 리다이렉트
+warning: http://0.0.0.0/mkkim/myapp.git/<span class="o">(</span>으<span class="o">)</span>로 리다이렉트
+하위 모듈 경로 <span class="s1">'myapp'</span>: <span class="s1">'10b195248d24cc2a929d4c84410e88c0dc9aa274'</span> 체크아웃
+
+<span class="nv">$ </span><span class="nb">cd </span>myapp
+<span class="o">((</span>10b1952...<span class="o">))</span><span class="nv">$ </span>git glog <span class="nt">-20</span>
+
+<span class="k">*</span> 2018-07-23 12:28:25 +0900 <span class="o">(</span>9분 전<span class="o">)</span> 9c5c2ba mkkim  <span class="o">(</span>stable<span class="o">)</span> <span class="nt">--</span> Update README.md
+<span class="k">*</span> 2018-07-23 12:22:09 +0900 <span class="o">(</span>16분 전<span class="o">)</span> 10b1952 mkkim  <span class="o">(</span>HEAD, origin/stable<span class="o">)</span> <span class="nt">--</span> Update Exception.md
+<span class="k">*</span> 2018-07-23 11:18:07 +0900 <span class="o">(</span>80분 전<span class="o">)</span> ad66c1b mkkim  <span class="nt">--</span> Create log/<span class="k">*</span>.log
+<span class="k">*</span> 2018-07-23 11:10:37 +0900 <span class="o">(</span>87분 전<span class="o">)</span> 336b1f8 mkkim  <span class="nt">--</span> Update README.md
+<span class="k">*</span> 2018-07-20 18:43:09 +0900 <span class="o">(</span>3일 전<span class="o">)</span> f587e1e mkkim  <span class="nt">--</span> Update README.md
+<span class="k">*</span> 2018-07-20 10:18:26 +0900 <span class="o">(</span>3일 전<span class="o">)</span> 9134a91 mkkim  <span class="nt">--</span> Update ./log
+<span class="k">*</span> 2018-07-19 10:23:57 +0900 <span class="o">(</span>4일 전<span class="o">)</span> a3bd063 mkkim  <span class="nt">--</span> Create introduction.md
+<span class="k">*</span> 2018-07-19 09:36:31 +0900 <span class="o">(</span>4일 전<span class="o">)</span> 061ad52 mkkim  <span class="nt">--</span> Create branch/stable
+<span class="k">*</span> 2018-07-19 09:12:34 +0900 <span class="o">(</span>4일 전<span class="o">)</span> 96a60a1 mkkim  <span class="o">(</span>origin/master, origin/HEAD, master<span class="o">)</span> <span class="nt">--</span> Create Exception.md
+<span class="k">*</span> 2018-07-19 09:12:22 +0900 <span class="o">(</span>4일 전<span class="o">)</span> cfb129f mkkim  <span class="nt">--</span> Update README.md
+<span class="k">*</span> 2018-07-18 18:37:33 +0900 <span class="o">(</span>5일 전<span class="o">)</span> ae07c16 mkkim  <span class="nt">--</span> initial commit
+</code></pre></div>
+<p>일이 이렇게 되더라도 문제가 안 된다.</p>
+
+<p>Reset이 된 서브모듈 디렉토리로 가서 작업하던 브랜치를 Checkout 하고 직접 origin/stable (아니면 원하는 어떠한 리모트 브랜치든)을 Merge 하거나 Rebase 하면 된다:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="k">*</span> 2018-07-23 13:27:07 +0900 <span class="o">(</span>86분 전<span class="o">)</span> b785fe9 mkkim  <span class="o">(</span>HEAD, origin/stable<span class="o">)</span> <span class="nt">--</span> Create ./log/180722.log
+<span class="k">*</span> 2018-07-23 13:09:58 +0900 <span class="o">(</span>2시간 전<span class="o">)</span> b8d6bc7 mkkim  <span class="o">(</span>stable<span class="o">)</span> <span class="nt">--</span> Update README.md
+<span class="k">*</span> ...
+
+<span class="o">((</span>10b1952...<span class="o">))</span><span class="nv">$ </span>git checkout stable
+
+<span class="k">*</span> 2018-07-23 13:27:07 +0900 <span class="o">(</span>87분 전<span class="o">)</span> b785fe9 mkkim  <span class="o">(</span>origin/stable<span class="o">)</span> <span class="nt">--</span> Create ./log/180722.log
+<span class="k">*</span> 2018-07-23 13:09:58 +0900 <span class="o">(</span>2시간 전<span class="o">)</span> b8d6bc7 mkkim  <span class="o">(</span>HEAD -&gt; stable<span class="o">)</span> <span class="nt">--</span> Update README.md
+<span class="k">*</span> ...
+
+<span class="o">(</span>stable<span class="o">)</span><span class="nv">$ </span>git merge origin/stable
+
+<span class="k">*</span> 2018-07-23 13:27:07 +0900 <span class="o">(</span>88분 전<span class="o">)</span> b785fe9 mkkim  <span class="o">(</span>HEAD -&gt; stable, origin/stable<span class="o">)</span> <span class="nt">--</span> Create ./log/180722.log
+<span class="k">*</span> 2018-07-23 13:09:58 +0900 <span class="o">(</span>2시간 전<span class="o">)</span> b8d6bc7 mkkim  <span class="nt">--</span> Update README.md
+<span class="k">*</span> ...
+</code></pre></div>
+<p>Local 서브모듈 저장소 update 시</p>
+
+<ul>
+<li><p>서브모듈에 커밋하지 않은 변경 사항이 있는 채로 변경 사항을 가져오지만, 서브모듈의 저장하지 않은 작업을 덮어쓰지 않는다.</p></li>
+<li><p>Upstream 저장소의 변경 사항과 충돌시 Local 서브모듈 디렉토리로 가서 충돌을 해결하면 된다.</p></li>
+</ul>
+
+<h2 id="summary">Summary</h2>
+
+<p>submodule 업데이트 수동:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd </span>myproject
+<span class="nv">$ </span><span class="nb">cd</span> &lt;submodule-name&gt;
+<span class="nv">$ </span>git fetch
+<span class="nv">$ </span>git merge origin/master
+</code></pre></div>
+<p>submodule 업데이트 자동:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd </span>myproject
+<span class="nv">$ </span>git submodule update <span class="nt">--remote</span> &lt;submodule-name&gt;  <span class="c"># Detached HEAD 상태(수동 병합하기)</span>
+<span class="nv">$ </span>git submodule update <span class="nt">--remote</span> <span class="nt">--merge</span> &lt;submodule-name&gt;
+<span class="nv">$ </span>git submodule update <span class="nt">--remote</span> <span class="nt">--rebase</span> &lt;submodule-name&gt;
+</code></pre></div>
+<p>submodule 이력 보기 설정하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git config diff.submodule log
+<span class="nv">$ </span>git config status.submodulesummary 5
+</code></pre></div>
+<p>submodule default branch 설정하기:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git config <span class="nt">-f</span> .gitmodules submodule.myapp.branch &lt;branch-name&gt;
+</code></pre></div>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Portal2312&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Portal2312&#39;s blog</li><li><a class="u-email" href="mailto:portal2312@gmail.com">portal2312@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">portal2312</span></a></li><li><a href="https://www.twitter.com/portal2312"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">portal2312</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my blog.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
